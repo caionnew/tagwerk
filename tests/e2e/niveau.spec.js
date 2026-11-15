@@ -17,3 +17,13 @@ test('Fortgeschritten wählen: gespeichert, Lesetexte mit B2 zuerst, Modi richti
   await page.click('.tcard >> nth=0');
   await expect(page.locator('.pbtn.play.wide')).toContainText('Vorlesen');
 });
+
+test('Schwerpunkt der Woche auf „Heute“, wechselbar', async ({ page }) => {
+  await seed(page, freshDB('sv'));
+  await page.goto(APP);
+  const line = page.locator('.focusline b');
+  await expect(line).toBeVisible();
+  const before = await line.textContent();
+  await page.click('[data-a=focusnext]');
+  await expect(line).not.toHaveText(before);
+});

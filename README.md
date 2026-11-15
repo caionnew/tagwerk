@@ -33,9 +33,9 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests, ohne Browser (155 Tests)
+npm test                    # Einheitstests, ohne Browser (159 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße (41 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße (42 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 ```
 

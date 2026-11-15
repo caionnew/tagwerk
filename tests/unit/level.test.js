@@ -33,3 +33,19 @@ test('Grundlagen: leichte zuerst; Mittel: alle Stufen', () => {
   for (const x of Array.from(pick('grund')).slice(0, 9)) { const [l, t] = x.split(':'); assert.equal(Number(l), minOf[t], x); }
   const m = Array.from(pick('mittel')); assert.equal(m.length, 12);
 });
+test('Schwerpunkt der Woche: schwächstes Thema, bleibt die Woche über, ein Drittel der neuen Sätze', () => {
+  const t = app.run('today()');
+  app.run(`DB.st = {}; DB.focus = {}; DB.settings.niveau = 'mittel'; DB.tlog = { '${t}':{ sv:{ 'p:passiv':[10, 7], 'p:tid':[10, 1] } } };`);
+  assert.equal(app.run("focusTrap('sv')"), 'passiv');
+  app.run(`DB.tlog = { '${t}':{ sv:{ 'p:tid':[10, 9] } } };`);
+  assert.equal(app.run("focusTrap('sv')"), 'passiv', 'innerhalb der Woche stabil');
+  const got = Array.from(app.run("pickNew('sv', 6).map(i => i.trap)"));
+  assert.ok(got.filter(x => x === 'passiv').length >= 2, got.join(' '));
+});
+test('Konnektoren & feste Verbindungen: Lücke mit drei Optionen, Lösung unter den Optionen', () => {
+  for (const g of ['verbind_sv', 'verbind_es']) for (let k = 0; k < 40; k++) {
+    const d = app.run(`GENS.${g}.make()`);
+    assert.ok(d.gap && d.prompt.includes('___'));
+    assert.ok(d.hint.split(' / ').map(x => x.toLowerCase()).includes(d.answers[0]), d.prompt);
+  }
+});

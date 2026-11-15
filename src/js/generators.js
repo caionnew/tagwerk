@@ -369,11 +369,62 @@ function genInte(){
   return { prompt:de, answers, label:'Übersetze ins Schwedische', note };
 }
 
+
+/* ---------- Konnektoren und feste Verbindungen (B1–B2): Satzlogik und Kollokationen ---------- */
+// [Satz mit ___, Lösung, drei Optionen, Deutsch, Erklärung]
+const VERB_SV = [
+  ['Det regnade hela dagen. ___ stannade vi inne.', 'Därför', ['Därför', 'Dessutom', 'Däremot'], 'Es regnete den ganzen Tag. Deshalb blieben wir drinnen.', 'därför = deshalb (Folge). Danach Inversion: Därför stannade vi.'],
+  ['Lägenheten är billig. ___ ligger den nära stationen.', 'Dessutom', ['Dessutom', 'Däremot', 'Därför'], 'Die Wohnung ist billig. Außerdem liegt sie nah am Bahnhof.', 'dessutom = außerdem (Zusatz).'],
+  ['Min bror älskar fotboll. Jag ___ tycker att det är tråkigt.', 'däremot', ['däremot', 'dessutom', 'därför'], 'Mein Bruder liebt Fußball. Ich dagegen finde es langweilig.', 'däremot = dagegen (Gegensatz).'],
+  ['Vi gick ut ___ det regnade.', 'trots att', ['trots att', 'eftersom', 'så att'], 'Wir gingen raus, obwohl es regnete.', 'trots att = obwohl, danach Nebensatz-Wortstellung.'],
+  ['Jag tar bussen ___ jag inte har något körkort.', 'eftersom', ['eftersom', 'fast', 'medan'], 'Ich nehme den Bus, weil ich keinen Führerschein habe.', 'eftersom = weil. fast = obwohl, medan = während.'],
+  ['Hon pratade tyst ___ barnen inte skulle vakna.', 'så att', ['så att', 'trots att', 'eftersom'], 'Sie sprach leise, damit die Kinder nicht aufwachten.', 'så att = damit, sodass.'],
+  ['___ jag lagade mat dukade han bordet.', 'Medan', ['Medan', 'Innan', 'Eftersom'], 'Während ich kochte, deckte er den Tisch.', 'medan = während (gleichzeitig).'],
+  ['Ring mig ___ du kommer fram.', 'när', ['när', 'om', 'innan'], 'Ruf mich an, wenn du ankommst.', 'när = wenn (zeitlich, es passiert sicher). om = falls.'],
+  ['Han är inte bara snäll ___ också rolig.', 'utan', ['utan', 'men', 'och'], 'Er ist nicht nur nett, sondern auch witzig.', 'Nach Verneinung heißt „sondern“ utan, nicht men.'],
+  ['Vi måste ___ ett beslut i dag.', 'fatta', ['fatta', 'göra', 'ställa'], 'Wir müssen heute eine Entscheidung treffen.', 'ett beslut fattar man (umgangssprachlich auch: ta ett beslut).'],
+  ['Får jag ___ en fråga?', 'ställa', ['ställa', 'göra', 'fråga'], 'Darf ich eine Frage stellen?', 'en fråga ställer man.'],
+  ['Hon ___ ett misstag på provet.', 'gjorde', ['gjorde', 'tog', 'fattade'], 'Sie machte in der Prüfung einen Fehler.', 'göra ett misstag = einen Fehler machen.'],
+  ['Vi ___ hänsyn till grannarna.', 'tar', ['tar', 'ger', 'gör'], 'Wir nehmen Rücksicht auf die Nachbarn.', 'ta hänsyn till = Rücksicht nehmen auf.'],
+  ['Han ___ ett löfte till sin mamma.', 'gav', ['gav', 'gjorde', 'sa'], 'Er gab seiner Mutter ein Versprechen.', 'ge ett löfte = ein Versprechen geben.'],
+  ['Det ___ ingen roll.', 'spelar', ['spelar', 'gör', 'har'], 'Das spielt keine Rolle.', 'det spelar ingen roll = das spielt keine Rolle, das ist egal.'],
+  ['Glöm inte att ___ tänderna.', 'borsta', ['borsta', 'tvätta', 'putsa'], 'Vergiss nicht, die Zähne zu putzen.', 'Zähne borstar man; putsa = polieren (Schuhe, Fenster).'],
+  ['Hon ___ examen i juni.', 'tog', ['tog', 'gjorde', 'fick'], 'Sie hat im Juni ihren Abschluss gemacht.', 'ta examen = den Abschluss machen.'],
+  ['Det ___ tid att lära sig ett språk.', 'tar', ['tar', 'kostar', 'behöver'], 'Es braucht Zeit, eine Sprache zu lernen.', 'det tar tid = es dauert, es braucht Zeit.']
+];
+const VERB_ES = [
+  ['Estudió mucho; ___, suspendió el examen.', 'sin embargo', ['sin embargo', 'por lo tanto', 'además'], 'Er hat viel gelernt; trotzdem ist er durchgefallen.', 'sin embargo = trotzdem, jedoch (Gegensatz).'],
+  ['No tenía dinero; ___, no fue al concierto.', 'por lo tanto', ['por lo tanto', 'sin embargo', 'en cambio'], 'Er hatte kein Geld; deshalb ging er nicht zum Konzert.', 'por lo tanto = deshalb, folglich.'],
+  ['El hotel es barato y, ___, está en el centro.', 'además', ['además', 'en cambio', 'sin embargo'], 'Das Hotel ist günstig und liegt außerdem im Zentrum.', 'además = außerdem.'],
+  ['A mí me encanta el frío; mi hermana, ___, prefiere el verano.', 'en cambio', ['en cambio', 'además', 'por eso'], 'Ich liebe die Kälte; meine Schwester dagegen mag lieber den Sommer.', 'en cambio = dagegen.'],
+  ['Te lo explico ___ lo entiendas.', 'para que', ['para que', 'porque', 'aunque'], 'Ich erkläre es dir, damit du es verstehst.', 'para que = damit, immer mit Subjuntivo.'],
+  ['___ hacía frío, salimos a pasear.', 'Aunque', ['Aunque', 'Porque', 'Como'], 'Obwohl es kalt war, gingen wir spazieren.', 'aunque = obwohl.'],
+  ['___ no contestabas, te dejé un mensaje.', 'Como', ['Como', 'Porque', 'Aunque'], 'Da du nicht geantwortet hast, habe ich dir eine Nachricht hinterlassen.', 'Am Satzanfang heißt „da, weil“ como, nicht porque.'],
+  ['No es caro, ___ barato.', 'sino', ['sino', 'pero', 'sin embargo'], 'Es ist nicht teuer, sondern billig.', 'Nach Verneinung heißt „sondern“ sino.'],
+  ['Llámame en ___ llegues.', 'cuanto', ['cuanto', 'cuando', 'mientras'], 'Ruf mich an, sobald du ankommst.', 'en cuanto = sobald; bei Zukünftigem mit Subjuntivo.'],
+  ['Iremos a la playa ___ que no llueva.', 'siempre', ['siempre', 'aunque', 'ya'], 'Wir fahren an den Strand, sofern es nicht regnet.', 'siempre que + Subjuntivo = sofern, vorausgesetzt dass.'],
+  ['Tenemos que ___ una decisión hoy.', 'tomar', ['tomar', 'hacer', 'dar'], 'Wir müssen heute eine Entscheidung treffen.', 'tomar una decisión = eine Entscheidung treffen.'],
+  ['¿Puedo ___ una pregunta?', 'hacer', ['hacer', 'poner', 'preguntar'], 'Darf ich eine Frage stellen?', 'una pregunta „macht“ man: hacer una pregunta.'],
+  ['Vamos a ___ un paseo.', 'dar', ['dar', 'hacer', 'tomar'], 'Lass uns einen Spaziergang machen.', 'dar un paseo = spazieren gehen.'],
+  ['Ella siempre ___ razón.', 'tiene', ['tiene', 'da', 'hace'], 'Sie hat immer recht.', 'tener razón = recht haben.'],
+  ['Mi abuelo ___ cien años el mes que viene.', 'cumple', ['cumple', 'tiene', 'hace'], 'Mein Großvater wird nächsten Monat hundert.', 'cumplir años = ein Alter erreichen, Geburtstag haben.'],
+  ['Este viaje me ___ mucha ilusión.', 'hace', ['hace', 'da', 'pone'], 'Auf diese Reise freue ich mich sehr.', 'hacer ilusión = Vorfreude machen.'],
+  ['Hay que ___ cola para entrar.', 'hacer', ['hacer', 'tomar', 'poner'], 'Man muss Schlange stehen, um reinzukommen.', 'hacer cola = Schlange stehen.'],
+  ['Mi hijo nunca me ___ caso.', 'hace', ['hace', 'da', 'pone'], 'Mein Sohn hört nie auf mich.', 'hacer caso a alguien = auf jemanden hören.'],
+  ['Le ___ las gracias por su ayuda.', 'di', ['di', 'hice', 'dije'], 'Ich habe mich für seine Hilfe bedankt.', 'dar las gracias = sich bedanken.'],
+  ['Esa película me ___ miedo.', 'da', ['da', 'hace', 'tiene'], 'Der Film macht mir Angst.', 'dar miedo = Angst machen.']
+];
+const genVerbind = list => () => {
+  const [p, a, opts, de, note] = pick(list);
+  return { prompt:p, deLine:de, answers:[a.toLowerCase()], label:'Welches Wort passt?', hint:opts.slice().sort(() => Math.random() - 0.5).join(' / '), note, gap:true, full:p.replace('___', a) };
+};
 const GENS = {
   np:{ lang:'sv', trap:'species', short:'Adjektivendungen', label:'Adjektivendungen & bestimmte Form', make:genNP },
   tempus:{ lang:'sv', trap:'tempus', short:'Zeitformen', label:'Präteritum oder Perfekt', make:genTempus },
   inte:{ lang:'sv', trap:'bisats', short:'Wortstellung', label:'Stellung von „inte“, „aldrig“ & Co.', make:genInte },
   conj:{ lang:'es', trap:'konjugation', short:'Verbformen', label:'Verbformen', make:genConj },
   serestar:{ lang:'es', trap:'serestar', short:'ser/estar', label:'ser oder estar', make:genSerEstar },
-  porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara }
+  porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara },
+  verbind_sv:{ lang:'sv', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_SV) },
+  verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) }
 };

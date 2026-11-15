@@ -114,6 +114,39 @@ levereras|leverera|wird geliefert (leverera = liefern)
 öppnades|öppna|wurde geöffnet (öppna = öffnen)
 räkningen|räkning|die Rechnung
 betalas|betala|wird bezahlt (betala = bezahlen)
+därför||deshalb
+stannade|stanna|blieb (stanna = bleiben, anhalten)
+inne||drinnen
+dessutom||außerdem
+ligger|ligga|liegt
+nära||nah
+stationen|station|der Bahnhof
+älskar|älska|liebt
+fotboll||Fußball
+däremot||dagegen
+tråkigt|tråkig|langweilig
+pratade|prata|sprach, redete
+tyst||leise, still
+vakna||aufwachen
+medan||während
+lagade|laga|kochte; laga mat = kochen
+dukade|duka|deckte (den Tisch)
+utan||ohne; nach Verneinung: sondern
+rolig||lustig, witzig
+fatta||fassen; fatta ett beslut = eine Entscheidung treffen
+beslut||Entscheidung
+ställa||stellen
+misstag||Fehler
+provet|prov|die Prüfung, der Test
+hänsyn||Rücksicht; ta hänsyn till = Rücksicht nehmen auf
+gav|ge|gab
+löfte||Versprechen
+roll||Rolle
+glöm|glömma|vergiss
+borsta||bürsten; borsta tänderna = Zähne putzen
+tänderna|tand|die Zähne
+examen||Abschluss, Examen
+lära|lära|lehren; lära sig = lernen
 hade|ha|hatte (ha); hade + Supinum = Plusquamperfekt
 setts|ses|gesehen (ses = sich sehen, sich treffen)
 kände|känna|kannte, fühlte; känna igen = wiedererkennen
@@ -589,6 +622,27 @@ paquete||Paket
 salsa||Salsa (Tanz); auch: Soße
 vecinos|vecino|Nachbarn
 verano||Sommer
+embargo||sin embargo = trotzdem, jedoch
+suspendió|suspender|ist durchgefallen; suspender = durchfallen
+tanto||so viel; por lo tanto = deshalb
+barato||billig
+además||außerdem
+prefiere|preferir|bevorzugt, mag lieber
+contestabas|contestar|du hast geantwortet (Imperfecto)
+sino||sondern (nach Verneinung)
+cuanto||en cuanto = sobald
+iremos|ir|wir werden gehen, fahren
+decisión||Entscheidung
+pregunta||Frage
+paseo||Spaziergang; dar un paseo = spazieren gehen
+abuelo||Großvater
+cumple|cumplir|erfüllt; cumplir años = Geburtstag haben, alt werden
+cien||hundert
+mes||Monat
+ilusión||Vorfreude, Hoffnung; hacer ilusión = freuen auf
+entrar||hineingehen, eintreten
+caso||Fall; hacer caso = beachten, auf jemanden hören
+esa|ese|diese
 evidente||offensichtlich
 proyecto||Projekt
 planificado|planificar|geplant

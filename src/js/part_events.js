@@ -246,6 +246,7 @@ document.addEventListener('click', e => {
     case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
     case 'pcrange': S.pcAll = b.dataset.v === '1'; render(); break;
+    case 'focusnext': { const c = focusCandidates(S.lang), cur = focusTrap(S.lang), nx = c[(c.indexOf(cur) + 1) % c.length]; DB.focus[S.lang] = { trap:nx, week:mondayOf(today()) }; S.dailyPlanCache = null; save(); render(); break; }
     case 'errtab': S.errTab = b.dataset.t; render(); break;
     case 'kultadd': {
       const lang = S.lang, e = KULTUR[lang].find(x => x.id === b.dataset.id); if (!e) break;

@@ -91,13 +91,15 @@ function playItem(item, rate, auto){
 // Nachschub: Wenn die eingebauten Sätze zur Neige gehen, neue von Tatoeba holen (höchstens alle 6 Stunden)
 async function refill(lang){
   if (!DB.settings.refill || navigator.onLine === false || typeof fetch !== 'function') return 0;
-  const unseen = BANK[lang].filter(i => !stOf(i.id)).length;
+  // Fortgeschritten: nur Sätze zählen, die auch drankommen (ab Mittelstufe oder schwaches Thema)
+  const fort = (DB.settings.niveau || 'mittel') === 'fort', weak = fort ? weakTraps(lang) : null;
+  const unseen = BANK[lang].filter(i => !stOf(i.id) && (!fort || i.own || i.tat || (i.lvl || 1) >= 2 || weak.has(i.trap))).length;
   if (unseen >= size().newPer * 3) return 0;
   DB.tatFetch = DB.tatFetch || {};
   if (Date.now() - (DB.tatFetch[lang] || 0) < 6 * 3600 * 1000) return 0;
   DB.tatFetch[lang] = Date.now(); save();
   const mature = matureCount(lang);
-  const wc = mature < 50 ? '3-8' : mature < 200 ? '4-10' : mature < 600 ? '5-12' : '6-16';
+  const wc = fort ? (mature < 200 ? '6-14' : '7-18') : mature < 50 ? '3-8' : mature < 200 ? '4-10' : mature < 600 ? '5-12' : '6-16';
   const traps = Object.keys(TAT_Q[lang]);
   const day = Math.floor(Date.now() / 86400000);
   let added = 0;

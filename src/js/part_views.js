@@ -117,6 +117,7 @@ function viewHome(){
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
     card = `<p class="eyebrow">Heute</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}, etwa ${minutes(p.queue)} Minuten</p>
       <ul class="plan2">${parts.join('')}</ul>
+      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b>${esc(trapMeta(lang, ft).label)}</b>. Ein Drittel der neuen Sätze kommt daraus. <button type="button" class="link" data-a="focusnext">Anderes Thema</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">Tagwerk starten</button>
       <p class="hint lenlink">Länge: ${size().label}, ${size().newPer} neue Sätze pro Tag. <button type="button" class="link" data-a="toSettings">Ändern</button></p>`;
     if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
@@ -778,7 +779,7 @@ function viewSettings(){
   <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>${v.newPer} neue Sätze, höchstens ${v.maxRev} Wiederholungen</span></button>`).join('')}</div>
   <h2 class="grp">Mein Niveau</h2>
   <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
-  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen, in denen du zuletzt öfter Fehler gemacht hast. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}</p>
+  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen, in denen du zuletzt öfter Fehler gemacht hast. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
   <h2 class="grp">Vorlesen</h2>
   <div class="rows">
     <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.autoplay}" data-a="autoplay"><span class="txt"><span class="rt">Lösung nach dem Prüfen vorlesen</span><span class="rd">Verbindet Schriftbild und Aussprache. Unterwegs ohne Kopfhörer besser aus.</span></span><span class="sw" aria-hidden="true"></span></button>

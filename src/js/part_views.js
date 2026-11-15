@@ -1,5 +1,5 @@
 /* ---------- Ansichten ---------- */
-const FOCUS_VIEWS = ['run', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
+const FOCUS_VIEWS = ['run', 'radio', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
 const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>` : esc(w)).join(' ');
 const MONTHS_FULL = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 function monthRecap(){
@@ -163,7 +163,7 @@ function viewExtra(){
   <h2 class="grp">Grammatik</h2>
   <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', 'Endlos neue Aufgaben: ' + genIds(lang).map(x => GENS[x].short || GENS[x].label).join(', '))}${g('spot', 'Fehler finden', 'Ein typischer Fehler steckt im Satz', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
-  <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canListen() ? 'Mitsprechen und die Aussprache prüfen' : 'Anhören, mitsprechen, aufnehmen', off)}</div>
+  <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canListen() ? 'Mitsprechen und die Aussprache prüfen' : 'Anhören, mitsprechen, aufnehmen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>
   <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Prüfung (online)')}${row('tat', 'Beispielsätze suchen', 'Echte Sätze aus Tatoeba (online)')}${row('own', 'Eigenen Satz eintragen', 'Aus Podcast, Gespräch oder Korrektur')}</div>
   <h2 class="grp">Nachschlagen</h2>
@@ -290,7 +290,8 @@ function feedbackHtml(r, ex, c){
   const near = lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
   const pill = c.result === 'ok' ? '<span class="verdict v-ok">Richtig</span>' : c.result === 'near' ? '<span class="verdict v-mid">Fast richtig</span>' : c.gaveUp ? '<span class="verdict v-bad">Lösung</span>' : '<span class="verdict v-bad">Falsch</span>';
   const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : ivlText(c.nextIvl)}</span>` : '';
-  let out = `<div class="vrow">${pill}${next}</div>`;
+  const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${c.combo} in Folge</span>` : '';
+  let out = `<div class="vrow">${pill}${combo}${next}</div>`;
   if (ex.type === 'gen' && ex.data.kind === 'spot') {
     const d = ex.data, fixed = d.full.split(' ');
     const changed = new Set(); fixed.forEach((w, i) => { if (w.replace(/[.,!?]/g, '') !== (d.words[i] || '').replace(/[.,!?]/g, '')) changed.add(i); });
@@ -326,7 +327,10 @@ function feedbackHtml(r, ex, c){
   const sol = showDiff && c.best ? c.best : solution;
   const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(sol, lang);
   out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
-  if (c.result === 'near') out += `<p class="expl">${near}</p>`;
+  const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
+  if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
+  else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
+  if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {
     if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. Der Unterschied liegt woanders.</p>`;
     else if (!(ex.type === 'gen' && ex.data.kind) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
@@ -390,26 +394,54 @@ const READING = {
 const readLink = ([name, url]) => `<a href="${url}" target="_blank" rel="noopener">${name.replace(/ /g, '\u00a0')}</a>`;
 function viewRunDone(){
   const r = S.run, lang = r.lang;
-  const total = r.ok + r.bad;
-  const daily = r.kind === 'daily';
-  const input = lang === 'sv'
-    ? `Zum Lesen: ${READING.sv.map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.`
-    : `Zum Lesen: ${READING.es.map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.`;
+  const daily = r.kind === 'daily', practice = r.kind === 'retry';
+  const total = r.ok + r.bad, res = r.res || [], missed = r.missed || [];
+  const perfect = total > 0 && !r.bad;
+  const title = daily ? 'Tagwerk erledigt' : practice ? 'Nochmal geübt' : perfect && total >= 3 ? 'Fehlerfrei' : 'Runde beendet';
+  const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok} von ${total} auf Anhieb richtig.`;
+  // Ergebnis je Aufgabe als Leiste: auf einen Blick, wo es gehakt hat
+  const nOk = res.filter(x => x.good && !x.near).length, nNear = res.filter(x => x.near).length, nBad = res.length - nOk - nNear;
+  const strip = res.length > 1 ? `<div class="rstrip${r.stamped ? '' : ' anim'}" role="img" aria-label="Ergebnis je Aufgabe: ${nOk} richtig${nNear ? `, ${nNear} fast richtig` : ''}${nBad ? `, ${nBad} falsch` : ''}">${res.map((x, k) => `<i class="rs ${x.good ? (x.near ? 'rs-near' : 'rs-ok') : 'rs-bad'}" style="--i:${k}"></i>`).join('')}</div>` : '';
+  // Kennzahlen nur, wenn sie etwas sagen
+  const fresh = res.filter(x => x.fresh).length;
+  const kp = [];
+  const mins = Math.round((r.secs || 0) / 60);
+  if (mins >= 1) kp.push([mins, mins === 1 ? 'Minute' : 'Minuten']);
+  if (fresh) kp.push([fresh, fresh === 1 ? 'neuer Satz' : 'neue Sätze']);
+  if ((r.best || 0) >= 3) kp.push([r.best, 'richtig in Folge']);
+  const kpis = kp.length >= 2 ? `<div class="kpis done-kpis">${kp.slice(0, 3).map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>` : '';
+  // Was die Wiederholungsplanung daraus macht
+  const sits = res.filter(x => x.good && x.ivl > 1).map(x => x.ivl);
+  const dWhen = n => (n === 2 ? 'übermorgen' : n < 14 ? `in ${n} Tagen` : n < 60 ? `in ${Math.round(n / 7)} Wochen` : `in ${Math.round(n / 30)} Monaten`);
+  const span = sits.length ? (() => {
+    const lo = Math.min(...sits), hi = Math.max(...sits);
+    const when = dWhen(lo) === dWhen(hi) ? dWhen(lo) : hi < 14 && lo > 2 ? `in ${lo} bis ${hi} Tagen` : `${dWhen(lo)} bis ${lo === 2 ? dWhen(hi) : dWhen(hi).replace(/^in /, '')}`;
+    return `<p class="sits"><b>Sitzt:</b> ${sits.length === 1 ? '1 Satz kommt' : `${sits.length} Sätze kommen`} erst ${when} wieder.</p>`;
+  })() : '';
   const ms = (() => { const now = matureCount(lang); const hit = milestoneList(now).filter(m => m > (r.strongBefore || 0) && m <= now).pop(); return hit ? `<p class="milestone">${hit} gefestigte Sätze auf ${LANG[lang].deName}</p>` : ''; })();
   const sk = daily ? (() => { const n = streak(), m = streakMilestone(n); return n >= 2 ? (m ? `<p class="milestone">${m}</p>` : `<p class="hint">Tag ${n} in Folge.</p>`) : ''; })() : '';
+  const tomorrow = daily ? (() => { const n = forecast(lang)[1].n; return n ? `<p class="hint">Morgen ${n === 1 ? 'kommt 1 Satz' : `kommen ${n} Sätze`} zur Wiederholung.</p>` : ''; })() : '';
+  const missedHtml = missed.length ? `<div class="grp-row"><h2 class="grp">Noch nicht sicher</h2><button type="button" class="link" data-a="retry">Gleich nochmal üben</button></div>
+    <div class="rows">${missed.slice(0, 6).map(x => `<div class="row static"><span class="txt"><span class="rt wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="rd">${esc(x.de)}</span>` : ''}</span>${speakBtn(x.target, lang)}</div>`).join('')}</div>
+    ${missed.length > 6 ? `<p class="legend">und ${missed.length - 6} weitere</p>` : ''}${practice ? '' : '<p class="legend">Sie kommen morgen wieder. Gleich nochmal üben ändert daran nichts, festigt sie aber.</p>'}` : '';
+  const nudge = !daily && !DB.done[today()] && !S.dailyRun ? `<div class="notice ok"><span>Das Tagwerk für heute steht noch aus.</span><button type="button" class="link" data-a="daily">Starten</button></div>` : !daily && S.dailyRun && S.dailyRun.lang === lang ? `<div class="notice ok"><span>Dein Tagwerk ist noch offen.</span><button type="button" class="link" data-a="daily">Fortsetzen</button></div>` : '';
+  const again = !daily && !practice && r.kind !== 'hard';
+  const buttons = daily
+    ? '<button type="button" class="primary" data-a="tab" data-v="home">Fertig</button><button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button>'
+    : again ? '<button type="button" class="primary" data-a="again">Noch eine Runde</button><button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button>'
+    : '<button type="button" class="primary" data-a="tab" data-v="extra">Fertig</button>';
+  const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   return `<div class="donebox">
     ${daily ? `<svg class="stamp${r.stamped ? '' : ' draw'}" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/></svg>` : ''}
-    <h1 class="done-h">${daily ? 'Tagwerk erledigt' : 'Runde beendet'}</h1>
-    <p class="lead">${!total ? 'Keine Aufgabe beantwortet.' : r.bad ? `${r.ok} von ${total} auf Anhieb richtig.` : total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`}</p>
+    <h1 class="done-h">${title}</h1>
+    <p class="lead">${lead}</p>
     ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint" style="margin-top:0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}
-    ${r.bad ? '<p class="hint" style="margin-top:0">Was du nicht wusstest, kommt morgen wieder.</p>' : ''}
-    ${ms}${sk}
-    ${daily ? (() => { const n = forecast(lang)[1].n; return n ? `<p class="hint">Morgen ${n === 1 ? 'kommt 1 Satz' : `kommen ${n} Sätze`} zur Wiederholung.</p>` : ''; })() : ''}
-    ${(() => { const m = r.missed || []; if (!m.length) return ''; return `<h2 class="grp">Noch nicht sicher</h2><div class="rows">${m.slice(0, 6).map(x => `<div class="row static"><span class="txt"><span class="rt wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="rd">${esc(x.de)}</span>` : ''}</span>${speakBtn(x.target, lang)}</div>`).join('')}</div>${m.length > 6 ? `<p class="legend">und ${m.length - 6} weitere</p>` : ''}`; })()}
-    <div class="btnrow">${daily
-      ? '<button type="button" class="primary" data-a="tab" data-v="home">Fertig</button><button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button>'
-      : `<button type="button" class="primary" data-a="tab" data-v="extra">Fertig</button>${r.kind === 'gen' || r.kind === 'extraNew' || r.kind === 'hard' ? '' : '<button type="button" class="ghost" data-a="again">Noch eine Runde</button>'}`}</div>
-    ${daily ? `<p class="hint">${input}</p>` : ''}
+    ${strip}${kpis}${span}
+    ${ms}${sk}${tomorrow}
+    ${missedHtml}
+    ${nudge}
+    <div class="btnrow done-btns">${buttons}</div>
+    ${reading}
   </div>`;
 }
 function viewShadow(){
@@ -758,6 +790,7 @@ function viewSettings(){
   <p class="src">Version ${esc(APP_VERSION)}</p>`;
 }
 function render(){
+  if (S.view !== 'radio' && S.radio) stopRadio();
   if ((S.view === 'run' || S.view === 'runDone') && !S.run) S.view = 'home';
   const lang = (S.view === 'run' || S.view === 'runDone') ? S.run.lang : S.lang;
   document.body.dataset.lang = lang;
@@ -771,6 +804,7 @@ function render(){
     case 'run': h = viewRun(); break;
     case 'runDone': h = viewRunDone(); break;
     case 'shadow': h = viewShadow(); break;
+    case 'radio': h = viewRadio(); break;
     case 'write': h = viewWrite(); break;
     case 'own': h = viewOwn(); break;
     case 'tat': h = viewTat(); break;

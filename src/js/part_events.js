@@ -40,6 +40,12 @@ document.addEventListener('click', e => {
     case 'gengo': startRun('gen', { gen:b.dataset.g }); break;
     case 'dict': startRun('dict'); break;
     case 'again': if (r) { S.lang = r.lang; startRun(r.kind, { trap:r.trap, gen:r.gen }); } break;
+    case 'retry': {
+      // Gleich nochmal: die Fehler dieser Runde in derselben Übungsform, ohne den Wiederholungsplan zu verändern
+      if (!r || !(r.missed || []).length) break;
+      const q = r.missed.map(m => (m.id && itemById(m.id) ? exFor(itemById(m.id)) : m.gen && m.data ? { type:'gen', gen:m.gen, data:m.data } : null)).filter(Boolean);
+      S.lang = r.lang; startRun('retry', { queue:q }); break;
+    }
     case 'check': check(); break;
     case 'giveup': giveUp(); setTimeout(() => { DB.used = DB.used || {}; DB.used.gaveup = true; save(); }, 0); break;
     case 'accept': DB.used = DB.used || {}; DB.used.accept = true; selfAccept(); break;
@@ -82,6 +88,8 @@ document.addEventListener('click', e => {
       box.focus(); box.dispatchEvent(new Event('input', { bubbles:true }));
       break;
     }
+    case 'radio': startRadio(); break;
+    case 'rplay': case 'rnext': case 'rprev': case 'rde': case 'rshow': case 'rslow': radioCmd(b.dataset.a); break;
     case 'shadow': {
       const ids = freshFirst(BANK[S.lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'shadow_' + S.lang, 8).map(i => i.id);
       S.shadow = { lang:S.lang, ids:shuffle(ids), idx:0, recording:false, hasRec:false }; goView('shadow'); break;
@@ -370,7 +378,6 @@ syncThemeColor();
 if (!handleLaunch()) render(); else if (S.view === 'own') render();
 setTimeout(() => { refill('sv'); refill('es'); }, 1500);
 if (canSpeak()) { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = () => { if (S.view === 'extra') render(); }; }
-if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
   // Nach einem Update: Hinweis, sobald die neue Version bereitsteht (nicht beim allerersten Installieren)
   const hadController = !!navigator.serviceWorker.controller;

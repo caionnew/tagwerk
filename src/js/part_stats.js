@@ -1,6 +1,23 @@
 /* ---------- Fehlerquellen, Tageszeit, Wortschatz ---------- */
 const ERR_TYPES = { free:'Freies Übersetzen', gap:'Lücke füllen', tiles:'Wortkästchen', hear:'Hören', spot:'Fehler finden', genus:'Genus', time:'Uhrzeiten & Zahlen', trans:'Umbauen' };
-const ERR_KINDS = { order:['Wortstellung', 'Richtige Wörter, falsche Reihenfolge'], word:['Falsches Wort oder Form', 'Anderes Wort, falsche Endung oder Zeitform'], missing:['Fehlendes Wort', 'Ein Wort fehlt, der Rest stimmt'], spell:['Tippfehler', 'Kein echtes Wort, knapp daneben'] };
+const ERR_KINDS = { order:['Wortstellung', 'Richtige Wörter, falsche Reihenfolge'], word:['Form oder Funktionswort', 'Endung, Zeitform, Präposition, Artikel oder Pronomen'], vocab:['Wortschatz', 'Ein anderes Wort, Form und Stellung passen'], missing:['Fehlendes Wort', 'Ein Wort fehlt, der Rest stimmt'], spell:['Tippfehler', 'Kein echtes Wort, knapp daneben'] };
+// Grammatik oder Wortschatz? Funktionswörter (Präpositionen, Partikeln, Artikel, Pronomen, Konjunktionen, Hilfs- und Modalverben,
+// Negation) und andere Formen desselben Wortes sind Grammatik: „tycker på“ statt „om“, „para“ statt „por“, „hennes“ statt „sin“,
+// „stor“ statt „stort“, „vienes“ statt „vengas“. Ein anderes Inhaltswort bei sonst richtiger Form ist Wortschatz: „sköna“ statt „fina“.
+const FUNC_WORDS = {
+  sv:'i på om till med av för från ur ut in upp ner bort fram hem ihåg efter före under över mellan utan hos vid sedan sen att som när eftersom fast trots men och eller så en ett den det de dem denna detta dessa sin sitt sina hans hennes dess deras min mitt mina din ditt dina vår vårt våra ert era jag du han hon vi ni mig dig sig oss er man inte aldrig alltid ofta redan bara också har hade ha haft är var vara varit blir blev bli ska skulle kommer kan kunde vill ville måste får fick behöver',
+  es:'a en de del al con por para sin sobre entre desde hasta hacia según el la los las un una unos unas lo le les se me te nos os mi mis tu tus su sus que si cuando porque aunque pero y o ni no ya muy más es son soy eres somos está están estoy estás estamos era eran fue fueron estaba estaban ha he has hemos han había'
+};
+const FUNC = {};
+const isFunc = (lang, w) => (FUNC[lang] = FUNC[lang] || new Set(FUNC_WORDS[lang].split(' ').map(deacc))).has(deacc(w));
+const lemmaOf = (lang, w) => { const g = lookupWord(lang, w); return g ? deacc((g.l || w).toLowerCase()) : null; };
+function sameWord(lang, a, b){
+  const la = lemmaOf(lang, a), lb = lemmaOf(lang, b);
+  if (la && lb) return la === lb;
+  // Unbekannt im Wörterbuch: gleicher Wortstamm (mindestens vier gleiche Anfangsbuchstaben) gilt als andere Form desselben Wortes
+  const x = deacc(a), y = deacc(b); let k = 0; while (k < x.length && x[k] === y[k]) k++;
+  return k >= 4 || (k >= 3 && Math.min(x.length, y.length) <= 4);
+}
 function lev(a, b){
   const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
   let prev = Array.from({ length:n + 1 }, (_, j) => j);
@@ -17,7 +34,8 @@ function lev(a, b){
   return prev[n];
 }
 // Welche Art Fehler? Vergleich mit der ähnlichsten erlaubten Lösung
-function errKind(input, answers, lang){
+function errKind(input, answers, lang, tested){ const m = mistake(input, answers, lang, tested); return m && m.kind; }
+function mistake(input, answers, lang, tested){
   const words = x => norm(x, lang).split(' ').filter(Boolean).map(deacc);
   const A = words(input); if (!A.length) return null;
   let best = null, score = -1;
@@ -25,15 +43,24 @@ function errKind(input, answers, lang){
   if (!best || !best.length) return null;
   const key = x => x.slice().sort().join(' ');
   if (A.join(' ') === best.join(' ')) return null;
-  if (A.length > 1 && key(A) === key(best)) return 'order';
+  if (A.length > 1 && key(A) === key(best)) return { kind:'order' };
   const missing = best.filter(w => !A.includes(w)), extra = A.filter(w => !best.includes(w));
-  if (!extra.length && missing.length) return 'missing';
+  if (!extra.length && missing.length) return { kind:'missing' };
   // Knapp daneben zählt nur als Schreibfehler, wenn das Getippte kein echtes Wort ist.
   // „stor“ statt „stort“ oder „gusta“ statt „gustan“ sind echte Wörter in falscher Form: ein Grammatikfehler.
   const raw = norm(input, lang).split(' ').filter(Boolean);
   const isWord = w => { const orig = raw.find(r => deacc(r) === w) || w; return !!lookupWord(lang, orig); };
-  if (extra.length && extra.length === missing.length && extra.every(w => !isWord(w) && missing.some(m => lev(w, m) <= Math.max(1, Math.floor(m.length / 4))))) return 'spell';
-  return 'word';
+  if (extra.length && extra.length === missing.length && extra.every(w => !isWord(w) && missing.some(m => lev(w, m) <= Math.max(1, Math.floor(m.length / 4))))) return { kind:'spell' };
+  // Paare bilden: jedes fehlende Wort mit dem ähnlichsten zusätzlichen, sonst nach Position
+  const rawB = (() => { for (const x of answers) { const b = norm(x, lang).split(' ').filter(Boolean); if (b.map(deacc).join(' ') === best.join(' ')) return b; } return best; })();
+  const orig = (list, w) => list.find(r => deacc(r) === w) || w;
+  const test = new Set((tested || []).flatMap(t => norm(t, lang).split(' ').map(deacc)));
+  const free = extra.slice(), pairs = [];
+  missing.forEach(m => { if (!free.length) return; let bi = 0; free.forEach((x, i) => { if (lev(x, m) < lev(free[bi], m)) bi = i; }); pairs.push([orig(raw, free[bi]), orig(rawB, m)]); free.splice(bi, 1); });
+  const gram = extra.length !== missing.length
+    ? missing.concat(extra).some(w => isFunc(lang, w) || test.has(w)) || pairs.some(([x, m]) => sameWord(lang, x, m))
+    : pairs.some(([x, m]) => test.has(deacc(m)) || isFunc(lang, m) || isFunc(lang, x) || sameWord(lang, x, m));
+  return { kind:gram ? 'word' : 'vocab', pairs };
 }
 function errType(ex){
   if (ex.type === 'free') return 'free';
@@ -50,12 +77,15 @@ function errType(ex){
 function recordAnswer(lang, ex, c, good){
   DB.tlog = DB.tlog || {};
   const t = today(), day = DB.tlog[t] = DB.tlog[t] || {}, L = day[lang] = day[lang] || {};
-  const add = k => { const v = L[k] = L[k] || [0, 0]; v[0]++; if (!good) v[1]++; };
-  const trap = ex.type === 'gen' ? (ex.data.trap || (GENS[ex.gen] && GENS[ex.gen].trap)) : (itemById(ex.id) || {}).trap;
-  if (trap) add('p:' + trap);
-  const type = errType(ex); if (type) add('t:' + type);
+  const add = (k, ok) => { const v = L[k] = L[k] || [0, 0]; v[0]++; if (!ok) v[1]++; };
+  const type = errType(ex);
   const typed = ['free', 'gap', 'hear', 'trans'].includes(type) || (type === 'time' && ex.data.mode === 'write');
-  if (!good && typed && c.input && !c.gaveUp) { const k = errKind(c.input, answersFor(ex), lang); if (k) L['e:' + k] = (L['e:' + k] || 0) + 1; }
+  const k = !good && typed && c.input && !c.gaveUp ? (c.kind || errKind(c.input, answersFor(ex), lang, testedPart(ex))) : null;
+  if (k) L['e:' + k] = (L['e:' + k] || 0) + 1;
+  // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes
+  const trap = ex.type === 'gen' ? (ex.data.trap || (GENS[ex.gen] && GENS[ex.gen].trap)) : (itemById(ex.id) || {}).trap;
+  if (trap) add('p:' + trap, good || k === 'vocab' || k === 'spell');
+  if (type) add('t:' + type, good);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
 }
 function pruneTlog(){

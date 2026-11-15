@@ -18,6 +18,7 @@ Eine Lern-App für **Schwedisch und Spanisch**, die jeden Tag ein kurzes „Tagw
 - **Wörterbuch** für jedes angezeigte Wort, offline, mit Beispielen aus den eigenen Sätzen.
 - **Land & Leute:** Alltag, Gesellschaft, Geografie und Sprachvarianten, teils mit Karte; Beispielsätze lassen sich in die Wiederholung übernehmen. Feste mit berechneten Terminen, falsche Freunde.
 - **Fortschritt:** Serie mit einem freien Tag pro Woche, Kalender, Lernminuten, Behalten, Fehlerquellen, Themenraster, „Dein Weg“ mit Etappen, Entwicklung der eigenen Texte.
+- **Hörrunde:** geübte Sätze nebenbei hören, Satz, Deutsch, langsam, ohne Antippen.
 - **Nachschub** von Tatoeba, sobald die eingebauten Sätze zur Neige gehen (online, abschaltbar).
 
 ## Auf dem Handy installieren
@@ -31,9 +32,9 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests, ohne Browser (118 Tests)
+npm test                    # Einheitstests, ohne Browser (142 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße (31 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße (34 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 ```
 

@@ -87,6 +87,33 @@ talat|tala|gesprochen; ärligt talat = ehrlich gesagt
 tränar|träna|trainiert
 vardagarna|vardag|die Werktage; på vardagarna = unter der Woche
 ärligt|ärlig|ehrlich; ärligt talat = ehrlich gesagt
+följa|följa|folgen; följa med = mitkommen
+lust|lust|Lust; ha lust = Lust haben
+tur|tur|Glück; som tur var = zum Glück
+märkte|märka|merkte, bemerkte (märka)
+ingen|ingen|niemand; kein, keine
+bitti|bitti|früh; i morgon bitti = morgen früh
+jobba|jobba|arbeiten
+förrgår|förrgår|i förrgår = vorgestern
+regnade|regna|regnete (regnen)
+hela|hel|ganz; hela dagen = den ganzen Tag
+dagen|dag|der Tag
+umeå|Umeå|Umeå (Stadt in Nordschweden)
+hand|hand|Hand; ta hand om = sich kümmern um
+saknar|sakna|vermisst (vermissen); fehlt
+fru|fru|Ehefrau; Frau (Anrede)
+maria|Maria|Maria (Name)
+trasig|trasig|kaputt
+mars|mars|März
+gånger|gång|Male; tre gånger = dreimal
+resa|resa|reisen; die Reise; resa bort = verreisen
+säga|säga|sagen
+bron|bro|die Brücke
+paketet|paket|das Paket
+levereras|leverera|wird geliefert (leverera = liefern)
+öppnades|öppna|wurde geöffnet (öppna = öffnen)
+räkningen|räkning|die Rechnung
+betalas|betala|wird bezahlt (betala = bezahlen)
 
 affären|affär|das Geschäft, der Laden
 aldrig||nie
@@ -496,6 +523,23 @@ paquete||Paket
 salsa||Salsa (Tanz); auch: Soße
 vecinos|vecino|Nachbarn
 verano||Sommer
+restaurante||Restaurant
+llovió|llover|es regnete (llover = regnen)
+perro||Hund
+veranos|verano|Sommer (Plural); todos los veranos = jeden Sommer
+encontrado|encontrar|gefunden (encontrar = finden)
+tus|tu|deine (Plural)
+durante||während, lang (Zeitraum)
+edad||Alter
+pasas|pasar|reichst, gibst (pasar); ¿me pasas …? = gibst du mir …?
+les|les|ihnen (indirektes Objekt)
+genial||toll, genial
+irías|ir|würdest gehen (ir)
+conmigo||mit mir
+lesionó|lesionarse|verletzte sich (lesionarse)
+jugando|jugar|spielend, beim Spielen (jugar)
+cambio|cambiarse|ich ziehe mich um (cambiarse); auch: Wechsel
+alegré|alegrarse|ich freute mich (alegrarse)
 aguacate|aguacate|Avocado (Mexiko, Mittelamerika, Spanien u. a.; aus dem Nahuatl)
 guacamole|guacamole|Guacamole (Avocadocreme; aus dem Nahuatl)
 millones|millón|Millionen

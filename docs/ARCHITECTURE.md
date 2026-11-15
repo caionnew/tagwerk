@@ -21,11 +21,12 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `data/kultur.js`, `data/geo.js` | Land & Leute, Kartendaten |
 | `js/part_head.js` | Konstanten, Themen (`TRAPS`), Speicher, Satzbank-Aufbau, Tagesplan, Runden, Wiederholungssperre, Serie, Tagesstand |
 | `js/part_fsrs.js` | FSRS-6 (Wiederholungsplanung) |
-| `js/part_check.js` | Antworten prüfen, Rundenablauf, „Meine ist auch richtig“ |
+| `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Gleich nochmal“, „Meine ist auch richtig“ |
 | `js/part_online.js` | Tatoeba (Nachschub, Suche, Aufnahmen), LanguageTool |
 | `js/part_speech.js` | Vorlesen, Aufnahme, Aussprache prüfen |
+| `js/part_radio.js` | Hörrunde: Sätze nebenbei hören |
 | `js/part_modern.js` | Symbole, Vibration, Teilen, Schnellzugriffe |
-| `js/part_stats.js` | Fehlerquellen, Uhrzeiten, Wortschatz |
+| `js/part_stats.js` | Fehlerquellen und Fehlerart (Grammatik oder Wortschatz), Uhrzeiten, Wortschatz |
 | `js/part_long.js` | Dein Weg, Themenraster, Veränderung über 30 Tage |
 | `js/part_write.js` | Textprofil, Hinweise, Extra-Aufgaben, Textarchiv |
 | `js/part_ref.js` | Themenblatt, Nachschlagelisten, Kulturkarten, Karten |

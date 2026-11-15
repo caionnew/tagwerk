@@ -52,7 +52,6 @@ const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i-
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h.toString(36); };
 const deacc = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-const joinList = p => (p.length > 1 ? p.slice(0, -1).join(', ') + ' und ' + p[p.length - 1] : (p[0] || ''));
 
 function norm(s, lang){
   let t = String(s || '').toLowerCase().replace(/[’`´]/g, "'").replace(/[.!?¡¿,;"„“”«»()…]/g, ' ').replace(/[–—]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -188,7 +187,7 @@ function snapshot(){
 }
 function persistRun(){
   const r = S.run;
-  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, strongBefore:r.strongBefore };
+  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, strongBefore:r.strongBefore, res:r.res, missed:r.missed, secs:r.secs, combo:r.combo, best:r.best };
   save();
 }
 function dayLog(d, lang){ const x = DB.log[d] && DB.log[d][lang]; return typeof x === 'number' ? { n:x } : (x || {}); }
@@ -220,7 +219,6 @@ function streakData(){
 }
 const streak = () => streakData().current;
 function sumLog(lang, days, key){ let n = 0; for (let k = 0; k < days; k++) n += dayLog(addDays(today(), -k), lang)[key] || 0; return n; }
-const week = lang => sumLog(lang, 7, 'n');
 function mondayOf(ds){ const [y, m, d] = ds.split('-').map(Number); const dt = new Date(y, m - 1, d); const wd = (dt.getDay() + 6) % 7; return addDays(ds, -wd); }
 const MATURE = 21, ANCHORED = 365;
 const matureCount = lang => BANK[lang].filter(i => { const s = stOf(i.id); return s && (s.ivl || 0) >= MATURE; }).length;
@@ -340,11 +338,12 @@ function startRun(kind, opts){
   else if (kind === 'dict') queue = freshFirst(BANK[lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'dict_' + lang, 10).map(i => ({ type:'dict', id:i.id }));
   else if (kind === 'hard') queue = hardItems(lang).map(i => ({ type:'free', id:i.id }));
   else if (kind === 'extraNew') queue = pickNew(lang, (opts && opts.n) || size().newPer).map(exFor);
+  else if (kind === 'retry') queue = ((opts && opts.queue) || []).map(x => Object.assign({}, x, { practice:true }));
   if (!queue.length) { note('Dafür gibt es gerade nichts zu üben.', 'warn'); render(); return; }
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;
   S.notice = null;
-  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, cur:null, strongBefore:strongCount(lang) };
+  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, cur:null, strongBefore:strongCount(lang), res:[], missed:[], secs:0, combo:0, best:0 };
   S.view = 'run'; prepCur(); persistRun(); render(); window.scrollTo(0, 0);
 }
 function hardItems(lang){
@@ -412,7 +411,7 @@ function restoreRun(){
   const d = DB.run;
   if (!d || d.date !== today() || !Array.isArray(d.queue) || d.idx >= d.queue.length) { DB.run = null; return; }
   if (d.queue.some(ex => ex.id && !itemById(ex.id))) { DB.run = null; return; }
-  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, strongBefore:d.strongBefore != null ? d.strongBefore : strongCount(d.lang) };
+  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, strongBefore:d.strongBefore != null ? d.strongBefore : strongCount(d.lang), res:d.res || [], missed:d.missed || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
 }
 function resumeDaily(){
   const d = openDaily(); if (!d) return false;

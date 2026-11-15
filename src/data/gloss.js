@@ -114,6 +114,39 @@ levereras|leverera|wird geliefert (leverera = liefern)
 öppnades|öppna|wurde geöffnet (öppna = öffnen)
 räkningen|räkning|die Rechnung
 betalas|betala|wird bezahlt (betala = bezahlen)
+bryr|bry|kümmert; bry sig om = sich kümmern um
+andra|annan|andere
+arg||wütend; arg på = wütend auf
+orolig||besorgt; orolig för = besorgt um
+längtar|längta|sehnt sich; längta efter = sich sehnen nach
+handlar|handla|handelt; handla om = gehen um; auch: einkaufen
+kärlek||Liebe
+duktig||tüchtig, gut; duktig på = gut in
+grattis||Glückwunsch
+födelsedagen|födelsedag|der Geburtstag
+deltar|delta|nimmt teil; delta i = teilnehmen an
+ber|be|bittet; be om = bitten um
+skäms|skämmas|schämt sich
+säker||sicher; säker på = sicher sein
+litar|lita|vertraut; lita på = vertrauen
+klagar|klaga|beschwert sich; klaga på = sich beschweren über
+påminner|påminna|erinnert; påminna om = erinnern an
+beroende||abhängig; beroende av = abhängig von
+nöjd||zufrieden; nöjd med = zufrieden mit
+resultatet|resultat|das Ergebnis
+van||gewohnt; van vid = gewöhnt an
+förvånad||überrascht; förvånad över = überrascht über
+beskedet|besked|die Nachricht, der Bescheid
+känd||bekannt; känd för = bekannt für
+vilket|vilken|welches
+lag||Mannschaft; auch: Gesetz
+emot||gegen; se fram emot = sich freuen auf
+semestern|semester|der Urlaub
+presenten|present|das Geschenk
+ansvarig||verantwortlich; ansvarig för = verantwortlich für
+projektet|projekt|das Projekt
+består|bestå|besteht; bestå av = bestehen aus
+delar|del|Teile
 väntar|vänta|wartet; vänta på = warten auf
 rädd||ängstlich; rädd för = Angst vor
 intresserad||interessiert; intresserad av = interessiert an
@@ -644,6 +677,33 @@ paquete||Paket
 salsa||Salsa (Tanz); auch: Soße
 vecinos|vecino|Nachbarn
 verano||Sommer
+quejé|quejarse|ich beschwerte mich; quejarse de = sich beschweren über
+despedimos|despedirse|wir verabschiedeten uns; despedirse de = sich verabschieden von
+nuestros|nuestro|unsere
+amigos|amigo|Freunde
+encargo|encargarse|ich kümmere mich; encargarse de = sich kümmern um
+error||Fehler
+consiste|consistir|besteht; consistir en = bestehen aus
+partes|parte|Teile
+preocupo|preocuparse|ich mache mir Sorgen; preocuparse por = sich sorgen um
+dedica|dedicarse|widmet sich; dedicarse a = beruflich machen
+enseñanza||Unterricht, Lehrberuf
+atrevo|atreverse|ich traue mich; atreverse a = sich trauen zu
+decírselo|decir|es ihm/ihr sagen
+cuento|contar|ich zähle; contar con = zählen auf
+reímos|reírse|wir lachten; reírse de = lachen über
+chistes|chiste|Witze
+actor||Schauspieler
+acostumbrarme|acostumbrarse|mich gewöhnen; acostumbrarse a = sich gewöhnen an
+horario||Zeiten, Stundenplan
+trato|tratar|ich versuche; tratar de = versuchen zu
+entenderte|entender|dich verstehen
+número||Nummer, Zahl
+convirtió|convertirse|wurde; convertirse en = werden zu
+intentarlo|intentar|es versuchen
+acabo|acabar|ich beende; acabar de = gerade getan haben
+huele|oler|riecht; oler a = riechen nach
+limón||Zitrone
 vecina|vecino|Nachbarin
 aquel||jener
 tardamos|tardar|wir brauchten (Zeit); tardar en = brauchen, um

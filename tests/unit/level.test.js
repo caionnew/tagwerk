@@ -49,3 +49,11 @@ test('Konnektoren & feste Verbindungen: Lücke mit drei Optionen, Lösung unter 
     assert.ok(d.hint.split(' / ').map(x => x.toLowerCase()).includes(d.answers[0]), d.prompt);
   }
 });
+test('Verben mit Präposition: je Sprache mindestens 36 Fälle (dreimal so viele wie gemerkt), eindeutig, Lösung unter den Optionen', () => {
+  for (const name of ['PREP_SV', 'PREP_ES']) {
+    const list = app.get(name);
+    assert.ok(list.length >= 36, `${name}: ${list.length}`);
+    assert.equal(new Set(list.map(x => x[0])).size, list.length);
+    assert.ok(list.every(x => x[2].includes(x[1]) && new Set(x[2]).size === 3));
+  }
+});

@@ -725,3 +725,9 @@ button.erow:active{ background:var(--accent-soft); }
 .tq-src .lbl-s{ display:block; margin-bottom:2px; }
 .popsay{ margin:12px 0 0; }
 .pbtn.play.wide{ width:auto; min-width:128px; border-radius:999px; padding:0 18px 0 14px; gap:6px; font-weight:700; font-size:15px; }
+
+/* Übungen: Aufgabe oben, Antwort unten. Die Antwortzone (Kästchen, Wörter, Auswahl, Eingabefeld) sitzt direkt über der
+   Knopfleiste, die Rückmeldung erscheint darunter. So bleiben Antippen, Prüfen und Weiter im Daumenbereich, bei allen Übungen gleich. */
+section.ex{ flex:1 0 auto; display:flex; flex-direction:column; }
+.ex-a{ margin-top:auto; padding-top:18px; }
+section.ex #fb:empty{ display:none; }

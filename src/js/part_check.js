@@ -175,7 +175,6 @@ function choose(value){
   else if (d.kind === 'genus') { c.input = value; c.result = value === d.answer ? 'ok' : 'bad'; }
   else return;
   finishAnswer(r, ex, c);
-  if (d.kind === 'genus' && c.result === 'ok') { const idx = r.idx; setTimeout(() => { if (S.run === r && r.idx === idx && r.cur.state === 'done' && S.view === 'run') next(); }, 650); }
 }
 function finishAnswer(r, ex, c){
   c.state = 'done'; c.enter = true; buzz(c.result === 'bad' ? 'bad' : 'ok');

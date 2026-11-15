@@ -37,6 +37,9 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 
 ## Darstellung und Ereignisse
 
+Übungen folgen einem Aufbau: oben die Aufgabe (Anweisung, Vorlage), unten in `.ex-a` die Antwortzone direkt über der Knopfleiste, dazwischen nach dem Antworten die Rückmeldung (`#fb`). Neue Übungsarten legen ihre Eingabe in `.ex-a`; `tests/e2e/layout.spec.js` prüft das für alle Arten.
+
+
 `render()` erzeugt die aktuelle Ansicht als Zeichenkette und setzt sie in `#app`. Alle Benutzeraktionen laufen über ein einziges Klick-Ereignis: Elemente tragen `data-a="aktion"`, `part_events.js` verteilt sie. Laufzeitzustand liegt in `S` (aktuelle Ansicht, laufende Runde, offene Fenster), alles Dauerhafte in `DB`.
 
 ## Datenspeicher

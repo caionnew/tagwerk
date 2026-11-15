@@ -35,7 +35,7 @@ npm install                 # Entwicklungswerkzeuge (Playwright, Kartenwerkzeuge
 npm run build               # → dist/
 npm test                    # Einheitstests, ohne Browser (151 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße (38 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße (40 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 ```
 

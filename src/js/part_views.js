@@ -210,8 +210,8 @@ function viewRun(){
     // Die Kästchen behalten ihren Platz: Gewählte bleiben als leerer Umriss stehen, damit nichts verrutscht
     const pool = ex.pool.map(p => ex.picked.includes(p.i) ? `<button type="button" class="tile ghost" disabled tabindex="-1" aria-hidden="true" lang="${lang}">${esc(p.t)}</button>` : `<button type="button" class="tile" data-a="pickt" data-i="${p.i}" lang="${lang}">${esc(p.t)}</button>`).join('');
     body = `<p class="kicker">Bring die Wörter in die richtige Reihenfolge${ex.extra ? '<span class="hintw">Ein Wort bleibt übrig</span>' : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
-      <div class="tiles-ans" style="min-height:${rows * 52 + 18}px" aria-label="Deine Antwort">${ans}</div>
-      ${done ? '' : `<div class="tiles-pool">${pool}</div>`}`;
+      <div class="ex-a"><div class="tiles-ans" style="min-height:${rows * 52 + 18}px" aria-label="Deine Antwort">${ans}</div>
+      ${done ? '' : `<div class="tiles-pool">${pool}</div>`}</div>`;
   } else if (ex.type === 'cloze') {
     const item = itemById(ex.id);
     const pos = gapPos(item.target, item.gap);
@@ -220,40 +220,40 @@ function viewRun(){
     const h = item.hint.replace(/[()]/g, '').trim();
     const hintTxt = !h ? '' : h.includes('/') ? h.split('/').map(x => x.trim()).join(' oder ') : `Grundform: ${h}`;
     body = `<p class="kicker">Ergänze die Lücke${hintTxt ? `<span class="hintw" lang="${lang}">${esc(hintTxt)}</span>` : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
-      <p class="cloze" lang="${lang}">${pos >= 0 ? `${esc(item.target.slice(0, pos))}${field}${esc(item.target.slice(pos + item.gap.length))}` : field}</p>
-      ${done ? '' : charbar(lang)}`;
+      <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${esc(item.target.slice(0, pos))}${field}${esc(item.target.slice(pos + item.gap.length))}` : field}</p>
+      ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'free') {
     const item = itemById(ex.id);
     const micTip = !done && !canListen() && (DB.used && DB.used.mic || 0) < 3 ? '<p class="src">Tipp: Mit dem Mikrofon deiner Tastatur kannst du die Antwort auch sprechen. Das übt nebenbei das Sprechen.</p>' : '';
     body = `<p class="kicker">Übersetze ${L.deAcc}</p><p class="de" lang="de">${esc(item.de)}</p>${micTip}
-      <textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}"${done ? ' readonly' : ''}>${esc(c.input)}</textarea>
-      ${done ? '' : `<div class="inrow">${charbar(lang)}${canListen() ? `<button type="button" class="micbtn${S.listening ? ' on' : ''}" data-a="dictate" aria-label="Antwort sprechen">${ICONS.mic}</button>` : ''}</div>`}`;
+      <div class="ex-a"><textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}"${done ? ' readonly' : ''}>${esc(c.input)}</textarea>
+      ${done ? '' : `<div class="inrow">${charbar(lang)}${canListen() ? `<button type="button" class="micbtn${S.listening ? ' on' : ''}" data-a="dictate" aria-label="Antwort sprechen">${ICONS.mic}</button>` : ''}</div>`}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
     const d = ex.data;
     body = `<p class="kicker">Ein typischer Fehler steckt im Satz. Tipp auf das falsche Wort.</p><p class="de" lang="de">${esc(d.deLine)}</p>
-      <p class="spot${c.intro ? ' enter' : ''}" lang="${lang}">${d.words.map((w, i) => {
+      <div class="ex-a"><p class="spot${c.intro ? ' enter' : ''}" lang="${lang}">${d.words.map((w, i) => {
         const cls = !done ? '' : i === c.pick ? (d.wrong.includes(i) ? ' hit' : ' miss') : d.wrong.includes(i) ? ' was' : '';
         return `<button type="button" class="sw-w${cls}" data-a="spotpick" data-i="${i}"${done ? ' disabled' : ''}>${esc(w)}</button>`;
-      }).join(' ')}</p>`;
+      }).join(' ')}</p></div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'genus') {
     const d = ex.data;
     body = `<p class="kicker">${esc(d.label)}</p>
       <div class="genus${c.intro ? ' enter' : ''}"><p class="genus-w" lang="${lang}">${esc(d.word)}</p><p class="genus-de">${esc(d.deLine)}</p></div>
-      <div class="genus-opts">${d.options.map(o => `<button type="button" class="genus-o${done ? (o === d.answer ? ' right' : o === c.input ? ' wrong' : '') : ''}" data-a="genuspick" data-v="${o}"${done ? ' disabled' : ''} lang="${lang}">${o}</button>`).join('')}</div>`;
+      <div class="ex-a"><div class="genus-opts">${d.options.map(o => `<button type="button" class="genus-o${done ? (o === d.answer ? ' right' : o === c.input ? ' wrong' : '') : ''}" data-a="genuspick" data-v="${o}"${done ? ' disabled' : ''} lang="${lang}">${o}</button>`).join('')}</div></div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'time') {
     const d = ex.data;
     const shown = d.mode === 'write' ? `<p class="clockbig">${d.clock ? esc(d.clock) : `${d.num} ${lang === 'sv' ? 'kr' : '€'}`}</p>`
       : d.mode === 'hear' ? `<div class="btnrow tight" style="margin:4px 0 14px"><button type="button" class="ghost icon" data-a="tplay" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost" data-a="tplay" data-rate="0.65">Langsam</button></div>${done ? `<p class="de" lang="${lang}">${esc(d.say)}</p>` : ''}`
       : `<p class="de" lang="${lang}">${esc(d.say)}</p>`;
-    body = `<p class="kicker">${esc(d.label)}</p>${shown}
-      ${d.mode !== 'write' && !d.clock ? `<div class="unitwrap">` : ''}<input type="text" id="answer" class="tw${d.mode !== 'write' ? ' numin' : ''}" lang="${d.mode === 'write' ? lang : 'de'}" inputmode="${d.mode === 'write' ? 'text' : (d.clock ? 'decimal' : 'numeric')}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${d.mode === 'write' ? esc(L.ph) : d.clock ? 'z. B. 7.45' : 'z. B. 47'}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">${d.mode !== 'write' && !d.clock ? `<span class="unit" aria-hidden="true">${lang === 'sv' ? 'kr' : '€'}</span></div>` : ''}
+    body = `<p class="kicker">${esc(d.label)}</p>${d.mode === 'hear' ? '' : shown}
+      <div class="ex-a">${d.mode === 'hear' ? shown : ''}${d.mode !== 'write' && !d.clock ? `<div class="unitwrap">` : ''}<input type="text" id="answer" class="tw${d.mode !== 'write' ? ' numin' : ''}" lang="${d.mode === 'write' ? lang : 'de'}" inputmode="${d.mode === 'write' ? 'text' : (d.clock ? 'decimal' : 'numeric')}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${d.mode === 'write' ? esc(L.ph) : d.clock ? 'z. B. 7.45' : 'z. B. 47'}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">${d.mode !== 'write' && !d.clock ? `<span class="unit" aria-hidden="true">${lang === 'sv' ? 'kr' : '€'}</span></div>` : ''}
       ${d.mode !== 'write' && d.clock && !done ? '<p class="vocab" style="margin-top:10px">Punkt, Komma oder Leerzeichen statt Doppelpunkt geht auch.</p>' : ''}
-      ${done || d.mode !== 'write' ? '' : charbar(lang)}`;
+      ${done || d.mode !== 'write' ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'trans') {
     const d = ex.data;
     body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${esc(d.src)}</p><p class="vocab">Beginne mit „${esc(d.start.trim())} …“</p>
-      <textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Umgebauter Satz">${esc(c.input)}</textarea>
-      ${done ? '' : charbar(lang)}`;
+      <div class="ex-a"><textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Umgebauter Satz">${esc(c.input)}</textarea>
+      ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen') {
     const d = ex.data;
     if (d.gap) {
@@ -261,19 +261,19 @@ function viewRun(){
       const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
       const field = `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
       body = `<p class="kicker">${esc(d.label)}${d.hint ? `<span class="hintw" lang="${lang}">${esc(d.hint)}</span>` : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
-        <p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
-        ${done ? '' : charbar(lang)}`;
+        <div class="ex-a"><p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
+        ${done ? '' : charbar(lang)}</div>`;
     } else {
       body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${d.sub ? lang : 'de'}">${esc(d.prompt)}</p>${d.sub ? `<p class="vocab">${esc(d.sub)}</p>` : ''}
-        <input type="text" id="answer" class="tw" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">
-        ${done ? '' : charbar(lang)}`;
+        <div class="ex-a"><input type="text" id="answer" class="tw" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">
+        ${done ? '' : charbar(lang)}</div>`;
     }
   } else if (ex.type === 'dict') {
     const item = itemById(ex.id);
     body = `<p class="kicker">Hör zu und schreib den Satz auf${item.tat && item.tat.audio ? '<span class="hintw">echte Aufnahme</span>' : ''}</p>
-      <div class="btnrow tight" style="margin:0 0 14px"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost" data-a="play" data-rate="0.65">Langsam</button></div>
+      <div class="ex-a"><div class="btnrow tight" style="margin:0 0 14px"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost" data-a="play" data-rate="0.65">Langsam</button></div>
       <textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Was du hörst">${esc(c.input)}</textarea>
-      ${done ? '' : charbar(lang)}`;
+      ${done ? '' : charbar(lang)}</div>`;
   }
   let actions;
   if (!done) {

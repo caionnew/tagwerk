@@ -766,7 +766,7 @@ function popupHtml(){
     <div class="pophead"><span class="popw" lang="${P.lang}">${esc(P.w)}</span>${speakBtn(P.w, P.lang)}</div>
     ${body}
     ${P.si != null && S.view === 'text' ? `<button type="button" class="ghost icon popsay" data-a="tsay" data-i="${P.si}">${ICON} Ganzen Satz anhören</button>` : ''}
-    <div class="popfoot"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'} öffnen</button><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
+    <div class="popfoot"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'} öffnen</button><button type="button" class="link" data-a="popanki">An Anki</button><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
   </div>`;
 }
 function renderPopup(){ const el = document.getElementById('pop'); if (el) el.innerHTML = popupHtml(); document.body.classList.toggle('has-pop', !!S.pop); }
@@ -791,6 +791,11 @@ function viewSettings(){
   <h2 class="grp">Nachschub</h2>
   <div class="rows">
     <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.refill}" data-a="refill"><span class="txt"><span class="rt">Neue Sätze automatisch von Tatoeba holen</span><span class="rd">Sobald die eingebauten Sätze zur Neige gehen und du online bist. Mit deinem Fortschritt werden die Sätze länger.${autoN ? ` Bisher ${autoN} Sätze für ${L.deName}.` : ''}</span></span><span class="sw" aria-hidden="true"></span></button>
+  </div>
+  <div class="rows" style="margin-top:10px">
+    <label class="row"><span class="txt"><span class="rt">Sätze aus Anki übernehmen</span><span class="rd">In AnkiDroid: Stapel exportieren als „Notizen als Klartext“. Die App erkennt Sprache und Übersetzung selbst, übernimmt bis zu ${ANKI_MAX} Sätze je Datei in Stapelreihenfolge und überspringt vorhandene. Erneut einlesen holt die nächsten.</span></span><input type="file" accept=".txt,.tsv,.csv,text/plain" data-a="ankifile" class="sr-only"></label>
+    ${S.ankiPrev ? (S.ankiPrev.error ? `<div class="row static"><span class="txt"><span class="rd">${esc(S.ankiPrev.error)}</span></span></div>` : `<div class="row static"><span class="txt"><span class="rt">${S.ankiPrev.total.toLocaleString('de-DE')} neue Sätze ${LANG[S.ankiPrev.lang].deName}${S.ankiPrev.en ? ' mit englischer Übersetzung' : ''}</span><span class="rd" lang="${S.ankiPrev.lang}">${S.ankiPrev.items.slice(0, 2).map(x => esc(x.target) + ' – ' + esc(x.de)).join('<br>')}</span></span></div>
+    <div class="row static"><span class="txt"><button type="button" class="primary" data-a="ankiok">${Math.min(S.ankiPrev.total, ANKI_MAX).toLocaleString('de-DE')} übernehmen</button></span><button type="button" class="link" data-a="ankino">Abbrechen</button></div>`) : ''}
   </div>
   <h2 class="grp">Daten</h2>
   <div class="rows">

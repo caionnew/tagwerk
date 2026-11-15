@@ -30,7 +30,7 @@ document.addEventListener('click', e => {
   const a = b.dataset.a;
   if (!['coldel', 'reset'].includes(a)) S.armed = null;
   if (a === 'reset' && S.armed && S.armed !== 'reset:' + (b.dataset.l || S.lang)) S.armed = null;
-  if (S.pop && !['popclose', 'popext', 'popweb', 'lookup', 'speak', 'topic', 'term'].includes(a)) { S.pop = null; renderPopup(); }
+  if (S.pop && !['popclose', 'popext', 'popanki', 'popweb', 'lookup', 'speak', 'topic', 'term'].includes(a)) { S.pop = null; renderPopup(); }
   const r = S.run;
   switch (a) {
     case 'tab': {
@@ -245,6 +245,10 @@ document.addEventListener('click', e => {
     case 'topic': openTopic((S.view === 'run' && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
+    case 'popanki': { const P = S.pop; if (!P) break; const e = lookupWord(P.lang, P.w); const ctx = P.sent || ''; shareToAnki(P.w, (e ? (e.l && e.l !== P.w ? e.l + ': ' : '') + e.de : '') + (ctx ? '\n\n' + ctx : '')); break; }
+    case 'ankiok': { if (!S.ankiPrev || !S.ankiPrev.items) break; const n = ankiCommit(S.ankiPrev); S.ankiPrev = null; note(`${n.toLocaleString('de-DE')} Sätze übernommen. Sie kommen als neue Sätze dran.`); render(); break; }
+    case 'ankino': S.ankiPrev = null; render(); break;
+    case 'textgap': startRun('textgap', { text:b.dataset.id }); break;
     case 'pcrange': S.pcAll = b.dataset.v === '1'; render(); break;
     case 'focusnext': { const c = focusCandidates(S.lang), cur = focusTrap(S.lang), nx = c[(c.indexOf(cur) + 1) % c.length]; DB.focus[S.lang] = { trap:nx, week:mondayOf(today()) }; S.dailyPlanCache = null; save(); render(); break; }
     case 'errtab': S.errTab = b.dataset.t; render(); break;
@@ -265,7 +269,7 @@ document.addEventListener('click', e => {
       const sent = S.view === 'text' && b.closest('.rs-s[data-i]');
       if (S.view === 'text' && S.text && S.text.looked && !S.text.looked.includes(w)) { S.text.looked.push(w); setTimeout(render, 0); }
       DB.used = DB.used || {}; DB.used.lookup = true; save();
-      S.pop = { lang, w, entry:lookupWord(lang, w), status:'idle', web:[], si:sent ? Number(sent.dataset.i) : null };
+      S.pop = { lang, w, entry:lookupWord(lang, w), status:'idle', web:[], si:sent ? Number(sent.dataset.i) : null, sent:sent ? sent.textContent.trim() : '' };
       renderPopup(); break;
     }
     case 'popclose': S.pop = null; renderPopup(); break;
@@ -350,6 +354,11 @@ document.addEventListener('keydown', e => {
 document.addEventListener('change', e => {
   const el = e.target;
   if (el.id === 'tatTrap' && S.tat) S.tat.trap = el.value;
+  if (el.dataset && el.dataset.a === 'ankifile' && el.files && el.files[0]) {
+    const f = el.files[0], fr = new FileReader();
+    fr.onload = () => { S.ankiPrev = ankiPrepare(String(fr.result || ''), f.name.replace(/\.[^.]+$/, '')); el.value = ''; render(); };
+    fr.readAsText(f);
+  }
   if (el.id === 'importFile' && el.files && el.files[0]) {
     const fr = new FileReader();
     fr.onload = () => {

@@ -9,6 +9,8 @@ const TRAPS = {
     { id:'bisats', label:'Wortstellung im Nebensatz', kind:'order', gen:'inte', short:'Im Nebensatz steht „inte“ vor dem Verb, und das Verb wandert nicht ans Ende.', rule:'Gilt nach att, eftersom, om, när, som, fast und ähnlichen Wörtern. Auch aldrig, alltid, kanske und ofta stehen dort vor dem Verb: …att han inte kommer, …eftersom jag alltid glömmer det.' },
     { id:'inversion', label:'Inversion & „inte“', kind:'order', short:'Das Verb steht an zweiter Stelle. Steht etwas anderes vorn, folgt das Subjekt erst danach.', rule:'Idag jobbar jag inte. När jag kommer hem lagar jag mat. „inte“ kommt erst nach dem Subjekt.' },
     { id:'tempus', label:'Präteritum oder Perfekt', kind:'form', gen:'tempus', short:'Mit Zeitpunkt in der Vergangenheit: Präteritum. Ohne Zeitpunkt, als Erfahrung oder bis heute andauernd: Perfekt.', rule:'Igår åt jag pizza, auch wenn man im Deutschen „habe gegessen“ sagt. Perfekt (har + Supinum) für Erfahrungen und Ergebnisse: Jag har aldrig varit i Kiruna.' },
+    { id:'prep', label:'Verben mit Präposition', kind:'gen', gen:'prep_sv', short:'Viele Verben und Adjektive haben eine feste Präposition, oft eine andere als im Deutschen.', rule:'Am besten als Ganzes lernen: tänka på, vänta på, rädd för, intresserad av, stolt över, vänja sig vid.' },
+    { id:'lesen', label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_sv', short:'Ein Wort aus einem Satz eines gelesenen Textes ergänzen, mit Grundform als Hilfe.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
     { id:'verbind', label:'Konnektoren & feste Verbindungen', kind:'gen', gen:'verbind_sv', short:'därför, dessutom, däremot verbinden Sätze; Verben und Nomen gehören fest zusammen.', rule:'Nach därför, dessutom und däremot am Satzanfang folgt Inversion. Feste Verbindungen lernt man als Ganzes: fatta ett beslut, ställa en fråga, ta hänsyn till, det spelar ingen roll.' },
     { id:'species', label:'Adjektivendungen & bestimmte Form', kind:'gen', gen:'np', short:'Doppelt bestimmt: den/det/de + Adjektiv auf -a + bestimmte Form.', rule:'Adjektiv in der Grundform bei en-Wörtern (en stor bil), mit -t bei ett-Wörtern (ett stort hus), mit -a im Plural und in der bestimmten Form (det stora huset).' },
     { id:'partikel', label:'Partikelverben', kind:'order', short:'Die Partikel ist betont und gehört zum Verb. „inte“ steht zwischen Verb und Partikel: Jag tycker inte om kaffe.', rule:'tycka om, ta med, komma ihåg, hålla med: Die Partikel ist betont. Jag kommer inte ihåg.' },
@@ -19,6 +21,8 @@ const TRAPS = {
     { id:'falska', label:'Falsche Freunde', kind:'form', short:FALSE_FRIEND, rule:'bleiben = stanna, lustig = rolig, Urlaub = semester, Semester = termin, Fahrt = resa, Rock = kjol, brav = snäll, bekommen = få, Termin = tid.' }
   ],
   es:[
+    { id:'prep', label:'Verben mit Präposition', kind:'gen', gen:'prep_es', short:'Viele Verben und Adjektive haben eine feste Präposition, oft eine andere als im Deutschen.', rule:'Am besten als Ganzes lernen: soñar con, pensar en, acordarse de, dejar de, empezar a, confiar en, tener ganas de.' },
+    { id:'lesen', label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_es', short:'Ein Wort aus einem Satz eines gelesenen Textes ergänzen, mit Grundform als Hilfe.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
     { id:'verbind', label:'Konnektoren & feste Verbindungen', kind:'gen', gen:'verbind_es', short:'sin embargo, por lo tanto, en cambio verbinden Sätze; Verben und Nomen gehören fest zusammen.', rule:'para que, en cuanto (Zukunft) und siempre que verlangen Subjuntivo. Feste Verbindungen als Ganzes lernen: tomar una decisión, hacer una pregunta, dar un paseo, tener razón.' },
     { id:'konjugation', label:'Verbformen', kind:'gen', gen:'conj', short:'Signale: normalmente = Präsens, ayer = Indefinido, antes/siempre = Imperfecto, es importante que = Subjuntivo.', rule:'Unregelmäßige Formen wie tuve, hice, fui, sea, vaya lohnen sich auswendig.' },
     { id:'serestar', label:'ser oder estar', kind:'form', gen:'serestar', short:'ser für Identität und Eigenschaften, estar für Zustand und Ort.', rule:'Auch ser: Uhrzeit und wo ein Ereignis stattfindet (la fiesta es en casa de Ana). Auch estar: Ergebnis und estar + Gerundium.' },
@@ -392,6 +396,10 @@ function startRun(kind, opts){
     }
   } else if (kind === 'gen') queue = [{ type:'gen', gen:opts.gen }];
   else if (kind === 'form') queue = Array.from({ length:10 }, () => ({ type:'gen', gen:opts.gen }));
+  else if (kind === 'textgap') {
+    const t = TEXTS[lang].find(x => x.id === opts.text);
+    queue = shuffle(gapSentences(t)).map(x => textGapData(lang, x, t.title)).filter(Boolean).slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
+  }
   else if (kind === 'dict') queue = freshFirst(BANK[lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'dict_' + lang, 10).map(i => ({ type:'dict', id:i.id }));
   else if (kind === 'hard') queue = hardItems(lang).map(i => ({ type:'free', id:i.id }));
   else if (kind === 'extraNew') queue = pickNew(lang, (opts && opts.n) || size().newPer).map(exFor);

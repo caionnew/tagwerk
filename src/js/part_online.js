@@ -118,3 +118,71 @@ async function refill(lang){
   if (added) { DB.tatFetch[lang + 'N'] = (DB.tatFetch[lang + 'N'] || 0) + added; save(); buildBank(); if (S.view === 'home' || S.view === 'progress') render(); }
   return added;
 }
+
+/* ---------- Anki ---------- */
+// An Anki senden: Teilen-Menü; AnkiDroid nimmt den Titel als Vorderseite, den Text als Rückseite
+function shareToAnki(front, back){
+  if (navigator.share) navigator.share({ title:front, text:back }).catch(() => {});
+  else if (navigator.clipboard) navigator.clipboard.writeText(front + '\t' + back).then(() => note('Kopiert. In Anki einfügen.'), () => {});
+}
+// Sätze aus einem Anki-Export übernehmen („Notizen als Klartext“, Tabulator, auch CSV). Spalten werden erkannt.
+function ankiClean(x){
+  return String(x || '').replace(/\[sound:[^\]]*\]/g, ' ').replace(/\{\{c\d+::([^}:]*)(::[^}]*)?\}\}/g, '$1').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
+}
+function ankiRows(text){
+  const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/);
+  let sep = '\t';
+  const head = lines.filter(l => l.startsWith('#'));
+  const hs = head.find(l => /^#separator:/i.test(l)); if (hs) { const v = hs.split(':')[1].trim().toLowerCase(); sep = { tab:'\t', comma:',', semicolon:';', pipe:'|', space:' ' }[v] || v; }
+  else if (!lines.some(l => l.includes('\t')) && lines.some(l => l.includes(';'))) sep = ';';
+  const body = lines.filter(l => !l.startsWith('#')).join('\n'), rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (q) { if (ch === '"' && body[i + 1] === '"') { cur += '"'; i++; } else if (ch === '"') q = false; else cur += ch; }
+    else if (ch === '"' && cur === '') q = true;
+    else if (ch === sep) { row.push(cur); cur = ''; }
+    else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+    else cur += ch;
+  }
+  if (cur || row.length) { row.push(cur); rows.push(row); }
+  return rows.map(r => r.map(ankiClean));
+}
+function ankiDetect(rows){
+  const sample = rows.slice(0, 200), cols = Math.max(0, ...sample.map(r => r.length));
+  const MARK = { sv:/[åäö]/i, es:/[ñ¿¡áéíóú]/i };
+  let best = null;
+  for (let c = 0; c < cols; c++) for (const lang of ['sv', 'es']) {
+    let hit = 0, all = 0, mark = 0;
+    sample.forEach(r => { const t = r[c] || ''; if (MARK[lang].test(t)) mark++; tokens(t).forEach(w => { if (!/[a-zà-ÿ]/i.test(w)) return; all++; if (lookupWord(lang, w)) hit++; }); });
+    const sc = (all ? hit / all : 0) + mark / Math.max(1, sample.length) * 0.5;
+    if (!best || sc > best.sc) best = { lang, col:c, sc };
+  }
+  if (!best || best.sc < 0.25) return null;
+  // Übersetzung: die übrige Spalte mit den meisten mehrwortigen Einträgen
+  let tr = -1, trN = 0;
+  for (let c = 0; c < cols; c++) { if (c === best.col) continue; const n = sample.filter(r => (r[c] || '').split(' ').length >= 2 && !/^\d+$/.test(r[c])).length; if (n > trN) { tr = c; trN = n; } }
+  if (tr < 0) return null;
+  const en = sample.slice(0, 60).map(r => r[tr] || '').join(' ').toLowerCase().match(/\b(the|and|is|you|to|of|it|i)\b/g);
+  return { lang:best.lang, col:best.col, tr, en:(en || []).length > 20 };
+}
+function ankiPrepare(text, name){
+  const rows = ankiRows(text), det = ankiDetect(rows);
+  if (!det) return { error:'In der Datei habe ich keine Spalte mit schwedischen oder spanischen Sätzen gefunden.' };
+  const have = new Set(BANK[det.lang].map(i => norm(i.target)));
+  const items = [];
+  rows.forEach(r => {
+    const target = (r[det.col] || '').trim(), de = (r[det.tr] || '').trim(), n = target.split(' ').length;
+    if (n < 3 || n > 22 || !de || have.has(norm(target))) return;
+    have.add(norm(target)); items.push({ target:/[.!?]$/.test(target) ? target : target + '.', de });
+  });
+  return { lang:det.lang, en:det.en, name, items, total:items.length };
+}
+const ANKI_MAX = 1500;
+function ankiCommit(P){
+  const list = P.items.slice(0, ANKI_MAX), t = today();
+  DB.tat[P.lang] = DB.tat[P.lang] || [];
+  list.forEach(x => DB.tat[P.lang].push({ id:P.lang + ':anki:' + hash(x.target), trap:'eigene', de:x.de, target:x.target, owner:'', license:'aus deinem Anki', src:'anki', deck:P.name, en:P.en || undefined, created:t, auto:true }));
+  save(); buildBank();
+  return list.length;
+}

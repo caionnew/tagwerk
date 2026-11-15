@@ -157,7 +157,7 @@ function viewText(){
       <p class="tdone-h">${score === t.q.length ? 'Alles verstanden.' : `${score} von ${t.q.length} richtig.`}</p>
       <p class="hint" style="margin-top:2px">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
       <div class="rows" style="margin-top:12px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span><button type="button" class="link" data-a="tkeep" data-k="${i}"${has ? ' disabled' : ''}>${has ? 'Übernommen' : 'Übernehmen'}</button></div>`; }).join('')}</div>
-      <div class="btnrow"><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
+      <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lücken aus dem Text</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
     </section>` : '';
   return backBar('Lesen und Hören', 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
 }

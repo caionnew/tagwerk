@@ -418,6 +418,64 @@ const genVerbind = list => () => {
   const [p, a, opts, de, note] = pick(list);
   return { prompt:p, deLine:de, answers:[a.toLowerCase()], label:'Welches Wort passt?', hint:opts.slice().sort(() => Math.random() - 0.5).join(' / '), note, gap:true, full:p.replace('___', a) };
 };
+
+/* ---------- Verben mit Präposition: tänka på, vänta på, soñar con, depender de ---------- */
+const PREP_SV = [
+  ['Jag tänker ofta ___ dig.', 'på', ['på', 'om', 'över'], 'Ich denke oft an dich.', 'tänka på = denken an.'],
+  ['Vi väntar ___ bussen.', 'på', ['på', 'för', 'efter'], 'Wir warten auf den Bus.', 'vänta på = warten auf.'],
+  ['Hon är rädd ___ hundar.', 'för', ['för', 'av', 'över'], 'Sie hat Angst vor Hunden.', 'rädd för = Angst haben vor.'],
+  ['Han är intresserad ___ historia.', 'av', ['av', 'för', 'i'], 'Er interessiert sich für Geschichte.', 'intresserad av = interessiert an.'],
+  ['Jag är trött ___ regnet.', 'på', ['på', 'av', 'över'], 'Ich habe den Regen satt.', 'trött på = etwas satthaben.'],
+  ['Det beror ___ vädret.', 'på', ['på', 'av', 'om'], 'Das hängt vom Wetter ab.', 'bero på = abhängen von.'],
+  ['Vi skrattade ___ skämtet.', 'åt', ['åt', 'på', 'över'], 'Wir lachten über den Witz.', 'skratta åt = lachen über.'],
+  ['Hon är stolt ___ sina barn.', 'över', ['över', 'av', 'på'], 'Sie ist stolz auf ihre Kinder.', 'stolt över = stolz auf.'],
+  ['Jag drömmer ___ en resa till Japan.', 'om', ['om', 'på', 'av'], 'Ich träume von einer Reise nach Japan.', 'drömma om = träumen von.'],
+  ['Han är kär ___ henne.', 'i', ['i', 'på', 'med'], 'Er ist in sie verliebt.', 'kär i = verliebt in.'],
+  ['Hon är gift ___ en svensk.', 'med', ['med', 'till', 'åt'], 'Sie ist mit einem Schweden verheiratet.', 'gift med = verheiratet mit.'],
+  ['Jag letar ___ mina nycklar.', 'efter', ['efter', 'på', 'för'], 'Ich suche meine Schlüssel.', 'leta efter = suchen nach.'],
+  ['Tack ___ hjälpen!', 'för', ['för', 'på', 'om'], 'Danke für die Hilfe!', 'tack för = danke für.'],
+  ['Han är bra ___ matte.', 'på', ['på', 'för', 'med'], 'Er ist gut in Mathe.', 'bra på = gut in.'],
+  ['Jag har vant mig ___ kylan.', 'vid', ['vid', 'med', 'på'], 'Ich habe mich an die Kälte gewöhnt.', 'vänja sig vid = sich gewöhnen an.']
+];
+const PREP_ES = [
+  ['Sueño ___ vivir junto al mar.', 'con', ['con', 'de', 'en'], 'Ich träume davon, am Meer zu leben.', 'soñar con = träumen von.'],
+  ['Pienso mucho ___ ti.', 'en', ['en', 'de', 'a'], 'Ich denke viel an dich.', 'pensar en = denken an. pensar de = halten von.'],
+  ['Se enamoró ___ su vecina.', 'de', ['de', 'con', 'en'], 'Er verliebte sich in seine Nachbarin.', 'enamorarse de = sich verlieben in.'],
+  ['Me acuerdo ___ aquel verano.', 'de', ['de', 'en', 'con'], 'Ich erinnere mich an jenen Sommer.', 'acordarse de = sich erinnern an.'],
+  ['Tardamos una hora ___ llegar.', 'en', ['en', 'de', 'para'], 'Wir brauchten eine Stunde, um anzukommen.', 'tardar en = brauchen (Zeit), um.'],
+  ['Dejé ___ fumar hace años.', 'de', ['de', 'a', 'con'], 'Ich habe vor Jahren aufgehört zu rauchen.', 'dejar de = aufhören zu.'],
+  ['Empezó ___ llover.', 'a', ['a', 'de', 'en'], 'Es fing an zu regnen.', 'empezar a = anfangen zu.'],
+  ['Confío ___ ti.', 'en', ['en', 'a', 'con'], 'Ich vertraue dir.', 'confiar en = vertrauen.'],
+  ['Me alegro ___ verte.', 'de', ['de', 'a', 'por'], 'Ich freue mich, dich zu sehen.', 'alegrarse de = sich freuen über.'],
+  ['Insistió ___ pagar la cuenta.', 'en', ['en', 'a', 'de'], 'Er bestand darauf, die Rechnung zu bezahlen.', 'insistir en = bestehen auf.'],
+  ['Mi casa da ___ la plaza.', 'a', ['a', 'en', 'de'], 'Mein Haus geht auf den Platz hinaus.', 'dar a = hinausgehen auf.'],
+  ['Me fijé ___ sus zapatos.', 'en', ['en', 'a', 'de'], 'Mir sind seine Schuhe aufgefallen.', 'fijarse en = achten auf.'],
+  ['Se negó ___ firmar.', 'a', ['a', 'de', 'en'], 'Er weigerte sich zu unterschreiben.', 'negarse a = sich weigern zu.'],
+  ['Me olvidé ___ llamarte.', 'de', ['de', 'a', 'en'], 'Ich habe vergessen, dich anzurufen.', 'olvidarse de = vergessen.'],
+  ['Aprendí ___ nadar de pequeño.', 'a', ['a', 'de', 'en'], 'Ich habe als Kind schwimmen gelernt.', 'aprender a = lernen zu.'],
+  ['Tengo ganas ___ verte.', 'de', ['de', 'a', 'por'], 'Ich freue mich darauf, dich zu sehen.', 'tener ganas de = Lust haben auf.']
+];
+const genPrep = list => () => { const d = genVerbind(list)(); d.label = 'Welche Präposition?'; return d; };
+/* ---------- Lücken aus Lesetexten: ein gebeugtes Wort aus einem Satz eines gelesenen Textes ---------- */
+function textGapData(lang, sentence, title){
+  const toks = sentence.split(' ');
+  const cand = toks.map((w, i) => ({ w:w.replace(/[.,;:!?¡¿«»"„“()]/g, ''), i })).filter(x => x.w.length >= 5 && /^[a-zà-ÿ]+$/i.test(x.w) && (x.i === 0 || x.w[0] === x.w[0].toLowerCase()));
+  if (!cand.length) return null;
+  const withL = cand.map(x => { const e = typeof lookupWord === 'function' ? lookupWord(lang, x.w) : null; return Object.assign(x, { lemma:e && e.l && e.l.toLowerCase() !== x.w.toLowerCase() ? e.l : null }); });
+  const pool = withL.some(x => x.lemma) ? withL.filter(x => x.lemma) : withL;
+  const x = pool[Math.floor(Math.random() * pool.length)];
+  const prompt = toks.map((w, i) => (i === x.i ? w.replace(x.w, '___') : w)).join(' ');
+  return { prompt, answers:[x.w.toLowerCase()], label:title ? `Aus „${title}“` : 'Ergänze aus dem Text', hint:x.lemma ? `Grundform: ${x.lemma}` : `beginnt mit „${x.w.slice(0, 2).toLowerCase()}…“`, gap:true, full:sentence, note:'' };
+}
+const gapSentences = t => t.body.replace(/\n+/g, ' ').split(/(?<=[.!?])\s+/).filter(x => x.split(' ').length >= 5);
+function genTextGap(lang){
+  return () => {
+    const read = (DB.used && DB.used.texts) || {};
+    const ts = TEXTS[lang].filter(t => read[t.id]); const list = ts.length ? ts : TEXTS[lang];
+    for (let k = 0; k < 20; k++) { const t = pick(list), d = textGapData(lang, pick(gapSentences(t)), t.title); if (d) return d; }
+    return textGapData(lang, gapSentences(TEXTS[lang][0])[0], TEXTS[lang][0].title);
+  };
+}
 const GENS = {
   np:{ lang:'sv', trap:'species', short:'Adjektivendungen', label:'Adjektivendungen & bestimmte Form', make:genNP },
   tempus:{ lang:'sv', trap:'tempus', short:'Zeitformen', label:'Präteritum oder Perfekt', make:genTempus },
@@ -426,5 +484,9 @@ const GENS = {
   serestar:{ lang:'es', trap:'serestar', short:'ser/estar', label:'ser oder estar', make:genSerEstar },
   porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara },
   verbind_sv:{ lang:'sv', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_SV) },
-  verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) }
+  verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) },
+  prep_sv:{ lang:'sv', trap:'prep', short:'Präpositionen', label:'Verben mit Präposition', make:genPrep(PREP_SV) },
+  prep_es:{ lang:'es', trap:'prep', short:'Preposiciones', label:'Verben mit Präposition', make:genPrep(PREP_ES) },
+  textgap_sv:{ lang:'sv', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('sv'), noGloss:true },
+  textgap_es:{ lang:'es', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('es'), noGloss:true }
 };

@@ -114,6 +114,28 @@ levereras|leverera|wird geliefert (leverera = liefern)
 öppnades|öppna|wurde geöffnet (öppna = öffnen)
 räkningen|räkning|die Rechnung
 betalas|betala|wird bezahlt (betala = bezahlen)
+väntar|vänta|wartet; vänta på = warten auf
+rädd||ängstlich; rädd för = Angst vor
+intresserad||interessiert; intresserad av = interessiert an
+historia||Geschichte
+trött||müde; trött på = etwas satthaben
+regnet|regn|der Regen
+beror|bero|hängt ab; bero på = abhängen von
+skrattade|skratta|lachte; skratta åt = lachen über
+skämtet|skämt|der Witz
+stolt||stolz; stolt över = stolz auf
+drömmer|drömma|träumt; drömma om = träumen von
+japan|Japan|Japan
+kär||verliebt; kär i = verliebt in
+gift||verheiratet; gift med = verheiratet mit
+svensk||Schwede; schwedisch
+letar|leta|sucht; leta efter = suchen nach
+mina|min|meine (Plural)
+hjälpen|hjälp|die Hilfe
+matte||Mathe
+vant|vänja|gewöhnt; vänja sig vid = sich gewöhnen an
+vid||bei, an
+kylan|kyla|die Kälte
 därför||deshalb
 stannade|stanna|blieb (stanna = bleiben, anhalten)
 inne||drinnen
@@ -622,6 +644,22 @@ paquete||Paket
 salsa||Salsa (Tanz); auch: Soße
 vecinos|vecino|Nachbarn
 verano||Sommer
+vecina|vecino|Nachbarin
+aquel||jener
+tardamos|tardar|wir brauchten (Zeit); tardar en = brauchen, um
+hora||Stunde
+fumar||rauchen
+llover||regnen
+confío|confiar|ich vertraue; confiar en = vertrauen
+insistió|insistir|bestand darauf; insistir en = bestehen auf
+pagar||bezahlen
+plaza||Platz
+fijé|fijarse|mir fiel auf; fijarse en = achten auf
+sus|su|seine, ihre (Plural)
+negó|negarse|weigerte sich; negarse a = sich weigern zu
+firmar||unterschreiben
+llamarte|llamar|dich anrufen
+ganas||Lust; tener ganas de = Lust haben auf
 embargo||sin embargo = trotzdem, jedoch
 suspendió|suspender|ist durchgefallen; suspender = durchfallen
 tanto||so viel; por lo tanto = deshalb

@@ -1,5 +1,5 @@
 /* ---------- Ansichten ---------- */
-const FOCUS_VIEWS = ['run', 'radio', 'texts', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
+const FOCUS_VIEWS = ['run', 'runDone', 'radio', 'texts', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
 const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>` : esc(w)).join(' ');
 const MONTHS_FULL = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 function monthRecap(){
@@ -410,15 +410,17 @@ function viewRunDone(){
   const mins = Math.round((r.secs || 0) / 60);
   if (mins >= 1) kp.push([mins, mins === 1 ? 'Minute' : 'Minuten']);
   if (fresh) kp.push([fresh, fresh === 1 ? 'neuer Satz' : 'neue Sätze']);
-  if ((r.best || 0) >= 3) kp.push([r.best, 'richtig in Folge']);
-  const kpis = kp.length >= 2 ? `<div class="kpis done-kpis">${kp.slice(0, 3).map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>` : '';
+  if ((r.best || 0) >= 3 && r.best < total) kp.push([r.best, 'richtig in Folge']);
+  const kpis = kp.length >= 2 ? `<div class="kpis done-kpis" style="grid-template-columns:repeat(${Math.min(3, kp.length)}, 1fr)">${kp.slice(0, 3).map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>` : '';
   // Was die Wiederholungsplanung daraus macht
   const sits = res.filter(x => x.good && x.ivl > 1).map(x => x.ivl);
   const dWhen = n => (n === 2 ? 'übermorgen' : n < 14 ? `in ${n} Tagen` : n < 60 ? `in ${Math.round(n / 7)} Wochen` : `in ${Math.round(n / 30)} Monaten`);
   const span = sits.length ? (() => {
     const lo = Math.min(...sits), hi = Math.max(...sits);
-    const when = dWhen(lo) === dWhen(hi) ? dWhen(lo) : hi < 14 && lo > 2 ? `in ${lo} bis ${hi} Tagen` : `${dWhen(lo)} bis ${lo === 2 ? dWhen(hi) : dWhen(hi).replace(/^in /, '')}`;
-    return `<p class="sits"><b>Sitzt:</b> ${sits.length === 1 ? '1 Satz kommt' : `${sits.length} Sätze kommen`} erst ${when} wieder.</p>`;
+    const unit = n => (n < 14 ? ['Tagen', n] : n < 60 ? ['Wochen', Math.round(n / 7)] : ['Monaten', Math.round(n / 30)]);
+    const [ul, nl] = unit(lo), [uh, nh] = unit(hi);
+    const when = dWhen(lo) === dWhen(hi) ? dWhen(lo) : lo === 2 ? `übermorgen bis ${dWhen(hi)}` : ul === uh ? `in ${nl} bis ${nh} ${ul}` : `${dWhen(lo)} bis ${dWhen(hi).replace(/^in /, '')}`;
+    return `<p class="sits"><b>Nächste Wiederholung:</b> ${sits.length === 1 ? '1 Satz kommt' : `${sits.length} Sätze kommen`} ${when} wieder.</p>`;
   })() : '';
   const ms = (() => { const now = matureCount(lang); const hit = milestoneList(now).filter(m => m > (r.strongBefore || 0) && m <= now).pop(); return hit ? `<p class="milestone">${hit} gefestigte Sätze auf ${LANG[lang].deName}</p>` : ''; })();
   const sk = daily ? (() => { const n = streak(), m = streakMilestone(n); return n >= 2 ? (m ? `<p class="milestone">${m}</p>` : `<p class="hint">Tag ${n} in Folge.</p>`) : ''; })() : '';
@@ -429,8 +431,8 @@ function viewRunDone(){
   const nudge = !daily && !DB.done[today()] && !S.dailyRun ? `<div class="notice ok"><span>Das Tagwerk für heute steht noch aus.</span><button type="button" class="link" data-a="daily">Starten</button></div>` : !daily && S.dailyRun && S.dailyRun.lang === lang ? `<div class="notice ok"><span>Dein Tagwerk ist noch offen.</span><button type="button" class="link" data-a="daily">Fortsetzen</button></div>` : '';
   const again = !daily && !practice && r.kind !== 'hard';
   const buttons = daily
-    ? '<button type="button" class="primary" data-a="tab" data-v="home">Fertig</button><button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button>'
-    : again ? '<button type="button" class="primary" data-a="again">Noch eine Runde</button><button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button>'
+    ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button><button type="button" class="primary" data-a="tab" data-v="home">Fertig</button>'
+    : again ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>'
     : '<button type="button" class="primary" data-a="tab" data-v="extra">Fertig</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   return `<div class="donebox">
@@ -442,9 +444,8 @@ function viewRunDone(){
     ${ms}${sk}${tomorrow}
     ${missedHtml}
     ${nudge}
-    <div class="btnrow done-btns">${buttons}</div>
     ${reading}
-  </div>`;
+  </div><div class="actionbar"><div class="in">${buttons}</div></div>`;
 }
 function viewShadow(){
   const sh = S.shadow, lang = sh.lang;

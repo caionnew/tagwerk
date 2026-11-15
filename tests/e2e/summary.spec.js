@@ -10,7 +10,10 @@ test('Kurze Runde: Leiste je Aufgabe, Fehler gleich nochmal üben, Plan bleibt u
   await expect(page.locator('.done-h')).toHaveText('Runde beendet');
   await expect(page.locator('.rstrip .rs')).toHaveCount(n);
   await expect(page.locator('.rstrip .rs-bad')).toHaveCount(n);
-  await expect(page.locator('[data-a=again]')).toBeVisible();
+  await expect(page.locator('.actionbar [data-a=again]')).toBeVisible();
+  await expect(page.locator('#tabs')).toBeHidden();
+  const bar = await page.$eval('.actionbar', el => Math.round(innerHeight - el.getBoundingClientRect().bottom));
+  expect(Math.abs(bar)).toBeLessThanOrEqual(1);
   const before = (await stored(page)).st;
   await page.click('[data-a=retry]');
   await expect(page.locator('.runbar')).toBeVisible();
@@ -29,5 +32,6 @@ test('Tagwerk: Stempel, Leiste, Lesetipps, Fertig und Weiter üben', async ({ pa
   await expect(page.locator('svg.stamp')).toBeVisible();
   expect(await page.locator('.rstrip .rs').count()).toBeGreaterThan(3);
   await expect(page.locator('.readtip a')).toHaveCount(3);
-  await expect(page.locator('.done-btns [data-a=tab][data-v=home]')).toHaveText('Fertig');
+  await expect(page.locator('.actionbar [data-a=tab][data-v=home]')).toHaveText('Fertig');
+  await expect(page.locator('#tabs')).toBeHidden();
 });

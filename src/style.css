@@ -647,7 +647,6 @@ button.erow:active{ background:var(--accent-soft); }
 .grp-row .grp{ margin:0; }
 .grp-row .link{ font-size:14.5px; white-space:nowrap; }
 .donebox .notice{ margin-top:18px; }
-.done-btns{ margin-top:22px; }
 .readtip{ margin-top:16px; }
 .combo{ display:inline-block; margin:0 0 10px 8px; padding:3px 10px; border-radius:999px; font-size:13.5px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); }
 

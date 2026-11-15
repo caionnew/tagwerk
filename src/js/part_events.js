@@ -245,6 +245,7 @@ document.addEventListener('click', e => {
     case 'topic': openTopic((S.view === 'run' && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
+    case 'pcrange': S.pcAll = b.dataset.v === '1'; render(); break;
     case 'errtab': S.errTab = b.dataset.t; render(); break;
     case 'kultadd': {
       const lang = S.lang, e = KULTUR[lang].find(x => x.id === b.dataset.id); if (!e) break;
@@ -386,6 +387,7 @@ S.lang = DB.settings.lang || 'sv';
 buildBank();
 buildGloss();
 pruneTlog();
+compactSnaps();
 snapshot();
 // Den Browser bitten, die Daten dauerhaft zu behalten und nicht bei Speicherknappheit zu löschen
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persisted().then(p => { if (!p) navigator.storage.persist(); }); } catch (e) {}

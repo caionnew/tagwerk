@@ -52,7 +52,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `st[id]` | Lernstand je Satz: FSRS-Stabilität `s`, Schwierigkeit `d`, Intervall `ivl`, `due`, `last`, Zähler, eigene richtige Fassungen |
 | `log[datum][sprache]` | Aufgaben, neue Sätze, Wiederholungen, gefestigt, Sekunden |
 | `done[datum]` | Tagwerk erledigt |
-| `snap[datum][sprache]` | Tagesstand: geübt `n`, gefestigt `m`, abrufbar `k`, Wortschatz `w`, gefestigt je Thema `t` |
+| `snap[datum][sprache]` | Tagesstand (älter als 120 Tage nur sonntags und am Monatsende, `compactSnaps`): geübt `n`, gefestigt `m`, abrufbar `k`, Wortschatz `w`, gefestigt je Thema `t` |
 | `tlog[datum]` | Fehlerquellen je Thema (`p:`), Übungsart (`t:`), Fehlerart (`e:`), Stunden `h`; nach 120 Tagen gelöscht |
 | `gen`, `genus` | Ergebnisse der erzeugten Aufgaben und der Genus-Wörter |
 | `own`, `tat` | eigene Sätze, Sätze von Tatoeba |

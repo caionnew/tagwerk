@@ -612,10 +612,11 @@ function niceStep(max){ const raw = max / 4, p = Math.pow(10, Math.floor(Math.lo
 function progressChart(lang){
   const days = Object.keys(DB.log).filter(k => (dayLog(k, lang).n || 0) > 0).sort();
   if (!days.length) return '';
-  const t = today(), start = days[0], span = dayDiff(t, start);
+  const t = today(), first = days[0], long = dayDiff(t, first) > 400, all = long && S.pcAll;
+  const start = long && !all ? addDays(t, -365) : first, span = dayDiff(t, start);
   if (span < 13) return `<h2 class="grp">Verlauf</h2><p class="legend" style="margin:0 4px 8px">Erscheint, sobald du zwei Wochen dabei bist.</p>`;
   const step = span > 180 ? 7 : span > 70 ? 3 : 1;
-  const pts = []; let cum = 0, snapFrom = null;
+  const pts = []; let cum = start > first ? days.filter(d => d < start).reduce((a, d) => a + (dayLog(d, lang).fresh || 0), 0) : 0, snapFrom = null;
   for (let k = 0; k <= span; k++) {
     const ds = addDays(start, k);
     cum += dayLog(ds, lang).fresh || 0;
@@ -646,7 +647,8 @@ function progressChart(lang){
   const fmtAx = ds => { const x = dateOf(ds); return span > 300 ? `${MONTHS[x.getMonth()]} ${x.getFullYear()}` : fmt(ds); };
   [0, Math.floor((pts.length - 1) / 2), pts.length - 1].forEach((i, j) => { g += `<text x="${X(i)}" y="${H - 5}" class="xl" text-anchor="${j === 0 ? 'start' : j === 2 ? 'end' : 'middle'}">${fmtAx(pts[i].ds)}</text>`; });
   const late = snapFrom && snapFrom !== start;
-  return `<h2 class="grp">Verlauf</h2><div class="chart">
+  const rangeSeg = long ? `<div class="seg2 pcr" role="radiogroup">${[[false, 'Letztes Jahr'], [true, 'Seit Beginn']].map(([v, l]) => `<button type="button" role="radio" aria-checked="${!!all === v}" data-a="pcrange" data-v="${v ? 1 : 0}">${l}</button>`).join('')}</div>` : '';
+  return `<h2 class="grp">Verlauf</h2>${rangeSeg}<div class="chart">
     <svg viewBox="0 0 ${W} ${H}" class="pcsvg" role="img" aria-label="Verlauf der geübten, abrufbaren und gefestigten Sätze">${g}</svg>
     <p class="legend calleg"><span><i class="lk ln-n"></i>geübt</span><span><i class="lk ln-k"></i>geschätzt abrufbar</span><span><i class="lk ln-m"></i>gefestigt</span></p>
     ${late ? `<p class="legend">Abrufbar und gefestigt werden seit dem ${fmt(snapFrom)} erfasst.</p>` : !snapFrom ? '<p class="legend">Abrufbar und gefestigt werden ab heute erfasst.</p>' : ''}
@@ -708,7 +710,7 @@ function viewProgress(){
   ${hoursHtml()}
 
   ${summary ? `<h2 class="grp">Sprachen</h2><div class="langsums">${summary}</div>` : ''}
-  ${wayHtml()}`;
+  ${wayHtml()}${yearsHtml()}`;
   }
   return `<div class="topline"><h1 class="vt">Fortschritt</h1>${gearBtn()}</div>${noticeHtml()}${tabs}
   <section class="today">
@@ -791,6 +793,7 @@ function viewSettings(){
   </div>
   <h2 class="grp">Daten</h2>
   <div class="rows">
+    ${(() => { const kb = Math.round(JSON.stringify(DB).length / 1024); return `<div class="row static"><span class="txt"><span class="rt">Gespeichert: etwa ${kb >= 1024 ? (kb / 1024).toFixed(1).replace('.', ',') + ' MB' : kb + ' KB'}</span><span class="rd">${kb > 3500 ? 'Der Browser erlaubt meist etwa 5 MB. Exportier bitte ein Backup.' : 'Ältere Tagesstände werden wöchentlich zusammengefasst, damit der Speicher auch nach Jahren reicht.'}</span></span></div>`; })()}
     <button type="button" class="row" data-a="export"><span class="txt"><span class="rt">Backup exportieren</span><span class="rd">Dein Fortschritt liegt nur auf diesem Gerät. ${DB.lastBackup ? `Letztes Backup am ${dateOf(DB.lastBackup).getDate()}. ${MONTHS_FULL[dateOf(DB.lastBackup).getMonth()]} ${dateOf(DB.lastBackup).getFullYear()}.` : 'Noch kein Backup gemacht.'}</span></span></button>
     ${canShareBackup() ? '<button type="button" class="row" data-a="shareBackup"><span class="txt"><span class="rt">Backup teilen</span><span class="rd">Etwa in Google Drive oder per Mail sichern</span></span></button>' : ''}
     <label class="row"><span class="txt"><span class="rt">Backup einspielen</span><span class="rd">Ersetzt den aktuellen Stand. Danach lässt es sich rückgängig machen.</span></span><input type="file" id="importFile" hidden></label>

@@ -754,3 +754,14 @@ section.ex #fb:empty{ display:none; }
 .wl-next .tl-t{ color:var(--muted); }
 .wl-lang{ font-size:12.5px; color:var(--muted); }
 .wrail .tl-t{ font-size:14.5px; padding:8px 0; }
+
+/* Dein Weg: Jahrestrenner; Jahr für Jahr */
+.wy .wy-t{ font-weight:750; font-size:15px; padding:10px 0 4px; }
+.ygrid{ display:grid; gap:10px; }
+.ycard{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:14px 16px; }
+.y-h{ font-weight:750; font-size:18px; margin:0; }
+.kpis.yk{ margin-top:10px; padding-top:10px; }
+.y-l{ margin:10px 0 0; font-size:14.5px; color:var(--muted); line-height:1.5; }
+.y-l b{ color:var(--ink); font-weight:650; margin-right:4px; }
+.y-l .sq{ margin-right:6px; }
+.pcr{ margin:0 0 10px; }

@@ -88,6 +88,16 @@ function recordAnswer(lang, ex, c, good){
   if (type) add('t:' + type, good);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
 }
+// Tagesstände älter als 120 Tage: nur Sonntage und Monatsenden behalten. Reicht für Verlauf und Etappen und hält den Speicher klein.
+function compactSnaps(){
+  if (!DB.snap) return;
+  const t = today();
+  Object.keys(DB.snap).forEach(d => {
+    if (dayDiff(t, d) <= 120) return;
+    const dt = dateOf(d), monthEnd = addDays(d, 1).slice(5, 7) !== d.slice(5, 7);
+    if (dt.getDay() !== 0 && !monthEnd) delete DB.snap[d];
+  });
+}
 function pruneTlog(){
   if (!DB.tlog) return;
   const t = today();

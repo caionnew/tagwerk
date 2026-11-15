@@ -148,7 +148,9 @@ function check(){
     const res = j.res;
     c.result = res; c.why = j.why; c.wasSeen = !!(ex.id && DB.st[ex.id]); c.wasDue = !!(ex.id && DB.st[ex.id] && DB.st[ex.id].due <= today());
     if (res !== 'ok') {
-      const best = closest(c.input, answersFor(ex), r.lang); c.best = best; c.diff = diffHtml(best, c.input, r.lang);
+      // Erzeugte Aufgaben: bei falscher Antwort die Standardlösung zeigen (passend zur Erklärung und zum Vorlesen).
+      // Satzbank: die richtige Fassung, die deiner Antwort am nächsten ist, damit die Korrektur klein bleibt.
+      const best = res === 'bad' && ex.type === 'gen' ? answersFor(ex)[0] : closest(c.input, answersFor(ex), r.lang); c.best = best; c.diff = diffHtml(best, c.input, r.lang);
       if (ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.mine = mineHtml(c.input, best, r.lang);
       const toks = ' ' + norm(c.input, r.lang) + ' ';
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
@@ -189,7 +191,8 @@ function finishAnswer(r, ex, c){
 }
 function autoSpeak(r, ex){
   if (!DB.settings.autoplay || ex.type === 'dict') return;
-  if (ex.type === 'gen') { speak(ex.data.full || ex.data.answers[0], r.lang); return; }
+  // Vorlesen, was angezeigt wird
+  if (ex.type === 'gen') { const c = r.cur; speak((c && c.result === 'near' && c.best) || ex.data.full || ex.data.answers[0], r.lang); return; }
   playItem(itemById(ex.id));
 }
 function giveUp(){

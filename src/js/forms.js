@@ -105,7 +105,7 @@ function genSpotEs(){
 
 /* ---------- 2) Umbauen: einen Satz umformen, ohne Deutsch ---------- */
 const SV_PRES = { äta:'äter', dricka:'dricker', skriva:'skriver', läsa:'läser', se:'ser', gå:'går', komma:'kommer', göra:'gör', ta:'tar', köpa:'köper', träffa:'träffar', springa:'springer', flyga:'flyger', simma:'simmar', vinna:'vinner', glömma:'glömmer', ringa:'ringer', hitta:'hittar', sjunga:'sjunger', få:'får', sova:'sover', åka:'åker' };
-const transData = (src, start, answers, note, trap) => ({ kind:'trans', src, start, answers, full:answers[0], note, trap, label:'Bau den Satz um' });
+const transData = (src, start, answers, note, trap, aim) => ({ kind:'trans', src, start, answers, full:answers[0], note, trap, aim, label:'Bau den Satz um' });
 function genTransSv(){
   const r = Math.random();
   if (r < 0.65) {
@@ -149,7 +149,7 @@ function genTransEs(){
   }
   const src = `Ayer ${who}${conjugate(inf, 'indef', p)} ${comp}.`;
   const perf = `Hoy ${who}${HABER[p]} ${participle(inf)} ${comp}.`;
-  return transData(src, 'Hoy ', [perf, `Hoy ${who}${conjugate(inf, 'indef', p)} ${comp}.`], `Mit „hoy“ nimmt man in Spanien das Perfecto (${HABER[p]} ${participle(inf)}). In Lateinamerika ist auch Indefinido üblich.`, 'perfecto');
+  return transData(src, 'Hoy ', [perf, `Hoy ${who}${conjugate(inf, 'indef', p)} ${comp}.`], `Mit „hoy“ nimmt man in Spanien das Perfecto (${HABER[p]} ${participle(inf)}). In Lateinamerika ist auch Indefinido üblich.`, 'perfecto', 'Dieselbe Handlung, nur heute schon passiert (nicht: passiert gerade).');
 }
 
 /* ---------- 3) Uhrzeiten & Zahlen ---------- */

@@ -261,7 +261,7 @@ function viewRun(){
       ${done || d.mode !== 'write' ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'trans') {
     const d = ex.data;
-    body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${esc(d.src)}</p><p class="vocab">Beginne mit „${esc(d.start.trim())} …“</p>
+    body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${esc(d.src)}</p><p class="vocab">Beginne mit „${esc(d.start.trim())} …“${d.aim ? `. ${esc(d.aim)}` : ''}</p>
       <div class="ex-a"><textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Umgebauter Satz">${esc(c.input)}</textarea>
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen') {

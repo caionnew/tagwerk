@@ -87,3 +87,14 @@ test('Sprache des Tages: die nötigere Sprache, fest für den Tag, Wechsel von H
   assert.equal(app.run('dayLang()'), 'es', 'Einstellung „Zuletzt gewählte“');
   app.run(`DB.settings.langMode = 'auto';`);
 });
+test('Umbauen „Ayer → Hoy“: Ziel ist benannt (heute schon passiert), Perfecto steht als Standardlösung vorn', () => {
+  let seen = 0;
+  for (let k = 0; k < 300 && seen < 5; k++) {
+    const d = app.run('GENS.trans_es.make()');
+    if (d.start !== 'Hoy ') continue;
+    seen++;
+    assert.ok(/schon passiert/.test(d.aim), d.src);
+    assert.ok(/ (he|has|ha|hemos|habéis|han) \S+ /.test(d.answers[0]), d.answers[0]);
+  }
+  assert.ok(seen >= 1);
+});

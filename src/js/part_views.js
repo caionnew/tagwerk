@@ -537,10 +537,13 @@ function calendarSvg(){
     for (let k = 0; k < 7; k++) {
       const ds = addDays(start, w * 7 + k);
       if (ds > t) continue;
-      const n = (dayLog(ds, 'sv').n || 0) + (dayLog(ds, 'es').n || 0);
+      const sv = dayLog(ds, 'sv').n || 0, es = dayLog(ds, 'es').n || 0, n = sv + es;
       if (first && ds >= first) { total++; if (n) active++; }
-      const lvl = DB.done[ds] ? (n >= 25 ? 3 : 2) : n ? 1 : 0;
-      out += `<rect data-a="calday" data-d="${ds}" x="${w * step}" y="${top + k * step}" width="${cell}" height="${cell}" rx="3" class="c${lvl}${free.has(ds) && !n ? ' fr' : ''}${ds === t ? ' now' : ''}${S.calDay === ds ? ' sel' : ''}"/>`;
+      // Form = Einsatz (gefüllt: Tagwerk, Umriss: etwas geübt, gestrichelt: freier Tag), Farbe = Sprache, beide Sprachen geteilt
+      const x = w * step, y = top + k * step, lang = sv && es ? 'b' : sv ? 's' : es ? 'e' : '', kind = DB.done[ds] ? 'd' : n ? 'p' : '';
+      const state = `${ds === t ? ' now' : ''}${S.calDay === ds ? ' sel' : ''}`;
+      if (kind === 'd' && lang === 'b') out += `<g data-a="calday" data-d="${ds}"><rect class="ds" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="3"/><path class="de" d="M${x + cell} ${y + 1.5}V${y + cell - 3}Q${x + cell} ${y + cell} ${x + cell - 3} ${y + cell}H${x + 1.5}Z"/><rect class="ov${state}" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="3"/></g>`;
+      else out += `<rect data-a="calday" data-d="${ds}" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="3" class="${kind ? kind + lang : 'c0'}${free.has(ds) && !n ? ' fr' : ''}${state}"/>`;
     }
   }
   const W = weeks * step - gap, H = top + 7 * step - gap;
@@ -700,7 +703,7 @@ function viewProgress(){
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
     <p class="legend">${S.calDay ? esc(dayDetail(S.calDay)) : cal.first ? `An ${cal.active} von ${cal.total} Tagen geübt, seit deinem ersten Übungstag am ${dateOf(cal.first).getDate()}. ${MONTHS_FULL[dateOf(cal.first).getMonth()]}${dateOf(cal.first).getFullYear() !== dateOf(today()).getFullYear() ? ' ' + dateOf(cal.first).getFullYear() : ''}. Tipp auf einen Tag für Details${cal.scrollable ? ', nach rechts wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>
-    <p class="legend calleg"><span><i class="sq c2"></i>Tagwerk</span><span><i class="sq c3"></i>Tagwerk und mehr</span><span><i class="sq c1"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>freier Tag</span></p></div>
+    <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt (Rand in Sprachfarbe)</span><span><i class="sq c0 fr"></i>freier Tag</span></p></div>
   ${mins.any ? `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart">${mins.html}<p class="legend"><span class="sq m-sv"></span>Schwedisch <span class="sq m-es"></span>Spanisch. Zusammen ${mins.total} Min.${(() => { let s = 0, n = 0; Object.keys(DB.log).forEach(k => { if (dayDiff(today(), k) >= 30) return; const v = (dayLog(k, 'sv').secs || 0) + (dayLog(k, 'es').secs || 0); if (v) { s += v; n++; } }); return n >= 5 ? ` Im Schnitt ${Math.round(s / n / 60)} Min. an Übungstagen, letzte 30 Tage.` : ''; })()}${mins.unm ? ' „–“: geübt, aber noch ohne Zeitmessung.' : ''}</p></div>` : ''}
   ${hoursHtml()}
 

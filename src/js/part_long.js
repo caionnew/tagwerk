@@ -28,7 +28,7 @@ function wayEvents(){
   days.forEach(d => {
     ['sv', 'es'].forEach(l => {
       const x = dayLog(d, l); n += x.n || 0; secs += x.secs || 0; mat[l] += x.mat || 0;
-      while (mi[l] < WAY_MATURE.length && mat[l] >= WAY_MATURE[mi[l]]) { ev.push({ d, ico:'mature', t:`${WAY_MATURE[mi[l]]} gefestigte Sätze ${LANG[l].deName}` }); mi[l]++; }
+      while (mi[l] < WAY_MATURE.length && mat[l] >= WAY_MATURE[mi[l]]) { ev.push({ d, ico:'mature', l, t:`${WAY_MATURE[mi[l]]} gefestigte Sätze` }); mi[l]++; }
     });
     while (ti.i < WAY_TASKS.length && n >= WAY_TASKS[ti.i]) { ev.push({ d, ico:'tasks', t:`${WAY_TASKS[ti.i].toLocaleString('de-DE')} Aufgaben` }); ti.i++; }
     while (hi.i < WAY_HOURS.length && secs >= WAY_HOURS[hi.i] * 3600) { ev.push({ d, ico:'time', t:`${WAY_HOURS[hi.i]} ${WAY_HOURS[hi.i] === 1 ? 'Stunde' : 'Stunden'} geübt` }); hi.i++; }
@@ -49,42 +49,50 @@ function wayEvents(){
   }
   ['sv', 'es'].forEach(l => {
     const firstOwn = (DB.own[l] || []).filter(o => o.created).map(o => o.created).sort()[0];
-    if (firstOwn) ev.push({ d:firstOwn, ico:'own', t:`Erster eigener Satz ${LANG[l].deName}` });
+    if (firstOwn) ev.push({ d:firstOwn, ico:'own', l, t:'Erster eigener Satz' });
     // Wortschatz und Themen erst seit den erweiterten Tagesständen
     // Nur Schwellen, die zwischen zwei Erfassungen überschritten wurden. Was schon beim ersten Erfassen erreicht war, hat kein bekanntes Datum.
     let prev = null;
     Object.keys(DB.snap || {}).sort().forEach(d => {
       const x = DB.snap[d][l]; if (!x || x.w == null) return;
       if (prev) {
-        WAY_WORDS.forEach(th => { if (prev.w < th && x.w >= th) ev.push({ d, ico:'words', t:`${th} verschiedene Wörter ${LANG[l].deName}` }); });
+        WAY_WORDS.forEach(th => { if (prev.w < th && x.w >= th) ev.push({ d, ico:'words', l, t:`${th} verschiedene Wörter` }); });
         Object.keys(x.t || {}).forEach(tr => {
           const total = BANK[l].filter(i => i.trap === tr).length, meta = trapMeta(l, tr);
-          if (meta && total >= 6 && (prev.t[tr] || 0) / total < 0.5 && x.t[tr] / total >= 0.5) ev.push({ d, ico:'topic', t:`„${meta.label}“ zur Hälfte gefestigt` });
+          if (meta && total >= 6 && (prev.t[tr] || 0) / total < 0.5 && x.t[tr] / total >= 0.5) ev.push({ d, ico:'topic', l, t:`„${meta.label}“ zur Hälfte gefestigt` });
         });
       }
       prev = { w:x.w, t:x.t || {} };
     });
     const texts = (DB.texts || []).filter(x => x.lang === l).map(x => x.date).sort();
-    if (texts.length) ev.push({ d:texts[0], ico:'write', t:`Erster Text ${LANG[l].deName}` });
-    if (texts.length >= 10) ev.push({ d:texts[9], ico:'write', t:`10 Texte ${LANG[l].deName}` });
+    if (texts.length) ev.push({ d:texts[0], ico:'write', l, t:'Erster eigener Text' });
+    if (texts.length >= 10) ev.push({ d:texts[9], ico:'write', l, t:'10 eigene Texte' });
   });
   ev.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
   // Nächste Etappen
   const next = [];
-  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const m = matureCount(l), nx = WAY_MATURE.find(x => x > m); if (nx) next.push({ ico:'mature', t:`${nx} gefestigte Sätze ${LANG[l].deName}`, rest:`noch ${nx - m}` }); });
+  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const m = matureCount(l), nx = WAY_MATURE.find(x => x > m); if (nx) next.push({ ico:'mature', l, t:`${nx} gefestigte Sätze`, rest:`noch ${nx - m}` }); });
   const nh = WAY_HOURS.find(x => x * 3600 > secs); if (nh) next.push({ ico:'time', t:`${nh} Stunden geübt`, rest:`noch ${fmtMin(nh * 3600 - secs).replace(/\.$/, '')}` });
-  return { done:ev, next:next.slice(0, 3) };
+  return { done:ev, next };
 }
-// Gleiche Punkte, Farbe nach Art der Etappe
-const WAY_CAT = { start:'a', mature:'a', words:'a', topic:'a', tasks:'b', time:'b', streak:'c', own:'d', write:'d' };
+// Dein Weg als Gleisplan: links Schwedisch, Mitte Gemeinsames (Serien, Aufgaben, Stunden), rechts Spanisch.
+// Gleiche Zeitachse für alle drei Spuren, so sieht man parallelen und unterschiedlichen Fortschritt. Oben die nächsten Ziele als offene Punkte.
+const WAY_LANES = ['sv', 'x', 'es'];
 function wayHtml(){
   const w = wayEvents(); if (!w.done.length) return '';
-  const all = !!S.wayAll, list = all ? w.done.slice().reverse() : w.done.slice(-5).reverse();
+  const firstOf = l => { const d = Object.keys(DB.log || {}).filter(x => (dayLog(x, l).n || 0) > 0).sort()[0]; return d || null; };
+  const start = { sv:firstOf('sv'), es:firstOf('es'), x:w.done[0].d };
+  const lanes = WAY_LANES.filter(k => start[k]);
+  const all = !!S.wayAll, list = all ? w.done.slice().reverse() : w.done.slice(-6).reverse();
   const fmtD = d => { const x = dateOf(d); return `${x.getDate()}. ${MONTHS[x.getMonth()]} ${x.getFullYear()}`; };
+  const rail = (lane, d, open) => `<span class="rail" style="grid-template-columns:repeat(${lanes.length}, 16px)" aria-hidden="true">${lanes.map(k => `<span class="rl rl-${k}${d == null || d >= start[k] ? ' on' : ''}">${k === lane ? `<i class="${open ? 'open' : ''}"></i>` : ''}</span>`).join('')}</span>`;
+  const label = k => (k === 'x' ? 'gemeinsam' : LANG[k].deName);
+  const nextRows = w.next.filter(x => lanes.includes(x.l || 'x')).map(x => `<li class="wl wl-next">${rail(x.l || 'x', null, true)}<span class="tl-t">${esc(x.t)}${x.l ? ` <span class="wl-lang">${LANG[x.l].deName}</span>` : ''}</span><span class="tl-d">${esc(x.rest)}</span></li>`).join('');
+  const rows = list.map(x => `<li class="wl">${rail(x.l || 'x', x.d)}<span class="tl-t">${esc(x.t)}${x.l ? ` <span class="wl-lang">${LANG[x.l].deName}</span>` : ''}</span><span class="tl-d">${fmtD(x.d)}</span></li>`).join('');
   return `<h2 class="grp">Dein Weg</h2><div class="chart way">
-    ${w.next.length ? `<p class="way-next">Als Nächstes: ${w.next.map(x => `${esc(x.t)} <span class="dim">(${esc(x.rest)})</span>`).join(' · ')}</p>` : ''}
-    <ol class="tl">${list.map(x => `<li><span class="tl-i c-${WAY_CAT[x.ico] || 'b'}" aria-hidden="true"></span><span class="tl-t">${esc(x.t)}</span><span class="tl-d">${fmtD(x.d)}</span></li>`).join('')}</ol>
-    ${w.done.length > 5 ? `<button type="button" class="link" data-a="wayall">${all ? 'Weniger zeigen' : `Ganzen Weg zeigen (${w.done.length} Etappen)`}</button>` : ''}
+    <p class="legend wleg">${lanes.map(k => `<span><i class="sq rl-${k}-sq"></i>${label(k)}</span>`).join('')}</p>
+    <ol class="wrail">${nextRows}${rows}</ol>
+    ${w.done.length > 6 ? `<button type="button" class="link" data-a="wayall">${all ? 'Weniger zeigen' : `Ganzen Weg zeigen (${w.done.length} Etappen)`}</button>` : ''}
   </div>`;
 }
 // Themenraster: je Thema Anteil gefestigt und Veränderung seit etwa 30 Tagen

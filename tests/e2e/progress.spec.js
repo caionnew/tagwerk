@@ -7,8 +7,8 @@ test('Überblick: Kalender beginnt bei heute, Tageszeit und Etappen', async ({ p
   const sc = await page.$eval('#calscroll', e => ({ left:Math.round(e.scrollLeft), max:e.scrollWidth - e.clientWidth }));
   expect(Math.abs(sc.left - sc.max)).toBeLessThanOrEqual(1);
   await expect(page.locator('svg.hours')).toBeVisible();
-  await expect(page.locator('.tl li').first()).toBeVisible();
-  await expect(page.locator('.way-next')).toContainText('Als Nächstes');
+  await expect(page.locator('.wrail .wl').first()).toBeVisible();
+  await expect(page.locator('.wrail .wl-next').first()).toBeVisible();
 });
 test('Sprachreiter: Kennzahlen, Themenraster und Fehlerquellen', async ({ page }) => {
   await seed(page, richDB('sv'));

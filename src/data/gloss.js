@@ -147,6 +147,11 @@ ansvarig||verantwortlich; ansvarig för = verantwortlich für
 projektet|projekt|das Projekt
 består|bestå|besteht; bestå av = bestehen aus
 delar|del|Teile
+ditt|din|dein (bei ett-Wörtern)
+dina|din|deine (Plural)
+vår||unser (bei en-Wörtern)
+vårt|vår|unser (bei ett-Wörtern)
+våra|vår|unsere (Plural)
 väntar|vänta|wartet; vänta på = warten auf
 rädd||ängstlich; rädd för = Angst vor
 intresserad||interessiert; intresserad av = interessiert an
@@ -677,6 +682,10 @@ paquete||Paket
 salsa||Salsa (Tanz); auch: Soße
 vecinos|vecino|Nachbarn
 verano||Sommer
+bonito||hübsch, schön
+viejo||alt
+perfecto||perfekt
+típico||typisch
 quejé|quejarse|ich beschwerte mich; quejarse de = sich beschweren über
 despedimos|despedirse|wir verabschiedeten uns; despedirse de = sich verabschieden von
 nuestros|nuestro|unsere
@@ -704,6 +713,14 @@ intentarlo|intentar|es versuchen
 acabo|acabar|ich beende; acabar de = gerade getan haben
 huele|oler|riecht; oler a = riechen nach
 limón||Zitrone
+nuestro||unser
+nuestra|nuestro|unsere
+nuestros|nuestro|unsere (männlich, Mehrzahl)
+nuestras|nuestro|unsere (weiblich, Mehrzahl)
+estos|este|diese (männlich, Mehrzahl)
+ese||dieser (da)
+esos|ese|diese (da, männlich, Mehrzahl)
+esas|ese|diese (da, weiblich, Mehrzahl)
 vecina|vecino|Nachbarin
 aquel||jener
 tardamos|tardar|wir brauchten (Zeit); tardar en = brauchen, um
@@ -1462,7 +1479,14 @@ function buildGloss(){
 }
 function lookupWord(lang, w){
   const k = String(w || '').toLowerCase().replace(/^[¿¡"„“«(]+|[.!?,;"„“”»)…]+$/g, '');
-  return GLOSS[lang][k] || GLOSS[lang][k.replace(/:/g, '')] || null;
+  const hit = GLOSS[lang][k] || GLOSS[lang][k.replace(/:/g, '')];
+  if (hit || lang !== 'es') return hit || null;
+  // Spanisch: Mehrzahl und weibliche Formen auf die Grundform zurückführen (casas → casa, ciudades → ciudad, nuevas → nuevo)
+  for (const b of [k.replace(/s$/, ''), k.replace(/es$/, ''), k.replace(/as$/, 'o'), k.replace(/a$/, 'o')]) {
+    const e = b !== k && GLOSS.es[b];
+    if (e) return Object.assign({}, e, { l:e.l || b });
+  }
+  return null;
 }
 async function wiktionary(lang, w){
   const word = String(w).toLowerCase();

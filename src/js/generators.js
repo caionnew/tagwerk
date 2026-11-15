@@ -528,13 +528,45 @@ function genTextGap(lang){
     return textGapData(lang, gapSentences(TEXTS[lang][0])[0], TEXTS[lang][0].title);
   };
 }
+
+/* ---------- Begleiter: min/mitt/mina, den här + bestimmte Form; nuestro/a/os/as, este/esa, Adjektiv-Übereinstimmung ---------- */
+const POSS_SV = [['mein', 'min', 'mitt', 'mina'], ['dein', 'din', 'ditt', 'dina'], ['unser', 'vår', 'vårt', 'våra']];
+function genDetSv(){
+  const type = pick(['poss', 'poss', 'possnoun', 'posspl', 'dem', 'demnoun', 'dempl']);
+  if (type === 'poss' || type === 'possnoun') {
+    const [w, g, de] = pick(GENUS.sv), parts = de.split(' '), P = pick(POSS_SV), det = g === 'ett' ? P[2] : P[1];
+    const deL = `${P[0]}${parts[0] === 'die' ? 'e' : ''} ${parts.slice(1).join(' ')}`;
+    if (type === 'poss') return { prompt:`___ ${w}`, deLine:deL, answers:[det], label:'Welches Possessivpronomen?', hint:P[0], gap:true, full:`${det} ${w}`, note:`${w} ist ein ${g}-Wort, also ${det} ${w}.` };
+    return { prompt:`${det} ___`, deLine:deL, answers:[w], label:'Welche Form nach dem Possessivpronomen?', hint:w, gap:true, full:`${det} ${w}`, note:`Nach min, mitt und mina steht die unbestimmte Form: ${det} ${w}.` };
+  }
+  const [de, gde, dePl, sv, art, def, pl, defPl] = pick(NOUNS), d = art === 'ett' ? 'det' : 'den', da = { m:'dieser', f:'diese', n:'dieses' }[gde];
+  if (type === 'posspl') { const P = pick(POSS_SV); return { prompt:`___ ${pl}`, deLine:`${P[0]}e ${dePl}`, answers:[P[3]], label:'Welches Possessivpronomen?', hint:P[0] + 'e', gap:true, full:`${P[3]} ${pl}`, note:`Im Plural immer ${P[3]}, ob en- oder ett-Wort.` }; }
+  if (type === 'dem') return { prompt:`___ här ${def}`, deLine:`${da} ${de} hier`, answers:[d], label:'den, det oder de?', hint:'den / det / de', gap:true, full:`${d} här ${def}`, note:`${sv} ist ein ${art}-Wort, also ${d} här ${def}.` };
+  if (type === 'dempl') return { prompt:`___ här ${defPl}`, deLine:`diese ${dePl} hier`, answers:['de'], label:'den, det oder de?', hint:'den / det / de', gap:true, full:`de här ${defPl}`, note:'Im Plural: de här und die bestimmte Pluralform.' };
+  return { prompt:`${d} här ___`, deLine:`${da} ${de} hier`, answers:[def], label:'Welche Form nach den/det här?', hint:sv, gap:true, full:`${d} här ${def}`, note:`Anders als im Deutschen steht nach den/det här die bestimmte Form: ${d} här ${def}.` };
+}
+const POSS_ES = [['mein', 'mi', 'mi', 'mis', 'mis'], ['dein', 'tu', 'tu', 'tus', 'tus'], ['unser', 'nuestro', 'nuestra', 'nuestros', 'nuestras']];
+const DEM_ES = [['dieser hier', 'este', 'esta', 'estos', 'estas'], ['dieser da', 'ese', 'esa', 'esos', 'esas']];
+const ADJ_ES = ['nuevo', 'viejo', 'pequeño', 'bonito', 'perfecto', 'típico'];
+const NO_PL_ES = ['leche', 'sal', 'sangre', 'gente', 'mar', 'crisis', 'lunes', 'miedo'];
+function genDetEs(){
+  const [w, g, de, extra] = pick(GENUS.es.filter(x => x[0] !== 'agua')), fem = g === 'la';
+  const pl = /[aeiouáéó]$/.test(w) && !NO_PL_ES.includes(w) && Math.random() < 0.4, noun = pl ? w + 's' : w, k = 1 + (fem ? 1 : 0) + (pl ? 2 : 0);
+  const deL = pl ? `${de}, Mehrzahl` : de, why = `${w} ist ${fem ? 'weiblich' : 'männlich'}${pl ? ', hier in der Mehrzahl' : ''}.${extra ? ' ' + extra : ''}`;
+  const type = pick(['poss', 'dem', 'adj', 'adj']);
+  if (type === 'poss' || type === 'dem') { const P = pick(type === 'poss' ? POSS_ES : DEM_ES), f = P[k]; return { prompt:`___ ${noun}`, deLine:deL, answers:[f], label:'Welche Form passt?', hint:P[0], gap:true, full:`${f} ${noun}`, note:`${why} Also ${f} ${noun}.` }; }
+  const a = pick(ADJ_ES), af = a.replace(/o$/, fem ? 'a' : 'o') + (pl ? 's' : ''), art = pl ? (fem ? 'las' : 'los') : g;
+  return { prompt:`${art} ${noun} ___`, deLine:deL, answers:[af], label:'Adjektiv anpassen', hint:a, gap:true, full:`${art} ${noun} ${af}`, note:`${why} Also ${af}.` };
+}
 const GENS = {
-  np:{ lang:'sv', trap:'species', short:'Adjektivendungen', label:'Adjektivendungen & bestimmte Form', make:genNP },
+  // Abwechslung: Adjektivendungen und Begleiter (min/mitt/mina, den här + bestimmte Form) im selben Thema
+  np:{ lang:'sv', trap:'species', short:'Adjektivendungen', label:'Adjektivendungen & bestimmte Form', make:() => (Math.random() < 0.4 ? genDetSv() : genNP()) },
   tempus:{ lang:'sv', trap:'tempus', short:'Zeitformen', label:'Präteritum oder Perfekt', make:genTempus },
   inte:{ lang:'sv', trap:'bisats', short:'Wortstellung', label:'Stellung von „inte“, „aldrig“ & Co.', make:genInte },
   conj:{ lang:'es', trap:'konjugation', short:'Verbformen', label:'Verbformen', make:genConj },
   serestar:{ lang:'es', trap:'serestar', short:'ser/estar', label:'ser oder estar', make:genSerEstar },
   porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara },
+  det_es:{ lang:'es', trap:'concord', short:'Übereinstimmung', label:'Begleiter & Adjektive anpassen', make:genDetEs },
   verbind_sv:{ lang:'sv', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_SV) },
   verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) },
   prep_sv:{ lang:'sv', trap:'prep', short:'Präpositionen', label:'Verben mit Präposition', make:genPrep(PREP_SV) },

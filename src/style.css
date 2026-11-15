@@ -715,3 +715,12 @@ button.erow:active{ background:var(--accent-soft); }
 .wchip{ display:inline-flex; gap:6px; align-items:baseline; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:12px; padding:7px 11px; font-size:14px; }
 .wchip b{ font-family:var(--serif); font-weight:600; font-size:16px; }
 .wchip span{ color:var(--muted); }
+
+.tmode{ margin:2px 0 10px; }
+.tag.on{ background:var(--accent-soft); border-color:transparent; color:var(--accent-ink); }
+.rs-s.ev{ text-decoration:underline; text-decoration-color:var(--ok); text-decoration-thickness:2px; text-underline-offset:5px; }
+.tgate{ margin:8px 0 6px; }
+.tgate .primary{ width:100%; }
+.tq-src{ margin:12px 0 0; font-family:var(--serif); font-size:16px; line-height:1.5; }
+.tq-src .lbl-s{ display:block; margin-bottom:2px; }
+.popsay{ margin:12px 0 0; }

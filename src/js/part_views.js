@@ -757,6 +757,7 @@ function popupHtml(){
   return `<div class="popov" data-a="popclose"></div><div class="pop" role="dialog" aria-label="Wörterbuch">
     <div class="pophead"><span class="popw" lang="${P.lang}">${esc(P.w)}</span>${speakBtn(P.w, P.lang)}</div>
     ${body}
+    ${P.si != null && S.view === 'text' ? `<button type="button" class="ghost icon popsay" data-a="tsay" data-i="${P.si}">${ICON} Ganzen Satz anhören</button>` : ''}
     <div class="popfoot"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'} öffnen</button><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
   </div>`;
 }

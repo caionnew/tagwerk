@@ -7,24 +7,33 @@ const fakeSpeech = () => {
     cancel(){ cur = null; }, getVoices:() => [{ lang:'sv-SE' }, { lang:'es-ES' }, { lang:'de-DE' }], onvoiceschanged:null } });
   window.SpeechSynthesisUtterance = function(t){ this.text = t; };
 };
-test('Lesen: antippbare Wörter landen in „Nachgeschlagen“, Fragen einzeln, Ergebnis gespeichert, Satz übernehmen', async ({ page }) => {
+test('Lesen: Fragen erst nach dem Text, einzeln mit Textstelle, Wörter in „Nachgeschlagen“, Satz anhören aus dem Wörterbuch', async ({ page }) => {
+  await page.addInitScript(fakeSpeech);
   await seed(page, freshDB('sv'));
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=texts]');
+  await expect(page.locator('[data-a=tdefmode][data-v=read]')).toHaveAttribute('aria-checked', 'true');
   await page.click('[data-a=textopen][data-id=vasa]');
   await expect(page.locator('.rtitle')).toHaveText('Regalskeppet Vasa');
+  await expect(page.locator('.tq')).toHaveCount(0);
   expect(await page.locator('.reader [data-a=lookup]').count()).toBeGreaterThan(50);
   await page.click('.reader [data-a=lookup][data-w=krigsskeppet]');
-  await page.click('[data-a=popclose] >> nth=0');
+  await page.click('[data-a=tsay]');
+  await expect.poll(() => page.evaluate(() => window.__said[0] || '')).toBe('Den 10 augusti 1628 seglade det nya krigsskeppet Vasa ut från Stockholm.');
+  await page.click('[data-a=tplayall]');
   await expect(page.locator('.wtray .wchip')).toHaveCount(1);
+  await page.click('[data-a=tquiz]');
   await expect(page.locator('.tq-head')).toContainText('Frage 1 von 3');
   await page.click('[data-a=tpick][data-k="0"][data-i="0"]');
-  await expect(page.locator('.tq-head')).toContainText('Frage 2 von 3');
+  await expect(page.locator('.tq-src')).toContainText('Skeppet var helt enkelt för smalt och för högt.');
+  await page.click('[data-a=tqnext]');
   await page.click('[data-a=tpick][data-k="1"][data-i="0"]');
-  await expect(page.locator('.tq-head')).toContainText('Frage 3 von 3');
+  await page.click('[data-a=tqnext]');
   await page.click('[data-a=tpick][data-k="2"][data-i="1"]');
+  await page.click('[data-a=tqnext]');
   await expect(page.locator('.tdone-h')).toHaveText('2 von 3 richtig.');
+  await expect(page.locator('.reader .rs-s.ev')).toHaveCount(3);
   await page.waitForTimeout(300);
   let db = await stored(page);
   expect(db.used.texts['sv:vasa'].best).toBe(2);
@@ -38,32 +47,34 @@ test('Lesen: antippbare Wörter landen in „Nachgeschlagen“, Fragen einzeln, 
   await page.click('.backbar [data-a=tab]');
   await expect(page.locator('[data-a=textopen][data-id=vasa]')).toContainText('2 von 3');
 });
-test('Nur hören: Text verschwommen, Satz für Satz vorgelesen, Antippen deckt auf, nach den Fragen alles sichtbar', async ({ page }) => {
+test('Nur hören: vorher gewählt und gemerkt, Text verschwommen, Antippen spielt und deckt dann auf, Fragen kommen von selbst', async ({ page }) => {
   await page.addInitScript(fakeSpeech);
   await seed(page, freshDB('es'));
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=texts]');
+  await page.click('[data-a=tdefmode][data-v=listen]');
   await page.click('[data-a=textopen][data-id=siesta]');
-  await page.click('[data-a=thide]');
   const total = await page.locator('.reader .rs-s').count();
   await expect(page.locator('.reader .rs-s.veil')).toHaveCount(total);
-  await expect.poll(() => page.evaluate(() => window.__said.length), { timeout:8000 }).toBeGreaterThanOrEqual(3);
+  await expect.poll(() => page.evaluate(() => window.__said.length), { timeout:8000 }).toBeGreaterThanOrEqual(2);
   const said = await page.evaluate(() => window.__said);
   expect(said[0]).toBe('Mucha gente cree que en España todo el mundo duerme la siesta.');
   expect(said[1]).toBe('No es verdad.');
-  await page.click('[data-a=tplayall]');
-  const n = await page.evaluate(() => window.__said.length);
-  await page.waitForTimeout(1200);
-  expect(await page.evaluate(() => window.__said.length)).toBe(n);
+  // Erstes Antippen: Satz 2 noch einmal hören, zweites: aufdecken
+  await page.click('.reader [data-a=treveal][data-i="1"]');
+  await expect.poll(() => page.evaluate(() => window.__said.filter(x => x === 'No es verdad.').length)).toBeGreaterThanOrEqual(2);
+  await expect(page.locator('.reader .rs-s.veil')).toHaveCount(total);
   await page.click('.reader [data-a=treveal][data-i="1"]');
   await expect(page.locator('.reader .rs-s.veil')).toHaveCount(total - 1);
-  for (let k = 0; k < 3; k++) { await page.click(`[data-a=tpick][data-k="${k}"][data-i="0"]`); }
+  await expect(page.locator('.tq')).toBeVisible({ timeout:20000 });
+  for (let k = 0; k < 3; k++) { await page.click(`[data-a=tpick][data-k="${k}"][data-i="0"]`); await page.click('[data-a=tqnext]'); }
   await expect(page.locator('.tdone-h')).toHaveText('Alles verstanden.');
   await expect(page.locator('.reader .rs-s.veil')).toHaveCount(0);
-  await expect(page.locator('.reader')).toContainText('veinte minutos');
   await page.waitForTimeout(300);
-  expect((await stored(page)).used.texts['es:siesta'].heard).toBe(true);
+  const db = await stored(page);
+  expect(db.used.texts['es:siesta'].heard).toBe(true);
+  expect(db.settings.textMode).toBe('listen');
 });
 test('Wikipedia-Fundstück: Artikel mit Quelle und Lizenz; ohne Netz eine klare Meldung', async ({ page }) => {
   let fail = false;

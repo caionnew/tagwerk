@@ -17,10 +17,13 @@ test('Länge 70 bis 200 Wörter, jeder Satz endet mit Satzzeichen', () => {
     for (const s of textSentences(t.body).flat()) assert.match(s, /[.!?]$/, `${t.id}: ${s}`);
   }
 });
-test('drei Fragen mit drei verschiedenen Antworten, übernehmbare Sätze stehen im Text', () => {
+test('drei Fragen mit drei verschiedenen Antworten und belegender Textstelle, übernehmbare Sätze stehen im Text', () => {
   for (const lang of ['sv', 'es']) for (const t of TEXTS[lang]) {
     assert.equal(t.q.length, 3, t.id);
-    for (const [q, opts] of t.q) { assert.ok(q.endsWith('?'), q); assert.equal(opts.length, 3); assert.equal(new Set(opts).size, 3, q); }
+    for (const [q, opts, src] of t.q) {
+      assert.ok(q.endsWith('?'), q); assert.equal(opts.length, 3); assert.equal(new Set(opts).size, 3, q);
+      assert.ok(src && textSentences(t.body).flat().some(x => x.includes(src)), `${t.id}: Textstelle zu „${q}“ fehlt im Text`);
+    }
     assert.ok(t.keep.length >= 2, t.id);
     const sents = textSentences(t.body).flat();
     for (const [s, de] of t.keep) { assert.ok(sents.includes(s), `${t.id}: „${s}“ ist kein ganzer Satz im Text`); assert.ok(de.length > 5); }

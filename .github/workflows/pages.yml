@@ -1,5 +1,6 @@
 # Veröffentlicht dist/ auf GitHub Pages, wenn alle Einheitstests bestehen.
 # Einmalig einstellen: Settings → Pages → Source: „GitHub Actions“.
+# Schlägt ein Lauf fehl: unter Actions → Pages → „Run workflow“ neu starten (oder einfach den nächsten Patch einspielen).
 name: Pages
 on:
   push: { branches: [main] }
@@ -8,16 +9,19 @@ permissions: { contents: read, pages: write, id-token: write }
 concurrency: { group: pages, cancel-in-progress: true }
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: { name: github-pages, url: '${{ steps.deployment.outputs.page_url }}' }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with: { node-version: 22, cache: npm }
       - run: npm ci
       - run: npm run build
       - run: npm run test:unit
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: dist }
+      # Eigener Artefaktname je Versuch: Bei „Re-run jobs“ lädt der zweite Versuch sonst ein zweites „github-pages“
+      # in denselben Lauf, und deploy-pages bricht mit „Multiple artifacts named github-pages“ ab.
+      - uses: actions/upload-pages-artifact@v5
+        with: { path: dist, name: 'github-pages-${{ github.run_attempt }}' }
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
+        with: { artifact_name: 'github-pages-${{ github.run_attempt }}' }

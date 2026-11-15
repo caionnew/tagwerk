@@ -71,6 +71,8 @@ printf '#!%s/bin/sh\nexec sh "$HOME/tagwerk/tools/einspielen.sh"\n' "$PREFIX" > 
 
 `tagwerk-….patch` herunterladen, Termux öffnen, `tagwerk` eintippen (die letzte Zeile der Einrichtung legt diesen Befehl an; ohne ihn geht `sh ~/tagwerk/tools/einspielen.sh`). Das Skript `tools/einspielen.sh` spielt die neueste Datei aus „Downloads“ ein, veröffentlicht und legt sie danach in `Downloads/tagwerk-eingespielt/` ab. Passt ein Update nicht zum Stand auf GitHub, ändert es nichts und sagt das.
 
+**Wenn „Pages“ rot ist:** unter Actions → Pages → „Run workflow“ einen neuen Lauf starten, oder einfach das nächste Update einspielen. „Re-run jobs“ bei einem fehlgeschlagenen Lauf funktioniert seit 24.11.1 ebenfalls.
+
 Für Claude: Ist das Repository öffentlich, reicht der Link (`https://github.com/DEIN-NAME/tagwerk`), um den aktuellen Stand zu holen; ein ZIP ist dann nicht mehr nötig.
 
 ## Was nur in der installierten App geht

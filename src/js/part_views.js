@@ -754,7 +754,8 @@ function viewSettings(){
     ${['sv', 'es'].map(l => `<button type="button" class="row danger${S.armed === 'reset:' + l ? ' armed' : ''}" data-a="reset" data-l="${l}"><span class="txt"><span class="rt">${S.armed === 'reset:' + l ? 'Wirklich zurücksetzen?' : `${LANG[l].deName} zurücksetzen`}</span><span class="rd">${S.armed === 'reset:' + l ? 'Löscht Fortschritt, Statistik und gesammelte Sätze dieser Sprache. Nicht rückgängig zu machen.' : 'Löscht Fortschritt und gesammelte Sätze dieser Sprache'}</span></span></button>`).join('')}
   </div>
   <h2 class="grp">Über Tagwerk</h2>
-  <p class="src" style="margin-top:0">Die Wiederholungen plant FSRS-6, dasselbe Verfahren wie in Anki. Lernminuten werden pro Aufgabe gemessen, Pausen über zwei Minuten zählen nicht. Internet brauchen nur die Beispielsätze von Tatoeba, die Textprüfung mit LanguageTool und das Wörterbuch.</p>`;
+  <p class="src" style="margin-top:0">Die Wiederholungen plant FSRS-6, dasselbe Verfahren wie in Anki. Lernminuten werden pro Aufgabe gemessen, Pausen über zwei Minuten zählen nicht. Internet brauchen nur die Beispielsätze von Tatoeba, die Textprüfung mit LanguageTool und das Wörterbuch.</p>
+  <p class="src">Version ${esc(APP_VERSION)}</p>`;
 }
 function render(){
   if ((S.view === 'run' || S.view === 'runDone') && !S.run) S.view = 'home';

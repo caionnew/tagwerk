@@ -4,7 +4,7 @@ Tagwerk ist eine einzelne HTML-Datei ohne Framework und ohne Laufzeit-Abhängigk
 
 ## Build
 
-`tools/build.js` setzt `src/index.html` (Gerüst mit Platzhaltern), `src/style.css` und alle Skripte in fester Reihenfolge zu `dist/index.html` zusammen, prüft das JavaScript auf Syntaxfehler und kopiert `public/` dazu. Die Cache-Version im Service Worker wird aus Paketversion und Inhalts-Hash gebildet (`tagwerk-24.0.0-1f89fd26`); jede inhaltliche Änderung erzeugt eine neue Version, und installierte Apps zeigen „Eine neue Version ist da“.
+`tools/build.js` setzt `src/index.html` (Gerüst mit Platzhaltern), `src/style.css` und alle Skripte in fester Reihenfolge zu `dist/index.html` zusammen, prüft das JavaScript auf Syntaxfehler und kopiert `public/` dazu. Die Cache-Version im Service Worker wird aus Paketversion und Inhalts-Hash gebildet (`tagwerk-24.0.0-1f89fd26`); jede inhaltliche Änderung erzeugt eine neue Version, und installierte Apps zeigen „Eine neue Version ist da“. Symbole bekommen einen Inhalts-Hash im Dateinamen (`icon-512.89186482.png`), weil Firefox Symbole pro Adresse zwischenspeichert; die Verweise in Manifest, Service Worker und `index.html` setzt der Build. Die Versionsnummer aus `package.json` ersetzt `'@VERSION@'` (`APP_VERSION`) und steht unter Einstellungen.
 
 Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihenfolge steht in `ORDER` in `tools/build.js`: Daten und Generatoren zuerst, Ansichten und Ereignisse zuletzt.
 

@@ -103,6 +103,8 @@ function trapMeta(lang, id){
   return TRAPS[lang].find(t => t.id === id);
 }
 
+// Versionsnummer, setzt tools/build.js aus package.json ein
+const APP_VERSION = '@VERSION@';
 /* ---------- Speicher ---------- */
 const KEY = 'tagwerk-offline-v1';
 const freshDB = () => ({ v:3, settings:{ size:'normal', lang:'sv', refill:true }, used:{}, tatFetch:{}, st:{}, own:{ sv:[], es:[] }, tat:{ sv:[], es:[] }, log:{}, done:{}, gen:{}, run:null });
@@ -119,7 +121,11 @@ function load(){
       DB.tat = Object.assign({ sv:[], es:[] }, d.tat || {});
       migrateStates();
     }
-  } catch (e) { note('Gespeicherte Daten ließen sich nicht lesen. Spiel ein Backup ein, falls du eines hast.', 'warn'); }
+  } catch (e) {
+    // Unlesbaren Stand zur Seite legen, bevor ein späteres Speichern ihn überschreibt
+    try { const raw = localStorage.getItem(KEY); if (raw) localStorage.setItem(KEY + '-unlesbar', raw); } catch (e2) {}
+    note('Gespeicherte Daten ließen sich nicht lesen. Spiel ein Backup ein, falls du eines hast.', 'warn');
+  }
 }
 function migrateStates(){
   const old = [0, 1, 2, 4, 8, 16, 32, 64];

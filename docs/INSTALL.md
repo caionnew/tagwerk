@@ -21,7 +21,7 @@ Fehlen auf dem Handy Knöpfe bei GitHub: im Browser-Menü ⋮ „Desktopwebsite�
 
 **Update:** Im Repository „Add file“ → „Upload files“, die neuen Dateien auswählen, „Commit changes“. Die alten werden ersetzt. Nach 1 bis 2 Minuten die App mit Internet öffnen. Erscheint „Eine neue Version ist da“, auf „Neu laden“ tippen. Die Cache-Version im Service Worker setzt der Build automatisch, du musst nichts von Hand ändern. Der Fortschritt bleibt, solange der Link gleich bleibt: Er gehört zur Adresse, nicht zu den Dateien.
 
-**Neues Symbol:** Android übernimmt ein geändertes Symbol nicht in eine schon installierte App. Backup exportieren, das alte Symbol vom Startbildschirm entfernen, den Link im selben Browser öffnen und neu installieren. Der Fortschritt hängt an der Adresse und am Browser, nicht am Symbol; ist er wider Erwarten weg, das Backup einspielen.
+**Neues Symbol:** Android übernimmt ein geändertes Symbol nicht in eine schon installierte App. Backup exportieren, das alte Symbol vom Startbildschirm entfernen, den Link **im selben Browser** öffnen und neu installieren. Der Fortschritt hängt an der Adresse und am Browser, nicht am Symbol. Firefox und Firefox Beta sind getrennte Browser mit getrenntem Speicher: Wer die App in Firefox Beta hatte und in Firefox neu installiert, startet dort leer, der alte Stand liegt weiter in Firefox Beta.
 
 ## Weg B: ganzes Repository mit automatischer Veröffentlichung
 

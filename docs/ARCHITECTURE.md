@@ -19,12 +19,14 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `data/fundstueck.js` | Feste, falsche Freunde, Begrüßung, Auswahl des Fundstücks |
 | `data/terms.js` | Fachbegriffe, `termify()` macht sie in Erklärungen antippbar |
 | `data/kultur.js`, `data/geo.js` | Land & Leute, Kartendaten |
+| `data/texte.js` | Lesetexte mit Fragen und übernehmbaren Sätzen |
 | `js/part_head.js` | Konstanten, Themen (`TRAPS`), Speicher, Satzbank-Aufbau, Tagesplan, Runden, Wiederholungssperre, Serie, Tagesstand |
 | `js/part_fsrs.js` | FSRS-6 (Wiederholungsplanung) |
 | `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Gleich nochmal“, „Meine ist auch richtig“ |
 | `js/part_online.js` | Tatoeba (Nachschub, Suche, Aufnahmen), LanguageTool |
 | `js/part_speech.js` | Vorlesen, Aufnahme, Aussprache prüfen |
 | `js/part_radio.js` | Hörrunde: Sätze nebenbei hören |
+| `js/part_read.js` | Lesen und Hören: Texte, Fragen, Wikipedia-Fundstück |
 | `js/part_modern.js` | Symbole, Vibration, Teilen, Schnellzugriffe |
 | `js/part_stats.js` | Fehlerquellen und Fehlerart (Grammatik oder Wortschatz), Uhrzeiten, Wortschatz |
 | `js/part_long.js` | Dein Weg, Themenraster, Veränderung über 30 Tage |
@@ -62,7 +64,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 
 ## Online und offline
 
-Offline funktioniert alles außer: Nachschub und Suche bei Tatoeba, Textprüfung mit LanguageTool, Wiktionary-Erklärungen für unbekannte Wörter, Aussprache prüfen (Spracherkennung von Chrome). Diese Dienste werden nur bei einer Aktion angefragt und nie zwischengespeichert. Die App lädt keine fremden Schriften, Skripte oder Tracker.
+Offline funktioniert alles außer: Wikipedia-Fundstück, Nachschub und Suche bei Tatoeba, Textprüfung mit LanguageTool, Wiktionary-Erklärungen für unbekannte Wörter, Aussprache prüfen (Spracherkennung von Chrome). Diese Dienste werden nur bei einer Aktion angefragt und nie zwischengespeichert. Die App lädt keine fremden Schriften, Skripte oder Tracker.
 
 ## Tests
 

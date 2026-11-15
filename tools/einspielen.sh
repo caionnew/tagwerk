@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Spielt das neueste Tagwerk-Update (tagwerk-*.patch aus dem Download-Ordner) ein und veröffentlicht es.
-# Gedacht für Termux auf dem Handy:  sh ~/tagwerk/tools/einspielen.sh   (oder kurz: tagwerk)
+# Gedacht für Termux auf dem Handy:  sh ~/tagwerk/tools/einspielen.sh   (oder kurz: tagwerk, siehe docs/INSTALL.md)
 # GitHub baut danach selbst (Workflow „Pages“); nach 1 bis 2 Minuten ist die neue Version online.
 set -e
 cd "$(dirname "$0")/.."

@@ -60,7 +60,7 @@ git rm -q --ignore-unmatch index.html manifest.webmanifest sw.js icon-192.png ic
 Z=$(ls -t ~/storage/downloads/tagwerk-repo*.zip | head -1)
 unzip -q -o "$Z" -d ~/twz && cp -r ~/twz/tagwerk/. . && rm -rf ~/twz
 git add -A && git commit -q -m "Quellcode" && git push
-echo "alias tagwerk='sh ~/tagwerk/tools/einspielen.sh'" >> ~/.bashrc
+printf '#!%s/bin/sh\nexec sh "$HOME/tagwerk/tools/einspielen.sh"\n' "$PREFIX" > "$PREFIX/bin/tagwerk" && chmod +x "$PREFIX/bin/tagwerk"
 ```
 
 `termux-setup-storage` fragt nach Zugriff auf Dateien: erlauben. `gh auth login` zeigt einen Code und eine Adresse (github.com/login/device): im Browser öffnen, Code eingeben, bestätigen. `-s workflow` ist nötig, weil das Repository Workflow-Dateien enthält; ohne diese Berechtigung lehnt GitHub den Push ab.
@@ -69,7 +69,7 @@ echo "alias tagwerk='sh ~/tagwerk/tools/einspielen.sh'" >> ~/.bashrc
 
 **Jedes weitere Update**
 
-`tagwerk-….patch` herunterladen, Termux öffnen, `tagwerk` eintippen. Das Skript `tools/einspielen.sh` spielt die neueste Datei aus „Downloads“ ein, veröffentlicht und legt sie danach in `Downloads/tagwerk-eingespielt/` ab. Passt ein Update nicht zum Stand auf GitHub, ändert es nichts und sagt das.
+`tagwerk-….patch` herunterladen, Termux öffnen, `tagwerk` eintippen (die letzte Zeile der Einrichtung legt diesen Befehl an; ohne ihn geht `sh ~/tagwerk/tools/einspielen.sh`). Das Skript `tools/einspielen.sh` spielt die neueste Datei aus „Downloads“ ein, veröffentlicht und legt sie danach in `Downloads/tagwerk-eingespielt/` ab. Passt ein Update nicht zum Stand auf GitHub, ändert es nichts und sagt das.
 
 Für Claude: Ist das Repository öffentlich, reicht der Link (`https://github.com/DEIN-NAME/tagwerk`), um den aktuellen Stand zu holen; ein ZIP ist dann nicht mehr nötig.
 

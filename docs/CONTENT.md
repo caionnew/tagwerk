@@ -67,3 +67,9 @@ Verb im Präsens, Rest des Satzes, erlaubte Adverbien, deutsche Verbformen (ich,
 ## Lesetipps (`READING` in `src/js/part_views.js`)
 
 Je Sprache drei Quellen, vom leichten Einstieg bis zur normalen Zeitung. Bedingungen: frei lesbar ohne Konto und Bezahlschranke, Texte auch außerhalb des Landes erreichbar, redaktionell verantwortet. Derzeit 8 Sidor, SVT Nyheter, Svenska Yle sowie Noticias fácil (Discapnet), RTVE Noticias, BBC Mundo.
+
+## Lesetexte (`src/data/texte.js`)
+
+Je Text: Kennung, Thema, Niveau (A2, B1, B2), Titel, Text (Absätze mit Leerzeile), drei Fragen auf Deutsch mit drei Antworten (die erste ist richtig, die App mischt) und mindestens zwei Sätze zum Übernehmen mit Übersetzung. Regeln: eigene Texte, keine übernommenen Absätze aus Zeitungen, Büchern oder Wikipedia; Fakten vorher prüfen; 70 bis 200 Wörter; jeder Satz endet mit Satzzeichen (Vorlesen und Hervorheben gehen satzweise); übernehmbare Sätze stehen wörtlich als ganzer Satz im Text. `tests/unit/texts.test.js` prüft das.
+
+Das Wikipedia-Fundstück lädt zur Laufzeit über `w/api.php` (generator=random, TextExtracts) und zeigt Quelle und Lizenz (CC BY-SA 4.0); in der App gespeichert wird davon nichts.

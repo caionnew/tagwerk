@@ -1,5 +1,5 @@
 /* ---------- Ansichten ---------- */
-const FOCUS_VIEWS = ['run', 'radio', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
+const FOCUS_VIEWS = ['run', 'radio', 'texts', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
 const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>` : esc(w)).join(' ');
 const MONTHS_FULL = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 function monthRecap(){
@@ -162,6 +162,8 @@ function viewExtra(){
   <div class="rows">${row('quick', 'Kurze Runde', seen < 3 ? '6 Grammatik-Aufgaben für den Anfang' : '6 Aufgaben aus bekannten Sätzen')}${g('genus', lang === 'sv' ? 'en oder ett?' : 'el oder la?', 'Das Genus in schnellen Runden', 'genus')}${g('time', 'Uhrzeiten & Zahlen', 'Für Bahnhof, Laden und Verabredung', 'time')}</div>
   <h2 class="grp">Grammatik</h2>
   <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', 'Endlos neue Aufgaben: ' + genIds(lang).map(x => GENS[x].short || GENS[x].label).join(', '))}${g('spot', 'Fehler finden', 'Ein typischer Fehler steckt im Satz', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
+  <h2 class="grp">Lesen und Hören</h2>
+  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', 'Ein zufälliger Artikel zum Lesen oder Hören (online)', '', 'book')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
   <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canListen() ? 'Mitsprechen und die Aussprache prüfen' : 'Anhören, mitsprechen, aufnehmen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>
@@ -791,6 +793,7 @@ function viewSettings(){
 }
 function render(){
   if (S.view !== 'radio' && S.radio) stopRadio();
+  if (S.view !== 'text' && S.text && S.text.playing) stopReading();
   if ((S.view === 'run' || S.view === 'runDone') && !S.run) S.view = 'home';
   const lang = (S.view === 'run' || S.view === 'runDone') ? S.run.lang : S.lang;
   document.body.dataset.lang = lang;
@@ -805,6 +808,8 @@ function render(){
     case 'runDone': h = viewRunDone(); break;
     case 'shadow': h = viewShadow(); break;
     case 'radio': h = viewRadio(); break;
+    case 'texts': h = viewTexts(); break;
+    case 'text': h = S.text && !S.text.id && !S.text.wiki ? viewWikiLoading() : viewText(); break;
     case 'write': h = viewWrite(); break;
     case 'own': h = viewOwn(); break;
     case 'tat': h = viewTat(); break;

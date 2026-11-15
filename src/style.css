@@ -663,3 +663,22 @@ button.erow:active{ background:var(--accent-soft); }
 .radio-ctl{ display:flex; gap:10px; margin-top:16px; align-items:stretch; }
 .radio-ctl .rbtn{ font-size:22px; min-width:64px; }
 .radio-ctl .rmain{ flex:1; font-size:18px; }
+
+/* Lesen und Hören */
+.tmodes{ margin:2px 0 14px; }
+.reader{ font-family:var(--serif); font-size:19px; line-height:1.65; margin-top:14px; }
+.reader p{ margin:0 0 14px; }
+.rs-s.on{ background:var(--accent-soft); border-radius:4px; box-shadow:0 0 0 3px var(--accent-soft); }
+.tplayer{ margin-top:4px; }
+.btnrow .ghost.on{ border-color:var(--accent); color:var(--accent-ink); }
+.sdots{ display:flex; flex-wrap:wrap; gap:5px; margin:4px 0 14px; }
+.sdots i{ width:9px; height:9px; border-radius:50%; background:var(--line); }
+.sdots i.done{ background:var(--accent); opacity:.55; }
+.sdots i.on{ background:var(--accent); }
+.tq{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:14px 16px; margin-bottom:10px; }
+.tq-q{ margin:0 0 10px; font-weight:650; }
+.tq-o{ display:flex; flex-direction:column; gap:8px; }
+.tq-b{ text-align:left; width:100%; font-weight:500; }
+.tq-b.right{ border-color:var(--ok); background:var(--ok-soft); color:var(--ink); opacity:1; }
+.tq-b.wrong{ border-color:var(--bad); background:var(--bad-soft); color:var(--ink); opacity:1; }
+.tq-score{ margin-top:14px; }

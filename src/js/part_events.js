@@ -89,6 +89,10 @@ document.addEventListener('click', e => {
       break;
     }
     case 'radio': startRadio(); break;
+    case 'texts': stopReading(); S.text = null; goView('texts'); break;
+    case 'textopen': openText(S.lang, b.dataset.id, 'read'); break;
+    case 'wiki': openWiki(); break;
+    case 'tmode': case 'tplayall': case 'tnext': case 'tprev': case 'tagain': case 'tslow': case 'tshow': case 'tpick': case 'tkeep': readCmd(b.dataset.a, b); break;
     case 'rplay': case 'rnext': case 'rprev': case 'rde': case 'rshow': case 'rslow': radioCmd(b.dataset.a); break;
     case 'shadow': {
       const ids = freshFirst(BANK[S.lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'shadow_' + S.lang, 8).map(i => i.id);

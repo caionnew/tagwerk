@@ -1,6 +1,6 @@
 // Wird beim Bauen durch tools/build.js ersetzt (Version + Inhalts-Hash), damit installierte Apps jede neue Fassung erkennen.
-const CACHE = 'tagwerk-24.2.0-b3c50aff';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const CACHE = 'tagwerk-dev';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

@@ -1,0 +1,69 @@
+# Inhalte pflegen
+
+Alle Inhalte liegen als Daten in `src/data/` und sind ohne Programmierkenntnisse erweiterbar. Nach jeder Änderung: `npm run build && npm test`. Die Tests prüfen Format, Doppelungen und ob jedes angezeigte Wort im Wörterbuch steht.
+
+## Satzbank (`src/data/content.js`)
+
+Je Sprache und Thema ein Textblock, eine Zeile pro Satz:
+
+```
+Deutsch | Zielsprache | Lücke | Hinweis | Alternativen
+Ich weiß, dass er heute nicht kommt. | Jag vet att han inte kommer idag. | | |
+Ich bleibe zu Hause, weil … | Jag stannar hemma eftersom jag inte mår bra. | | | Jag stannar hemma för att jag inte mår bra.
+```
+
+- **Lücke**: Wort für Lückenaufgaben; weitere richtige Füllungen mit `/` (`gick/for`). Muss im Zielsatz vorkommen.
+- **Hinweis**: nur, wenn er die Lösung nicht verrät (etwa die Grundform).
+- **Alternativen**: weitere richtige Übersetzungen, getrennt mit `;;`.
+- Die Kennung eines Satzes ist ein Hash des Zielsatzes. **Einen Zielsatz zu ändern, setzt seinen Lernstand zurück.** Tippfehler im Deutschen sind unkritisch.
+
+Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TRAPS` in `src/js/part_head.js`.
+
+## Wörterbuch (`src/data/gloss.js`)
+
+Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeugt `buildGloss()` selbst; Konjugationstabellen stehen in `src/js/generators.js`. Fehlt ein Wort, nennt `tests/unit/dictionary.test.js` es beim Namen.
+
+## Weitere Inhalte
+
+| Datei | Inhalt |
+|---|---|
+| `src/data/kultur.js` | Land & Leute: Kategorie, Titel (Zielsprache), Text, Beispielsatz, optional Varianten mit Flagge und Karte |
+| `src/data/terms.js` | Grammatik- und App-Begriffe zum Antippen; Suchmuster als regulärer Ausdruck |
+| `src/data/fundstueck.js` | Feste mit Datumsfunktion (bewegliche Feste über `easter()`), falsche Freunde, Begrüßungen |
+| `src/js/forms.js` | Genus-Wörter, Fehler-finden-Rahmen, Umbauen, Uhrzeiten |
+| `src/js/generators.js` | Grammatik-Generatoren (Adjektivendungen, Zeitformen, Konjugation, ser/estar, por/para) |
+| `src/data/geo.js` | Kartendaten, **nicht von Hand bearbeiten**: `npm run geo` erzeugt sie aus Natural Earth |
+
+## Karten
+
+Karten hängen an Einträgen in `kultur.js`: `map:{ v:'hisp' | 'nord', g:[[…Ländercodes Gruppe 1], [… Gruppe 2]], ctx:[…], pts:[…] }`. Gruppe *i* bekommt dieselbe Farbe wie der Punkt an Variante *i*. Ländercodes und Orte stehen in `tools/build_geo.js`; neue Orte dort ergänzen und `npm run geo` ausführen.
+
+### Projektionen
+
+Gewählt nach Messung, nicht nach Gewohnheit: `node tools/projection_check.js` berechnet für alle Grenzpunkte der dargestellten Länder die Tissot-Indikatrix aus der numerischen Jacobi-Matrix (Flächenfaktor σ = ab, Winkelverzerrung ω = 2·arcsin((a − b)/(a + b))).
+
+| Ausschnitt | Projektion | Flächenfehler max/min | ω max | Begründung |
+|---|---|---|---|---|
+| Amerika und Spanien | Lambert flächentreu azimutal, Mitte 57,5° W 10° N | 1,00 | 22° | Die Karte färbt Länder ein, also flächentreu. Der Ausschnitt ist ungefähr kreisförmig; Mittelpunkt per Minimax über ω, jedes Land gleich gewichtet (`--search`). Bisher Plattkarte: Flächenfehler 1,78, ω max 33°. |
+| Norden | Transversale Mercator, Mittelmeridian 15° O (wie SWEREF 99 TM) | 1,018 | 0° | Winkeltreu und deckungsgleich mit schwedischen Karten; der Flächenfehler von 1,8 % ist nicht sichtbar. |
+
+Mercator scheidet für beide aus: Über den amerikanischen Ausschnitt beträgt sein Flächenfehler 3,18.
+
+## Qualitätsregeln für Texte
+
+Ruhig und sachlich, keine Ausrufezeichen, keine Füllwörter, Fakten nur, wenn sie stabil sind (keine Tagespolitik). Kulturkarten verknüpfen immer Sprache mit Inhalt und haben einen übernehmbaren Beispielsatz ohne deutsche Klammerzusätze im Zielsatz.
+
+## Bausteine der Generatoren
+
+Wortstellung (`inte`), Fehler finden und Umbauen auf Schwedisch ziehen aus `VP_SV` in `src/js/generators.js`. Eine Zeile:
+
+```
+['plockar', 'svamp', ['aldrig', 'alltid', 'ofta'], ['sammle', 'sammelst', 'sammelt', 'sammeln', 'sammeln'],
+ '{S} {V} {A} Pilze', '{s} {A} Pilze {V}', 'På hösten', 'Im Herbst']
+```
+
+Verb im Präsens, Rest des Satzes, erlaubte Adverbien, deutsche Verbformen (ich, du, er/sie, wir, sie), deutscher Hauptsatz, deutscher Nebensatz (Verb am Ende), Satzanfang auf Schwedisch und Deutsch für die Inversion. Regeln: nur Verben aus einem Wort (keine Partikelverben wie „tycker om“), deutsches Verb in beiden Vorlagen dieselbe Form (kein „kaufe … ein“ / „einkaufe“), „inte“ nur, wo „nicht“ im Deutschen passt (bei unbestimmten Objekten wäre es „kein“). Spanisch: `ES_DAY` und `ES_VP` in `src/js/forms.js`, Infinitiv und Ergänzung; unregelmäßige Formen kommen aus `IRR_ES` und `PART_IRR`.
+
+## Lesetipps (`READING` in `src/js/part_views.js`)
+
+Je Sprache drei Quellen, vom leichten Einstieg bis zur normalen Zeitung. Bedingungen: frei lesbar ohne Konto und Bezahlschranke, Texte auch außerhalb des Landes erreichbar, redaktionell verantwortet. Derzeit 8 Sidor, SVT Nyheter, Svenska Yle sowie Noticias fácil (Discapnet), RTVE Noticias, BBC Mundo.

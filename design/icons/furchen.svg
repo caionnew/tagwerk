@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#2367A3"/>
+  <clipPath id="sky"><rect width="512" height="276"/></clipPath>
+  <circle cx="256" cy="276" r="58" fill="#E3A21A" clip-path="url(#sky)"/>
+  <path d="M0 276 H512 V512 H0 Z" fill="#143F66"/>
+  <g stroke="#F3F5F4" stroke-width="10" stroke-linecap="round" opacity=".9">
+    <line x1="246" y1="290" x2="210" y2="430"/>
+    <line x1="266" y1="290" x2="302" y2="430"/>
+    <line x1="226" y1="290" x2="126" y2="410"/>
+    <line x1="286" y1="290" x2="386" y2="410"/>
+  </g>
+</svg>

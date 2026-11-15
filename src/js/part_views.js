@@ -124,7 +124,16 @@ function viewHome(){
   }
   const dnow = dateOf(today());
   const hello = `<header class="hello"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p><p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p></header>`;
-  return `${topLine()}${hello}${noticeHtml() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${streakBox()}${weakHtml(lang)}${findHtml(lang)}`;
+  // Die andere Sprache bleibt sichtbar: Stand und ein Weg dorthin, ohne umschalten zu müssen
+  const other = activeLangs().filter(l => l !== lang)[0];
+  let otherHtml = '';
+  if (other) {
+    const n = langNeed(other), dueN = n.due, since = n.since, auto = (DB.settings.langMode || 'auto') === 'auto';
+    const when = since <= 1 ? 'zuletzt gestern' : since >= 7 ? 'länger nicht geübt' : `zuletzt vor ${since} Tagen`;
+    const why = auto && DB.dayLang && DB.dayLang.d === today() && !DB.dayLang.manual ? `Heute ist ${LANG[lang].deName} dran, weil es gerade nötiger ist.` : '';
+    otherHtml = `<div class="otherlang"><p><b>${LANG[other].deName}:</b> ${dueN ? plural(dueN, 'Wiederholung', 'Wiederholungen') + ' fällig' : 'nichts fällig'}, ${when}.${why ? ` ${why} ${LANG[other].deName} kommt dran, sobald es nötiger ist.` : ''}</p><button type="button" class="link" data-a="lang" data-l="${other}">${DB.done[today()] ? 'Auch üben' : 'Stattdessen üben'}</button></div>`;
+  }
+  return `${topLine()}${hello}${noticeHtml() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${streakBox()}${weakHtml(lang)}${findHtml(lang)}`;
 }
 function topicRows(lang){
   const traps = TRAPS[lang].map(t => t.id).concat(BANK[lang].some(i => i.trap === 'eigene') ? ['eigene'] : []);
@@ -777,6 +786,9 @@ function viewSettings(){
   <h2 class="grp">Länge des Tagwerks</h2>
   <p class="setl-n">Gilt ab dem nächsten Tagwerk.</p>
   <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>${v.newPer} neue Sätze, höchstens ${v.maxRev} Wiederholungen</span></button>`).join('')}</div>
+  <h2 class="grp">Sprache beim Start</h2>
+  <div class="seg2" role="radiogroup">${[['auto', 'Nach Bedarf'], ['last', 'Zuletzt gewählte']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.langMode || 'auto') === k}" data-a="langmode" data-v="${k}">${l}</button>`).join('')}</div>
+  <p class="setl-n">${(DB.settings.langMode || 'auto') === 'auto' ? 'Ein Tagwerk am Tag, in einer Sprache: Beim ersten Öffnen des Tages wählt die App die Sprache, die es nötiger hat (mehr fällig, länger nicht geübt). Die andere steht auf „Heute“ mit ihrem Stand; ein Wechsel von Hand gilt bis morgen.' : 'Die App öffnet in der zuletzt gewählten Sprache.'}</p>
   <h2 class="grp">Mein Niveau</h2>
   <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
   <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen, in denen du zuletzt öfter Fehler gemacht hast. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>

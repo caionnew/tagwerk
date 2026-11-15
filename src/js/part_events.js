@@ -39,7 +39,8 @@ document.addEventListener('click', e => {
       if (r && r.finished) S.run = null;
       goView(b.dataset.v); break;
     }
-    case 'lang': S.lang = b.dataset.l; DB.settings.lang = S.lang; S.notice = null; save(); render(); break;
+    case 'lang': S.lang = b.dataset.l; DB.settings.lang = S.lang; DB.dayLang = { d:today(), l:S.lang, manual:true }; S.notice = null; save(); render(); break;
+    case 'langmode': DB.settings.langMode = b.dataset.v === 'last' ? 'last' : 'auto'; save(); render(); break;
     case 'daily': { const d = openDaily(); if (d && d.lang === S.lang) { resumeDaily(); render(); window.scrollTo(0, 0); } else startRun('daily'); break; }
     case 'quick': startRun('quick'); break;
     case 'pickTopic': goView('pickTopic'); break;
@@ -393,8 +394,9 @@ try {
 } catch (e) {}
 /* ---------- Start ---------- */
 load();
-S.lang = DB.settings.lang || 'sv';
 buildBank();
+// Sprache des Tages erst nach dem Aufbau der Satzbank, sonst zählen die fälligen Wiederholungen nicht
+S.lang = dayLang(); DB.settings.lang = S.lang; save();
 buildGloss();
 pruneTlog();
 compactSnaps();

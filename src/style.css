@@ -765,3 +765,8 @@ section.ex #fb:empty{ display:none; }
 .y-l b{ color:var(--ink); font-weight:650; margin-right:4px; }
 .y-l .sq{ margin-right:6px; }
 .pcr{ margin:0 0 10px; }
+
+.otherlang{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:10px 2px 0; padding:12px 14px; border:1px solid var(--line); border-radius:14px; font-size:15px; color:var(--muted); }
+.otherlang p{ margin:0; line-height:1.45; }
+.otherlang b{ color:var(--ink); font-weight:650; }
+.otherlang .link{ white-space:nowrap; }

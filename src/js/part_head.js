@@ -269,6 +269,25 @@ function stage(item){
   if (st && (st.reps || 0) >= 2) return 'free';
   return item.kind === 'order' ? 'tiles' : 'cloze';
 }
+// Sprache des Tages: beim ersten Start des Tages die Sprache, die es nötiger hat (fällige Wiederholungen im Verhältnis
+// zur Tagwerk-Länge, dazu Tage seit dem letzten Üben). Bleibt für den Tag fest; ein Wechsel von Hand gilt bis morgen.
+function activeLangs(){ return ['sv', 'es'].filter(l => BANK[l].some(i => stOf(i.id)) || Object.keys(DB.log || {}).some(d => (dayLog(d, l).n || 0) > 0)); }
+function langNeed(l){
+  const t = today(), due = dueItems(l).length, cap = Math.max(1, size().maxRev);
+  const last = Object.keys(DB.log || {}).filter(d => d < t && (dayLog(d, l).n || 0) > 0).sort().pop();
+  const since = last ? dayDiff(t, last) : 7;
+  return { due, since, score:Math.min(due, cap) / cap + 0.6 * Math.min(since, 7) };
+}
+function dayLang(){
+  const t = today(); DB.dayLang = DB.dayLang || {};
+  if ((DB.settings.langMode || 'auto') !== 'auto') return DB.settings.lang || 'sv';
+  if (DB.dayLang.d === t && DB.dayLang.l) return DB.dayLang.l;
+  const act = activeLangs();
+  let l = act.length === 1 ? act[0] : !act.length ? (DB.settings.lang || 'sv') : null;
+  if (!l) { const a = langNeed('sv'), b = langNeed('es'); l = a.score === b.score ? (DB.dayLang.l === 'sv' ? 'es' : 'sv') : a.score > b.score ? 'sv' : 'es'; }
+  DB.dayLang = { d:t, l };
+  return l;
+}
 function dueItems(lang){
   const t = today();
   return BANK[lang].filter(i => { const s = stOf(i.id); return s && s.due <= t; }).sort((a, b) => stOf(a.id).due.localeCompare(stOf(b.id).due));

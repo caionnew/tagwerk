@@ -73,3 +73,17 @@ test('Begleiter: min/mitt nach en/ett, den/det här + bestimmte Form; nuestro/a/
   assert.equal(app.run("lookupWord('es', 'problemas').l"), 'problema');
   assert.equal(app.run("lookupWord('es', 'pequeñas').l"), 'pequeño');
 });
+test('Sprache des Tages: die nötigere Sprache, fest für den Tag, Wechsel von Hand gilt bis morgen', () => {
+  const t = app.run('today()'), d = k => app.run(`addDays(today(), -${k})`);
+  app.run(`DB.st = {}; DB.settings.langMode = 'auto'; DB.dayLang = {}; DB.log = { '${d(1)}':{ sv:{ n:20 } }, '${d(4)}':{ es:{ n:20 } } };`);
+  assert.equal(app.run('dayLang()'), 'es', 'Spanisch länger nicht geübt');
+  app.run(`DB.log['${d(1)}'] = { es:{ n:20 } }; DB.log['${d(5)}'] = { sv:{ n:20 } };`);
+  assert.equal(app.run('dayLang()'), 'es', 'innerhalb des Tages fest');
+  app.run(`DB.dayLang = { d:'${t}', l:'sv', manual:true };`);
+  assert.equal(app.run('dayLang()'), 'sv', 'Wechsel von Hand gilt');
+  app.run(`DB.dayLang = {}; DB.log = { '${d(1)}':{ sv:{ n:20 } } };`);
+  assert.equal(app.run('dayLang()'), 'sv', 'nur eine Sprache aktiv');
+  app.run(`DB.settings.langMode = 'last'; DB.settings.lang = 'es';`);
+  assert.equal(app.run('dayLang()'), 'es', 'Einstellung „Zuletzt gewählte“');
+  app.run(`DB.settings.langMode = 'auto';`);
+});

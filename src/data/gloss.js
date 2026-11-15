@@ -114,6 +114,72 @@ levereras|leverera|wird geliefert (leverera = liefern)
 öppnades|öppna|wurde geöffnet (öppna = öffnen)
 räkningen|räkning|die Rechnung
 betalas|betala|wird bezahlt (betala = bezahlen)
+hade|ha|hatte (ha); hade + Supinum = Plusquamperfekt
+setts|ses|gesehen (ses = sich sehen, sich treffen)
+kände|känna|kannte, fühlte; känna igen = wiedererkennen
+direkt||sofort, direkt
+påstår|påstå|behauptet (behaupten)
+mejlet|mejl|die E-Mail
+vetat|veta|gewusst (veta = wissen)
+ensam||allein
+konstigt|konstig|seltsam; det är inte konstigt = kein Wunder
+folk||Leute
+längre|lång|länger; inte … längre = nicht mehr
+tiden|tid|die Zeit; hela tiden = ständig
+försenade|försenad|verspätet (Plural)
+tidigare||früher, vorher
+annorlunda||anders
+först||erst, zuerst; först när = erst als
+dåliga|dålig|schlecht (bestimmte Form)
+vädret|väder|das Wetter
+festen|fest|das Fest, die Party
+mest||am meisten
+långa|lång|lang (Plural und bestimmte Form)
+sommarkvällarna|sommarkväll|die Sommerabende
+flyttade|flytta|zog um (umziehen); flyttade in = zog ein
+hit||hierher
+upplevt|uppleva|erlebt (erleben)
+så||so; så kall = so kalt
+vinter||Winter
+förr||früher
+skjuta|skjuta|schieben, schießen; skjuta upp = verschieben
+riktigt|riktig|richtig; inte riktigt = nicht ganz
+reda|reda|ta reda på = herausfinden
+priserna|pris|die Preise
+kraftigt|kraftig|stark, kräftig
+företaget|företag|das Unternehmen, die Firma
+flyttat|flytta|verlegt, umgezogen (Supinum)
+huvudkontor||Hauptsitz, Zentrale
+bära||tragen
+eget|egen|eigen (bei ett-Wörtern)
+bagage||Gepäck
+lena|Lena|Lena (Name)
+berättade|berätta|erzählte (erzählen)
+kanada|Kanada|Kanada
+föräldrarna|förälder|die Eltern
+lämnat|lämna|überlassen, verlassen; lämna över = übergeben
+känns|kännas|fühlt sich an
+mitt|min|mein (bei ett-Wörtern)
+förhandlingarna|förhandling|die Verhandlungen
+pågick|pågå|dauerte an (andauern)
+natten|natt|die Nacht; sent på natten = spät in der Nacht
+sabbatsår||Sabbatjahr
+skyndar|skynda|eilt; skynda sig = sich beeilen
+missa||verpassen
+sista|sist|letzte; sista bussen = der letzte Bus
+lär|lära|dürfte, soll wohl (Vermutung); auch: lehren
+varmare|varm|wärmer
+lagen|lag|das Gesetz
+antogs|anta|wurde angenommen (anta = annehmen)
+lång||lang
+debatt||Debatte
+sägs|säga|man sagt, es heißt
+rivas|riva|abgerissen werden (riva = abreißen)
+patienten|patient|der Patient
+opereras|operera|operiert werden
+omedelbart|omedelbar|sofort, unverzüglich
+renoverades|renovera|wurde renoviert
+in||hinein; flytta in = einziehen
 
 affären|affär|das Geschäft, der Laden
 aldrig||nie
@@ -523,6 +589,82 @@ paquete||Paket
 salsa||Salsa (Tanz); auch: Soße
 vecinos|vecino|Nachbarn
 verano||Sommer
+evidente||offensichtlich
+proyecto||Projekt
+planificado|planificar|geplant
+será|ser|wird sein; findet statt (bei Ereignissen)
+sala||Saal, Raum
+reservada|reservar|reserviert
+harto||satt; estar harto de = es satthaben
+basada|basar|basiert; estar basado en = beruhen auf
+novela||Roman
+gran|grande|groß (vor Nomen)
+éxito||Erfolg
+mientras||während
+preparaba|preparar|bereitete zu (Imperfecto)
+jardín||Garten
+encontré|encontrar|ich fand (Indefinido)
+había|haber|hatte (Hilfsverb, Plusquamperfekt); es gab
+llevábamos|llevar|wir … schon (llevar + Gerundium = seit … tun)
+esperando|esperar|wartend
+vuelo||Flug
+cancelado|cancelar|gestrichen, abgesagt
+sentaba|sentarse|setzte mich (Imperfecto)
+planteado|plantearse|überlegt; plantearse algo = über etwas nachdenken
+extranjero||Ausland; en el extranjero = im Ausland
+mensaje||Nachricht
+obra||Bauarbeiten, Baustelle; auch: Werk
+ni||nicht einmal; ni una noche = keine einzige Nacht
+aunque||obwohl, auch wenn
+saldremos|salir|wir werden losgehen; salir de excursión = einen Ausflug machen
+excursión||Ausflug
+terraza||Terrasse
+sorprendió|sorprender|überraschte
+hubieran|haber|hätten (Subjuntivo Plusquamperfekt)
+invitado|invitar|eingeladen
+momento||Moment
+intente|intentar|versuche (Subjuntivo); por mucho que lo intente = so sehr ich es auch versuche
+consigo|conseguir|ich schaffe es; auch: mit sich
+entenderlo|entender|es verstehen
+primera|primero|erste
+escrita|escribir|geschrieben
+cambiaron|cambiar|tauschten, änderten
+necesitas|necesitar|du brauchst
+dejo|dejar|ich lasse, leihe (dejar)
+sin||ohne
+explicado|explicar|erklärt
+veces|vez|Male; tres veces = dreimal
+sigue|seguir|macht weiter; sigue sin entenderlo = versteht es immer noch nicht
+dejé|dejar|ich ließ (liegen)
+dímelo|decir|sag es mir
+conocerte|conocer|dich kennenlernen
+quedan|quedar|bleiben übrig; nos quedan = uns bleiben
+solo||nur
+vacaciones||Urlaub, Ferien
+pena||Kummer; me da pena = es tut mir leid
+tan||so
+firmaría|firmar|würde unterschreiben
+nada||nichts
+leerlo|leer|es lesen
+hubieras|haber|hättest (Subjuntivo Plusquamperfekt)
+avisado|avisar|Bescheid gesagt
+habría|haber|hätte (Konditional)
+recogido|recoger|abgeholt
+serían|ser|wären; dürften gewesen sein (Vermutung)
+importaría|importar|würde ausmachen; ¿te importaría …? = würde es dir etwas ausmachen …?
+cerrar||schließen
+preocupes|preocuparse|(dass) du dir Sorgen machst; no te preocupes = mach dir keine Sorgen
+ocurrirá|ocurrir|wird einfallen (ocurrírsele a alguien)
+completo||vollständig; por completo = völlig
+cumpleaños||Geburtstag
+acostumbrarás|acostumbrarse|du wirst dich gewöhnen
+ritmo||Rhythmus
+esto||das, dies
+jefe||Chef
+final||Ende; al final = am Ende
+queja|quejarse|beschwert sich
+pero||aber
+chico||Junge, junger Mann
 restaurante||Restaurant
 llovió|llover|es regnete (llover = regnen)
 perro||Hund

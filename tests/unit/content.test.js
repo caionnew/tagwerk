@@ -4,13 +4,13 @@ const { loadApp } = require('../helpers/load.js');
 const app = loadApp();
 const CONTENT = app.get('CONTENT'), conjugate = app.get('conjugate');
 
-test('jede Zeile der Satzbank hat fünf Felder, keine Doppelungen, die Lücke steht im Zielsatz', () => {
+test('jede Zeile der Satzbank hat fünf Felder (sechstes optional: Niveau), keine Doppelungen, die Lücke steht im Zielsatz', () => {
   const problems = [], seen = new Set(); let n = 0;
   for (const lang of ['sv', 'es']) for (const [trap, raw] of Object.entries(CONTENT[lang])) {
     raw.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
       n++;
       const p = line.split('|').map(x => x.trim());
-      if (p.length !== 5) problems.push(`Felder ${p.length}: ${line}`);
+      if (p.length !== 5 && !(p.length === 6 && /^(A2|B1|B2)$/.test(p[5]))) problems.push(`Felder ${p.length}: ${line}`);
       const [, target, gap] = p;
       if (seen.has(lang + target)) problems.push(`doppelt: ${target}`);
       seen.add(lang + target);

@@ -201,6 +201,7 @@ document.addEventListener('click', e => {
       render(); break;
     }
     case 'size': DB.settings.size = b.dataset.s; save(); render(); break;
+    case 'niveau': DB.settings.niveau = ['grund', 'mittel', 'fort'].includes(b.dataset.v) ? b.dataset.v : 'mittel'; S.dailyPlanCache = null; save(); render(); break;
     case 'undoimport': if (S.undoDB) { DB = JSON.parse(S.undoDB); S.undoDB = null; save(); buildBank(); note('Vorheriger Stand wiederhergestellt.', 'ok'); render(); } break;
     case 'reload': location.reload(); break;
     case 'nagoff': DB.used = DB.used || {}; DB.used.backupNag = today(); save(); render(); break;

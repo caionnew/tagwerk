@@ -769,6 +769,9 @@ function viewSettings(){
   <h2 class="grp">Länge des Tagwerks</h2>
   <p class="setl-n">Gilt ab dem nächsten Tagwerk.</p>
   <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>${v.newPer} neue Sätze, höchstens ${v.maxRev} Wiederholungen</span></button>`).join('')}</div>
+  <h2 class="grp">Mein Niveau</h2>
+  <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
+  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen, in denen du zuletzt öfter Fehler gemacht hast. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}</p>
   <h2 class="grp">Vorlesen</h2>
   <div class="rows">
     <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.autoplay}" data-a="autoplay"><span class="txt"><span class="rt">Lösung nach dem Prüfen vorlesen</span><span class="rd">Verbindet Schriftbild und Aussprache. Unterwegs ohne Kopfhörer besser aus.</span></span><span class="sw" aria-hidden="true"></span></button>

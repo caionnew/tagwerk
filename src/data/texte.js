@@ -80,6 +80,28 @@ Systemet infördes 1974, och Sverige blev då det första landet i världen där
         ['I dag är det vanligt att se pappor med barnvagn mitt på dagen.', 'Heute sieht man oft Väter mit Kinderwagen mitten am Tag.']] }
 ],
 es:[
+{ id:'espanavaciada', topic:'Gesellschaft', level:'B2', title:'La España vaciada',
+  body:`En las últimas décadas, miles de pueblos del interior de España han ido perdiendo a sus habitantes. Los jóvenes se marchan a las ciudades en busca de trabajo, y en muchos lugares solo quedan personas mayores. En algunas comarcas viven menos de diez personas por kilómetro cuadrado.
+
+Para describir este fenómeno se habla de la España vaciada. El término no es casual: sugiere que el campo no se ha quedado vacío por sí solo, sino que lo han ido dejando atrás la economía y la política.
+
+Sin embargo, hay señales de cambio. Desde que se extendió el teletrabajo, algunas familias han decidido instalarse en pueblos donde la vivienda es barata y la vida más tranquila. Que esta tendencia se mantenga dependerá, sobre todo, de que lleguen la fibra óptica, los médicos y las escuelas.`,
+  q:[['Warum verlieren viele Dörfer Einwohner?', ['Junge Leute ziehen für Arbeit in die Städte', 'Die Dörfer werden abgerissen', 'Die Mieten sind dort zu hoch'], 'Los jóvenes se marchan a las ciudades en busca de trabajo'],
+     ['Was drückt der Begriff „España vaciada“ aus?', ['Das Land wurde geleert, es ist nicht von selbst leer geworden', 'Die Dörfer sind nur im Sommer leer', 'Spanien hat zu wenig Wasser'], 'sugiere que el campo no se ha quedado vacío por sí solo'],
+     ['Wovon hängt laut Text ab, ob der Trend anhält?', ['Von Glasfaser, Ärzten und Schulen', 'Vom Wetter', 'Von neuen Autobahnen'], 'dependerá, sobre todo, de que lleguen la fibra óptica, los médicos y las escuelas']],
+  keep:[['Los jóvenes se marchan a las ciudades en busca de trabajo, y en muchos lugares solo quedan personas mayores.', 'Die Jungen ziehen auf der Suche nach Arbeit in die Städte, und an vielen Orten bleiben nur ältere Menschen.'],
+        ['Que esta tendencia se mantenga dependerá, sobre todo, de que lleguen la fibra óptica, los médicos y las escuelas.', 'Ob dieser Trend anhält, hängt vor allem davon ab, dass Glasfaser, Ärzte und Schulen kommen.']] },
+{ id:'lenguas', topic:'Sprache', level:'B2', title:'Las lenguas de España',
+  body:`Aunque mucha gente piensa que en España solo se habla español, el país tiene varias lenguas oficiales. Además del castellano, el catalán, el gallego y el euskera son cooficiales en sus comunidades autónomas.
+
+El euskera, la lengua del País Vasco, es un caso especial: no está emparentado con ninguna otra lengua conocida y ya se hablaba en la región mucho antes de que llegaran los romanos. Durante la dictadura de Franco, el uso público de estas lenguas estuvo muy limitado, por lo que muchas familias dejaron de transmitirlas a sus hijos.
+
+Hoy, en cambio, se enseñan en las escuelas, y en Barcelona, Santiago o Bilbao es habitual que los carteles estén en dos idiomas. Para quien aprende español conviene saberlo: a veces la lengua de la calle no es la que uno espera.`,
+  q:[['Welche Sprachen sind neben Spanisch in ihren Regionen Amtssprachen?', ['Katalanisch, Galicisch und Baskisch', 'Portugiesisch und Französisch', 'Englisch und Arabisch'], 'el catalán, el gallego y el euskera son cooficiales'],
+     ['Was ist am Baskischen besonders?', ['Es ist mit keiner bekannten Sprache verwandt', 'Es ist die jüngste Sprache Spaniens', 'Es wird nur geschrieben, nicht gesprochen'], 'no está emparentado con ninguna otra lengua conocida'],
+     ['Was geschah unter Franco?', ['Die öffentliche Nutzung dieser Sprachen war stark eingeschränkt', 'Sie wurden Pflichtfach in allen Schulen', 'Sie wurden offiziell gleichgestellt'], 'el uso público de estas lenguas estuvo muy limitado']],
+  keep:[['Aunque mucha gente piensa que en España solo se habla español, el país tiene varias lenguas oficiales.', 'Obwohl viele denken, dass in Spanien nur Spanisch gesprochen wird, hat das Land mehrere Amtssprachen.'],
+        ['Hoy, en cambio, se enseñan en las escuelas, y en Barcelona, Santiago o Bilbao es habitual que los carteles estén en dos idiomas.', 'Heute dagegen werden sie in den Schulen unterrichtet, und in Barcelona, Santiago oder Bilbao sind Schilder meist zweisprachig.']] },
 { id:'siesta', topic:'Alltag', level:'A2', title:'La siesta',
   body:`Mucha gente cree que en España todo el mundo duerme la siesta. No es verdad. La mayoría de los españoles trabaja por la tarde y no tiene tiempo para dormir.
 

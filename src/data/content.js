@@ -22,6 +22,10 @@ Es ist schade, dass du nicht mitkommen kannst. | Det är synd att du inte kan f�
 Er sagt, dass er nie Fleisch isst. | Han säger att han aldrig äter kött. | | |
 Ich frage mich, warum sie nicht antwortet. | Jag undrar varför hon inte svarar. | | |
 Wenn ich keine Lust habe, bleibe ich zu Hause. | Om jag inte har lust stannar jag hemma. | | | När jag inte har lust stannar jag hemma.
+Obwohl wir uns lange nicht gesehen hatten, erkannte ich sie sofort. | Fast vi inte hade setts på länge kände jag igen henne direkt. |  |  | Trots att vi inte hade setts på länge kände jag igen henne direkt.;; Fast vi inte hade träffats på länge kände jag igen henne direkt.;; Trots att vi inte hade träffats på länge kände jag igen henne direkt. | B2
+Er behauptet, dass er die E-Mail nie bekommen hat. | Han påstår att han aldrig har fått mejlet. |  |  | Han påstår att han aldrig fick mejlet.;; Han hävdar att han aldrig har fått mejlet.;; Han hävdar att han aldrig fick mejlet. | B2
+Ich wäre gekommen, wenn ich gewusst hätte, dass du nicht allein bist. | Jag hade kommit om jag hade vetat att du inte var ensam. |  |  | Jag skulle ha kommit om jag hade vetat att du inte var ensam.;; Jag hade kommit om jag hade vetat att du inte är ensam. | B2
+Kein Wunder, dass die Leute nicht mehr Zug fahren, wenn die Züge ständig Verspätung haben. | Det är inte konstigt att folk inte åker tåg längre när tågen hela tiden är försenade. |  |  | Det är inte konstigt att folk slutar åka tåg när tågen hela tiden är försenade.;; Det är inte konstigt att folk inte längre åker tåg när tågen hela tiden är försenade.;; Det är inte konstigt att folk inte åker tåg längre när tågen ständigt är försenade. | B2
 `,
 inversion: `
 Heute arbeite ich nicht. | Idag jobbar jag inte. | | | Idag arbetar jag inte.
@@ -44,6 +48,10 @@ Zum Glück hat niemand etwas gemerkt. | Som tur var märkte ingen något. | | | 
 Vielleicht regnet es morgen. | Kanske regnar det i morgon. | | | Det regnar kanske i morgon.;; Kanske det regnar i morgon.
 Hier wohne ich seit fünf Jahren. | Här har jag bott i fem år. | | | Jag har bott här i fem år.
 Morgen früh muss ich arbeiten. | I morgon bitti måste jag jobba. | | | I morgon bitti måste jag arbeta.
+Hätte ich das früher gewusst, hätte ich anders gehandelt. | Hade jag vetat det tidigare hade jag gjort annorlunda. |  |  | Om jag hade vetat det tidigare hade jag gjort annorlunda.;; Hade jag vetat det tidigare skulle jag ha gjort annorlunda.;; Om jag hade vetat det tidigare skulle jag ha gjort annorlunda.;; Hade jag vetat det tidigare hade jag handlat annorlunda. | B2
+Erst als es dunkel wurde, merkten wir, wie spät es war. | Först när det blev mörkt märkte vi hur sent det var. |  |  |  | B2
+Trotz des schlechten Wetters kamen fast alle zum Fest. | Trots det dåliga vädret kom nästan alla till festen. |  |  |  | B2
+Am meisten vermisse ich die langen Sommerabende. | Mest saknar jag de långa sommarkvällarna. |  |  | Jag saknar de långa sommarkvällarna mest.;; Det jag saknar mest är de långa sommarkvällarna. | B2
 `,
 tempus: `
 Gestern habe ich einen alten Freund getroffen. | Igår träffade jag en gammal vän. | träffade | (träffa) |
@@ -65,6 +73,10 @@ Als ich nach Hause kam, schlief sie schon. | När jag kom hem sov hon redan. | s
 Sie hat drei Jahre in Malmö gewohnt, jetzt wohnt sie in Umeå. | Hon bodde i Malmö i tre år, nu bor hon i Umeå. | bodde | (bo) |
 Hast du das Buch zu Ende gelesen? | Har du läst ut boken? | Har du läst ut | (läsa ut) | Har du läst klart boken?
 Gestern Abend haben wir einen Film gesehen. | Igår kväll såg vi en film. | såg | (se) | Vi såg en film igår kväll.
+Als ich ankam, war der Zug schon abgefahren. | När jag kom fram hade tåget redan gått. | hade | (ha) | När jag kom dit hade tåget redan gått.;; När jag kom fram hade tåget redan åkt. | B2
+Seit ich hier wohne, habe ich keinen so kalten Winter erlebt. | Sedan jag flyttade hit har jag aldrig upplevt en så kall vinter. | har jag aldrig upplevt | (uppleva) | Sen jag flyttade hit har jag aldrig upplevt en så kall vinter.;; Sedan jag flyttade hit har jag aldrig varit med om en så kall vinter.;; Så länge jag har bott här har jag aldrig upplevt en så kall vinter. | B2
+Wir hatten gerade gegessen, als es an der Tür klingelte. | Vi hade precis ätit när det ringde på dörren. | hade precis ätit | (äta) | Vi hade just ätit när det ringde på dörren.;; Vi hade precis ätit när det ringde på. | B2
+Früher habe ich viel mehr gelesen als heute. | Förr läste jag mycket mer än nu. | läste | (läsa) | Förr läste jag mycket mer än idag.;; Jag läste mycket mer förr än nu. | B2
 `,
 partikel: `
 Ich mag Kaffee. | Jag tycker om kaffe. | | | Jag gillar kaffe.
@@ -89,6 +101,10 @@ Zieh deine Jacke an! | Ta på dig jackan! | | | Sätt på dig jackan!
 Sie hat sich um die Kinder gekümmert. | Hon tog hand om barnen. | | | Hon har tagit hand om barnen.
 Wir müssen um sieben aufstehen. | Vi måste gå upp klockan sju. | | | Vi måste stiga upp klockan sju.
 Sie gibt nie auf. | Hon ger aldrig upp. | | |
+Wir müssen das Treffen auf nächste Woche verschieben. | Vi måste skjuta upp mötet till nästa vecka. |  |  | Vi måste flytta mötet till nästa vecka. | B2
+Da stimme ich dir nicht ganz zu. | Där håller jag inte riktigt med dig. |  |  | Jag håller inte riktigt med dig där.;; Jag håller inte helt med dig där. | B2
+Kannst du herausfinden, wann der Laden aufmacht? | Kan du ta reda på när affären öppnar? |  |  | Kan du ta reda på när butiken öppnar?;; Kan du kolla när affären öppnar? | B2
+Die Preise sind stark gestiegen. | Priserna har gått upp kraftigt. |  |  | Priserna har stigit kraftigt.;; Priserna har ökat kraftigt. | B2
 `,
 sin: `
 Anna ruft ihre Mutter an. | Anna ringer sin mamma. | sin | |
@@ -110,6 +126,10 @@ Erik und seine Frau wohnen in Lund. | Erik och hans fru bor i Lund. | hans | |
 Maria leiht mir ihr Fahrrad. | Maria lånar ut sin cykel till mig. | sin | |
 Sie sprechen oft über ihre Kinder. | De pratar ofta om sina barn. | sina | | De talar ofta om sina barn.
 Anna sagt, dass ihr Auto kaputt ist. | Anna säger att hennes bil är trasig. | hennes | | Anna säger att hennes bil är sönder.
+Die Firma hat ihren Hauptsitz nach Malmö verlegt. | Företaget har flyttat sitt huvudkontor till Malmö. | sitt |  |  | B2
+Jeder muss sein eigenes Gepäck tragen. | Var och en får bära sitt eget bagage. | sitt |  | Alla får bära sitt eget bagage.;; Var och en måste bära sitt eget bagage. | B2
+Lena hat mir erzählt, dass ihr Bruder nach Kanada zieht. | Lena berättade för mig att hennes bror ska flytta till Kanada. | hennes |  | Lena har berättat för mig att hennes bror ska flytta till Kanada.;; Lena berättade för mig att hennes bror flyttar till Kanada. | B2
+Die Eltern haben ihr Haus ihren Kindern überlassen. | Föräldrarna har lämnat över sitt hus till sina barn. | sitt |  |  | B2
 `,
 tid: `
 Ich wohne seit zwei Jahren in Stockholm. | Jag har bott i Stockholm i två år. | i två år | |
@@ -131,6 +151,10 @@ Sie hat vor einer Stunde angerufen. | Hon ringde för en timme sedan. | för en 
 Ich lerne seit März Schwedisch. | Jag har pluggat svenska sedan mars. | sedan mars/sen mars | | Jag har läst svenska sedan mars.;; Jag har studerat svenska sedan mars.;; Jag har pluggat svenska sen mars.
 Am Samstag waren wir im Kino. | I lördags var vi på bio. | I lördags | | Vi var på bio i lördags.
 Ich trainiere dreimal pro Woche. | Jag tränar tre gånger i veckan. | i veckan/per vecka | | Jag tränar tre gånger per vecka.
+Ich habe dich seit Jahren nicht gesehen! | Jag har inte sett dig på flera år! | på flera år |  | Jag har inte sett dig på många år!;; Jag har inte träffat dig på flera år! | B2
+Wir sind vor einer Woche umgezogen, und es fühlt sich schon wie zu Hause an. | Vi flyttade för en vecka sedan, och det känns redan som hemma. | för en vecka sedan/för en vecka sen |  | Vi flyttade för en vecka sen, och det känns redan som hemma. | B2
+In zwei Wochen fange ich meine neue Stelle an. | Om två veckor börjar jag på mitt nya jobb. | Om två veckor |  | Jag börjar på mitt nya jobb om två veckor. | B2
+Die Verhandlungen dauerten bis spät in die Nacht. | Förhandlingarna pågick till sent på natten. | till sent på natten |  | Förhandlingarna höll på till sent på natten. | B2
 `,
 framtid: `
 Ich werde morgen anrufen. | Jag ska ringa i morgon. | ska ringa/ringer/kommer att ringa/kommer ringa | | Jag ringer i morgon.;; Jag kommer att ringa i morgon.
@@ -153,6 +177,10 @@ Was machst du am Wochenende? | Vad ska du göra i helgen? | ska du göra | | Vad
 Ich habe vor, im Sommer zu verreisen. | Jag tänker resa bort i sommar. | tänker | | Jag planerar att resa bort i sommar.;; Jag ska resa bort i sommar.
 Du darfst das niemandem sagen. | Du får inte säga det till någon. | får inte | | Du får inte berätta det för någon.
 Das wird bestimmt gut gehen. | Det kommer säkert att gå bra. | kommer säkert att gå/kommer säkert gå | | Det kommer säkert gå bra.;; Det går säkert bra.
+Ich habe vor, nächstes Jahr ein Sabbatjahr zu machen. | Jag tänker ta ett sabbatsår nästa år. | tänker |  | Jag planerar att ta ett sabbatsår nästa år.;; Jag ska ta ett sabbatsår nästa år. | B2
+Wenn wir uns nicht beeilen, verpassen wir den letzten Bus. | Om vi inte skyndar oss kommer vi att missa sista bussen. | kommer vi att missa/missar vi/kommer vi missa |  | Om vi inte skyndar oss missar vi sista bussen.;; Om vi inte skyndar oss kommer vi missa sista bussen. | B2
+Du brauchst morgen nicht früh aufzustehen. | Du behöver inte gå upp tidigt i morgon. | behöver inte |  | Du behöver inte stiga upp tidigt i morgon. | B2
+Morgen dürfte es wieder wärmer werden. | Det lär bli varmare igen i morgon. | lär bli |  | Det blir nog varmare igen i morgon.;; Det kommer nog att bli varmare igen i morgon. | B2
 `,
 passiv: `
 Das Geschäft wird um neun Uhr geöffnet. | Affären öppnas klockan nio. | öppnas/öppnar | (öppna) | Affären öppnar klockan nio.;; Butiken öppnar klockan nio.;; Butiken öppnas klockan nio.
@@ -175,6 +203,10 @@ Das Paket wird morgen geliefert. | Paketet levereras i morgon. | levereras | (le
 In Schweden isst man oft Fisch. | I Sverige äter man ofta fisk. | äter man | |
 Das Fenster wurde geöffnet. | Fönstret öppnades. | öppnades | (öppna) | Fönstret blev öppnat.
 Die Rechnung muss bis Freitag bezahlt werden. | Räkningen måste betalas senast på fredag. | betalas | (betala) | Räkningen måste betalas före fredag.
+Das Gesetz wurde nach langer Debatte angenommen. | Lagen antogs efter en lång debatt. | antogs | (anta) | Lagen blev antagen efter en lång debatt. | B2
+Es heißt, die Brücke soll abgerissen werden. | Det sägs att bron ska rivas. | sägs | (säga) | Det påstås att bron ska rivas. | B2
+Der Patient muss sofort operiert werden. | Patienten måste opereras omedelbart. | opereras | (operera) | Patienten måste opereras direkt.;; Patienten måste opereras genast. | B2
+Die Wohnung wurde renoviert, bevor wir eingezogen sind. | Lägenheten renoverades innan vi flyttade in. | renoverades | (renovera) | Lägenheten blev renoverad innan vi flyttade in. | B2
 `,
 falska: `
 Ich bleibe heute zu Hause. | Jag stannar hemma idag. | stannar | |
@@ -216,6 +248,10 @@ Er ist intelligent. | Es inteligente. | Es | (ser/estar) | Él es inteligente.
 Das Wasser ist sehr kalt. | El agua está muy fría. | está | (ser/estar) |
 Meine Schwester ist sehr klug. | Mi hermana es muy lista. | es | (ser/estar) | Mi hermana es muy inteligente.
 Das Restaurant ist heute geschlossen. | El restaurante está cerrado hoy. | está | (ser/estar) | Hoy el restaurante está cerrado.
+Es ist offensichtlich, dass das Projekt nicht gut geplant ist. | Es evidente que el proyecto no está bien planificado. | está | (ser/estar) | Es obvio que el proyecto no está bien planificado. | B2
+Die Besprechung findet im großen Saal statt, der schon reserviert ist. | La reunión será en la sala grande, que ya está reservada. | será | (ser/estar) | La reunión es en la sala grande, que ya está reservada. | B2
+Ich habe es satt, dass du immer zu spät kommst. | Estoy harto de que siempre llegues tarde. | Estoy | (ser/estar) | Estoy harta de que siempre llegues tarde.;; Estoy cansado de que siempre llegues tarde. | B2
+Der Film basiert auf einem Roman, der ein großer Erfolg war. | La película está basada en una novela que fue un gran éxito. | está | (ser/estar) |  | B2
 `,
 pasado: `
 Als ich klein war, wohnte ich in Köln. | Cuando era pequeño, vivía en Colonia. | vivía | (vivir) | Cuando era pequeña, vivía en Colonia.;; Cuando era niño, vivía en Colonia.;; Cuando era niña, vivía en Colonia.
@@ -236,6 +272,10 @@ Wir haben uns 2015 in Sevilla kennengelernt. | Nos conocimos en 2015 en Sevilla.
 Es war schon spät, als wir ankamen. | Ya era tarde cuando llegamos. | era | (ser) |
 Plötzlich ging das Licht aus. | De repente se fue la luz. | se fue/se apagó | (irse) | De pronto se fue la luz.;; De repente se apagó la luz.
 Jeden Sommer fuhren wir ans Meer. | Todos los veranos íbamos a la playa. | íbamos | (ir) | Cada verano íbamos a la playa.;; Todos los veranos íbamos al mar.
+Während ich das Abendessen machte, spielten die Kinder im Garten. | Mientras yo preparaba la cena, los niños jugaban en el jardín. | preparaba | (preparar) | Mientras preparaba la cena, los niños jugaban en el jardín.;; Mientras yo hacía la cena, los niños jugaban en el jardín. | B2
+Als ich endlich die Schlüssel fand, war der Zug schon weg. | Cuando por fin encontré las llaves, el tren ya se había ido. | se había ido/había salido | (irse) | Cuando por fin encontré las llaves, el tren ya había salido. | B2
+Wir warteten schon zwei Stunden, als man uns sagte, dass der Flug gestrichen war. | Llevábamos dos horas esperando cuando nos dijeron que el vuelo estaba cancelado. | Llevábamos | (llevar) | Hacía dos horas que esperábamos cuando nos dijeron que el vuelo estaba cancelado. | B2
+Als Kind habe ich mich immer, wenn es regnete, mit einem Buch ans Fenster gesetzt. | De pequeña, siempre que llovía me sentaba a leer junto a la ventana. | me sentaba | (sentarse) | De pequeño, siempre que llovía me sentaba a leer junto a la ventana.;; De niña, siempre que llovía me sentaba a leer junto a la ventana.;; De niño, siempre que llovía me sentaba a leer junto a la ventana. | B2
 `,
 perfecto: `
 Heute habe ich viel gearbeitet. | Hoy he trabajado mucho. | he trabajado/trabajé | (trabajar) | Hoy trabajé mucho.
@@ -256,6 +296,10 @@ Letzte Woche habe ich meine Schlüssel verloren. | La semana pasada perdí las l
 Heute Morgen habe ich den Bus verpasst. | Esta mañana he perdido el autobús. | he perdido/perdí | (perder) | Esta mañana perdí el autobús.;; Esta mañana he perdido el bus.
 Ich war noch nie in Mexiko. | Nunca he estado en México. | he estado | (estar) | No he estado nunca en México.
 Hast du deine Schlüssel gefunden? | ¿Has encontrado tus llaves? | Has encontrado/Encontraste | (encontrar) | ¿Encontraste tus llaves?;; ¿Ya has encontrado tus llaves?
+Dieses Jahr sind wir so wenig gereist wie nie. | Este año hemos viajado menos que nunca. | hemos viajado/viajamos | (viajar) | Este año viajamos menos que nunca. | B2
+Hast du jemals darüber nachgedacht, im Ausland zu leben? | ¿Alguna vez te has planteado vivir en el extranjero? | te has planteado | (plantearse) | ¿Te has planteado alguna vez vivir en el extranjero?;; ¿Alguna vez has pensado en vivir en el extranjero? | B2
+Ich hatte noch keine Zeit, deine Nachricht zu lesen. | Todavía no he tenido tiempo de leer tu mensaje. | he tenido | (tener) | Aún no he tenido tiempo de leer tu mensaje.;; Todavía no he tenido tiempo para leer tu mensaje. | B2
+Seit die Bauarbeiten begonnen haben, haben wir keine Nacht gut geschlafen. | Desde que empezó la obra, no hemos dormido bien ni una noche. | hemos dormido | (dormir) | Desde que empezaron las obras, no hemos dormido bien ni una noche. | B2
 `,
 subjuntivo: `
 Ich will, dass du kommst. | Quiero que vengas. | vengas | (venir) |
@@ -275,6 +319,10 @@ Es ist klar, dass er heute kommt. | Está claro que viene hoy. | viene | (venir)
 Jedes Mal, wenn ich Zeit habe, rufe ich dich an. | Cada vez que tengo tiempo, te llamo. | tengo | (tener) |
 Ich bin sicher, dass sie recht hat. | Estoy seguro de que tiene razón. | tiene | (tener) | Estoy segura de que tiene razón.
 Ich hoffe, dass du morgen Zeit hast. | Espero que tengas tiempo mañana. | tengas | (tener) | Espero que mañana tengas tiempo.
+Auch wenn es morgen regnet, machen wir den Ausflug. | Aunque llueva mañana, saldremos de excursión. | llueva | (llover) | Saldremos de excursión aunque llueva mañana. | B2
+Ich suche eine Wohnung, die eine Terrasse hat und nicht zu teuer ist. | Busco un piso que tenga terraza y no sea muy caro. | tenga | (tener) | Busco un piso que tenga terraza y que no sea muy caro.;; Busco un apartamento que tenga terraza y no sea muy caro. | B2
+Es hat mich überrascht, dass sie mich nicht eingeladen hatten. | Me sorprendió que no me hubieran invitado. | hubieran invitado/hubiesen invitado | (invitar) | Me sorprendió que no me hubiesen invitado. | B2
+Wenn du einen Moment Zeit hast, ruf mich an. | Cuando tengas un momento, llámame. | tengas | (tener) | Llámame cuando tengas un momento. | B2
 `,
 porpara: `
 Das Geschenk ist für dich. | El regalo es para ti. | para | (por/para) |
@@ -295,6 +343,10 @@ Danke für deine Hilfe. | Gracias por tu ayuda. | por | (por/para) |
 Ich brauche den Bericht bis Montag. | Necesito el informe para el lunes. | para | (por/para) |
 Wir sind zwei Wochen durch Peru gereist. | Viajamos por Perú durante dos semanas. | por | (por/para) | Viajamos dos semanas por Perú.;; Hemos viajado por Perú durante dos semanas.
 Für sein Alter spricht er sehr gut. | Para su edad, habla muy bien. | Para | (por/para) |
+So sehr ich es auch versuche, ich verstehe es nicht. | Por mucho que lo intente, no consigo entenderlo. | Por | (por/para) | Por más que lo intente, no consigo entenderlo.;; Por mucho que lo intento, no consigo entenderlo. | B2
+Dafür, dass es sein erster Roman ist, ist er sehr gut geschrieben. | Para ser su primera novela, está muy bien escrita. | Para | (por/para) |  | B2
+Sie haben meinen Flug gegen einen früheren getauscht. | Me cambiaron el vuelo por uno más temprano. | por | (por/para) |  | B2
+Ich habe es deinetwegen getan, nicht meinetwegen. | Lo hice por ti, no por mí. | por | (por/para) |  | B2
 `,
 pronombres: `
 Ich gebe es dir morgen. | Te lo doy mañana. | | | Mañana te lo doy.
@@ -316,6 +368,10 @@ Ich habe ihn gestern gesehen. | Lo vi ayer. | | | Ayer lo vi.;; Le vi ayer.;; Ay
 Kannst du mir das Salz geben? | ¿Me pasas la sal? | | | ¿Me puedes pasar la sal?;; ¿Puedes pasarme la sal?
 Ich schenke ihnen ein Buch. | Les regalo un libro. | | |
 Ich habe es dir doch gesagt. | Te lo dije. | | | Ya te lo dije.;; Te lo he dicho.;; Ya te lo he dicho.
+Wenn du das Auto brauchst, leihe ich es dir gern. | Si necesitas el coche, te lo dejo sin problema. |  |  | Si necesitas el coche, te lo presto sin problema.;; Si te hace falta el coche, te lo dejo sin problema. | B2
+Ich habe es ihm schon dreimal erklärt, und er versteht es immer noch nicht. | Ya se lo he explicado tres veces y sigue sin entenderlo. |  |  | Ya se lo expliqué tres veces y sigue sin entenderlo. | B2
+Die Schlüssel? Die habe ich zu Hause liegen lassen. | ¿Las llaves? Me las dejé en casa. |  |  | ¿Las llaves? Las dejé en casa.;; ¿Las llaves? Me las he dejado en casa. | B2
+Sag es mir, wenn du es weißt. | Dímelo cuando lo sepas. |  |  | Avísame cuando lo sepas. | B2
 `,
 gustar: `
 Mir gefallen die Bücher. | Me gustan los libros. | gustan | (gustar) |
@@ -334,6 +390,10 @@ Ihr schmeckt der Kaffee nicht. | No le gusta el café. | gusta | (gustar) | El c
 Das ist mir egal. | Me da igual. | da | (dar igual) |
 Stört es dich, wenn ich das Fenster öffne? | ¿Te molesta si abro la ventana? | molesta | (molestar) |
 Hast du Lust auf ein Eis? | ¿Te apetece un helado? | apetece | (apetecer) |
+Es stört mich, wenn Leute im Kino telefonieren. | Me molesta que la gente hable por teléfono en el cine. | molesta | (molestar) | Me molesta que la gente hable por el móvil en el cine. | B2
+Meine Eltern würden dich sehr gern kennenlernen. | A mis padres les encantaría conocerte. | encantaría | (encantar) |  | B2
+Uns bleiben nur noch zwei Urlaubstage. | Nos quedan solo dos días de vacaciones. | quedan | (quedar) | Solo nos quedan dos días de vacaciones. | B2
+Es tut mir leid, dass du so früh gehst. | Me da pena que te vayas tan pronto. | da pena/da lástima | (dar pena) | Me da lástima que te vayas tan pronto. | B2
 `,
 condicional: `
 Ich hätte gern einen Kaffee. | Me gustaría un café. | gustaría | (gustar) | Quería un café.;; Quisiera un café.
@@ -354,6 +414,10 @@ Wir könnten morgen ins Kino gehen. | Podríamos ir al cine mañana. | Podríamo
 An deiner Stelle würde ich das nicht machen. | Yo que tú, no lo haría. | haría | (hacer) | Yo en tu lugar no lo haría.;; En tu lugar no lo haría.;; Yo que tú no lo haría.
 Es wäre toll, dich zu sehen. | Sería genial verte. | Sería/Estaría | (ser) | Sería estupendo verte.;; Estaría genial verte.
 Würdest du mit mir ins Kino gehen? | ¿Irías al cine conmigo? | Irías | (ir) |
+An deiner Stelle würde ich nichts unterschreiben, ohne es vorher zu lesen. | Yo en tu lugar no firmaría nada sin leerlo antes. | firmaría | (firmar) | Yo que tú no firmaría nada sin leerlo antes. | B2
+Wenn du mir Bescheid gesagt hättest, hätte ich dich am Bahnhof abgeholt. | Si me hubieras avisado, te habría recogido en la estación. | habría recogido/hubiera recogido | (recoger) | Si me hubieras avisado, te hubiera recogido en la estación.;; Si me hubieses avisado, te habría recogido en la estación. | B2
+Es dürfte etwa zehn gewesen sein, als er ankam. | Serían las diez cuando llegó. | Serían/Eran | (ser) | Eran más o menos las diez cuando llegó. | B2
+Würde es dir etwas ausmachen, das Fenster zu schließen? | ¿Te importaría cerrar la ventana? | importaría | (importar) |  | B2
 `,
 reflexivo: `
 Ich stehe um sieben auf. | Me levanto a las siete. | Me levanto | (levantarse) |
@@ -375,6 +439,10 @@ Wir treffen uns um acht vor dem Kino. | Nos vemos a las ocho delante del cine. |
 Er hat sich beim Fußball verletzt. | Se lesionó jugando al fútbol. | Se lesionó/Se hizo daño/Se ha lesionado | (lesionarse) | Se hizo daño jugando al fútbol.;; Se ha lesionado jugando al fútbol.;; Se lesionó jugando fútbol.
 Ich ziehe mich schnell um. | Me cambio rápido. | Me cambio | (cambiarse) | Me cambio de ropa rápido.;; Me cambio rápidamente.
 Ich habe mich sehr gefreut. | Me alegré mucho. | Me alegré/Me he alegrado | (alegrarse) | Me he alegrado mucho.
+Ich habe zu spät gemerkt, dass ich im falschen Zug saß. | Me di cuenta demasiado tarde de que me había equivocado de tren. | Me di cuenta | (darse cuenta) |  | B2
+Mach dir keine Sorgen, mir wird schon etwas einfallen. | No te preocupes, ya se me ocurrirá algo. | se me ocurrirá | (ocurrirse) |  | B2
+Wir haben seinen Geburtstag völlig vergessen. | Se nos olvidó por completo su cumpleaños. | Se nos olvidó/Nos olvidamos | (olvidarse) | Nos olvidamos por completo de su cumpleaños. | B2
+Mit der Zeit gewöhnst du dich an den Rhythmus der Stadt. | Con el tiempo te acostumbrarás al ritmo de la ciudad. | te acostumbrarás | (acostumbrarse) |  | B2
 `,
 preposiciones: `
 Ich sehe meine Schwester. | Veo a mi hermana. | a | |
@@ -393,6 +461,10 @@ Sie ist mit einem Spanier verheiratet. | Está casada con un español. | con | |
 Wir fahren mit dem Zug. | Vamos en tren. | en | |
 Ich besuche meine Großeltern. | Visito a mis abuelos. | a | |
 Ich bin seit Montag krank. | Estoy enfermo desde el lunes. | desde | | Estoy enferma desde el lunes.
+Das hängt davon ab, was der Chef entscheidet. | Esto depende de lo que decida el jefe. | de |  | Eso depende de lo que decida el jefe. | B2
+Am Ende habe ich mich für die kleinere Wohnung entschieden. | Al final me decidí por el piso más pequeño. | por |  |  | B2
+Er beschwert sich immer über alles, tut aber nie etwas. | Siempre se queja de todo, pero nunca hace nada. | de |  |  | B2
+Meine Schwester hat einen Mann aus Bilbao geheiratet. | Mi hermana se casó con un chico de Bilbao. | con |  | Mi hermana se casó con un hombre de Bilbao. | B2
 `,
 falsos: `
 Meine Firma ist in Madrid. | Mi empresa está en Madrid. | empresa/compañía | |

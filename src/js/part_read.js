@@ -86,13 +86,14 @@ function readCmd(a, b){
   render();
 }
 function viewTexts(){
-  const lang = S.lang, list = TEXTS[lang], done = (DB.used && DB.used.texts) || {};
+  const lang = S.lang, done = (DB.used && DB.used.texts) || {}, niv = DB.settings.niveau || 'mittel', rank = { A2:1, B1:2, B2:3 };
+  const list = niv === 'mittel' ? TEXTS[lang] : TEXTS[lang].slice().sort((a, b) => (niv === 'fort' ? rank[b.level] - rank[a.level] : rank[a.level] - rank[b.level]));
   const cards = list.map(t => { const d = done[lang + ':' + t.id];
     const state = d ? `<span class="tstate${d.best === t.q.length ? ' full' : ''}">${d.best} von ${t.q.length}${d.heard ? ', gehört' : ''}</span>` : '<span class="tstate new">Neu</span>';
     return `<button type="button" class="tcard" data-a="textopen" data-id="${t.id}"><span class="tchips"><span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>${state}</span><span class="ttitle" lang="${lang}">${esc(t.title)}</span><span class="tteaser" lang="${lang}">${esc(textSentences(t.body)[0][0])}</span></button>`; }).join('');
   return backBar('Lesen und Hören') + `
-    <div class="seg2 tmode" role="radiogroup" aria-label="Wie möchtest du die Texte?">${[['read', 'Lesen'], ['listen', 'Nur hören']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${textMode() === k}" data-a="tdefmode" data-v="${k}">${l}</button>`).join('')}</div>
-    <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verschwommen und wird vorgelesen. Danach drei Fragen, dann kannst du nachlesen.' : 'Lesen, auf Wunsch mitlesen, danach drei Fragen.'}</p>
+    <div class="seg2 tmode" role="radiogroup" aria-label="Wie möchtest du die Texte?">${[['read', 'Lesen und hören'], ['listen', 'Nur hören']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${textMode() === k}" data-a="tdefmode" data-v="${k}">${l}</button>`).join('')}</div>
+    <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verschwommen und wird vorgelesen. Danach drei Fragen, dann kannst du nachlesen.' : 'Der Text ist sichtbar. Mit „Vorlesen“ unten liest die App ihn vor, Satz für Satz hervorgehoben. Danach drei Fragen.'}</p>
     <div class="tgrid2">${cards}</div>
     <h2 class="grp">Frischer Lesestoff</h2>
     <div class="rows">${row('wiki', 'Wikipedia-Fundstück', `Ein zufälliger Artikel aus der ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Wikipedia, oft anspruchsvoll (online)`, '', 'book')}</div>`;
@@ -125,7 +126,8 @@ function viewText(){
     </header>`;
   const bar = `<div class="actionbar reader-bar"><div class="in">
       <button type="button" class="pbtn" data-a="treplay" aria-label="Satz noch einmal">${PICO.replay}</button>
-      <button type="button" class="pbtn play" data-a="tplayall" aria-label="${T.playing ? 'Pause' : 'Vorlesen'}">${T.playing ? PICO.pause : PICO.play}</button>
+      ${T.hidden ? `<button type="button" class="pbtn play" data-a="tplayall" aria-label="${T.playing ? 'Pause' : 'Weiter hören'}">${T.playing ? PICO.pause : PICO.play}</button>`
+        : `<button type="button" class="pbtn play wide" data-a="tplayall">${T.playing ? PICO.pause + '<span>Pause</span>' : PICO.play + '<span>Vorlesen</span>'}</button>`}
       <span class="pspace"></span><span class="sr-only" aria-live="polite">Satz ${Math.min(T.si + 1, list.length)} von ${list.length}</span>
       <button type="button" class="pchip" data-a="tslow" aria-pressed="${!!T.slow}">${PICO.slow}<span>Langsam</span></button>
       ${veil ? `<button type="button" class="pchip" data-a="tshowall">${PICO.eye}<span>Text zeigen</span></button>` : ''}

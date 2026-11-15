@@ -59,6 +59,16 @@ function norm(s, lang){
   else if (lang === 'es') t = t.replace(/^(yo|tú|tu|él|ella|nosotros|nosotras|ellos|ellas|usted|ustedes) (?=\S+ \S)/, '');
   return t;
 }
+// Niveau eines Satzes, grob geschätzt: Länge, Nebensätze, anspruchsvolle Formen (Plusquamperfekt, Konditional, Subjuntivo, Passiv).
+// 1 = Grundlagen (etwa A2), 2 = Mittelstufe (B1), 3 = Fortgeschritten (B2). Gleiche Regel wie in tests/unit/level.test.js.
+const LVL_SUB = { sv:/(?:^|\s)(att|som|eftersom|om|när|medan|innan|fast|trots|så att|för att|ifall|än|vilket|hur|varför)(?=\s)/g, es:/(?:^|\s)(que|cuando|porque|aunque|si|mientras|donde|como|cual|quien)(?=\s)/g };
+const LVL_HARD = { sv:/(?:^|\s)(skulle|hade|lär|borde|\S+(?:ades|ades|des|tes|ogs|ass|sades)|\S+as(?= (?:av|efter|innan|senast|i|på)\b))(?=\s|[.,!?]|$)/, es:/(?:^|\s)(\S+ría[ns]?|\S+(?:ara|iera|ase|iese)[ns]?|haya[ns]?|hubiera[ns]?|hubiese[ns]?|habría[ns]?|se (?:lo|la|le|los|las|me|te|nos)|me (?:lo|la|las|los)|te (?:lo|la|las|los)|llevábamos|ocurrirá)(?=\s|[.,!?]|$)/ };
+function estLevel(lang, t){
+  const x = ' ' + String(t).toLowerCase().replace(/[.,!?¡¿;:]/g, ' ') + ' ';
+  const w = String(t).split(/\s+/).length, sub = (x.match(LVL_SUB[lang]) || []).length, hard = LVL_HARD[lang].test(x) ? 1 : 0;
+  const sc = w + 3 * sub + 3 * hard;
+  return sc <= 8 ? 1 : sc <= 13 ? 2 : 3;
+}
 function tokens(s){ return String(s).replace(/[.!?¡¿,;"„“”«»()…]/g, ' ').split(/\s+/).filter(Boolean); }
 
 /* ---------- Satzbank ---------- */
@@ -80,7 +90,7 @@ function buildBank(){
       raw.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
         const p = line.split('|').map(x => x.trim());
         if (p.length < 2) return;
-        const [de, target, gap = '', hint = '', alts = ''] = p;
+        const [de, target, gap = '', hint = '', alts = '', level = ''] = p;
         const gaps = gap ? gap.split('/').map(x => x.trim()).filter(Boolean) : [];
         const altList = alts ? alts.split(';;').map(x => x.trim()).filter(Boolean) : [];
         if (gaps[0]) {
@@ -89,12 +99,14 @@ function buildBank(){
           const pre = target.slice(0, pos), post = target.slice(pos + gaps[0].length);
           altList.forEach(a => { if (pos >= 0 && a.startsWith(pre) && a.endsWith(post) && a.length > pre.length + post.length) { const fill = a.slice(pre.length, a.length - post.length).trim(); if (fill && !gaps.includes(fill)) gaps.push(fill); } });
         }
-        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList });
+        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0 });
       });
     });
     (DB.own[lang] || []).forEach(o => BANK[lang].push({ id:o.id, lang, trap:'eigene', kind:'order', de:o.de, target:o.target, gap:'', gapAlts:[], hint:'', alts:[], own:true }));
     (DB.tat[lang] || []).forEach(o => BANK[lang].push({ id:o.id, lang, trap:o.trap, kind:'order', de:o.de, target:o.target, gap:'', gapAlts:[], hint:'', alts:[], own:o.trap === 'eigene' && !o.auto, tat:o }));
   });
+  // Niveau: angegeben in der sechsten Spalte (A2, B1, B2), sonst geschätzt
+  ['sv', 'es'].forEach(lang => BANK[lang].forEach(it => { it.lvl = it.lvlTag || estLevel(lang, it.target); }));
 }
 const itemById = id => BANK.sv.find(i => i.id === id) || BANK.es.find(i => i.id === id);
 function trapMeta(lang, id){
@@ -254,18 +266,40 @@ function dueItems(lang){
   const t = today();
   return BANK[lang].filter(i => { const s = stOf(i.id); return s && s.due <= t; }).sort((a, b) => stOf(a.id).due.localeCompare(stOf(b.id).due));
 }
+// Themen mit vielen Fehlern in den letzten 30 Tagen: Dort kommen auch für Fortgeschrittene die Grundlagen-Sätze
+function weakTraps(lang){
+  const p = (typeof errStats === 'function' ? errStats(lang, 30).p : {}) || {};
+  return new Set(Object.keys(p).filter(k => p[k][0] >= 4 && p[k][1] / p[k][0] >= 0.25));
+}
+function levelOrder(lang, list, strict){
+  const niv = DB.settings.niveau || 'mittel';
+  if (niv === 'mittel') return list;
+  const lvl = i => (i.own || i.tat ? 2 : i.lvl || 1);
+  if (niv === 'grund') return list.slice().sort((a, b) => lvl(a) - lvl(b));
+  // Fortgeschritten: schwerere Sätze zuerst; Grundlagen nur in schwachen Themen, sonst erst, wenn nichts anderes mehr da ist
+  const weak = weakTraps(lang);
+  const sorted = list.slice().sort((a, b) => lvl(b) - lvl(a));
+  if (!strict) return sorted;
+  const main = sorted.filter(i => lvl(i) >= 2 || weak.has(i.trap));
+  return main.concat(sorted.filter(i => !main.includes(i)));
+}
 function pickNew(lang, n, onlyTrap){
-  const unseen = BANK[lang].filter(i => !stOf(i.id) && (!onlyTrap || i.trap === onlyTrap));
+  const unseen = levelOrder(lang, BANK[lang].filter(i => !stOf(i.id) && (!onlyTrap || i.trap === onlyTrap)), !onlyTrap);
   const out = unseen.filter(i => i.own || (i.tat && !i.tat.auto)).slice(0, Math.max(1, Math.ceil(n / 2)));
   const count = {};
   BANK[lang].forEach(i => { if (stOf(i.id)) count[i.trap] = (count[i.trap] || 0) + 1; });
   while (out.length < n) {
     const rest = unseen.filter(i => !out.includes(i));
     if (!rest.length) break;
-    const traps = [...new Set(rest.map(i => i.trap))];
-    traps.sort((a, b) => (count[a] || 0) - (count[b] || 0) || Math.random() - 0.5);
-    const tr = traps[0];
-    const item = rest.find(i => i.trap === tr);
+    // Fortgeschritten: Grundlagen-Sätze schwacher Themen sind erlaubt, andere erst, wenn sonst nichts mehr da ist
+    const fort = (DB.settings.niveau || 'mittel') === 'fort' && !onlyTrap;
+    const ok = fort ? rest.filter(i => (i.own || i.tat || (i.lvl || 1) >= 2) || weakTraps(lang).has(i.trap)) : rest;
+    const pool = ok.length ? ok : rest;
+    const tps = [...new Set(pool.map(i => i.trap))].sort((a, b) => (count[a] || 0) - (count[b] || 0) || Math.random() - 0.5);
+    const tr = tps[0];
+    // Schwaches Thema: erst die Grundlagen festigen, sonst die schwersten zuerst
+    const cands = pool.filter(i => i.trap === tr);
+    const item = fort && weakTraps(lang).has(tr) ? cands.reduce((a, b) => ((b.lvl || 1) < (a.lvl || 1) ? b : a)) : cands[0];
     out.push(item); count[tr] = (count[tr] || 0) + 1;
   }
   return out;
@@ -288,7 +322,10 @@ function dailyPlan(lang){
   // Die Hälfte der Grammatik-Aufgaben aus dem Generator des Tages, der Rest aus den anderen Übungsformen, täglich wechselnd
   const fx = formIds(lang).filter(f => GENS[f].daily), day = Math.floor(Date.now() / 86400000);
   const nForm = fx.length ? Math.floor(sz.gen / 2) : 0;
-  const drills = g ? Array.from({ length:sz.gen - nForm }, () => ({ type:'gen', gen:g })) : [];
+  // Fortgeschritten und der Generator des Tages sitzt (85 % der letzten 15+ richtig): nur noch zwei Aufgaben davon
+  const rec = g && DB.gen[g] && DB.gen[g].recent || [];
+  const sure = (DB.settings.niveau || 'mittel') === 'fort' && rec.length >= 15 && rec.reduce((x, y) => x + y, 0) / rec.length >= 0.85;
+  const drills = g ? Array.from({ length:sure ? Math.min(2, sz.gen - nForm) : sz.gen - nForm }, () => ({ type:'gen', gen:g })) : [];
   for (let i = 0; i < nForm; i++) drills.push({ type:'gen', gen:fx[(day + i) % fx.length] });
   shuffleInPlace(drills);
   // gemischt statt Block: Formübungen gleichmäßig zwischen die Sätze verteilen

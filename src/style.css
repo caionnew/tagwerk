@@ -724,3 +724,4 @@ button.erow:active{ background:var(--accent-soft); }
 .tq-src{ margin:12px 0 0; font-family:var(--serif); font-size:16px; line-height:1.5; }
 .tq-src .lbl-s{ display:block; margin-bottom:2px; }
 .popsay{ margin:12px 0 0; }
+.pbtn.play.wide{ width:auto; min-width:128px; border-radius:999px; padding:0 18px 0 14px; gap:6px; font-weight:700; font-size:15px; }

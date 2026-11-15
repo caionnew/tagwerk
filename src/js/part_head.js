@@ -308,7 +308,12 @@ function pickNew(lang, n, onlyTrap){
   let unseen = levelOrder(lang, BANK[lang].filter(i => !stOf(i.id) && (!onlyTrap || i.trap === onlyTrap)), !onlyTrap);
   // Schwerpunkt der Woche: bis zu einem Drittel der neuen Sätze aus diesem Thema, vorn eingereiht
   const ft = !onlyTrap && focusTrap(lang);
-  if (ft) { const fx = unseen.filter(i => i.trap === ft).slice(0, Math.ceil(n / 3)); unseen = fx.concat(unseen.filter(i => !fx.includes(i))); }
+  if (ft) {
+    // Ist der Schwerpunkt bei „Fortgeschritten“ ein schwaches Thema, erst die Grundlagen festigen
+    let fx = unseen.filter(i => i.trap === ft);
+    if ((DB.settings.niveau || 'mittel') === 'fort' && weakTraps(lang).has(ft)) fx = fx.slice().sort((a, b) => (a.lvl || 1) - (b.lvl || 1));
+    fx = fx.slice(0, Math.ceil(n / 3)); unseen = fx.concat(unseen.filter(i => !fx.includes(i)));
+  }
   const out = unseen.filter(i => i.own || (i.tat && !i.tat.auto) || (ft && i.trap === ft)).slice(0, Math.max(1, Math.ceil(n / 2)));
   const count = {};
   BANK[lang].forEach(i => { if (stOf(i.id)) count[i.trap] = (count[i.trap] || 0) + 1; });
@@ -431,7 +436,8 @@ function makeFresh(g){
   const mem = DB.used.genRecent = DB.used.genRecent || {};
   const list = mem[g] = mem[g] || [];
   let d = GENS[g].make(), k = genKey(d);
-  for (let tries = 0; tries < 30 && list.includes(k); tries++) { d = GENS[g].make(); k = genKey(d); }
+  // Viele Versuche: Kleine Listen (15 Fälle bei 12 gemerkten) brauchen sonst Glück
+  for (let tries = 0; tries < 200 && list.includes(k); tries++) { d = GENS[g].make(); k = genKey(d); }
   list.push(k); if (list.length > GEN_MEMORY) list.splice(0, list.length - GEN_MEMORY);
   return d;
 }

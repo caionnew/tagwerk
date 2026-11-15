@@ -17,7 +17,7 @@ test('Satzbank je Sprache: mindestens 60 Sätze ab Mittelstufe, davon mindestens
     assert.ok(l[2] >= 30, `${lang}: nur ${l[2]} schwere Sätze`);
   }
 });
-const pick = (niv, tlog) => app.run(`(() => { DB.st = {}; DB.tlog = ${JSON.stringify(tlog || {})}; DB.settings.niveau = '${niv}'; return pickNew('sv', 12).map(i => i.lvl + ':' + i.trap); })()`);
+const pick = (niv, tlog) => app.run(`(() => { DB.st = {}; DB.focus = {}; DB.tlog = ${JSON.stringify(tlog || {})}; DB.settings.niveau = '${niv}'; return pickNew('sv', 12).map(i => i.lvl + ':' + i.trap); })()`);
 test('Fortgeschritten: keine Grundlagen-Sätze, solange schwerere da sind', () => {
   const got = Array.from(pick('fort'));
   assert.equal(got.length, 12);

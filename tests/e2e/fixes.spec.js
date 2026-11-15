@@ -27,3 +27,16 @@ test('Fortgeschritten: Grundform verdeckt, Tipp zeigt sie, Eingabe bleibt', asyn
   }
   expect(checked).toBe(true);
 });
+test('Lücke nach dem Prüfen: falsch = durchgestrichen + Lösung, kein Eingabefeld mehr, kein Wort doppelt', async ({ page }) => {
+  await seed(page, freshDB('es'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  if (await page.$('[data-a=form][data-g=prep_es]')) await page.click('[data-a=form][data-g=prep_es]');
+  else { await page.click('[data-a=forms]'); await page.click('[data-a=gengo][data-g=prep_es]'); }
+  await page.fill('#answer', 'zzz'); await page.click('[data-a=check]');
+  await expect(page.locator('.cloze s.gapdone.bad')).toHaveText('zzz');
+  await expect(page.locator('.cloze .gapdone.fix')).toHaveCount(1);
+  await expect(page.locator('#answer')).toHaveCount(0);
+  const want = await page.locator('.cloze .gapdone.fix').textContent();
+  expect(await page.locator('.cloze').textContent()).not.toContain(want + ' ' + want);
+});

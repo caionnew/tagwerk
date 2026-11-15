@@ -210,6 +210,13 @@ function tipChip(text, lang, c){
   const hide = (DB.settings.niveau || 'mittel') === 'fort' && /^Grundform/.test(text) && !c.tip && c.state !== 'done';
   return hide ? `<button type="button" class="hintw tipbtn" data-a="showtip">Grundform zeigen</button>` : `<span class="hintw" lang="${lang}">${esc(text)}</span>`;
 }
+// Lücke nach dem Prüfen als Text statt Eingabefeld: richtig grün; fast richtig zeigt die richtige Form (zählt ja als richtig);
+// falsch zeigt deine Antwort durchgestrichen und die Lösung daneben. So steht nie dasselbe Wort doppelt da.
+function gapDone(c, want, lang){
+  if (c.result === 'ok') return `<span class="gapdone ok" lang="${lang}">${esc(c.input.trim() || want)}</span>`;
+  if (c.result === 'near') return `<span class="gapdone near" lang="${lang}">${esc(want)}</span>`;
+  return `${c.input.trim() && !c.gaveUp ? `<s class="gapdone bad" lang="${lang}">${esc(c.input.trim())}</s> ` : ''}<span class="gapdone fix" lang="${lang}">${esc(want)}</span>`;
+}
 function viewRun(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur, lang = r.lang, L = LANG[lang];
   const done = c.state === 'done';
@@ -231,7 +238,7 @@ function viewRun(){
     const item = itemById(ex.id);
     const pos = gapPos(item.target, item.gap);
     const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
-    const field = `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(item.gap)}</span>` : ''}`;
+    const field = done ? gapDone(c, item.gap, lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}" aria-label="Lücke">`;
     const h = item.hint.replace(/[()]/g, '').trim();
     const hintTxt = !h ? '' : h.includes('/') ? h.split('/').map(x => x.trim()).join(' oder ') : `Grundform: ${h}`;
     body = `<p class="kicker">Ergänze die Lücke${hintTxt ? tipChip(hintTxt, lang, c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
@@ -274,7 +281,7 @@ function viewRun(){
     if (d.gap) {
       const pos = d.prompt.indexOf('___');
       const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
-      const field = `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
+      const field = done ? gapDone(c, d.full.slice(pos, d.full.length - (d.prompt.length - pos - 3)), lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
       body = `<p class="kicker">${esc(d.label)}${d.hint ? tipChip(d.hint, lang, c) : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
         <div class="ex-a"><p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
         ${done ? '' : charbar(lang)}</div>`;

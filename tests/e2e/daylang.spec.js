@@ -10,6 +10,8 @@ test('Andere Sprache sichtbar, Wechsel gilt für den Tag', async ({ page }) => {
   const other = await box.locator('[data-a=lang]').getAttribute('data-l');
   await box.locator('[data-a=lang]').click();
   await expect(page.locator(`.otherlang [data-a=lang]`)).not.toHaveAttribute('data-l', other);
+  // Gespeichert wird kurz verzögert (und sofort beim Verlassen der App); vor dem Neuladen warten, bis der Wechsel im Speicher steht
+  await page.waitForFunction(() => { const d = JSON.parse(localStorage.getItem('tagwerk-offline-v1') || '{}'); return d.dayLang && d.dayLang.manual; });
   await page.reload();
   await expect(page.locator('.otherlang [data-a=lang]')).not.toHaveAttribute('data-l', other);
 });

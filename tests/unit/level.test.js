@@ -98,3 +98,9 @@ test('Umbauen „Ayer → Hoy“: Ziel ist benannt (heute schon passiert), Perfe
   }
   assert.ok(seen >= 1);
 });
+test('Adjektiv anpassen: keine Aufgabe, deren Lösung schon als Hinweis dasteht (außer männlich auf -a)', () => {
+  for (let k = 0; k < 400; k++) {
+    const d = app.run('genDetEs()');
+    if (d.label === 'Adjektiv anpassen' && d.answers[0] === d.hint) assert.ok(/a$/.test(d.full.split(' ')[1]), d.full);
+  }
+});

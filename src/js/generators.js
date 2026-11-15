@@ -549,7 +549,13 @@ const POSS_ES = [['mein', 'mi', 'mi', 'mis', 'mis'], ['dein', 'tu', 'tu', 'tus',
 const DEM_ES = [['dieser hier', 'este', 'esta', 'estos', 'estas'], ['dieser da', 'ese', 'esa', 'esos', 'esas']];
 const ADJ_ES = ['nuevo', 'viejo', 'pequeño', 'bonito', 'perfecto', 'típico'];
 const NO_PL_ES = ['leche', 'sal', 'sangre', 'gente', 'mar', 'crisis', 'lunes', 'miedo'];
+// Männlich Einzahl bei Nomen auf -o wäre geschenkt (Lösung = Hinweis); bleibt drin nur bei männlichen Nomen auf -a (el problema bonito)
 function genDetEs(){
+  let d = genDetEsOne();
+  for (let k = 0; k < 20 && d.label === 'Adjektiv anpassen' && d.answers[0] === d.hint && !/a$/.test(d.full.split(' ')[1]); k++) d = genDetEsOne();
+  return d;
+}
+function genDetEsOne(){
   const [w, g, de, extra] = pick(GENUS.es.filter(x => x[0] !== 'agua')), fem = g === 'la';
   const pl = /[aeiouáéó]$/.test(w) && !NO_PL_ES.includes(w) && Math.random() < 0.4, noun = pl ? w + 's' : w, k = 1 + (fem ? 1 : 0) + (pl ? 2 : 0);
   const deL = pl ? `${de}, Mehrzahl` : de, why = `${w} ist ${fem ? 'weiblich' : 'männlich'}${pl ? ', hier in der Mehrzahl' : ''}.${extra ? ' ' + extra : ''}`;

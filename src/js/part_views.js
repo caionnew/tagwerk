@@ -50,7 +50,7 @@ function streakBox(){
     const free = !DB.done[ds] && !some && sd.free.has(ds);
     if (free) hasFree = true;
     if (some) hasSome = true;
-    return `<span class="wd${DB.done[ds] ? ' on' : some ? ' some' : free ? ' free' : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' pop' : ''}"><i></i>${l}</span>`;
+    return `<span class="wd${DB.done[ds] ? ' on' : some ? ' some' : free ? ' free' : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' fillnow' : ''}"><i></i>${l}</span>`;
   }).join('');
   let line;
   if (!sd.current) line = DB.done[t] ? 'Heute erledigt. Ziel: jeden Tag ein Tagwerk.' : 'Ziel: jeden Tag ein Tagwerk. Ein freier Tag pro Woche ist erlaubt.';
@@ -205,6 +205,11 @@ function runBar(r){
   const line = chosen ? esc(topic) + (ex.requeue ? ', zweiter Versuch' : '') : (ex.requeue ? 'Zweiter Versuch' : '');
   return `<div class="runbar">${x}${prog}</div>${line ? `<p class="topic">${line}</p>` : '<div class="topic-sp"></div>'}`;
 }
+// Hinweis als Chip. Bei „Fortgeschritten“ bleibt die Grundform verdeckt, bis man sie antippt; Auswahl-Hinweise (ser oder estar, Optionen) bleiben immer sichtbar.
+function tipChip(text, lang, c){
+  const hide = (DB.settings.niveau || 'mittel') === 'fort' && /^Grundform/.test(text) && !c.tip && c.state !== 'done';
+  return hide ? `<button type="button" class="hintw tipbtn" data-a="showtip">Grundform zeigen</button>` : `<span class="hintw" lang="${lang}">${esc(text)}</span>`;
+}
 function viewRun(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur, lang = r.lang, L = LANG[lang];
   const done = c.state === 'done';
@@ -229,7 +234,7 @@ function viewRun(){
     const field = `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(item.gap)}</span>` : ''}`;
     const h = item.hint.replace(/[()]/g, '').trim();
     const hintTxt = !h ? '' : h.includes('/') ? h.split('/').map(x => x.trim()).join(' oder ') : `Grundform: ${h}`;
-    body = `<p class="kicker">Ergänze die Lücke${hintTxt ? `<span class="hintw" lang="${lang}">${esc(hintTxt)}</span>` : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
+    body = `<p class="kicker">Ergänze die Lücke${hintTxt ? tipChip(hintTxt, lang, c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
       <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${esc(item.target.slice(0, pos))}${field}${esc(item.target.slice(pos + item.gap.length))}` : field}</p>
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'free') {
@@ -270,7 +275,7 @@ function viewRun(){
       const pos = d.prompt.indexOf('___');
       const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
       const field = `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
-      body = `<p class="kicker">${esc(d.label)}${d.hint ? `<span class="hintw" lang="${lang}">${esc(d.hint)}</span>` : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
+      body = `<p class="kicker">${esc(d.label)}${d.hint ? tipChip(d.hint, lang, c) : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
         <div class="ex-a"><p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
         ${done ? '' : charbar(lang)}</div>`;
     } else {

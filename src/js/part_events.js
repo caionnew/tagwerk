@@ -250,6 +250,7 @@ document.addEventListener('click', e => {
     case 'ankiok': { if (!S.ankiPrev || !S.ankiPrev.items) break; const n = ankiCommit(S.ankiPrev); S.ankiPrev = null; note(`${n.toLocaleString('de-DE')} Sätze übernommen. Sie kommen als neue Sätze dran.`); render(); break; }
     case 'ankino': S.ankiPrev = null; render(); break;
     case 'textgap': startRun('textgap', { text:b.dataset.id }); break;
+    case 'showtip': if (S.run && S.run.cur) { S.run.cur.tip = true; render(); const a = document.getElementById('answer'); if (a) a.focus(); } break;
     case 'pcrange': S.pcAll = b.dataset.v === '1'; render(); break;
     case 'focusnext': { const c = focusCandidates(S.lang), cur = focusTrap(S.lang), nx = c[(c.indexOf(cur) + 1) % c.length]; DB.focus[S.lang] = { trap:nx, week:mondayOf(today()) }; S.dailyPlanCache = null; save(); render(); break; }
     case 'errtab': S.errTab = b.dataset.t; render(); break;

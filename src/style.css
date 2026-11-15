@@ -725,7 +725,7 @@ section.ex #fb:empty{ display:none; }
 /* Bewegung nur als Antwort auf eine Handlung */
 .seg.just{ animation:segFill .35s ease-out; transform-origin:left center; }
 @keyframes segFill{ from{ transform:scaleX(0); } to{ transform:none; } }
-.wd.pop i{ animation:dotPop .5s cubic-bezier(.2,.8,.3,1.4) .15s both; }
+.wd.fillnow i{ animation:dotPop .5s cubic-bezier(.2,.8,.3,1.4) .15s both; }
 @keyframes dotPop{ 0%{ transform:scale(.4); opacity:.4; } 100%{ transform:none; opacity:1; } }
 
 /* Übungstage: Form = Einsatz, Farbe = Sprache */
@@ -770,3 +770,5 @@ section.ex #fb:empty{ display:none; }
 .otherlang p{ margin:0; line-height:1.45; }
 .otherlang b{ color:var(--ink); font-weight:650; }
 .otherlang .link{ white-space:nowrap; }
+
+.hintw.tipbtn{ border:1px dashed currentColor; background:none; cursor:pointer; font:inherit; font-size:inherit; }

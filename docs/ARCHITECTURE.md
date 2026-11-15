@@ -37,7 +37,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 
 ## Darstellung und Ereignisse
 
-Übungen folgen einem Aufbau: oben die Aufgabe (Anweisung, Vorlage), unten in `.ex-a` die Antwortzone direkt über der Knopfleiste, dazwischen nach dem Antworten die Rückmeldung (`#fb`). Neue Übungsarten legen ihre Eingabe in `.ex-a`; `tests/e2e/layout.spec.js` prüft das für alle Arten.
+Übungen folgen einem Aufbau: oben die Aufgabe (Anweisung, Vorlage), darunter ein Abstandshalter (`.ex-sp`, höchstens 30 % der Bildhöhe), dann in `.ex-a` die Antwortzone in der unteren Bildhälfte, dazwischen nach dem Antworten die Rückmeldung (`#fb`). Neue Übungsarten legen ihre Eingabe in `.ex-a`; `tests/e2e/layout.spec.js` prüft das für alle Arten.
 
 
 `render()` erzeugt die aktuelle Ansicht als Zeichenkette und setzt sie in `#app`. Alle Benutzeraktionen laufen über ein einziges Klick-Ereignis: Elemente tragen `data-a="aktion"`, `part_events.js` verteilt sie. Laufzeitzustand liegt in `S` (aktuelle Ansicht, laufende Runde, offene Fenster), alles Dauerhafte in `DB`.
@@ -64,6 +64,10 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 ## App-Symbol
 
 `design/icons/*.svg` sind Entwürfe auf 512 × 512 mit dem Motiv im inneren Kreis (80 %, sichere Zone für Masken). `tools/icons.js` rendert den in `design/icons/AKTIV` genannten Entwurf zu `public/icon-192.png` und `icon-512.png` (rund, Ecken durchsichtig, `purpose: any`) und `icon-maskable-512.png` (randlos, `purpose: maskable`). Farben aus der App: Blau `#1D5689`, Safran `#E3A21A`, Papier `#F3F5F4`.
+
+## Bewegung
+
+Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), der Fortschrittsbalken füllt sich, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich. `prefers-reduced-motion: reduce` schaltet alles ab.
 
 ## Online und offline
 

@@ -81,10 +81,10 @@ function viewRadio(){
       <div class="rsteps">${steps}</div>
       ${R.show ? `<p class="radio-t" lang="${lang}">${esc(item.target)}</p><p class="radio-de">${esc(item.de || '')}</p>` : '<p class="radio-t radio-hidden">Nur hören</p>'}
     </section>
-    <div class="radio-ctl">
-      <button type="button" class="ghost rbtn" data-a="rprev" aria-label="Vorheriger Satz">‹</button>
-      <button type="button" class="primary rbtn rmain" data-a="rplay">${R.playing ? 'Pause' : 'Weiter'}</button>
-      <button type="button" class="ghost rbtn" data-a="rnext" aria-label="Nächster Satz">›</button>
-    </div>
-    <div class="rows" style="margin-top:18px">${sw('rde', R.de, 'Deutsch dazwischen', 'Erst der Satz, dann die Bedeutung')}${sw('rshow', R.show, 'Text zeigen', 'Aus: reines Hörverstehen')}${sw('rslow', R.slow, 'Erstes Mal langsamer')}</div>`;
+    <div class="rows" style="margin-top:18px">${sw('rde', R.de, 'Deutsch dazwischen', 'Erst der Satz, dann die Bedeutung')}${sw('rshow', R.show, 'Text zeigen', 'Aus: reines Hörverstehen')}${sw('rslow', R.slow, 'Erstes Mal langsamer')}</div>
+    <div class="actionbar reader-bar"><div class="in">
+      <button type="button" class="pbtn" data-a="rprev" aria-label="Vorheriger Satz">${PICO.prev}</button>
+      <button type="button" class="pbtn play wide" data-a="rplay">${R.playing ? PICO.pause + '<span>Pause</span>' : PICO.play + '<span>Weiter</span>'}</button>
+      <button type="button" class="pbtn" data-a="rnext" aria-label="Nächster Satz">${PICO.next}</button>
+    </div></div>`;
 }

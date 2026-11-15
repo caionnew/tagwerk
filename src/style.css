@@ -62,12 +62,12 @@ body.has-actions .wrap{ display:flex; flex-direction:column; min-height:calc(100
 .statline{ color:var(--muted); font-size:15px; margin:0 0 4px; }
 .hint{ color:var(--muted); font-size:14.5px; margin:10px 0 0; }
 .src{ color:var(--muted); font-size:13px; margin:12px 0 0; }
-.notice{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-radius:12px; padding:11px 14px; font-size:15px; margin:0 0 16px; }
+.notice{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-radius:14px; padding:12px 14px; font-size:15px; margin:0 0 16px; }
 .notice.ok{ background:var(--ok-soft); }
 .notice.warn{ background:var(--warn-soft); }
 
 /* Listen */
-.rows{ background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+.rows{ background:var(--surface); border:1px solid var(--line); border-radius:18px; overflow:hidden; }
 .row{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:none; border:0; border-top:1px solid var(--line); padding:13px 16px; color:var(--ink); min-height:56px; }
 .row:first-child{ border-top:0; }
 button.row::after, label.row::after{ content:''; flex:none; width:8px; height:8px; margin-left:4px; border-top:2px solid var(--faint); border-right:2px solid var(--faint); transform:rotate(45deg); }
@@ -260,19 +260,19 @@ button.row.toggle::after{ display:none; }
 
 /* Feinschliff */
 #fb:empty{ display:none; }
-#fb{ margin-top:20px; padding:14px 16px 16px; border-radius:14px; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--line); }
+#fb{ margin-top:18px; padding:16px; border-radius:18px; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--line); }
 #fb.fb-ok{ border-left-color:var(--ok); }
 #fb.fb-near{ border-left-color:var(--warn); }
 #fb.fb-bad{ border-left-color:var(--bad); }
 .eyebrow{ font-size:14px; color:var(--muted); margin:0 0 2px; font-weight:600; }
 .today .num{ font-size:24px; }
 .plan2{ list-style:none; padding:0; margin:12px 0 16px; }
-.plan2 li{ display:flex; align-items:baseline; gap:8px; padding:8px 0; border-top:1px solid var(--line); font-size:16px; }
+.plan2 li{ display:grid; grid-template-columns:1.6em 1fr; column-gap:8px; align-items:baseline; padding:9px 0; border-top:1px solid var(--line); font-size:16px; }
 .plan2 li:first-child{ border-top:0; }
 .plan2 b{ min-width:1.4em; text-align:right; font-variant-numeric:tabular-nums; }
 /* Die Bezeichnung links bricht nie um, die Erklärung rechts darf umbrechen */
-.plan2 li{ white-space:nowrap; }
-.plan2 span{ color:var(--muted); font-size:14px; margin-left:auto; text-align:right; padding-left:12px; white-space:normal; min-width:0; }
+.plan2 li{ white-space:normal; }
+.plan2 span{ grid-column:2; color:var(--muted); font-size:14px; margin-top:1px; line-height:1.4; }
 .choices{ border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-top:4px; }
 .choices .row{ background:var(--bg); }
 .intro{ background:var(--accent-soft); border-radius:16px; padding:14px 16px 10px; margin:0 0 14px; font-size:15.5px; }
@@ -651,7 +651,7 @@ button.erow:active{ background:var(--accent-soft); }
 .combo{ display:inline-block; margin:0 0 10px 8px; padding:3px 10px; border-radius:999px; font-size:13.5px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); }
 
 /* Hörrunde */
-.radio-card{ background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:20px 20px 24px; margin-top:14px; min-height:210px; }
+.radio-card{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:18px 18px 22px; margin-top:14px; min-height:210px; }
 .rsteps{ display:flex; gap:6px; margin-bottom:18px; }
 .rstep{ font-size:12.5px; font-weight:650; color:var(--muted); padding:3px 10px; border-radius:999px; border:1px solid var(--line); }
 .rstep.on{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
@@ -659,9 +659,6 @@ button.erow:active{ background:var(--accent-soft); }
 .radio-t{ font-family:var(--serif); font-size:27px; line-height:1.3; margin:0 0 10px; }
 .radio-de{ color:var(--muted); font-size:16px; margin:0; }
 .radio-hidden{ color:var(--faint); font-family:var(--sans); font-size:20px; }
-.radio-ctl{ display:flex; gap:10px; margin-top:16px; align-items:stretch; }
-.radio-ctl .rbtn{ font-size:22px; min-width:64px; }
-.radio-ctl .rmain{ flex:1; font-size:18px; }
 
 /* Lesen und Hören */
 .tgrid2{ display:grid; gap:10px; }
@@ -728,5 +725,12 @@ button.erow:active{ background:var(--accent-soft); }
 /* Übungen: Aufgabe oben, Antwort unten. Die Antwortzone (Kästchen, Wörter, Auswahl, Eingabefeld) sitzt direkt über der
    Knopfleiste, die Rückmeldung erscheint darunter. So bleiben Antippen, Prüfen und Weiter im Daumenbereich, bei allen Übungen gleich. */
 section.ex{ flex:1 0 auto; display:flex; flex-direction:column; }
-.ex-a{ margin-top:auto; padding-top:18px; }
+.ex-sp{ flex:1 1 auto; min-height:18px; max-height:30vh; }
+.ex-a{ padding-bottom:4px; }
 section.ex #fb:empty{ display:none; }
+
+/* Bewegung nur als Antwort auf eine Handlung */
+.seg.just{ animation:segFill .35s ease-out; transform-origin:left center; }
+@keyframes segFill{ from{ transform:scaleX(0); } to{ transform:none; } }
+.wd.pop i{ animation:dotPop .5s cubic-bezier(.2,.8,.3,1.4) .15s both; }
+@keyframes dotPop{ 0%{ transform:scale(.4); opacity:.4; } 100%{ transform:none; opacity:1; } }

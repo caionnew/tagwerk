@@ -50,7 +50,7 @@ function streakBox(){
     const free = !DB.done[ds] && !some && sd.free.has(ds);
     if (free) hasFree = true;
     if (some) hasSome = true;
-    return `<span class="wd${DB.done[ds] ? ' on' : some ? ' some' : free ? ' free' : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}"><i></i>${l}</span>`;
+    return `<span class="wd${DB.done[ds] ? ' on' : some ? ' some' : free ? ' free' : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' pop' : ''}"><i></i>${l}</span>`;
   }).join('');
   let line;
   if (!sd.current) line = DB.done[t] ? 'Heute erledigt. Ziel: jeden Tag ein Tagwerk.' : 'Ziel: jeden Tag ein Tagwerk. Ein freier Tag pro Woche ist erlaubt.';
@@ -187,7 +187,7 @@ function runBar(r){
   else topic = trapMeta(r.lang, itemById(ex.id).trap).label;
   const prog = r.endless
     ? `<span class="count grow">${r.ok} richtig, ${r.bad} falsch</span>`
-    : `<div class="progress" aria-hidden="true">${r.queue.map((_, i) => `<span class="seg${i < r.idx ? ' pass' : i === r.idx ? ' cur' : ''}"></span>`).join('')}</div><span class="count">${r.idx + 1}/${r.queue.length}</span>`;
+    : `<div class="progress" aria-hidden="true">${r.queue.map((_, i) => `<span class="seg${i < r.idx ? ' pass' : i === r.idx ? ' cur' : ''}${i === r.idx - 1 && r.cur && r.cur.intro ? ' just' : ''}"></span>`).join('')}</div><span class="count">${r.idx + 1}/${r.queue.length}</span>`;
   const x = r.kind === 'daily'
     ? `<button type="button" class="x xt" data-a="quit" aria-label="Pausieren, später an derselben Stelle weitermachen">Pause</button>`
     : `<button type="button" class="x xt" data-a="${r.endless ? 'endrun' : 'quit'}" aria-label="Runde jetzt beenden, Antworten bleiben gespeichert">Beenden</button>`;
@@ -284,6 +284,7 @@ function viewRun(){
     const canAccept = c.result === 'bad' && !c.gaveUp && !!c.input && ex.type !== 'dict' && ex.type !== 'tiles' && !fixedAnswer;
     actions = `${canAccept ? '<button type="button" class="ghost" data-a="accept">Meine ist auch richtig</button>' : ''}<button type="button" class="primary" data-a="next">Weiter</button>`;
   }
+  body = body.replace('<div class="ex-a">', '<div class="ex-sp" aria-hidden="true"></div><div class="ex-a">');
   return runBar(r) + `<section class="ex">${body}<div id="fb" class="${done ? 'fb-' + c.result + (c.gaveUp ? ' fb-gave' : '') + (c.enter ? ' enter' : '') : ''}" aria-live="polite">${done ? feedbackHtml(r, ex, c) : ''}</div></section><div class="actionbar"><div class="in">${actions}</div></div>`;
 }
 const ivlText = n => (n <= 1 ? 'morgen wieder' : n === 2 ? 'übermorgen wieder' : n < 14 ? `in etwa ${n} Tagen wieder` : n < 60 ? `in etwa ${Math.round(n / 7)} Wochen wieder` : n < 540 ? `in etwa ${Math.round(n / 30)} Monaten wieder` : `in etwa ${Math.round(n / 365)} Jahr${Math.round(n / 365) > 1 ? 'en' : ''} wieder`);
@@ -837,6 +838,7 @@ function render(){
   const cs = $('#calscroll');
   if (cs) { cs.scrollLeft = S.calScroll != null ? S.calScroll : cs.scrollWidth; cs.addEventListener('scroll', () => { S.calScroll = cs.scrollLeft; }, { passive:true }); }
   if (S.view === 'runDone' && S.run) S.run.stamped = true;
+  if (S.view === 'home' && S.justDone) S.justDone = null;
   if (S.focus) { S.focus = false; const el = $('#answer'); if (el && !el.readOnly) { try { el.focus({ preventScroll:true }); } catch (e) {} caretToEnd(el); } }
 }
 // Vorgegebener Satzanfang („Tyvärr …“): Schreibmarke ans Ende, nicht davor

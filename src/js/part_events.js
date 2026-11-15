@@ -14,6 +14,14 @@ function newWrite(lang, prompt, text, keep){
 }
 let draftTimer = null;
 function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 800); }
+// Ein Kästchen gleitet von seiner alten an die neue Stelle; bei „Bewegung reduzieren“ springt es wie bisher
+function flyFrom(from, sel){
+  const el = document.querySelector(sel); if (!el || !el.animate) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const to = el.getBoundingClientRect(), dx = from.left - to.left, dy = from.top - to.top;
+  if (Math.abs(dx) + Math.abs(dy) < 2) return;
+  el.animate([{ transform:`translate(${dx}px, ${dy}px)` }, { transform:'none' }], { duration:200, easing:'cubic-bezier(.2,.8,.2,1)' });
+}
 function goView(v){ S.view = v; render(); window.scrollTo(0, 0); }
 document.addEventListener('pointerdown', e => { if (e.target.closest('[data-c]')) e.preventDefault(); });
 document.addEventListener('click', e => {
@@ -64,12 +72,12 @@ document.addEventListener('click', e => {
       finishRun(); break;
     }
     case 'pickt': {
-      const ex = r.queue[r.idx]; const i = Number(b.dataset.i);
-      ex.picked.push(i); render();
+      const ex = r.queue[r.idx]; const i = Number(b.dataset.i), from = b.getBoundingClientRect();
+      ex.picked.push(i); render(); flyFrom(from, `.tiles-ans [data-i="${i}"]`);
       if (DB.settings.autoplay) { const p = ex.pool.find(x => x.i === i); if (p) speak(p.t, r.lang); }
       break;
     }
-    case 'unpick': { const ex = r.queue[r.idx]; const i = Number(b.dataset.i); ex.picked = ex.picked.filter(x => x !== i); render(); break; }
+    case 'unpick': { const ex = r.queue[r.idx]; const i = Number(b.dataset.i), from = b.getBoundingClientRect(); ex.picked = ex.picked.filter(x => x !== i); render(); flyFrom(from, `.tiles-pool [data-a=pickt][data-i="${i}"]`); break; }
     case 'resetTiles': { r.queue[r.idx].picked = []; render(); break; }
     case 'play': playItem(itemById(r.queue[r.idx].id), Number(b.dataset.rate)); break;
     case 'speakItem': playItem(itemById(b.dataset.id)); break;

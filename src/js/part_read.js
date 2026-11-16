@@ -84,6 +84,17 @@ function readCmd(a, b){
     openText(T.lang, nxt.id); return;
   }
   render();
+  if (a === 'tpick') keepAboveBar('.tq-src');
+  else if (a === 'tqnext') followSentence(textDone(T, t) && T.qi >= t.q.length ? '.tdone' : '.tq');
+}
+// Element über der Leiste sichtbar machen, ohne den Anfang der Frage aus dem Bild zu schieben
+function keepAboveBar(sel){
+  const el = document.querySelector(sel), card = document.querySelector('.tq'); if (!el) return;
+  const bar = document.querySelector('.reader-bar'), limit = (bar ? bar.getBoundingClientRect().top : innerHeight) - 12;
+  const over = el.getBoundingClientRect().bottom - limit; if (over <= 0) return;
+  const room = card ? card.getBoundingClientRect().top - 8 : over;
+  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollBy({ top:Math.min(over, Math.max(0, room)) || over, behavior:calm ? 'auto' : 'smooth' });
 }
 function viewTexts(){
   const lang = S.lang, done = (DB.used && DB.used.texts) || {}, niv = DB.settings.niveau || 'mittel', rank = { A2:1, B1:2, B2:3 };
@@ -117,22 +128,25 @@ function viewText(){
   const evidence = new Set(t ? Object.keys(T.picks).map(k => srcIndex(T, t.q[k][2])) : []);
   const heard = T.listened ? list.length : T.si;
   let k = 0;
-  const article = `<article class="reader${veil ? ' veiled' : ''}" lang="${lang}">${T.sents.map(p => `<p>${p.map(s => { const i = k++;
+  const fold = veil && T.quiz && !finished;
+  const article = `<article class="reader${veil ? ' veiled' : ''}${fold ? ' folded' : ''}" lang="${lang}">${T.sents.map(p => `<p>${p.map(s => { const i = k++;
     const cls = `rs-s${T.playing && i === T.si ? ' on' : ''}${veiled(i) ? ' veil' : ''}${!veiled(i) && evidence.has(i) ? ' ev' : ''}`;
     return veiled(i) ? `<span class="${cls}" data-a="treveal" data-i="${i}" role="button" aria-label="Satz ${i + 1}: ${T.tapped === i ? 'aufdecken' : 'noch einmal hören'}">${esc(s)}</span>` : `<span class="${cls}" data-i="${i}">${linkWords(s, lang)}</span>`; }).join(' ')}</p>`).join('')}</article>`;
   const hero = `<header class="rhero">
       <div class="tchips">${W ? '<span class="tag">Wikipedia</span>' : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>
       <h1 class="rtitle" lang="${lang}">${esc(W ? W.title : t.title)}</h1>
       <div class="rprog" aria-hidden="true"><i style="width:${Math.round(100 * Math.min(heard, list.length) / Math.max(1, list.length))}%"></i></div>
-      ${veil ? '<p class="rhint">Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn. Nach dem letzten Satz kommen die Fragen.</p>' : ''}
+      ${veil ? `<p class="rhint">${fold ? 'Der Text bleibt bis nach den Fragen verdeckt.' : 'Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn. Nach dem letzten Satz kommen die Fragen.'}</p>` : ''}
     </header>`;
+  const answered = !W && T.quiz && !finished && T.picks[Math.min(T.qi, t.q.length - 1)] != null;
+  const nextBtn = answered ? `<button type="button" class="primary pnext" data-a="tqnext">${T.qi + 1 < t.q.length ? 'Nächste Frage' : 'Ergebnis'}</button>` : '';
   const bar = `<div class="actionbar reader-bar"><div class="in">
       <button type="button" class="pbtn" data-a="treplay" aria-label="Satz noch einmal">${PICO.replay}</button>
-      ${T.hidden ? `<button type="button" class="pbtn play" data-a="tplayall" aria-label="${T.playing ? 'Pause' : 'Weiter hören'}">${T.playing ? PICO.pause : PICO.play}</button>`
+      ${T.hidden || answered ? `<button type="button" class="pbtn play" data-a="tplayall" aria-label="${T.playing ? 'Pause' : 'Weiter hören'}">${T.playing ? PICO.pause : PICO.play}</button>`
         : `<button type="button" class="pbtn play wide" data-a="tplayall">${T.playing ? PICO.pause + '<span>Pause</span>' : PICO.play + '<span>Vorlesen</span>'}</button>`}
       <span class="pspace"></span><span class="sr-only" aria-live="polite">Satz ${Math.min(T.si + 1, list.length)} von ${list.length}</span>
-      <button type="button" class="pchip" data-a="tslow" aria-pressed="${!!T.slow}">${PICO.slow}<span>Langsam</span></button>
-      ${veil ? `<button type="button" class="pchip" data-a="tshowall">${PICO.eye}<span>Text zeigen</span></button>` : ''}
+      ${answered ? nextBtn : `<button type="button" class="pchip" data-a="tslow" aria-pressed="${!!T.slow}">${PICO.slow}<span>Langsam</span></button>
+      ${veil ? `<button type="button" class="pchip" data-a="tshowall">${PICO.eye}<span>Text zeigen</span></button>` : ''}`}
     </div></div>`;
   const looked = T.looked.length ? `<h2 class="grp">Nachgeschlagen</h2><div class="wtray">${T.looked.map(w => { const e = lookupWord(lang, w); return `<button type="button" class="wchip" data-a="lookup" data-w="${esc(w)}"><b lang="${lang}">${esc(w)}</b>${e ? `<span>${esc(e.de.split(/[;(]/)[0].trim())}</span>` : ''}</button>`; }).join('')}</div>` : '';
   if (W) {
@@ -150,14 +164,15 @@ function viewText(){
       <div class="tq-head"><span>Frage ${qi + 1} von ${t.q.length}</span><span class="sdots">${t.q.map((_, i) => `<i class="${T.picks[i] == null ? (i === qi ? 'on' : '') : T.picks[i] === 0 ? 'ok' : 'bad'}"></i>`).join('')}</span></div>
       <p class="tq-q">${esc(q)}</p>
       <div class="tq-o">${optionOrder(t.id, qi, opts.length).map(i => `<button type="button" class="tq-b${picked != null ? (i === 0 ? ' right' : i === picked ? ' wrong' : ' dim') : ''}" data-a="tpick" data-k="${qi}" data-i="${i}"${picked != null ? ' disabled' : ''}>${esc(opts[i])}</button>`).join('')}</div>
-      ${picked != null ? `<p class="tq-src"><span class="lbl-s">Im Text</span> <span lang="${lang}">${esc(srcSent)}</span></p><div class="btnrow tight"><button type="button" class="${picked === 0 ? 'primary' : 'ghost'}" data-a="tqnext">${qi + 1 < t.q.length ? 'Nächste Frage' : 'Ergebnis'}</button></div>` : ''}
+      ${picked != null ? `<p class="tq-src"><span class="lbl-s">Im Text</span> <span lang="${lang}">${esc(srcSent)}</span></p>` : ''}
     </section>`;
   const own = new Set((DB.own[lang] || []).map(o => o.id));
   const after = finished ? `<section class="tdone">
       <p class="tdone-h">${score === t.q.length ? 'Alles verstanden.' : `${score} von ${t.q.length} richtig.`}</p>
       <p class="hint" style="margin-top:2px">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
-      <div class="rows" style="margin-top:12px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span><button type="button" class="link" data-a="tkeep" data-k="${i}"${has ? ' disabled' : ''}>${has ? 'Übernommen' : 'Übernehmen'}</button></div>`; }).join('')}</div>
-      <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lücken aus dem Text</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
+      <p class="keep-h">Zum Lernen: Diese Sätze kommen als neue Sätze in deine nächsten Tagwerke und werden danach wiederholt.</p>
+      <div class="rows" style="margin-top:8px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span><button type="button" class="link" data-a="tkeep" data-k="${i}"${has ? ' disabled' : ''}>${has ? 'Im Tagwerk' : 'Ins Tagwerk'}</button></div>`; }).join('')}</div>
+      <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
     </section>` : '';
   return backBar('Lesen und Hören', 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
 }

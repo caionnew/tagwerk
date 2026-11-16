@@ -38,7 +38,10 @@ const SCENES = [
   ['bonus', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, click('[data-a=bonus]'), p => p.fill('#bonusText', 'Jag tycker att det är skönt att jobba hemma.'), click('[data-a=bonuscheck]'), p => p.evaluate(() => document.querySelector('.bonus').scrollIntoView({ block:'end' }))]],
   ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],
   ['einstellungen-unten', rich, [click('[data-a=settings] >> nth=0'), bottom]],
-  ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]]
+  ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]],
+  ['hoeren-antwort', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=tdefmode][data-v=listen]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'), click('[data-a=tpick][data-k="0"][data-i="0"]')]],
+  ['lesen-ende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'),
+    ...[0, 1, 2].flatMap(k => [click(`[data-a=tpick][data-k="${k}"][data-i="0"]`), click('[data-a=tqnext]')])]]
 ].filter(([n]) => !ONLY || ONLY.split(',').includes(n));
 
 // Fester Zufall (mulberry32), vor dem Laden der App gesetzt

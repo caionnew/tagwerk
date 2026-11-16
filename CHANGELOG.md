@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.23.1
+- **Hören ohne Scrollen:** Sind die Fragen dran, klappt der verdeckte Text auf drei Zeilen zusammen, und die Frage steht oben. Nach dem Antworten steht „Nächste Frage“ (bzw. „Ergebnis“) rechts in der Leiste unten statt unter der Frage, und die Fundstelle im Text rückt ins Bild. Gilt auch beim Lesen.
+- **„Ins Tagwerk“ statt „Übernehmen“:** Nach den Fragen erklärt eine Zeile, was mit den angebotenen Sätzen passiert: Sie kommen als neue Sätze in die nächsten Tagwerke und werden danach wiederholt. Übernommene zeigen „Im Tagwerk“.
+- **„Lückentext üben“ statt „Lücken aus dem Text“.**
+- **Themen dieser Runde:** Die Punkte stehen bündig, auch in Zeilen ohne Pfeil (Themen ohne Regelseite).
+
 ## 24.23.0
 - **Themen dieser Runde:** Das Rundenende zeigt, welche Themen dran waren, je Thema ein Punkt pro Aufgabe (grün richtig, gelb fast, rot falsch). Antippen öffnet die Regel mit Beispielen und „10 Aufgaben üben“. Die Liste erscheint ab zwei Themen, höchstens fünf, Themen mit Fehlern zuerst.
 - **Fehler gebündelt:** Liegt ein Thema mit mindestens zwei Fehlern klar vorn, steht darüber etwa „2 von 3 Fehlern: Wortstellung im Nebensatz. Thema üben“. Das übt andere Sätze zur selben Regel, nicht dieselben Aufgaben noch einmal. Bei Gleichstand bleibt der Hinweis weg.

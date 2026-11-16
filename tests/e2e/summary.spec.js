@@ -67,6 +67,9 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen öffnet die Regel mit �
   const rows = page.locator('.trow');
   expect(await rows.count()).toBeGreaterThanOrEqual(2);
   expect(await page.locator('.tdots i.d-bad').count()).toBeGreaterThanOrEqual(2);
+  // Punkte bündig rechts, auch in Zeilen ohne Regel (ohne Pfeil)
+  const rights = await page.$$eval('.trow .tdots', els => els.map(e => Math.round(e.getBoundingClientRect().right)));
+  expect(new Set(rights).size).toBe(1);
   await page.locator('button.trow').first().click();
   await expect(page.locator('.pop')).toContainText('Thema');
   await expect(page.locator('.pop [data-a=trapgo]')).toHaveText('10 Aufgaben üben');

@@ -271,6 +271,17 @@ function stage(item){
 }
 // Sprache des Tages: beim ersten Start des Tages die Sprache, die es nötiger hat (fällige Wiederholungen im Verhältnis
 // zur Tagwerk-Länge, dazu Tage seit dem letzten Üben). Bleibt für den Tag fest; ein Wechsel von Hand gilt bis morgen.
+// Tagwerk je Sprache: DB.doneLang[datum][sprache]. Die Serie zählt weiter je Tag (DB.done), egal in welcher Sprache.
+// Ältere Tage ohne Angabe: Sprache aus dem Tagesprotokoll (die mit den meisten Aufgaben).
+function doneIn(ds, l){
+  const x = DB.doneLang && DB.doneLang[ds];
+  if (x) return !!x[l];
+  if (!DB.done || !DB.done[ds]) return false;
+  const a = dayLog(ds, 'sv').n || 0, b = dayLog(ds, 'es').n || 0;
+  return (a >= b ? 'sv' : 'es') === l;
+}
+function tagwerkCount(l, from, to){ return Object.keys(DB.done || {}).filter(d => DB.done[d] && (!from || d >= from) && (!to || d <= to) && doneIn(d, l)).length; }
+function lastPractice(l){ return Object.keys(DB.log || {}).filter(d => (dayLog(d, l).n || 0) > 0).sort().pop() || null; }
 function activeLangs(){ return ['sv', 'es'].filter(l => BANK[l].some(i => stOf(i.id)) || Object.keys(DB.log || {}).some(d => (dayLog(d, l).n || 0) > 0)); }
 function langNeed(l){
   const t = today(), due = dueItems(l).length, cap = Math.max(1, size().maxRev);

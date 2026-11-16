@@ -288,7 +288,7 @@ function next(){
 function finishRun(){
   const r = S.run;
   r.finished = true;
-  if (r.kind === 'daily') { DB.done[today()] = true; S.justDone = today(); S.dailyRun = null; DB.run = null; setTimeout(() => refill(r.lang), 500); }
+  if (r.kind === 'daily') { DB.done[today()] = true; DB.doneLang = DB.doneLang || {}; DB.doneLang[today()] = Object.assign({}, DB.doneLang[today()], { [r.lang]:true }); S.justDone = today(); S.dailyRun = null; DB.run = null; setTimeout(() => refill(r.lang), 500); }
   snapshot();
   save(); S.view = 'runDone'; render(); window.scrollTo(0, 0);
 }

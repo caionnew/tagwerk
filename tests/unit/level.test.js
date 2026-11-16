@@ -104,3 +104,13 @@ test('Adjektiv anpassen: keine Aufgabe, deren Lösung schon als Hinweis dasteht 
     if (d.label === 'Adjektiv anpassen' && d.answers[0] === d.hint) assert.ok(/a$/.test(d.full.split(' ')[1]), d.full);
   }
 });
+test('Tagwerk je Sprache: gezählt nach Sprache, alte Tage aus dem Protokoll erschlossen', () => {
+  const d = k => app.run(`addDays(today(), -${k})`);
+  app.run(`DB.done = { '${d(1)}':true, '${d(2)}':true, '${d(3)}':true }; DB.doneLang = { '${d(1)}':{ es:true }, '${d(2)}':{ sv:true, es:true } };
+    DB.log = { '${d(3)}':{ sv:{ n:30 }, es:{ n:4 } } };`);
+  assert.equal(app.run(`doneIn('${d(1)}', 'sv')`), false);
+  assert.equal(app.run(`doneIn('${d(1)}', 'es')`), true);
+  assert.equal(app.run(`doneIn('${d(3)}', 'sv')`), true, 'alter Tag: Sprache mit den meisten Aufgaben');
+  assert.equal(app.run("tagwerkCount('sv')"), 2);
+  assert.equal(app.run("tagwerkCount('es')"), 2);
+});

@@ -42,7 +42,7 @@ const GEAR = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
 const gearBtn = () => `<button type="button" class="iconbtn" data-a="settings" aria-label="Einstellungen">${GEAR}</button>`;
 function topLine(){ return `<div class="topline">${langSeg()}${gearBtn()}</div>`; }
 // Woche im Kopf von „Heute“: dieselbe Kodierung wie die Übungstage (gefüllt = Tagwerk, Farbe = Sprache, beide geteilt;
-// Rand = nur geübt; gestrichelt = freier Tag). Darunter nur die Serie als Zahl; Tipp führt zum Kalender.
+// Rand = nur geübt; gestrichelt = Pausetag, die Serie hält). Darunter nur die Serie als Zahl; Tipp führt zum Kalender.
 function weekStrip(){
   // Die letzten sieben Tage bis heute (statt Kalenderwoche): auch montags aussagekräftig
   const sd = streakData(), t = today(), y = addDays(t, -1);
@@ -56,7 +56,7 @@ function weekStrip(){
   }).join('');
   const risk = sd.current && !DB.done[t] && sd.free.has(y);
   const cap = sd.current ? `${sd.current} in Folge` : 'Serie startet heute';
-  const label = `${plural(sd.current, 'Tag', 'Tage')} in Folge${DB.done[t] ? ', heute erledigt' : risk ? ', gestern war dein freier Tag, heute braucht es ein Tagwerk' : ''}`;
+  const label = `${plural(sd.current, 'Tag', 'Tage')} in Folge${DB.done[t] ? ', heute erledigt' : risk ? ', gestern war dein Pausetag, heute braucht es ein Tagwerk' : ''}`;
   return `<button type="button" class="weekstrip" data-a="tab" data-v="progress" aria-label="${label}. Zum Kalender"><span class="wks">${cells}</span><span class="wkc${risk ? ' warn' : ''}">${risk ? 'heute nötig' : cap}</span></button>`;
 }
 function findHtml(lang){
@@ -658,7 +658,7 @@ function calendarSvg(){
       if (ds > t) continue;
       const sv = dayLog(ds, 'sv').n || 0, es = dayLog(ds, 'es').n || 0, n = sv + es;
       if (first && ds >= first) { total++; if (n) active++; }
-      // Form = Einsatz (gefüllt: Tagwerk, Umriss: etwas geübt, gestrichelt: freier Tag), Farbe = Sprache, beide Sprachen geteilt
+      // Form = Einsatz (gefüllt: Tagwerk, Umriss: etwas geübt, gestrichelt: Pausetag), Farbe = Sprache, beide Sprachen geteilt
       const ts = doneIn(ds, 'sv'), te = doneIn(ds, 'es'), kind = DB.done[ds] ? 'd' : n ? 'p' : '';
       const x = w * step, y = top + k * step, lang = kind === 'd' ? (ts && te ? 'b' : ts ? 's' : te ? 'e' : sv && es ? 'b' : sv ? 's' : 'e') : sv && es ? 'b' : sv ? 's' : es ? 'e' : '';
       const state = `${ds === t ? ' now' : ''}${S.calDay === ds ? ' sel' : ''}`;
@@ -678,7 +678,7 @@ function dayDetail(ds){
   const head = `${WDAYS[dt.getDay()]}, ${dt.getDate()}. ${MONTHS[dt.getMonth()]}`;
   const parts = ['sv', 'es'].map(l => { const x = dayLog(ds, l); return x.n ? `${LANG[l].deName} ${plural(x.n, 'Aufgabe', 'Aufgaben')}${x.secs ? ` in ${fmtMin(x.secs)}` : ''}` : ''; }).filter(Boolean);
   const free = streakData().free.has(ds);
-  return `${head}: ${parts.length ? endDot(parts.join(', ')) : free ? 'freier Tag, die Serie lief weiter.' : 'nicht geübt.'}${DB.done[ds] ? ` ${['sv', 'es'].filter(l => doneIn(ds, l)).map(l => LANG[l].deName + '-Tagwerk').join(' und ') || 'Tagwerk'} erledigt.` : ''}`;
+  return `${head}: ${parts.length ? endDot(parts.join(', ')) : free ? 'Pausetag, die Serie lief weiter.' : 'nicht geübt.'}${DB.done[ds] ? ` ${['sv', 'es'].filter(l => doneIn(ds, l)).map(l => LANG[l].deName + '-Tagwerk').join(' und ') || 'Tagwerk'} erledigt.` : ''}`;
 }
 function minutesChart(){
   const days = 14, t = today();
@@ -815,13 +815,13 @@ function viewProgress(){
     return `<div class="topline"><h1 class="vt">Fortschritt</h1>${gearBtn()}</div>${noticeHtml()}${tabs}
   <section class="today">
     <p class="num">${plural(sd.current, 'Tag', 'Tage')} in Folge</p>
-    <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tagwerk am Tag, egal in welcher Sprache; ein freier Tag pro Woche ist erlaubt.</p>
-    ${firstDate ? `<div class="kpis k4"><div><b>${tot.days.toLocaleString('de-DE')}</b><span>Übungstage</span></div><div><b>${activeLangs().reduce((a, l) => a + tagwerkCount(l), 0).toLocaleString('de-DE')}</b><span>Tagwerke</span>${activeLangs().length > 1 ? `<span class="kl" aria-label="${activeLangs().map(l => `${tagwerkCount(l)} ${LANG[l].deName}`).join(', ')}">${activeLangs().map(l => `<span><i class="sq rl-${l}-sq"></i>${tagwerkCount(l)}</span>`).join('')}</span>` : ''}</div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>Aufgaben</span></div><div><b>${tot.secs >= 3600 ? Math.round(tot.secs / 3600) : Math.round(tot.secs / 60)}</b><span>${tot.secs >= 3600 ? 'Stunden' : 'Minuten'}</span></div></div><p class="legend" style="margin:8px 0 0">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
+    <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tagwerk am Tag, egal in welcher Sprache; ein Pausetag pro Woche hält die Serie.</p>
+    ${firstDate ? `<div class="kpis k4"><div><b>${tot.days.toLocaleString('de-DE')}</b><span>Übungstage</span></div><div><b>${activeLangs().reduce((a, l) => a + tagwerkCount(l), 0).toLocaleString('de-DE')}</b><span>Tagwerke</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>Aufgaben</span></div><div><b>${tot.secs >= 3600 ? Math.round(tot.secs / 3600) : Math.round(tot.secs / 60)}</b><span>${tot.secs >= 3600 ? 'Stunden' : 'Minuten'}</span></div></div>${activeLangs().length > 1 ? `<p class="kmeta"><span>Tagwerke:</span>${activeLangs().map(l => `<span class="kmi"><i class="sq rl-${l}-sq"></i>${LANG[l].deName} ${tagwerkCount(l).toLocaleString('de-DE')}</span>`).join('')}</p>` : ''}<p class="kmeta">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
   </section>
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
     <p class="legend">${S.calDay ? esc(dayDetail(S.calDay)) : cal.first ? `${cal.active} von ${cal.total} Tagen geübt. Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>
-    <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt (Rand in Sprachfarbe)</span><span><i class="sq c0 fr"></i>freier Tag</span></p></div>
+    <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>Pausetag, Serie hält</span></p></div>
   ${mins.any ? `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart">${mins.html}<p class="legend"><span class="sq m-sv"></span>Schwedisch <span class="sq m-es"></span>Spanisch. Zusammen ${mins.total} Min.${(() => { let s = 0, n = 0; Object.keys(DB.log).forEach(k => { if (dayDiff(today(), k) >= 30) return; const v = (dayLog(k, 'sv').secs || 0) + (dayLog(k, 'es').secs || 0); if (v) { s += v; n++; } }); return n >= 5 ? ` Im Schnitt ${Math.round(s / n / 60)} Min. an Übungstagen, letzte 30 Tage.` : ''; })()}${mins.unm ? ' „–“: geübt, aber noch ohne Zeitmessung.' : ''}</p></div>` : ''}
   ${hoursHtml()}
 

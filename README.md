@@ -17,7 +17,7 @@ Eine Lern-App für **Schwedisch und Spanisch**, die jeden Tag ein kurzes „Tagw
 - **Schreiben** mit Textprofil (Zeitformen, Nebensätze, Satzlänge, LIX), treffsicheren Offline-Hinweisen, freiwilligen Extra-Aufgaben und Archiv. Online-Prüfung mit LanguageTool auf Wunsch.
 - **Wörterbuch** für jedes angezeigte Wort, offline, mit Beispielen aus den eigenen Sätzen.
 - **Land & Leute:** Alltag, Gesellschaft, Geografie und Sprachvarianten, teils mit Karte; Beispielsätze lassen sich in die Wiederholung übernehmen. Feste mit berechneten Terminen, falsche Freunde.
-- **Fortschritt:** Serie mit einem freien Tag pro Woche, Kalender, Lernminuten, Behalten, Fehlerquellen, Themenraster, „Dein Weg“ mit Etappen, Entwicklung der eigenen Texte.
+- **Fortschritt:** Serie mit einem Pausetag pro Woche, Kalender, Lernminuten, Behalten, Fehlerquellen, Themenraster, „Dein Weg“ mit Etappen, Entwicklung der eigenen Texte.
 - **Lesen und Hören:** kurze Texte zu allem Möglichen, zum Lesen oder nur Hören, mit Verständnisfragen; dazu ein ausgezeichneter Wikipedia-Artikel, bevorzugt mit Bezug zum Land, auch als Lückentext (online).
 - **Hörrunde:** geübte Sätze nebenbei hören, Satz, Deutsch, langsam, ohne Antippen.
 - **Nachschub** von Tatoeba, sobald die eingebauten Sätze zur Neige gehen: gezielt zu schwachen Themen, bei „Fortgeschritten“ nach B2-Mustern, ohne Sätze, die vorhandenen zu sehr ähneln (online, abschaltbar).

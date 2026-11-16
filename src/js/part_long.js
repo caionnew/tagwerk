@@ -47,7 +47,7 @@ function wayEvents(){
     while (ti.i < TASKS.length && n >= TASKS[ti.i]) { ev.push({ d, ico:'tasks', t:`${TASKS[ti.i].toLocaleString('de-DE')} Aufgaben` }); ti.i++; }
     while (hi.i < HOURS.length && secs >= HOURS[hi.i] * 3600) { ev.push({ d, ico:'time', t:`${HOURS[hi.i].toLocaleString('de-DE')} ${HOURS[hi.i] === 1 ? 'Stunde' : 'Stunden'} geübt` }); hi.i++; }
   });
-  // Serien nach derselben Regel wie die Serienanzeige: ein freier Tag pro Woche unterbricht nicht
+  // Serien nach derselben Regel wie die Serienanzeige: ein Pausetag pro Woche unterbricht nicht
   const doneDays = Object.keys(DB.done || {}).filter(d => DB.done[d]).sort();
   if (doneDays.length) {
     const STREAK = ladder(WAY_STREAK, streakStep, doneDays.length + 7);

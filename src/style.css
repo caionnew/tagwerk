@@ -316,9 +316,10 @@ button.row[disabled]::after{ display:none; }
 .cal .c2, .sq.c2{ fill:color-mix(in srgb, var(--ok) 62%, var(--bg)); background:color-mix(in srgb, var(--ok) 62%, var(--bg)); }
 .cal .c3, .sq.c3{ fill:var(--ok); background:var(--ok); }
 .sq.c0.fr{ background:transparent; box-shadow:inset 0 0 0 1.2px var(--muted); border:0; outline:1.2px dashed var(--muted); outline-offset:-1.2px; box-shadow:none; }
-.calleg{ display:flex; flex-wrap:wrap; gap:4px 14px; }
-.calleg span{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
-.calleg .sq{ margin:0; }
+/* Legende in zwei gleichen Spalten: Einträge stehen untereinander, nichts bricht ungleich um */
+.calleg{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:4px 14px; }
+.calleg span{ display:flex; align-items:flex-start; gap:6px; line-height:1.45; }
+.calleg .sq{ flex:none; margin:4px 0 0; }
 .rtrend{ display:flex; gap:6px; align-items:flex-end; height:96px; margin:14px 0 6px; }
 .rtw{ flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; height:100%; }
 .rtn{ font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; min-height:14px; }
@@ -781,10 +782,11 @@ section.ex #fb:empty{ display:none; }
 .ol-m{ color:var(--muted); }
 /* Überblick: vier Kacheln */
 .kpis.k4{ grid-template-columns:repeat(4, 1fr); }
-/* Aufteilung nach Sprache unter der Zahl: Farbpunkt + Anzahl, nie umbrechen */
-.kpis .kl{ display:flex; gap:10px; white-space:nowrap; margin-top:2px; font-variant-numeric:tabular-nums; }
-.kpis .kl > span{ display:inline-flex; align-items:center; gap:4px; }
-.kpis .kl .sq{ width:8px; height:8px; border-radius:2px; }
+/* Unter den Zahlen, je in eigener Zeile: Tagwerke nach Sprache, Startdatum. Gleiche Schrift, gleichmäßige Abstände */
+.kmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; margin:14px 0 0; font-size:14px; line-height:1.45; color:var(--muted); font-variant-numeric:tabular-nums; }
+.kmeta + .kmeta{ margin-top:4px; }
+.kmi{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+.kmeta .sq{ margin:0; width:10px; height:10px; }
 .today-kpis{ margin-bottom:18px; }
 .today-mat{ margin:-8px 0 16px; }
 .store .mbar{ display:block; margin:8px 0 6px; }

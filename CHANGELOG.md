@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.30.0
+- **„Pausetag“ statt „freier Tag“.** Gemeint ist ein ausgelassener Tag, der die Serie nicht unterbricht (einer pro Woche); „frei“ ließ sich als „leer“ lesen. Legende: „Pausetag, Serie hält“. Ebenso in der Serienerklärung („ein Pausetag pro Woche hält die Serie“), im Tagesdetail im Kalender und im Hinweis der Wochenleiste.
+- **Legende der Übungstage aufgeräumt:** „nur etwas geübt“ ohne den Zusatz „(Rand in Sprachfarbe)“, den das Symbol schon zeigt. Die Einträge stehen in zwei gleichen Spalten statt unregelmäßig umzubrechen; bricht ein Eintrag auf schmalen Geräten doch um, steht das Symbol neben der ersten Zeile.
+- **Serienkachel aufgeräumt:** Die Aufteilung der Tagwerke nach Sprache steht nicht mehr unter der Zahl „Tagwerke“, sondern in einer eigenen Zeile darunter („Tagwerke: ■ Schwedisch 22 ■ Spanisch 12“). Die vier Zahlen stehen dadurch wieder auf einer Höhe, und der große Abstand vor „seit …“ ist weg.
+
 ## 24.29.0
 - **Kalender: „an beiden Sprachen nur etwas geübt“ hat jetzt einen geteilten Rand** in beiden Sprachfarben (oben links Schwedisch, unten rechts Spanisch, wie die gefüllte Kachel „beide Sprachen“). Vorher war der Rand grau, obwohl die Legende „Rand in Sprachfarbe“ sagt. Gilt auch für die Legende und die Wochenleiste auf „Heute“.
 - **Schreiben: Wörter zum Einbauen leichter unterzubringen.** Fünf statt drei Vorschläge, in der Grundform („ayudar“ statt „ayudarme“; gebeugt zählt weiter), dazu „Andere Wörter“ für neue Vorschläge (dein Text bleibt stehen). Eigennamen wie Anna, Uppsala, Madrid werden nicht mehr vorgeschlagen; vorher erschienen sie sogar kleingeschrieben.

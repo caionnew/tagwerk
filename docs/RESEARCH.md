@@ -14,7 +14,7 @@ Brunmair & Richter (2019), *Psychological Bulletin*: Metaanalyse über 59 Studie
 
 ## Gewohnheit und Serie
 
-Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Automatisierung, Spanne 18 bis 254 Tage; ein einzelner verpasster Tag beeinflusste die Gewohnheitsbildung kaum. Daher die Serienregel mit einem freien Tag pro Woche. Ob verlorene Serien die Motivation senken, ist nicht belegt.
+Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Automatisierung, Spanne 18 bis 254 Tage; ein einzelner verpasster Tag beeinflusste die Gewohnheitsbildung kaum. Daher die Serienregel mit einem Pausetag pro Woche. Ob verlorene Serien die Motivation senken, ist nicht belegt.
 
 ## Schreiben: Komplexität statt Note
 

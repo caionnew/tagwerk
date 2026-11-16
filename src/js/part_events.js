@@ -207,6 +207,30 @@ document.addEventListener('click', e => {
     case 'niveau': DB.settings.niveau = ['grund', 'mittel', 'fort'].includes(b.dataset.v) ? b.dataset.v : 'mittel'; S.dailyPlanCache = null; save(); render(); break;
     case 'undoimport': if (S.undoDB) { DB = JSON.parse(S.undoDB); S.undoDB = null; save(); buildBank(); note('Vorheriger Stand wiederhergestellt.', 'ok'); render(); } break;
     case 'reload': location.reload(); break;
+    // Bonus „Eigener Satz“ am Rundenende
+    case 'bonus': {
+      if (!r) break;
+      r.bonus = Object.assign({ k:0, text:'' }, r.bonus, { open:true }); render();
+      const t = $('#bonusText'); if (t) { t.scrollIntoView({ block:'center' }); try { t.focus({ preventScroll:true }); } catch (e) {} }
+      break;
+    }
+    case 'bonusnext': if (r && r.bonus) { const t = $('#bonusText'); if (t) r.bonus.text = t.value; r.bonus.k++; r.bonus.res = null; r.bonus.lt = undefined; render(); } break;
+    case 'bonuscheck': {
+      const bo = r && r.bonus, t = $('#bonusText'); if (!bo || !t) break;
+      bo.text = t.value; bo.lt = undefined;
+      const cands = bonusCands(r); if (!cands.length) break;
+      bo.res = bonusCheck(r.lang, bo.text, cands[bo.k % cands.length]);
+      if (bo.res.ok && !bo.logged) { bo.logged = true; logAct(r.lang); save(); }
+      render(); break;
+    }
+    case 'bonuslt': {
+      const bo = r && r.bonus; if (!bo || !bo.text.trim()) break;
+      if (navigator.onLine === false) { bo.lt = offlineMsg; render(); break; }
+      bo.lt = 'loading'; render();
+      languageTool(bo.text, r.lang).then(m => { if (S.run === r) { bo.lt = m; render(); } })
+        .catch(() => { if (S.run === r) { bo.lt = 'LanguageTool ist gerade nicht erreichbar. Versuch es in einer Minute noch einmal.'; render(); } });
+      break;
+    }
     case 'persist':
       navigator.storage.persist().then(p => { STORE.persisted = !!p; note(p ? 'Der Browser behält deine Daten jetzt dauerhaft.' : 'Der Browser hat abgelehnt. Ein Backup schützt deinen Stand trotzdem.', p ? 'ok' : 'warn'); render(); }).catch(() => {});
       break;
@@ -240,7 +264,7 @@ document.addEventListener('click', e => {
     case 'tplay': { const ex = r && r.queue[r.idx]; if (ex && ex.data) speak(ex.data.say, r.lang, Number(b.dataset.rate)); break; }
     case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; render(); window.scrollTo(0, 0); break; }
     case 'term': S.pop = { type:'term', k:b.dataset.k, lang:(S.view === 'run' && S.run && S.run.lang) || S.lang }; renderPopup(); break;
-    case 'topic': openTopic((S.view === 'run' && S.run && S.run.lang) || S.lang, b.dataset.t); break;
+    case 'topic': openTopic(((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
     case 'popanki': { const P = S.pop; if (!P) break; const e = lookupWord(P.lang, P.w); const ctx = P.sent || ''; shareToAnki(P.w, (e ? (e.l && e.l !== P.w ? e.l + ': ' : '') + e.de : '') + (ctx ? '\n\n' + ctx : '')); break; }
@@ -341,6 +365,7 @@ document.addEventListener('input', e => {
   const r = S.run;
   if (e.target.id === 'answer' && r && r.cur) { r.cur.input = e.target.value; sizeGap(e.target); }
   if (e.target.id === 'wtext' && S.write) { S.write.text = e.target.value; saveDraftSoon(); }
+  if (e.target.id === 'bonusText' && r && r.bonus) r.bonus.text = e.target.value;
   if (e.target.id === 'ownDe' && S.own) S.own.de = e.target.value;
   if (e.target.id === 'ownT' && S.own) S.own.t = e.target.value;
 });

@@ -242,7 +242,7 @@ function next(){
     if (counts) {
       recordAnswer(r.lang, ex, c, good);
       const item = ex.id ? itemById(ex.id) : null;
-      (r.res = r.res || []).push({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' });
+      (r.res = r.res || []).push({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' });
     }
     if (ex.id && ex.type !== 'dict') {
       const prev = DB.st[ex.id] || { ok:0, bad:0, alts:[] };

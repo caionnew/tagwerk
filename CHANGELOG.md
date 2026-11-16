@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.23.0
+- **Themen dieser Runde:** Das Rundenende zeigt, welche Themen dran waren, je Thema ein Punkt pro Aufgabe (grün richtig, gelb fast, rot falsch). Antippen öffnet die Regel mit Beispielen und „10 Aufgaben üben“. Die Liste erscheint ab zwei Themen, höchstens fünf, Themen mit Fehlern zuerst.
+- **Fehler gebündelt:** Liegt ein Thema mit mindestens zwei Fehlern klar vorn, steht darüber etwa „2 von 3 Fehlern: Wortstellung im Nebensatz. Thema üben“. Das übt andere Sätze zur selben Regel, nicht dieselben Aufgaben noch einmal. Bei Gleichstand bleibt der Hinweis weg.
+- **Bonus „Eigener Satz“:** Am Rundenende, eingeklappt: einen eigenen Satz mit einem Ausdruck aus der Runde schreiben. Bei Sätzen mit Lücke ist es der geübte Grammatikpunkt (etwa „sina“), sonst das seltenste Inhaltswort des Satzes mit Bedeutung (etwa „promenad – Spaziergang“). Zuerst kommen Sätze, die du gerade neu gelernt oder gewusst hast. Die Prüfung ohne Netz achtet darauf, dass es ein ganzer Satz ist, nicht der Übungssatz, und dass der Ausdruck vorkommt (Inhaltswörter auch in anderer Form). Danach auf Wunsch LanguageTool. Zählt einmal als Aufgabe des Tages. „Anderer Ausdruck“ wechselt den Vorschlag.
+
 ## 24.22.0
 - **Speicher im Blick:** Unter Einstellungen → Daten zeigt ein Balken, wie viel von den etwa 5 MB belegt ist, die Firefox einer Adresse erlaubt. Mitgezählt werden auch andere Seiten unter derselben Adresse (alle GitHub-Seiten unter caionnew.github.io teilen sich die Grenze). Dazu steht dort, ob der Browser die Daten dauerhaft behält oder bei Platzmangel löschen darf; im zweiten Fall fragt „Dauerhaft speichern“ ihn erneut. Ab 3 MB warnt auch „Heute“.
 - **Aufgeräumt:** Eine ESLint-Prüfung über das ganze Skript fand einen doppelten Schlüssel (`slow` beim Lesen, ohne Folgen) und neun Variablen, die berechnet, aber nie benutzt wurden, darunter ein unnötiger Tagesplan auf „Heute“ nach erledigtem Tagwerk. Alles entfernt; sichtbar ändert sich nichts.

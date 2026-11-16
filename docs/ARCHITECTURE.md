@@ -42,6 +42,8 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 
 `render()` erzeugt die aktuelle Ansicht als Zeichenkette und setzt sie in `#app`. Alle Benutzeraktionen laufen über ein einziges Klick-Ereignis: Elemente tragen `data-a="aktion"`, `part_events.js` verteilt sie. Laufzeitzustand liegt in `S` (aktuelle Ansicht, laufende Runde, offene Fenster), alles Dauerhafte in `DB`.
 
+Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster Antwort (Satz-ID oder Generator, richtig, fast, neu). `roundTopics` gruppiert danach nach Thema, `topicsHtml` zeigt die Punkte und bündelt Fehler, wenn ein Thema klar vorn liegt. `bonusCands` wählt die Ausdrücke für den Bonus „Eigener Satz“ (Lücke, sonst das in der Satzbank seltenste Inhaltswort), `bonusCheck` prüft ohne Netz. Der Bonus-Stand liegt in `S.run.bonus` und wird nicht gespeichert.
+
 ## Datenspeicher
 
 `DB` liegt als JSON unter `localStorage['tagwerk-offline-v1']` und wird 150 ms nach jeder Änderung gespeichert, sofort beim Wechsel in den Hintergrund. Backup und Wiederherstellung exportieren genau dieses Objekt (`backupText`, `parseBackup`, `applyBackup` in `part_head.js`). Der Speicher gehört zur Adresse (Origin), nicht zu den Dateien: Ein Update unter demselben Link behält den Stand.
@@ -83,4 +85,4 @@ Offline funktioniert alles außer: Wikipedia-Fundstück, Nachschub und Suche bei
 
 ## Sichtprüfung
 
-`node tools/sicht.js` fotografiert die Hauptansichten (Heute, erledigtes Tagwerk, Üben, Fortschritt, Aufgabe, Rückmeldung, Rundenende, Einstellungen, Lesen) in 390 × 844 und 411 × 923, hell und dunkel, nach `sicht/`. Mit `--vs <Git-Stand>` baut es den älteren Stand in einem eigenen Arbeitsbaum, fotografiert ihn ebenso und legt für jede geänderte Ansicht ein Bild „vorher | jetzt“ nach `sicht/vergleich/`; die Ausgabe nennt die geänderten Bilder. `Math.random` ist im Browser festgelegt, damit beide Stände dieselben Aufgaben zeigen. `--nur heute,aufgabe` beschränkt die Ansichten, `--ganz` fotografiert die ganze Seite.
+`node tools/sicht.js` fotografiert die Hauptansichten (Heute, erledigtes Tagwerk, Üben, Fortschritt, Aufgabe, Rückmeldung, Rundenende mit Themen und Bonus, Einstellungen, Lesen) mit einem Profil aus 90 geübten Sätzen und sechs Wochen Verlauf in 390 × 844 und 411 × 923, hell und dunkel, nach `sicht/`. Mit `--vs <Git-Stand>` baut es den älteren Stand in einem eigenen Arbeitsbaum, fotografiert ihn ebenso und legt für jede geänderte Ansicht ein Bild „vorher | jetzt“ nach `sicht/vergleich/`; die Ausgabe nennt die geänderten Bilder. `Math.random` ist im Browser festgelegt, damit beide Stände dieselben Aufgaben zeigen. `--nur heute,aufgabe` beschränkt die Ansichten, `--ganz` fotografiert die ganze Seite.

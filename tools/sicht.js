@@ -18,28 +18,33 @@ const SIZES = [[390, 844], [411, 923]], SCHEMES = ['light', 'dark'];
 
 const pad = n => String(n).padStart(2, '0'), now = new Date();
 const TODAY = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-const doneDB = () => { const db = richDB('sv'); db.done[TODAY] = true; db.doneLang = { [TODAY]:{ sv:true } }; db.log[TODAY] = { sv:{ n:31, ok:26, secs:742, fresh:5, rev:22, revOk:20, mat:2 } }; return db; };
+const rich = () => richDB('sv');
+const doneDB = () => { const db = rich(); db.done[TODAY] = true; db.doneLang = { [TODAY]:{ sv:true } }; db.log[TODAY] = { sv:{ n:31, ok:26, secs:742, fresh:5, rev:22, revOk:20, mat:2 } }; return db; };
 const click = sel => p => p.click(sel);
+const bottom = p => p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 const answerAll = async p => { for (let k = 0; k < 40 && await p.$('.runbar'); k++) { await answerWrong(p); await p.click('[data-a=next]'); } };
 // Name, Lernstand, Schritte nach dem Start
 const SCENES = [
-  ['heute', richDB, []],
+  ['heute', rich, []],
   ['heute-erledigt', doneDB, []],
-  ['ueben', richDB, [click('[data-a=tab][data-v=extra]')]],
-  ['fortschritt', richDB, [click('[data-a=tab][data-v=progress]')]],
-  ['fortschritt-sprache', richDB, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]')]],
-  ['aufgabe', richDB, [click('[data-a=daily]')]],
-  ['aufgabe-falsch', richDB, [click('[data-a=daily]'), answerWrong]],
-  ['rundenende', richDB, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll]],
-  ['einstellungen', richDB, [click('[data-a=settings] >> nth=0')]],
-  ['einstellungen-unten', richDB, [click('[data-a=settings] >> nth=0'), p => p.evaluate(() => window.scrollTo(0, document.body.scrollHeight))]],
-  ['lesen', richDB, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]]
+  ['ueben', rich, [click('[data-a=tab][data-v=extra]')]],
+  ['fortschritt', rich, [click('[data-a=tab][data-v=progress]')]],
+  ['fortschritt-sprache', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]')]],
+  ['aufgabe', rich, [click('[data-a=daily]')]],
+  ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
+  ['rundenende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll]],
+  ['tagwerk-ende', rich, [click('[data-a=daily]'), answerAll, p => p.evaluate(() => { const g = document.querySelector('.grprow') || document.querySelector('.donebox h2'); if (g) g.scrollIntoView(); })]],
+  ['rundenende-unten', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, bottom]],
+  ['bonus', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, click('[data-a=bonus]'), p => p.fill('#bonusText', 'Jag tycker att det är skönt att jobba hemma.'), click('[data-a=bonuscheck]'), p => p.evaluate(() => document.querySelector('.bonus').scrollIntoView({ block:'end' }))]],
+  ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],
+  ['einstellungen-unten', rich, [click('[data-a=settings] >> nth=0'), bottom]],
+  ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]]
 ].filter(([n]) => !ONLY || ONLY.split(',').includes(n));
 
 // Fester Zufall (mulberry32), vor dem Laden der App gesetzt
 const SEED_RANDOM = () => { let a = 20261116; Math.random = () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
 
-async function tour(browser, html, dir){
+async function tour(browser, html, dir, label){
   fs.mkdirSync(dir, { recursive:true });
   const files = [];
   for (const [name, db, steps] of SCENES) for (const [w, h] of SIZES) for (const scheme of SCHEMES) {
@@ -48,13 +53,14 @@ async function tour(browser, html, dir){
     await ctx.addInitScript(SEED_RANDOM);
     await ctx.addInitScript(v => { if (!sessionStorage.getItem('s')) { sessionStorage.setItem('s', '1'); localStorage.setItem('tagwerk-offline-v1', v); } }, JSON.stringify(db()));
     const page = await ctx.newPage();
+    page.setDefaultTimeout(5000);
     try {
       await page.goto('file://' + html);
       for (const s of steps) await s(page);
       await page.waitForTimeout(300);
       await page.screenshot({ path:file, fullPage:FULL });
       files.push(file);
-    } catch (e) { console.log(`  ${path.basename(file)}: nicht möglich (${e.message.split('\n')[0]})`); }
+    } catch (e) { console.log(`  ${label}: ${path.basename(file)} nicht möglich (${e.message.split('\n')[0]})`); }
     await ctx.close();
   }
   return files;
@@ -82,10 +88,10 @@ async function compare(browser, a, b, out, label){
   execFileSync('node', ['tools/build.js'], { cwd:ROOT, stdio:'ignore' });
   fs.rmSync(OUT, { recursive:true, force:true });
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {});
-  const now = await tour(browser, path.join(ROOT, 'dist', 'index.html'), OUT);
+  const now = await tour(browser, path.join(ROOT, 'dist', 'index.html'), OUT, 'jetzt');
   console.log(`${now.length} Bilder in sicht/`);
   if (VS) {
-    const before = await tour(browser, buildRef(VS), path.join(OUT, 'vorher'));
+    const before = await tour(browser, buildRef(VS), path.join(OUT, 'vorher'), `vorher (${VS})`);
     const changed = [];
     for (const f of now) {
       const old = path.join(OUT, 'vorher', path.basename(f));

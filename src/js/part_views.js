@@ -432,6 +432,98 @@ const READING = {
   es:[['Noticias fácil', 'https://www.discapnet.es/lectura-facil/inicio'], ['RTVE Noticias', 'https://www.rtve.es/noticias/'], ['BBC Mundo', 'https://www.bbc.com/mundo']]
 };
 const readLink = ([name, url]) => `<a href="${url}" target="_blank" rel="noopener">${name.replace(/ /g, '\u00a0')}</a>`;
+// Themen der Runde: je Thema ein Punkt pro Aufgabe (erster Versuch). Sätze nach ihrem Thema, erzeugte Aufgaben nach Generator.
+function roundTopics(r){
+  const lang = r.lang, map = new Map();
+  (r.res || []).forEach(x => {
+    let key, label, trap = null;
+    if (x.id) { const it = itemById(x.id), tr = it && trapMeta(lang, it.trap); if (!tr) return; key = tr.id; label = tr.label; trap = tr.id; }
+    else if (x.gen && GENS[x.gen]) { const tr = TRAPS[lang].find(t => t.gen === x.gen); key = tr ? tr.id : x.gen; label = tr ? tr.label : GENS[x.gen].label; trap = tr ? tr.id : null; }
+    else return;
+    const t = map.get(key) || { key, label, trap, gen:x.gen || null, dots:[], bad:0 };
+    t.dots.push(x.good ? (x.near ? 'near' : 'ok') : 'bad'); if (!x.good) t.bad++;
+    map.set(key, t);
+  });
+  return [...map.values()].sort((a, b) => b.bad - a.bad || b.dots.length - a.dots.length);
+}
+function topicsHtml(r){
+  const tps = roundTopics(r);
+  if (tps.length < 2) return '';
+  // Fehler bündeln: Hakt es mindestens zweimal im selben Thema, ist das der nächste Schritt (andere Sätze, gleiche Regel)
+  // Nur wenn ein Thema klar vorn liegt: mindestens zwei Fehler und mehr als jedes andere Thema
+  const nBad = tps.reduce((a, t) => a + t.bad, 0), worst = tps[0].bad >= 2 && tps[0].bad > tps[1].bad ? tps[0] : null;
+  const go = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
+  const bundle = worst && go(worst) ? `<p class="hint bundle">${worst.bad === nBad ? (nBad === 2 ? 'Beide Fehler' : `Alle ${nBad} Fehler`) : `${worst.bad} von ${nBad} Fehlern`}: <b>${esc(worst.label)}</b>. <button type="button" class="link inl" ${go(worst)}>Thema üben</button></p>` : '';
+  const dot = d => `<i class="d-${d}"></i>`;
+  const rows = tps.slice(0, 5).map(t => {
+    const sheet = t.trap && t.trap !== 'eigene';
+    const ok = t.dots.length - t.bad, aria = `${ok} richtig${t.bad ? `, ${t.bad} falsch` : ''}`;
+    const inner = `<span class="txt"><span class="rt">${esc(t.label)}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span>`;
+    return sheet ? `<button type="button" class="row trow" data-a="topic" data-t="${t.trap}">${inner}</button>` : `<div class="row static trow">${inner}</div>`;
+  }).join('');
+  return `<div class="grprow"><h2 class="grp">Themen dieser Runde</h2><span class="grpnote">Tippen für die Regel</span></div>${bundle}<div class="rows">${rows}</div>${tps.length > 5 ? `<p class="legend">und ${plural(tps.length - 5, 'weiteres Thema', 'weitere Themen')}</p>` : ''}`;
+}
+// Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
+// (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).
+function bonusCands(r){
+  const lang = r.lang, res = (r.res || []).filter(x => x.id);
+  const freq = new Map();
+  BANK[lang].forEach(i => new Set(wTokens(i.target).map(w => lemmaOf(lang, w) || w)).forEach(b => freq.set(b, (freq.get(b) || 0) + 1)));
+  const fq = w => freq.get(lemmaOf(lang, w) || w) || 0;
+  const skip = w => w.length < 4 || W_STOP.has(w) || W_SUBS[lang].includes(w) || W_CONN[lang].includes(w) || isFunc(lang, w) || NAMES.includes(w);
+  const seen = new Set(), all = [];
+  res.forEach((x, i) => {
+    const item = itemById(x.id); if (!item || seen.has(item.id)) return; seen.add(item.id);
+    let c = null;
+    if (item.gap) c = { expr:item.gap, hint:item.hint || '', score:-1 };
+    else {
+      const ws = wTokens(item.target).filter(w => !skip(w));
+      if (ws.length) {
+        const w = ws.reduce((a, b) => (fq(b) < fq(a) || (fq(b) === fq(a) && b.length > a.length) ? b : a));
+        const e = lookupWord(lang, w);
+        c = { expr:w, de:e ? e.de.split(';')[0].trim() : '', score:fq(w) };
+      }
+    }
+    // Zuerst Neues und Gewusstes (anwenden, was gerade sitzt), darin Lücken vor seltenen Wörtern
+    if (c) all.push(Object.assign(c, { id:item.id, trap:item.trap, bucket:(x.good ? 0 : 2) + (x.fresh ? 0 : 1), i }));
+  });
+  const out = [];
+  all.sort((a, b) => a.bucket - b.bucket || a.score - b.score || a.i - b.i).forEach(c => {
+    if (!out.some(o => o.expr.toLowerCase() === c.expr.toLowerCase())) out.push({ expr:c.expr, de:c.de || '', hint:c.hint || '', id:c.id, trap:c.trap });
+  });
+  return out.slice(0, 8);
+}
+// Prüfung ohne Netz: ganzer Satz, Ausdruck kommt vor (Inhaltswörter auch in anderer Form), nicht bloß der Übungssatz
+function bonusCheck(lang, text, cand){
+  const toks = tokens(text).map(w => w.toLowerCase()), item = itemById(cand.id);
+  if (toks.length < 3) return { ok:false, msg:'Bitte einen ganzen Satz, mindestens drei Wörter.' };
+  const model = item ? tokens(item.target).map(w => deacc(w.toLowerCase())) : [];
+  const same = toks.filter(w => model.includes(deacc(w))).length;
+  if (item && (norm(text, lang) === norm(item.target, lang) || (same / Math.max(toks.length, model.length) >= 0.8))) return { ok:false, msg:'Das ist fast der Satz aus der Übung. Schreib einen eigenen.' };
+  const has = tokens(cand.expr).map(w => w.toLowerCase()).every(w => toks.some(t => deacc(t) === deacc(w) || (!isFunc(lang, w) && w.length >= 4 && sameWord(lang, t, w))));
+  return has ? { ok:true, msg:`Passt: „${cand.expr}“ steckt drin.` } : { ok:false, msg:`„${cand.expr}“ kommt noch nicht vor.` };
+}
+function bonusHtml(r){
+  const cands = bonusCands(r), lang = r.lang;
+  if (!cands.length) return '';
+  const b = r.bonus, c = cands[(b ? b.k : 0) % cands.length];
+  const ex = `<b lang="${lang}">${esc(c.expr)}</b>${c.hint ? ` <span class="bde">${esc(c.hint)}</span>` : c.de ? ` <span class="bde">– ${esc(c.de)}</span>` : ''}`;
+  if (!b || !b.open) return `<h2 class="grp">Bonus</h2><div class="rows"><button type="button" class="row" data-a="bonus"><span class="txt"><span class="rt">Eigener Satz</span><span class="rd">Schreib einen Satz mit „${esc(c.expr)}“, ganz ohne Vorlage.</span></span></button></div>`;
+  const item = itemById(c.id), tr = trapMeta(lang, c.trap);
+  const lt = b.lt === 'loading' ? '<p class="hint"><span class="dots">Wird geprüft</span></p>'
+    : typeof b.lt === 'string' ? `<p class="hint">${esc(b.lt)}</p>`
+    : b.lt ? ltHtml(b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.${lang === 'sv' ? ' Für Schwedisch vor allem die Rechtschreibung.' : ''}</p>` : '';
+  const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>${b.res.ok && b.lt === undefined ? `<p class="hint"><button type="button" class="link inl" data-a="bonuslt">Mit LanguageTool prüfen (online)</button></p>` : ''}` : '';
+  return `<h2 class="grp">Bonus: eigener Satz</h2><section class="chart bonus">
+    <p class="bq">Schreib einen eigenen Satz mit ${ex}</p>
+    ${tr && tr.id !== 'eigene' ? `<p class="legend">Thema: ${esc(tr.label)}</p>` : ''}
+    ${item ? `<p class="bmodel"><span class="rt wordrow" lang="${lang}">${linkWords(item.target, lang)}</span>${item.de ? `<span class="rd">${esc(item.de)}</span>` : ''}</p>` : ''}
+    <textarea id="bonusText" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="Dein Satz">${esc(b.text || '')}</textarea>
+    ${charbar(lang)}
+    ${res}${lt}
+    <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck">Prüfen</button></div>
+  </section>`;
+}
 function viewRunDone(){
   const r = S.run, lang = r.lang;
   const daily = r.kind === 'daily';
@@ -480,7 +572,9 @@ function viewRunDone(){
     ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint" style="margin-top:0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}
     ${strip}${kpis}${span}
     ${ms}${sk}${tomorrow}
+    ${topicsHtml(r)}
     ${missedHtml}
+    ${bonusHtml(r)}
     ${nudge}
     ${reading}
   </div><div class="actionbar"><div class="in">${buttons}</div></div>`;

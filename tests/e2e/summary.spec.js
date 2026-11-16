@@ -10,7 +10,7 @@ test('Kurze Runde: Leiste je Aufgabe, Fehler aufgelistet, keine sofortige Übung
   await expect(page.locator('.done-h')).toHaveText('Runde beendet');
   await expect(page.locator('.rstrip .rs')).toHaveCount(n);
   await expect(page.locator('.rstrip .rs-bad')).toHaveCount(n);
-  await expect(page.locator('.donebox h2.grp')).toHaveText('Noch nicht sicher');
+  await expect(page.locator('.donebox h2.grp', { hasText:'Noch nicht sicher' })).toHaveCount(1);
   await expect(page.locator('[data-a=retry]')).toHaveCount(0);
   await expect(page.locator('.actionbar [data-a=again]')).toBeVisible();
   await expect(page.locator('#tabs')).toBeHidden();
@@ -57,4 +57,48 @@ test('Heute: wenig geübt zeigt die Zahl der Aufgaben, ohne Übung keine Bilanz'
   await page.click('[data-a=lang][data-l=es]');
   await expect(page.locator('.today .num')).toHaveText('Tagwerk erledigt');
   await expect(page.locator('.today-kpis')).toHaveCount(0);
+});
+test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen öffnet die Regel mit „10 Aufgaben üben“', async ({ page }) => {
+  await seed(page, richDB('sv'));
+  await page.goto(APP);
+  await page.click('[data-a=daily]');
+  for (let k = 0; k < 80 && await page.$('.runbar'); k++) { await answerWrong(page); await page.click('[data-a=next]'); }
+  await expect(page.locator('.donebox')).toContainText('Themen dieser Runde');
+  const rows = page.locator('.trow');
+  expect(await rows.count()).toBeGreaterThanOrEqual(2);
+  expect(await page.locator('.tdots i.d-bad').count()).toBeGreaterThanOrEqual(2);
+  await page.locator('button.trow').first().click();
+  await expect(page.locator('.pop')).toContainText('Thema');
+  await expect(page.locator('.pop [data-a=trapgo]')).toHaveText('10 Aufgaben üben');
+});
+test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden erkannt, LanguageTool auf Wunsch', async ({ page }) => {
+  await seed(page, richDB('sv'));
+  await page.route('https://api.languagetool.org/**', route => route.fulfill({ json:{ matches:[] } }));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=quick]');
+  for (let k = 0; k < 30 && await page.$('.runbar'); k++) { await answerWrong(page); await page.click('[data-a=next]'); }
+  await page.click('[data-a=bonus]');
+  const box = page.locator('#bonusText');
+  await expect(box).toBeFocused();
+  const expr = (await page.locator('.bonus .bq b').textContent()).trim();
+  const model = (await page.locator('.bonus .bmodel .rt').textContent()).trim();
+  await box.fill(model);
+  await page.click('[data-a=bonuscheck]');
+  await expect(page.locator('.bres')).toHaveText('Das ist fast der Satz aus der Übung. Schreib einen eigenen.');
+  await box.fill('Vi åker till stan imorgon bitti.');
+  await page.click('[data-a=bonuscheck]');
+  await expect(page.locator('.bres.is-warn')).toContainText('kommt noch nicht vor');
+  const tasks = () => page.evaluate(() => { const d = JSON.parse(localStorage.getItem('tagwerk-offline-v1')); const t = new Date(), p = x => String(x).padStart(2, '0'); return d.log[`${t.getFullYear()}-${p(t.getMonth() + 1)}-${p(t.getDate())}`].sv.n; });
+  const before = await tasks();
+  await box.fill(`Igår sa min granne något om ${expr} på bussen.`);
+  await page.click('[data-a=bonuscheck]');
+  await expect(page.locator('.bres.is-ok')).toContainText(`Passt: „${expr}“ steckt drin.`);
+  await expect(box).toHaveValue(`Igår sa min granne något om ${expr} på bussen.`);
+  await page.click('[data-a=bonuslt]');
+  await expect(page.locator('.bonus .lt-ok')).toHaveText('Keine Fehler gefunden.');
+  // Die Übung zählt als Aufgabe des Tages, aber nur einmal
+  await page.click('[data-a=bonuscheck]');
+  await page.waitForTimeout(300);
+  expect(await tasks()).toBe(before + 1);
 });

@@ -80,7 +80,7 @@ Das Wikipedia-Fundstück lädt zur Laufzeit über `w/api.php` (generator=categor
 ## Aussprachehilfen beim Nachsprechen
 
 Regeln in `src/js/part_shadow.js`, nur was sicher gilt (`tests/unit/shadow.test.js` prüft Beispiele):
-- Schwedisch: r verschmilzt mit d, t, n, s, l zu einem Laut (Mittelschweden), auch über die Wortgrenze (`svMarks`, `shHints`). Stumme Buchstaben: dj-, gj-, hj-, lj- am Wortanfang, g in -igt, Endungen von jag, det, vad. Alltagsformen in `SV_SAY` (mig → mej, de/dem → dom, och → å, någon → nån …); neue nur mit standardsprachlicher Aussprache, nicht mit Dialekt.
+- Schwedisch: r verschmilzt mit d, t, n, s, l zu einem Laut (Mittelschweden), auch über die Wortgrenze (`svMarks`, `shHints`). sj-Laut bei sj, skj, stj am Wortanfang und bei -tion, -sion, -ssion; tj-Laut bei tj, kj am Wortanfang (sk, k, g vor hellem Vokal bleiben unmarkiert: zu viele Ausnahmen). Stumme Buchstaben: dj-, gj-, hj-, lj- am Wortanfang, g in -igt, Endungen von jag, det, vad. Alltagsformen in `SV_SAY` (mig → mej, de/dem → dom, och → å, någon → nån …); neue nur mit standardsprachlicher Aussprache, nicht mit Dialekt.
 - Spanisch: betonter Vokal nach den Regeln der Rechtschreibung (`esStress`: Akzent, sonst vorletzte Silbe bei Vokal, n, s am Ende, sonst letzte). Einsilbige und unbetonte Wörter (`ES_ATONE`: Präpositionen, Konjunktionen, Relativwörter) bleiben unmarkiert. Bindung zwischen Wörtern vor Vokal oder stummem h, nicht vor hie-/hue- (Gleitlaut) und nicht über Satzzeichen.
 
 ## Nachschub von Tatoeba

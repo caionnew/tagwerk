@@ -21,7 +21,7 @@ async function open(page){
   await expect(page.locator('.shsteps')).toBeVisible();
 }
 
-test('Nachsprechen: hören, mitsprechen, aufnehmen; Auswertung, Vergleich, zweiter Versuch, Übersicht; Mikrofon danach frei', async ({ page }) => {
+test('Nachsprechen: hören, mitsprechen, aufnehmen; Auswertung, Abspielposition, Mitsprechen in Schleife, zweiter Versuch, Übersicht; Mikrofon danach frei', async ({ page }) => {
   await open(page);
   // Hören: Der Hauptknopf führt durch die Schritte, das gerade gesprochene Wort ist markiert
   await expect(page.locator('.shbar .primary')).toHaveText('Anhören');
@@ -50,10 +50,23 @@ test('Nachsprechen: hören, mitsprechen, aufnehmen; Auswertung, Vergleich, zweit
   await expect(page.locator('.shwave.me .pz:not(.ok)')).toHaveCount(1);
   await expect(page.locator('.shwave.orig .pill')).toHaveCount(1);
   await expect(page.locator('.shmsg.warn')).toHaveCount(0);
-  // Im Wechsel: Original, dann die eigene Aufnahme; der Knopf bleibt gedrückt, solange es läuft
+  // Seitlicher Knopf so hoch wie der Hauptknopf
+  const hs = await page.$$eval('.shbar button', bs => bs.map(x => Math.round(x.getBoundingClientRect().height)));
+  expect(new Set(hs).size).toBe(1);
+  // Im Wechsel: Original, dann die eigene Aufnahme; die Abspielposition läuft erst im Original, dann in deiner Spur
   await page.click('[data-a=shpab]');
   await expect(page.locator('[data-a=shpab]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.shlane.orig .shph')).toHaveCount(1);
+  await expect(page.locator('.shlane.me .shph')).toHaveCount(1, { timeout:8000 });
+  await expect(page.locator('.shlane.orig .shph')).toHaveCount(0);
   await expect(page.locator('[data-a=shpab]')).toHaveAttribute('aria-pressed', 'false', { timeout:12000 });
+  await expect(page.locator('.shph')).toHaveCount(0);
+  // Mitsprechen nach der Aufnahme: wiederholt sich, bis man es stoppt
+  await page.click('.shplay [data-a=shalong]');
+  await expect(page.locator('#shtip')).toContainText('Durchgang 2', { timeout:8000 });
+  await page.click('.shplay [data-a=shalong]');
+  await expect(page.locator('.shplay [data-a=shalong]')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#shtip')).toContainText('Versuch 1');
   // Antippen der eigenen Spur spielt ab der Stelle
   await page.click('.shlane.me');
   await expect(page.locator('[data-a=shpm]')).toHaveAttribute('aria-pressed', 'true');
@@ -100,10 +113,17 @@ test('Nachsprechen: gesperrtes Mikrofon wird erklärt, Aussprachehilfen lassen s
   await expect(page.locator('.shsteps')).toBeVisible();
   await expect(page.locator('[data-a=shhints]')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.shs.hints')).toHaveCount(1);
+  // Mit Hilfen steht immer eine Zeile darunter (Erklärung oder „nichts Besonderes“), der Satz selbst springt nicht
+  await expect(page.locator('.shleg')).toHaveCount(1);
+  const box = () => page.locator('.shs').boundingBox();
+  const before = await box();
   await page.click('[data-a=shhints]');
   await expect(page.locator('[data-a=shhints]')).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('.shs.hints')).toHaveCount(0);
   await expect(page.locator('.shleg')).toHaveCount(0);
+  const after = await box();
+  expect(Math.abs(after.y - before.y)).toBeLessThan(0.5);
+  expect(Math.abs(after.height - before.height)).toBeLessThan(0.5);
   await expect.poll(async () => (await stored(page)).settings.shHints).toBe(false);
 });
 

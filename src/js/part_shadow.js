@@ -69,7 +69,12 @@ const fmtSec = s => s.toLocaleString('de-DE', { minimumFractionDigits:1, maximum
 const SV_SILENT_END = { jag:1, det:1, vad:1 };
 const SV_SAY = { säg:'säj', säga:'säja', säger:'säjer', mig:'mej', dig:'dej', sig:'sej', de:'dom', dem:'dom', och:'å', sade:'sa', någon:'nån', något:'nåt', några:'nåra', sedan:'sen', sådan:'sån', sådant:'sånt', sådana:'såna' };
 function svMarks(word){
-  const w = word.toLowerCase(), m = { retro:[], silent:[], say:SV_SAY[w] || '' };
+  const w = word.toLowerCase(), m = { retro:[], silent:[], say:SV_SAY[w] || '', sj:[], tj:[] };
+  // sj-Laut: sj, skj, stj am Wortanfang, -tion/-sion/-ssion am Ende; tj-Laut: tj, kj am Wortanfang
+  const sj = w.match(/^(sj|skj|stj)/), tion = w.match(/(ss|s|t)i(?=on(en|er|erna)?$)/), tj = w.match(/^(tj|kj)/);
+  if (sj) m.sj.push([0, sj[1].length]);
+  if (tion && tion.index > 0) m.sj.push([tion.index, tion.index + tion[1].length + 1]);
+  if (tj) m.tj.push([0, 2]);
   if (SV_SILENT_END[w]) m.silent.push(w.length - 1);
   if (/^(dj|gj|hj|lj)/.test(w)) m.silent.push(0);
   if (w.length > 4 && w.endsWith('igt')) m.silent.push(w.length - 2);
@@ -137,6 +142,8 @@ function shWordHtml(core, mk, endRetro, startRetro){
   const cls = Array.from(core, () => '');
   (mk.silent || []).forEach(i => { cls[i] = 'ph-si'; });
   (mk.retro || []).forEach(([a, b]) => { for (let i = a; i < b; i++) cls[i] = 'ph-rx'; });
+  (mk.sj || []).forEach(([a, b]) => { for (let i = a; i < b; i++) cls[i] = 'ph-sj'; });
+  (mk.tj || []).forEach(([a, b]) => { for (let i = a; i < b; i++) cls[i] = 'ph-tj'; });
   if (mk.stress != null) cls[mk.stress] = 'ph-st';
   if (endRetro) cls[core.length - 1] = 'ph-rx';
   if (startRetro) cls[0] = 'ph-rx';
@@ -144,7 +151,8 @@ function shWordHtml(core, mk, endRetro, startRetro){
   const flush = () => { if (run) h += rc ? `<span class="${rc}">${esc(run)}</span>` : esc(run); run = ''; };
   Array.from(core).forEach((c, i) => { if (cls[i] !== rc) { flush(); rc = cls[i]; } run += c; });
   flush();
-  return mk.say ? `<ruby>${h}<rt>${esc(mk.say)}</rt></ruby>` : h;
+  // Gesprochene Form schwebt über dem Wort (ohne Einfluss auf Zeilenhöhe, wird beim Kopieren nicht mitkopiert)
+  return mk.say ? `<span class="ph-say" data-say="${esc(mk.say)}">${h}</span>` : h;
 }
 // Satz als antippbare Wörter (Nachschlagen); mit Hinweisen auf Wunsch. data-k: Wortnummer für die Erkennung
 function shSentenceHtml(text, lang, hints, hits){
@@ -162,6 +170,8 @@ function shLegend(text, lang){
   const H = shHints(text, lang), W = H.words, L = H.links, out = [];
   if (lang === 'sv') {
     if (W.some(m => m.retro && m.retro.length) || L.includes('retro')) out.push('<span class="ph-rx">rt</span> r verschmilzt mit dem folgenden Laut (in Mittelschweden), auch über die Wortgrenze');
+    if (W.some(m => m.sj && m.sj.length)) out.push('<span class="ph-sj">sj</span> sj-Laut: gehaucht, mit runden Lippen, kein „sch“');
+    if (W.some(m => m.tj && m.tj.length)) out.push('<span class="ph-tj">tj</span> tj-Laut: fast wie „ch“ in „ich“');
     if (W.some(m => m.silent && m.silent.length)) out.push('<span class="ph-si">g</span> stumm');
     if (W.some(m => m.say)) out.push('klein darüber: so spricht man es');
   } else {
@@ -226,7 +236,7 @@ function shStart(lang){
   shSentence();
 }
 function shSentence(){
-  Object.assign(S.shadow, { phase:'idle', heard:false, along:false, orig:null, takes:[], err:null, playing:null, pron:null, listening:false });
+  Object.assign(S.shadow, { phase:'idle', heard:false, along:false, orig:null, takes:[], err:null, playing:null, pron:null, listening:false, doneTip:'', rep:0 });
   shPrefetch();
 }
 // Echte Aufnahme des Originals laden und vermessen (nur wenn der Server es erlaubt): dann gibt es die Hüllkurve zum Vergleich
@@ -259,20 +269,26 @@ function shMeasured(kind, dur, rate){
 // Abspielen als Folge von Schritten (Original, Pause, eigene Aufnahme); jedes neue Abspielen bricht das alte ab
 function shStopPlay(){
   SH.ptoken++;
+  shHeadStop();
   try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
   if (audioEl) { try { audioEl.pause(); } catch (e) {} }
   if (SH.play) { try { SH.play.stop(); } catch (e) {} SH.play = null; }
   shKaraoke(-1);
   if (S.shadow) S.shadow.playing = null;
 }
-function shSeq(kind, steps){
+// loop: so oft wiederholen (mit gap ms dazwischen), bis gestoppt wird oder die Zahl erreicht ist
+function shSeq(kind, steps, loop, gap){
   shStopPlay();
   const tok = ++SH.ptoken, sh = S.shadow;
-  sh.playing = kind; shPatch();
+  sh.playing = kind; sh.rep = 1; shPatch();
   let i = 0;
   const next = () => {
     if (tok !== SH.ptoken) return;
-    if (i >= steps.length) { sh.playing = null; shPatch(); return; }
+    if (i >= steps.length && loop && sh.rep < loop) {
+      setTimeout(() => { if (tok !== SH.ptoken) return; i = 0; sh.rep++; shPatch(); next(); }, gap || 1000);
+      return;
+    }
+    if (i >= steps.length) { sh.playing = null; shHeadStop(); shPatch(); return; }
     const st = steps[i++];
     if (typeof st === 'number') { setTimeout(next, st); return; }
     st(next, tok);
@@ -284,6 +300,37 @@ function shWordAt(text, ci){
   let pos = 0, k = -1, hit = -1;
   String(text).split(/(\s+)/).forEach(part => { if (part && !/^\s+$/.test(part)) { k++; if (ci >= pos && ci < pos + part.length) hit = k; } pos += part.length; });
   return hit;
+}
+// Abspielposition im Wellenbild: Linie und hinterlegter Fortschritt. Die Bewegung rechnet der Browser selbst (Web Animations),
+// deshalb läuft sie gleichmäßig, auch wenn die Seite gerade beschäftigt ist. track: .shtrack mit data-t0 (Beginn) und data-span (Länge in s);
+// ta bis tb: abgespielter Ausschnitt in Sekunden derselben Zeitachse, secs: Dauer, delay: Ausgabeverzögerung (etwa Bluetooth)
+function shHead(track, ta, tb, secs, delay){
+  shHeadStop();
+  if (!track || !track.animate || !(secs > 0)) return;
+  const t0 = Number(track.dataset.t0), span = Number(track.dataset.span), w = track.getBoundingClientRect().width;
+  if (!(span > 0) || !w) return;
+  const X = t => (t - t0) / span * w, x0 = X(ta), x1 = X(tb);
+  const band = document.createElement('i'), head = document.createElement('i');
+  band.className = 'shpb'; head.className = 'shph';
+  band.style.left = x0.toFixed(1) + 'px'; band.style.width = Math.max(0, x1 - x0).toFixed(1) + 'px';
+  track.append(band, head);
+  const o = { duration:secs * 1000, delay:Math.max(0, delay || 0) * 1000, easing:'linear', fill:'both' };
+  head.animate([{ transform:`translateX(${x0.toFixed(1)}px)` }, { transform:`translateX(${x1.toFixed(1)}px)` }], o);
+  band.animate([{ transform:'scaleX(0)' }, { transform:'scaleX(1)' }], o);
+  SH.head = [band, head];
+}
+function shHeadStop(){
+  const els = SH.head; SH.head = null;
+  if (!els) return;
+  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  els.forEach(e => { if (calm || !e.animate) { e.remove(); return; } const a = e.animate([{ opacity:1 }, { opacity:0 }], { duration:200, fill:'forwards' }); a.onfinish = () => e.remove(); });
+}
+// Abspielposition für das Original: Balken der Computerstimme (gemessene Länge) oder Wellenbild der Tatoeba-Aufnahme
+function shHeadOrig(kind, rate){
+  const sh = S.shadow, o = sh && sh.orig, track = document.querySelector('.shlane.orig .shtrack');
+  if (!o || !track) return;
+  if (o.env && kind === 'native') { const d = o.env.bins.length * SH_BIN, r = rate < 0.8 ? 0.75 : 1; shHead(track, 0, d, d / r); }
+  else if (!o.env) shHead(track, 0.15, 0.15 + o.dur, o.dur * (kind === 'tts' ? 0.9 / rate : rate < 0.8 ? 1 / 0.75 : 1));
 }
 function shKaraoke(k){ document.querySelectorAll('.shs .w').forEach(el => el.classList.toggle('kar', Number(el.dataset.k) === k)); }
 const shOrigStep = (item, rate) => (done, tok) => {
@@ -297,9 +344,10 @@ const shOrigStep = (item, rate) => (done, tok) => {
   };
   // Falls das Ende nie gemeldet wird (manche Sprachausgaben): nach der geschätzten Dauer weiter
   const guard = setTimeout(() => end(true), 3000 + String(item.target).length * 120 / rate);
-  playItemEv(item, rate, { start:k => { t0 = performance.now(); kind = k; }, end, word:ci => { if (tok === SH.ptoken) shKaraoke(shWordAt(item.target, ci)); } });
+  playItemEv(item, rate, { start:k => { t0 = performance.now(); kind = k; if (tok === SH.ptoken) shHeadOrig(k, rate); }, end, word:ci => { if (tok === SH.ptoken) shKaraoke(shWordAt(item.target, ci)); } });
 };
-const shTakeStep = (take, from) => (done, tok) => {
+// track: Selektor des Wellenbilds, in dem die Abspielposition läuft
+const shTakeStep = (take, from, track) => (done, tok) => {
   const c = shCtx(), an = take.an;
   const fin = () => { if (tok === SH.ptoken) done(); };
   if (c && take.buf && an && !an.nothing) {
@@ -312,6 +360,7 @@ const shTakeStep = (take, from) => (done, tok) => {
     SH.play = src;
     src.onended = () => { if (SH.play === src) SH.play = null; fin(); };
     src.start(0, a, Math.max(0.05, b - a));
+    shHead(track && document.querySelector(track), a, b, Math.max(0.05, b - a), c.outputLatency || c.baseLatency || 0);
     return;
   }
   const el = new Audio(take.url);
@@ -430,6 +479,7 @@ const SHI = {
   rec:'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>',
   stop:'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11" rx="2.5" fill="currentColor"/></svg>',
   ab:'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  loop:'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M17 4l3 3-3 3M20 7H8a4 4 0 0 0-4 4M7 20l-3-3 3-3M4 17h12a4 4 0 0 0 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   check:'<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
 // Hüllkurve als Balken. t0/t1: Zeitfenster in s; mark: Länge des Originals als Klammer; pill: Original ohne Hüllkurve; pz: Pausen
@@ -449,6 +499,8 @@ function shWaveSvg(bins, o){
   if (o.mark) { const a = x(o.mark[0]), b = x(Math.min(t1, o.mark[1])); h += `<path class="mk" vector-effect="non-scaling-stroke" d="M${a} 3v7M${a} 6.5H${b}M${b} 3v7"/>`; }
   return `<svg class="shwave${o.cls ? ' ' + o.cls : ''}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${h}</svg>`;
 }
+// Wellenbild mit Zeitachse (für die Abspielposition)
+const shTrack = (svg, t0, span, attr) => `<span class="shtrack" data-t0="${t0.toFixed(3)}" data-span="${span.toFixed(3)}"${attr || ''}>${svg}</span>`;
 // Live: Fenster wächst mit, die Klammer zeigt ab Sprechbeginn, wie lang das Original ist
 function shLiveWave(t){
   const sh = S.shadow, L = SH.live || {}, o = sh.orig && !sh.orig.approx ? sh.orig.dur : 0;
@@ -471,7 +523,8 @@ function shPatch(){
   const tip = document.getElementById('shtip'); if (tip) tip.innerHTML = shTip(sh);
 }
 function shTip(sh){
-  if (sh.playing === 'along') return 'Jetzt mitsprechen: gleichzeitig mit der Stimme, halblaut.';
+  if (sh.playing === 'along') return `Jetzt mitsprechen, halblaut und gleichzeitig.${sh.rep > 1 ? ` Durchgang ${sh.rep}.` : ''} Es wiederholt sich, bis du stoppst.`;
+  if (sh.phase === 'done' && sh.doneTip) return sh.doneTip;
   if (sh.playing === 'hear') return 'Hör auf Melodie und Betonung.';
   if (!sh.heard) return 'Erst nur zuhören.';
   if (!sh.along) return 'Dann gleichzeitig mitsprechen, halblaut. Halt mit der Stimme Schritt.';
@@ -497,17 +550,18 @@ function shResultHtml(sh){
   const play = `<div class="shplay">
       <button type="button" class="pchip" data-a="shpo" data-sh="orig" aria-pressed="${sh.playing === 'orig'}">${PICO.play}<span>Original</span></button>
       <button type="button" class="pchip" data-a="shpm" data-sh="me" aria-pressed="${sh.playing === 'me'}">${PICO.play}<span>Du</span></button>
-      <button type="button" class="pchip" data-a="shpab" data-sh="ab" aria-pressed="${sh.playing === 'ab'}">${SHI.ab}<span>Im Wechsel</span></button></div>`;
+      <button type="button" class="pchip" data-a="shpab" data-sh="ab" aria-pressed="${sh.playing === 'ab'}">${SHI.ab}<span>Im Wechsel</span></button>
+      <button type="button" class="pchip" data-a="shalong" data-sh="along" aria-pressed="${sh.playing === 'along'}">${SHI.loop}<span>Mitsprechen</span></button></div>`;
   const pron = canListen() ? (sh.pron || sh.listening ? shPronHtml(sh) : '<p class="shtip"><button type="button" class="link" data-a="pron">Versteht dich die Spracherkennung? Testen</button></p>') : '';
   if (!an) return `<p class="shmsg">Aufgenommen. Auswerten geht in diesem Browser nicht, anhören schon.</p>${play}${pron}`;
   if (an.nothing) return `<p class="shmsg warn"><b>Nichts gehört.</b> Ist das Mikrofon frei? Tipp auf „Nochmal“ und sprich direkt los.</p>`;
   const od = o ? o.dur : 0, T = Math.max(an.speech, od) + 0.45, a0 = an.onset - 0.15;
   const oe = o && o.env;
-  const origLane = oe ? shWaveSvg(oe.bins, { t0:oe.an.onset - 0.15, t1:oe.an.onset - 0.15 + T, cls:'orig' })
-    : o ? shWaveSvg([], { t0:0, t1:T, pill:[0.15, 0.15 + od], cls:'orig' }) : '';
+  const origLane = oe ? shTrack(shWaveSvg(oe.bins, { t0:oe.an.onset - 0.15, t1:oe.an.onset - 0.15 + T, cls:'orig' }), oe.an.onset - 0.15, T)
+    : o ? shTrack(shWaveSvg([], { t0:0, t1:T, pill:[0.15, 0.15 + od], cls:'orig' }), 0, T, ' data-pill="1"') : '';
   const lanes = `<div class="shlanes">
-      <div class="shlane"><span class="shl">Original</span>${origLane || '<span class="shnone">Hör es dir an, dann steht es hier zum Vergleich.</span>'}</div>
-      <button type="button" class="shlane me" data-a="shseek" aria-label="Deine Aufnahme ab dieser Stelle abspielen"><span class="shl">Du</span>${shWaveSvg(tk.bins, { t0:a0, t1:a0 + T, pz:an.pauses, cls:'me' })}</button>
+      <div class="shlane orig"><span class="shl">Original</span>${origLane || '<span class="shnone">Hör es dir an, dann steht es hier zum Vergleich.</span>'}</div>
+      <button type="button" class="shlane me" data-a="shseek" aria-label="Deine Aufnahme ab dieser Stelle abspielen"><span class="shl">Du</span>${shTrack(shWaveSvg(tk.bins, { t0:a0, t1:a0 + T, pz:an.pauses, cls:'me' }), a0, T)}</button>
     </div>`;
   const tp = o && !o.approx ? shTempo(an.speech, od) : null;
   const tiles = [
@@ -523,11 +577,11 @@ function shResultHtml(sh){
     if (tp && pt && Math.abs(Math.log(tp.ratio)) < Math.abs(Math.log(pt.ratio)) - 0.08) cmp.push('Tempo näher am Original als eben');
     if (an.extra < prev.extra) cmp.push('weniger Stockungen als eben');
   }
+  sh.doneTip = `Versuch ${tk.n}${cmp.length ? `: ${cmp.join(', ')}.` : '.'} Tipp auf deine Spur, um ab der Stelle zu hören.`;
   return `${lanes}
     <div class="shtiles">${tiles.map(([c, l, v, s]) => `<div class="sht ${c}"><span class="shtl">${l}</span><b>${v}</b><span class="shts">${s}</span></div>`).join('')}</div>
     ${level ? `<p class="shmsg warn">${level}</p>` : ''}
-    <p class="shtip">Versuch ${tk.n}${cmp.length ? `: ${cmp.join(', ')}.` : '.'} Tipp auf deine Spur, um ab der Stelle zu hören.</p>
-    ${play}${pron}`;
+    ${play}<p class="shtip" id="shtip" aria-live="polite">${shTip(sh)}</p>${pron}`;
 }
 function shStageHtml(sh){
   const err = sh.err ? `<p class="shmsg warn">${esc(sh.err)}</p>` : '';
@@ -543,14 +597,14 @@ function shStageHtml(sh){
 }
 function shBarHtml(sh){
   const last = sh.idx >= sh.ids.length - 1;
-  const slow = `<button type="button" class="pchip" data-a="shslow" aria-pressed="${!!sh.slow}">${PICO.slow}<span>Langsam</span></button>`;
+  const slow = `<button type="button" class="ghost" data-a="shslow" aria-pressed="${!!sh.slow}">${PICO.slow}<span>Langsam</span></button>`;
   let left = '', right = '';
-  if (sh.phase === 'starting') { left = '<button type="button" class="pchip" data-a="shcancel">Abbrechen</button>'; right = '<button type="button" class="primary" disabled>Mikrofon startet …</button>'; }
-  else if (sh.phase === 'rec') { left = '<button type="button" class="pchip" data-a="shcancel">Verwerfen</button>'; right = `<button type="button" class="primary shmain shstop" data-a="shstop">${SHI.stop}<span>Fertig</span></button>`; }
+  if (sh.phase === 'starting') { left = '<button type="button" class="ghost" data-a="shcancel">Abbrechen</button>'; right = '<button type="button" class="primary" disabled>Mikrofon startet …</button>'; }
+  else if (sh.phase === 'rec') { left = '<button type="button" class="ghost" data-a="shcancel">Verwerfen</button>'; right = `<button type="button" class="primary shmain shstop" data-a="shstop">${SHI.stop}<span>Fertig</span></button>`; }
   else if (sh.phase === 'proc') right = '<button type="button" class="primary" disabled>Wird ausgewertet …</button>';
   else if (sh.listening) right = '<button type="button" class="primary" disabled>Ich höre zu …</button>';
   else if (sh.phase === 'done' && sh.takes.length) {
-    left = `<button type="button" class="pchip" data-a="shrec">${SHI.rec}<span>Nochmal</span></button>`;
+    left = `<button type="button" class="ghost" data-a="shrec">${SHI.rec}<span>Nochmal</span></button>`;
     right = `<button type="button" class="primary" data-a="shnext">${last ? 'Zur Übersicht' : 'Nächster Satz'}</button>`;
   } else {
     left = slow;
@@ -564,6 +618,7 @@ function viewShadow(){
   const sh = S.shadow, lang = sh.lang, item = shItem();
   if (!item) return shSummaryHtml();
   const hints = DB.settings.shHints !== false, leg = hints ? shLegend(item.target, lang) : [];
+  if (hints && !leg.length) leg.push('In diesem Satz nichts Besonderes zur Aussprache.');
   const head = `<div class="runbar"><button type="button" class="x xt" data-a="shquit">Beenden</button><div class="progress" aria-hidden="true">${sh.ids.map((_, i) => `<span class="seg${i < sh.idx ? ' pass' : i === sh.idx ? ' cur' : ''}"></span>`).join('')}</div><span class="count">${sh.idx + 1}/${sh.ids.length}</span></div>`;
   const src = shNative(item) && navigator.onLine !== false ? 'Aufnahme von Tatoeba' : 'Computerstimme';
   return head + `<section class="ex shex">
@@ -583,7 +638,7 @@ function shSummaryHtml(){
   const kp = [[rows.length, rows.length === 1 ? 'Satz aufgenommen' : 'Sätze aufgenommen'], [takes, takes === 1 ? 'Versuch' : 'Versuche']];
   if (gm) kp.push([gm.toLocaleString('de-DE', { maximumFractionDigits:1, minimumFractionDigits:1 }) + '×', 'so lang wie das Original']);
   else kp.push([stock, stock === 1 ? 'Stockung' : 'Stockungen']);
-  const list = rows.map(r => { const it = itemById(r.id), an = r.take.an; return `<div class="row static shrow"><span class="txt"><span class="rt" lang="${lang}">${esc(it ? it.target : '')}</span>${shWaveSvg(r.take.bins, { t0:an.onset - 0.1, t1:an.offset + 0.1, pz:an.pauses, cls:'mini' })}</span><button type="button" class="pbtn" data-a="shone" data-i="${r.i}" data-sh="one${r.i}" aria-pressed="${sh.playing === 'one' + r.i}" aria-label="Original und dich im Wechsel hören">${SHI.ab}</button></div>`; }).join('');
+  const list = rows.map(r => { const it = itemById(r.id), an = r.take.an; return `<div class="row static shrow"><span class="txt"><span class="rt" lang="${lang}">${esc(it ? it.target : '')}</span>${shTrack(shWaveSvg(r.take.bins, { t0:an.onset - 0.1, t1:an.offset + 0.1, pz:an.pauses, cls:'mini' }), an.onset - 0.1, an.offset - an.onset + 0.2, ` data-i="${r.i}"`)}</span><button type="button" class="pbtn" data-a="shone" data-i="${r.i}" data-sh="one${r.i}" aria-pressed="${sh.playing === 'one' + r.i}" aria-label="Original und dich im Wechsel hören">${SHI.ab}</button></div>`; }).join('');
   return backBar('Nachsprechen') + `<div class="donebox">
     <h1 class="done-h">Runde geschafft</h1>
     <p class="lead">${rows.length === 1 ? 'Ein Satz' : rows.length + ' Sätze'} nachgesprochen.</p>
@@ -603,20 +658,28 @@ function shadowCmd(a, b, e){
   const toggle = (kind, steps) => { if (sh.playing === kind) { shStopPlay(); shPatch(); } else shSeq(kind, steps); };
   switch (a) {
     case 'shhear': if (!item || shBusy(sh)) break; sh.heard = true; sh.err = null; render(); shSeq('hear', [shOrigStep(item, rate)]); break;
-    case 'shalong': if (!item || shBusy(sh)) break; sh.heard = true; sh.along = true; sh.err = null; render(); shSeq('along', [shOrigStep(item, rate)]); break;
+    case 'shalong': {
+      if (!item || shBusy(sh)) break;
+      if (sh.playing === 'along') { shStopPlay(); shPatch(); break; }
+      const first = !sh.along;
+      sh.heard = true; sh.along = true; sh.err = null;
+      if (first || sh.phase !== 'done') render();
+      shSeq('along', [shOrigStep(item, rate)], 10, 1100);
+      break;
+    }
     case 'shrec': shRecStart(); break;
     case 'shstop': shRecStop(); break;
     case 'shcancel': if (sh.phase === 'starting') { sh.phase = sh.takes.length ? 'done' : 'idle'; render(); } else shRecCancel(); break;
     case 'shslow': sh.slow = !sh.slow; render(); break;
     case 'shhints': DB.settings.shHints = DB.settings.shHints === false; save(); render(); break;
     case 'shpo': if (item) toggle('orig', [shOrigStep(item, rate)]); break;
-    case 'shpm': if (last) toggle('me', [shTakeStep(last)]); break;
-    case 'shpab': if (item && last) toggle('ab', [shOrigStep(item, 0.9), 400, shTakeStep(last)]); break;
+    case 'shpm': if (last) toggle('me', [shTakeStep(last, null, '.shlane.me .shtrack')]); break;
+    case 'shpab': if (item && last) toggle('ab', [shOrigStep(item, 0.9), 400, shTakeStep(last, null, '.shlane.me .shtrack')]); break;
     case 'shseek': {
       if (!last || !last.an || last.an.nothing) break;
       const r = b.getBoundingClientRect(), od = sh.orig ? sh.orig.dur : 0, T = Math.max(last.an.speech, od) + 0.45;
       const f = Math.min(1, Math.max(0, ((e && e.clientX != null ? e.clientX : r.left) - r.left) / Math.max(1, r.width)));
-      shSeq('me', [shTakeStep(last, Math.max(0, last.an.onset - 0.15 + f * T - 0.1))]);
+      shSeq('me', [shTakeStep(last, Math.max(0, last.an.onset - 0.15 + f * T - 0.1), '.shlane.me .shtrack')]);
       break;
     }
     case 'shnext': case 'shquit': {
@@ -628,10 +691,10 @@ function shadowCmd(a, b, e){
       if (sh.idx < sh.ids.length) shSentence();
       render(); window.scrollTo(0, 0); break;
     }
-    case 'shone': { const l = sh.log[Number(b.dataset.i)], it = l && itemById(l.id); if (it) toggle('one' + b.dataset.i, [shOrigStep(it, 0.9), 400, shTakeStep(l.take)]); break; }
+    case 'shone': { const k = b.dataset.i, l = sh.log[Number(k)], it = l && itemById(l.id); if (it) toggle('one' + k, [shOrigStep(it, 0.9), 400, shTakeStep(l.take, null, `.shrow .shtrack[data-i="${k}"]`)]); break; }
     case 'shall': case 'shmine': {
       const steps = [];
-      sh.log.forEach(l => { const it = l && itemById(l.id); if (!it) return; if (a === 'shall') steps.push(shOrigStep(it, 0.9), 350); steps.push(shTakeStep(l.take), 700); });
+      sh.log.forEach((l, k) => { const it = l && itemById(l.id); if (!it) return; if (a === 'shall') steps.push(shOrigStep(it, 0.9), 350); steps.push(shTakeStep(l.take, null, `.shrow .shtrack[data-i="${k}"]`), 700); });
       toggle(a === 'shall' ? 'all' : 'mine', steps); break;
     }
     case 'pron': {

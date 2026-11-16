@@ -78,18 +78,25 @@ test('Schwedisch: r verschmilzt (auch über die Wortgrenze), stumme Buchstaben, 
   assert.deepEqual(m('roligt').silent, [4]);
   assert.deepEqual(m('jag').silent, [2]);
   assert.equal(m('mig').say, 'mej');
+  assert.deepEqual(m('stjärna').sj, [[0, 3]]);
+  assert.deepEqual(m('sjö').sj, [[0, 2]]);
+  assert.deepEqual(m('station').sj, [[3, 5]]);
+  assert.deepEqual(m('passion').sj, [[2, 5]]);
+  assert.deepEqual(m('tjugo').tj, [[0, 2]]);
+  assert.deepEqual(m('attjo').tj, [], 'tj nur am Wortanfang');
+  assert.equal(fn('shLegend')('Affären öppnas klockan nio.', 'sv').length, 0, 'nichts zu markieren');
   assert.equal(m('dem').say, 'dom');
   assert.deepEqual(val(fn('shHints')('Vi har lämnat över sitt hus.', 'sv').links), ['', 'retro', '', 'retro', '', '']);
 });
 test('Satz mit Hilfen: Text bleibt vollständig, Wörter antippbar', () => {
   const html = fn('shSentenceHtml');
-  const plain = h => h.replace(/<rt>.*?<\/rt>/g, '').replace(/<[^>]+>/g, '').replace(/⁠/g, '').replace(/&#39;/g, "'");
+  const plain = h => h.replace(/<[^>]+>/g, '').replace(/⁠/g, '').replace(/&#39;/g, "'");
   ['Föräldrarna har lämnat över sitt hus till sina barn.', 'Det är inte konstigt att jag säger det.', '¿Llevábamos dos horas esperando, o no?', 'Si me hubieras avisado, te habría recogido en la estación.']
     .forEach(t => { const lang = /[¿á]/.test(t) || t.startsWith('Si') ? 'es' : 'sv'; assert.equal(plain(html(t, lang, true)), t); assert.equal(plain(html(t, lang, false)), t); });
   // „ringer dig“: r und d verschmelzen auch über die Wortgrenze, „dig“ spricht man „dej“
   const h = html('Jag ringer dig i morgon.', 'sv', true);
   assert.match(h, /ringe<span class="ph-rx">r<\/span><\/span>\u2060<span class="ph-l ph-lrx"/);
-  assert.match(h, /<ruby><span class="ph-rx">d<\/span>ig<rt>dej<\/rt><\/ruby>/);
+  assert.match(h, /<span class="ph-say" data-say="dej"><span class="ph-rx">d<\/span>ig<\/span>/);
   assert.match(h, /data-a="lookup" data-w="morgon" data-k="4"/);
 });
 test('Spracherkennung: Wörter je Satzwort, beste Hypothese, Zahlen und „i morgon“', () => {

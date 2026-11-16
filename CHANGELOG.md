@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.27.0
+- **Nachsprechen: Mitsprechen in Schleife.** Ein Antippen auf „Mitsprechen“ spielt das Original wieder und wieder (gut eine Sekunde Pause dazwischen, höchstens zehnmal), bis du es noch einmal antippst. Die Zeile darunter zählt die Durchgänge mit. Den Knopf gibt es jetzt auch nach der Aufnahme, neben „Original“, „Du“ und „Im Wechsel“ (zwei Reihen, gleich breit).
+- **Abspielposition im Wellenbild:** Beim Abspielen läuft eine Linie mit, dahinter füllt sich der gespielte Teil; beim Balken der Computerstimme füllt sich der Balken selbst. „Im Wechsel“ zeigt erst das Original, dann deine Spur. Die Bewegung rechnet der Browser selbst (Web Animations), sie läuft gleichmäßig; die Verzögerung der Tonausgabe (etwa über Bluetooth) wird berücksichtigt, soweit der Browser sie meldet. Auch in der Übersicht am Ende.
+- **Knöpfe unten gleich hoch:** „Nochmal“, „Langsam“, „Verwerfen“ haben dieselbe Höhe wie der Hauptknopf.
+- **Aussprachehilfen springen nicht mehr:** gleicher Zeilenabstand mit und ohne Hilfen; die gesprochene Form schwebt über dem Wort, ohne die Zeile zu verschieben (und wird beim Kopieren nicht mitkopiert). Hat ein Satz nichts Besonderes, steht das darunter, statt dass das Antippen scheinbar nichts tut.
+- **Neu in den Aussprachehilfen (Schwedisch):** sj-Laut bei sj, skj, stj am Wortanfang und bei -tion, -sion (station, passion); tj-Laut bei tj, kj am Wortanfang (tjugo, kjol).
+
 ## 24.26.0
 - **Nachsprechen neu gebaut.** Drei Schritte als Leiste: Hören, Mitsprechen, Allein. Der Hauptknopf rechts unten führt hindurch (Anhören, Mitsprechen, Aufnehmen, Nächster Satz), jeder Schritt lässt sich auch direkt antippen. Beim Vorlesen ist das gerade gesprochene Wort markiert, wenn die Stimme Wortgrenzen meldet. Ein Schild zeigt, ob eine Tatoeba-Aufnahme oder die Computerstimme spricht.
 - **Rückmeldung beim Sprechen:** Während der Aufnahme läuft die Lautstärke als Wellenbild mit, darüber eine Klammer, so lang wie das Original. Hinweise „Sprich jetzt“, „Ich höre dich“, „Sehr leise“. Die Aufnahme stoppt von selbst nach gut einer Sekunde Stille.

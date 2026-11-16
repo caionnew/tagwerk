@@ -10,10 +10,11 @@ test('Spanisch erledigt, Schwedisch-Tagwerk zusätzlich startbar, Stand stimmt',
   await page.goto(APP);
   await expect(page.locator('.today .eyebrow')).toContainText('Zusätzlich');
   await expect(page.locator('.today [data-a=daily]')).toContainText('Schwedisch-Tagwerk starten');
-  await expect(page.locator('.otherlang')).toContainText('Spanisch-Tagwerk heute erledigt');
+  await expect(page.locator('.otherlang')).toContainText('Spanisch');
+  await expect(page.locator('.otherlang')).toContainText('Tagwerk heute erledigt');
   await page.click('[data-a=lang][data-l=es]');
   await expect(page.locator('.today')).toContainText('Tagwerk erledigt');
-  await expect(page.locator('.otherlang [data-a=otherdaily]')).toContainText('Schwedisch-Tagwerk zusätzlich');
+  await expect(page.locator('.otherlang [data-a=otherdaily]')).toContainText('Zusätzlich starten');
   await page.click('.otherlang [data-a=otherdaily]');
   await expect(page.locator('.runbar')).toBeVisible();
 });

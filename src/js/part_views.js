@@ -41,23 +41,23 @@ function tabs(){
 const GEAR = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>';
 const gearBtn = () => `<button type="button" class="iconbtn" data-a="settings" aria-label="Einstellungen">${GEAR}</button>`;
 function topLine(){ return `<div class="topline">${langSeg()}${gearBtn()}</div>`; }
-function streakBox(){
-  const sd = streakData(), t = today(), mo = mondayOf(t), y = addDays(t, -1);
-  let hasFree = false, hasSome = false;
-  const dots = ['M', 'D', 'M', 'D', 'F', 'S', 'S'].map((l, i) => {
-    const ds = addDays(mo, i);
-    const some = !DB.done[ds] && ((dayLog(ds, 'sv').n || 0) + (dayLog(ds, 'es').n || 0)) > 0;
-    const free = !DB.done[ds] && !some && sd.free.has(ds);
-    if (free) hasFree = true;
-    if (some) hasSome = true;
-    return `<span class="wd${DB.done[ds] ? ' on' : some ? ' some' : free ? ' free' : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' fillnow' : ''}"><i></i>${l}</span>`;
+// Woche im Kopf von „Heute“: dieselbe Kodierung wie die Übungstage (gefüllt = Tagwerk, Farbe = Sprache, beide geteilt;
+// Rand = nur geübt; gestrichelt = freier Tag). Darunter nur die Serie als Zahl; Tipp führt zum Kalender.
+function weekStrip(){
+  // Die letzten sieben Tage bis heute (statt Kalenderwoche): auch montags aussagekräftig
+  const sd = streakData(), t = today(), y = addDays(t, -1);
+  const cells = Array.from({ length:7 }, (_, i) => addDays(t, i - 6)).map(ds => {
+    const l = WDAYS[dateOf(ds).getDay()][0], sv = (dayLog(ds, 'sv').n || 0) > 0, es = (dayLog(ds, 'es').n || 0) > 0;
+    let cls = '';
+    if (DB.done[ds]) { const a = doneIn(ds, 'sv'), b = doneIn(ds, 'es'); cls = a && b ? 'db' : a ? 'ds' : b ? 'de' : sv && es ? 'db' : sv ? 'ds' : 'de'; }
+    else if (sv || es) cls = sv && es ? 'pb' : sv ? 'ps' : 'pe';
+    else if (sd.free.has(ds)) cls = 'fr';
+    return `<span class="wk${cls ? ' ' + cls : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' fillnow' : ''}"><i></i>${l}</span>`;
   }).join('');
-  let line;
-  if (!sd.current) line = DB.done[t] ? 'Heute erledigt. Ziel: jeden Tag ein Tagwerk.' : 'Ziel: jeden Tag ein Tagwerk. Ein freier Tag pro Woche ist erlaubt.';
-  else if (DB.done[t]) line = `${plural(sd.current, 'Tag', 'Tage')} in Folge. Heute erledigt.`;
-  else if (sd.free.has(y)) line = `${plural(sd.current, 'Tag', 'Tage')} in Folge. Gestern war dein freier Tag, heute braucht es ein Tagwerk.`;
-  else line = `${plural(sd.current, 'Tag', 'Tage')} in Folge. Mit dem heutigen Tagwerk werden es ${sd.current + 1}.`;
-  return `<div class="weekgoal"><div class="wdots" aria-hidden="true">${dots}</div><p class="wtext">${line}</p>${hasSome ? '<p class="wleg"><i class="half"></i>Halb gefüllt: geübt, aber kein Tagwerk</p>' : ''}${hasFree ? '<p class="wleg"><i></i>Gestrichelt: freier Tag, die Serie läuft weiter</p>' : ''}</div>`;
+  const risk = sd.current && !DB.done[t] && sd.free.has(y);
+  const cap = sd.current ? `${sd.current} in Folge` : 'Serie startet heute';
+  const label = `${plural(sd.current, 'Tag', 'Tage')} in Folge${DB.done[t] ? ', heute erledigt' : risk ? ', gestern war dein freier Tag, heute braucht es ein Tagwerk' : ''}`;
+  return `<button type="button" class="weekstrip" data-a="tab" data-v="progress" aria-label="${label}. Zum Kalender"><span class="wks">${cells}</span><span class="wkc${risk ? ' warn' : ''}">${risk ? 'heute nötig' : cap}</span></button>`;
 }
 function findHtml(lang){
   const f = fundstueck(lang), L = LANG[lang];
@@ -123,7 +123,7 @@ function viewHome(){
     if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
   }
   const dnow = dateOf(today());
-  const hello = `<header class="hello"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p><p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p></header>`;
+  const hello = `<header class="hello"><div class="hello-t"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p><p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p></div>${weekStrip()}</header>`;
   // Die andere Sprache bleibt sichtbar: Stand und ein Weg dorthin, ohne umschalten zu müssen
   const other = activeLangs().filter(l => l !== lang)[0];
   let otherHtml = '';
@@ -132,12 +132,11 @@ function viewHome(){
     const since = last ? dayDiff(today(), last) : null;
     const when = since === 0 ? 'heute geübt' : since === 1 ? 'zuletzt gestern' : since == null || since >= 7 ? 'länger nicht geübt' : `zuletzt vor ${since} Tagen`;
     const oDone = doneIn(today(), other);
-    const why = !oDone && auto && DB.dayLang && DB.dayLang.d === today() && !DB.dayLang.manual && !dayDone ? ` Heute ist ${LANG[lang].deName} dran, weil es gerade nötiger ist.` : '';
-    const state = oDone ? `${LANG[other].deName}-Tagwerk heute erledigt.` : `${dueN ? plural(dueN, 'Wiederholung', 'Wiederholungen') + ' fällig' : 'nichts fällig'}, ${when}.${why}`;
-    const btn = oDone ? `<button type="button" class="link" data-a="lang" data-l="${other}">Ansehen</button>` : `<button type="button" class="link" data-a="otherdaily" data-l="${other}">${LANG[other].deName}-Tagwerk${dayDone ? ' zusätzlich' : ''}</button>`;
-    otherHtml = `<div class="otherlang"><p><b>${LANG[other].deName}:</b> ${state}</p>${btn}</div>`;
+    const state = oDone ? 'Tagwerk heute erledigt' : `${dueN ? dueN + ' fällig' : 'nichts fällig'} · ${when.replace('zuletzt ', '')}`;
+    const btn = oDone ? `<button type="button" class="link" data-a="lang" data-l="${other}">Ansehen</button>` : `<button type="button" class="link" data-a="otherdaily" data-l="${other}" aria-label="${LANG[other].deName}-Tagwerk starten">${dayDone ? 'Zusätzlich starten' : 'Tagwerk starten'}</button>`;
+    otherHtml = `<div class="otherlang"><span class="sq rl-${other}-sq" aria-hidden="true"></span><p><b>${LANG[other].deName}</b> <span class="ol-m">${state}</span></p>${btn}</div>`;
   }
-  return `${topLine()}${hello}${noticeHtml() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${streakBox()}${weakHtml(lang)}${findHtml(lang)}`;
+  return `${topLine()}${hello}${noticeHtml() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${weakHtml(lang)}${findHtml(lang)}`;
 }
 function topicRows(lang){
   const traps = TRAPS[lang].map(t => t.id).concat(BANK[lang].some(i => i.trap === 'eigene') ? ['eigene'] : []);
@@ -725,13 +724,12 @@ function viewProgress(){
     return `<div class="topline"><h1 class="vt">Fortschritt</h1>${gearBtn()}</div>${noticeHtml()}${tabs}
   <section class="today">
     <p class="num">${plural(sd.current, 'Tag', 'Tage')} in Folge</p>
-    <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tag zählt, wenn du ein Tagwerk erledigst. Ein freier Tag pro Woche unterbricht die Serie nicht.</p>
-    ${firstDate ? `<p class="hint" style="margin-top:0">Seit ${firstDate.getDate()}. ${MONTHS_FULL[firstDate.getMonth()]} ${firstDate.getFullYear()}: an ${tot.days.toLocaleString('de-DE')} Tagen geübt, ${tot.n.toLocaleString('de-DE')} Aufgaben${tot.secs ? `, ${fmtMin(tot.secs).replace(/\.$/, "")}` : ''}. Tagwerke: ${activeLangs().map(l => `${tagwerkCount(l).toLocaleString('de-DE')} ${LANG[l].deName}`).join(', ') || 'noch keins'}.</p>` : ''}
-    ${Object.keys(tot.years).filter(y => tot.years[y].days).length > 1 ? `<table class="years"><thead><tr><th>Jahr</th><th>Tage</th><th>Aufgaben</th><th>Zeit</th></tr></thead><tbody>${Object.keys(tot.years).filter(y => tot.years[y].days).sort().reverse().map(y => { const v = tot.years[y]; return `<tr><td>${y}</td><td>${v.days}</td><td>${v.n.toLocaleString('de-DE')}</td><td>${v.secs ? fmtMin(v.secs).replace(/\.$/, '') : '–'}</td></tr>`; }).join('')}</tbody></table>` : ''}
+    <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tagwerk am Tag, egal in welcher Sprache; ein freier Tag pro Woche ist erlaubt.</p>
+    ${firstDate ? `<div class="kpis k4"><div><b>${tot.days.toLocaleString('de-DE')}</b><span>Übungstage</span></div><div><b>${activeLangs().reduce((a, l) => a + tagwerkCount(l), 0).toLocaleString('de-DE')}</b><span class="kl">${activeLangs().map(l => `<i class="sq rl-${l}-sq"></i>${tagwerkCount(l)}`).join(' ')} Tagwerke</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>Aufgaben</span></div><div><b>${tot.secs >= 3600 ? Math.round(tot.secs / 3600) : Math.round(tot.secs / 60)}</b><span>${tot.secs >= 3600 ? 'Stunden' : 'Minuten'}</span></div></div><p class="legend" style="margin:8px 0 0">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
   </section>
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
-    <p class="legend">${S.calDay ? esc(dayDetail(S.calDay)) : cal.first ? `An ${cal.active} von ${cal.total} Tagen geübt, seit deinem ersten Übungstag am ${dateOf(cal.first).getDate()}. ${MONTHS_FULL[dateOf(cal.first).getMonth()]}${dateOf(cal.first).getFullYear() !== dateOf(today()).getFullYear() ? ' ' + dateOf(cal.first).getFullYear() : ''}. Tipp auf einen Tag für Details${cal.scrollable ? ', nach rechts wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>
+    <p class="legend">${S.calDay ? esc(dayDetail(S.calDay)) : cal.first ? `${cal.active} von ${cal.total} Tagen geübt. Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>
     <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt (Rand in Sprachfarbe)</span><span><i class="sq c0 fr"></i>freier Tag</span></p></div>
   ${mins.any ? `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart">${mins.html}<p class="legend"><span class="sq m-sv"></span>Schwedisch <span class="sq m-es"></span>Spanisch. Zusammen ${mins.total} Min.${(() => { let s = 0, n = 0; Object.keys(DB.log).forEach(k => { if (dayDiff(today(), k) >= 30) return; const v = (dayLog(k, 'sv').secs || 0) + (dayLog(k, 'es').secs || 0); if (v) { s += v; n++; } }); return n >= 5 ? ` Im Schnitt ${Math.round(s / n / 60)} Min. an Übungstagen, letzte 30 Tage.` : ''; })()}${mins.unm ? ' „–“: geübt, aber noch ohne Zeitmessung.' : ''}</p></div>` : ''}
   ${hoursHtml()}

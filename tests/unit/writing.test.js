@@ -26,3 +26,27 @@ test('Profil zählt Sätze, Nebensätze und Verbindungswörter', () => {
   const a = analyzeText('sv', 'Igår gick jag till jobbet eftersom bussen var sen. Men det gick bra. Sedan åt vi lunch tillsammans och pratade länge.');
   assert.equal(a.sents, 3); assert.equal(a.subCount, 1); assert.ok(a.conns.includes('men')); assert.ok(!a.conns.includes('sen'));
 });
+
+test('Wörter zum Einbauen: Grundformen, keine Eigennamen, fünf Vorschläge, „Andere Wörter“ bringt neue', () => {
+  const a = loadApp();
+  a.run("DB.st = {}; BANK.sv.concat(BANK.es).forEach(i => { DB.st[i.id] = { ivl:2, due:'2030-01-01', s:1, d:5 }; });");
+  for (const lang of ['sv', 'es']) {
+    const names = a.get('properNames')(lang), words = a.get('learningWords')(lang).map(x => x.base);
+    ['anna', 'stockholm', 'uppsala', 'norge', 'madrid', 'españa', 'juan'].forEach(n => assert.ok(!words.includes(n), `${lang}: ${n} ist ein Name`));
+    // Kein gewöhnliches Wort als Name erkannt
+    ['hus', 'bil', 'casa', 'tren', 'hoy', 'idag'].forEach(w => assert.ok(!names.has(w), `${lang}: ${w}`));
+  }
+  const words = a.get('learningWords')('es').map(x => x.base);
+  assert.ok(words.includes('ayudar') && !words.includes('ayudarme'), 'Grundform statt gebeugter Form');
+  const first = JSON.parse(JSON.stringify(a.get('suggWords')('sv')));
+  assert.equal(first.sugg.length, 5); assert.equal(first.suggMore, true);
+  const next = JSON.parse(JSON.stringify(a.get('suggWords')('sv', first.sugg.map(x => x.base))));
+  assert.equal(next.sugg.filter(x => first.sugg.some(y => y.base === x.base)).length, 0, 'andere Wörter als eben');
+});
+test('Kalender: an beiden Sprachen nur etwas geübt hat einen geteilten Rand in beiden Sprachfarben', () => {
+  const a = loadApp();
+  a.run("DB.log[today()] = { sv:{ n:3 }, es:{ n:2 } }; delete DB.done[today()];");
+  const svg = a.get('calendarSvg')().svg;
+  assert.match(svg, /<linearGradient id="calpb"[^>]*><stop offset="\.5" style="stop-color:var\(--sv\)"\/><stop offset="\.5" style="stop-color:var\(--es\)"\/>/);
+  assert.match(svg, /class="pb now"/);
+});

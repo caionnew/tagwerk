@@ -111,12 +111,34 @@ function textHints(lang, text){
 }
 // Wörter aus Sätzen, die du gerade lernst (schon geübt, noch nicht gefestigt)
 const W_STOP = new Set('och att det som en ett är jag du han hon vi ni de man inte på i med för till av om har kan ska vill den detta var mycket bara också men så när här där nu idag igår hur vad vem hans hennes deras min din sin mitt ditt sitt mina dina sina vara göra blir blev från efter under över mellan utan andra något några många alla inga ingen själv el la los las un una que de en y a es no se lo le me te mi tu su por para con del al más muy pero como hay está son'.split(' '));
+// Eigennamen (Anna, Uppsala, Madrid) sind keine Wörter zum Einbauen: irgendwo in den Sätzen mitten im Satz groß geschrieben,
+// oder im Wörterbuch als Name, Stadt, Land markiert (so fallen auch Namen am Satzanfang heraus)
+function properNames(lang){
+  const out = new Set();
+  BANK[lang].forEach(i => {
+    const ws = String(i.target).split(/\s+/);
+    ws.forEach((x, k) => {
+      const m = x.match(/^[¿¡"„“«(]*([A-ZÅÄÖÁÉÍÓÚÑ][a-zåäöéáíóúñü]+)/); if (!m) return;
+      const w = m[1].toLowerCase(), first = k === 0 || /[.!?:]["”»]?$/.test(ws[k - 1]), e = lookupWord(lang, w);
+      if (!first || (e && /\((Name|Stadt|Land|Ort|Insel)/.test(e.de))) out.add(w);
+    });
+  });
+  return out;
+}
 function learningWords(lang){
   const out = new Map();
   // Nur Inhaltswörter: keine Funktionswörter, Bindewörter oder Verbindungswörter, Grundform mindestens 4 Buchstaben
   const skip = w => w.length < 4 || W_STOP.has(w) || W_SUBS[lang].includes(w) || W_CONN[lang].includes(w);
-  BANK[lang].forEach(i => { const st = stOf(i.id); if (!st || (st.ivl || 0) >= MATURE) return; wTokens(i.target).forEach(w => { if (skip(w)) return; const e = lookupWord(lang, w); const base = (e && e.l) || w; if (skip(base)) return; if (!out.has(base)) out.set(base, { w, base, de:e ? e.de.split(';')[0].replace(/\s*\(.*$/, '') : '' }); }); });
+  const nm = properNames(lang);
+  BANK[lang].forEach(i => { const st = stOf(i.id); if (!st || (st.ivl || 0) >= MATURE) return; wTokens(i.target).forEach(w => { if (skip(w) || nm.has(w)) return; const e = lookupWord(lang, w); const base = (e && e.l) || w; if (skip(base)) return; if (!out.has(base)) out.set(base, { w, base, de:e ? e.de.split(';')[0].replace(/\s*\(.*$/, '') : '' }); }); });
   return [...out.values()];
+}
+// Wörter zum Einbauen beim Schreiben: fünf Vorschläge (Grundform, gebeugt zählt auch) und ob es weitere gibt (für „Andere Wörter“);
+// bisher gezeigte kommen zuletzt
+const W_SUGG = 5;
+function suggWords(lang, not){
+  const all = shuffle(learningWords(lang)), fresh = all.filter(x => !(not || []).includes(x.base));
+  return { sugg:fresh.concat(all.filter(x => !fresh.includes(x))).slice(0, W_SUGG), suggMore:all.length > W_SUGG };
 }
 function analyzeText(lang, text){
   const sents = sentSplit(text), toks = wTokens(text);

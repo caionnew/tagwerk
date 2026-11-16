@@ -591,7 +591,7 @@ function viewWrite(){
     <p class="de" lang="de">${esc(w.prompt)}</p>
     <p class="vocab"><button type="button" class="link" data-a="wnew">Andere Aufgabe</button></p>
     ${ex ? `<div class="wextra"><span class="wx-t">Extra: ${esc(ex.t)}</span><span class="wx-b"><button type="button" class="link dim" data-a="wextra">Andere</button><button type="button" class="link dim" data-a="wextraoff">Ohne</button></span></div>` : `<p class="vocab"><button type="button" class="link dim" data-a="wextra">Mit Extra-Aufgabe schreiben</button></p>`}
-    ${w.sugg && w.sugg.length ? `<p class="wsugg">Zum Einbauen aus deinen neuen Sätzen: ${w.sugg.map(x => `<button type="button" class="wchip" data-a="lookup" data-w="${esc(x.w)}" lang="${lang}">${esc(x.w)}</button>`).join('')}</p>` : ''}
+    ${w.sugg && w.sugg.length ? `<p class="wsugg">Aus deinen neuen Sätzen, gern gebeugt: ${w.sugg.map(x => `<button type="button" class="wchip" data-a="lookup" data-w="${esc(x.base)}" lang="${lang}">${esc(x.base)}</button>`).join('')}${w.suggMore ? ' <button type="button" class="link dim" data-a="wsugg">Andere Wörter</button>' : ''}</p>` : ''}
     <textarea id="wtext" class="tw" lang="${lang}" rows="7" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="${esc(L.ph)}">${esc(w.text)}</textarea>
     ${charbar(lang)}
     ${w.prof ? profileHtml(lang, w.prof, w.extra) : ''}
@@ -648,7 +648,8 @@ function calendarSvg(){
   const weeks = Math.min(156, Math.max(17, since));
   const cell = 13, gap = 3, top = 14, step = cell + gap;
   const start = addDays(mondayOf(t), -7 * (weeks - 1)), free = streakData().free;
-  let out = '', active = 0, total = 0, lastMonth = -1;
+  // Geteilter Rand für „an beiden Sprachen etwas geübt“: oben links Schwedisch, unten rechts Spanisch (wie die gefüllte Kachel)
+  let out = '<defs><linearGradient id="calpb" x1="0" y1="0" x2="1" y2="1"><stop offset=".5" style="stop-color:var(--sv)"/><stop offset=".5" style="stop-color:var(--es)"/></linearGradient></defs>', active = 0, total = 0, lastMonth = -1;
   for (let w = 0; w < weeks; w++) {
     const dw = dateOf(addDays(start, w * 7)), mo = dw.getMonth();
     if (mo !== lastMonth) { out += `<text x="${w * step}" y="9">${MONTHS[mo]}${mo === 0 ? ' ' + String(dw.getFullYear()).slice(2) : ''}</text>`; lastMonth = mo; }

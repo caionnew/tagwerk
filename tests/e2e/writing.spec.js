@@ -21,3 +21,20 @@ test('Text mit typischen Fehlern: Profil, vier Hinweise, Archiv, Verlauf', async
   await page.click('[data-a=ptab][data-t=sv]');
   await expect(page.locator('h2.grp', { hasText:'Schreiben' })).toBeVisible();
 });
+test('Wörter zum Einbauen: fünf Grundformen, „Andere Wörter“ tauscht sie und lässt den Text stehen', async ({ page }) => {
+  const db = richDB('sv'); Object.keys(db.st).forEach((k, i) => { db.st[k].ivl = i % 2 ? 3 : 30; });
+  await seed(page, db);
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=write]');
+  const chips = () => page.$$eval('.wsugg .wchip', e => e.map(x => x.textContent));
+  const before = await chips();
+  expect(before.length).toBe(5);
+  before.forEach(w => expect(w).toBe(w.toLowerCase()));
+  await page.fill('#wtext', 'Jag skriver något.');
+  await page.click('[data-a=wsugg]');
+  const after = await chips();
+  expect(after.length).toBe(5);
+  expect(after.filter(w => before.includes(w))).toEqual([]);
+  await expect(page.locator('#wtext')).toHaveValue('Jag skriver något.');
+});

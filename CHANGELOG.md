@@ -2,6 +2,10 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.29.0
+- **Kalender: „an beiden Sprachen nur etwas geübt“ hat jetzt einen geteilten Rand** in beiden Sprachfarben (oben links Schwedisch, unten rechts Spanisch, wie die gefüllte Kachel „beide Sprachen“). Vorher war der Rand grau, obwohl die Legende „Rand in Sprachfarbe“ sagt. Gilt auch für die Legende und die Wochenleiste auf „Heute“.
+- **Schreiben: Wörter zum Einbauen leichter unterzubringen.** Fünf statt drei Vorschläge, in der Grundform („ayudar“ statt „ayudarme“; gebeugt zählt weiter), dazu „Andere Wörter“ für neue Vorschläge (dein Text bleibt stehen). Eigennamen wie Anna, Uppsala, Madrid werden nicht mehr vorgeschlagen; vorher erschienen sie sogar kleingeschrieben.
+
 ## 24.28.0
 - **Fehler behoben: Bonus „Eigener Satz“ blieb auf „Wird geprüft“ hängen.** Tippte man weiter, während LanguageTool noch prüfte, wurde die Antwort verworfen, „Prüfen“ blieb gesperrt und die Zeile „Wird geprüft“ stand für immer da (auf GitHub fiel deshalb der Browsertest durch). Jetzt zählt nur die neueste Prüfung, „Prüfen“ ist nie gesperrt, eine veraltete Antwort entfernt nur die Zeile, ohne die Seite neu zu zeichnen (die Tastatur bleibt offen), und Markierungen beziehen sich immer auf den geprüften Text. Der Test spielt den Fall jetzt mit verzögerter Antwort fest nach.
 - **Nachsprechen: Der Satz spielt von selbst**, sobald er erscheint (nach „Nachsprechen“, „Nächster Satz“ oder „Überspringen“, also immer als Folge eines Antippens). Der Haken bei „Hören“ kommt erst, wenn der Satz zu Ende gehört ist, bei „Mitsprechen“ nach dem ersten ganzen Durchgang. Der Hauptknopf zeigt währenddessen schon den nächsten Schritt.

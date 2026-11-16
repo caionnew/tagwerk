@@ -711,8 +711,9 @@ section.ex #fb:empty{ display:none; }
 .sq.db{ background:linear-gradient(135deg, var(--sv) 50%, var(--es) 50%); }
 .cal .db{ fill:var(--sv); }
 .cal .ps, .cal .pe, .cal .pb{ fill:var(--surface); stroke-width:1.6; }
-.cal .ps{ stroke:var(--sv); } .cal .pe{ stroke:var(--es); } .cal .pb{ stroke:var(--muted); }
-.sq.pb{ background:transparent; box-shadow:inset 0 0 0 1.6px var(--muted); }
+.cal .ps{ stroke:var(--sv); } .cal .pe{ stroke:var(--es); } .cal .pb{ stroke:url(#calpb); }
+/* Geteilter Rand im HTML (Legende, Wochenleiste): Verlauf mit harter Kante, innen per Maske ausgespart, also durchsichtig auf jedem Hintergrund */
+.sq.pb, .wk.pb i{ box-sizing:border-box; border:0; padding:1.6px; background:linear-gradient(135deg, var(--sv) 50%, var(--es) 50%); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
 .cal .ov{ fill:transparent; }
 /* Dein Weg als Gleisplan */
 .wleg{ display:flex; gap:14px; margin:0 0 6px; }
@@ -764,7 +765,7 @@ section.ex #fb:empty{ display:none; }
 .wk{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(--muted); width:14px; }
 .wk i{ display:block; width:14px; height:14px; border-radius:3px; background:var(--line); box-sizing:border-box; }
 .wk.ds i{ background:var(--sv); } .wk.de i{ background:var(--es); } .wk.db i{ background:linear-gradient(135deg, var(--sv) 50%, var(--es) 50%); }
-.wk.ps i, .wk.pe i, .wk.pb i{ background:transparent; border:1.6px solid var(--muted); }
+.wk.ps i, .wk.pe i{ background:transparent; border:1.6px solid var(--muted); }
 .wk.ps i{ border-color:var(--sv); } .wk.pe i{ border-color:var(--es); }
 .wk.fr i{ background:transparent; border:1.2px dashed var(--muted); }
 .wk.now i{ outline:1.5px solid var(--ink); outline-offset:1.5px; }

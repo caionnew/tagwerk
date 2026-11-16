@@ -7,10 +7,9 @@ function nextPrompt(){
   return p;
 }
 function saveDraft(){ if (!S.write) return; DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text, id:S.write.id, extra:S.write.extra }; save(); }
-// Neue Schreibaufgabe: eigene Kennung fürs Archiv, Extra-Aufgabe (falls gewünscht) und drei Wörter zum Einbauen
+// Neue Schreibaufgabe: eigene Kennung fürs Archiv, Extra-Aufgabe (falls gewünscht) und Wörter zum Einbauen (Grundform, gebeugt zählt auch)
 function newWrite(lang, prompt, text, keep){
-  const words = shuffle(learningWords(lang)).slice(0, 3);
-  return Object.assign({ lang, prompt, text:text || '', copied:false, lt:null, prof:null, id:'w' + Date.now().toString(36), extra:DB.settings.wextra === false ? '' : pickExtra(lang), sugg:words }, keep || {});
+  return Object.assign({ lang, prompt, text:text || '', copied:false, lt:null, prof:null, id:'w' + Date.now().toString(36), extra:DB.settings.wextra === false ? '' : pickExtra(lang) }, suggWords(lang), keep || {});
 }
 let draftTimer = null;
 function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 800); }
@@ -105,6 +104,7 @@ document.addEventListener('click', e => {
       S.write = dr && dr.text ? newWrite(S.lang, dr.prompt, dr.text, Object.assign({ restored:true }, dr.id ? { id:dr.id } : {}, dr.extra != null ? { extra:dr.extra } : {})) : newWrite(S.lang, nextPrompt());
       goView('write'); break;
     }
+    case 'wsugg': { const w = S.write, wt = $('#wtext'); if (!w) break; if (wt) w.text = wt.value; Object.assign(w, suggWords(w.lang, (w.sugg || []).map(x => x.base))); render(); break; }
     case 'wnew': { const wt = $('#wtext'); const keepText = wt ? wt.value : S.write.text; S.write = newWrite(S.write.lang, nextPrompt(), keepText); saveDraft(); render(); break; }
     case 'weval': {
       const wt = $('#wtext'); if (wt) S.write.text = wt.value;

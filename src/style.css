@@ -790,5 +790,7 @@ section.ex #fb:empty{ display:none; }
 .ol-m{ color:var(--muted); }
 /* Überblick: vier Kacheln */
 .kpis.k4{ grid-template-columns:repeat(4, 1fr); }
-.kpis .kl{ display:flex; flex-wrap:wrap; align-items:center; gap:3px; }
-.kpis .kl .sq{ width:8px; height:8px; border-radius:2px; margin-left:2px; }
+/* Aufteilung nach Sprache unter der Zahl: Farbpunkt + Anzahl, nie umbrechen */
+.kpis .kl{ display:flex; gap:10px; white-space:nowrap; margin-top:2px; font-variant-numeric:tabular-nums; }
+.kpis .kl > span{ display:inline-flex; align-items:center; gap:4px; }
+.kpis .kl .sq{ width:8px; height:8px; border-radius:2px; }

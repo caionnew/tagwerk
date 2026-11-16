@@ -189,7 +189,7 @@ function viewExtra(){
   <h2 class="grp">Lesen und Hören</h2>
   <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land (online)', '', 'book')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
-  <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canListen() ? 'Mitsprechen und die Aussprache prüfen' : 'Anhören, mitsprechen, aufnehmen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
+  <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canRecord() ? 'Hören, mitsprechen, aufnehmen und vergleichen' : canListen() ? 'Mitsprechen und von der Spracherkennung prüfen lassen' : 'Hören und mitsprechen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>
   <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Prüfung (online)')}${row('tat', 'Beispielsätze suchen', 'Echte Sätze aus Tatoeba (online)')}${row('own', 'Eigenen Satz eintragen', 'Aus Podcast, Gespräch oder Korrektur')}</div>
   <h2 class="grp">Nachschlagen</h2>
@@ -500,8 +500,9 @@ function bonusCheck(lang, text, cand){
   const model = item ? tokens(item.target).map(w => deacc(w.toLowerCase())) : [];
   const same = toks.filter(w => model.includes(deacc(w))).length;
   if (item && (norm(text, lang) === norm(item.target, lang) || (same / Math.max(toks.length, model.length) >= 0.8))) return { ok:false, msg:'Das ist fast der Satz aus der Übung. Schreib einen eigenen.' };
+  // Ab hier ist es ein eigener Satz: LanguageTool prüft ihn in jedem Fall, der Ausdruck ist nur die Aufgabe dazu
   const has = tokens(cand.expr).map(w => w.toLowerCase()).every(w => toks.some(t => deacc(t) === deacc(w) || (!isFunc(lang, w) && w.length >= 4 && sameWord(lang, t, w))));
-  return has ? { ok:true, msg:`Passt: „${cand.expr}“ steckt drin.` } : { ok:false, msg:`„${cand.expr}“ kommt noch nicht vor.` };
+  return has ? { ok:true, own:true, msg:`„${cand.expr}“ steckt drin.` } : { ok:false, own:true, msg:`„${cand.expr}“ kommt noch nicht vor.` };
 }
 function bonusHtml(r){
   const cands = bonusCands(r), lang = r.lang;
@@ -513,7 +514,7 @@ function bonusHtml(r){
   const lt = b.lt === 'loading' ? '<p class="hint"><span class="dots">Wird geprüft</span></p>'
     : typeof b.lt === 'string' ? `<p class="hint">${esc(b.lt)}</p>`
     : b.lt ? ltHtml(b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.${lang === 'sv' ? ' Für Schwedisch vor allem die Rechtschreibung.' : ''}</p>` : '';
-  const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>${b.res.ok && b.lt === undefined ? `<p class="hint"><button type="button" class="link inl" data-a="bonuslt">Mit LanguageTool prüfen (online)</button></p>` : ''}` : '';
+  const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>` : '';
   return `<h2 class="grp">Bonus: eigener Satz</h2><section class="chart bonus">
     <p class="bq">Schreib einen eigenen Satz mit ${ex}</p>
     ${tr && tr.id !== 'eigene' ? `<p class="legend">Thema: ${esc(tr.label)}</p>` : ''}
@@ -521,7 +522,7 @@ function bonusHtml(r){
     <textarea id="bonusText" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="Dein Satz">${esc(b.text || '')}</textarea>
     ${charbar(lang)}
     ${res}${lt}
-    <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck">Prüfen</button></div>
+    <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck"${b.lt === 'loading' ? ' disabled' : ''}>Prüfen</button></div>
   </section>`;
 }
 function viewRunDone(){
@@ -578,20 +579,6 @@ function viewRunDone(){
     ${nudge}
     ${reading}
   </div><div class="actionbar"><div class="in">${buttons}</div></div>`;
-}
-function viewShadow(){
-  const sh = S.shadow, lang = sh.lang;
-  const item = itemById(sh.ids[sh.idx]);
-  if (!item) return backBar('Nachsprechen') + `<p class="lead">Runde beendet.</p><p class="hint">Tipp: Hör dir am Ende nur deine eigenen Aufnahmen an. Dabei fällt die Satzmelodie am deutlichsten auf.</p><div class="btnrow"><button type="button" class="primary" data-a="shadow">Neue Runde</button></div>`;
-  return backBar(`Nachsprechen ${sh.idx + 1}/${sh.ids.length}`) + `
-    <p class="de big-de" lang="${lang}">${esc(item.target)}</p>
-    <p class="gloss">${esc(item.de)}</p>
-    <p class="hint">So geht’s: anhören, beim zweiten Mal gleichzeitig mitsprechen${canRecord() ? ', dann allein sprechen, aufnehmen und mit dem Original vergleichen' : ''}.</p>
-    <div class="btnrow"><button type="button" class="ghost icon" data-a="splay" data-rate="0.9">${ICON} Anhören</button><button type="button" class="ghost" data-a="splay" data-rate="0.65">Langsam</button></div>
-    ${canListen() ? `<div class="btnrow"><button type="button" class="ghost icon micb${sh.listening ? ' on' : ''}" data-a="pron">${ICONS.mic}${sh.listening ? 'Ich höre zu …' : 'Aussprache prüfen'}</button></div>` : ''}
-    ${sh.pron ? (sh.pron.err ? `<p class="hint">${esc(sh.pron.err)}</p>` : `<div class="pron"><p class="pron-s" lang="${lang}">${tokens(String(item.target).replace(/ i (dag|morgon|kväll|går|natt)\b/gi, ' i$1')).map((w, k) => `<span class="${sh.pron.hit[k] ? 'p-ok' : 'p-miss'}">${esc(w)}</span>`).join(' ')}</p><p class="legend">${sh.pron.hit.filter(Boolean).length} von ${sh.pron.hit.length} Wörtern erkannt. Gehört: „${esc(sh.pron.heard)}“. Die Erkennung ist ein Anhaltspunkt, kein Urteil: Gelb markierte Wörter lohnen einen zweiten Versuch.</p></div>`) : ''}
-    ${canRecord() ? `<div class="btnrow">${sh.recording ? '<button type="button" class="ghost rec on" data-a="recstop">Stopp</button>' : '<button type="button" class="ghost rec" data-a="recstart">Aufnehmen</button>'}${sh.hasRec ? '<button type="button" class="ghost" data-a="recplay">Mich anhören</button>' : ''}</div>` : ''}
-    <div class="actionbar"><div class="in"><button type="button" class="primary" data-a="snext">Nächster Satz</button></div></div>`;
 }
 function viewWrite(){
   const w = S.write, lang = w.lang, L = LANG[lang];
@@ -954,6 +941,8 @@ function viewSettings(){
 function render(){
   if (S.view !== 'radio' && S.radio) stopRadio();
   if (S.view !== 'text' && S.text && S.text.playing) stopReading();
+  // Nachsprechen verlassen: Mikrofon und Wiedergabe sofort aus, Aufnahmen verwerfen
+  if (S.view !== 'shadow' && S.shadow) { shTeardown(); S.shadow = null; }
   if ((S.view === 'run' || S.view === 'runDone') && !S.run) S.view = 'home';
   const lang = (S.view === 'run' || S.view === 'runDone') ? S.run.lang : S.lang;
   document.body.dataset.lang = lang;

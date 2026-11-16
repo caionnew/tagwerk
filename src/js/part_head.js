@@ -463,10 +463,11 @@ function hardItems(lang){
     .sort((a, b) => { const x = stOf(a.id), y = stOf(b.id); return ((y.d || 5) - (x.d || 5)) || (y.bad - x.bad); }).slice(0, 5);
 }
 // Zufallsauswahl ohne Wiederholung der letzten Runden: zuletzt Gewähltes kommt nach hinten, solange es genug anderes gibt
-function freshFirst(items, slot, n){
+// prefer: unter den länger nicht gezeigten zuerst diese (etwa Sätze mit echter Aufnahme)
+function freshFirst(items, slot, n, prefer){
   const mem = DB.used.recentPick = DB.used.recentPick || {};
   const recent = mem[slot] || [];
-  const out = shuffle(items).sort((a, b) => (recent.includes(a.id) ? 1 : 0) - (recent.includes(b.id) ? 1 : 0)).slice(0, n);
+  const out = shuffle(items).sort((a, b) => (recent.includes(a.id) ? 1 : 0) - (recent.includes(b.id) ? 1 : 0) || (prefer ? (prefer(b) ? 1 : 0) - (prefer(a) ? 1 : 0) : 0)).slice(0, n);
   mem[slot] = recent.concat(out.map(i => i.id)).slice(-30);
   return out;
 }

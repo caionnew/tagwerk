@@ -1,15 +1,20 @@
-/* ---------- Spracherkennung (Chrome, online): Aussprache prüfen und Antworten sprechen ---------- */
+/* ---------- Spracherkennung (Chrome, online): beim Nachsprechen und zum Sprechen von Antworten ---------- */
 const SRec = window.SpeechRecognition || window.webkitSpeechRecognition;
 const canListen = () => !!SRec;
 let activeRec = null;
-function listen(lang, done){
+// onInterim (optional): Zwischenstand beim Sprechen, für Rückmeldung in Echtzeit
+function listen(lang, done, onInterim){
   if (!SRec) return done({ ok:false, err:'unsupported' });
   if (activeRec) { try { activeRec.abort(); } catch (e) {} }
   const rec = new SRec();
-  rec.lang = LANG[lang].tts; rec.interimResults = false; rec.maxAlternatives = 4; rec.continuous = false;
+  rec.lang = LANG[lang].tts; rec.interimResults = !!onInterim; rec.maxAlternatives = 4; rec.continuous = false;
   let fin = false;
   const end = r => { if (fin) return; fin = true; activeRec = null; done(r); };
-  rec.onresult = e => end({ ok:true, alts:Array.from(e.results[0]).map(a => a.transcript) });
+  rec.onresult = e => {
+    const r = e.results[0];
+    if (onInterim && !r.isFinal) { try { onInterim(r[0].transcript); } catch (x) {} return; }
+    end({ ok:true, alts:Array.from(r).map(a => a.transcript) });
+  };
   rec.onerror = e => end({ ok:false, err:e.error || 'error' });
   rec.onend = () => end({ ok:false, err:'no-speech' });
   try { rec.start(); activeRec = rec; } catch (e) { end({ ok:false, err:'busy' }); }
@@ -22,30 +27,12 @@ const LISTEN_ERR = {
   'audio-capture':'Kein Mikrofon gefunden.',
   unsupported:'Dieser Browser hat keine Spracherkennung. In Chrome geht es.'
 };
-// Welche Wörter des Zielsatzes hat die Erkennung verstanden? Beste von mehreren Hypothesen
+// Zahlen als Ziffer oder Wort gelten gleich (die Erkennung schreibt oft „3“ statt „tre“)
 const NUM_WORDS = {
   sv:{ 1:['en', 'ett'], 2:['två'], 3:['tre'], 4:['fyra'], 5:['fem'], 6:['sex'], 7:['sju'], 8:['åtta'], 9:['nio'], 10:['tio'], 11:['elva'], 12:['tolv'], 15:['femton'], 20:['tjugo'], 30:['trettio'], 100:['hundra'] },
   es:{ 1:['uno', 'un', 'una'], 2:['dos'], 3:['tres'], 4:['cuatro'], 5:['cinco'], 6:['seis'], 7:['siete'], 8:['ocho'], 9:['nueve'], 10:['diez'], 11:['once'], 12:['doce'], 15:['quince'], 20:['veinte'], 30:['treinta'], 100:['cien'] }
 };
-// Schreibvarianten angleichen, damit nur echte Ausspracheprobleme markiert werden (i dag = idag, 3 = tre)
-function pronTokens(text, lang){
-  let t = ' ' + String(text).toLowerCase() + ' ';
-  if (lang === 'sv') t = t.replace(/ i (dag|morgon|kväll|går|natt) /g, ' i$1 ');
-  return tokens(t).flatMap(w => /^\d+$/.test(w) && NUM_WORDS[lang][w] ? [NUM_WORDS[lang][w][0]] : [norm(w, lang)]);
-}
 const numSame = (a, b, lang) => a === b || Object.values(NUM_WORDS[lang]).some(ws => ws.includes(a) && ws.includes(b));
-function pronCheck(target, alts, lang){
-  const T = pronTokens(target, lang);
-  let best = null;
-  alts.forEach(a => {
-    const A = pronTokens(a, lang);
-    const pool = A.slice();
-    const hit = T.map(w => { const i = pool.findIndex(x => numSame(x, w, lang)); if (i >= 0) { pool.splice(i, 1); return true; } return false; });
-    const score = hit.filter(Boolean).length / Math.max(1, T.length);
-    if (!best || score > best.score) best = { heard:a, hit, score };
-  });
-  return best;
-}
 
 /* ---------- Vibration als leise Rückmeldung (Android) ---------- */
 function buzz(kind){

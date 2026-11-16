@@ -81,4 +81,4 @@ Teilen an Tagwerk (Share-Ziel), Schnellzugriffe am App-Symbol, Spracherkennung u
 
 ## Firefox für Android
 
-Alles Übrige läuft, auch offline. Firefox bietet nach heutigem Stand keine Spracherkennung (also kein „Aussprache prüfen“), kein Teilen an die App und keine Schnellzugriffe am Symbol. Der Lernstand liegt im Speicher von Firefox: In den Firefox-Einstellungen darf „Browserdaten beim Beenden löschen“ nicht eingeschaltet sein, und „Websitedaten löschen“ für die Adresse löscht auch den Fortschritt.
+Alles Übrige läuft, auch offline. Firefox bietet nach heutigem Stand keine Spracherkennung (beim Nachsprechen fehlt also nur die Worterkennung; Aufnehmen und Auswerten gehen), kein Teilen an die App und keine Schnellzugriffe am Symbol. Der Lernstand liegt im Speicher von Firefox: In den Firefox-Einstellungen darf „Browserdaten beim Beenden löschen“ nicht eingeschaltet sein, und „Websitedaten löschen“ für die Adresse löscht auch den Fortschritt.

@@ -10,7 +10,7 @@
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome. Zufall ist im Browser festgelegt, damit beide Stände dasselbe zeigen.
 const path = require('path'), fs = require('fs'), os = require('os'), { execFileSync } = require('child_process');
 const { chromium } = require('@playwright/test');
-const { richDB, answerWrong } = require('../tests/e2e/helpers.js');
+const { richDB, answerWrong, fakeVoice, speechWav, fakeMicArgs } = require('../tests/e2e/helpers.js');
 const ROOT = path.join(__dirname, '..'), OUT = path.join(ROOT, 'sicht');
 const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
 const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz');
@@ -20,6 +20,8 @@ const pad = n => String(n).padStart(2, '0'), now = new Date();
 const TODAY = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 const rich = () => richDB('sv');
 const doneDB = () => { const db = rich(); db.done[TODAY] = true; db.doneLang = { [TODAY]:{ sv:true } }; db.log[TODAY] = { sv:{ n:31, ok:26, secs:742, fresh:5, rev:22, revOk:20, mat:2 } }; return db; };
+// Vorgetäuschtes Mikrofon (Testsignal mit einer Pause) und eine Test-Stimme, damit Nachsprechen überall gleich aussieht
+const LAUNCH = { ...(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {}), args:fakeMicArgs(speechWav(path.join(os.tmpdir(), 'tagwerk-sicht-mikro.wav'), [['s', 0.5], ['v', 0.8], ['s', 0.6], ['v', 0.7], ['s', 5]])) };
 const click = sel => p => p.click(sel);
 const bottom = p => p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 // Wikipedia-Fundstück ohne Netz: feste Antwort statt echter Abfrage
@@ -42,6 +44,8 @@ const SCENES = [
   ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],
   ['einstellungen-unten', rich, [click('[data-a=settings] >> nth=0'), bottom]],
   ['fundstueck', rich, [mockWiki, click('[data-a=tab][data-v=extra]'), click('[data-a=wiki] >> nth=0'), bottom]],
+  ['nachsprechen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]')]],
+  ['nachsprechen-ergebnis', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]'), click('.shstep[data-a=shrec]'), p => p.waitForSelector('.shtiles', { timeout:15000 })]],
   ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]],
   ['hoeren-antwort', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=tdefmode][data-v=listen]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'), click('[data-a=tpick][data-k="0"][data-i="0"]')]],
   ['lesen-ende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'),
@@ -58,6 +62,7 @@ async function tour(browser, html, dir, label){
     const file = path.join(dir, `${name}-${w}-${scheme === 'light' ? 'hell' : 'dunkel'}.png`);
     const ctx = await browser.newContext({ viewport:{ width:w, height:h }, deviceScaleFactor:2, colorScheme:scheme, reducedMotion:'reduce' });
     await ctx.addInitScript(SEED_RANDOM);
+    await ctx.addInitScript(fakeVoice);
     await ctx.addInitScript(v => { if (!sessionStorage.getItem('s')) { sessionStorage.setItem('s', '1'); localStorage.setItem('tagwerk-offline-v1', v); } }, JSON.stringify(db()));
     const page = await ctx.newPage();
     page.setDefaultTimeout(5000);
@@ -94,7 +99,7 @@ async function compare(browser, a, b, out, label){
 (async () => {
   execFileSync('node', ['tools/build.js'], { cwd:ROOT, stdio:'ignore' });
   fs.rmSync(OUT, { recursive:true, force:true });
-  const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {});
+  const browser = await chromium.launch(LAUNCH);
   const now = await tour(browser, path.join(ROOT, 'dist', 'index.html'), OUT, 'jetzt');
   console.log(`${now.length} Bilder in sicht/`);
   if (VS) {

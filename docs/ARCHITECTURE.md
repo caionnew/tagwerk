@@ -24,10 +24,11 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `js/part_fsrs.js` | FSRS-6 (Wiederholungsplanung) |
 | `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Meine ist auch richtig“ |
 | `js/part_online.js` | Tatoeba (Nachschub, Suche, Aufnahmen), LanguageTool |
-| `js/part_speech.js` | Vorlesen, Aufnahme, Aussprache prüfen |
+| `js/part_speech.js` | Vorlesen (auf Wunsch mit Meldungen zu Beginn, Wortgrenzen und Ende) |
 | `js/part_radio.js` | Hörrunde: Sätze nebenbei hören |
 | `js/part_read.js` | Lesen und Hören: Texte, Fragen, Wikipedia-Fundstück |
-| `js/part_modern.js` | Symbole, Vibration, Teilen, Schnellzugriffe |
+| `js/part_modern.js` | Spracherkennung, Symbole, Vibration, Teilen, Schnellzugriffe |
+| `js/part_shadow.js` | Nachsprechen: Aufnahme, Pegel, Auswertung, Wiedergabe, Aussprachehilfen, Übersicht |
 | `js/part_stats.js` | Fehlerquellen und Fehlerart (Grammatik oder Wortschatz), Uhrzeiten, Wortschatz |
 | `js/part_long.js` | Dein Weg, Themenraster, Veränderung über 30 Tage |
 | `js/part_write.js` | Textprofil, Hinweise, Extra-Aufgaben, Textarchiv |
@@ -42,6 +43,8 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 
 `render()` erzeugt die aktuelle Ansicht als Zeichenkette und setzt sie in `#app`. Alle Benutzeraktionen laufen über ein einziges Klick-Ereignis: Elemente tragen `data-a="aktion"`, `part_events.js` verteilt sie. Laufzeitzustand liegt in `S` (aktuelle Ansicht, laufende Runde, offene Fenster), alles Dauerhafte in `DB`.
 
+Nachsprechen (`part_shadow.js`) führt je Satz durch drei Schritte: Hören, Mitsprechen, Allein (Aufnahme). Die Aufnahme läuft über `getUserMedia` ohne automatische Lautstärkeregelung (sie würde Betonung glätten und leise Stimmen bis zur Übersteuerung anheben) und `MediaRecorder`; ein `AnalyserNode` liefert live den Pegel für die Anzeige und stoppt nach 1,2 s Stille. Danach wird die Aufnahme dekodiert und im 20-ms-Raster ausgewertet (`shAnalyze`: Sprechbeginn und -ende, Pausen ab 0,35 s, leise, übersteuert). `shMarkPauses` ordnet jedem Satzzeichen die zeitlich nächste Pause zu, übrige Pausen gelten als Stockung. Das Tempo vergleicht die Sprechdauer mit dem Original: bei der Computerstimme gemessen von Beginn bis Ende der Ausgabe, bei Tatoeba-Aufnahmen aus der dekodierten Datei (falls der Server das erlaubt, sonst nur ungefähr und ohne Urteil). Die Wiedergabe schneidet Stille ab und gleicht die Lautstärke an. Das Mikrofon wird nach jeder Aufnahme, beim Verlassen und wenn die App in den Hintergrund geht sofort freigegeben; Aufnahmen bleiben nur im Arbeitsspeicher (`S.shadow`). Die Spracherkennung ist eine Zugabe: Zwischenergebnisse färben verstandene Wörter schon beim Sprechen.
+
 Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster Antwort (Satz-ID oder Generator, richtig, fast, neu). `roundTopics` gruppiert danach nach Thema, `topicsHtml` zeigt die Punkte und bündelt Fehler, wenn ein Thema klar vorn liegt. `bonusCands` wählt die Ausdrücke für den Bonus „Eigener Satz“ (Lücke, sonst das in der Satzbank seltenste Inhaltswort), `bonusCheck` prüft ohne Netz. Der Bonus-Stand liegt in `S.run.bonus` und wird nicht gespeichert.
 
 ## Datenspeicher
@@ -50,7 +53,7 @@ Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster
 
 | Feld | Inhalt |
 |---|---|
-| `settings` | Rundenlänge, Sprache, Nachschub, Vorlesen, Extra-Aufgaben beim Schreiben |
+| `settings` | Rundenlänge, Sprache, Nachschub, Vorlesen, Extra-Aufgaben beim Schreiben, Aussprachehilfen (`shHints`, fehlt = an) |
 | `st[id]` | Lernstand je Satz: FSRS-Stabilität `s`, Schwierigkeit `d`, Intervall `ivl`, `due`, `last`, Zähler, eigene richtige Fassungen |
 | `log[datum][sprache]` | Aufgaben, neue Sätze, Wiederholungen, gefestigt, Sekunden |
 | `done[datum]` | Tagwerk erledigt |
@@ -75,7 +78,7 @@ Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein
 
 ## Online und offline
 
-Offline funktioniert alles außer: Wikipedia-Fundstück, Nachschub und Suche bei Tatoeba, Textprüfung mit LanguageTool, Wiktionary-Erklärungen für unbekannte Wörter, Aussprache prüfen (Spracherkennung von Chrome). Diese Dienste werden nur bei einer Aktion angefragt und nie zwischengespeichert. Die App lädt keine fremden Schriften, Skripte oder Tracker.
+Offline funktioniert alles außer: Wikipedia-Fundstück, Nachschub und Suche bei Tatoeba, Textprüfung mit LanguageTool, Wiktionary-Erklärungen für unbekannte Wörter, Spracherkennung beim Nachsprechen (Chrome). Aufnehmen und Auswerten beim Nachsprechen gehen offline. Diese Dienste werden nur bei einer Aktion angefragt und nie zwischengespeichert. Die App lädt keine fremden Schriften, Skripte oder Tracker.
 
 ## Tests
 

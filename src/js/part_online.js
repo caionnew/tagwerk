@@ -123,23 +123,26 @@ async function languageTool(text, lang){
 const offlineMsg = 'Keine Verbindung. Das hier braucht Internet, alles andere geht auch offline.';
 let audioEl = null;
 // auto: von der App selbst gestartet (Hördiktat). Verweigert der Browser das ohne Antippen, bleibt es still.
-function playItem(item, rate, auto){
+function playItem(item, rate, auto){ playItemEv(item, rate, null, auto); }
+// ev (optional, siehe speak): start('native' oder 'tts'), end(fehler), word(Zeichenposition, nur beim Vorlesen)
+function playItemEv(item, rate, ev, auto){
   if (item && item.tat && item.tat.audio && !item.tat.audio.blocked && navigator.onLine !== false) {
     try {
       if (audioEl) audioEl.pause();
-      audioEl = new Audio(item.tat.audio.url);
-      audioEl.playbackRate = rate && rate < 0.8 ? 0.75 : 1;
-      audioEl.play().catch(err => {
+      const el = audioEl = new Audio(item.tat.audio.url);
+      el.playbackRate = rate && rate < 0.8 ? 0.75 : 1;
+      if (ev) { el.onplaying = () => ev.start('native'); el.onended = () => ev.end(false); }
+      el.play().catch(err => {
         // NotAllowedError: Autoplay-Sperre des Browsers, kein Problem der Aufnahme
-        if (err && err.name === 'NotAllowedError') { if (!auto) speak(item.target, item.lang, rate); return; }
+        if (err && err.name === 'NotAllowedError') { if (!auto) speak(item.target, item.lang, rate, ev); else if (ev) ev.end(true); return; }
         // Manche Aufnahmen dürfen außerhalb von Tatoeba nicht abgespielt werden: dann einmal merken und vorlesen
         item.tat.audio.blocked = true; const o = (DB.tat[item.lang] || []).find(x => x.id === item.id); if (o && o.audio) { o.audio.blocked = true; save(); }
-        speak(item.target, item.lang, rate);
+        speak(item.target, item.lang, rate, ev);
       });
       return;
     } catch (e) {}
   }
-  speak(item.target, item.lang, rate);
+  speak(item.target, item.lang, rate, ev);
 }
 
 

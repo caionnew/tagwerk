@@ -98,15 +98,8 @@ document.addEventListener('click', e => {
     case 'tplayall': case 'treplay': case 'tslow': case 'tshowall': case 'treveal': case 'tsay': case 'tquiz': case 'tqnext': case 'tpick': case 'tkeep': case 'tnexttext': readCmd(b.dataset.a, b); break;
     case 'tdefmode': DB.settings.textMode = b.dataset.v === 'listen' ? 'listen' : 'read'; save(); render(); break;
     case 'rplay': case 'rnext': case 'rprev': case 'rde': case 'rshow': case 'rslow': radioCmd(b.dataset.a); break;
-    case 'shadow': {
-      const ids = freshFirst(BANK[S.lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'shadow_' + S.lang, 8).map(i => i.id);
-      S.shadow = { lang:S.lang, ids:shuffle(ids), idx:0, recording:false, hasRec:false }; goView('shadow'); break;
-    }
-    case 'splay': playItem(itemById(S.shadow.ids[S.shadow.idx]), Number(b.dataset.rate)); break;
-    case 'recstart': recStart(); break;
-    case 'recstop': recStop(); break;
-    case 'recplay': if (recUrl) new Audio(recUrl).play(); break;
-    case 'snext': recStop(); S.shadow.idx++; S.shadow.hasRec = false; S.shadow.pron = null; logAct(S.shadow.lang); save(); render(); window.scrollTo(0, 0); break;
+    case 'shadow': case 'shhear': case 'shalong': case 'shrec': case 'shstop': case 'shcancel': case 'shslow': case 'shhints': case 'shpo': case 'shpm': case 'shpab':
+    case 'shseek': case 'shnext': case 'shquit': case 'shone': case 'shall': case 'shmine': case 'pron': shadowCmd(a, b, e); break;
     case 'write': {
       const dr = DB.draft && DB.draft[S.lang];
       S.write = dr && dr.text ? newWrite(S.lang, dr.prompt, dr.text, Object.assign({ restored:true }, dr.id ? { id:dr.id } : {}, dr.extra != null ? { extra:dr.extra } : {})) : newWrite(S.lang, nextPrompt());
@@ -221,31 +214,21 @@ document.addEventListener('click', e => {
       const cands = bonusCands(r); if (!cands.length) break;
       bo.res = bonusCheck(r.lang, bo.text, cands[bo.k % cands.length]);
       if (bo.res.ok && !bo.logged) { bo.logged = true; logAct(r.lang); save(); }
+      // Eigener Satz: gleich mit LanguageTool prüfen (Grammatik, Rechtschreibung), nicht erst auf Nachfrage
+      if (bo.res.own) {
+        if (navigator.onLine === false) bo.lt = 'Ohne Internet nur diese Grundprüfung. Grammatik und Rechtschreibung prüft LanguageTool, sobald du online bist.';
+        else {
+          const text = bo.text; bo.lt = 'loading';
+          languageTool(text, r.lang).then(m => { if (S.run === r && bo.text === text) { bo.lt = m; render(); } })
+            .catch(() => { if (S.run === r && bo.text === text) { bo.lt = 'LanguageTool ist gerade nicht erreichbar. Tipp in einer Minute noch einmal auf Prüfen.'; render(); } });
+        }
+      }
       render(); break;
-    }
-    case 'bonuslt': {
-      const bo = r && r.bonus; if (!bo || !bo.text.trim()) break;
-      if (navigator.onLine === false) { bo.lt = offlineMsg; render(); break; }
-      bo.lt = 'loading'; render();
-      languageTool(bo.text, r.lang).then(m => { if (S.run === r) { bo.lt = m; render(); } })
-        .catch(() => { if (S.run === r) { bo.lt = 'LanguageTool ist gerade nicht erreichbar. Versuch es in einer Minute noch einmal.'; render(); } });
-      break;
     }
     case 'persist':
       navigator.storage.persist().then(p => { STORE.persisted = !!p; note(p ? 'Der Browser behält deine Daten jetzt dauerhaft.' : 'Der Browser hat abgelehnt. Ein Backup schützt deinen Stand trotzdem.', p ? 'ok' : 'warn'); render(); }).catch(() => {});
       break;
     case 'nagoff': DB.used = DB.used || {}; DB.used.backupNag = today(); save(); render(); break;
-    case 'pron': {
-      const sh = S.shadow; if (!sh || sh.listening) break;
-      const item = itemById(sh.ids[sh.idx]);
-      sh.listening = true; sh.pron = null; render();
-      listen(sh.lang, res => {
-        sh.listening = false;
-        sh.pron = res.ok ? pronCheck(item.target, res.alts, sh.lang) : { err:LISTEN_ERR[res.err] || 'Die Spracherkennung hat nicht geklappt.' };
-        if (S.view === 'shadow') render();
-      });
-      break;
-    }
     case 'dictate': {
       if (S.listening || !r || !r.cur) break;
       S.listening = true; render();
@@ -289,7 +272,7 @@ document.addEventListener('click', e => {
     case 'moreNew': startRun('extraNew', { n:Number(b.dataset.n) || 0 }); break;
     case 'lookup': {
       const w = (b.dataset.w || '').trim(); if (!w || /^\d+$/.test(w)) break;
-      const lang = (S.view === 'run' && S.run && S.run.lang) || (S.view === 'text' && S.text && S.text.lang) || S.lang;
+      const lang = (S.view === 'run' && S.run && S.run.lang) || (S.view === 'text' && S.text && S.text.lang) || (S.view === 'shadow' && S.shadow && S.shadow.lang) || S.lang;
       const sent = S.view === 'text' && b.closest('.rs-s[data-i]');
       if (S.view === 'text' && S.text && S.text.looked && !S.text.looked.includes(w)) { S.text.looked.push(w); setTimeout(render, 0); }
       DB.used = DB.used || {}; DB.used.lookup = true; save();
@@ -403,7 +386,7 @@ document.addEventListener('change', e => {
 });
 
 window.addEventListener('pagehide', () => { if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); } });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { if (S.shadow) { shRecStop(); shStopPlay(); } if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); } });
 // Hell/Dunkel: Statusleiste in der Farbe der App und neu zeichnen, wenn das System umschaltet (auch mitten in einer Übung)
 function syncThemeColor(){
   try {

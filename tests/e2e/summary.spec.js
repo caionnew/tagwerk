@@ -74,9 +74,10 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen öffnet die Regel mit �
   await expect(page.locator('.pop')).toContainText('Thema');
   await expect(page.locator('.pop [data-a=trapgo]')).toHaveText('10 Aufgaben üben');
 });
-test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden erkannt, LanguageTool auf Wunsch', async ({ page }) => {
+test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden erkannt, eigene Sätze gleich mit LanguageTool', async ({ page }) => {
   await seed(page, richDB('sv'));
-  await page.route('https://api.languagetool.org/**', route => route.fulfill({ json:{ matches:[] } }));
+  let ltCalls = 0;
+  await page.route('https://api.languagetool.org/**', route => { ltCalls++; return route.fulfill({ json:{ matches:[] } }); });
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=quick]');
@@ -89,6 +90,7 @@ test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden 
   await box.fill(model);
   await page.click('[data-a=bonuscheck]');
   await expect(page.locator('.bres')).toHaveText('Das ist fast der Satz aus der Übung. Schreib einen eigenen.');
+  expect(ltCalls).toBe(0);
   await box.fill('Vi åker till stan imorgon bitti.');
   await page.click('[data-a=bonuscheck]');
   await expect(page.locator('.bres.is-warn')).toContainText('kommt noch nicht vor');
@@ -96,10 +98,11 @@ test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden 
   const before = await tasks();
   await box.fill(`Igår sa min granne något om ${expr} på bussen.`);
   await page.click('[data-a=bonuscheck]');
-  await expect(page.locator('.bres.is-ok')).toContainText(`Passt: „${expr}“ steckt drin.`);
+  // Ein Antippen: Ausdruck geprüft und gleich LanguageTool gefragt
+  await expect(page.locator('.bres.is-ok')).toContainText(`„${expr}“ steckt drin.`);
   await expect(box).toHaveValue(`Igår sa min granne något om ${expr} på bussen.`);
-  await page.click('[data-a=bonuslt]');
   await expect(page.locator('.bonus .lt-ok')).toHaveText('Keine Fehler gefunden.');
+  expect(ltCalls).toBe(2);
   // Die Übung zählt als Aufgabe des Tages, aber nur einmal
   await page.click('[data-a=bonuscheck]');
   await page.waitForTimeout(300);

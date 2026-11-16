@@ -54,3 +54,22 @@ test('Wochenstreifen färbt nach Sprache des Tagwerks, beide geteilt', async ({ 
   await expect(cells.nth(4)).toHaveClass(/\bdb\b/);
   await expect(cells.nth(6)).toHaveClass(/\bnow\b/);
 });
+test('„seit“-Aufgabe: bei falscher Antwort die genaue Erklärung (Deutsch Präsens, Schwedisch Perfekt mit i)', async ({ page }) => {
+  await seed(page, freshDB('sv'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  if (await page.$('[data-a=form][data-g=tempus]')) await page.click('[data-a=form][data-g=tempus]');
+  else { await page.click('[data-a=forms]'); await page.click('[data-a=gengo][data-g=tempus]'); }
+  let seen = false;
+  for (let k = 0; k < 30 && !seen; k++) {
+    if (await page.$('[data-a=again]')) await page.click('[data-a=again]');
+    const de = await page.locator('.de').first().textContent();
+    if (/seit/.test(de)) {
+      await page.fill('#answer', 'jag vänta här'); await page.click('[data-a=check]');
+      await expect(page.locator('#fb .expl').first()).toContainText('Im Deutschen steht hier Präsens');
+      seen = true;
+    } else { await page.fill('#answer', 'x'); await page.click('[data-a=check]'); }
+    await page.click('[data-a=next]');
+  }
+  expect(seen).toBe(true);
+});

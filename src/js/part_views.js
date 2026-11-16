@@ -361,7 +361,8 @@ function feedbackHtml(r, ex, c){
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {
     if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. Der Unterschied liegt woanders.</p>`;
-    else if (!(ex.type === 'gen' && ex.data.kind) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
+    // Erzeugte Aufgaben mit eigener Erklärung: die passt genau zum Satz und geht vor der allgemeinen Diagnose
+    else if (!(ex.type === 'gen' && (ex.data.kind || ex.data.note)) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
     else if (ex.type === 'gen') out += `<p class="expl">${termify(ex.data.note)}</p>`;
     else if (tr && tr.short) out += `<p class="expl">${termify(tr.short)}</p>${tr.id !== 'eigene' ? `<button type="button" class="link more-l" data-a="topic" data-t="${tr.id}">Regel und Beispiele</button>` : ''}`;
     if (ex.type === 'free' && !c.gaveUp && c.input) {

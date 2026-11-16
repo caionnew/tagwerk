@@ -76,20 +76,25 @@ test('Nur hören: vorher gewählt und gemerkt, Text verschwommen, Antippen spiel
   expect(db.used.texts['es:siesta'].heard).toBe(true);
   expect(db.settings.textMode).toBe('listen');
 });
-test('Wikipedia-Fundstück: Artikel mit Quelle und Lizenz; ohne Netz eine klare Meldung', async ({ page }) => {
-  let fail = false;
-  await page.route('https://sv.wikipedia.org/w/api.php**', route => fail ? route.abort() : route.fulfill({ json:{ query:{ pages:[
+test('Wikipedia-Fundstück: nur ausgezeichnete Artikel, Bezug zum Kulturraum zuerst, Gesehenes nicht noch einmal', async ({ page }) => {
+  let fail = false; const urls = [];
+  const long = t => `${t} är ett ämne som har beskrivits utförligt i många källor och som fortfarande väcker intresse hos både forskare och allmänhet. `.repeat(4);
+  await page.route('https://sv.wikipedia.org/w/api.php**', route => { urls.push(route.request().url()); return fail ? route.abort() : route.fulfill({ json:{ query:{ pages:[
     { title:'Kort', extract:'För kort.', fullurl:'https://sv.wikipedia.org/wiki/Kort' },
-    { title:'Stockholms skärgård', fullurl:'https://sv.wikipedia.org/wiki/Stockholms_sk%C3%A4rg%C3%A5rd',
-      extract:'Stockholms skärgård är en skärgård i Östersjön utanför Stockholm. Den består av omkring trettio tusen öar, kobbar och skär. Många stockholmare har sommarstuga på någon av öarna och åker dit med båt. Skärgården sträcker sig ungefär åtta mil från norr till söder och är ett populärt mål för seglare och kajakpaddlare under sommarhalvåret.\nPå vintern kan isen lägga sig mellan de inre öarna, och då åker en del människor långfärdsskridskor mellan dem.' }
-  ] } } }));
+    { title:'Anne av Kleve', extract:long('Anne av Kleve var en engelsk drottning'), fullurl:'https://sv.wikipedia.org/wiki/Anne_av_Kleve' },
+    { title:'Allmänna skyddsrum i Stockholm', extract:long('Allmänna skyddsrum i Stockholm byggdes under kalla kriget i Sverige'), fullurl:'https://sv.wikipedia.org/wiki/Allm%C3%A4nna_skyddsrum_i_Stockholm' }
+  ] } } }); });
   await seed(page, freshDB('sv'));
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=wiki] >> nth=0');
-  await expect(page.locator('.rtitle')).toHaveText('Stockholms skärgård');
-  await expect(page.locator('.reader')).toContainText('trettio tusen öar');
+  await expect(page.locator('.rtitle')).toHaveText('Allmänna skyddsrum i Stockholm');
+  expect(decodeURIComponent(urls[0])).toContain('generator=categorymembers&gcmtitle=Kategori:Wikipedia:Utmärkta artiklar');
+  await expect(page.locator('.tchips')).toContainText('Exzellenter Artikel');
   await expect(page.locator('.legend')).toContainText('CC BY-SA 4.0');
+  // Gesehenes kommt nicht wieder: jetzt bleibt nur der Artikel ohne Bezug zum Norden
+  await page.click('.btnrow [data-a=wiki]');
+  await expect(page.locator('.rtitle')).toHaveText('Anne av Kleve');
   fail = true;
   await page.click('.btnrow [data-a=wiki]');
   await expect(page.locator('#app')).toContainText('Dafür braucht es Internet');
@@ -115,4 +120,21 @@ test('Hören: nach der Antwort stehen Frage, Fundstelle und „Nächste Frage“
   await next.click();
   await expect(page.locator('.tq-head')).toContainText('Frage 2 von 3');
   await expect(page.locator('.reader-bar [data-a=tslow]')).toBeVisible();
+});
+test('Hören: „Text zeigen“ lässt sich mit „Verbergen“ wieder zurücknehmen', async ({ page }) => {
+  await seed(page, richDB('sv'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=texts]');
+  await page.click('[data-a=tdefmode][data-v=listen]');
+  await page.click('[data-a=textopen][data-id=vasa]');
+  const chip = page.locator('.reader-bar [data-a=tshowall]');
+  await expect(page.locator('.reader .rs-s.veil').first()).toBeVisible();
+  await chip.click();
+  await expect(page.locator('.reader .rs-s.veil')).toHaveCount(0);
+  await expect(chip).toHaveText('Verbergen');
+  await expect(chip).toHaveAttribute('aria-pressed', 'true');
+  await chip.click();
+  await expect(chip).toHaveText('Text zeigen');
+  expect(await page.locator('.reader .rs-s.veil').count()).toBeGreaterThan(5);
 });

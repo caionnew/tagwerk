@@ -77,3 +77,13 @@ test('Erzeugte Aufgaben: die Musterlösung und alle Alternativen werden immer er
   }
   assert.deepEqual([...new Set(bad)].slice(0, 10), []);
 });
+test('Lösungsanzeige: „imorgon“ getippt markiert „i morgon“ nicht als falsch, und umgekehrt', () => {
+  const d = (t, y) => app.run(`diffHtml(${JSON.stringify(t)}, ${JSON.stringify(y)}, 'sv')`);
+  const a = d('Det kommer att regna i morgon.', 'Det kommer att regna imorgon');
+  assert.doesNotMatch(a.html, /w-miss|w-near/);
+  assert.equal(a.score, 1);
+  const b = d('Jag vet att han inte kommer idag.', 'Jag vet att han inte kommer i dag');
+  assert.doesNotMatch(b.html, /w-miss|w-near/);
+  assert.match(d('Det kommer att regna i morgon.', 'Det kommer att snöa imorgon').html, /w-miss[^>]*>regna</);
+  assert.equal(app.run(`judgeX('Det kommer att regna imorgon', ['Det kommer att regna i morgon.'], 'sv').res`), 'ok');
+});

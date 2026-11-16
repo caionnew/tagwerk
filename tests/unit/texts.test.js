@@ -7,13 +7,13 @@ test('je Sprache mindestens sechs Texte mit eindeutiger Kennung, Thema und Nivea
   for (const lang of ['sv', 'es']) {
     assert.ok(TEXTS[lang].length >= 6, lang);
     const ids = TEXTS[lang].map(t => t.id); assert.equal(new Set(ids).size, ids.length);
-    for (const t of TEXTS[lang]) { assert.ok(t.title && t.topic && /^(A2|B1|B2)$/.test(t.level), t.id); }
+    for (const t of TEXTS[lang]) { assert.ok(t.title && t.topic && /^(A2|B1|B2|C1)$/.test(t.level), t.id); }
     assert.ok(new Set(TEXTS[lang].map(t => t.topic)).size >= 5, `${lang}: zu wenig Themenvielfalt`);
   }
 });
-test('Länge 70 bis 200 Wörter, jeder Satz endet mit Satzzeichen', () => {
+test('Länge 70 bis 260 Wörter, jeder Satz endet mit Satzzeichen', () => {
   for (const lang of ['sv', 'es']) for (const t of TEXTS[lang]) {
-    const n = t.body.split(/\s+/).length; assert.ok(n >= 70 && n <= 200, `${t.id}: ${n} Wörter`);
+    const n = t.body.split(/\s+/).length; assert.ok(n >= 70 && n <= 260, `${t.id}: ${n} Wörter`);
     for (const s of textSentences(t.body).flat()) assert.match(s, /[.!?]$/, `${t.id}: ${s}`);
   }
 });

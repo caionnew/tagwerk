@@ -77,7 +77,123 @@ Systemet infördes 1974, och Sverige blev då det första landet i världen där
      ['Was passiert mit reservierten Tagen, die ein Elternteil nicht nimmt?', ['Sie verfallen', 'Der andere Elternteil bekommt sie', 'Man bekommt sie ausgezahlt'], 'Om en förälder inte tar sina dagar, försvinner de.'],
      ['Was war 1974 besonders?', ['Als erstes Land konnten auch Väter bezahlte Elternzeit nehmen', 'Das Kindergeld wurde abgeschafft', 'Kitas wurden kostenlos'], 'Systemet infördes 1974']],
   keep:[['Om en förälder inte tar sina dagar, försvinner de.', 'Wenn ein Elternteil seine Tage nicht nimmt, verfallen sie.'],
-        ['I dag är det vanligt att se pappor med barnvagn mitt på dagen.', 'Heute sieht man oft Väter mit Kinderwagen mitten am Tag.']] }
+        ['I dag är det vanligt att se pappor med barnvagn mitt på dagen.', 'Heute sieht man oft Väter mit Kinderwagen mitten am Tag.']] },
+{ id:'offentlighet', topic:'Politik', level:'B2', title:'Offentlighetsprincipen',
+  body:`Redan 1766 fick Sverige en tryckfrihetsförordning, en av världens första lagar om pressfrihet. Den gav också alla rätt att läsa myndigheternas handlingar. Principen gäller fortfarande och kallas offentlighetsprincipen.
+
+I praktiken betyder det att vem som helst kan vända sig till en kommun eller ett departement och begära ut brev, avtal eller mejl. Man behöver inte berätta vem man är eller varför man vill ha uppgifterna. Myndigheten får inte heller försöka ta reda på det. Handlingarna ska lämnas ut skyndsamt, ofta samma dag.
+
+Det finns undantag. Uppgifter om någons hälsa, om försvaret eller om pågående brottsutredningar kan beläggas med sekretess. Men huvudregeln är öppenhet, och det är sekretessen som måste motiveras.
+
+För journalister är principen ett viktigt verktyg. Många granskningar av slöseri och maktmissbruk har börjat med en enkel begäran om att få se ett dokument. Dessutom gäller meddelarfriheten: den som är anställd i offentlig sektor får i regel berätta för medierna om missförhållanden, och chefen får inte leta efter källan.
+
+För utländska besökare kan det verka märkligt. För de flesta svenskar är det självklart att makten ska tåla insyn.`,
+  q:[['Was muss man angeben, wenn man in Schweden ein Behördendokument anfordert?', ['Weder den eigenen Namen noch den Grund', 'Den Namen, aber nicht den Grund', 'Einen Presseausweis'], 'Man behöver inte berätta vem man är eller varför man vill ha uppgifterna.'],
+     ['Was muss nach der Grundregel begründet werden?', ['Die Geheimhaltung, nicht die Offenheit', 'Jede Anfrage nach einem Dokument', 'Jede Veröffentlichung in der Presse'], 'det är sekretessen som måste motiveras'],
+     ['Was bedeutet die meddelarfrihet?', ['Beschäftigte im öffentlichen Dienst dürfen Medien über Missstände informieren, und niemand darf nach ihnen suchen', 'Journalisten dürfen alle geheimen Akten lesen', 'Behörden müssen jede Woche eine Pressemitteilung veröffentlichen'], 'Dessutom gäller meddelarfriheten']],
+  keep:[['Man behöver inte berätta vem man är eller varför man vill ha uppgifterna.', 'Man muss nicht sagen, wer man ist oder warum man die Angaben haben will.'],
+        ['Men huvudregeln är öppenhet, och det är sekretessen som måste motiveras.', 'Aber die Grundregel ist Offenheit, und begründen muss man die Geheimhaltung.'],
+        ['För de flesta svenskar är det självklart att makten ska tåla insyn.', 'Für die meisten Schweden ist es selbstverständlich, dass sich die Macht in die Karten schauen lassen muss.']] },
+{ id:'grannenslon', topic:'Gesellschaft', level:'B2', title:'Grannens lön',
+  body:`I många länder är lönen en privatsak. I Sverige har det länge varit annorlunda. Eftersom deklarationerna hamnar hos en myndighet, Skatteverket, räknas de som allmänna handlingar, och vem som helst har kunnat ringa och fråga vad en person tjänar.
+
+Förr såldes till och med tjocka böcker, så kallade taxeringskalendrar, där man kunde slå upp grannar, kolleger och kändisar. I dag sköts det mesta av webbtjänster som Ratsit och Merinfo. Där kan man för en liten summa se inkomst, adress och ålder på nästan vem som helst. Tjänsterna har ett utgivningsbevis, och då gäller EU:s dataskyddsregler i stort sett inte.
+
+Kritikerna tycker att det har gått för långt. Uppgifterna kan användas av bedragare, och den som blir hotad kan lättare hittas. Försvararna menar att öppenheten motverkar fusk och gör löneskillnader synliga.
+
+Ett litet steg mot mer integritet togs 2024. Skatteverket bedömer sedan dess att inkomst av tjänst och inkomst av näringsverksamhet var för sig inte längre är offentliga, från och med inkomståret 2023. Den sammanlagda förvärvsinkomsten går däremot fortfarande att få fram.`,
+  q:[['Warum konnte man in Schweden das Einkommen anderer erfragen?', ['Steuererklärungen gelten als öffentliche Akten', 'Arbeitgeber müssen Gehälter im Internet veröffentlichen', 'Jeder muss sein Gehalt den Nachbarn mitteilen'], 'räknas de som allmänna handlingar'],
+     ['Welches Argument nennen die Befürworter der Offenheit?', ['Sie erschwert Betrug und macht Lohnunterschiede sichtbar', 'Sie bringt dem Staat Gebühren ein', 'Sie schützt Menschen, die bedroht werden'], 'Försvararna menar att öppenheten motverkar fusk och gör löneskillnader synliga.'],
+     ['Was ist seit dem Einkommensjahr 2023 noch öffentlich?', ['Die Summe der Erwerbseinkommen', 'Nur das Einkommen aus selbstständiger Arbeit', 'Gar nichts mehr'], 'Den sammanlagda förvärvsinkomsten går däremot fortfarande att få fram.']],
+  keep:[['I många länder är lönen en privatsak.', 'In vielen Ländern ist das Gehalt Privatsache.'],
+        ['Kritikerna tycker att det har gått för långt.', 'Die Kritiker finden, dass es zu weit gegangen ist.'],
+        ['Försvararna menar att öppenheten motverkar fusk och gör löneskillnader synliga.', 'Die Befürworter meinen, dass die Offenheit Betrug entgegenwirkt und Lohnunterschiede sichtbar macht.']] },
+{ id:'kiruna', topic:'Orte', level:'B2', title:'En stad som flyttar',
+  body:`Kiruna, långt norr om polcirkeln, byggdes kring en järnmalmsgruva. Statliga LKAB bryter malmen djupt under jorden, i en av världens största underjordiska gruvor. Men ju längre ner man bryter, desto mer rör sig marken ovanför. Sprickor kryper närmare husen i den gamla stadskärnan.
+
+Därför bestämdes det för drygt tjugo år sedan att en stor del av staden skulle flytta några kilometer österut. Ett nytt centrum med stadshus, torg och affärer har vuxit fram. Tusentals bostäder har rivits och ersatts, och LKAB står för en stor del av kostnaden.
+
+Vissa byggnader var för värdefulla för att rivas. Den röda träkyrkan från 1912, som en gång röstades fram till Sveriges vackraste byggnad, lyftes upp på fjärrstyrda specialvagnar i augusti 2025. Under två dagar rullade den fem kilometer genom staden, en halv kilometer i timmen, medan folk stod längs vägen och SVT sände direkt.
+
+Flytten väcker blandade känslor. Gruvan ger jobb och skatteintäkter, och utan den skulle Kiruna knappast finnas. Men många invånare sörjer kvarter där de har vuxit upp, och för samebyarna i området innebär nya gruvplaner mindre betesmark för renarna.`,
+  q:[['Warum muss Kiruna umziehen?', ['Der Bergbau unter der Stadt bringt den Boden in Bewegung', 'Der Fluss tritt jedes Frühjahr über die Ufer', 'Die Stadt soll näher an den Flughafen rücken'], 'Men ju längre ner man bryter, desto mer rör sig marken ovanför.'],
+     ['Wie wurde die Kirche umgesetzt?', ['Am Stück auf Spezialfahrzeugen, in zwei Tagen', 'In Einzelteile zerlegt und neu aufgebaut', 'Mit Hubschraubern in mehreren Etappen'], 'Under två dagar rullade den fem kilometer genom staden'],
+     ['Welcher Nachteil wird für die Samen genannt?', ['Weniger Weideland für die Rentiere', 'Höhere Mieten in der neuen Innenstadt', 'Längere Wege zur Kirche'], 'för samebyarna i området innebär nya gruvplaner mindre betesmark för renarna']],
+  keep:[['Sprickor kryper närmare husen i den gamla stadskärnan.', 'Risse kriechen näher an die Häuser im alten Stadtkern heran.'],
+        ['Vissa byggnader var för värdefulla för att rivas.', 'Manche Gebäude waren zu wertvoll, um sie abzureißen.'],
+        ['Flytten väcker blandade känslor.', 'Der Umzug weckt gemischte Gefühle.']] },
+{ id:'samer', topic:'Minderheiten', level:'C1', title:'Samernas rättigheter',
+  body:`Samerna är Sveriges urfolk. De levde i Sápmi, som i dag sträcker sig över Norge, Sverige, Finland och Ryssland, långt innan det fanns några nationsgränser. Renskötseln är fortfarande en viktig del av kulturen, även om de flesta samer i dag har helt andra yrken.
+
+Under 1900-talet förde staten en hård politik. Samiska barn skickades till nomadskolor, språket trycktes undan, och vid ett statligt institut för rasbiologi mätte forskare samers skallar. Sametinget, som är både ett folkvalt organ och en statlig myndighet, inrättades först 1993.
+
+År 2020 kom en dom som fick stor betydelse. Högsta domstolen slog fast att Girjas sameby, och inte staten, har rätt att upplåta småviltsjakt och fiske på sitt område ovanför odlingsgränsen, alltså bestämma vem som får jaga och fiska där. Skälet var att samerna har använt marken sedan urminnes tider. Domen hyllades av många samer men väckte ilska hos en del jägare, och flera samer berättade efteråt om hot och trakasserier.
+
+I september 2026 lämnade en sanningskommission sin slutrapport om statens politik mot samerna och dess följder. Kommissionen föreslår bland annat att staten ska be det samiska folket om ursäkt. Hur regeringen och riksdagen svarar är ännu inte avgjort.`,
+  q:[['Was entschied das Oberste Gericht 2020?', ['Die Samengemeinde Girjas, nicht der Staat, vergibt Kleinwildjagd und Fischerei in ihrem Gebiet', 'Die Rentierhaltung wird verboten', 'Samen dürfen ohne Erlaubnis überall in Schweden jagen'], 'Högsta domstolen slog fast att Girjas sameby'],
+     ['Worauf stützte sich das Urteil?', ['Auf die Nutzung des Landes seit unvordenklicher Zeit', 'Auf ein neues Gesetz des Reichstags', 'Auf einen Vertrag mit Norwegen'], 'Skälet var att samerna har använt marken sedan urminnes tider.'],
+     ['Was schlägt die Wahrheitskommission unter anderem vor?', ['Eine Entschuldigung des Staates beim samischen Volk', 'Ein samisches Parlament in Norwegen', 'Die Abschaffung des Sametinget'], 'Kommissionen föreslår bland annat att staten ska be det samiska folket om ursäkt.']],
+  keep:[['Samerna är Sveriges urfolk.', 'Die Samen sind Schwedens indigenes Volk.'],
+        ['Under 1900-talet förde staten en hård politik.', 'Im 20. Jahrhundert verfolgte der Staat eine harte Politik.'],
+        ['Skälet var att samerna har använt marken sedan urminnes tider.', 'Der Grund war, dass die Samen das Land seit unvordenklichen Zeiten genutzt haben.']] },
+{ id:'friskolor', topic:'Bildung', level:'B2', title:'Skolor med vinst',
+  body:`År 1992 genomförde regeringen Bildt en skolreform som har gjort Sverige ganska unikt. Sedan dess följer en skolpeng med varje elev, och familjen väljer skola. Pengarna går dit, oavsett om skolan drivs av kommunen, av en stiftelse eller av ett privat företag.
+
+Det ovanliga är att aktiebolag får driva skolor och dela ut vinst till ägarna. Internationellt är det sällsynt att skattefinansierade skolor får gå med vinst. I Sverige är friskolorna avgiftsfria för familjerna, och den största skolkoncernen är börsnoterad.
+
+Friskolorna har vuxit snabbt. Läsåret 2025/26 gick ungefär var sjätte grundskoleelev och nästan var tredje gymnasieelev i en fristående skola.
+
+Anhängarna menar att valfriheten har gett fler alternativ och tvingat de kommunala skolorna att bli bättre. Kritikerna pekar på att vinstdrivande skolor ofta har färre behöriga lärare och att betygen har stigit snabbare än kunskaperna. De varnar också för att elever med välutbildade föräldrar samlas i vissa skolor, medan andra skolor får de tyngsta uppgifterna.
+
+Forskningen ger inget entydigt svar, och frågan har delat riksdagen i årtionden.`,
+  q:[['Was ist am schwedischen System international ungewöhnlich?', ['Steuerfinanzierte Schulen dürfen Gewinn an Eigentümer ausschütten', 'Eltern müssen hohes Schulgeld zahlen', 'Alle Schulen gehören dem Staat'], 'Det ovanliga är att aktiebolag får driva skolor och dela ut vinst till ägarna.'],
+     ['Wie viele Gymnasiasten besuchen eine freie Schule?', ['Fast jeder dritte', 'Etwa jeder zehnte', 'Mehr als die Hälfte'], 'nästan var tredje gymnasieelev'],
+     ['Was kritisieren die Gegner?', ['Weniger ausgebildete Lehrkräfte und Noten, die schneller steigen als das Wissen', 'Zu hohes Schulgeld für Familien', 'Zu wenig Auswahl für die Eltern'], 'Kritikerna pekar på att vinstdrivande skolor ofta har färre behöriga lärare']],
+  keep:[['Sedan dess följer en skolpeng med varje elev, och familjen väljer skola.', 'Seitdem bekommt jedes Kind einen Schulgutschein mit, und die Familie wählt die Schule.'],
+        ['Friskolorna har vuxit snabbt.', 'Die freien Schulen sind schnell gewachsen.'],
+        ['Forskningen ger inget entydigt svar, och frågan har delat riksdagen i årtionden.', 'Die Forschung gibt keine eindeutige Antwort, und die Frage spaltet den Reichstag seit Jahrzehnten.']] },
+{ id:'nato', topic:'Politik', level:'B2', title:'Från alliansfrihet till Nato',
+  body:`Sverige har inte varit i krig sedan 1814. Under den långa freden växte bilden av ett neutralt land fram, en medlare mellan öst och väst. Under kalla kriget samarbetade Sverige visserligen i hemlighet med västmakterna, men officiellt stod landet utanför alla allianser.
+
+Efter Rysslands fullskaliga invasion av Ukraina i februari 2022 svängde opinionen snabbt. Socialdemokraterna, som länge hade sagt nej, ändrade ståndpunkt, och i maj samma år lämnade Sverige in sin ansökan. Turkiet och Ungern dröjde med att godkänna den, så det tog nästan två år. Den 7 mars 2024 blev Sverige Natos 32:a medlem.
+
+Försvaret byggs nu upp igen. Värnplikten, som hade vilat sedan 2010, aktiverades på nytt 2017 och gäller både kvinnor och män. I november 2024 fick alla hushåll en broschyr om hur man förbereder sig för kris och krig, med råd om vatten, mat och radio.
+
+Kritiker menar att Sverige har gett upp en roll som fredsmäklare. Anhängarna svarar att neutraliteten aldrig var så neutral som den såg ut och att ett litet land behöver allierade.`,
+  q:[['Wann war Schweden zuletzt im Krieg?', ['1814', '1945', '1905'], 'Sverige har inte varit i krig sedan 1814.'],
+     ['Warum dauerte der Beitritt fast zwei Jahre?', ['Die Türkei und Ungarn stimmten erst spät zu', 'Das schwedische Parlament war dagegen', 'Schweden musste erst die Wehrpflicht einführen'], 'Turkiet och Ungern dröjde med att godkänna den'],
+     ['Für wen gilt die Wehrpflicht heute?', ['Für Frauen und Männer', 'Nur für Männer', 'Nur für Freiwillige'], 'gäller både kvinnor och män']],
+  keep:[['Efter Rysslands fullskaliga invasion av Ukraina i februari 2022 svängde opinionen snabbt.', 'Nach Russlands Großangriff auf die Ukraine im Februar 2022 schlug die öffentliche Meinung schnell um.'],
+        ['Försvaret byggs nu upp igen.', 'Die Verteidigung wird jetzt wieder aufgebaut.'],
+        ['Kritiker menar att Sverige har gett upp en roll som fredsmäklare.', 'Kritiker meinen, Schweden habe eine Rolle als Friedensvermittler aufgegeben.']] },
+{ id:'systembolaget', topic:'Alltag', level:'B2', title:'Systembolaget',
+  body:`Den som vill köpa vin, sprit eller starköl i en svensk butik måste gå till Systembolaget. Det statliga bolaget har ensamrätt på att sälja alkohol till privatpersoner, och man måste vara 20 år för att handla där. Butikerna har begränsade öppettider och är stängda på söndagar.
+
+Bakgrunden är en lång kamp mot supandet. År 1922 röstade svenskarna om ett totalförbud mot alkohol, och förbudet föll knappt: 51 procent röstade nej. I stället fortsatte man med motboken, som redan hade införts några år tidigare. Den gav varje köpare en personlig ranson av sprit, och gifta kvinnor fick sällan någon egen motbok. Systemet avskaffades först 1955.
+
+När Sverige gick med i EU 1995 fick monopolet finnas kvar, eftersom det motiveras med folkhälsan. Butikerna får inte locka till köp: det finns inga extrapriser, och personalen ska be om legitimation om kunden ser ut att vara under 25.
+
+Många utländska besökare tycker att reglerna är krångliga. Ändå är monopolet populärt. I mätningar vill en klar majoritet av svenskarna behålla det, delvis för att sortimentet är stort och personalen kunnig.`,
+  q:[['Wie knapp scheiterte das Alkoholverbot 1922?', ['51 Prozent stimmten dagegen', 'Es wurde fast einstimmig abgelehnt', 'Es wurde angenommen, aber nie umgesetzt'], '51 procent röstade nej'],
+     ['Was war die Motbok?', ['Ein persönliches Heft mit einer Alkoholration', 'Ein Kochbuch der Abstinenzbewegung', 'Ein Ausweis für Restaurantbesitzer'], 'Den gav varje köpare en personlig ranson'],
+     ['Warum durfte das Monopol nach dem EU-Beitritt bleiben?', ['Es wird mit der Volksgesundheit begründet', 'Weil es dem Staat viel Geld bringt', 'Weil die EU Alkohol überall stark besteuert'], 'eftersom det motiveras med folkhälsan']],
+  keep:[['Butikerna har begränsade öppettider och är stängda på söndagar.', 'Die Läden haben eingeschränkte Öffnungszeiten und sind sonntags geschlossen.'],
+        ['Systemet avskaffades först 1955.', 'Das System wurde erst 1955 abgeschafft.'],
+        ['Ändå är monopolet populärt.', 'Trotzdem ist das Monopol beliebt.']] },
+{ id:'miljonprogrammet', topic:'Wohnen', level:'B2', title:'Miljonprogrammet',
+  body:`I mitten av 1960-talet var bostadsbristen akut. Folk flyttade från landsbygden till städerna, och många bodde trångt i gamla lägenheter utan badrum. Riksdagen beslutade därför att en miljon bostäder skulle byggas på tio år, och mellan 1965 och 1974 blev det faktiskt drygt en miljon.
+
+Bilden av miljonprogrammet domineras av grå betonghus i förorter som Rinkeby, Rosengård eller Hammarkullen. Men ungefär en tredjedel av bostäderna var villor och radhus. För sin tid var lägenheterna dessutom moderna, med rymliga kök, balkong och grönområden mellan husen.
+
+Redan efter några år fick en del områden dåligt rykte. De som hade råd flyttade vidare, och lägenheterna gick till dem som hade svårast att få bostad någon annanstans, ofta nyanlända. I dag finns flera av områdena på polisens lista över utsatta områden, med hög arbetslöshet och problem med kriminella nätverk.
+
+Samtidigt bor ungefär var fjärde invånare i Sverige i en bostad från de här åren, och många trivs. Husen behöver renoveras, men kraftiga hyreshöjningar efter renoveringar tvingar ibland ut de boende. Frågan är hur man rustar upp utan att driva bort dem som bor där.`,
+  q:[['Was beschloss der Reichstag Mitte der 1960er-Jahre?', ['Eine Million Wohnungen in zehn Jahren zu bauen', 'Alle alten Häuser abzureißen', 'Den Bau von Einfamilienhäusern zu verbieten'], 'Riksdagen beslutade därför att en miljon bostäder skulle byggas på tio år'],
+     ['Welcher Anteil waren Einfamilien- und Reihenhäuser?', ['Etwa ein Drittel', 'Fast keiner', 'Mehr als die Hälfte'], 'Men ungefär en tredjedel av bostäderna var villor och radhus.'],
+     ['Welches Problem bringt die Sanierung mit sich?', ['Starke Mieterhöhungen drängen Bewohner hinaus', 'Die Wohnungen werden kleiner', 'Die Balkone müssen entfernt werden'], 'kraftiga hyreshöjningar efter renoveringar tvingar ibland ut de boende']],
+  keep:[['I mitten av 1960-talet var bostadsbristen akut.', 'Mitte der 1960er-Jahre war die Wohnungsnot akut.'],
+        ['Redan efter några år fick en del områden dåligt rykte.', 'Schon nach wenigen Jahren bekamen manche Viertel einen schlechten Ruf.'],
+        ['Frågan är hur man rustar upp utan att driva bort dem som bor där.', 'Die Frage ist, wie man saniert, ohne die Menschen zu vertreiben, die dort wohnen.']] }
 ],
 es:[
 { id:'espanavaciada', topic:'Gesellschaft', level:'B2', title:'La España vaciada',
@@ -178,7 +294,121 @@ Cuando termina la batalla, las calles están cubiertas de una salsa roja. Los bo
      ['Welche Regel gilt?', ['Tomaten vor dem Werfen zerdrücken', 'Nur Grün tragen', 'Nur Kinder dürfen werfen'], 'hay que aplastar los tomates antes de tirarlos'],
      ['Seit wann gibt es die Tomatina?', ['Seit 1945', 'Seit dem Mittelalter', 'Seit 2001'], 'la primera Tomatina fue en 1945']],
   keep:[['Cuando termina la batalla, las calles están cubiertas de una salsa roja.', 'Wenn die Schlacht vorbei ist, sind die Straßen mit einer roten Soße bedeckt.'],
-        ['Nadie sabe exactamente cómo empezó, pero la primera Tomatina fue en 1945.', 'Niemand weiß genau, wie es anfing, aber die erste Tomatina war 1945.']] }
+        ['Nadie sabe exactamente cómo empezó, pero la primera Tomatina fue en 1945.', 'Niemand weiß genau, wie es anfing, aber die erste Tomatina war 1945.']] },
+{ id:'hora', topic:'Alltag', level:'B2', title:'La hora equivocada',
+  body:`Si se mira un mapa, España queda en la misma franja de longitud que el Reino Unido y Portugal. El meridiano de Greenwich incluso atraviesa el este del país. Sin embargo, sus relojes marcan la misma hora que Berlín o Varsovia.
+
+El cambio tiene fecha exacta. La noche del 16 de marzo de 1940, a las once, los relojes saltaron directamente a medianoche. Suele contarse como un gesto de Franco hacia la Alemania nazi, aunque varios países de Europa occidental también adelantaron sus relojes durante la guerra y tampoco volvieron atrás. Canarias, en cambio, va una hora por detrás, y de ahí la famosa frase de la radio: «una hora menos en Canarias».
+
+La consecuencia es que el sol sale y se pone tarde. En Galicia, en pleno verano, todavía hay luz pasadas las diez de la noche. Muchos expertos relacionan este desfase con los horarios españoles: se come a las dos, se cena a las diez y, según varios estudios, se duerme menos que en otros países europeos. Otros recuerdan que esos horarios tienen también otras raíces, como las largas jornadas partidas de la posguerra.
+
+Volver a la hora de Greenwich se ha propuesto varias veces, pero el cambio nunca ha llegado. Al final, cambiar la hora es fácil; cambiar las costumbres, no tanto.`,
+  q:[['Seit wann gilt in Spanien die mitteleuropäische Zeit?', ['Seit März 1940', 'Seit dem Beginn des Bürgerkriegs 1936', 'Seit dem EU-Beitritt 1986'], 'La noche del 16 de marzo de 1940, a las once, los relojes saltaron directamente a medianoche.'],
+     ['Was ist auf den Kanaren anders?', ['Dort ist es eine Stunde früher', 'Dort gilt die Berliner Zeit', 'Dort gibt es keine Sommerzeit'], 'Canarias, en cambio, va una hora por detrás'],
+     ['Welche weitere Ursache für die späten Essenszeiten wird genannt?', ['Lange geteilte Arbeitstage in der Nachkriegszeit', 'Die Hitze im Sommer', 'Das Fernsehprogramm'], 'como las largas jornadas partidas de la posguerra']],
+  keep:[['Sin embargo, sus relojes marcan la misma hora que Berlín o Varsovia.', 'Dennoch zeigen seine Uhren dieselbe Zeit wie in Berlin oder Warschau.'],
+        ['La consecuencia es que el sol sale y se pone tarde.', 'Die Folge ist, dass die Sonne spät auf- und untergeht.'],
+        ['Al final, cambiar la hora es fácil; cambiar las costumbres, no tanto.', 'Letztlich ist es leicht, die Uhrzeit zu ändern; die Gewohnheiten zu ändern, weniger.']] },
+{ id:'memoria', topic:'Geschichte', level:'C1', title:'La memoria que divide',
+  body:`Durante décadas, el Valle de los Caídos, en la sierra, a unos cincuenta kilómetros de Madrid, fue la tumba de Francisco Franco. El monumento se construyó en parte con el trabajo de presos políticos, y en sus criptas reposan además más de treinta mil víctimas de la guerra civil, de ambos bandos, muchas trasladadas allí sin permiso de sus familias.
+
+Tras la muerte de Franco en 1975, la Transición apostó por mirar hacia delante. La Ley de Amnistía de 1977 liberó a presos políticos, pero también impidió juzgar los crímenes del régimen. Muchos lo llaman el pacto del olvido.
+
+Las cosas empezaron a cambiar en el siglo XXI. Asociaciones de familiares abrieron fosas comunes con voluntarios, porque decenas de miles de personas siguen desaparecidas. En octubre de 2019, el Gobierno de Pedro Sánchez exhumó a Franco y lo trasladó a un cementerio de El Pardo. La Ley de Memoria Democrática de 2022 rebautizó el lugar como Valle de Cuelgamuros y convirtió en tarea del Estado la búsqueda de los desaparecidos.
+
+Para sus defensores, se trata de justicia y de dignidad para las víctimas. El Partido Popular y Vox la consideran una ley que reabre heridas y divide a los españoles, y han prometido derogarla. Mientras tanto, los forenses ya han sacado cientos de cuerpos de las criptas del valle.`,
+  q:[['Wer liegt außer Franco im Valle de los Caídos begraben?', ['Mehr als 30.000 Opfer des Bürgerkriegs beider Seiten', 'Nur Generäle des Regimes', 'Die spanischen Könige'], 'más de treinta mil víctimas de la guerra civil, de ambos bandos'],
+     ['Was bewirkte das Amnestiegesetz von 1977 auch?', ['Die Verbrechen des Regimes konnten nicht verfolgt werden', 'Franco wurde nachträglich verurteilt', 'Alle Massengräber wurden geöffnet'], 'pero también impidió juzgar los crímenes del régimen'],
+     ['Wie stehen PP und Vox zum Gesetz von 2022?', ['Sie wollen es aufheben', 'Sie haben es gemeinsam eingebracht', 'Sie wollen es auf ganz Europa ausweiten'], 'y han prometido derogarla']],
+  keep:[['Tras la muerte de Franco en 1975, la Transición apostó por mirar hacia delante.', 'Nach Francos Tod 1975 setzte die Transición darauf, nach vorn zu schauen.'],
+        ['Las cosas empezaron a cambiar en el siglo XXI.', 'Im 21. Jahrhundert begann sich etwas zu ändern.'],
+        ['Para sus defensores, se trata de justicia y de dignidad para las víctimas.', 'Für die Befürworter geht es um Gerechtigkeit und Würde für die Opfer.']] },
+{ id:'marmenor', topic:'Umwelt', level:'B2', title:'Una laguna con derechos',
+  body:`El Mar Menor, en Murcia, es la mayor laguna salada de Europa. Una estrecha franja de arena, La Manga, la separa del Mediterráneo. Durante décadas fue un paraíso para bañistas y familias.
+
+Pero el agua se fue enfermando. Los fertilizantes de la agricultura intensiva del Campo de Cartagena llegaban a la laguna y alimentaban algas que dejaban el fondo sin oxígeno. En 2016 el agua se volvió verde y turbia, y en 2019 y 2021 aparecieron toneladas de peces muertos en las playas.
+
+Entonces una profesora de Filosofía del Derecho, Teresa Vicente, propuso algo inédito: darle a la laguna personalidad jurídica, como si fuera una persona. Más de 600.000 ciudadanos firmaron la iniciativa popular, y en 2022 las Cortes la aprobaron con el apoyo de todos los grupos salvo Vox. Así, el Mar Menor se convirtió en el primer ecosistema de Europa con derechos propios: a existir, a evolucionar de forma natural y a ser protegido y restaurado.
+
+En la práctica, cualquier ciudadano puede ahora defender la laguna ante los tribunales en su nombre. En 2024 el Tribunal Constitucional confirmó la ley. Los agricultores temen nuevas restricciones y critican que se les culpe solo a ellos. Lo que nadie discute es que el Mar Menor necesitará años para recuperarse.`,
+  q:[['Was schadete der Lagune vor allem?', ['Dünger aus der intensiven Landwirtschaft', 'Öl aus Schiffen', 'Zu viele Fischer'], 'Los fertilizantes de la agricultura intensiva del Campo de Cartagena llegaban a la laguna'],
+     ['Wie kam das Gesetz zustande?', ['Durch eine Bürgerinitiative mit mehr als 600.000 Unterschriften', 'Durch ein Urteil des Verfassungsgerichts', 'Durch eine EU-Richtlinie'], 'Más de 600.000 ciudadanos firmaron la iniciativa popular'],
+     ['Was können Bürger heute tun?', ['Die Lagune in ihrem Namen vor Gericht verteidigen', 'Kostenlos in der Lagune fischen', 'Grundstücke an der Lagune beschlagnahmen'], 'cualquier ciudadano puede ahora defender la laguna ante los tribunales en su nombre']],
+  keep:[['Durante décadas fue un paraíso para bañistas y familias.', 'Jahrzehntelang war sie ein Paradies für Badegäste und Familien.'],
+        ['Pero el agua se fue enfermando.', 'Aber das Wasser wurde nach und nach krank.'],
+        ['Lo que nadie discute es que el Mar Menor necesitará años para recuperarse.', 'Unbestritten ist, dass das Mar Menor Jahre brauchen wird, um sich zu erholen.']] },
+{ id:'once', topic:'Gesellschaft', level:'B2', title:'La ONCE',
+  body:`En muchas calles españolas hay un pequeño quiosco donde se venden los cupones de la ONCE, la Organización Nacional de Ciegos Españoles. Detrás de esta lotería hay una historia poco común.
+
+La ONCE nació el 13 de diciembre de 1938, día de Santa Lucía, patrona de los ciegos, en plena guerra civil. Un grupo de personas ciegas rechazó una pensión y prefirió unir las pequeñas rifas que muchos ya vendían para ganarse la vida. Pocos meses después empezó a venderse el cupón.
+
+Desde entonces, la lotería financia casi todo lo que hace la organización: escuelas, perros guía, libros en braille y apoyo para encontrar trabajo. Muchos vendedores son personas ciegas o con otra discapacidad, y para ellos el quiosco es un empleo estable.
+
+Con los años, la ONCE amplió su labor a todas las personas con discapacidad. En 1988 creó una fundación, y hoy el grupo, que tiene también empresas de lavandería, hoteles y limpieza, emplea a más de 70.000 personas, la mayoría con alguna discapacidad.
+
+Algunos critican que una organización social dependa del juego. La ONCE responde que su lotería es pública y está regulada, y que todo el beneficio vuelve a la sociedad.`,
+  q:[['Was taten die blinden Gründer 1938?', ['Sie lehnten eine Rente ab und legten ihre Lotterien zusammen', 'Sie gründeten eine Partei', 'Sie verlangten eine Steuer zugunsten der Blinden'], 'Un grupo de personas ciegas rechazó una pensión'],
+     ['Wofür verwendet die ONCE das Geld aus der Lotterie?', ['Für Schulen, Blindenhunde, Braille-Bücher und Arbeitsvermittlung', 'Vor allem für Sportvereine', 'Für den Bau von Kirchen'], 'Desde entonces, la lotería financia casi todo lo que hace la organización'],
+     ['Wie viele Menschen beschäftigt die Gruppe heute?', ['Mehr als 70.000, die meisten mit Behinderung', 'Etwa 7.000', 'Nur die blinden Losverkäufer'], 'emplea a más de 70.000 personas']],
+  keep:[['Detrás de esta lotería hay una historia poco común.', 'Hinter dieser Lotterie steckt eine ungewöhnliche Geschichte.'],
+        ['Muchos vendedores son personas ciegas o con otra discapacidad, y para ellos el quiosco es un empleo estable.', 'Viele Verkäufer sind blind oder haben eine andere Behinderung, und für sie ist der Kiosk eine feste Stelle.'],
+        ['Algunos critican que una organización social dependa del juego.', 'Manche kritisieren, dass eine soziale Organisation vom Glücksspiel abhängt.']] },
+{ id:'chile', topic:'Politik', level:'C1', title:'Chile y sus dos constituciones fallidas',
+  body:`En octubre de 2019, el Gobierno chileno subió treinta pesos el billete de metro en Santiago. Los estudiantes empezaron a saltarse los torniquetes, y en pocos días el país vivió las mayores protestas desde el fin de la dictadura. El lema lo resumía todo: «No son treinta pesos, son treinta años».
+
+Las protestas apuntaban a la desigualdad, a las pensiones privadas y a una Constitución redactada en 1980, bajo Pinochet, aunque reformada muchas veces. Para calmar la crisis, los partidos acordaron abrir un proceso constituyente. En 2020, casi el 80 % votó a favor de escribir una nueva Constitución.
+
+Una convención elegida, paritaria y con escaños reservados para los pueblos indígenas, redactó un texto muy progresista. En septiembre de 2022, con voto obligatorio, el 62 % lo rechazó. Sus críticos lo veían demasiado largo y radical; sus defensores culparon a las campañas de desinformación.
+
+Se intentó de nuevo, esta vez con un consejo dominado por la derecha. En diciembre de 2023, el 56 % rechazó también esa propuesta. Chile sigue, por tanto, con la Constitución de 1980. Muchos chilenos hablan hoy de cansancio constitucional.`,
+  q:[['Was war der Auslöser der Proteste 2019?', ['Eine Fahrpreiserhöhung der Metro um 30 Pesos', 'Eine verlorene Präsidentschaftswahl', 'Ein Erdbeben in Santiago'], 'En octubre de 2019, el Gobierno chileno subió treinta pesos el billete de metro en Santiago.'],
+     ['Wie ging die Abstimmung im September 2022 aus?', ['62 Prozent lehnten den Entwurf ab', 'Der Entwurf wurde knapp angenommen', 'Die Abstimmung wurde abgesagt'], 'el 62 % lo rechazó'],
+     ['Welche Verfassung gilt heute in Chile?', ['Die von 1980, mehrfach reformiert', 'Die Verfassung von 2022', 'Die Verfassung von 2023'], 'Chile sigue, por tanto, con la Constitución de 1980.']],
+  keep:[['El lema lo resumía todo: «No son treinta pesos, son treinta años».', 'Der Slogan fasste alles zusammen: „Es geht nicht um dreißig Pesos, sondern um dreißig Jahre.“'],
+        ['Se intentó de nuevo, esta vez con un consejo dominado por la derecha.', 'Man versuchte es erneut, diesmal mit einem von der Rechten dominierten Rat.'],
+        ['Muchos chilenos hablan hoy de cansancio constitucional.', 'Viele Chilenen sprechen heute von Verfassungsmüdigkeit.']] },
+{ id:'uruguay', topic:'Gesellschaft', level:'B2', title:'Cannabis en la farmacia',
+  body:`En diciembre de 2013, Uruguay se convirtió en el primer país del mundo en regular por ley todo el mercado del cannabis, desde el cultivo hasta la venta. La ley se aprobó bajo el Gobierno de José Mujica, conocido por su vida austera. El argumento era sencillo: si el Estado controla el mercado, se lo quita a los narcotraficantes.
+
+La ley ofrece tres caminos. Se pueden cultivar unas pocas plantas en casa, entrar en un club cannábico o comprar en una farmacia. En todos los casos hay que ser ciudadano o residente y estar inscrito en un registro estatal. Los turistas, por tanto, no pueden comprar.
+
+La venta en farmacias empezó en julio de 2017. Cada persona puede comprar como máximo diez gramos por semana y cuarenta al mes, y la compra se confirma con la huella dactilar. El precio lo fija el Estado.
+
+Al principio hubo un problema inesperado: varios bancos amenazaron con cerrar las cuentas de las farmacias por miedo a las normas de Estados Unidos, y algunas dejaron de vender. Hoy el sistema funciona, aunque son pocas las farmacias que participan. Los críticos señalan que el consumo no ha bajado; los defensores, que el mercado legal ha quitado clientes a los traficantes.`,
+  q:[['Welches Ziel verfolgte das Gesetz?', ['Den Drogenhändlern den Markt wegzunehmen', 'Touristen anzuziehen', 'Cannabis nur für Kranke zu erlauben'], 'si el Estado controla el mercado, se lo quita a los narcotraficantes'],
+     ['Wer darf in der Apotheke kaufen?', ['Registrierte Staatsbürger und Einwohner', 'Alle Erwachsenen, auch Touristen', 'Nur Mitglieder eines Clubs'], 'hay que ser ciudadano o residente y estar inscrito en un registro estatal'],
+     ['Welches unerwartete Problem gab es?', ['Banken drohten, die Konten der Apotheken zu schließen', 'Es wuchs zu wenig Cannabis', 'Die Preise stiegen stark an'], 'varios bancos amenazaron con cerrar las cuentas de las farmacias']],
+  keep:[['La ley ofrece tres caminos.', 'Das Gesetz bietet drei Wege.'],
+        ['Los turistas, por tanto, no pueden comprar.', 'Touristen können also nicht kaufen.'],
+        ['El precio lo fija el Estado.', 'Den Preis legt der Staat fest.']] },
+{ id:'bolivia', topic:'Sprache', level:'B2', title:'Un Estado plurinacional',
+  body:`Desde 2009, el nombre oficial de Bolivia es Estado Plurinacional de Bolivia. La nueva Constitución, aprobada en referéndum durante el primer Gobierno de Evo Morales, el primer presidente indígena del país, reconoce que en Bolivia conviven muchas naciones.
+
+Su artículo quinto declara oficiales el castellano y las lenguas de 36 pueblos indígenas, desde el aimara y el quechua hasta idiomas que hablan solo unos cientos de personas. El Gobierno central y los departamentales deben usar al menos dos lenguas oficiales, y para trabajar en la administración pública se exige, en teoría, hablar dos de ellas.
+
+También los símbolos cambiaron. Junto a la bandera roja, amarilla y verde, la wiphala, una bandera de cuadros de colores de los pueblos andinos, es ahora símbolo del Estado. La Constitución reconoce además la justicia indígena, que las comunidades aplican según sus propias normas.
+
+Para muchos indígenas, que durante siglos fueron excluidos, fue un reconocimiento histórico. Sus críticos, sobre todo en las tierras bajas del oriente, vieron en el cambio un proyecto político del partido de Morales. En la práctica, el castellano sigue dominando en las escuelas, los tribunales y los medios.`,
+  q:[['Welche Sprachen sind in Bolivien Amtssprachen?', ['Spanisch und die Sprachen von 36 indigenen Völkern', 'Nur Spanisch und Quechua', 'Spanisch und Englisch'], 'Su artículo quinto declara oficiales el castellano y las lenguas de 36 pueblos indígenas'],
+     ['Was ist die Wiphala?', ['Eine bunt karierte Flagge der Andenvölker, heute Staatssymbol', 'Ein traditionelles Musikinstrument', 'Das bolivianische Parlament'], 'la wiphala, una bandera de cuadros de colores de los pueblos andinos'],
+     ['Wie sieht es in der Praxis aus?', ['Spanisch dominiert weiterhin in Schulen, Gerichten und Medien', 'Die meisten Schulen unterrichten nur noch auf Aymara', 'Spanisch wurde aus den Gerichten verbannt'], 'En la práctica, el castellano sigue dominando en las escuelas, los tribunales y los medios.']],
+  keep:[['También los símbolos cambiaron.', 'Auch die Symbole änderten sich.'],
+        ['Para muchos indígenas, que durante siglos fueron excluidos, fue un reconocimiento histórico.', 'Für viele Indigene, die jahrhundertelang ausgeschlossen waren, war es eine historische Anerkennung.'],
+        ['En la práctica, el castellano sigue dominando en las escuelas, los tribunales y los medios.', 'In der Praxis dominiert Spanisch weiterhin in Schulen, Gerichten und Medien.']] },
+{ id:'barcelona', topic:'Wohnen', level:'B2', title:'Barcelona contra los pisos turísticos',
+  body:`Barcelona recibe cada año millones de turistas, y muchos se alojan en pisos alquilados a través de plataformas como Airbnb. Para los vecinos de barrios como la Barceloneta o el Gòtic, eso significa maletas en la escalera, ruido y, sobre todo, alquileres cada vez más altos.
+
+En junio de 2024, el alcalde Jaume Collboni anunció una medida drástica: la ciudad no renovará ninguna de las 10.101 licencias de pisos turísticos. Cuando caduquen, en noviembre de 2028, esas viviendas deberán volver al uso residencial. Un decreto de la Generalitat de 2023 permite a los ayuntamientos hacerlo.
+
+Unas semanas después, miles de personas se manifestaron con pistolas de agua contra el turismo masivo. Las imágenes de turistas mojados en las terrazas dieron la vuelta al mundo.
+
+El PP y el sector recurrieron el decreto, pero en 2025 el Tribunal Constitucional lo avaló. Los críticos recuerdan que los pisos turísticos son apenas un uno por ciento de las viviendas de la ciudad y temen que crezca el alquiler ilegal. El Ayuntamiento responde que cada piso cuenta en una ciudad donde, según sus datos, el alquiler ha subido alrededor de un setenta por ciento en una década.`,
+  q:[['Was kündigte Bürgermeister Collboni 2024 an?', ['Keine der 10.101 Lizenzen für Ferienwohnungen zu verlängern', 'Eine Touristensteuer abzuschaffen', 'Neue Hotels nur noch am Stadtrand zu erlauben'], 'la ciudad no renovará ninguna de las 10.101 licencias de pisos turísticos'],
+     ['Womit protestierten Anwohner im Sommer 2024?', ['Mit Wasserpistolen', 'Mit Kochtöpfen', 'Mit einem Generalstreik'], 'miles de personas se manifestaron con pistolas de agua'],
+     ['Welchen Einwand bringen Kritiker vor?', ['Ferienwohnungen machen nur etwa ein Prozent des Wohnungsbestands aus', 'Touristen zahlen zu wenig Steuern', 'Die Lizenzen laufen erst 2050 aus'], 'los pisos turísticos son apenas un uno por ciento de las viviendas de la ciudad']],
+  keep:[['Cuando caduquen, en noviembre de 2028, esas viviendas deberán volver al uso residencial.', 'Wenn sie im November 2028 auslaufen, müssen diese Wohnungen wieder normal bewohnt werden.'],
+        ['Unas semanas después, miles de personas se manifestaron con pistolas de agua contra el turismo masivo.', 'Wenige Wochen später demonstrierten Tausende mit Wasserpistolen gegen den Massentourismus.'],
+        ['Las imágenes de turistas mojados en las terrazas dieron la vuelta al mundo.', 'Die Bilder von nassen Touristen auf den Terrassen gingen um die Welt.']] }
 ]
 };
 const textSentences = body => body.split(/\n\s*\n/).map(p => p.trim().split(/(?<=[.!?])\s+(?=[A-ZÅÄÖÁÉÍÓÚÑ¿¡0-9])/));

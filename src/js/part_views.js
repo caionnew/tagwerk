@@ -187,7 +187,7 @@ function viewExtra(){
   <h2 class="grp">Grammatik</h2>
   <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', 'Endlos neue Aufgaben: ' + genIds(lang).map(x => GENS[x].short || GENS[x].label).join(', '))}${g('spot', 'Fehler finden', 'Ein typischer Fehler steckt im Satz', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
   <h2 class="grp">Lesen und Hören</h2>
-  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', 'Ein zufälliger Artikel zum Lesen oder Hören (online)', '', 'book')}</div>
+  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land (online)', '', 'book')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
   <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canListen() ? 'Mitsprechen und die Aussprache prüfen' : 'Anhören, mitsprechen, aufnehmen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>

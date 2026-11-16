@@ -84,7 +84,10 @@ function judgeX(input, answers, lang, opt){
 function diffHtml(target, typed, lang){
   const T = String(target).split(/\s+/).filter(Boolean);
   const tb = T.map(w => deacc(norm(w, lang))), te = T.map(w => norm(w, lang));
-  const Y = norm(typed, lang).split(' ').filter(Boolean), yb = Y.map(deacc);
+  // Zusammengeschrieben wie „imorgon“ zählt wie „i morgon“ (norm macht beides gleich): getippte Form an die Lösung anpassen
+  const Y = [];
+  norm(typed, lang).split(' ').filter(Boolean).forEach(y => { const k = tb.findIndex((w, i) => w && tb[i + 1] && w + tb[i + 1] === deacc(y)); if (k >= 0) Y.push(te[k], te[k + 1]); else Y.push(y); });
+  const yb = Y.map(deacc);
   const idx = tb.map((w, i) => (w ? i : -1)).filter(i => i >= 0);
   const m = idx.length, n = yb.length;
   const dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));

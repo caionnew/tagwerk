@@ -51,7 +51,7 @@ function readCmd(a, b){
     stopReading(); if (back) T.si--; readPlay(); return;
   }
   else if (a === 'tslow') { T.slow = !T.slow; DB.settings.slowRead = T.slow; save(); if (T.playing) { stopReading(); readPlay(); return; } }
-  else if (a === 'tshowall') { T.unveiled = true; }
+  else if (a === 'tshowall') { T.unveiled = !T.unveiled; if (!T.unveiled) T.revealed = []; }
   else if (a === 'treveal') {
     // Verschwommener Satz: erstes Antippen spielt ihn noch einmal, zweites deckt ihn auf
     const i = Number(b.dataset.i);
@@ -97,7 +97,7 @@ function keepAboveBar(sel){
   window.scrollBy({ top:Math.min(over, Math.max(0, room)) || over, behavior:calm ? 'auto' : 'smooth' });
 }
 function viewTexts(){
-  const lang = S.lang, done = (DB.used && DB.used.texts) || {}, niv = DB.settings.niveau || 'mittel', rank = { A2:1, B1:2, B2:3 };
+  const lang = S.lang, done = (DB.used && DB.used.texts) || {}, niv = DB.settings.niveau || 'mittel', rank = { A2:1, B1:2, B2:3, C1:4 };
   const list = niv === 'mittel' ? TEXTS[lang] : TEXTS[lang].slice().sort((a, b) => (niv === 'fort' ? rank[b.level] - rank[a.level] : rank[a.level] - rank[b.level]));
   const cards = list.map(t => { const d = done[lang + ':' + t.id];
     const state = d ? `<span class="tstate${d.best === t.q.length ? ' full' : ''}">${d.best} von ${t.q.length}${d.heard ? ', gehört' : ''}</span>` : '<span class="tstate new">Neu</span>';
@@ -107,7 +107,7 @@ function viewTexts(){
     <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verschwommen und wird vorgelesen. Danach drei Fragen, dann kannst du nachlesen.' : 'Der Text ist sichtbar. Mit „Vorlesen“ unten liest die App ihn vor, Satz für Satz hervorgehoben. Danach drei Fragen.'}</p>
     <div class="tgrid2">${cards}</div>
     <h2 class="grp">Frischer Lesestoff</h2>
-    <div class="rows">${row('wiki', 'Wikipedia-Fundstück', `Ein zufälliger Artikel aus der ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Wikipedia, oft anspruchsvoll (online)`, '', 'book')}</div>`;
+    <div class="rows">${row('wiki', 'Wikipedia-Fundstück', `Ein ausgezeichneter Artikel der ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Wikipedia, möglichst mit Bezug zum ${lang === 'sv' ? 'Norden' : 'spanischsprachigen Raum'}, anspruchsvoll (online)`, '', 'book')}</div>`;
 }
 const PICO = {
   play:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
@@ -133,7 +133,7 @@ function viewText(){
     const cls = `rs-s${T.playing && i === T.si ? ' on' : ''}${veiled(i) ? ' veil' : ''}${!veiled(i) && evidence.has(i) ? ' ev' : ''}`;
     return veiled(i) ? `<span class="${cls}" data-a="treveal" data-i="${i}" role="button" aria-label="Satz ${i + 1}: ${T.tapped === i ? 'aufdecken' : 'noch einmal hören'}">${esc(s)}</span>` : `<span class="${cls}" data-i="${i}">${linkWords(s, lang)}</span>`; }).join(' ')}</p>`).join('')}</article>`;
   const hero = `<header class="rhero">
-      <div class="tchips">${W ? '<span class="tag">Wikipedia</span>' : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>
+      <div class="tchips">${W ? `<span class="tag">Wikipedia</span>${W.label ? `<span class="tag">${esc(W.label)}</span>` : ''}` : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>
       <h1 class="rtitle" lang="${lang}">${esc(W ? W.title : t.title)}</h1>
       <div class="rprog" aria-hidden="true"><i style="width:${Math.round(100 * Math.min(heard, list.length) / Math.max(1, list.length))}%"></i></div>
       ${veil ? `<p class="rhint">${fold ? 'Der Text bleibt bis nach den Fragen verdeckt.' : 'Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn. Nach dem letzten Satz kommen die Fragen.'}</p>` : ''}
@@ -146,7 +146,7 @@ function viewText(){
         : `<button type="button" class="pbtn play wide" data-a="tplayall">${T.playing ? PICO.pause + '<span>Pause</span>' : PICO.play + '<span>Vorlesen</span>'}</button>`}
       <span class="pspace"></span><span class="sr-only" aria-live="polite">Satz ${Math.min(T.si + 1, list.length)} von ${list.length}</span>
       ${answered ? nextBtn : `<button type="button" class="pchip" data-a="tslow" aria-pressed="${!!T.slow}">${PICO.slow}<span>Langsam</span></button>
-      ${veil ? `<button type="button" class="pchip" data-a="tshowall">${PICO.eye}<span>Text zeigen</span></button>` : ''}`}
+      ${T.hidden && (veil || T.unveiled) && !done ? `<button type="button" class="pchip" data-a="tshowall" aria-pressed="${!veil}">${PICO.eye}<span>${veil ? 'Text zeigen' : 'Verbergen'}</span></button>` : ''}`}
     </div></div>`;
   const looked = T.looked.length ? `<h2 class="grp">Nachgeschlagen</h2><div class="wtray">${T.looked.map(w => { const e = lookupWord(lang, w); return `<button type="button" class="wchip" data-a="lookup" data-w="${esc(w)}"><b lang="${lang}">${esc(w)}</b>${e ? `<span>${esc(e.de.split(/[;(]/)[0].trim())}</span>` : ''}</button>`; }).join('')}</div>` : '';
   if (W) {
@@ -176,20 +176,39 @@ function viewText(){
     </section>` : '';
   return backBar('Lesen und Hören', 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
 }
-// Wikipedia: zufällige Artikel über die offizielle API (seit Jahren stabil), der längste Einleitungstext gewinnt
+// Wikipedia-Fundstück: nur Artikel, die die Wikipedia-Gemeinschaft selbst ausgezeichnet hat (exzellent bzw. gut),
+// solche mit Bezug zum Kulturraum der Sprache zuerst, schon Gesehenes nicht noch einmal. Zufällig ist nur der
+// Einstieg in die alphabetische Liste der Kategorie (die API kennt keinen Zufall innerhalb einer Kategorie).
+const WIKI_CATS = {
+  sv:[['Kategori:Wikipedia:Utmärkta artiklar', 'Exzellenter Artikel'], ['Kategori:Wikipedia:Bra artiklar', 'Guter Artikel']],
+  es:[['Categoría:Wikipedia:Artículos destacados', 'Exzellenter Artikel'], ['Categoría:Wikipedia:Artículos buenos', 'Guter Artikel']]
+};
+const WIKI_NEAR = {
+  sv:/\b(sverige|svensk\w*|stockholm\w*|göteborg\w*|malmö|skån\w*|norrland\w*|lappland\w*|sam(er|isk\w*)|nord(en|isk\w*)|skandinavi\w*|finland\w*|finsk\w*|norge|norsk\w*|danmark|dansk\w*|island|isländsk\w*|uppsala|gotland\w*|öland|kiruna|östersjö\w*|vikinga\w*)\b/i,
+  es:/\b(españa|español\w*|hispan\w*|madrid\w*|barcelon\w*|andaluc\w*|cataluñ\w*|catalán|catalan\w*|vasc\w*|galicia|galleg\w*|castilla|castellan\w*|méxico|mexican\w*|argentin\w*|chile\w*|colombia\w*|perú|peruan\w*|cuba\w*|venezol\w*|venezuela|bolivia\w*|uruguay\w*|paraguay\w*|ecuador\w*|guatemal\w*|hondur\w*|nicaragu\w*|costa rica|panam\w*|puerto ric\w*|dominican\w*|latinoameric\w*|iberoameric\w*|al-ándalus|canari\w*)\b/i
+};
+const WIKI_LETTERS = { sv:'ABCDEFGHIJKLMNOPRSTUVÅÄÖ', es:'ABCDEFGHIJLMNOPRSTUV' };
+function wikiClean(extract){
+  return extract.replace(/\s*\([^()]*\)/g, '').replace(/ {2,}/g, ' ').split('\n').filter(x => x.trim().length > 40).slice(0, 4).join('\n\n');
+}
 async function fetchWiki(lang){
-  const url = `https://${lang}.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&generator=random&grnnamespace=0&grnlimit=10&prop=extracts%7Cinfo&inprop=url&exintro=1&explaintext=1&exlimit=10`;
-  for (let tries = 0; tries < 3; tries++) {
+  DB.used = DB.used || {}; const seenAll = DB.used.wikiSeen = DB.used.wikiSeen || {}, seen = seenAll[lang] = seenAll[lang] || [];
+  let fallback = null;
+  for (let tries = 0; tries < 4; tries++) {
+    const [cat, label] = WIKI_CATS[lang][tries % 2], L = WIKI_LETTERS[lang], start = L[Math.floor(Math.random() * L.length)];
+    const url = `https://${lang}.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&generator=categorymembers&gcmtitle=${encodeURIComponent(cat)}&gcmnamespace=0&gcmlimit=20&gcmstartsortkeyprefix=${encodeURIComponent(start)}&prop=extracts%7Cinfo&inprop=url&exintro=1&explaintext=1&exlimit=20`;
     const res = await fetch(url); if (!res.ok) throw new Error('http ' + res.status);
     const j = await res.json();
-    const pages = ((j.query && j.query.pages) || []).filter(p => p.extract && p.extract.length >= 350 && !/\(.*\d{3,}.*–/.test(p.title))
-      .sort((a, b) => b.extract.length - a.extract.length);
-    if (pages.length) {
-      const p = pages[0];
-      const text = p.extract.replace(/\s*\([^()]*\)/g, '').replace(/ {2,}/g, ' ').split('\n').filter(x => x.trim().length > 40).slice(0, 4).join('\n\n');
-      return { title:p.title, url:p.fullurl || `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(p.title)}`, body:text };
-    }
+    const pages = ((j.query && j.query.pages) || []).filter(p => p.extract && !seen.includes(p.title))
+      .map(p => Object.assign(p, { body:wikiClean(p.extract) })).filter(p => p.body.length >= 400);
+    const near = pages.filter(p => WIKI_NEAR[lang].test(p.title + ' ' + p.body));
+    const pick = (near.length ? near : pages)[Math.floor(Math.random() * (near.length || pages.length))];
+    if (!pick) continue;
+    const out = { title:pick.title, url:pick.fullurl || `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(pick.title)}`, body:pick.body, label, near:near.length > 0 };
+    if (out.near) { seen.push(out.title); if (seen.length > 400) seen.splice(0, seen.length - 400); save(); return out; }
+    fallback = fallback || out;
   }
+  if (fallback) { seen.push(fallback.title); save(); return fallback; }
   throw new Error('empty');
 }
 function openWiki(){

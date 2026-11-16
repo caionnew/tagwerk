@@ -32,7 +32,7 @@ function readPlay(){
   }
   T.playing = true; T.startedAt = Date.now();
   const tok = ++readToken, tts = LANG[T.lang].tts;
-  if (S.view === 'text') { render(); followSentence(); }
+  if (S.view === 'text') { render(); if (!T.quiz) followSentence(); }
   sayThen(list[T.si], tts, T.slow ? 0.72 : 0.92, () => {
     if (tok !== readToken || S.text !== T || !T.playing) return;
     clearTimeout(readTimer);
@@ -44,7 +44,7 @@ const srcIndex = (T, src) => flatSents(T).findIndex(x => x.includes(src));
 function readCmd(a, b){
   const T = S.text; if (!T) return;
   const t = T.id ? textById(T.lang, T.id) : null;
-  if (a === 'tplayall') { if (T.playing) stopReading(); else { if (T.listened && !T.hidden) { T.si = 0; T.listened = false; } readPlay(); } }
+  if (a === 'tplayall') { if (T.playing) stopReading(); else { if (T.listened) { T.si = 0; T.listened = false; } readPlay(); } }
   else if (a === 'treplay') {
     // Wie bei einem Player: Noch einmal den aktuellen Satz, in der ersten Sekunde den davor
     const back = T.playing && Date.now() - (T.startedAt || 0) < 1200 && T.si > 0;
@@ -142,7 +142,7 @@ function viewText(){
   const nextBtn = answered ? `<button type="button" class="primary pnext" data-a="tqnext">${T.qi + 1 < t.q.length ? 'Nächste Frage' : 'Ergebnis'}</button>` : '';
   const bar = `<div class="actionbar reader-bar"><div class="in">
       <button type="button" class="pbtn" data-a="treplay" aria-label="Satz noch einmal">${PICO.replay}</button>
-      ${T.hidden || answered ? `<button type="button" class="pbtn play" data-a="tplayall" aria-label="${T.playing ? 'Pause' : 'Weiter hören'}">${T.playing ? PICO.pause : PICO.play}</button>`
+      ${T.hidden || answered ? `<button type="button" class="pbtn play" data-a="tplayall" aria-label="${T.playing ? 'Pause' : T.listened ? 'Von vorn hören' : 'Weiter hören'}">${T.playing ? PICO.pause : PICO.play}</button>`
         : `<button type="button" class="pbtn play wide" data-a="tplayall">${T.playing ? PICO.pause + '<span>Pause</span>' : PICO.play + '<span>Vorlesen</span>'}</button>`}
       <span class="pspace"></span><span class="sr-only" aria-live="polite">Satz ${Math.min(T.si + 1, list.length)} von ${list.length}</span>
       ${answered ? nextBtn : `<button type="button" class="pchip" data-a="tslow" aria-pressed="${!!T.slow}">${PICO.slow}<span>Langsam</span></button>

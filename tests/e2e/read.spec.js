@@ -138,3 +138,21 @@ test('Hören: „Text zeigen“ lässt sich mit „Verbergen“ wieder zurückne
   await expect(chip).toHaveText('Text zeigen');
   expect(await page.locator('.reader .rs-s.veil').count()).toBeGreaterThan(5);
 });
+test('Hören: Bei den Fragen spielt „Abspielen“ den ganzen Text von vorn, die Frage bleibt im Bild', async ({ page }) => {
+  await page.addInitScript(fakeSpeech);
+  await seed(page, freshDB('es'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=texts]');
+  await page.click('[data-a=tdefmode][data-v=listen]');
+  await page.click('[data-a=textopen][data-id=siesta]');
+  await expect(page.locator('.tq')).toBeVisible({ timeout:20000 });
+  const play = page.locator('.reader-bar [data-a=tplayall]');
+  await expect(play).toHaveAttribute('aria-label', 'Von vorn hören');
+  const before = await page.evaluate(() => window.__said.length);
+  const qTop = await page.$eval('.tq-q', e => Math.round(e.getBoundingClientRect().top));
+  await play.click();
+  await expect.poll(() => page.evaluate(n => window.__said.slice(n), before)).toContain('Mucha gente cree que en España todo el mundo duerme la siesta.');
+  await expect.poll(() => page.evaluate(n => window.__said.length - n, before), { timeout:8000 }).toBeGreaterThanOrEqual(3);
+  expect(await page.$eval('.tq-q', e => Math.round(e.getBoundingClientRect().top))).toBe(qTop);
+});

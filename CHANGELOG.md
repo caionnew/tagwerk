@@ -2,6 +2,10 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.24.1
+- **Hören: Text bei den Fragen noch einmal von vorn.** Ist der Text zu Ende gehört, spielt „Abspielen“ ihn wieder ab dem ersten Satz (vorher kam beim Hören nur der letzte Satz). Während der Fragen springt die Seite dabei nicht mehr zum gerade gelesenen Satz, die Frage bleibt im Bild. Der Pfeil links spielt weiterhin den aktuellen Satz noch einmal.
+- **Themenliste für Lesetexte:** `docs/THEMEN.md` sammelt Leitlinien, die nächste Runde Themen (El Gordo ersetzt durch „Las doce uvas“, weil La ONCE schon das Lotterie-Thema hat), weitere Ideen und was schon geschrieben ist.
+
 ## 24.24.0
 - **16 neue Lesetexte auf B2/C1**, je acht auf Schwedisch und Spanisch, mit drei Fragen und drei Sätzen fürs Tagwerk. Schwedisch: Offentlighetsprincipen, Grannens lön (öffentliche Einkommen, seit 2023 nur noch als Summe), En stad som flyttar (Kiruna, die Kirche zog im August 2025 um), Samernas rättigheter (Girjas-Urteil, Wahrheitskommission 2026), Skolor med vinst, Från alliansfrihet till Nato, Systembolaget, Miljonprogrammet. Spanisch: La hora equivocada, La memoria que divide, Una laguna con derechos (Mar Menor), La ONCE, Chile y sus dos constituciones fallidas, Cannabis en la farmacia (Uruguay), Un Estado plurinacional (Bolivien), Barcelona contra los pisos turísticos. Fakten vorher an Quellen geprüft (Behörden, Gesetzblätter, Gerichte, Statistikämter). Bei „Fortgeschritten“ stehen C1-Texte oben.
 - **Wikipedia-Fundstück nach Kriterien:** nur Artikel, die die Wikipedia-Gemeinschaft als exzellent oder gut ausgezeichnet hat, solche mit Bezug zum Norden bzw. zum spanischsprachigen Raum zuerst, schon gezeigte nicht noch einmal. Die Auszeichnung steht als Schild über dem Titel. Vorher war es ein zufälliger Artikel, oft ein kurzer Eintrag zu einem Dorf oder einer Käferart.

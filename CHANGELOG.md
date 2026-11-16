@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.28.0
+- **Fehler behoben: Bonus „Eigener Satz“ blieb auf „Wird geprüft“ hängen.** Tippte man weiter, während LanguageTool noch prüfte, wurde die Antwort verworfen, „Prüfen“ blieb gesperrt und die Zeile „Wird geprüft“ stand für immer da (auf GitHub fiel deshalb der Browsertest durch). Jetzt zählt nur die neueste Prüfung, „Prüfen“ ist nie gesperrt, eine veraltete Antwort entfernt nur die Zeile, ohne die Seite neu zu zeichnen (die Tastatur bleibt offen), und Markierungen beziehen sich immer auf den geprüften Text. Der Test spielt den Fall jetzt mit verzögerter Antwort fest nach.
+- **Nachsprechen: Der Satz spielt von selbst**, sobald er erscheint (nach „Nachsprechen“, „Nächster Satz“ oder „Überspringen“, also immer als Folge eines Antippens). Der Haken bei „Hören“ kommt erst, wenn der Satz zu Ende gehört ist, bei „Mitsprechen“ nach dem ersten ganzen Durchgang. Der Hauptknopf zeigt währenddessen schon den nächsten Schritt.
+- **„Versuch N“ zählt je Satz.** Vorher zählte es über die ganze Runde. Die Übersicht am Ende nennt weiter alle Versuche zusammen.
+
 ## 24.27.0
 - **Nachsprechen: Mitsprechen in Schleife.** Ein Antippen auf „Mitsprechen“ spielt das Original wieder und wieder (gut eine Sekunde Pause dazwischen, höchstens zehnmal), bis du es noch einmal antippst. Die Zeile darunter zählt die Durchgänge mit. Den Knopf gibt es jetzt auch nach der Aufnahme, neben „Original“, „Du“ und „Im Wechsel“ (zwei Reihen, gleich breit).
 - **Abspielposition im Wellenbild:** Beim Abspielen läuft eine Linie mit, dahinter füllt sich der gespielte Teil; beim Balken der Computerstimme füllt sich der Balken selbst. „Im Wechsel“ zeigt erst das Original, dann deine Spur. Die Bewegung rechnet der Browser selbst (Web Animations), sie läuft gleichmäßig; die Verzögerung der Tonausgabe (etwa über Bluetooth) wird berücksichtigt, soweit der Browser sie meldet. Auch in der Übersicht am Ende.

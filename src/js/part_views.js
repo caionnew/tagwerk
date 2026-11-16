@@ -513,7 +513,7 @@ function bonusHtml(r){
   const item = itemById(c.id), tr = trapMeta(lang, c.trap);
   const lt = b.lt === 'loading' ? '<p class="hint"><span class="dots">Wird geprüft</span></p>'
     : typeof b.lt === 'string' ? `<p class="hint">${esc(b.lt)}</p>`
-    : b.lt ? ltHtml(b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.${lang === 'sv' ? ' Für Schwedisch vor allem die Rechtschreibung.' : ''}</p>` : '';
+    : b.lt ? ltHtml(b.ltText || b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.${lang === 'sv' ? ' Für Schwedisch vor allem die Rechtschreibung.' : ''}</p>` : '';
   const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>` : '';
   return `<h2 class="grp">Bonus: eigener Satz</h2><section class="chart bonus">
     <p class="bq">Schreib einen eigenen Satz mit ${ex}</p>
@@ -522,7 +522,7 @@ function bonusHtml(r){
     <textarea id="bonusText" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="Dein Satz">${esc(b.text || '')}</textarea>
     ${charbar(lang)}
     ${res}${lt}
-    <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck"${b.lt === 'loading' ? ' disabled' : ''}>Prüfen</button></div>
+    <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck">Prüfen</button></div>
   </section>`;
 }
 function viewRunDone(){

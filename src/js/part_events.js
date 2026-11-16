@@ -218,9 +218,15 @@ document.addEventListener('click', e => {
       if (bo.res.own) {
         if (navigator.onLine === false) bo.lt = 'Ohne Internet nur diese Grundprüfung. Grammatik und Rechtschreibung prüft LanguageTool, sobald du online bist.';
         else {
-          const text = bo.text; bo.lt = 'loading';
-          languageTool(text, r.lang).then(m => { if (S.run === r && bo.text === text) { bo.lt = m; render(); } })
-            .catch(() => { if (S.run === r && bo.text === text) { bo.lt = 'LanguageTool ist gerade nicht erreichbar. Tipp in einer Minute noch einmal auf Prüfen.'; render(); } });
+          // Nur die neueste Prüfung zählt. Wurde inzwischen weitergetippt, fällt die Antwort weg (kein „Wird geprüft“, das hängen bleibt)
+          const text = bo.text, req = bo.req = (bo.req || 0) + 1; bo.lt = 'loading';
+          const apply = v => {
+            if (S.run !== r || bo.req !== req) return;
+            // Weitergetippt: nur die Zeile „Wird geprüft“ entfernen, nicht neu zeichnen (die Tastatur bliebe sonst nicht offen)
+            if (bo.text !== text) { bo.lt = undefined; const d = document.querySelector('.bonus .dots'); if (d) d.closest('p').remove(); return; }
+            bo.lt = v; bo.ltText = text; render();
+          };
+          languageTool(text, r.lang).then(apply).catch(() => apply('LanguageTool ist gerade nicht erreichbar. Tipp in einer Minute noch einmal auf Prüfen.'));
         }
       }
       render(); break;

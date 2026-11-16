@@ -23,17 +23,19 @@ async function open(page){
 
 test('Nachsprechen: hören, mitsprechen, aufnehmen; Auswertung, Abspielposition, Mitsprechen in Schleife, zweiter Versuch, Übersicht; Mikrofon danach frei', async ({ page }) => {
   await open(page);
-  // Hören: Der Hauptknopf führt durch die Schritte, das gerade gesprochene Wort ist markiert
-  await expect(page.locator('.shbar .primary')).toHaveText('Anhören');
-  await expect(page.locator('.shstep.cur')).toContainText('Hören');
-  await page.click('.shbar .primary');
+  // Hören läuft von selbst; das gerade gesprochene Wort ist markiert. Der Haken kommt erst, wenn der Satz zu Ende ist
   await expect(page.locator('.shs .w.kar')).toHaveCount(1);
-  await expect(page.locator('.shstep.done')).toContainText('Hören');
+  await expect(page.locator('.shstep[data-m=hear]')).toHaveClass(/\bon\b/);
+  await expect(page.locator('.shstep.done')).toHaveCount(0);
   await expect(page.locator('.shbar .primary')).toHaveText('Mitsprechen');
   await expect(page.locator('.shs .w.kar')).toHaveCount(0, { timeout:8000 });
+  await expect(page.locator('.shstep.done')).toHaveText('Hören');
+  // Mitsprechen: Haken erst nach dem ersten ganzen Durchgang
   await page.click('.shbar .primary');
   await expect(page.locator('#shtip')).toContainText('Jetzt mitsprechen');
   await expect(page.locator('.shbar .primary')).toHaveText('Aufnehmen');
+  await expect(page.locator('.shstep.done')).toHaveCount(1);
+  await expect(page.locator('.shstep.done')).toHaveCount(2, { timeout:8000 });
   // Aufnehmen bricht das Mitsprechen ab; ohne automatische Lautstärkeregelung
   await page.click('.shbar .primary');
   await expect(page.locator('#shlive svg')).toBeVisible();
@@ -74,15 +76,19 @@ test('Nachsprechen: hören, mitsprechen, aufnehmen; Auswertung, Abspielposition,
   await page.click('[data-a=shrec]');
   await expect(page.locator('.shbar .primary')).toHaveText('Fertig');
   await expect(page.locator('.shbar .primary')).toHaveText('Nächster Satz', { timeout:15000 });
+  await expect(page.locator('#shtip')).toContainText('Versuch 2');
   expect(await liveTracks(page)).toBe(0);
   await page.click('[data-a=shnext]');
   await expect(page.locator('.count')).toHaveText('2/8');
-  await expect(page.locator('.shbar .primary')).toHaveText('Anhören');
-  // Beenden: Übersicht mit der Aufnahme des ersten Satzes
+  // Nächster Satz spielt gleich los; Versuche zählen je Satz neu
+  await expect(page.locator('.shs .w.kar')).toHaveCount(1);
+  await page.click('.shstep[data-a=shrec]');
+  await expect(page.locator('#shtip')).toContainText('Versuch 1', { timeout:15000 });
+  // Beenden: Übersicht mit den Aufnahmen beider Sätze, Versuche insgesamt
   await page.click('[data-a=shquit]');
   await expect(page.locator('.done-h')).toHaveText('Runde geschafft');
-  await expect(page.locator('.shrow')).toHaveCount(1);
-  await expect(page.locator('.kpis')).toContainText('2Versuche');
+  await expect(page.locator('.shrow')).toHaveCount(2);
+  await expect(page.locator('.kpis')).toContainText('3Versuche');
   await page.click('[data-a=shall]');
   await expect(page.locator('[data-a=shall]')).toHaveAttribute('aria-pressed', 'true');
   // Verlassen: Wiedergabe aus, nichts gespeichert außer dem Tagesprotokoll

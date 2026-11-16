@@ -77,7 +77,8 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen öffnet die Regel mit �
 test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden erkannt, eigene Sätze gleich mit LanguageTool', async ({ page }) => {
   await seed(page, richDB('sv'));
   let ltCalls = 0;
-  await page.route('https://api.languagetool.org/**', route => { ltCalls++; return route.fulfill({ json:{ matches:[] } }); });
+  // Verzögerte Antwort: Der nächste Satz wird getippt, während die vorige Prüfung noch läuft (so wie auf GitHub)
+  await page.route('https://api.languagetool.org/**', async route => { ltCalls++; await new Promise(x => setTimeout(x, 600)); await route.fulfill({ json:{ matches:[] } }); });
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=quick]');
@@ -94,6 +95,7 @@ test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden 
   await box.fill('Vi åker till stan imorgon bitti.');
   await page.click('[data-a=bonuscheck]');
   await expect(page.locator('.bres.is-warn')).toContainText('kommt noch nicht vor');
+  await expect(page.locator('.bonus .dots')).toHaveText('Wird geprüft');
   const tasks = () => page.evaluate(() => { const d = JSON.parse(localStorage.getItem('tagwerk-offline-v1')); const t = new Date(), p = x => String(x).padStart(2, '0'); return d.log[`${t.getFullYear()}-${p(t.getMonth() + 1)}-${p(t.getDate())}`].sv.n; });
   const before = await tasks();
   await box.fill(`Igår sa min granne något om ${expr} på bussen.`);
@@ -102,7 +104,13 @@ test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden 
   await expect(page.locator('.bres.is-ok')).toContainText(`„${expr}“ steckt drin.`);
   await expect(box).toHaveValue(`Igår sa min granne något om ${expr} på bussen.`);
   await expect(page.locator('.bonus .lt-ok')).toHaveText('Keine Fehler gefunden.');
+  await expect(page.locator('.bonus .dots')).toHaveCount(0);
   expect(ltCalls).toBe(2);
+  // Weitertippen während der Prüfung: Die veraltete Antwort fällt weg, nichts bleibt auf „Wird geprüft“ hängen
+  await page.click('[data-a=bonuscheck]');
+  await box.fill(`Igår sa min granne något om ${expr} på tåget.`);
+  await expect(page.locator('.bonus .dots')).toHaveCount(0, { timeout:3000 });
+  await expect(page.locator('[data-a=bonuscheck]')).toBeEnabled();
   // Die Übung zählt als Aufgabe des Tages, aber nur einmal
   await page.click('[data-a=bonuscheck]');
   await page.waitForTimeout(300);

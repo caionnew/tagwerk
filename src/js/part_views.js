@@ -60,7 +60,7 @@ function weekStrip(){
   return `<button type="button" class="weekstrip" data-a="tab" data-v="progress" aria-label="${label}. Zum Kalender"><span class="wks">${cells}</span><span class="wkc${risk ? ' warn' : ''}">${risk ? 'heute nötig' : cap}</span></button>`;
 }
 function findHtml(lang){
-  const f = fundstueck(lang), L = LANG[lang];
+  const f = fundstueck(lang);
   if (f.kind === 'event') {
     const when = f.diff === 0 ? 'heute' : f.diff === 1 ? 'morgen' : `in ${f.diff} Tagen`;
     return `<section class="find"><p class="find-k">${lang === 'sv' ? 'Bald in Schweden' : 'Bald in der spanischsprachigen Welt'} · ${when}</p>
@@ -102,7 +102,6 @@ function viewHome(){
     const left = od.queue.length - od.idx;
     card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx))} Minuten. Du machst dort weiter, wo du aufgehört hast.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
   } else if (doneToday) {
-    const p = dailyPlan(lang);
     card = `<p class="eyebrow">Heute</p><p class="num">Tagwerk erledigt</p>${todayHtml(lang)}<p class="breakdown">Wenn du noch Zeit hast:</p>
       <div class="choices">
         <button type="button" class="row" data-a="tab" data-v="extra"><span class="txt"><span class="rt">Weiter üben</span><span class="rd">Kurze Runden, Grammatik-Training, Schreiben oder ein Thema gezielt üben.</span></span></button>
@@ -128,7 +127,7 @@ function viewHome(){
   const other = activeLangs().filter(l => l !== lang)[0];
   let otherHtml = '';
   if (other) {
-    const n = langNeed(other), dueN = n.due, last = lastPractice(other), auto = (DB.settings.langMode || 'auto') === 'auto';
+    const n = langNeed(other), dueN = n.due, last = lastPractice(other);
     const since = last ? dayDiff(today(), last) : null;
     const when = since === 0 ? 'heute geübt' : since === 1 ? 'zuletzt gestern' : since == null || since >= 7 ? 'länger nicht geübt' : `zuletzt vor ${since} Tagen`;
     const oDone = doneIn(today(), other);
@@ -136,7 +135,7 @@ function viewHome(){
     const btn = oDone ? `<button type="button" class="link" data-a="lang" data-l="${other}">Ansehen</button>` : `<button type="button" class="link" data-a="otherdaily" data-l="${other}" aria-label="${LANG[other].deName}-Tagwerk starten">${dayDone ? 'Zusätzlich starten' : 'Tagwerk starten'}</button>`;
     otherHtml = `<div class="otherlang"><span class="sq rl-${other}-sq" aria-hidden="true"></span><p><b>${LANG[other].deName}</b> <span class="ol-m">${state}</span></p>${btn}</div>`;
   }
-  return `${topLine()}${hello}${noticeHtml() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${weakHtml(lang)}${findHtml(lang)}`;
+  return `${topLine()}${hello}${noticeHtml() || storeHint() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${weakHtml(lang)}${findHtml(lang)}`;
 }
 // Was heute in dieser Sprache passiert ist: Zeit, Neues, Wiederholungen, alles Üben des Tages zusammen
 function todayHtml(lang){
@@ -713,16 +712,13 @@ function viewProgress(){
   const practiced = items.filter(i => stOf(i.id)).length;
   const mature = matureCount(lang), nextM = nextMilestone(mature), prevM = prevMilestone(mature);
   const known = Math.round(knownEstimate(lang));
-  const fresh7 = sumLog(lang, 7, 'fresh'), rev7 = sumLog(lang, 7, 'rev'), secs7 = sumLog(lang, 7, 'secs');
+  const secs7 = sumLog(lang, 7, 'secs');
   const rev30 = sumLog(lang, 30, 'rev'), revOk30 = sumLog(lang, 30, 'revOk'), revM30 = sumLog(lang, 30, 'revM'), revMOk30 = sumLog(lang, 30, 'revMOk');
   const fc = forecast(lang), fcMax = Math.max(1, ...fc.map(f => f.n)), cap = size().maxRev;
   const dist = { anchored:0, mature:0, young:0, neu:0 };
   items.forEach(i => { const st = stOf(i.id); if (!st) dist.neu++; else if ((st.ivl || 0) >= ANCHORED) dist.anchored++; else if ((st.ivl || 0) >= MATURE) dist.mature++; else dist.young++; });
-  const distRows = [['anchored', 'Verankert', 'nächste Wiederholung erst in einem Jahr oder später'], ['mature', 'Gefestigt', 'nächste Wiederholung in 3 Wochen bis 1 Jahr'], ['young', 'Im Aufbau', 'kommt innerhalb von 3 Wochen wieder'], ['neu', 'Neu', 'noch nicht geübt']];
   const hard = hardItems(lang);
   const collected = DB.own[lang].map(o => ({ id:o.id, de:o.de, target:o.target })).concat(DB.tat[lang].filter(o => !o.auto).map(o => ({ id:o.id, de:o.de, target:o.target })));
-  const autoN = DB.tat[lang].filter(o => o.auto).length;
-  const week7 = [fresh7 ? plural(fresh7, 'neuer Satz', 'neue Sätze') : '', rev7 ? plural(rev7, 'Wiederholung', 'Wiederholungen') : '', secs7 ? fmtMin(secs7) : ''].filter(Boolean);
   const firstDate = tot.first ? dateOf(tot.first) : null;
   const ret = rev30 >= 10 ? revOk30 / rev30 : null;
   const tabs = `<div class="ptabs" role="tablist">${[['all', 'Überblick'], ['sv', 'Schwedisch'], ['es', 'Spanisch']].map(([k, l]) => `<button type="button" role="tab" aria-selected="${tab === k}" data-a="ptab" data-t="${k}">${l}</button>`).join('')}</div>`;
@@ -807,6 +803,18 @@ function popupHtml(){
   </div>`;
 }
 function renderPopup(){ const el = document.getElementById('pop'); if (el) el.innerHTML = popupHtml(); document.body.classList.toggle('has-pop', !!S.pop); }
+// Speicher: Balken bis zur Grenze von etwa 5 MB, Anteil anderer Seiten unter derselben Adresse, dauerhaft ja oder nein
+const fmtMB = n => (n >= 1024 * 1024 ? `${(n / 1048576).toFixed(1).replace('.', ',')} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
+const storePct = () => Math.min(100, Math.round(storeUsed() / STORE.limit * 100));
+function storeRow(){
+  if (!STORE.own) STORE.own = JSON.stringify(DB).length;
+  const warn = storeUsed() >= STORE_WARN;
+  const other = STORE.other >= 10240 ? ` Davon ${fmtMB(STORE.other)} von anderen Seiten unter ${esc(location.host || 'dieser Adresse')}.` : '';
+  const pers = STORE.persisted === true ? ' Der Browser behält die Daten dauerhaft.' : STORE.persisted === false ? ' Der Browser darf die Daten bei Platzmangel löschen.' : '';
+  const text = ((warn ? 'Der Speicher wird knapp. Exportier bitte ein Backup.' : '') + other + pers).trim();
+  return `<div class="row static store${warn ? ' warn' : ''}"><span class="txt"><span class="rt">Gespeichert: ${fmtMB(storeUsed())} von etwa 5\u00a0MB</span><span class="mbar" role="img" aria-label="${storePct()} % belegt"><span style="width:${Math.max(2, storePct())}%"></span></span>${text ? `<span class="rd">${text}</span>` : ''}${STORE.persisted === false ? '<button type="button" class="link" data-a="persist">Dauerhaft speichern</button>' : ''}</span></div>`;
+}
+const storeHint = () => (storeUsed() >= STORE_WARN ? `<div class="notice warn"><span>Der Speicher ist zu ${storePct()} % voll. Exportier bitte ein Backup.</span><button type="button" class="link" data-a="toSettings">Ansehen</button></div>` : '');
 function viewSettings(){
   const L = LANG[S.lang];
   const autoN = DB.tat[S.lang].filter(o => o.auto).length;
@@ -839,7 +847,7 @@ function viewSettings(){
   </div>
   <h2 class="grp">Daten</h2>
   <div class="rows">
-    ${(() => { const kb = Math.round(JSON.stringify(DB).length / 1024); return `<div class="row static"><span class="txt"><span class="rt">Gespeichert: etwa ${kb >= 1024 ? (kb / 1024).toFixed(1).replace('.', ',') + ' MB' : kb + ' KB'}</span><span class="rd">${kb > 3500 ? 'Der Browser erlaubt meist etwa 5 MB. Exportier bitte ein Backup.' : 'Ältere Tagesstände werden wöchentlich zusammengefasst, damit der Speicher auch nach Jahren reicht.'}</span></span></div>`; })()}
+    ${storeRow()}
     <button type="button" class="row" data-a="export"><span class="txt"><span class="rt">Backup exportieren</span><span class="rd">Dein Fortschritt liegt nur auf diesem Gerät. ${DB.lastBackup ? `Letztes Backup am ${dateOf(DB.lastBackup).getDate()}. ${MONTHS_FULL[dateOf(DB.lastBackup).getMonth()]} ${dateOf(DB.lastBackup).getFullYear()}.` : 'Noch kein Backup gemacht.'}</span></span></button>
     ${canShareBackup() ? '<button type="button" class="row" data-a="shareBackup"><span class="txt"><span class="rt">Backup teilen</span><span class="rd">Etwa in Google Drive oder per Mail sichern</span></span></button>' : ''}
     <label class="row"><span class="txt"><span class="rt">Backup einspielen</span><span class="rd">Ersetzt den aktuellen Stand. Danach lässt es sich rückgängig machen.</span></span><input type="file" id="importFile" hidden></label>

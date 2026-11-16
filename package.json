@@ -1,6 +1,6 @@
 {
   "name": "tagwerk",
-  "version": "24.21.0",
+  "version": "24.22.0",
   "private": true,
   "description": "Offline-Lern-App für Schwedisch und Spanisch: Sätze mit FSRS-Wiederholung, Grammatik-Generatoren, Schreiben mit Textprofil. Ohne Konto, ohne KI.",
   "scripts": {
@@ -10,13 +10,17 @@
     "test:e2e": "npm run build && playwright test",
     "test:all": "npm run test:unit && npm run test:e2e",
     "geo": "node tools/build_geo.js",
-    "serve": "npm run build && npx --yes http-server dist -p 8080 -c-1",
+    "serve": "npm run build && node tools/serve.js",
     "screenshots": "npm run build && node tools/screenshots.js",
+    "sicht": "node tools/sicht.js",
+    "lint": "node tools/lint.js",
     "icons": "node tools/icons.js"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "d3-geo": "^3.1.1",
+    "eslint": "9.39.5",
+    "globals": "17.14.0",
     "topojson-client": "^3.1.0",
     "topojson-simplify": "^3.0.3",
     "world-atlas": "^2.0.2"

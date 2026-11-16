@@ -44,7 +44,6 @@ const SIZES = {
   normal:{ label:'Normal', newPer:6, maxRev:20, gen:6 },
   lang:{ label:'Lang', newPer:10, maxRev:35, gen:8 }
 };
-const INTERVALS = [0, 1, 2, 4, 8, 16, 32, 64];
 const SECS = { tiles:30, cloze:25, free:45, gen:20, dict:30 };
 const NAMES = ['anna','peter','lisa','jonas','juan','ana','pablo','madrid','göteborg','sverige','uppsala','lund','stockholm','norge','méxico','barcelona','berlín','colonia','sevilla','perú','chile','españa'];
 
@@ -183,10 +182,21 @@ function backupSummary(){
   return `${n === 1 ? '1 Satz' : `${n} Sätze`}, ${days === 1 ? '1 Übungstag' : `${days} Übungstage`}`;
 }
 let saveTimer = null;
+// Speicherbedarf in Zeichen (≈ Byte): eigener Lernstand und alles andere unter derselben Adresse.
+// Firefox erlaubt pro Adresse etwa 5 MB localStorage, alle Seiten unter caionnew.github.io teilen sich das.
+const STORE = { own:0, other:0, limit:5 * 1024 * 1024, persisted:null };
+function measureStore(){
+  let own = 0, other = 0;
+  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i), n = k.length + (localStorage.getItem(k) || '').length; if (k === KEY) own = n; else other += n; } } catch (e) {}
+  STORE.own = own; STORE.other = other;
+}
+const storeUsed = () => STORE.own + STORE.other;
+const STORE_WARN = 3 * 1024 * 1024;
 function save(){
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(DB)); }
+    const json = JSON.stringify(DB); STORE.own = json.length;
+    try { localStorage.setItem(KEY, json); }
     catch (e) { note('Speichern ist fehlgeschlagen. Exportier zur Sicherheit ein Backup unter Einstellungen.', 'warn'); render(); }
   }, 150);
 }

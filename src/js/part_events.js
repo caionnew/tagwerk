@@ -207,6 +207,9 @@ document.addEventListener('click', e => {
     case 'niveau': DB.settings.niveau = ['grund', 'mittel', 'fort'].includes(b.dataset.v) ? b.dataset.v : 'mittel'; S.dailyPlanCache = null; save(); render(); break;
     case 'undoimport': if (S.undoDB) { DB = JSON.parse(S.undoDB); S.undoDB = null; save(); buildBank(); note('Vorheriger Stand wiederhergestellt.', 'ok'); render(); } break;
     case 'reload': location.reload(); break;
+    case 'persist':
+      navigator.storage.persist().then(p => { STORE.persisted = !!p; note(p ? 'Der Browser behält deine Daten jetzt dauerhaft.' : 'Der Browser hat abgelehnt. Ein Backup schützt deinen Stand trotzdem.', p ? 'ok' : 'warn'); render(); }).catch(() => {});
+      break;
     case 'nagoff': DB.used = DB.used || {}; DB.used.backupNag = today(); save(); render(); break;
     case 'pron': {
       const sh = S.shadow; if (!sh || sh.listening) break;
@@ -398,7 +401,8 @@ pruneTlog();
 compactSnaps();
 snapshot();
 // Den Browser bitten, die Daten dauerhaft zu behalten und nicht bei Speicherknappheit zu löschen
-try { if (navigator.storage && navigator.storage.persist) navigator.storage.persisted().then(p => { if (!p) navigator.storage.persist(); }); } catch (e) {}
+measureStore();
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persisted().then(p => p || navigator.storage.persist()).then(p => { STORE.persisted = !!p; if (S.view === 'settings') render(); }).catch(() => {}); } catch (e) {}
 restoreRun();
 syncThemeColor();
 if (!handleLaunch()) render(); else if (S.view === 'own') render();

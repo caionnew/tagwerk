@@ -13,7 +13,8 @@ test('Andere Sprache sichtbar, ihr Tagwerk startet direkt, die Wahl gilt für de
   await page.click('[data-a=quit]');
   await expect(page.locator(`.langseg [data-a=lang][data-l=${other}]`)).toHaveAttribute('aria-checked', 'true');
   await expect(page.locator(`.otherlang [data-l=${other}]`)).toHaveCount(0);
-  // Die Wahl steht für heute im Speicher; beim nächsten Start liest dayLang() sie (Einheitstest). Kein Neuladen:
-  // Bei file://-Seiten setzt das Test-Gerüst den Speicher dabei gelegentlich auf den Ausgangsstand zurück.
+  // Die Wahl gilt für heute, auch nach einem Neustart der App
   await page.waitForFunction(o => { const d = JSON.parse(localStorage.getItem('tagwerk-offline-v1') || '{}'); return d.dayLang && d.dayLang.manual && d.dayLang.l === o; }, other);
+  await page.reload();
+  await expect(page.locator(`.langseg [data-a=lang][data-l=${other}]`)).toHaveAttribute('aria-checked', 'true');
 });

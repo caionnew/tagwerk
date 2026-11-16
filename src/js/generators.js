@@ -146,7 +146,7 @@ function genSince(){
 function genTempus(){
   if (Math.random() < 0.22) return genSince();
   const v = pick(VERBS_SV);
-  const [inf, pret, sup, deObj, svObj, part, aux, long, exp, q, deExp, svExp] = v;
+  const [, pret, sup, deObj, svObj, part, aux, long, exp, q, deExp, svExp] = v;
   const frames = ['past', 'past', 'past'];
   if (exp) frames.push('exp', 'exp');
   if (q) frames.push('q');

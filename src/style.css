@@ -793,3 +793,6 @@ section.ex #fb:empty{ display:none; }
 .kpis .kl .sq{ width:8px; height:8px; border-radius:2px; }
 .today-kpis{ margin-bottom:18px; }
 .today-mat{ margin:-8px 0 16px; }
+.store .mbar{ display:block; margin:8px 0 6px; }
+.store .link{ display:block; margin-top:6px; }
+.store.warn .mbar span{ background:var(--warn); }

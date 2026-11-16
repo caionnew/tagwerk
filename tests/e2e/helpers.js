@@ -1,7 +1,7 @@
 // Gemeinsame Hilfen für die Browser-Tests: App-Adresse, Startprofile, Fehlererfassung, Aufgaben beantworten.
 const path = require('path'), fs = require('fs');
 const base = require('@playwright/test');
-const APP = 'file://' + path.join(__dirname, '..', '..', 'dist', 'index.html');
+const APP = 'http://127.0.0.1:4173/'; // tools/serve.js, gestartet von playwright.config.js
 const KEY = 'tagwerk-offline-v1';
 // Gleiche Kennung wie in der App: Sprache + djb2-Hash des Zielsatzes
 const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h.toString(36); };

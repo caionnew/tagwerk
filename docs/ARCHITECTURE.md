@@ -61,6 +61,8 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 
 Ältere Speicherstände werden beim Laden ergänzt; Felder werden nie umbenannt, damit Backups aus allen Versionen lesbar bleiben.
 
+Firefox erlaubt pro Adresse etwa 5 MB localStorage, und alle Seiten unter `caionnew.github.io` teilen sich diese Grenze. `STORE` (`part_head.js`) misst beim Start den eigenen Stand und alles andere unter der Adresse, `save()` aktualisiert die eigene Größe. Die Einstellungen zeigen die Belegung als Balken; ab 3 MB (`STORE_WARN`) warnt auch „Heute“. Beim Start bittet die App mit `navigator.storage.persist()` darum, dass der Browser die Daten nicht bei Platzmangel löscht; das gilt für allen Speicher der Adresse. Lehnt der Browser ab, bieten die Einstellungen „Dauerhaft speichern“ an, denn auf eine Handlung hin stimmen Browser eher zu.
+
 ## App-Symbol
 
 `design/icons/*.svg` sind Entwürfe auf 512 × 512 mit dem Motiv im inneren Kreis (80 %, sichere Zone für Masken). `tools/icons.js` rendert den in `design/icons/AKTIV` genannten Entwurf zu `public/icon-192.png` und `icon-512.png` (rund, Ecken durchsichtig, `purpose: any`) und `icon-maskable-512.png` (randlos, `purpose: maskable`). Farben aus der App: Blau `#1D5689`, Safran `#E3A21A`, Papier `#F3F5F4`.
@@ -76,4 +78,9 @@ Offline funktioniert alles außer: Wikipedia-Fundstück, Nachschub und Suche bei
 ## Tests
 
 - `tests/unit/` (Node, ohne Browser): Inhalte, Wörterbuch-Abdeckung, FSRS gegen die Referenz, Wiederholungssperre, Rundenauswahl, Serienregel, Feste, Fehlerart, Schreibprüfung. `tests/helpers/load.js` lädt die Quellen in eine VM und ersetzt die Oberfläche durch Platzhalter.
-- `tests/e2e/` (Playwright, Handygröße): Start, kompletter Tagwerk-Durchlauf, Wortkästchen, „Meine ist auch richtig“, Nachschlagen, Fortschritt, Schreiben, Land & Leute, Teilen, Schnellzugriff, reduzierte Bewegung. Jeder Test schlägt fehl, sobald die Seite einen JavaScript-Fehler wirft.
+- `tests/unit/lint.test.js` prüft mit ESLint (`tools/lint.js`) das Gesamtskript in Bau-Reihenfolge, wie es im Browser läuft: undefinierte und doppelt vergebene Namen, doppelte Schlüssel, unbenutzte Variablen, toter Code. Einzelne Dateien allein ergäben Fehlalarme, weil sie Namen aus anderen Dateien benutzen. Funde nennen Datei und Zeile der Quelle.
+- `tests/e2e/` (Playwright, Handygröße): Start, kompletter Tagwerk-Durchlauf, Wortkästchen, „Meine ist auch richtig“, Nachschlagen, Fortschritt, Schreiben, Land & Leute, Teilen, Schnellzugriff, reduzierte Bewegung, Offline-Start, Speicheranzeige. Jeder Test schlägt fehl, sobald die Seite einen JavaScript-Fehler wirft. Die Tests laufen gegen `tools/serve.js` unter `http://127.0.0.1:4173/` (startet `playwright.config.js` selbst), also mit Service Worker, eigenem Speicher je Test und echtem Neuladen.
+
+## Sichtprüfung
+
+`node tools/sicht.js` fotografiert die Hauptansichten (Heute, erledigtes Tagwerk, Üben, Fortschritt, Aufgabe, Rückmeldung, Rundenende, Einstellungen, Lesen) in 390 × 844 und 411 × 923, hell und dunkel, nach `sicht/`. Mit `--vs <Git-Stand>` baut es den älteren Stand in einem eigenen Arbeitsbaum, fotografiert ihn ebenso und legt für jede geänderte Ansicht ein Bild „vorher | jetzt“ nach `sicht/vergleich/`; die Ausgabe nennt die geänderten Bilder. `Math.random` ist im Browser festgelegt, damit beide Stände dieselben Aufgaben zeigen. `--nur heute,aufgabe` beschränkt die Ansichten, `--ganz` fotografiert die ganze Seite.

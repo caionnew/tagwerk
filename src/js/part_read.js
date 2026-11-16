@@ -9,7 +9,7 @@ const textMode = () => (DB.settings.textMode === 'listen' ? 'listen' : 'read');
 function openText(lang, id, mode){
   const t = textById(lang, id); if (!t) return;
   stopReading();
-  S.text = { lang, id, hidden:(mode || textMode()) === 'listen', sents:textSentences(t.body), si:0, playing:false, slow:false, picks:{}, qi:0, revealed:[], looked:[], quiz:false, tapped:null, slow:!!DB.settings.slowRead, t0:Date.now() };
+  S.text = { lang, id, hidden:(mode || textMode()) === 'listen', sents:textSentences(t.body), si:0, playing:false, slow:!!DB.settings.slowRead, picks:{}, qi:0, revealed:[], looked:[], quiz:false, tapped:null, t0:Date.now() };
   goView('text');
   if (S.text.hidden) readPlay();
 }

@@ -31,17 +31,18 @@ Siehe [docs/INSTALL.md](docs/INSTALL.md). Kurz: Die sechs Dateien aus `dist/` au
 Voraussetzung: Node.js 20 oder neuer.
 
 ```bash
-npm install                 # Entwicklungswerkzeuge (Playwright, Kartenwerkzeuge)
+npm install                 # Entwicklungswerkzeuge (Playwright, ESLint, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests, ohne Browser (173 Tests)
+npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (174 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße (56 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (59 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
+npm run sicht -- --vs origin/main   # Bildschirmfotos aller Ansichten, vorher/nachher
 ```
 
 Eigenes Chromium statt Download: `CHROMIUM_PATH=/pfad/zu/chrome npm run test:e2e`.
 
-Weitere Befehle: `npm run icons -- <name>` erzeugt die App-Symbole aus einem Entwurf in `design/icons/`, `npm run geo` erzeugt die Kartendaten neu, `npm run screenshots` die Bilder oben, `python3 tools/fsrs_reference.py` die FSRS-Referenz (braucht `pip install fsrs==6.3.3`).
+Weitere Befehle: `npm run icons -- <name>` erzeugt die App-Symbole aus einem Entwurf in `design/icons/`, `npm run geo` erzeugt die Kartendaten neu, `npm run screenshots` die Bilder oben, `npm run lint` die ESLint-Prüfung allein, `python3 tools/fsrs_reference.py` die FSRS-Referenz (braucht `pip install fsrs==6.3.3`).
 
 ## Aufbau
 
@@ -53,7 +54,7 @@ src/
   js/                 Logik: Generatoren, Übungsformen, Wiederholung, Prüfung, Statistik, Schreiben, Ansichten
 public/               Manifest, Service Worker, Symbole (aus design/icons/, siehe tools/icons.js)
 design/icons/         Entwürfe für das App-Symbol als SVG; AKTIV nennt den verwendeten
-tools/                Build, Symbole, Kartendaten, FSRS-Referenz, Bildschirmfotos, einspielen.sh (Updates per Termux)
+tools/                Build, ESLint-Prüfung, lokaler Server, Sichtprüfung, Symbole, Kartendaten, FSRS-Referenz, Bildschirmfotos, einspielen.sh (Updates per Termux)
 tests/
   unit/               Node-Tests ohne Browser
   e2e/                Playwright-Tests

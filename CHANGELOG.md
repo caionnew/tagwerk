@@ -2,6 +2,10 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.21.0
+- **Tagesbilanz auf „Heute“:** Nach dem Tagwerk zeigt die Karte unter „Tagwerk erledigt“, was heute in dieser Sprache passiert ist: Minuten, neue Sätze und wie viele Wiederholungen du gewusst hast (etwa „20/22“), dazu „2 Sätze heute gefestigt“, wenn welche dazukamen. Weiteres Üben am selben Tag zählt mit. Ohne Zeit oder Neues steht dort die Zahl der Aufgaben.
+- **„Gleich nochmal üben“ entfällt:** Falsche Sätze kommen schon in derselben Runde ein zweites Mal, und die Lösung stand eben noch da. Eine weitere Runde direkt danach prüfte nur das Kurzzeitgedächtnis. Die Liste „Noch nicht sicher“ bleibt zum Nachlesen und Anhören; die Sätze kommen wie bisher morgen wieder.
+
 ## 24.20.2
 - **Kachel „Tagwerke“ lesbar:** Zahl und Beschriftung wie bei den anderen Kacheln, darunter die Aufteilung nach Sprache (■ 2  ■ 1) in einer Zeile. Vorher brach „■ 2 ■ / 1 Tagwerke“ mitten zwischen Farbpunkt und Zahl um.
 

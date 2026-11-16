@@ -49,12 +49,6 @@ document.addEventListener('click', e => {
     case 'gengo': startRun('gen', { gen:b.dataset.g }); break;
     case 'dict': startRun('dict'); break;
     case 'again': if (r) { S.lang = r.lang; startRun(r.kind, { trap:r.trap, gen:r.gen }); } break;
-    case 'retry': {
-      // Gleich nochmal: die Fehler dieser Runde in derselben Übungsform, ohne den Wiederholungsplan zu verändern
-      if (!r || !(r.missed || []).length) break;
-      const q = r.missed.map(m => (m.id && itemById(m.id) ? exFor(itemById(m.id)) : m.gen && m.data ? { type:'gen', gen:m.gen, data:m.data } : null)).filter(Boolean);
-      S.lang = r.lang; startRun('retry', { queue:q }); break;
-    }
     case 'check': check(); break;
     case 'giveup': giveUp(); setTimeout(() => { DB.used = DB.used || {}; DB.used.gaveup = true; save(); }, 0); break;
     case 'accept': DB.used = DB.used || {}; DB.used.accept = true; selfAccept(); break;

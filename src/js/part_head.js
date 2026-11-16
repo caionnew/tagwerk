@@ -439,7 +439,6 @@ function startRun(kind, opts){
   else if (kind === 'dict') queue = freshFirst(BANK[lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'dict_' + lang, 10).map(i => ({ type:'dict', id:i.id }));
   else if (kind === 'hard') queue = hardItems(lang).map(i => ({ type:'free', id:i.id }));
   else if (kind === 'extraNew') queue = pickNew(lang, (opts && opts.n) || size().newPer).map(exFor);
-  else if (kind === 'retry') queue = ((opts && opts.queue) || []).map(x => Object.assign({}, x, { practice:true }));
   if (!queue.length) { note('Dafür gibt es gerade nichts zu üben.', 'warn'); render(); return; }
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;

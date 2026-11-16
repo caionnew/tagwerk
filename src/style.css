@@ -624,9 +624,6 @@ button.erow:active{ background:var(--accent-soft); }
 .done-kpis{ margin-top:16px; }
 .sits{ margin:14px 0 0; font-size:15px; color:var(--muted); }
 .sits b{ color:var(--ink); font-weight:650; }
-.grp-row{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:24px 4px 8px; }
-.grp-row .grp{ margin:0; }
-.grp-row .link{ font-size:14.5px; white-space:nowrap; }
 .donebox .notice{ margin-top:18px; }
 .readtip{ margin-top:16px; }
 .combo{ display:inline-block; margin:0 0 10px 8px; padding:3px 10px; border-radius:999px; font-size:13.5px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); }
@@ -794,3 +791,5 @@ section.ex #fb:empty{ display:none; }
 .kpis .kl{ display:flex; gap:10px; white-space:nowrap; margin-top:2px; font-variant-numeric:tabular-nums; }
 .kpis .kl > span{ display:inline-flex; align-items:center; gap:4px; }
 .kpis .kl .sq{ width:8px; height:8px; border-radius:2px; }
+.today-kpis{ margin-bottom:18px; }
+.today-mat{ margin:-8px 0 16px; }

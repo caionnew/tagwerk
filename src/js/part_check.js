@@ -182,7 +182,7 @@ function finishAnswer(r, ex, c){
   c.state = 'done'; c.enter = true; buzz(c.result === 'bad' ? 'bad' : 'ok');
   // Serie in der Runde: zählt nur erste Versuche
   if (!ex.requeue) { r.combo = c.result === 'bad' ? 0 : (r.combo || 0) + 1; r.best = Math.max(r.best || 0, r.combo); c.combo = r.combo; }
-  if (ex.id && ex.type !== 'dict' && !ex.requeue && !ex.practice && c.result) {
+  if (ex.id && ex.type !== 'dict' && !ex.requeue && c.result) {
     const g = c.result === 'ok' ? 3 : c.result === 'near' ? 2 : 1;
     c.nextIvl = FSRS.review(DB.st[ex.id] || {}, g, today(), true).ivl;
   }
@@ -230,29 +230,23 @@ function next(){
   if (c && c.state === 'done') {
     const good = c.result === 'ok' || c.result === 'near';
     // Das Rundenergebnis zählt nur den ersten Versuch. Der zweite kommt kurz nach der Lösung und sagt wenig.
-    // Übungsrunden („Gleich nochmal“) zählen im Ergebnis, ändern aber weder Wiederholungsplan noch Statistik der Fehlerquellen.
-    const counts = !ex.requeue, sched = counts && !ex.practice;
+    const counts = !ex.requeue;
     if (counts) { if (good) r.ok++; else r.bad++; }
     const f = { n:1, a:1, ok:good ? 1 : 0, secs:Math.min(120, Math.max(0, Math.round((Date.now() - (r.shownAt || Date.now())) / 1000))) };
     r.secs = (r.secs || 0) + f.secs;
-    if (ex.id && ex.type !== 'dict' && sched) {
+    if (ex.id && ex.type !== 'dict' && counts) {
       if (!c.wasSeen) f.fresh = 1;
       else if (c.wasDue) { f.rev = 1; f.revOk = good ? 1 : 0; }
     }
     logDay(r.lang, f);
-    if (sched) recordAnswer(r.lang, ex, c, good);
     if (counts) {
+      recordAnswer(r.lang, ex, c, good);
       const item = ex.id ? itemById(ex.id) : null;
       (r.res = r.res || []).push({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' });
     }
     if (ex.id && ex.type !== 'dict') {
       const prev = DB.st[ex.id] || { ok:0, bad:0, alts:[] };
-      if (counts && !sched && !good) {
-        const item = itemById(ex.id);
-        r.queue.push({ type:item.kind === 'order' ? 'tiles' : 'cloze', id:ex.id, requeue:true });
-        if (!(r.missed || []).some(x => x.id === ex.id)) (r.missed = r.missed || []).push({ id:ex.id, target:item.target, de:item.de });
-      }
-      if (sched) {
+      if (counts) {
         const g = !good ? 1 : (c.result === 'near' ? 2 : 3);
         const wasMature = (prev.ivl || 0) >= MATURE;
         const st = Object.assign(prev, FSRS.review(prev, g, today()));
@@ -269,7 +263,7 @@ function next(){
       }
     }
     if (ex.type === 'gen' && !good && counts) (r.missed = r.missed || []).push({ target:ex.data.full || ex.data.answers[0], de:ex.data.deLine || (ex.data.gap ? '' : ex.data.prompt), gen:ex.gen, data:ex.data });
-    if (ex.type === 'gen' && sched) {
+    if (ex.type === 'gen'  && counts) {
       const g = DB.gen[ex.gen] || (DB.gen[ex.gen] = { ok:0, bad:0 });
       if (good) g.ok++; else g.bad++;
       g.recent = (g.recent || []).concat(good ? 1 : 0).slice(-50);

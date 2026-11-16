@@ -103,7 +103,7 @@ function viewHome(){
     card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx))} Minuten. Du machst dort weiter, wo du aufgehört hast.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
   } else if (doneToday) {
     const p = dailyPlan(lang);
-    card = `<p class="eyebrow">Heute</p><p class="num">Tagwerk erledigt</p><p class="breakdown">Wenn du noch Zeit hast:</p>
+    card = `<p class="eyebrow">Heute</p><p class="num">Tagwerk erledigt</p>${todayHtml(lang)}<p class="breakdown">Wenn du noch Zeit hast:</p>
       <div class="choices">
         <button type="button" class="row" data-a="tab" data-v="extra"><span class="txt"><span class="rt">Weiter üben</span><span class="rd">Kurze Runden, Grammatik-Training, Schreiben oder ein Thema gezielt üben.</span></span></button>
         ${(() => { const avail = BANK[lang].filter(i => !stOf(i.id)).length; if (!avail) return ''; const opts = [3, 6, 10].filter(n => n <= avail); if (!opts.length) opts.push(avail);
@@ -137,6 +137,18 @@ function viewHome(){
     otherHtml = `<div class="otherlang"><span class="sq rl-${other}-sq" aria-hidden="true"></span><p><b>${LANG[other].deName}</b> <span class="ol-m">${state}</span></p>${btn}</div>`;
   }
   return `${topLine()}${hello}${noticeHtml() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${weakHtml(lang)}${findHtml(lang)}`;
+}
+// Was heute in dieser Sprache passiert ist: Zeit, Neues, Wiederholungen, alles Üben des Tages zusammen
+function todayHtml(lang){
+  const x = dayLog(today(), lang);
+  if (!x.n) return '';
+  const kp = [], mins = Math.round((x.secs || 0) / 60);
+  if (mins >= 1) kp.push([mins, mins === 1 ? 'Minute' : 'Minuten']);
+  if (x.fresh) kp.push([x.fresh, x.fresh === 1 ? 'neuer Satz' : 'neue Sätze']);
+  if (x.rev) kp.push([`${x.revOk || 0}/${x.rev}`, x.rev === 1 ? 'Wiederholung gewusst' : 'Wiederholungen gewusst']);
+  if (kp.length < 3) kp.unshift([x.n, x.n === 1 ? 'Aufgabe' : 'Aufgaben']);
+  const tiles = kp.slice(0, 3);
+  return `<div class="kpis today-kpis" style="grid-template-columns:repeat(${tiles.length}, 1fr)" aria-label="Heute">${tiles.map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>${x.mat ? `<p class="hint today-mat">${plural(x.mat, 'Satz', 'Sätze')} heute <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button>.</p>` : ''}`;
 }
 function topicRows(lang){
   const traps = TRAPS[lang].map(t => t.id).concat(BANK[lang].some(i => i.trap === 'eigene') ? ['eigene'] : []);
@@ -423,10 +435,10 @@ const READING = {
 const readLink = ([name, url]) => `<a href="${url}" target="_blank" rel="noopener">${name.replace(/ /g, '\u00a0')}</a>`;
 function viewRunDone(){
   const r = S.run, lang = r.lang;
-  const daily = r.kind === 'daily', practice = r.kind === 'retry';
+  const daily = r.kind === 'daily';
   const total = r.ok + r.bad, res = r.res || [], missed = r.missed || [];
   const perfect = total > 0 && !r.bad;
-  const title = daily ? 'Tagwerk erledigt' : practice ? 'Nochmal geübt' : perfect && total >= 3 ? 'Fehlerfrei' : 'Runde beendet';
+  const title = daily ? 'Tagwerk erledigt' : perfect && total >= 3 ? 'Fehlerfrei' : 'Runde beendet';
   const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok} von ${total} auf Anhieb richtig.`;
   // Ergebnis je Aufgabe als Leiste: auf einen Blick, wo es gehakt hat
   const nOk = res.filter(x => x.good && !x.near).length, nNear = res.filter(x => x.near).length, nBad = res.length - nOk - nNear;
@@ -452,11 +464,11 @@ function viewRunDone(){
   const ms = (() => { const now = matureCount(lang); const hit = milestoneList(now).filter(m => m > (r.strongBefore || 0) && m <= now).pop(); return hit ? `<p class="milestone">${hit} gefestigte Sätze auf ${LANG[lang].deName}</p>` : ''; })();
   const sk = daily ? (() => { const n = streak(), m = streakMilestone(n); return n >= 2 ? (m ? `<p class="milestone">${m}</p>` : `<p class="hint">Tag ${n} in Folge.</p>`) : ''; })() : '';
   const tomorrow = daily ? (() => { const n = forecast(lang)[1].n; return n ? `<p class="hint">Morgen ${n === 1 ? 'kommt 1 Satz' : `kommen ${n} Sätze`} zur Wiederholung.</p>` : ''; })() : '';
-  const missedHtml = missed.length ? `<div class="grp-row"><h2 class="grp">Noch nicht sicher</h2><button type="button" class="link" data-a="retry">Gleich nochmal üben</button></div>
+  const missedHtml = missed.length ? `<h2 class="grp">Noch nicht sicher</h2>
     <div class="rows">${missed.slice(0, 6).map(x => `<div class="row static"><span class="txt"><span class="rt wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="rd">${esc(x.de)}</span>` : ''}</span>${speakBtn(x.target, lang)}</div>`).join('')}</div>
-    ${missed.length > 6 ? `<p class="legend">und ${missed.length - 6} weitere</p>` : ''}${practice ? '' : '<p class="legend">Sie kommen morgen wieder. Gleich nochmal üben ändert daran nichts, festigt sie aber.</p>'}` : '';
+    ${missed.length > 6 ? `<p class="legend">und ${missed.length - 6} weitere</p>` : ''}${missed.some(x => x.id) ? '<p class="legend">Sie kommen morgen wieder.</p>' : ''}` : '';
   const nudge = !daily && !DB.done[today()] && !S.dailyRun ? `<div class="notice ok"><span>Das Tagwerk für heute steht noch aus.</span><button type="button" class="link" data-a="daily">Starten</button></div>` : !daily && S.dailyRun && S.dailyRun.lang === lang ? `<div class="notice ok"><span>Dein Tagwerk ist noch offen.</span><button type="button" class="link" data-a="daily">Fortsetzen</button></div>` : '';
-  const again = !daily && !practice && r.kind !== 'hard';
+  const again = !daily && r.kind !== 'hard';
   const buttons = daily
     ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button><button type="button" class="primary" data-a="tab" data-v="home">Fertig</button>'
     : again ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>'

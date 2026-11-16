@@ -443,8 +443,9 @@ function startRun(kind, opts){
   } else if (kind === 'gen') queue = [{ type:'gen', gen:opts.gen }];
   else if (kind === 'form') queue = Array.from({ length:10 }, () => ({ type:'gen', gen:opts.gen }));
   else if (kind === 'textgap') {
-    const t = TEXTS[lang].find(x => x.id === opts.text);
-    queue = shuffle(gapSentences(t)).map(x => textGapData(lang, x, t.title)).filter(Boolean).slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
+    // Eigener Lesetext oder Wikipedia-Fundstück (Text kommt dann mit)
+    const t = opts.body ? { body:opts.body, title:opts.title } : TEXTS[lang].find(x => x.id === opts.text);
+    if (t) queue = shuffle(gapSentences(t)).map(x => textGapData(lang, x, t.title)).filter(Boolean).slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
   }
   else if (kind === 'dict') queue = freshFirst(BANK[lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'dict_' + lang, 10).map(i => ({ type:'dict', id:i.id }));
   else if (kind === 'hard') queue = hardItems(lang).map(i => ({ type:'free', id:i.id }));
@@ -453,7 +454,7 @@ function startRun(kind, opts){
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;
   S.notice = null;
-  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, cur:null, strongBefore:strongCount(lang), res:[], missed:[], secs:0, combo:0, best:0 };
+  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, strongBefore:strongCount(lang), res:[], missed:[], secs:0, combo:0, best:0 };
   S.view = 'run'; prepCur(); persistRun(); render(); window.scrollTo(0, 0);
 }
 function hardItems(lang){

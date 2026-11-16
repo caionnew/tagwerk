@@ -1,6 +1,86 @@
 /* Eingebautes Wörterbuch. Zeile: Form | Grundform (leer = gleich) | Deutsch */
 const GLOSS_RAW = {
-sv: `sara|Sara|Sara (Name)
+sv: `försenat|försenad|verspätet
+följaktligen|följaktligen|folglich
+missade|missa|verpassen (Präteritum)
+ändå|ändå|trotzdem, dennoch
+såvitt|såvitt|soweit; såvitt jag vet = soweit ich weiß
+låna|låna|leihen, ausleihen
+förutsatt|förutsatt|vorausgesetzt; förutsatt att = vorausgesetzt, dass
+försiktigt|försiktig|vorsichtig
+oavsett|oavsett|unabhängig von; oavsett om = egal ob
+eller|eller|oder
+mindre|liten|weniger, kleiner
+pluggar|plugga|lernen, studieren (umgangssprachlich)
+samtidigt|samtidigt|gleichzeitig; samtidigt som = während
+heltid|heltid|Vollzeit
+ute|ute|draußen
+å|å|ach; å ena sidan … å andra sidan = einerseits … andererseits
+sidan|sida|die Seite
+soligt|solig|sonnig
+ses|ses|sich sehen; vi ses = bis bald
+såvida|såvida|sofern; såvida inte = es sei denn
+annat|annan|anderes
+från|från|von, aus
+fastän|fastän|obwohl
+tände|tända|anzünden (Präteritum)
+lägger|lägga|legen; lägga märke till = bemerken, lägga fram = vorlegen
+märke|märke|das Zeichen, die Marke; lägga märke till = bemerken
+bruden|brud|die Braut
+höll|hålla|halten (Präteritum); hålla tal = eine Rede halten
+tal|tal|die Rede; auch: die Zahl
+bröllopet|bröllop|die Hochzeit
+begick|begå|begehen (Präteritum)
+brott|brott|das Verbrechen
+brottet|brott|das Verbrechen
+förslag|förslag|der Vorschlag
+förslaget|förslag|der Vorschlag
+väckte|väcka|wecken; erregen (Präteritum)
+uppmärksamhet|uppmärksamhet|die Aufmerksamkeit
+chefen|chef|der Chef, die Chefin
+ställer|ställa|stellen; ställa krav = Anforderungen stellen
+höga|hög|hoch
+krav|krav|die Anforderung, die Forderung
+dra|dra|ziehen; dra nytta av = Nutzen ziehen aus
+nytta|nytta|der Nutzen
+erfarenhet|erfarenhet|die Erfahrung
+partiet|parti|die Partei
+ställning|ställning|die Stellung; ta ställning = Stellung beziehen
+regeringen|regering|die Regierung
+plötsligt|plötslig|plötzlich
+syn|syn|die Sicht; få syn på = erblicken
+älg|älg|der Elch
+pappa|pappa|Papa, Vater
+pension|pension|die Rente; gå i pension = in Rente gehen
+slut|slut|das Ende; göra slut = Schluss machen
+sätter|sätta|setzen; sätta igång = loslegen
+igång|igång|in Gang; sätta igång = loslegen
+ansökte|ansöka|beantragen, sich bewerben (Präteritum)
+tvivlar|tvivla|zweifeln
+hörde|höra|hören (Präteritum); höra av sig = sich melden
+kommunen|kommun|die Gemeinde
+priset|pris|der Preis
+skyllde|skylla|die Schuld geben (Präteritum); skylla på = die Schuld schieben auf
+avstånd|avstånd|der Abstand; ta avstånd från = sich distanzieren von
+uttalandet|uttalande|die Äußerung
+typiskt|typisk|typisch
+skyldig|skyldig|schuldig; auch: etwas schulden
+brinner|brinna|brennen; brinna för = sich leidenschaftlich einsetzen für
+miljöfrågor|miljöfråga|Umweltfragen
+brist|brist|der Mangel
+lärare|lärare|der Lehrer, die Lehrerin; auch Plural
+nys|nys|få nys om = Wind bekommen von
+planen|plan|der Plan
+hämnades|hämnas|sich rächen (Präteritum)
+fiende|fiende|der Feind
+rör|röra|berühren; det rör sig om = es handelt sich um
+summor|summa|Summen
+gratulerade|gratulera|gratulieren (Präteritum)
+misstänkt|misstänkt|verdächtig, verdächtigt
+mord|mord|der Mord
+nog|nog|genug; auch: wohl
+ursäkter|ursäkt|Ausreden, Entschuldigungen
+sara|Sara|Sara (Name)
 orka|orka|die Kraft oder Lust haben
 be|be|bitten; be om ursäkt = sich entschuldigen
 ursäkt|ursäkt|Entschuldigung; be om ursäkt = sich entschuldigen
@@ -674,7 +754,64 @@ jul||Weihnachten
 gott|god|gut (ett-Form); Gott nytt år = Frohes neues Jahr
 någon||jemand; irgendein (en-Wort); någon gång = schon einmal
 `,
-es: `o|o|oder
+es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
+obstante|obstante|no obstante = dennoch, jedoch
+partido|partido|das Spiel (Sport); auch: die Partei
+precio|precio|der Preis
+gasolina|gasolina|das Benzin
+consiguiente|consiguiente|por consiguiente = folglich
+usa|usar|benutzen (Präsens, er/sie)
+presto|prestar|leihen (Präsens, ich)
+tal|tal|solch; con tal de que = vorausgesetzt, dass
+devuelvas|devolver|zurückgeben (Subjuntivo, du)
+iré|ir|gehen (Futur, ich)
+ayúdame|ayudar|hilf mir (Imperativ)
+pesar|pesar|wiegen; a pesar de = trotz
+siguió|seguir|weitermachen, folgen (Indefinido, er/sie)
+trabajando|trabajar|arbeitend (Gerundium)
+rió|reír|lachen (Indefinido, er/sie); reírse de = auslachen
+calor|calor|die Hitze, die Wärme
+ordenado|ordenado|ordentlich
+desastre|desastre|die Katastrophe; umgangssprachlich: der Chaot
+economía|economía|die Wirtschaft
+optimista|optimista|optimistisch
+según|según|laut, nach, je nach
+hará|hacer|machen (Futur, er/sie); hará buen tiempo = es wird schönes Wetter
+buen|bueno|gut (vor einem Substantiv)
+aprobar|aprobar|bestehen (Prüfung); genehmigen
+echo|echar|werfen (Präsens, ich); echar de menos = vermissen
+llevó|llevar|tragen, bringen (Indefinido, er/sie); llevar a cabo = durchführen
+cabo|cabo|das Ende, das Kap; llevar a cabo = durchführen
+reforma|reforma|die Reform
+prisa|prisa|die Eile; tener prisa = es eilig haben
+vergüenza|vergüenza|die Scham; dar vergüenza = peinlich sein
+público|público|öffentlich; das Publikum
+paces|paz|der Frieden; hacer las paces = sich versöhnen
+loco|loco|verrückt
+cae|caer|fallen (Präsens, er/sie); caer bien = sympathisch sein
+fía|fiarse|vertrauen (Präsens, er/sie)
+instinto|instinto|der Instinkt
+presume|presumir|angeben (Präsens, er/sie)
+arrepiento|arrepentirse|bereuen (Präsens, ich)
+empeñó|empeñarse|darauf bestehen (Indefinido, er/sie)
+guerra|guerra|der Krieg
+burlan|burlarse|sich lustig machen (Präsens, sie)
+optado|optar|sich entscheiden (Partizip)
+medicina|medicina|die Medizin
+conformó|conformarse|sich zufriedengeben (Indefinido, er/sie)
+empate|empate|das Unentschieden
+carece|carecer|nicht haben, fehlen (Präsens, er/sie)
+experiencia|experiencia|die Erfahrung
+abusa|abusar|missbrauchen (Präsens, er/sie)
+harté|hartarse|satthaben (Indefinido, ich)
+esperar|esperar|warten; hoffen
+obligados|obligado|verpflichtet
+acercó|acercarse|sich nähern (Indefinido, er/sie)
+comprometo|comprometerse|sich verpflichten (Präsens, ich)
+ayudarte|ayudar|dir helfen
+huyó|huir|fliehen (Indefinido, er/sie)
+policía|policía|die Polizei
+o|o|oder
 algo||etwas
 largo||lang
 nadar||schwimmen

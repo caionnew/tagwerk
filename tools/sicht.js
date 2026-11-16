@@ -22,6 +22,9 @@ const rich = () => richDB('sv');
 const doneDB = () => { const db = rich(); db.done[TODAY] = true; db.doneLang = { [TODAY]:{ sv:true } }; db.log[TODAY] = { sv:{ n:31, ok:26, secs:742, fresh:5, rev:22, revOk:20, mat:2 } }; return db; };
 const click = sel => p => p.click(sel);
 const bottom = p => p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+// Wikipedia-Fundstück ohne Netz: feste Antwort statt echter Abfrage
+const WIKI_BODY = 'Allmänna skyddsrum i Stockholm byggdes under det kalla kriget för att skydda befolkningen. De flesta skyddsrummen ligger djupt under jorden och används i dag som garage eller förråd. Kommunen kontrollerar regelbundet att dörrarna fungerar och att ventilationen är intakt. Under en kris ska skyddsrummen kunna öppnas inom fyrtioåtta timmar. Många stockholmare vet inte var det närmaste skyddsrummet finns, trots att skyltarna sitter på husväggarna.';
+const mockWiki = p => p.route('https://sv.wikipedia.org/w/api.php**', r => r.fulfill({ headers:{ 'Access-Control-Allow-Origin':'*' }, json:{ query:{ pages:[{ title:'Allmänna skyddsrum i Stockholm', extract:WIKI_BODY, fullurl:'https://sv.wikipedia.org/wiki/Skyddsrum' }] } } }));
 const answerAll = async p => { for (let k = 0; k < 40 && await p.$('.runbar'); k++) { await answerWrong(p); await p.click('[data-a=next]'); } };
 // Name, Lernstand, Schritte nach dem Start
 const SCENES = [
@@ -38,6 +41,7 @@ const SCENES = [
   ['bonus', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, click('[data-a=bonus]'), p => p.fill('#bonusText', 'Jag tycker att det är skönt att jobba hemma.'), click('[data-a=bonuscheck]'), p => p.evaluate(() => document.querySelector('.bonus').scrollIntoView({ block:'end' }))]],
   ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],
   ['einstellungen-unten', rich, [click('[data-a=settings] >> nth=0'), bottom]],
+  ['fundstueck', rich, [mockWiki, click('[data-a=tab][data-v=extra]'), click('[data-a=wiki] >> nth=0'), bottom]],
   ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]],
   ['hoeren-antwort', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=tdefmode][data-v=listen]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'), click('[data-a=tpick][data-k="0"][data-i="0"]')]],
   ['lesen-ende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'),

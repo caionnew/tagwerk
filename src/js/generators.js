@@ -390,7 +390,31 @@ const VERB_SV = [
   ['Det ___ ingen roll.', 'spelar', ['spelar', 'gör', 'har'], 'Das spielt keine Rolle.', 'det spelar ingen roll = das spielt keine Rolle, das ist egal.'],
   ['Glöm inte att ___ tänderna.', 'borsta', ['borsta', 'tvätta', 'putsa'], 'Vergiss nicht, die Zähne zu putzen.', 'Zähne borstar man; putsa = polieren (Schuhe, Fenster).'],
   ['Hon ___ examen i juni.', 'tog', ['tog', 'gjorde', 'fick'], 'Sie hat im Juni ihren Abschluss gemacht.', 'ta examen = den Abschluss machen.'],
-  ['Det ___ tid att lära sig ett språk.', 'tar', ['tar', 'kostar', 'behöver'], 'Es braucht Zeit, eine Sprache zu lernen.', 'det tar tid = es dauert, es braucht Zeit.']
+  ['Det ___ tid att lära sig ett språk.', 'tar', ['tar', 'kostar', 'behöver'], 'Es braucht Zeit, eine Sprache zu lernen.', 'det tar tid = es dauert, es braucht Zeit.'],
+  ['Tåget var försenat. ___ missade vi mötet.', 'Följaktligen', ['Följaktligen', 'Däremot', 'Dessutom'], 'Der Zug hatte Verspätung. Folglich verpassten wir das Treffen.', 'följaktligen = folglich (gehoben). Danach Inversion: Följaktligen missade vi.'],
+  ['Han har bott här i tio år. ___ pratar han nästan ingen svenska.', 'Ändå', ['Ändå', 'Därför', 'Alltså'], 'Er wohnt seit zehn Jahren hier. Trotzdem spricht er kaum Schwedisch.', 'ändå = trotzdem. Danach Inversion: Ändå pratar han.'],
+  ['___ jag vet har ingen ringt.', 'Såvitt', ['Såvitt', 'Såsom', 'Sålunda'], 'Soweit ich weiß, hat niemand angerufen.', 'såvitt jag vet = soweit ich weiß.'],
+  ['Du får låna bilen ___ du kör försiktigt.', 'förutsatt att', ['förutsatt att', 'trots att', 'så att'], 'Du darfst das Auto leihen, vorausgesetzt, dass du vorsichtig fährst.', 'förutsatt att = vorausgesetzt, dass.'],
+  ['Vi åker ___ det regnar eller inte.', 'oavsett om', ['oavsett om', 'eftersom', 'medan'], 'Wir fahren, egal ob es regnet oder nicht.', 'oavsett om = egal ob.'],
+  ['___ priserna har stigit handlar folk mindre.', 'I och med att', ['I och med att', 'Trots att', 'Innan'], 'Da die Preise gestiegen sind, kaufen die Leute weniger ein.', 'i och med att = dadurch dass, da. Nach dem Nebensatz folgt Inversion: handlar folk.'],
+  ['Hon pluggar ___ hon arbetar heltid.', 'samtidigt som', ['samtidigt som', 'innan', 'sedan'], 'Sie studiert und arbeitet gleichzeitig Vollzeit.', 'samtidigt som = gleichzeitig, während.'],
+  ['Det var kallt ute. ___ var det soligt.', 'Å andra sidan', ['Å andra sidan', 'Därför', 'Följaktligen'], 'Draußen war es kalt. Andererseits war es sonnig.', 'å andra sidan = andererseits. Danach Inversion: var det.'],
+  ['Vi ses klockan sju, ___ du inte hör något annat från mig.', 'såvida', ['såvida', 'eftersom', 'därför'], 'Wir sehen uns um sieben, sofern du nichts anderes von mir hörst.', 'såvida inte = sofern nicht, es sei denn. „inte“ steht im Nebensatz vor dem Verb.'],
+  ['___ hon var sjuk gick hon till jobbet.', 'Fastän', ['Fastän', 'Eftersom', 'Sedan'], 'Obwohl sie krank war, ging sie zur Arbeit.', 'fastän = obwohl (wie trots att).'],
+  ['Det var mörkt, ___ vi tände ljus.', 'så', ['så', 'för', 'men'], 'Es war dunkel, also zündeten wir Kerzen an.', 'så = also, deshalb (Folge).'],
+  ['Jag kan inte komma, ___ jag är sjuk.', 'för', ['för', 'så', 'fast'], 'Ich kann nicht kommen, denn ich bin krank.', 'för = denn, danach normale Wortstellung.'],
+  ['___ du märke till skillnaden?', 'Lägger', ['Lägger', 'Tar', 'Ger'], 'Bemerkst du den Unterschied?', 'lägga märke till = bemerken.'],
+  ['Bruden ___ ett tal på bröllopet.', 'höll', ['höll', 'gav', 'gjorde'], 'Die Braut hielt auf der Hochzeit eine Rede.', 'hålla tal = eine Rede halten.'],
+  ['Han ___ ett brott.', 'begick', ['begick', 'gjorde', 'tog'], 'Er beging ein Verbrechen.', 'begå ett brott = ein Verbrechen begehen.'],
+  ['Förslaget ___ stor uppmärksamhet.', 'väckte', ['väckte', 'gjorde', 'tog'], 'Der Vorschlag erregte große Aufmerksamkeit.', 'väcka uppmärksamhet = Aufmerksamkeit erregen.'],
+  ['Chefen ___ höga krav på oss.', 'ställer', ['ställer', 'gör', 'ger'], 'Die Chefin stellt hohe Anforderungen an uns.', 'ställa krav på = Anforderungen stellen an.'],
+  ['Vi kan ___ nytta av hans erfarenhet.', 'dra', ['dra', 'göra', 'ge'], 'Wir können von seiner Erfahrung profitieren.', 'dra nytta av = Nutzen ziehen aus.'],
+  ['Partiet vill inte ___ ställning i frågan.', 'ta', ['ta', 'ge', 'göra'], 'Die Partei will in der Frage nicht Stellung beziehen.', 'ta ställning = Stellung beziehen.'],
+  ['Regeringen lägger ___ ett nytt förslag.', 'fram', ['fram', 'upp', 'ut'], 'Die Regierung legt einen neuen Vorschlag vor.', 'lägga fram = vorlegen. lägga upp = planen, posten; lägga ut = veröffentlichen, auslagern.'],
+  ['Plötsligt ___ jag syn på en älg.', 'fick', ['fick', 'tog', 'gav'], 'Plötzlich erblickte ich einen Elch.', 'få syn på = erblicken.'],
+  ['Min pappa ___ i pension förra året.', 'gick', ['gick', 'tog', 'kom'], 'Mein Vater ist letztes Jahr in Rente gegangen.', 'gå i pension = in Rente gehen.'],
+  ['De ___ slut efter fem år.', 'gjorde', ['gjorde', 'tog', 'satte'], 'Sie haben sich nach fünf Jahren getrennt.', 'göra slut = Schluss machen. ta slut = zu Ende gehen, ausgehen.'],
+  ['Nu ___ vi igång!', 'sätter', ['sätter', 'gör', 'tar'], 'Jetzt legen wir los!', 'sätta igång = loslegen.']
 ];
 const VERB_ES = [
   ['Estudió mucho; ___, suspendió el examen.', 'sin embargo', ['sin embargo', 'por lo tanto', 'además'], 'Er hat viel gelernt; trotzdem ist er durchgefallen.', 'sin embargo = trotzdem, jedoch (Gegensatz).'],
@@ -412,7 +436,29 @@ const VERB_ES = [
   ['Hay que ___ cola para entrar.', 'hacer', ['hacer', 'tomar', 'poner'], 'Man muss Schlange stehen, um reinzukommen.', 'hacer cola = Schlange stehen.'],
   ['Mi hijo nunca me ___ caso.', 'hace', ['hace', 'da', 'pone'], 'Mein Sohn hört nie auf mich.', 'hacer caso a alguien = auf jemanden hören.'],
   ['Le ___ las gracias por su ayuda.', 'di', ['di', 'hice', 'dije'], 'Ich habe mich für seine Hilfe bedankt.', 'dar las gracias = sich bedanken.'],
-  ['Esa película me ___ miedo.', 'da', ['da', 'hace', 'tiene'], 'Der Film macht mir Angst.', 'dar miedo = Angst machen.']
+  ['Esa película me ___ miedo.', 'da', ['da', 'hace', 'tiene'], 'Der Film macht mir Angst.', 'dar miedo = Angst machen.'],
+  ['Llovía a cántaros; ___, el partido se jugó.', 'no obstante', ['no obstante', 'por consiguiente', 'además'], 'Es regnete in Strömen; dennoch wurde das Spiel ausgetragen.', 'no obstante = dennoch, jedoch (gehoben).'],
+  ['Ha subido el precio de la gasolina; ___, la gente usa más el tren.', 'por consiguiente', ['por consiguiente', 'no obstante', 'en cambio'], 'Der Benzinpreis ist gestiegen; folglich nutzen die Leute mehr den Zug.', 'por consiguiente = folglich.'],
+  ['Te presto el coche ___ me lo devuelvas mañana.', 'con tal de que', ['con tal de que', 'a pesar de que', 'ya que'], 'Ich leihe dir das Auto, vorausgesetzt, du gibst es mir morgen zurück.', 'con tal de que = vorausgesetzt, dass; immer mit Subjuntivo.'],
+  ['No iré ___ me lo pidas tú.', 'a no ser que', ['a no ser que', 'puesto que', 'así que'], 'Ich gehe nicht hin, es sei denn, du bittest mich darum.', 'a no ser que = es sei denn; immer mit Subjuntivo.'],
+  ['___ estás aquí, ayúdame con esto.', 'Ya que', ['Ya que', 'Aunque', 'Para que'], 'Wo du schon hier bist, hilf mir dabei.', 'ya que = da ja, wo schon (bekannter Grund).'],
+  ['___ de que estaba cansado, siguió trabajando.', 'A pesar', ['A pesar', 'En vez', 'Antes'], 'Obwohl er müde war, arbeitete er weiter.', 'a pesar de que = obwohl.'],
+  ['No solo no me ayudó, ___ se rió de mí.', 'sino que', ['sino que', 'pero', 'sin embargo'], 'Er hat mir nicht nur nicht geholfen, sondern mich sogar ausgelacht.', 'Vor einem konjugierten Verb heißt „sondern“ sino que.'],
+  ['Hacía mucho calor, ___ nos quedamos en casa.', 'así que', ['así que', 'aunque', 'para que'], 'Es war sehr heiß, also blieben wir zu Hause.', 'así que = also, deshalb (Folge).'],
+  ['Mi hermano es muy ordenado, ___ yo soy un desastre.', 'mientras que', ['mientras que', 'ya que', 'así que'], 'Mein Bruder ist sehr ordentlich, während ich ein Chaot bin.', 'mientras que = während (Gegensatz).'],
+  ['___ a la economía, el informe es optimista.', 'En cuanto', ['En cuanto', 'A pesar', 'Por lo tanto'], 'Was die Wirtschaft betrifft, ist der Bericht optimistisch.', 'en cuanto a = was … betrifft.'],
+  ['___ lo que dices, mañana hará buen tiempo.', 'Según', ['Según', 'Mientras', 'Aunque'], 'Nach dem, was du sagst, wird morgen schönes Wetter.', 'según = laut, nach.'],
+  ['Estudia mucho ___ aprobar.', 'con el fin de', ['con el fin de', 'a pesar de', 'en lugar de'], 'Er lernt viel, um zu bestehen.', 'con el fin de + Infinitiv = um zu (gehoben).'],
+  ['Te ___ de menos.', 'echo', ['echo', 'tengo', 'hago'], 'Ich vermisse dich.', 'echar de menos = vermissen (in Spanien; in Lateinamerika meist extrañar).'],
+  ['Hay que ___ en cuenta el precio.', 'tener', ['tener', 'poner', 'dar'], 'Man muss den Preis berücksichtigen.', 'tener en cuenta = berücksichtigen.'],
+  ['La empresa ___ a cabo una reforma.', 'llevó', ['llevó', 'hizo', 'tomó'], 'Das Unternehmen führte eine Reform durch.', 'llevar a cabo = durchführen.'],
+  ['No me ___ cuenta de la hora.', 'di', ['di', 'hice', 'tomé'], 'Ich habe nicht auf die Uhrzeit geachtet.', 'darse cuenta de = merken, bemerken.'],
+  ['Siempre ___ prisa por las mañanas.', 'tengo', ['tengo', 'hago', 'doy'], 'Morgens habe ich es immer eilig.', 'tener prisa = es eilig haben.'],
+  ['Me ___ vergüenza hablar en público.', 'da', ['da', 'hace', 'pone'], 'Es ist mir peinlich, öffentlich zu sprechen.', 'dar vergüenza = peinlich sein.'],
+  ['Tenemos que ___ las paces.', 'hacer', ['hacer', 'dar', 'tener'], 'Wir müssen uns versöhnen.', 'hacer las paces = sich versöhnen.'],
+  ['El ruido me ___ loco.', 'vuelve', ['vuelve', 'hace', 'da'], 'Der Lärm macht mich verrückt.', 'volver loco a alguien = jemanden verrückt machen.'],
+  ['¿Me ___ un favor?', 'haces', ['haces', 'das', 'pones'], 'Tust du mir einen Gefallen?', 'hacer un favor = einen Gefallen tun.'],
+  ['Ese chico me ___ muy bien.', 'cae', ['cae', 'gusta', 'sienta'], 'Ich finde den Jungen sehr sympathisch.', 'caer bien/mal = sympathisch/unsympathisch sein.']
 ];
 const genVerbind = list => () => {
   const [p, a, opts, de, note] = pick(list);
@@ -461,7 +507,23 @@ const PREP_SV = [
   ['Jag ser fram ___ semestern.', 'emot', ['emot', 'på', 'till'], 'Ich freue mich auf den Urlaub.', 'se fram emot = sich freuen auf.'],
   ['Hon tackade ___ presenten.', 'för', ['för', 'på', 'om'], 'Sie bedankte sich für das Geschenk.', 'tacka för = danken für.'],
   ['Han är ansvarig ___ projektet.', 'för', ['för', 'av', 'på'], 'Er ist für das Projekt verantwortlich.', 'ansvarig för = verantwortlich für.'],
-  ['Det består ___ tre delar.', 'av', ['av', 'i', 'med'], 'Es besteht aus drei Teilen.', 'bestå av = bestehen aus.']
+  ['Det består ___ tre delar.', 'av', ['av', 'i', 'med'], 'Es besteht aus drei Teilen.', 'bestå av = bestehen aus.'],
+  ['Hon ansökte ___ jobbet.', 'om', ['om', 'till', 'för'], 'Sie bewarb sich um die Stelle.', 'ansöka om = sich bewerben um, beantragen.'],
+  ['Jag tvivlar ___ det.', 'på', ['på', 'om', 'över'], 'Ich bezweifle das.', 'tvivla på = zweifeln an.'],
+  ['Han hörde ___ sig till kommunen.', 'av', ['av', 'på', 'till'], 'Er meldete sich bei der Gemeinde.', 'höra av sig = sich melden.'],
+  ['Vi kom överens ___ priset.', 'om', ['om', 'på', 'med'], 'Wir einigten uns auf den Preis.', 'komma överens om = sich einigen auf; komma överens med någon = sich mit jemandem verstehen.'],
+  ['Han skyllde ___ sin bror.', 'på', ['på', 'över', 'åt'], 'Er schob die Schuld auf seinen Bruder.', 'skylla på = die Schuld schieben auf.'],
+  ['Hon tog avstånd ___ uttalandet.', 'från', ['från', 'av', 'mot'], 'Sie distanzierte sich von der Äußerung.', 'ta avstånd från = sich distanzieren von.'],
+  ['Det är typiskt ___ honom.', 'för', ['för', 'av', 'på'], 'Das ist typisch für ihn.', 'typiskt för = typisch für.'],
+  ['Han är skyldig ___ brottet.', 'till', ['till', 'för', 'av'], 'Er ist des Verbrechens schuldig.', 'skyldig till = schuldig an.'],
+  ['Hon brinner ___ miljöfrågor.', 'för', ['för', 'av', 'på'], 'Sie setzt sich leidenschaftlich für Umweltfragen ein.', 'brinna för = für etwas brennen.'],
+  ['Vi har brist ___ lärare.', 'på', ['på', 'av', 'för'], 'Wir haben einen Mangel an Lehrern.', 'brist på = Mangel an.'],
+  ['Jag fick nys ___ planen.', 'om', ['om', 'på', 'av'], 'Ich bekam Wind von dem Plan.', 'få nys om = Wind bekommen von.'],
+  ['Han hämnades ___ sin fiende.', 'på', ['på', 'över', 'mot'], 'Er rächte sich an seinem Feind.', 'hämnas på = sich rächen an.'],
+  ['Det rör sig ___ stora summor.', 'om', ['om', 'på', 'av'], 'Es handelt sich um große Summen.', 'det rör sig om = es handelt sich um.'],
+  ['Hon gratulerade honom ___ examen.', 'till', ['till', 'för', 'på'], 'Sie gratulierte ihm zum Abschluss.', 'gratulera till = gratulieren zu (aber: grattis på födelsedagen).'],
+  ['Han är misstänkt ___ mord.', 'för', ['för', 'av', 'om'], 'Er steht unter Mordverdacht.', 'misstänkt för = verdächtigt wegen.'],
+  ['Jag har fått nog ___ dina ursäkter.', 'av', ['av', 'på', 'med'], 'Ich habe genug von deinen Ausreden.', 'få nog av = genug haben von.']
 ];
 const PREP_ES = [
   ['Sueño ___ vivir junto al mar.', 'con', ['con', 'de', 'en'], 'Ich träume davon, am Meer zu leben.', 'soñar con = träumen von.'],
@@ -505,7 +567,23 @@ const PREP_ES = [
   ['Acabo ___ llegar.', 'de', ['de', 'a', 'en'], 'Ich bin gerade angekommen.', 'acabar de + Infinitiv = gerade etwas getan haben.'],
   ['Estoy de acuerdo ___ ti.', 'con', ['con', 'de', 'en'], 'Ich bin deiner Meinung.', 'estar de acuerdo con = einverstanden sein mit.'],
   ['Huele ___ café.', 'a', ['a', 'de', 'con'], 'Es riecht nach Kaffee.', 'oler a = riechen nach.'],
-  ['Sabe ___ limón.', 'a', ['a', 'de', 'con'], 'Es schmeckt nach Zitrone.', 'saber a = schmecken nach.']
+  ['Sabe ___ limón.', 'a', ['a', 'de', 'con'], 'Es schmeckt nach Zitrone.', 'saber a = schmecken nach.'],
+  ['Se fía ___ su instinto.', 'de', ['de', 'en', 'con'], 'Er verlässt sich auf seinen Instinkt.', 'fiarse de = vertrauen, sich verlassen auf.'],
+  ['Siempre presume ___ su coche.', 'de', ['de', 'con', 'en'], 'Er gibt immer mit seinem Auto an.', 'presumir de = angeben mit.'],
+  ['Me arrepiento ___ lo que dije.', 'de', ['de', 'en', 'a'], 'Ich bereue, was ich gesagt habe.', 'arrepentirse de = bereuen.'],
+  ['Se empeñó ___ comprar la casa.', 'en', ['en', 'de', 'a'], 'Er bestand darauf, das Haus zu kaufen.', 'empeñarse en = darauf bestehen, sich in den Kopf setzen.'],
+  ['El libro trata ___ la guerra.', 'de', ['de', 'en', 'con'], 'Das Buch handelt vom Krieg.', 'tratar de = handeln von (auch: tratar sobre).'],
+  ['Se burlan ___ él.', 'de', ['de', 'con', 'a'], 'Sie machen sich über ihn lustig.', 'burlarse de = sich lustig machen über.'],
+  ['Ha optado ___ estudiar medicina.', 'por', ['por', 'a', 'de'], 'Sie hat sich entschieden, Medizin zu studieren.', 'optar por = sich entscheiden für.'],
+  ['Se conformó ___ un empate.', 'con', ['con', 'de', 'en'], 'Er gab sich mit einem Unentschieden zufrieden.', 'conformarse con = sich zufriedengeben mit.'],
+  ['Carece ___ experiencia.', 'de', ['de', 'en', 'sin'], 'Es fehlt ihm an Erfahrung.', 'carecer de = nicht haben, Mangel haben an.'],
+  ['Abusa ___ su poder.', 'de', ['de', 'con', 'en'], 'Er missbraucht seine Macht.', 'abusar de = missbrauchen.'],
+  ['Me harté ___ esperar.', 'de', ['de', 'a', 'con'], 'Ich hatte es satt zu warten.', 'hartarse de = etwas satthaben.'],
+  ['Están obligados ___ pagar.', 'a', ['a', 'de', 'en'], 'Sie sind verpflichtet zu zahlen.', 'estar obligado a = verpflichtet sein zu.'],
+  ['Se acercó ___ la ventana.', 'a', ['a', 'de', 'en'], 'Er ging ans Fenster.', 'acercarse a = sich nähern, hingehen zu.'],
+  ['Me comprometo ___ ayudarte.', 'a', ['a', 'de', 'en'], 'Ich verpflichte mich, dir zu helfen.', 'comprometerse a = sich verpflichten zu.'],
+  ['Se interesa ___ la política.', 'por', ['por', 'de', 'a'], 'Er interessiert sich für Politik.', 'interesarse por (oder en) = sich interessieren für.'],
+  ['Huyó ___ la policía.', 'de', ['de', 'a', 'por'], 'Er floh vor der Polizei.', 'huir de = fliehen vor.']
 ];
 const genPrep = list => () => { const d = genVerbind(list)(); d.label = 'Welche Präposition?'; return d; };
 /* ---------- Lücken aus Lesetexten: ein gebeugtes Wort aus einem Satz eines gelesenen Textes ---------- */

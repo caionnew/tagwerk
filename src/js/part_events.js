@@ -48,7 +48,7 @@ document.addEventListener('click', e => {
     case 'forms': { const g = genIds(S.lang); if (g.length === 1) startRun('gen', { gen:g[0] }); else goView('pickGen'); break; }
     case 'gengo': startRun('gen', { gen:b.dataset.g }); break;
     case 'dict': startRun('dict'); break;
-    case 'again': if (r) { S.lang = r.lang; startRun(r.kind, { trap:r.trap, gen:r.gen }); } break;
+    case 'again': if (r) { S.lang = r.lang; startRun(r.kind, { trap:r.trap, gen:r.gen, text:r.text, body:r.wiki && r.wiki.body, title:r.wiki && r.wiki.title }); } break;
     case 'check': check(); break;
     case 'giveup': giveUp(); setTimeout(() => { DB.used = DB.used || {}; DB.used.gaveup = true; save(); }, 0); break;
     case 'accept': DB.used = DB.used || {}; DB.used.accept = true; selfAccept(); break;
@@ -270,7 +270,7 @@ document.addEventListener('click', e => {
     case 'popanki': { const P = S.pop; if (!P) break; const e = lookupWord(P.lang, P.w); const ctx = P.sent || ''; shareToAnki(P.w, (e ? (e.l && e.l !== P.w ? e.l + ': ' : '') + e.de : '') + (ctx ? '\n\n' + ctx : '')); break; }
     case 'ankiok': { if (!S.ankiPrev || !S.ankiPrev.items) break; const n = ankiCommit(S.ankiPrev); S.ankiPrev = null; note(`${n.toLocaleString('de-DE')} Sätze übernommen. Sie kommen als neue Sätze dran.`); render(); break; }
     case 'ankino': S.ankiPrev = null; render(); break;
-    case 'textgap': startRun('textgap', { text:b.dataset.id }); break;
+    case 'textgap': if (b.dataset.id === 'wiki') { const w = S.text && S.text.wiki; if (w) startRun('textgap', { body:w.body, title:w.title }); } else startRun('textgap', { text:b.dataset.id }); break;
     case 'otherdaily': { const l = b.dataset.l; S.lang = l; DB.settings.lang = l; DB.dayLang = { d:today(), l, manual:true }; save(); const d = openDaily(); if (d && d.lang === l) { resumeDaily(); render(); window.scrollTo(0, 0); } else startRun('daily'); break; }
     case 'showtip': if (S.run && S.run.cur) { S.run.cur.tip = true; render(); const a = document.getElementById('answer'); if (a) a.focus(); } break;
     case 'pcrange': S.pcAll = b.dataset.v === '1'; render(); break;

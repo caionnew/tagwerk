@@ -151,7 +151,7 @@ function viewText(){
   const looked = T.looked.length ? `<h2 class="grp">Nachgeschlagen</h2><div class="wtray">${T.looked.map(w => { const e = lookupWord(lang, w); return `<button type="button" class="wchip" data-a="lookup" data-w="${esc(w)}"><b lang="${lang}">${esc(w)}</b>${e ? `<span>${esc(e.de.split(/[;(]/)[0].trim())}</span>` : ''}</button>`; }).join('')}</div>` : '';
   if (W) {
     return backBar('Wikipedia-Fundstück', 'texts') + hero + article + `<p class="legend">Aus der Wikipedia, Artikel „<a href="${esc(W.url)}" target="_blank" rel="noopener">${esc(W.title)}</a>“, Text unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>${looked}
-      <div class="btnrow"><button type="button" class="primary" data-a="wiki">Noch ein Fundstück</button></div>` + bar;
+      <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="wiki">Lückentext üben</button><button type="button" class="primary" data-a="wiki">Nächster Artikel</button></div>` + bar;
   }
   // Fragen erst nach dem Text: beim Lesen auf Knopfdruck, beim Hören von selbst nach dem letzten Satz
   const gate = !T.quiz ? `<div class="tgate">${T.hidden

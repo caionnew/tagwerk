@@ -1,31 +1,86 @@
 /* ---------- Online-Extras: Tatoeba & LanguageTool ---------- */
 const TAT_LANG = { sv:'swe', es:'spa' };
+// Suchmuster für den Nachschub je Thema. TAT_Q für alle, TAT_ADV bei „Fortgeschritten“ (B2/C1-Strukturen).
+// Falsche Freunde kommen aus der Liste in fundstueck.js, damit beide Stellen zusammenpassen.
+const ffQuery = lang => FALSE_FRIENDS[lang].map(f => f[0].replace(/^(el|la|los|las) /, ''));
 const TAT_Q = {
   sv:{
-    bisats:['eftersom', '"att han inte"', '"att jag inte"', '"om du inte"', '"att hon inte"', '"som jag aldrig"', '"att det inte"'],
-    inversion:['^idag', '^igår', '^tyvärr', '^nu', '^ibland', '^kanske', '^sedan'],
-    tempus:['"har aldrig"', '^igår', '"förra veckan"', '"förra året"', '"i somras"', '"har du någonsin"'],
-    partikel:['"tycker om"', '"komma ihåg"', '"kommer ihåg"', '"ta med"', '"håller med"', '"ge upp"', '"hälsa på"'],
-    sin:['sin', 'sitt', 'sina'],
-    tid:['sedan', '"om en vecka"', '"i två"', '"på morgonen"', '"på helgen"', '"i måndags"'],
-    framtid:['"kommer att"', '"behöver inte"', '"får inte"', 'borde', '"skulle vilja"'],
-    passiv:['"det finns"', '"finns det"', '"man kan"', '"man måste"'],
-    falska:['stanna', 'roligt', 'semester', 'fick', 'snäll']
+    bisats:['eftersom', '"att han inte"', '"att jag inte"', '"om du inte"', '"att hon inte"', '"som jag aldrig"', '"att det inte"', '"som inte"', '"innan jag"', 'medan'],
+    inversion:['^idag', '^igår', '^tyvärr', '^nu', '^ibland', '^kanske', '^sedan', '^därför', '^plötsligt', '^ofta'],
+    tempus:['"har aldrig"', '^igår', '"förra veckan"', '"förra året"', '"i somras"', '"har du någonsin"', '"har bott"', '"har varit"', '"för två år sedan"'],
+    partikel:['"tycker om"', '"komma ihåg"', '"kommer ihåg"', '"ta med"', '"håller med"', '"ge upp"', '"hälsa på"', '"känner igen"', '"stäng av"', '"hitta på"'],
+    sin:['sin', 'sitt', 'sina', '"sin mamma"', '"sitt rum"', '"sina vänner"'],
+    tid:['sedan', '"om en vecka"', '"i två"', '"på morgonen"', '"på helgen"', '"i måndags"', '"om ett år"', '"för en timme sedan"'],
+    framtid:['"kommer att"', '"behöver inte"', '"får inte"', 'borde', '"skulle vilja"', '"ska resa"', '"kommer inte att"'],
+    passiv:['"det finns"', '"finns det"', '"man kan"', '"man måste"', 'byggdes', 'såldes', 'kallas'],
+    falska:ffQuery('sv')
   },
   es:{
-    serestar:['estoy', 'está', '"es muy"', 'estamos'],
-    pasado:['"cuando era"', 'estaba', '"de repente"', 'ayer'],
-    perfecto:['"he estado"', '"nunca he"', '"has visto"', '"hoy he"'],
-    subjuntivo:['"quiero que"', 'ojalá', '"espero que"', '"para que"', '"no creo que"'],
-    porpara:['"gracias por"', '"para mí"', '"por eso"', 'para'],
-    pronombres:['"se lo"', '"te lo"', '"me lo"', '"se la"'],
-    gustar:['"me gusta"', '"me gustan"', '"me duele"', '"le gusta"', '"me encanta"'],
-    condicional:['"si tuviera"', '"me gustaría"', 'deberías', 'podrías'],
-    reflexivo:['"se me"', '"me acuerdo"', '"me levanto"', '"nos vamos"'],
-    preposiciones:['"pienso en"', '"depende de"', '"desde hace"', '"se casó con"'],
-    falsos:['empresa', 'abrigo', 'gimnasio']
+    serestar:['estoy', 'está', '"es muy"', 'estamos', '"está lleno"', '"es importante"', '"estaba cansado"'],
+    pasado:['"cuando era"', 'estaba', '"de repente"', 'ayer', '"cuando llegué"', '"de niño"', '"todos los días"'],
+    perfecto:['"he estado"', '"nunca he"', '"has visto"', '"hoy he"', '"ya he"', '"todavía no he"', '"alguna vez"'],
+    subjuntivo:['"quiero que"', 'ojalá', '"espero que"', '"para que"', '"no creo que"', '"cuando llegues"', '"es mejor que"', '"dudo que"'],
+    porpara:['"gracias por"', '"para mí"', '"por eso"', 'para', '"por teléfono"', '"para aprender"', '"por la mañana"'],
+    pronombres:['"se lo"', '"te lo"', '"me lo"', '"se la"', '"se las"', '"nos lo"'],
+    gustar:['"me gusta"', '"me gustan"', '"me duele"', '"le gusta"', '"me encanta"', '"me interesa"', '"me parece"'],
+    condicional:['"si tuviera"', '"me gustaría"', 'deberías', 'podrías', '"me encantaría"', 'sería', 'podríamos'],
+    reflexivo:['"se me"', '"me acuerdo"', '"me levanto"', '"nos vamos"', '"se llama"', '"nos vemos"'],
+    preposiciones:['"pienso en"', '"depende de"', '"desde hace"', '"se casó con"', '"sueño con"', '"tarda en"', '"se olvidó de"'],
+    falsos:ffQuery('es')
   }
 };
+const TAT_ADV = {
+  sv:{
+    bisats:['"trots att"', '"även om"', '"i och med att"', '"vilket innebär"', '"så länge"', '"förutsatt att"', '"oavsett om"', '"såvida inte"'],
+    inversion:['^däremot', '^förmodligen', '^egentligen', '^ändå', '^följaktligen', '^dessutom', '^tydligen', '^därför'],
+    tempus:['"hade redan"', '"hade aldrig"', '"hade hunnit"', '"har länge"', '"under flera år"', '"hade glömt"'],
+    partikel:['"komma fram till"', '"lägga märke till"', '"stå ut med"', '"gå med på"', '"hålla på att"', '"ta reda på"', '"komma överens"', '"ta upp"'],
+    sin:['"sin egen"', '"sitt eget"', '"sina egna"', '"sin fru"', '"sina föräldrar"', '"sitt arbete"'],
+    tid:['"sedan dess"', '"under tiden"', '"för länge sedan"', '"i flera år"', '"inom kort"', '"så småningom"'],
+    framtid:['"skulle kunna"', '"skulle ha"', '"lär vara"', 'torde', '"kommer nog"', '"hade tänkt"'],
+    passiv:['"har byggts"', '"måste göras"', 'anses', 'sägs', '"har hittats"', 'diskuterades']
+  },
+  es:{
+    serestar:['"está claro que"', '"es evidente"', '"estar de acuerdo"', '"está a punto de"', '"es probable que"', '"estaba convencido"'],
+    pasado:['solía', 'hubo', 'llevaba', '"acababa de"', '"había una vez"', '"de repente se"'],
+    perfecto:['"había sido"', '"había estado"', '"ya había"', '"nunca había"', 'habrá', '"me han dicho"'],
+    subjuntivo:['"aunque sea"', '"como si"', '"antes de que"', '"sin que"', '"a menos que"', '"ojalá hubiera"', '"por mucho que"', '"no es que"'],
+    porpara:['"por lo menos"', '"por si acaso"', '"para siempre"', '"por fin"', '"por lo visto"', '"para colmo"'],
+    pronombres:['"se los"', '"se las"', 'díselo', 'dámelo', '"me lo dijo"', '"te lo prometo"'],
+    gustar:['"me molesta"', '"me importa"', '"me cae"', '"me hace falta"', '"me preocupa"', '"le sorprende"'],
+    condicional:['habría', '"si hubiera"', '"yo que tú"', '"sería mejor"', '"de haberlo sabido"', '"me habría gustado"'],
+    reflexivo:['"se dio cuenta"', '"me quedé"', '"se puso"', '"nos llevamos"', '"se atrevió"', '"se arrepintió"'],
+    preposiciones:['"consiste en"', '"se trata de"', '"cuenta con"', '"se fía de"', '"insistió en"', '"se negó a"']
+  }
+};
+// Statt reinem Zufall: Wörter aus Gesellschaft, Natur, Sport und Kultur, damit nicht immer Kaffee und Schlüssel vorkommen
+const TAT_THEMES = {
+  sv:['samhället', 'regeringen', 'valet', 'skogen', 'havet', 'fåglar', 'matchen', 'laget', 'konserten', 'romanen', 'forskarna', 'klimatet', 'kommunen', 'grannarna', 'traditionen', 'historien', 'staden', 'landsbygden', 'jobbet', 'universitetet'],
+  es:['sociedad', 'gobierno', 'elecciones', 'bosque', 'mar', 'pájaros', 'partido', 'equipo', 'concierto', 'novela', 'científicos', 'clima', 'ayuntamiento', 'vecinos', 'tradición', 'historia', 'ciudad', 'pueblo', 'empresa', 'universidad']
+};
+// Tatoeba übersetzt viel aus dem Englischen, mit immer denselben Figuren
+const TAT_NAMES = /\b(Tom|Mary|John|Alice|Bob|Jack|Ken)\b/;
+const tatSet = (lang, t) => new Set(wTokens(t).filter(w => w.length >= 3 && !isFunc(lang, w)).map(w => lemmaOf(lang, w) || w));
+// Zu ähnlich: Inhaltswörter zu 60 % gleich mit einem vorhandenen Satz, oder ein sehr häufiger Satzanfang
+function tatSamey(lang, target, pool){
+  if (TAT_NAMES.test(target)) return true;
+  const a = tatSet(lang, target);
+  if (pool.starts[wTokens(target).slice(0, 2).join(' ')] >= 4) return true;
+  return a.size > 0 && pool.sets.some(b => { let n = 0; a.forEach(w => { if (b.has(w)) n++; }); return n / (a.size + b.size - n) >= 0.6; });
+}
+function tatPool(lang){
+  const sets = [], starts = {};
+  BANK[lang].forEach(i => { sets.push(tatSet(lang, i.target)); const k = wTokens(i.target).slice(0, 2).join(' '); starts[k] = (starts[k] || 0) + 1; });
+  return { sets, starts };
+}
+// Suchplan für einen Nachschub: Schwerpunkt der Woche zuerst, dann reihum, bei „Fortgeschritten“ die anspruchsvollen Muster, zuletzt ein Themenwort
+function tatPlan(lang, fort, day){
+  const traps = Object.keys(TAT_Q[lang]), ft = focusTrap(lang);
+  const order = (ft && TAT_Q[lang][ft] ? [ft] : []).concat([0, 1, 2, 3].map(k => traps[(day + k) % traps.length])).filter((t, i, arr) => arr.indexOf(t) === i).slice(0, 3);
+  const plan = order.map(trap => { const adv = fort && TAT_ADV[lang][trap]; return { trap, q:pick(adv && adv.length ? adv : TAT_Q[lang][trap]) }; });
+  plan.push({ trap:'eigene', q:pick(TAT_THEMES[lang]) });
+  return plan;
+}
 async function tatoebaSearch(lang, q, native, wc){
   const p = new URLSearchParams({ lang:TAT_LANG[lang], 'trans:lang':'deu', 'showtrans:lang':'deu', is_unapproved:'no', is_orphan:'no', word_count:wc || '3-12', sort:'random', limit:'20', include:'audios' });
   if (q) p.set('q', q);
@@ -100,19 +155,21 @@ async function refill(lang){
   DB.tatFetch[lang] = Date.now(); save();
   const mature = matureCount(lang);
   const wc = fort ? (mature < 200 ? '6-14' : '7-18') : mature < 50 ? '3-8' : mature < 200 ? '4-10' : mature < 600 ? '5-12' : '6-16';
-  const traps = Object.keys(TAT_Q[lang]);
-  const day = Math.floor(Date.now() / 86400000);
+  const plan = tatPlan(lang, fort, Math.floor(Date.now() / 86400000)), pool = tatPool(lang);
   let added = 0;
-  for (let k = 0; k < 4 && added < 16; k++) {
-    const free = k === 3, trap = traps[(day + k) % traps.length];
+  for (const { trap, q } of plan) {
+    if (added >= 16) break;
     try {
-      const list = await tatoebaSearch(lang, free ? '' : pick(TAT_Q[lang][trap]), true, wc);
-      list.sort((a, b) => (b.audio ? 1 : 0) - (a.audio ? 1 : 0)).slice(0, 4).forEach(x => {
+      const list = (await tatoebaSearch(lang, q, true, wc)).sort((a, b) => (b.audio ? 1 : 0) - (a.audio ? 1 : 0));
+      let taken = 0;
+      for (const x of list) {
+        if (taken >= 4) break;
         const id = lang + ':tat:' + x.tid;
-        if (DB.tat[lang].some(o => o.id === id)) return;
-        DB.tat[lang].push({ id, trap:free ? 'eigene' : trap, de:x.de, target:x.target, owner:x.owner, license:x.license, audio:x.audio, created:today(), auto:true });
-        added++;
-      });
+        if (DB.tat[lang].some(o => o.id === id) || tatSamey(lang, x.target, pool)) continue;
+        DB.tat[lang].push({ id, trap, de:x.de, target:x.target, owner:x.owner, license:x.license, audio:x.audio, created:today(), auto:true });
+        pool.sets.push(tatSet(lang, x.target));
+        added++; taken++;
+      }
     } catch (e) { break; }
   }
   if (added) { DB.tatFetch[lang + 'N'] = (DB.tatFetch[lang + 'N'] || 0) + added; save(); buildBank(); if (S.view === 'home' || S.view === 'progress') render(); }

@@ -156,3 +156,31 @@ test('Hören: Bei den Fragen spielt „Abspielen“ den ganzen Text von vorn, di
   await expect.poll(() => page.evaluate(n => window.__said.length - n, before), { timeout:8000 }).toBeGreaterThanOrEqual(3);
   expect(await page.$eval('.tq-q', e => Math.round(e.getBoundingClientRect().top))).toBe(qTop);
 });
+test('Lückentext: aus dem Wikipedia-Fundstück und aus einem Lesetext, „Noch eine Runde“ bleibt beim selben Text', async ({ page }) => {
+  const body = 'Allmänna skyddsrum i Stockholm byggdes under det kalla kriget för att skydda befolkningen. De flesta skyddsrummen ligger djupt under jorden och används i dag som garage eller förråd. Kommunen kontrollerar regelbundet att dörrarna fungerar och att ventilationen är intakt. Under en kris ska skyddsrummen kunna öppnas inom fyrtioåtta timmar. Många stockholmare vet inte var det närmaste skyddsrummet finns, trots att skyltarna sitter på husväggarna.';
+  await page.route('https://sv.wikipedia.org/w/api.php**', route => route.fulfill({ json:{ query:{ pages:[{ title:'Allmänna skyddsrum i Stockholm', extract:body, fullurl:'https://sv.wikipedia.org/wiki/Skyddsrum' }] } } }));
+  await seed(page, freshDB('sv'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=wiki] >> nth=0');
+  await expect(page.locator('.rtitle')).toHaveText('Allmänna skyddsrum i Stockholm');
+  await page.click('[data-a=textgap][data-id=wiki]');
+  await expect(page.locator('.runbar')).toBeVisible();
+  await expect(page.locator('#app')).toContainText('Aus „Allmänna skyddsrum i Stockholm“');
+  for (let k = 0; k < 20 && await page.$('.runbar'); k++) { await page.fill('#answer', 'zzz'); await page.click('[data-a=check]'); await page.click('[data-a=next]'); }
+  await expect(page.locator('.done-h')).toBeVisible();
+  await page.click('[data-a=again]');
+  await expect(page.locator('#app')).toContainText('Aus „Allmänna skyddsrum i Stockholm“');
+  // Eigener Lesetext: nach den Fragen Lückentext, dann noch eine Runde
+  await page.click('[data-a=quit]');
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=texts]');
+  await page.click('[data-a=textopen][data-id=vasa]');
+  await page.click('[data-a=tquiz]');
+  for (let k = 0; k < 3; k++) { await page.click(`[data-a=tpick][data-k="${k}"][data-i="0"]`); await page.click('[data-a=tqnext]'); }
+  await page.click('[data-a=textgap][data-id=vasa]');
+  await expect(page.locator('#app')).toContainText('Aus „Regalskeppet Vasa“');
+  for (let k = 0; k < 20 && await page.$('.runbar'); k++) { await page.fill('#answer', 'zzz'); await page.click('[data-a=check]'); await page.click('[data-a=next]'); }
+  await page.click('[data-a=again]');
+  await expect(page.locator('#app')).toContainText('Aus „Regalskeppet Vasa“');
+});

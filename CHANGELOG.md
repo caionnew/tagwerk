@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.25.0
+- **Nachschub von Tatoeba gezielter und abwechslungsreicher.** Ein Abruf sucht jetzt viermal statt einmal: zuerst im Thema mit den meisten Fehlern, dann in zwei Themen, die täglich wechseln, zuletzt zu einem Sachthema (Gesellschaft, Wahlen, Wald, Vögel, Spiel, Mannschaft, Roman, Gemeinde, Nachbarn und mehr). Bei „Fortgeschritten“ suchen die Themen nach B2-Mustern, etwa „trots att“, „i och med att“, Satzanfang mit „följaktligen“, „hade hunnit“ oder „como si“, „por mucho que“, „ojalá hubiera“, „de haberlo sabido“. Je Thema 6 bis 10 Suchwörter statt 3 bis 7; die falschen Freunde suchen nach allen Wörtern ihrer Liste. Je Suche höchstens vier Sätze, die mit Aufnahme zuerst.
+- **Weniger Ähnliches aus Tatoeba:** Aussortiert werden Sätze mit den Tatoeba-Standardnamen (Tom, Mary, John …), Sätze, die einem vorhandenen zu ähnlich sind (mindestens 60 % gleiche Inhaltswörter), und Sätze mit einem Anfang aus zwei Wörtern, der schon viermal vorkommt (etwa „Jag har“).
+- **Konnektoren & feste Verbindungen: je 42 Fälle statt 18 (Schwedisch) und 20 (Spanisch)**, vor allem B2. Schwedisch: följaktligen, ändå, såvitt, förutsatt att, oavsett om, i och med att, såvida inte, å andra sidan; lägga märke till, hålla tal, begå ett brott, ställa krav, dra nytta av, ta ställning, lägga fram. Spanisch: no obstante, por consiguiente, con tal de que, a no ser que, sino que, mientras que, en cuanto a; echar de menos, tener en cuenta, llevar a cabo, darse cuenta, dar vergüenza, caer bien. Vorher kam dieselbe Aufgabe nach wenigen Runden wieder.
+- **Verben mit Präposition: 57 statt 41 (Schwedisch) und 58 statt 42 (Spanisch).** Neu etwa ansöka om, tvivla på, ta avstånd från, skylla på, brist på; fiarse de, empeñarse en, optar por, conformarse con, carecer de.
+- **Lückentext aus dem Wikipedia-Fundstück:** Unter dem Artikel stehen „Lückentext üben“ und „Nächster Artikel“ (vorher „Noch ein Fundstück“).
+- **Fehler behoben:** „Noch eine Runde“ nach einem Lückentext tat nichts, weil der Text nicht mitkam. Jetzt geht es mit demselben Text weiter, auch beim Wikipedia-Artikel.
+- **Tests:** Ein neuer Test prüft, dass jeder Generator mindestens 36 verschiedene Aufgaben liefert (dreimal so viele, wie die Wiederholungssperre sich merkt). Dazu Tests für Suchplan und Filter des Nachschubs und ein Browsertest für den Lückentext. Die Sichtprüfung (`npm run sicht`) zeigt jetzt auch das Wikipedia-Fundstück, mit fester Antwort statt Netz.
+
 ## 24.24.1
 - **Hören: Text bei den Fragen noch einmal von vorn.** Ist der Text zu Ende gehört, spielt „Abspielen“ ihn wieder ab dem ersten Satz (vorher kam beim Hören nur der letzte Satz). Während der Fragen springt die Seite dabei nicht mehr zum gerade gelesenen Satz, die Frage bleibt im Bild. Der Pfeil links spielt weiterhin den aktuellen Satz noch einmal.
 - **Themenliste für Lesetexte:** `docs/THEMEN.md` sammelt Leitlinien, die nächste Runde Themen (El Gordo ersetzt durch „Las doce uvas“, weil La ONCE schon das Lotterie-Thema hat), weitere Ideen und was schon geschrieben ist.

@@ -29,24 +29,25 @@ Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel:
 
 ### Prüfung und Rückmeldung
 
-3. **Verwechslung beim Namen nennen (B).** Erkennt die Prüfung ein vertauschtes Paar (por/para, ser/estar, en/ett, sin/hans), steht in einer Zeile, was hier gilt und warum. Ergänzt die Erklärung je Satz um die gemachte Verwechslung; für Präteritum/Perfekt gibt es das schon.
+3. **Fehler finden mit zwei Kandidaten (B).** Sätze mit zwei typischen Fehlerstellen verschiedener Sorten, höchstens eine davon falsch: ein ser/estar und ein por/para (Estoy en Madrid por trabajo), im Schwedischen etwa eine Inversion und ein Adjektiv mit en/ett-Endung. Dann reicht es nicht, das einzige kritische Wort zu finden; man muss beide prüfen. Nächster Schritt nach 24.45 (richtige Sätze, Verbessern). Braucht neue Satzvorlagen, je Sprache mindestens 36 (dreimal die Wiederholungssperre), mit einer Erklärung zu beiden Stellen.
+4. **Verwechslung beim Namen nennen (B).** Erkennt die Prüfung ein vertauschtes Paar (por/para, ser/estar, en/ett, sin/hans), steht in einer Zeile, was hier gilt und warum. Ergänzt die Erklärung je Satz um die gemachte Verwechslung; für Präteritum/Perfekt gibt es das schon.
 
 ### Hören und Sprechen
 
-4. **Hörunterscheidung, spanische Betonung (B+), sonst Minimalpaare (B).** término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
-5. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
-6. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
-7. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
+5. **Hörunterscheidung, spanische Betonung (B+), sonst Minimalpaare (B).** término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
+6. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
+7. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
+8. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
 
 ### Schreiben
 
-8. **Korrekturen aus dem Schreiben ins Tagwerk (B+, vorher A−).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
+9. **Korrekturen aus dem Schreiben ins Tagwerk (B+, vorher A−).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
 
 ### Planung und Rückblick
 
-9. **Wochenbilanz zum Schwerpunkt (B).** „Wortstellung im Nebensatz: vor der Woche 38 % Fehler, in der Woche 15 %.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Wenig Aufwand. Steht in deiner Liste „Offen“.
-10. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
-11. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
+10. **Wochenbilanz zum Schwerpunkt (B).** „Wortstellung im Nebensatz: vor der Woche 38 % Fehler, in der Woche 15 %.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Wenig Aufwand. Steht in deiner Liste „Offen“.
+11. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
+12. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
 
 ## Offen: Rückmeldung von dir

@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.44.0
+**8 neue schwedische Lesetexte auf B2/C1**, jeder mit drei Fragen und drei Sätzen fürs Tagwerk.
+- **Dagen H:** der Wechsel zum Rechtsverkehr 1967, gegen eine Volksabstimmung mit fast 83 Prozent Nein.
+- **Kalle Anka klockan tre:** die Disney-Stunde an Heiligabend seit 1960, mit den Zuschauerzahlen von 2020 und 2025.
+- **Studentflaket:** Abifeiern auf der Ladefläche und die Regeln dafür (20 km/h, Geländer, Fahrer ab 21).
+- **Almedalsveckan:** von Palmes Rede 1968 bis zu gut 3 100 Veranstaltungen 2026, mit der Kritik daran.
+- **Vargen delar Sverige:** Bestand 2025/26, Referenzwert 170 und dann 220, die gestoppte Jagd 2026, die Beschlüsse für 2027.
+- **Vasaloppet:** Gustav Vasas Flucht, das erste Rennen 1922, das Frauenverbot von 1923 bis 1981.
+- **Alva Myrdal:** Familienpolitik, auch die Befürwortung der Sterilisierung, dann UN, Abrüstung und Friedensnobelpreis 1982.
+- **Meänkieli – vårt språk:** Minderheitensprache im Tornedal, Assimilierung in der Schule, Wahrheitskommission 2023.
+
+Alle Zahlen und Daten sind vorher an Quellen geprüft (Behörden, Gerichte, Statistik, seriöse Presse). Zeitgebundenes steht mit Jahr im Text. Die 8 spanischen Texte folgen mit 24.45.
+
 ## 24.43.0
 **Redewendungen als neues Thema in beiden Sprachen.**
 - **Je 24 Sätze, 12 auf B1 und 12 auf B2.** Die Lücke sitzt auf dem Schlüsselwort des Bildes. Die Erklärung nennt die deutsche Entsprechung und die wörtliche Bedeutung, etwa „ha tummen mitt i handen = zwei linke Hände haben (wörtlich: den Daumen mitten in der Hand)“.

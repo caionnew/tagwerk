@@ -13,15 +13,7 @@ Sammelstelle für Themen, damit keine Idee verloren geht. Format und Prüfregeln
 
 ## Nächste Runde (vorgeschlagen 16. November 2026, gewünscht)
 
-Schwedisch:
-- Dagen H: In der Nacht zum 3. September 1967 wechselt Schweden auf Rechtsverkehr. (Anekdote)
-- Kalle Anka klockan tre: An Heiligabend um 15 Uhr sieht halb Schweden dieselbe Disney-Sendung, seit 1960. (Brauch)
-- Studentflak: Abifeiern auf geschmückten Lastwagen. (Brauch)
-- Almedalsveckan: eine Woche Politik zum Anfassen in Visby auf Gotland. (Lokales)
-- Vargen: Wölfe, Jäger, Schafhalter und Naturschutz. (Natur)
-- Vasaloppet: 90 Kilometer auf Skiern von Sälen nach Mora und die Legende von Gustav Vasa. (Sport)
-- Alva Myrdal: Sozialreformerin, Diplomatin, Friedensnobelpreis 1982. (Persönlichkeit)
-- Meänkieli: eine Minderheitensprache im Tornedal an der finnischen Grenze. (Lokales)
+Die schwedischen Themen dieser Runde sind mit 24.44.0 geschrieben (siehe unten).
 
 Spanisch:
 - El Ecce Homo de Borja: Eine missglückte Restaurierung 2012 bringt einem Dorf Touristen. (Anekdote)
@@ -62,5 +54,6 @@ Spanisch:
 
 ## Geschrieben
 
+- 24.44.0 (B2/C1): dagenh, kalleanka, studentflak, almedalen, vargen, vasaloppet, alvamyrdal, meankieli.
 - 24.24.0 (B2/C1): offentlighet, grannenslon, kiruna, samer, friskolor, nato, systembolaget, miljonprogrammet; hora, memoria, marmenor, once, chile, uruguay, bolivia, barcelona.
 - Frühere Texte (A2 bis B2): allemansratten, vasa, midnattssol, astrid, surstromming, ishotellet, foraldraledig; espanavaciada, lenguas, siesta, castells, camino, galapagos, machupicchu, muertos, tomatina.

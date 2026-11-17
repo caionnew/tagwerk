@@ -193,7 +193,129 @@ Samtidigt bor ungefär var fjärde invånare i Sverige i en bostad från de här
      ['Welches Problem bringt die Sanierung mit sich?', ['Starke Mieterhöhungen drängen Bewohner hinaus', 'Die Wohnungen werden kleiner', 'Die Balkone müssen entfernt werden'], 'kraftiga hyreshöjningar efter renoveringar tvingar ibland ut de boende']],
   keep:[['I mitten av 1960-talet var bostadsbristen akut.', 'Mitte der 1960er-Jahre war die Wohnungsnot akut.'],
         ['Redan efter några år fick en del områden dåligt rykte.', 'Schon nach wenigen Jahren bekamen manche Viertel einen schlechten Ruf.'],
-        ['Frågan är hur man rustar upp utan att driva bort dem som bor där.', 'Die Frage ist, wie man saniert, ohne die Menschen zu vertreiben, die dort wohnen.']] }
+        ['Frågan är hur man rustar upp utan att driva bort dem som bor där.', 'Die Frage ist, wie man saniert, ohne die Menschen zu vertreiben, die dort wohnen.']] },
+{ id:'dagenh', topic:'Geschichte', level:'B2', title:'Dagen H',
+  body:`Fram till hösten 1967 körde svenskarna på vänster sida av vägen, trots att grannländerna sedan länge hade högertrafik. De flesta bilar hade dessutom ratten till vänster, vilket gjorde omkörningar på smala landsvägar riskabla.
+
+År 1955 fick folket säga sitt i en folkomröstning. Svaret var tydligt: nästan 83 procent röstade nej till högertrafik. Ändå beslutade riksdagen åtta år senare att byta sida. Omröstningen hade bara varit rådgivande.
+
+Förberedelserna tog fyra år. Omkring 350 000 vägskyltar skulle flyttas eller bytas ut, korsningar byggas om och bussar förses med dörrar på höger sida. En stor informationskampanj nådde varenda hushåll, och tv ordnade till och med en tävling om den bästa låten om högertrafik.
+
+Själva bytet skedde en söndagsmorgon, den 3 september. Mellan klockan ett och sex fick bara nödvändiga fordon köra. Tio minuter före fem skulle alla stanna, försiktigt byta körfält och stanna igen. Klockan fem prick rullade Sverige vidare på höger sida.
+
+Under de följande veckorna sjönk antalet olyckor kraftigt, troligen för att alla körde ovanligt försiktigt. Effekten höll dock inte i sig. År 1969 var olyckstalen tillbaka på samma nivå som före omläggningen.`,
+  q:[['Wie ging die Volksabstimmung von 1955 aus?', ['Fast 83 Prozent stimmten gegen den Rechtsverkehr', 'Eine knappe Mehrheit stimmte dafür', 'Sie wurde wegen zu geringer Beteiligung wiederholt'], 'nästan 83 procent röstade nej till högertrafik'],
+     ['Was mussten alle Fahrzeuge um zehn vor fünf tun?', ['Anhalten, vorsichtig die Spur wechseln und wieder anhalten', 'Das Licht einschalten und hupen', 'Sofort den nächsten Parkplatz ansteuern'], 'Tio minuter före fem skulle alla stanna'],
+     ['Wie entwickelten sich die Unfallzahlen?', ['Erst sanken sie stark, 1969 lagen sie wieder auf dem alten Stand', 'In den ersten Wochen stiegen sie stark an', 'Sie blieben jahrzehntelang niedriger als vorher'], 'År 1969 var olyckstalen tillbaka på samma nivå som före omläggningen.']],
+  keep:[['Ändå beslutade riksdagen åtta år senare att byta sida.', 'Trotzdem beschloss der Reichstag acht Jahre später, die Seite zu wechseln.'],
+        ['Klockan fem prick rullade Sverige vidare på höger sida.', 'Um Punkt fünf rollte Schweden auf der rechten Seite weiter.'],
+        ['Effekten höll dock inte i sig.', 'Die Wirkung hielt allerdings nicht an.']] },
+{ id:'kalleanka', topic:'Bräuche', level:'B2', title:'Kalle Anka klockan tre',
+  body:`I Sverige firas julen på julafton, den 24 december, och mitt på eftermiddagen stannar landet. Klockan tre sätter sig miljontals människor framför tv:n för att se Kalle Anka och hans vänner önskar god jul, en timme med gamla Disneyfilmer som SVT har visat varje julafton sedan 1960.
+
+Programmet består av korta tecknade filmer och klipp ur långfilmer som Askungen och Lady och Lufsen. Nästan allt är sig likt år efter år, och just det är poängen. Många kan replikerna utantill och skrattar på samma ställen som alltid.
+
+Att traditionen slog rot har en enkel förklaring. När programmet började sändas fanns det bara en tv-kanal i Sverige, och tecknad film från USA var en sällsynthet. På 1970-talet kritiserades programmet för att vara reklam för ett amerikanskt storföretag, men när SVT ville ta bort det blev protesterna så kraftiga att planerna lades ner.
+
+Under den timmen får larmcentralerna märkbart färre samtal, något som kallas Kalle Anka-effekten. Rekordet sattes 2020, då drygt 4,5 miljoner såg programmet. Sedan dess har siffrorna sjunkit, men 2025 tittade ändå nästan 3 miljoner, närmare var tredje svensk.`,
+  q:[['Seit wann zeigt SVT die Sendung an Heiligabend?', ['Seit 1960', 'Seit 1976', 'Seit 1990'], 'som SVT har visat varje julafton sedan 1960'],
+     ['Warum schlug die Tradition so leicht Wurzeln?', ['Es gab nur einen Fernsehsender, und amerikanische Zeichentrickfilme waren selten', 'Disney verschenkte damals Fernsehgeräte', 'Die Filme liefen an Heiligabend auch in allen Kinos'], 'fanns det bara en tv-kanal i Sverige'],
+     ['Was ist der „Kalle-Anka-Effekt“?', ['Während der Sendung gehen deutlich weniger Notrufe ein', 'Das Stromnetz wird von den vielen Fernsehern überlastet', 'Die Geschäfte schließen eine Stunde früher'], 'något som kallas Kalle Anka-effekten']],
+  keep:[['Nästan allt är sig likt år efter år, och just det är poängen.', 'Fast alles bleibt Jahr für Jahr gleich, und genau darum geht es.'],
+        ['Att traditionen slog rot har en enkel förklaring.', 'Dass die Tradition Wurzeln schlug, hat eine einfache Erklärung.'],
+        ['Sedan dess har siffrorna sjunkit, men 2025 tittade ändå nästan 3 miljoner, närmare var tredje svensk.', 'Seitdem sind die Zahlen gesunken, aber 2025 sahen trotzdem fast 3 Millionen zu, beinahe jeder dritte Schwede.']] },
+{ id:'studentflak', topic:'Bräuche', level:'B2', title:'Studentflaket',
+  body:`I början av juni hör man dem långt innan man ser dem: lastbilar och traktorer med släp, fulla av sjungande ungdomar i vita mössor. Det är elever som just har tagit studenten, alltså gått ut gymnasiet, och som nu firar på ett studentflak.
+
+Dagen börjar ofta med champagnefrukost. Sedan kommer utspringet: klassen rusar ut ur skolan, där släkt och vänner väntar med stora skyltar som visar studentens barnbild. Därefter kliver klassen upp på flaket, pyntat med ballonger och en banderoll med en skämtsam slogan, och åker runt i stan med hög musik.
+
+Egentligen får man inte åka på ett flak, men för studentfiranden finns ett undantag med stränga villkor. Flaket får köra högst 20 kilometer i timmen och bara på vägar där hastighetsgränsen är högst 70. Räcket bör vara minst 110 centimeter högt, föraren ska ha fyllt 21 år och polisen ska meddelas i förväg.
+
+Reglerna har vuxit fram efter flera olyckor där studenter har ramlat av och skadats, i enstaka fall dödligt. Polisen rekommenderar därför flakvärdar, personer som inte själva firar och som håller kontakt med föraren.
+
+Under pandemin 2020 och 2021 var flaken förbjudna, och en del studenter protesterade. Sedan 2022 rullar de igen.`,
+  q:[['Was halten Familie und Freunde beim „utspring“ in die Höhe?', ['Große Schilder mit Babyfotos der Abiturienten', 'Die Zeugnisse der Schüler', 'Die Fahne der Schule'], 'stora skyltar som visar studentens barnbild'],
+     ['Wie schnell darf ein studentflak höchstens fahren?', ['20 Kilometer pro Stunde', '30 Kilometer pro Stunde', '70 Kilometer pro Stunde'], 'Flaket får köra högst 20 kilometer i timmen'],
+     ['Wen empfiehlt die Polizei an Bord?', ['Aufsichtspersonen, die selbst nicht mitfeiern', 'Einen Sanitäter mit Notfallkoffer', 'Einen Polizisten in Zivil'], 'Polisen rekommenderar därför flakvärdar']],
+  keep:[['Dagen börjar ofta med champagnefrukost.', 'Der Tag beginnt oft mit einem Champagnerfrühstück.'],
+        ['Egentligen får man inte åka på ett flak, men för studentfiranden finns ett undantag med stränga villkor.', 'Eigentlich darf man nicht auf einer Ladefläche mitfahren, aber für Abifeiern gibt es eine Ausnahme mit strengen Auflagen.'],
+        ['Sedan 2022 rullar de igen.', 'Seit 2022 rollen sie wieder.']] },
+{ id:'almedalen', topic:'Politik', level:'B2', title:'Almedalsveckan',
+  body:`En julidag 1968 klev utbildningsministern Olof Palme upp på ett lastbilsflak i parken Almedalen i Visby, åtminstone enligt berättelsen, och talade till semesterfirare. Han tillbringade somrarna på Gotland, och mötet var improviserat. Ingen kunde ana att det var början på en av Sveriges största politiska traditioner.
+
+I dag samlas politiker, myndigheter, företag, organisationer och journalister i Visby en vecka i slutet av juni. Varje riksdagsparti får en halv dag, och partiledarnas tal i parken sänds direkt i tv. Runt omkring pågår seminarier, debatter och mingel i den medeltida staden innanför ringmuren.
+
+Veckan har vuxit kraftigt. År 1998 hölls sex seminarier, men före pandemin var det över 4 000 programpunkter. År 2026 genomfördes drygt 3 100 evenemang med omkring 1 800 arrangörer.
+
+Alla är inte förtjusta. Kritiker menar att veckan har blivit en mässa för lobbyister och pr-byråer, och Skattebetalarnas förening har ifrågasatt att kommuner och myndigheter lägger skattepengar på resor till Gotland. Anhängarna svarar att det är unikt att vem som helst kan gå fram till en minister och ställa en fråga.
+
+Traditionen har inte alltid varit självklar. Sommaren efter mordet på Palme 1986 kom bara två partier. Sedan dess har liknande veckor startats i Norge, Danmark och Estland.`,
+  q:[['Wie begann die Almedalswoche?', ['Mit einer improvisierten Rede Olof Palmes im Sommer 1968', 'Mit einem Beschluss des Reichstags', 'Mit einem Musikfestival auf Gotland'], 'mötet var improviserat'],
+     ['Was kritisiert der Steuerzahlerverband?', ['Dass Kommunen und Behörden Steuergeld für Reisen nach Gotland ausgeben', 'Dass die Reden nicht im Fernsehen übertragen werden', 'Dass die Woche zu kurz ist'], 'Skattebetalarnas förening har ifrågasatt'],
+     ['Was geschah im Sommer nach dem Mord an Palme 1986?', ['Nur zwei Parteien kamen', 'Die Woche wurde verboten', 'Alle Parteien hielten Trauerreden'], 'Sommaren efter mordet på Palme 1986 kom bara två partier.']],
+  keep:[['Ingen kunde ana att det var början på en av Sveriges största politiska traditioner.', 'Niemand konnte ahnen, dass das der Anfang einer der größten politischen Traditionen Schwedens war.'],
+        ['Alla är inte förtjusta.', 'Nicht alle sind begeistert.'],
+        ['Traditionen har inte alltid varit självklar.', 'Die Tradition war nicht immer selbstverständlich.']] },
+{ id:'vargen', topic:'Natur', level:'C1', title:'Vargen delar Sverige',
+  body:`Få djur väcker så starka känslor i Sverige som vargen. I mitten av 1800-talet fanns den i nästan hela landet, men den förföljdes hårt, och när den fredades 1966 fanns bara en handfull kvar. I början av 1980-talet fick ett invandrat par valpar i Värmland. Nästan hela dagens stam härstammar från ett fåtal djur, och inaveln är ett av de största problemen.
+
+Vintern 2025/26 räknades omkring 355 vargar i Sverige, de flesta i mellersta delen av landet. För många på landsbygden är det alldeles för många, eftersom vargar river får och dödar jakthundar. Andra ser vargen som en självklar del av naturen och menar att konflikterna kan minskas med stängsel och ersättning.
+
+Politiskt handlar striden om ett tal, referensvärdet, alltså det minsta antal vargar som behövs för att stammen ska anses livskraftig. Tidigare låg det på 300. År 2025 sänkte regeringen det till 170, men EU-kommissionen menade att siffran saknade vetenskapligt stöd. Domstolarna stoppade därför all licensjakt vintern 2026.
+
+I augusti 2026 höjde regeringen värdet till 220. I oktober beslutade länsstyrelserna att 72 vargar får fällas under vintern 2027, vilket skulle bli den näst största vargjakten hittills. Naturskyddsföreningen anser att jakten äventyrar stammens framtid. Jägareförbundet hade å sin sida kritiserat skarpt att förra vinterns jakt stoppades.`,
+  q:[['Wie viele Wölfe gab es, als die Art 1966 unter Schutz gestellt wurde?', ['Nur eine Handvoll', 'Etwa 300', 'Mehrere Tausend'], 'fanns bara en handfull kvar'],
+     ['Warum stoppten die Gerichte die Lizenzjagd im Winter 2026?', ['Die EU-Kommission hielt den Referenzwert von 170 Wölfen für wissenschaftlich unbegründet', 'Es lag zu wenig Schnee', 'Es hatten sich zu wenige Jäger gemeldet'], 'EU-kommissionen menade att siffran saknade vetenskapligt stöd'],
+     ['Was beschlossen die Provinzialregierungen im Oktober 2026?', ['Im Winter 2027 dürfen 72 Wölfe erlegt werden', 'Die Jagd auf Wölfe wird ganz verboten', 'Die Wölfe werden nach Norwegen umgesiedelt'], 'I oktober beslutade länsstyrelserna att 72 vargar får fällas under vintern 2027']],
+  keep:[['Få djur väcker så starka känslor i Sverige som vargen.', 'Kaum ein Tier weckt in Schweden so starke Gefühle wie der Wolf.'],
+        ['Nästan hela dagens stam härstammar från ett fåtal djur, och inaveln är ett av de största problemen.', 'Fast der ganze heutige Bestand stammt von wenigen Tieren ab, und die Inzucht ist eines der größten Probleme.'],
+        ['Tidigare låg det på 300.', 'Früher lag er bei 300.']] },
+{ id:'vasaloppet', topic:'Sport', level:'B2', title:'Vasaloppet',
+  body:`Vintern 1520–21 försökte den unge adelsmannen Gustav Eriksson få männen i Mora att resa sig mot den danske kungen. De vägrade, och han flydde på skidor västerut mot Norge. Kort därefter ångrade sig moraborna och skickade två skickliga skidlöpare, Engelbrekt och Lars, efter honom. Enligt berättelsen hann de upp honom i Sälen. Två år senare valdes han till kung och gick till historien som Gustav Vasa.
+
+År 1922 föreslog en tidningsredaktör från Mora ett skidlopp till minne av flykten, och den 19 mars samma år stod 119 åkare på startlinjen. Av praktiska skäl gick loppet åt motsatt håll, från Sälen till Mora, och så är det fortfarande.
+
+I dag räknas Vasaloppet som världens äldsta och största längdskidlopp. Den första söndagen i mars startar närmare 15 000 åkare samtidigt i Berga by utanför Sälen, och sträckan är 90 kilometer i klassisk stil. Över målportalen i Mora står loppets motto: I fäders spår för framtids segrar.
+
+Kvinnorna fick vänta länge. År 1923 åkte Margit Nordin hela sträckan och hyllades i mål, men kort därefter förbjöds kvinnor att delta. Förbudet hävdes först 1981, och sedan 1997 koras även en officiell vinnare bland damerna.
+
+Ingen har vunnit fler gånger än Nils Karlsson, känd som Mora-Nisse, med nio segrar.`,
+  q:[['Warum führt das Rennen von Sälen nach Mora?', ['Aus praktischen Gründen, obwohl Gustav in die andere Richtung floh', 'Weil Gustav Vasa von Sälen nach Mora floh', 'Weil Mora näher an Norwegen liegt'], 'Av praktiska skäl gick loppet åt motsatt håll'],
+     ['Was geschah nach Margit Nordins Teilnahme 1923?', ['Frauen wurden vom Rennen ausgeschlossen', 'Sie erhielt den ersten Frauenpreis', 'Das Rennen wurde in zwei Klassen geteilt'], 'kort därefter förbjöds kvinnor att delta'],
+     ['Wie lang ist die Strecke?', ['90 Kilometer', '50 Kilometer', '119 Kilometer'], 'sträckan är 90 kilometer i klassisk stil']],
+  keep:[['Enligt berättelsen hann de upp honom i Sälen.', 'Der Überlieferung nach holten sie ihn in Sälen ein.'],
+        ['Kvinnorna fick vänta länge.', 'Die Frauen mussten lange warten.'],
+        ['Förbudet hävdes först 1981, och sedan 1997 koras även en officiell vinnare bland damerna.', 'Das Verbot wurde erst 1981 aufgehoben, und seit 1997 wird auch eine offizielle Siegerin bei den Frauen gekürt.']] },
+{ id:'alvamyrdal', topic:'Persönlichkeiten', level:'C1', title:'Alva Myrdal',
+  body:`Alva Myrdal, född 1902 i Uppsala, hör till 1900-talets mest inflytelserika svenskar. Tillsammans med sin man, nationalekonomen Gunnar Myrdal, gav hon 1934 ut boken Kris i befolkningsfrågan. Födelsetalen sjönk, och paret menade att samhället måste ta ett större ansvar för barnfamiljerna, bland annat genom förskolor, så att kvinnor kunde förvärvsarbeta och ändå bilda familj. Boken satte frågan på den politiska dagordningen, och många av idéerna blev senare en del av välfärdsstaten.
+
+Boken har också en mörk sida. Den förordade sterilisering av människor som ansågs olämpliga som föräldrar, en tanke som då hade brett stöd men som senare har fått hård kritik.
+
+Efter andra världskriget gick Alva Myrdal ut i världen. År 1949 blev hon chef för en avdelning inom FN, som första kvinna på en så hög post, och därefter ledde hon Unescos samhällsvetenskapliga avdelning. Åren 1955–1961 var hon Sveriges ambassadör i Indien.
+
+Hennes stora fråga blev nedrustningen. Från 1962 ledde hon den svenska delegationen vid förhandlingarna i Genève, och 1966–1973 var hon statsråd med ansvar för nedrustning. Hon kritiserade både USA och Sovjetunionen för kapprustningen. År 1982 fick hon Nobels fredspris tillsammans med mexikanen Alfonso García Robles.`,
+  q:[['Was forderten die Myrdals 1934 unter anderem?', ['Mehr Verantwortung der Gesellschaft für Familien, etwa durch Vorschulen', 'Ein Verbot der Erwerbsarbeit für Mütter', 'Höhere Steuern für Kinderreiche'], 'samhället måste ta ett större ansvar för barnfamiljerna'],
+     ['Welche dunkle Seite hat das Buch?', ['Es befürwortete die Sterilisierung von Menschen, die als ungeeignete Eltern galten', 'Es lehnte das Frauenwahlrecht ab', 'Es forderte die Abschaffung der Volksschule'], 'Den förordade sterilisering'],
+     ['Welches Thema prägte ihre spätere Laufbahn am stärksten?', ['Die Abrüstung', 'Die Rentenreform', 'Der Umweltschutz'], 'Hennes stora fråga blev nedrustningen.']],
+  keep:[['Boken har också en mörk sida.', 'Das Buch hat auch eine dunkle Seite.'],
+        ['Efter andra världskriget gick Alva Myrdal ut i världen.', 'Nach dem Zweiten Weltkrieg ging Alva Myrdal hinaus in die Welt.'],
+        ['Hennes stora fråga blev nedrustningen.', 'Ihr großes Thema wurde die Abrüstung.']] },
+{ id:'meankieli', topic:'Sprache', level:'C1', title:'Meänkieli – vårt språk',
+  body:`I Tornedalen, längs älven som skiljer Sverige från Finland, talar många ett språk som de flesta svenskar aldrig har hört. Det heter meänkieli, vilket betyder vårt språk. Det är nära släkt med finskan men har tagit upp många ord från svenskan.
+
+Länge kallades det finska eller tornedalsfinska. När staten byggde skolor i Tornedalen i slutet av 1800-talet blev svenska det enda undervisningsspråket, trots att de flesta barn talade finska. Många äldre har berättat att de fick skämmas för sitt modersmål, och i många familjer fördes språket inte vidare till barnen. Det finns till och med ett ord för den som inte talar sitt eget språk: ummikko.
+
+År 2000 blev meänkieli ett av Sveriges fem nationella minoritetsspråk, tillsammans med samiska, finska, romani chib och jiddisch. Det ger bland annat rätt att använda språket hos myndigheter i vissa kommuner. Hur många som talar det vet ingen säkert, och uppskattningarna går kraftigt isär.
+
+Hösten 2023 lämnade en sannings- och försoningskommission sin slutrapport, Som om vi aldrig funnits. Den beskriver hur statens försvenskningspolitik nedvärderade minoritetens språk och kultur, och föreslår bland annat en offentlig ursäkt.
+
+För en bred publik blev Tornedalen känt genom Mikael Niemis roman Populärmusik från Vittula, som utspelar sig i Pajala och fick Augustpriset år 2000.`,
+  q:[['Was bedeutet „meänkieli“?', ['Unsere Sprache', 'Sprache des Flusses', 'Finnisch des Nordens'], 'vilket betyder vårt språk'],
+     ['Was geschah, als der Staat Ende des 19. Jahrhunderts im Tornedal Schulen baute?', ['Schwedisch wurde die einzige Unterrichtssprache', 'Meänkieli wurde Pflichtfach', 'Die Schulen wurden zweisprachig'], 'blev svenska det enda undervisningsspråket'],
+     ['Was ist ein „ummikko“?', ['Jemand, der die eigene Sprache nicht spricht', 'Ein Lehrer für Meänkieli', 'Ein Lehnwort aus dem Schwedischen'], 'ett ord för den som inte talar sitt eget språk']],
+  keep:[['Länge kallades det finska eller tornedalsfinska.', 'Lange nannte man es Finnisch oder Tornedal-Finnisch.'],
+        ['Det finns till och med ett ord för den som inte talar sitt eget språk: ummikko.', 'Es gibt sogar ein Wort für jemanden, der seine eigene Sprache nicht spricht: ummikko.'],
+        ['Hur många som talar det vet ingen säkert, och uppskattningarna går kraftigt isär.', 'Wie viele es sprechen, weiß niemand genau, und die Schätzungen gehen weit auseinander.']] }
 ],
 es:[
 { id:'espanavaciada', topic:'Gesellschaft', level:'B2', title:'La España vaciada',

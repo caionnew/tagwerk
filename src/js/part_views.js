@@ -878,7 +878,7 @@ function popupHtml(){
     <div class="popfoot"><span class="poplinks"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'}</button><button type="button" class="link" data-a="popanki">An Anki</button></span><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
   </div>`;
 }
-function renderPopup(){ const el = document.getElementById('pop'); if (el) el.innerHTML = popupHtml(); document.body.classList.toggle('has-pop', !!S.pop); }
+function renderPopup(){ const el = document.getElementById('pop'); if (el) el.innerHTML = popupHtml(); document.body.classList.toggle('has-pop', !!S.pop); armBack(); }
 // Speicher: Balken bis zur Grenze von etwa 5 MB, Anteil anderer Seiten unter derselben Adresse, dauerhaft ja oder nein
 const fmtMB = n => (n >= 1024 * 1024 ? `${(n / 1048576).toFixed(1).replace('.', ',')} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
 const storePct = () => Math.min(100, Math.round(storeUsed() / STORE.limit * 100));
@@ -978,6 +978,7 @@ function render(){
   if (S.view === 'runDone' && S.run) S.run.stamped = true;
   if (S.view === 'home' && S.justDone) S.justDone = null;
   if (S.focus) { S.focus = false; const el = $('#answer'); if (el && !el.readOnly) { try { el.focus({ preventScroll:true }); } catch (e) {} caretToEnd(el); } }
+  armBack();
 }
 // Vorgegebener Satzanfang („Tyvärr …“): Schreibmarke ans Ende, nicht davor
 function caretToEnd(el){

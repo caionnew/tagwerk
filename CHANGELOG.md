@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.33.0
+- **Zurück-Geste geht innerhalb der App zurück.** Bisher kannte die App den Browserverlauf nicht: Die Zurück-Geste verließ sie sofort, in Firefox auf eine leere, schwarze Seite. Jetzt schließt sie ein offenes Fenster (Nachschlagen, Thema), führt aus Unterseiten zurück (etwa Text → Textliste → Üben → Heute), pausiert ein laufendes Tagwerk, beendet eine Runde wie „Beenden“ und bricht eine laufende Aufnahme ab. Erst auf „Heute“ verlässt sie die App wie gewohnt.
+- **Backup aus alten Versionen vollständig übernommen:** Beim Einspielen wird die alte Einstellung „neue Sätze pro Tag“ jetzt in die Länge (Kurz, Normal, Lang) umgerechnet, wie es beim Start schon geschah; vorher kam ein altes „Kurz“ als „Normal“ zurück. Start und Einspielen nutzen dafür dieselbe Regel.
+- **Mehr Backup-Tests:** Der ganze Stand kommt zurück, auch was später dazukam (Tagwerk je Sprache, Entwürfe, Schreibarchiv, eigene und Tatoeba-Sätze mit Aufnahme, Einstellungen). Ein Backup in alter Form (Wiederholung nach Stufen, ohne neuere Teile) wird übernommen, umgerechnet, und die App läuft damit.
+
 ## 24.32.0
 UI-Feinschliff.
 - **Fehler behoben:** Am Ende eines Lesetexts waren die Sätze mit den Antworten (grün unterstrichen) viel kleiner als der übrige Text. Ursache: Die Zahl in den Fehlerquellen und die Belegsätze teilten sich einen Klassennamen.

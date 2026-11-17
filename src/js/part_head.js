@@ -129,20 +129,22 @@ let DB = freshDB();
 function load(){
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) {
-      const d = JSON.parse(raw);
-      DB = Object.assign(freshDB(), d);
-      DB.settings = Object.assign(freshDB().settings, d.settings || {});
-      if (!d.settings || !d.settings.size) DB.settings.size = d.settings && d.settings.newPerDay === 3 ? 'kurz' : d.settings && d.settings.newPerDay === 10 ? 'lang' : 'normal';
-      DB.own = Object.assign({ sv:[], es:[] }, d.own || {});
-      DB.tat = Object.assign({ sv:[], es:[] }, d.tat || {});
-      migrateStates();
-    }
+    if (raw) adoptDB(JSON.parse(raw));
   } catch (e) {
     // Unlesbaren Stand zur Seite legen, bevor ein späteres Speichern ihn überschreibt
     try { const raw = localStorage.getItem(KEY); if (raw) localStorage.setItem(KEY + '-unlesbar', raw); } catch (e2) {}
     note('Gespeicherte Daten ließen sich nicht lesen. Spiel ein Backup ein, falls du eines hast.', 'warn');
   }
+}
+// Gespeicherten Stand oder Backup übernehmen, auch aus alten Versionen: fehlende Teile ergänzen, alte Einstellungen und
+// Wiederholungsdaten umrechnen. Gleiche Regeln für den Start und fürs Einspielen eines Backups.
+function adoptDB(d){
+  DB = Object.assign(freshDB(), d);
+  DB.settings = Object.assign(freshDB().settings, d.settings || {});
+  if (!d.settings || !d.settings.size) DB.settings.size = d.settings && d.settings.newPerDay === 3 ? 'kurz' : d.settings && d.settings.newPerDay === 10 ? 'lang' : 'normal';
+  DB.own = Object.assign({ sv:[], es:[] }, d.own || {});
+  DB.tat = Object.assign({ sv:[], es:[] }, d.tat || {});
+  migrateStates();
 }
 function migrateStates(){
   const old = [0, 1, 2, 4, 8, 16, 32, 64];
@@ -170,13 +172,7 @@ function parseBackup(text){
     return d;
   } catch (e) { return null; }
 }
-function applyBackup(d){
-  DB = Object.assign(freshDB(), d);
-  DB.own = Object.assign({ sv:[], es:[] }, d.own || {});
-  DB.tat = Object.assign({ sv:[], es:[] }, d.tat || {});
-  DB.settings = Object.assign(freshDB().settings, d.settings || {});
-  migrateStates(); flushSave(); buildBank();
-}
+function applyBackup(d){ adoptDB(d); flushSave(); buildBank(); }
 function backupSummary(){
   const n = Object.keys(DB.st || {}).length, days = Object.keys(DB.log || {}).length;
   return `${n === 1 ? '1 Satz' : `${n} Sätze`}, ${days === 1 ? '1 Übungstag' : `${days} Übungstage`}`;

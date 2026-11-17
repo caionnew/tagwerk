@@ -392,6 +392,31 @@ document.addEventListener('change', e => {
 });
 
 window.addEventListener('pagehide', () => { if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); });
+/* ---------- Zurück-Geste (Android, auch Firefox): innerhalb der App einen Schritt zurück ----------
+   Solange es in der App ein „zurück“ gibt, liegt ein Eintrag im Browserverlauf darüber. Die Geste nimmt ihn weg (popstate),
+   die App geht einen Schritt zurück, über dieselben Knöpfe wie in der Oberfläche, und legt bei Bedarf wieder einen an.
+   Auf „Heute“ ohne offenes Fenster verlässt die Geste die App wie gewohnt. */
+let navArmed = false;
+const atRoot = () => S.view === 'home' && !S.pop;
+function armBack(){
+  if (navArmed || atRoot()) return;
+  try { history.pushState({ tw:1 }, ''); navArmed = true; } catch (e) {}
+}
+function inAppBack(){
+  if (S.pop) { S.pop = null; renderPopup(); return true; }
+  const q = sel => { const b = document.querySelector(sel); return b && !b.disabled ? b : null; };
+  if (S.view === 'shadow' && S.shadow && shBusy(S.shadow)) { shadowCmd('shcancel'); return true; }
+  const b = q('#app .backbar .x') || q('#app .runbar .x') || (S.view === 'runDone' ? q('#app .actionbar [data-a=tab][data-v=home]') || q('#app .actionbar [data-a=tab]') : null);
+  if (b) { b.click(); return true; }
+  if (S.view !== 'home') { goView('home'); return true; }
+  return false;
+}
+window.addEventListener('popstate', () => {
+  navArmed = false;
+  // Nichts mehr zurückzunehmen (alter Eintrag nach Neustart oder Tab-Wechsel): wie der Browser weiter zurück, also die App verlassen
+  if (!inAppBack()) { try { history.back(); } catch (e) {} return; }
+  armBack();
+});
 // Verbindung kommt oder geht: Menüs mit Online-Diensten zeigen es gleich an
 ['online', 'offline'].forEach(ev => window.addEventListener(ev, () => { if (['extra', 'texts'].includes(S.view)) render(); }));
 document.addEventListener('visibilitychange', () => { if (document.hidden) { if (S.shadow) { shRecStop(); shStopPlay(); } if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); } });

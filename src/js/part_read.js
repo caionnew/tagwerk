@@ -6,10 +6,11 @@ const textById = (lang, id) => TEXTS[lang].find(t => t.id === id);
 function optionOrder(id, k, n){ const o = [...Array(n).keys()]; let h = parseInt(hash(id + ':' + k), 36); for (let i = n - 1; i > 0; i--) { const j = h % (i + 1); h = Math.floor(h / 7) + 13; [o[i], o[j]] = [o[j], o[i]]; } return o; }
 // Lesen oder nur hören wird vor dem Öffnen gewählt (in der Übersicht) und gemerkt: Wer hören will, soll den Text vorher nicht sehen.
 const textMode = () => (DB.settings.textMode === 'listen' ? 'listen' : 'read');
-function openText(lang, id, mode){
+// back: wohin „zurück“ führt, wenn der Text nicht aus der Übersicht kommt (etwa aus Land & Leute)
+function openText(lang, id, mode, back){
   const t = textById(lang, id); if (!t) return;
   stopReading();
-  S.text = { lang, id, hidden:(mode || textMode()) === 'listen', sents:textSentences(t.body), si:0, playing:false, slow:!!DB.settings.slowRead, picks:{}, qi:0, revealed:[], looked:[], quiz:false, tapped:null, t0:Date.now() };
+  S.text = { lang, id, back:back || null, hidden:(mode || textMode()) === 'listen', sents:textSentences(t.body), si:0, playing:false, slow:!!DB.settings.slowRead, picks:{}, qi:0, revealed:[], looked:[], quiz:false, tapped:null, t0:Date.now() };
   goView('text');
   if (S.text.hidden) readPlay();
 }
@@ -174,7 +175,7 @@ function viewText(){
       <div class="rows" style="margin-top:8px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span><button type="button" class="link" data-a="tkeep" data-k="${i}"${has ? ' disabled' : ''}>${has ? 'Im Tagwerk' : 'Ins Tagwerk'}</button></div>`; }).join('')}</div>
       <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
     </section>` : '';
-  return backBar('Lesen und Hören', 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
+  return backBar('Lesen und Hören', T.back || 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
 }
 // Wikipedia-Fundstück: nur Artikel, die die Wikipedia-Gemeinschaft selbst ausgezeichnet hat (exzellent bzw. gut),
 // solche mit Bezug zum Kulturraum der Sprache zuerst, schon Gesehenes nicht noch einmal. Zufällig ist nur der

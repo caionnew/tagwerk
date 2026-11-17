@@ -542,9 +542,19 @@ button.row[disabled]::after{ display:none; }
 .kf{ font-size:19px; line-height:1; }
 .kw{ font-family:var(--serif); font-size:17px; color:var(--accent-ink); white-space:nowrap; }
 .kr{ font-size:13px; color:var(--muted); }
-.kfoot{ margin:10px 0 0; }
-.kown{ font-size:14px; color:var(--ok); }
 .find.kcard{ margin-bottom:10px; }
+/* Land & Leute: Filter, Beispielsatz mit „Ins Tagwerk“, Verweis auf Lesetexte */
+.kchips{ display:flex; flex-wrap:wrap; gap:6px; margin:2px 0 4px; }
+.kchips button{ min-height:36px; border:1px solid var(--line); background:var(--surface); color:var(--muted); border-radius:999px; padding:6px 12px; font-size:14px; font-weight:650; }
+.kchips button[aria-checked="true"]{ background:var(--accent-soft); color:var(--accent-ink); border-color:transparent; }
+.kchips .kn{ margin-left:6px; font-weight:500; font-variant-numeric:tabular-nums; opacity:.75; }
+.khead{ display:flex; align-items:flex-start; gap:10px; }
+.khead .find-h{ flex:1; min-width:0; padding-top:4px; }
+.kadd{ flex:none; min-height:36px; border:1px solid var(--line); background:var(--surface); color:var(--accent-ink); border-radius:999px; padding:6px 12px; font-size:13.5px; font-weight:650; }
+.kadd:active{ transform:scale(.96); background:var(--accent-soft); }
+.kadd.on{ display:inline-flex; align-items:center; border-color:transparent; background:none; color:var(--ok); padding:6px 2px; }
+.kmore{ margin:8px 0 0; font-size:14px; color:var(--muted); }
+.find .kmore .link{ margin:0; font-size:14px; }
 /* Fehlerquellen */
 .errseg{ margin-bottom:12px; }
 .erows{ display:grid; gap:4px; }
@@ -624,7 +634,7 @@ button.erow:active{ background:var(--accent-soft); }
 :root{ --m0:#5aa9e6; --m1:#e8a33d; --m2:#6cc28f; --m3:#c58be0; }
 .map{ display:block; width:100%; max-width:360px; height:auto; margin:10px auto 4px; }
 .map-sm{ max-width:240px; }
-.map-nord{ max-width:220px; }
+.map-nord{ max-width:240px; }
 .map-nord.map-sm{ max-width:170px; }
 .map .mland{ fill:color-mix(in srgb, var(--ink) 11%, transparent); stroke:var(--surface); stroke-width:.5; }
 .map .mctx{ fill:color-mix(in srgb, var(--accent) 26%, transparent); stroke:var(--surface); stroke-width:.5; }

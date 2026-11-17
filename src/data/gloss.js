@@ -992,6 +992,8 @@ såsom|såsom|wie, so wie (gehoben)
 fattade|fatta|fasste (Präteritum); fatta ett beslut = eine Entscheidung treffen
 sålunda|sålunda|so, auf diese Weise (gehoben)
 satte|sätta|setzte (Präteritum)
+skånska|skånska|Schonisch, der Dialekt aus Skåne (Schonen)
+hörs|höras|ist zu hören; det hörs = das hört man
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch
@@ -2110,6 +2112,14 @@ cerrado|cerrar|geschlossen (Partizip)
 empezado|empezar|angefangen (Partizip)
 casado|casarse|verheiratet, geheiratet (Partizip)
 vendido|vender|verkauft (Partizip)
+seseo|seseo|Aussprache von z und c (vor e, i) wie s
+tortilla|tortilla|in Spanien Omelett (tortilla de patatas), in Mexiko und Mittelamerika Maisfladen
+maíz|maíz|Mais
+coger|coger|nehmen (Spanien); in Teilen Lateinamerikas derb für Sex
+cogemos|coger|wir nehmen (Spanien)
+taxi|taxi|Taxi
+agarrar|agarrar|nehmen, greifen, packen
+cena|cena|Abendessen; auch: isst zu Abend (cenar)
 `
 };
 

@@ -2,6 +2,27 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.49.0
+**Land & Leute neu gegliedert, vier neue Karten; Grammatik-Begriffe je Sprache.**
+- **Land & Leute:**
+  - Oben ein Filter nach Kategorie, mit Anzahl: Alle, Sprache, Geografie, Alltag, Gesellschaft. „Sprache“ steht jetzt vorn, dort sind die meisten Karten.
+  - „Ins Tagwerk“ ist ein kleiner Knopf neben dem Titel statt einer eigenen Zeile unter jeder Karte. Was er tut, steht einmal in der Einleitung.
+  - Karten mit passendem Lesetext verlinken ihn: allemansrätten, Systembolaget, föräldraledig, Sápmi, Norrland, Essenszeiten, Mate, Sprachen Spaniens. „Zurück“ führt wieder nach Land & Leute, der Filter bleibt.
+  - Die Nordkarte hat oben keinen leeren Streifen mehr: niedriger und etwas breiter.
+- **Vier neue Karten, Fakten an Quellen geprüft:**
+  - **skånska:** Schonen gehörte bis 1658 zu Dänemark (Frieden von Roskilde). Schonisch hat das r hinten im Rachen und Doppellaute. Die Karte färbt Schonen als Teil Schwedens.
+  - **el seseo:** z und c vor e und i klingen im größten Teil Spaniens wie englisches th, in Lateinamerika, auf den Kanaren und in großen Teilen Andalusiens wie s (RAE, Ortografía).
+  - **¿Qué tortilla?:** in Spanien ein Omelett, in Mexiko, Mittelamerika, Puerto Rico, der Dominikanischen Republik und Bolivien ein Maisfladen (DLE, 3. Bedeutung).
+  - **¿coger o tomar?:** in Spanien „nehmen“, in Mexiko, Argentinien, Uruguay, Paraguay, Venezuela und Bolivien derb für Sex. Dort sagt man tomar oder agarrar.
+  - **Geprüft und weggelassen:** „rolig“ (schwedisch lustig, norwegisch und dänisch ruhig) steht schon bei den falschen Freunden. „piso, departamento, apartamento“ wäre die sechste Wortvariante ohne neuen Gedanken.
+- **Grammatik-Begriffe:**
+  - Die Liste zeigt nur die Begriffe der gewählten Sprache, je 27. Supinum erscheint nicht mehr im Spanischen, Subjuntivo nicht mehr im Schwedischen.
+  - 17 Begriffe gelten für beide Sprachen, etwa Perfekt, Präsens, Infinitiv und Nebensatz. Sie haben je eine eigene Erklärung mit eigenem Beispiel statt eines Satzes für beide Sprachen.
+  - Neu: Plusquamperfekt, Modalverb, Objekt, Relativsatz. Sie stehen in Erklärungen, waren aber nicht antippbar. Auch „Reflexivpronomen“ und „Reflexives Verb“ sind jetzt antippbar.
+  - Imperativ, Hilfsverb und Reflexivverb gibt es jetzt auch fürs Schwedische, weil Satzbank und Wörterbuch sie dort verwenden. Partizip, Konditional und Konjugation bleiben spanisch, Supinum, Inversion und die Begriffe zur Bestimmtheit schwedisch. Ein Test prüft, dass kein Begriff in den Erklärungen einer Sprache vorkommt, für die er keine Fassung hat.
+- **Wörterbuch:** 10 neue Einträge, darunter „cena“ als Abendessen. Bisher stand dort nur die Verbform von cenar.
+- 5 neue Einheitstests (254), 4 neue Browser-Tests (85).
+
 ## 24.48.0
 **Mehr Indefinido, Doku zusammengeführt.**
 - **19 neue Sätze im Thema „Perfecto vs. Indefinido“, alle mit Indefinido und klarem Zeitpunkt.** Darunter ayer llamé, anoche vimos, el lunes pasado empezó, hace tres meses abrieron, en 1992 Barcelona organizó. Vorher hatte das Thema fast nur Perfecto, und „Fehler finden“ hatte für Indefinido nur 4 Quellsätze.

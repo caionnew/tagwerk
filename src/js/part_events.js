@@ -92,7 +92,8 @@ document.addEventListener('click', e => {
     }
     case 'radio': startRadio(); break;
     case 'texts': stopReading(); S.text = null; goView('texts'); break;
-    case 'textopen': openText(S.lang, b.dataset.id); break;
+    case 'textopen': openText(S.lang, b.dataset.id, null, b.dataset.back); break;
+    case 'kultcat': S.kultCat = b.dataset.c; render(); break;
     case 'wiki': openWiki(); break;
     case 'tplayall': case 'treplay': case 'tslow': case 'tshowall': case 'treveal': case 'tsay': case 'tquiz': case 'tqnext': case 'tpick': case 'tkeep': case 'tnexttext': readCmd(b.dataset.a, b); break;
     case 'tdefmode': DB.settings.textMode = b.dataset.v === 'listen' ? 'listen' : 'read'; save(); render(); break;
@@ -255,7 +256,7 @@ document.addEventListener('click', e => {
     case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; S.minDay = null; render(); window.scrollTo(0, 0); break; }
     case 'term': S.pop = { type:'term', k:b.dataset.k, lang:(S.view === 'run' && S.run && S.run.lang) || S.lang }; renderPopup(); break;
     case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
-    case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
+    case 'ref': S.ref = b.dataset.r; S.kultCat = null; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
     case 'textgap': if (b.dataset.id === 'wiki') { const w = S.text && S.text.wiki; if (w) startRun('textgap', { body:w.body, title:w.title }); } else startRun('textgap', { text:b.dataset.id }); break;
     case 'otherdaily': { const l = b.dataset.l; S.lang = l; DB.settings.lang = l; DB.dayLang = { d:today(), l, manual:true }; save(); const d = openDaily(); if (d && d.lang === l) { resumeDaily(); render(); window.scrollTo(0, 0); } else startRun('daily'); break; }

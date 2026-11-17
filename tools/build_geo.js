@@ -42,13 +42,16 @@ const GEO = {
     fitBox:{ type:'Feature', geometry:{ type:'MultiPoint', coordinates:[[-124.5, 48.5], [-67, 47.5], [3.5, 43.8], [-9.5, 43.8], [11.5, 1], [-68.5, -55.8], [-117.5, 32.5], [-34.8, -7.5]] } },
     proj:() => d3.geoAzimuthalEqualArea().rotate([57.5, -10]) }),
   // Norden: Transversale Mercator um 15° O wie SWEREF 99 TM. Winkeltreu, Flächenfehler über SE, NO, FI, DK höchstens 1,8 %.
-  nord:view({ w:240, h:330, q:0.06, keys:['SWE', 'NOR', 'FIN', 'DNK', 'ALA'], fit:['SWE', 'FIN', 'NOR', 'DNK'],
-    fitBox:{ type:'Feature', geometry:{ type:'MultiPoint', coordinates:[[5, 54.5], [31.5, 54.5], [5, 71.2], [31.5, 71.2]] } },
+  // Ausschnitt an den Küsten entlang (Nordkap 71,2° N, Varanger 70,4° N), damit oben kein leerer Streifen bleibt; Höhe folgt daraus.
+  nord:view({ w:240, autoHeight:true, q:0.06, keys:['SWE', 'NOR', 'FIN', 'DNK', 'ALA'], fit:['SWE', 'FIN', 'NOR', 'DNK'],
+    fitBox:{ type:'Feature', geometry:{ type:'MultiPoint', coordinates:[[5, 54.5], [31.5, 54.5], [4.8, 61.5], [25.8, 71.2], [31.5, 70.4]] } },
     proj:() => d3.geoTransverseMercator().rotate([-15, 0]),
     pts:{ Kiruna:[20.2253, 67.8558], Stockholm:[18.0686, 59.3293], Göteborg:[11.9746, 57.7089], Malmö:[13.0038, 55.605], Helsingfors:[24.9384, 60.1699], Mariehamn:[19.9348, 60.0973], Oslo:[10.7522, 59.9139], Köpenhamn:[12.5683, 55.6761] },
     extra:proj => ({
       polar:pathOf(proj, { type:'LineString', coordinates:Array.from({ length:61 }, (_, i) => [0 + i * 0.6, 66.5634]) }),
-      norrClip:pathOf(proj, band(60.6, 72, 5, 31))
+      norrClip:pathOf(proj, band(60.6, 72, 5, 31)),
+      // Schonen (Skåne län), grob: Nordgrenze zu Halland und Småland, Ostgrenze zu Blekinge, sonst durchs Meer. Im Uhrzeigersinn.
+      skaneClip:pathOf(proj, { type:'Polygon', coordinates:[[[12.2, 56.47], [12.85, 56.47], [13.15, 56.44], [13.45, 56.42], [13.75, 56.47], [14.05, 56.5], [14.3, 56.44], [14.45, 56.3], [14.52, 56.03], [14.7, 55.7], [14.5, 55.2], [12.9, 55.1], [12.2, 55.4], [12.2, 56.47]]] })
     }) })
 };
 const js = `/* Kartendaten, erzeugt mit tools/build_geo.js aus Natural Earth (gemeinfrei) über world-atlas. Nicht von Hand bearbeiten. */\nconst GEO = ${JSON.stringify(GEO)};\n`;

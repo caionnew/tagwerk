@@ -29,8 +29,8 @@ Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeug
 
 | Datei | Inhalt |
 |---|---|
-| `src/data/kultur.js` | Land & Leute: Kategorie, Titel (Zielsprache), Text, Beispielsatz, optional Varianten mit Flagge und Karte |
-| `src/data/terms.js` | Grammatik- und App-Begriffe zum Antippen; Suchmuster als regulärer Ausdruck |
+| `src/data/kultur.js` | Land & Leute: Kategorie, Titel (Zielsprache), Text, Beispielsatz, optional Varianten mit Flagge, Karte und passende Lesetexte (`txt`) |
+| `src/data/terms.js` | Grammatik- und App-Begriffe zum Antippen; Suchmuster als regulärer Ausdruck, Erklärung und Beispiel je Sprache |
 | `src/data/fundstueck.js` | Feste mit Datumsfunktion (bewegliche Feste über `easter()`), falsche Freunde, Begrüßungen |
 | `src/js/forms.js` | Genus-Wörter, Fehler-finden-Rahmen, Umbauen, Uhrzeiten |
 | `src/js/generators.js` | Grammatik-Generatoren (Adjektivendungen, Pluralklassen `PLURAL_SV`, Zeitformen, Konjugation, ser/estar, Verbalperiphrasen `PERI_ES`, por/para, Konnektoren `VERB_SV`/`VERB_ES`, Verben mit Präposition `PREP_SV`/`PREP_ES`). Jeder Generator braucht mindestens 36 verschiedene Aufgaben, dreimal die Wiederholungssperre; `tests/unit/variety.test.js` prüft das |
@@ -39,6 +39,8 @@ Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeug
 ## Karten
 
 Karten hängen an Einträgen in `kultur.js`: `map:{ v:'hisp' | 'nord', g:[[…Ländercodes Gruppe 1], [… Gruppe 2]], ctx:[…], pts:[…] }`. Gruppe *i* bekommt dieselbe Farbe wie der Punkt an Variante *i*. Ländercodes und Orte stehen in `tools/build_geo.js`; neue Orte dort ergänzen und `npm run geo` ausführen.
+
+Eine Region innerhalb eines Landes (bisher Schonen) färbt `clip:{ k:'SWE', p:'skaneClip', g:0 }`: das Land, beschnitten auf ein grobes Polygon aus `build_geo.js`, in der Farbe von Gruppe *g*. Das Polygon im Uhrzeigersinn angeben, sonst deutet d3-geo es als „alles außer“. Für ganze Länder reicht `g`; Regionen nur, wenn ihre Grenze für die Aussage zählt und auf der Karte noch sichtbar ist.
 
 ### Projektionen
 
@@ -54,6 +56,17 @@ Mercator scheidet für beide aus: Über den amerikanischen Ausschnitt beträgt s
 ## Qualitätsregeln für Texte
 
 Ruhig und sachlich, keine Ausrufezeichen, keine Füllwörter, Fakten nur, wenn sie stabil sind (keine Tagespolitik). Kulturkarten verknüpfen immer Sprache mit Inhalt und haben einen übernehmbaren Beispielsatz ohne deutsche Klammerzusätze im Zielsatz.
+
+### Land & Leute: was hinein gehört
+
+- **Ein Gedanke je Karte, den es sonst in der App nicht gibt.** Neue Wortvarianten nach Land (coche, carro, auto) bringen ab der fünften wenig; besser sind andere Arten von Unterschied: gleiches Wort mit anderer Bedeutung (tortilla), anderer Stilebene (coger), anderer Aussprache (seseo, skånska).
+- **Abgrenzung:** Falsche Freunde (Deutsch–Zielsprache) stehen in `fundstueck.js`, Redewendungen in der Satzbank (Thema „Redewendungen“), längere Geschichten in den Lesetexten. Eine Karte wiederholt keinen dieser Einträge; gibt es einen passenden Lesetext, verlinkt sie ihn mit `txt`.
+- **Karte nur, wenn sie etwas zeigt:** regionale Verteilung, die man sich über das Bild merkt. Länder, für die die Quellen nicht übereinstimmen, bleiben grau statt geraten.
+- **Quellen:** Regionalangaben aus dem DLE (Länderkürzel der Bedeutung) oder der RAE-Ortografía, Geschichte aus Fachliteratur. Im Text steht nur, was die Quelle trägt.
+
+### Grammatik-Begriffe
+
+Ein Begriff bekommt eine Fassung für jede Sprache, in deren Erklärungen er vorkommt (Themen, Satzbank, Wörterbuch), mit Beispiel in dieser Sprache. `tests/unit/terms.test.js` meldet Begriffe, die in einer Sprache vorkommen, aber dort keine Fassung haben. Die Liste unter „Üben“ zeigt nur die Begriffe der gewählten Sprache.
 
 ## Bausteine der Generatoren
 

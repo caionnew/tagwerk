@@ -17,7 +17,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `js/forms.js` | Übungsformen: Fehler finden, Umbauen, Uhrzeiten & Zahlen, Genus |
 | `data/gloss.js` | Wörterbuch, `lookupWord()`, Wiktionary-Abfrage |
 | `data/fundstueck.js` | Feste, falsche Freunde, Begrüßung, Auswahl des Fundstücks |
-| `data/terms.js` | Fachbegriffe, `termify()` macht sie in Erklärungen antippbar |
+| `data/terms.js` | Fachbegriffe mit Erklärung je Sprache, `termify()` macht sie in Erklärungen antippbar, `termsFor()` liefert die Liste einer Sprache |
 | `data/kultur.js`, `data/geo.js` | Land & Leute, Kartendaten |
 | `data/texte.js` | Lesetexte mit Fragen und übernehmbaren Sätzen |
 | `js/part_head.js` | Konstanten, Themen (`TRAPS`), Speicher, Satzbank-Aufbau, Tagesplan, Runden, Wiederholungssperre, Serie, Tagesstand |

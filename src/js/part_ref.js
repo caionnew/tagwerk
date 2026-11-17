@@ -57,7 +57,7 @@ function viewRef(){
   }
   if (kind === 'kultur') return viewKultur(back);
   if (kind === 'terms') {
-    return backBar('Grammatik-Begriffe', back) + `<p class="lead-s">Die Fachwörter aus den Erklärungen, in Alltagssprache. In jeder Erklärung kannst du sie auch direkt antippen.</p><div class="rows">${TERMS.filter(t => t[7] !== 'app').sort((a, b) => a[1].localeCompare(b[1], 'de')).map(t => `<button type="button" class="row" data-a="term" data-k="${t[0]}"><span class="txt"><span class="rt">${esc(t[1])}</span><span class="rd">${esc(t[3].split('. ')[0].replace(/\.$/, ''))}.</span></span></button>`).join('')}</div>`;
+    return backBar('Grammatik-Begriffe', back) + `<p class="lead-s">Die Fachwörter aus den Erklärungen, in Alltagssprache und mit ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Beispielen. In jeder Erklärung kannst du sie auch direkt antippen.</p><div class="rows">${termsFor(lang).sort((a, b) => a.t.localeCompare(b.t, 'de')).map(t => `<button type="button" class="row" data-a="term" data-k="${t.k}"><span class="txt"><span class="rt">${esc(t.t)}</span><span class="rd">${esc(t[lang][0].split('. ')[0].replace(/\.$/, ''))}.</span></span></button>`).join('')}</div>`;
   }
   if (kind === 'friends') {
     return backBar('Falsche Freunde', back) + `<p class="lead-s">Wörter, die nach Deutsch klingen und etwas anderes bedeuten.</p><div class="rows">${FALSE_FRIENDS[lang].map(f => `<div class="row static ffrow"><span class="txt"><span class="rt"><span class="wordrow" lang="${lang}">${linkWords(f[0], lang)}</span> = ${esc(f[1])}</span><span class="rd">${esc(capFirst(f[2]))}.</span></span></div>`).join('')}</div>`;
@@ -66,20 +66,27 @@ function viewRef(){
   return backBar(lang === 'sv' ? 'Feste in Schweden' : 'Feste in der spanischsprachigen Welt', back) + `<p class="lead-s">Nach dem nächsten Termin sortiert.</p><div class="rows">${list.map(({ ev, dt }) => { const n = dayDiff(ymd(dt), today()); return `<div class="row static feast"><span class="txt"><span class="rt">${esc(ev[0])}<span class="find-d"> · ${dt.getDate()}. ${MONTHS_FULL[dt.getMonth()]}${n === 0 ? ' · heute' : n === 1 ? ' · morgen' : n < 60 ? ` · in ${n} Tagen` : ''}</span></span><span class="rd">${esc(ev[2])}</span><span class="feast-p"><span class="wordrow" lang="${lang}">${linkWords(ev[3], lang)}</span> <span class="find-g">${esc(ev[4])}</span></span></span>${speakBtn(ev[3], lang)}</div>`; }).join('')}</div>`;
 }
 
-// Land & Leute: Karte und Sammlung. Der Beispielsatz lässt sich in die eigenen Sätze übernehmen.
+// Land & Leute: Karte und Sammlung. Der Beispielsatz lässt sich in die eigenen Sätze übernehmen, passende Lesetexte sind verlinkt.
 function kulturBody(e, lang, small){
   const owned = (DB.own[lang] || []).some(o => o.target === e.ex[0]);
-  return `<p class="find-h"><span class="wordrow" lang="${lang}">${linkWords(e.title, lang)}</span></p>
+  const add = owned ? '<span class="kadd on">✓ Im Tagwerk</span>' : `<button type="button" class="kadd" data-a="kultadd" data-id="${e.id}" aria-label="Beispielsatz ins Tagwerk übernehmen">Ins Tagwerk</button>`;
+  const texts = small ? [] : (e.txt || []).map(id => textById(lang, id)).filter(Boolean);
+  return `<div class="khead"><p class="find-h"><span class="wordrow" lang="${lang}">${linkWords(e.title, lang)}</span></p>${add}</div>
     <p class="find-t">${esc(e.text)}</p>
     ${e.map ? mapSvg(e.map, mapLabel(e), small) : ''}
     ${e.vars ? `<div class="kvars">${e.vars.map((v, i) => `<div class="kv"><span class="kf" aria-hidden="true">${v[0]}</span><span class="kw" lang="${lang}">${e.map && e.map.g && i < e.map.g.length ? `<span class="kdot mg${i}${(e.map.soft || []).includes(i) ? ' msoft' : ''}" aria-hidden="true"></span>` : ''}${esc(v[1])}</span><span class="kr">${esc(v[2])}</span></div>`).join('')}</div>` : ''}
     <div class="find-p"><span class="wordrow" lang="${lang}">${linkWords(e.ex[0], lang)}</span>${speakBtn(e.ex[0], lang)}<span class="find-g">${esc(e.ex[1])}</span></div>
-    <p class="kfoot">${owned ? '<span class="kown">✓ Im Tagwerk</span>' : `<button type="button" class="link" data-a="kultadd" data-id="${e.id}">Ins Tagwerk</button>`}</p>`;
+    ${texts.length ? `<p class="kmore">${texts.length > 1 ? 'Lesetexte' : 'Lesetext'}: ${texts.map(t => `<button type="button" class="link" data-a="textopen" data-id="${t.id}" data-back="ref">${esc(t.title)}</button>`).join(' · ')}</p>` : ''}`;
 }
+// Übersicht: Filter nach Kategorie (mit Anzahl), Kategorien mit den Karten zuerst
 function viewKultur(back){
-  const lang = S.lang, list = KULTUR[lang];
-  return backBar('Land & Leute', back) + `<p class="lead-s">${lang === 'sv' ? 'Schweden und das Schwedische' : 'Spanien, Lateinamerika und das Spanische'}: Alltag, Gesellschaft, Geografie.</p>`
-    + Object.keys(KULTUR_CATS).map(cat => { const items = list.filter(e => e.cat === cat); return items.length ? `<h2 class="grp">${KULTUR_CATS[cat]}</h2>${items.map(e => `<section class="find kcard">${kulturBody(e, lang)}</section>`).join('')}` : ''; }).join('');
+  const lang = S.lang, list = KULTUR[lang], cats = Object.keys(KULTUR_CATS).filter(c => list.some(e => e.cat === c));
+  const cur = cats.includes(S.kultCat) ? S.kultCat : 'alle';
+  const chip = (c, label, n) => `<button type="button" role="radio" aria-checked="${cur === c}" data-a="kultcat" data-c="${c}">${label}<span class="kn">${n}</span></button>`;
+  const cards = items => items.map(e => `<section class="find kcard">${kulturBody(e, lang)}</section>`).join('');
+  return backBar('Land & Leute', back) + `<p class="lead-s">${lang === 'sv' ? 'Schweden und das Schwedische' : 'Spanien, Lateinamerika und das Spanische'} in ${list.length} Einblicken. „Ins Tagwerk“ übernimmt den Beispielsatz in deine Wiederholungen.</p>`
+    + `<div class="kchips" role="radiogroup" aria-label="Kategorie">${chip('alle', 'Alle', list.length)}${cats.map(c => chip(c, KULTUR_CATS[c], list.filter(e => e.cat === c).length)).join('')}</div>`
+    + (cur === 'alle' ? cats.map(c => `<h2 class="grp">${KULTUR_CATS[c]}</h2>${cards(list.filter(e => e.cat === c))}`).join('') : cards(list.filter(e => e.cat === cur)));
 }
 
 // Karten: Länder in Gruppenfarben, passend zu den Punkten an den Zeilen darunter. Daten aus geo.js (Natural Earth).
@@ -90,6 +97,8 @@ function mapSvg(m, label, small){
   const cls = k => col[k] != null ? `mg${col[k]}${(m.soft || []).includes(col[k]) ? ' msoft' : ''}` : (m.ctx || []).includes(k) ? 'mctx' : 'mland';
   let extra = '';
   if (m.norrland && g.c.SWE) { const id = 'nc' + (++mapSeq); extra += `<clipPath id="${id}"><path d="${g.norrClip}"/></clipPath><path d="${g.c.SWE}" clip-path="url(#${id})" class="mnorr"/>`; }
+  // Ein Teil eines Landes in Gruppenfarbe, etwa Schonen: das Land, beschnitten auf die Region
+  if (m.clip && g.c[m.clip.k] && g[m.clip.p]) { const id = 'kc' + (++mapSeq); extra += `<clipPath id="${id}"><path d="${g[m.clip.p]}"/></clipPath><path d="${g.c[m.clip.k]}" clip-path="url(#${id})" class="mg${m.clip.g}"/>`; }
   if (m.polar && g.polar) extra += `<path d="${g.polar}" class="mpolar"/><text x="6" y="${(g.pts.Kiruna ? g.pts.Kiruna[1] + 12 : 40)}" class="mlab mlab-s">Polarkreis</text>`;
   // Ortsname rechts vom Punkt, mit „<“ am Ende links davon
   (m.pts || []).forEach(raw => { const left = raw.endsWith('<'), n = raw.replace(/[<>]$/, ''), p = g.pts[n]; if (!p) return; const right = raw.endsWith('>') || (!left && p[0] < g.w * 0.62); extra += `<circle cx="${p[0]}" cy="${p[1]}" r="2.6" class="mpt"/><text x="${p[0] + (right ? 5 : -5)}" y="${p[1] + 3.5}" text-anchor="${right ? 'start' : 'end'}" class="mlab">${n}</text>`; });

@@ -2,13 +2,13 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
 
-Stand: 17. November 2026 (nach 24.39.0)
+Stand: 17. November 2026 (nach 24.40.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
-- **Die App ist breit, die Inhalte sind schmal.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Seit 24.39 gibt es 317 schwedische Sätze, davon 138 als B2 markiert (vorher 209 und 32); bei „Fortgeschritten“ reichen die B2-Sätze bei 6 neuen am Tag gut drei Wochen. Spanisch hat 232 Sätze, davon nur 40 als B2, die nach knapp einer Woche verbraucht sind. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
+- **Die App ist breit, die Inhalte holen auf.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Seit 24.39 und 24.40 gibt es 317 schwedische und 364 spanische Sätze, davon 138 bzw. 172 als B2 markiert (vorher 32 bzw. 40); bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reichen die B2-Sätze drei bis vier Wochen. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
 - **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Was auf B2/C1 schwer bleibt, fehlt: Modalpartikeln, Verbalperiphrasen, Subjuntivo im Satzgefüge, Redewendungen, Pluralklassen.
 - **Prüfqualität ist die größte Quelle für Ärger.** In einer kurzen Durchsicht (24.34–24.35) fanden sich ein grammatischer Fehler („de el“), unidiomatisches Deutsch, richtige Antworten, die als falsch galten („i gymmet“, Subjekt vorn bei Inversion), und bei rund der Hälfte der Sätze eine Erklärung, die nicht zum Satz passte. Jede falsche „Falsch“-Wertung kostet täglich Zeit und Vertrauen. 24.37 hat alle Generatoren durchgesehen (ein grammatischer Fehler, „con ti“; sechs Auswahlaufgaben mit einer zweiten vertretbaren Option; fehlende richtige Fassungen bei Uhrzeiten und beim Umbauen). 24.38 hat die Satzbank durchgesehen: Jeder der 441 Sätze hat jetzt eine Erklärung, rund 130 weitere richtige Fassungen sind dazugekommen, und zwei Regeln gelten für alle Sätze (fehlendes „har“ im schwedischen Nebensatz, betontes spanisches Subjektpronomen).
 - **Die Browser-Tests laufen in Chromium und Firefox,** seit 24.39 beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
@@ -17,45 +17,43 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 
 Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel: Inhalte auf B2/C1. Lesetexte danach, weil sie seltener genutzt werden als das Tagwerk.
 
-1. **24.40: B2/C1-Sätze Spanisch.** Je Thema 12 neue Sätze (rund 130), alle mit Niveau, Erklärung und Alternativen; Varianten aus Lateinamerika, wo sie dort üblich sind. Schwedisch ist mit 24.39 erledigt.
-2. **24.41: Neue Themen für Fortgeschrittene.** Spanisch: Verbalperiphrasen (llevar + Gerundium, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de) mit Generator und Sätzen. Schwedisch: Pluralklassen mit bestimmten Pluralformen als Generator. Danach Modalpartikeln (Schwedisch) und Subjuntivo im Satzgefüge (Spanisch) als Satzthemen.
-3. **24.42: Redewendungen** in beiden Sprachen als Thema in der Satzbank (statt Sprichwörtern als eigene Übung, siehe unten).
-4. **24.43 und 24.44: 16 Lesetexte B2/C1** aus [THEMEN.md](THEMEN.md), Abschnitt „Nächste Runde“, je 8 Schwedisch und Spanisch.
-5. **Danach:** Wochenbilanz zum Schwerpunkt, Korrekturen aus dem Schreiben ins Tagwerk, Hörunterscheidung für die spanische Betonung.
+1. **24.41: Neue Themen für Fortgeschrittene.** Spanisch: Verbalperiphrasen (llevar + Gerundium, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de) mit Generator und Sätzen. Schwedisch: Pluralklassen mit bestimmten Pluralformen als Generator. Danach Modalpartikeln (Schwedisch) und Subjuntivo im Satzgefüge (Spanisch) als Satzthemen.
+2. **24.42: Redewendungen** in beiden Sprachen als Thema in der Satzbank (statt Sprichwörtern als eigene Übung, siehe unten).
+3. **24.43 und 24.44: 16 Lesetexte B2/C1** aus [THEMEN.md](THEMEN.md), Abschnitt „Nächste Runde“, je 8 Schwedisch und Spanisch.
+4. **Danach:** Wochenbilanz zum Schwerpunkt, Korrekturen aus dem Schreiben ins Tagwerk, Hörunterscheidung für die spanische Betonung.
 
 ## Bewertet: lohnend
 
 ### Inhalte und Niveau
 
-1. **B2/C1-Sätze, je Thema 12 neue (A; Schwedisch erledigt mit 24.39, Spanisch offen).** Der größte Hebel: wirkt jeden Tag und behebt den Engpass oben. Aufwand hoch, Fehlerrisiko beherrschbar mit denselben Regeln wie bei der Durchsicht (Erklärung je Satz, Alternativen, idiomatisches Deutsch, Prüfung an Quellen bei Zweifel).
-2. **Verbalperiphrasen, Spanisch (A−).** Auf B2 häufig und für Deutschsprachige ungewohnt (llevamos dos horas esperando, acabo de llegar, vuelve a intentarlo). Feste Bausteine, daher als Generator machbar.
-3. **Pluralklassen, Schwedisch (B+).** Auch Fortgeschrittene greifen bei datorer, äpplen, möss daneben, dazu die bestimmten Pluralformen. Als Generator aus einer geprüften Liste (mindestens 36 Wörter, dreimal die Wiederholungssperre). Steht in deiner Liste „Offen“.
-4. **Modalpartikeln, Schwedisch (B+).** ju, väl, nog, visst, ändå, då, nämligen: Sie machen Sprache natürlich, und Deutsch hat Gegenstücke (ja, wohl, doch, eben), die aber nicht eins zu eins passen. Nur als Sätze mit Erklärung, nicht erzeugt; die Bedeutung hängt am Zusammenhang.
-5. **Subjuntivo im Satzgefüge, Spanisch (B+).** aunque mit Tatsache oder Annahme, como si, sin que, el que + Subjuntivo, Zeitenfolge (quería que vinieras). Erweitert das vorhandene Thema um die B2-Fälle.
-6. **Redewendungen statt Sprichwörter (B+).** Im Alltag hört man „ta det lugnt“, „dra alla över en kam“, „no tener pelos en la lengua“ viel öfter als Sprichwörter. Als Thema in der Satzbank laufen sie durch Tagwerk und Wiederholung; eine eigene Übungsform bräuchte es nicht. Ersetzt die frühere Idee „Sprichwörter als eigene Übung“ (Idee des Nutzers, B+ → hier aufgegangen).
-7. **16 Lesetexte B2/C1 (B+).** Gewünscht und wertvoll fürs Leseverstehen. Seltener genutzt als das Tagwerk und aufwendig (Fakten prüfen), daher nach den Sätzen.
-8. **Adjektivsteigerung, Schwedisch (B).** bra, bättre, bäst; gammal, äldre, äldst; få, färre, färst. Kleiner Generator, begrenzter Nutzen auf B2.
+1. **Verbalperiphrasen, Spanisch (A−).** Auf B2 häufig und für Deutschsprachige ungewohnt (llevamos dos horas esperando, acabo de llegar, vuelve a intentarlo). Feste Bausteine, daher als Generator machbar.
+2. **Pluralklassen, Schwedisch (B+).** Auch Fortgeschrittene greifen bei datorer, äpplen, möss daneben, dazu die bestimmten Pluralformen. Als Generator aus einer geprüften Liste (mindestens 36 Wörter, dreimal die Wiederholungssperre). Steht in deiner Liste „Offen“.
+3. **Modalpartikeln, Schwedisch (B+).** ju, väl, nog, visst, ändå, då, nämligen: Sie machen Sprache natürlich, und Deutsch hat Gegenstücke (ja, wohl, doch, eben), die aber nicht eins zu eins passen. Nur als Sätze mit Erklärung, nicht erzeugt; die Bedeutung hängt am Zusammenhang.
+4. **Subjuntivo im Satzgefüge, Spanisch (B+).** aunque mit Tatsache oder Annahme, como si, sin que, el que + Subjuntivo, Zeitenfolge (quería que vinieras). Erweitert das vorhandene Thema um die B2-Fälle.
+5. **Redewendungen statt Sprichwörter (B+).** Im Alltag hört man „ta det lugnt“, „dra alla över en kam“, „no tener pelos en la lengua“ viel öfter als Sprichwörter. Als Thema in der Satzbank laufen sie durch Tagwerk und Wiederholung; eine eigene Übungsform bräuchte es nicht. Ersetzt die frühere Idee „Sprichwörter als eigene Übung“ (Idee des Nutzers, B+ → hier aufgegangen).
+6. **16 Lesetexte B2/C1 (B+).** Gewünscht und wertvoll fürs Leseverstehen. Seltener genutzt als das Tagwerk und aufwendig (Fakten prüfen), daher nach den Sätzen.
+7. **Adjektivsteigerung, Schwedisch (B).** bra, bättre, bäst; gammal, äldre, äldst; få, färre, färst. Kleiner Generator, begrenzter Nutzen auf B2.
 
 ### Prüfung und Rückmeldung
 
-9. **Verwechslung beim Namen nennen (B).** Erkennt die Prüfung ein vertauschtes Paar (por/para, ser/estar, en/ett, sin/hans), steht in einer Zeile, was hier gilt und warum. Ergänzt die Erklärung je Satz um die gemachte Verwechslung; für Präteritum/Perfekt gibt es das schon.
+8. **Verwechslung beim Namen nennen (B).** Erkennt die Prüfung ein vertauschtes Paar (por/para, ser/estar, en/ett, sin/hans), steht in einer Zeile, was hier gilt und warum. Ergänzt die Erklärung je Satz um die gemachte Verwechslung; für Präteritum/Perfekt gibt es das schon.
 
 ### Hören und Sprechen
 
-10. **Hörunterscheidung, spanische Betonung (B+), sonst Minimalpaare (B).** término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
-11. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
-12. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
-13. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
+9. **Hörunterscheidung, spanische Betonung (B+), sonst Minimalpaare (B).** término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
+10. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
+11. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
+12. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
 
 ### Schreiben
 
-14. **Korrekturen aus dem Schreiben ins Tagwerk (B+, vorher A−).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
+13. **Korrekturen aus dem Schreiben ins Tagwerk (B+, vorher A−).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
 
 ### Planung und Rückblick
 
-15. **Wochenbilanz zum Schwerpunkt (B).** „Wortstellung im Nebensatz: vor der Woche 38 % Fehler, in der Woche 15 %.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Wenig Aufwand. Steht in deiner Liste „Offen“.
-16. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
-17. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
+14. **Wochenbilanz zum Schwerpunkt (B).** „Wortstellung im Nebensatz: vor der Woche 38 % Fehler, in der Woche 15 %.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Wenig Aufwand. Steht in deiner Liste „Offen“.
+15. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
+16. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
 
 ## Offen: Rückmeldung von dir

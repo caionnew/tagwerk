@@ -1734,6 +1734,186 @@ viajado|viajar|gereist
 visito|visitar|ich besuche
 visto|ver|gesehen; me visto (vestirse) = ich ziehe mich an
 zapatos|zapato|Schuhe
+conferencia|conferencia|Konferenz, Vortrag
+ayuntamiento|ayuntamiento|Rathaus, Stadtverwaltung
+increíble|increíble|unglaublich
+cambiado|cambiar|verändert (Partizip)
+llena|lleno|voll (weiblich)
+pescador|pescador|Fischer
+vestido|vestido|Kleid
+llevaba|llevar|trug (Imperfecto)
+seda|seda|Seide
+pura|puro|rein (weiblich)
+dirección|dirección|Adresse; Richtung
+correcta|correcto|richtig (weiblich)
+resultados|resultado|Ergebnisse
+serán|ser|werden sein (Futur)
+publicados|publicar|veröffentlicht (Partizip, Plural)
+despierta|despierto|wach (weiblich)
+maduro|maduro|reif
+plátanos|plátano|Bananen
+verdes|verde|grün; unreif (Plural)
+camarero|camarero|Kellner
+esperamos|esperar|wir warteten, wir warten
+soleado|soleado|sonnig
+llenas|lleno|voll (weiblich, Plural)
+timbre|timbre|Klingel
+callaron|callarse|verstummten (Indefinido)
+cobertura|cobertura|Empfang (Handy), Abdeckung
+quién|quién|wer
+culpable|culpable|schuldig; der Täter, die Schuldige
+contaba|contar|erzählte (Imperfecto)
+mismas|mismo|dieselben (weiblich, Plural)
+historias|historia|Geschichten
+justo|justo|genau, gerade; gerecht
+luego|luego|dann, später
+oscuridad|oscuridad|Dunkelheit
+practicando|practicar|übend (Gerundium)
+piano|piano|Klavier
+nieve|nieve|Schnee
+apenas|apenas|kaum
+llovido|llover|geregnet (Partizip)
+cuántas|cuánto|wie viele (weiblich)
+mudado|mudarse|umgezogen (Partizip)
+casamos|casarse|wir heirateten
+encuentro|encontrarse|ich finde; me encuentro mal = mir geht es schlecht
+mal|mal|schlecht
+vida|vida|Leben
+reído|reírse|gelacht (Partizip)
+caí|caerse|ich fiel (Indefinido)
+río|río|Fluss
+latinoamérica|Latinoamérica|Lateinamerika
+alguien|alguien|jemand
+mudanza|mudanza|Umzug
+normal|normal|normal
+escríbeme|escribir|schreib mir (Imperativ)
+dudo|dudar|ich bezweifle
+nadie|nadie|niemand
+hayáis|haber|ihr habt (Subjuntivo)
+llegaran|llegar|ankämen (Imperfecto de subjuntivo)
+elige|elegir|wähle, such dir aus (Imperativ)
+guste|gustar|gefalle (Subjuntivo)
+admitirlo|admitir|es zugeben
+hasta|hasta|bis
+termines|terminar|du beendest, fertig bist (Subjuntivo)
+principiante|principiante|Anfänger
+sorprendentemente|sorprendente|erstaunlich, überraschend
+diseñado|diseñar|entworfen (Partizip)
+arquitecto|arquitecto|Architekt
+famoso|famoso|berühmt
+costa|costa|Küste
+cualquier|cualquiera|irgendein, jede beliebige
+cosa|cosa|Sache, Ding
+mitad|mitad|Hälfte
+intérprete|intérprete|Dolmetscher, Dolmetscherin
+naciones|nación|Nationen
+unidas|unido|vereint (weiblich, Plural); Naciones Unidas = Vereinte Nationen
+factura|factura|Rechnung
+pasa|pasar|fährt durch, geht vorbei; passiert
+zaragoza|Zaragoza|Saragossa (Stadt in Spanien)
+cuándo|cuándo|wann
+traducción|traducción|Übersetzung
+paraguas|paraguas|Regenschirm
+mandar|mandar|schicken
+receta|receta|Rezept
+encuentres|encontrar|du findest (Subjuntivo)
+cuentes|contar|du erzählst (Subjuntivo); no se lo cuentes = erzähl es nicht
+enseño|enseñar|ich zeige; ich lehre
+devuélveme|devolver|gib mir zurück (Imperativ)
+hayas|haber|du hast (Subjuntivo)
+entere|enterarse|erfahre (Subjuntivo)
+otros|otro|andere (Plural)
+acostarlos|acostar|sie ins Bett bringen
+regalamos|regalar|wir schenkten, wir schenken
+bicicleta|bicicleta|Fahrrad
+comunicaron|comunicar|teilten mit (Indefinido)
+quejarte|quejarse|dich beschweren
+levantarme|levantarse|aufstehen (ich)
+falta|faltar|fehlt
+cosas|cosa|Sachen, Dinge
+demás|demás|übrige; los demás = die anderen
+historia|historia|Geschichte
+acaban|acabar|gehen zu Ende; se me acaban = mir gehen aus
+después|después|danach, nach; después de = nach
+entrenamiento|entrenamiento|Training
+músculos|músculo|Muskeln
+alegraría|alegrar|würde freuen (Konditional)
+vinieras|venir|kämest (Imperfecto de subjuntivo)
+alcanza|alcanzar|reicht; erreicht
+hubiera|haber|hätte (Imperfecto de subjuntivo)
+cogido|coger|genommen, erwischt (Partizip)
+diría|decir|würde sagen (Konditional)
+ayudaría|ayudar|würde helfen (Konditional)
+imaginado|imaginar|vorgestellt (Partizip)
+deberíamos|deber|wir sollten (Konditional)
+quedarais|quedarse|ihr bliebet (Imperfecto de subjuntivo)
+terco|terco|stur
+habríamos|haber|wir hätten (Konditional)
+molestaría|molestar|würde stören (Konditional)
+pusiera|poner|stellte, machte an (Imperfecto de subjuntivo)
+avisó|avisar|sagte Bescheid (Indefinido)
+personas|persona|Personen, Leute
+acabado|acabar|zu Ende gegangen (Partizip)
+batería|batería|Akku, Batterie; Schlagzeug
+adaptado|adaptarse|eingelebt, angepasst (Partizip)
+corté|cortarse|ich schnitt (mich) (Indefinido)
+dedo|dedo|Finger
+cocinando|cocinar|kochend (Gerundium)
+fecha|fecha|Datum, Termin
+quitó|quitarse|zog aus (Indefinido)
+porque|porque|weil
+concentrar|concentrarse|konzentrieren
+acordar|acordarse|erinnern
+quejó|quejarse|beschwerte sich (Indefinido)
+date|darse|gib dir; date prisa = beeil dich
+pregunto|preguntarse|ich frage (mich)
+ten|tener|hab (Imperativ); ten cuidado = pass auf
+cuidado|cuidado|Vorsicht, Sorgfalt
+resfriarte|resfriarse|dich erkälten
+pasar|pasar|vorbeigehen, verbringen; hacerse pasar por = sich ausgeben als
+acostumbrado|acostumbrarse|gewöhnt (Partizip)
+orgulloso|orgulloso|stolz
+acordé|acordarse|ich erinnerte mich (Indefinido)
+rato|rato|Weile
+insiste|insistir|besteht darauf
+época|época|Zeit, Epoche
+consta|constar|besteht (aus); constar de = bestehen aus
+plantas|planta|Stockwerke; Pflanzen
+contar|contar|zählen; erzählen; contar con = sich verlassen auf
+propio|propio|eigen
+supermercado|supermercado|Supermarkt
+enteré|enterarse|ich erfuhr (Indefinido)
+amigo|amigo|Freund
+cuida|cuidar|kümmert sich um, pflegt
+siguen|seguir|sind noch, bleiben; folgen
+cajas|caja|Kisten, Kartons
+construcción|construcción|Bau, Konstruktion
+costó|costar|kostete (Indefinido)
+mil|mil|tausend; mil millones = eine Milliarde
+dejado|dejar|gelassen (Partizip)
+quizás|quizás|vielleicht
+primero|primero|erste; de primero = als Vorspeise
+ensalada|ensalada|Salat
+mixta|mixto|gemischt (weiblich)
+cebolla|cebolla|Zwiebel
+bufanda|bufanda|Schal
+helador|helador|eisig
+juzgado|juzgado|Gericht
+expediente|expediente|Akte
+florero|florero|Vase
+marchiten|marchitarse|welken (Subjuntivo)
+compañeros|compañero|Kollegen, Mitschüler
+regalaron|regalar|schenkten (Indefinido)
+despedida|despedida|Abschied
+nota|nota|Notiz; Note
+olvidarlo|olvidar|es vergessen
+contratos|contrato|Verträge
+carpeta|carpeta|Mappe
+azul|azul|blau
+escritorio|escritorio|Schreibtisch
+estantería|estantería|Regal
+lado|lado|Seite; al lado de = neben
+terminas|terminar|du beendest, du bist fertig
 `
 };
 

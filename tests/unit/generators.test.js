@@ -94,3 +94,8 @@ test('Fehler finden Spanisch: Erklärung nennt den Auslöser im Satz', () => {
   assert.ok(p && /„la semana pasada“/.test(p.note) && /perdí, nicht he perdido/.test(p.note), p && p.note);
   assert.ok(notes.every(d => d.note && d.note.length > 20));
 });
+test('Fehler finden Spanisch: keine Relativsätze, in denen auch der Indikativ stimmt (alguien que, lo que, un … que)', () => {
+  app.run('BANK_SPOTS_ES = bankSpotsEs()');
+  const n = run('BANK_SPOTS_ES.length');
+  for (let i = 0; i < n; i++) { const d = run(`BANK_SPOTS_ES[${i}]()`); assert.ok(!/\b(alguien que|lo que|un \S+ que|una \S+ que)\b/.test(d.full), d.full); }
+});

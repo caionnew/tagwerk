@@ -2,6 +2,26 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.40.0
+**132 neue Sätze Spanisch auf B2/C1.**
+- **Neue Sätze:** 12 je Thema, alle mit Erklärung am Satz und weiteren richtigen Fassungen, alle als B2 markiert. Spanisch hat jetzt 364 Sätze, davon 172 auf B2 (vorher 40). Bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reicht das etwa vier Wochen.
+- **Beispiele je Thema:**
+  - ser/estar: Ereignis und Zustand im selben Satz (la conferencia es en el ayuntamiento, que está en obras), Passiv mit ser, maduro und verde mit beiden Bedeutungen.
+  - Indefinido und Imperfecto: supe (erfuhr) und sabía, begrenzte Dauer (vivimos diez años).
+  - Perfecto: desde que vivo aquí, este verano, en toda mi vida; dazu Sätze, in denen auch in Spanien das Indefinido steht (hace dos años).
+  - Subjuntivo nach en cuanto, sin que, hasta que, dudar que und im Perfekt (hayáis tenido); dazu Gegenbeispiele mit Indikativ (aunque llueve, si te apetece, sé que).
+  - por/para: para ser principiante, por si llueve, pasar por, trabajar para.
+  - Objektpronomen bei Imperativ, Infinitiv und acabar de.
+  - gustar & Co.: costar, quedar bien, dar igual, alcanzar, se me acaban.
+  - Konditional Perfekt und gemischte si-Sätze, Vermutung über die Vergangenheit (habría unas cien personas).
+  - Reflexivverben wie darse prisa, hacerse pasar por, ponerse de acuerdo.
+  - Präpositionen wie constar de, contar con, cuidar de.
+  - Falsche Freunde wie Karton, Milliarde, Chef, eventuell, Salat, Schal, Akte, Vase, Kollege, Notiz, Mappe, Regal.
+- **Lateinamerika:** Wo dort etwas anderes üblich ist, zählt es mit, etwa Indefinido statt Perfecto, carro, mesero, apurarse, tomar statt coger.
+- **Wörterbuch:** 180 neue Einträge, damit jedes Wort der neuen Sätze nachschlagbar ist.
+- **Fehler finden:** Relativsätze mit „alguien que“ und „lo que“ kommen dort nicht mehr vor. „Busco a alguien que me ayuda“ und „Elige lo que más te gusta“ sind je nach Lesart auch richtig, also kein eindeutiger Fehler.
+- 1 neuer Einheitstest (230).
+
 ## 24.39.0
 **108 neue Sätze Schwedisch auf B2/C1, Firefox-Tests verbindlich, Anki-Anbindung entfernt.**
 - **Neue Sätze:** 12 je Thema, alle mit Erklärung am Satz und weiteren richtigen Fassungen; 106 als B2 markiert, 2 als B1. Schwedisch hat jetzt 317 Sätze, davon 138 auf B2 (vorher 32). Bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reicht das gut drei Wochen.

@@ -81,8 +81,8 @@ function bankSpotsEs(){
   const out = [];
   BANK.es.forEach(it => {
     if (!it.gap || it.gap.includes(' ') || !it.hint) return;
-    // Relativsätze wie „un piso que tiene/tenga“ sind je nach Lesart beides: nicht als Fehler verwenden
-    if (/\b(un|una|unos|unas) \S+ que\b/.test(it.target)) return;
+    // Relativsätze wie „un piso que tiene/tenga“, „alguien que me ayuda/ayude“, „lo que te gusta/guste“ sind je nach Lesart beides: nicht als Fehler verwenden
+    if (/\b(un|una|unos|unas) \S+ que\b|\balguien que\b|\blo que\b/.test(it.target)) return;
     const inf = it.hint.replace(/[()]/g, '').split(',')[0].trim();
     if (!/^[a-zñ]+(ar|er|ir)$/.test(inf)) return;
     const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?¿¡]/g, '') === it.gap);

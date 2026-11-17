@@ -80,11 +80,29 @@ Je Sprache drei Quellen, vom leichten Einstieg bis zur normalen Zeitung. Bedingu
 
 ## Lesetexte (`src/data/texte.js`)
 
-Themen, Leitlinien und Ideen für weitere Texte sammelt [THEMEN.md](THEMEN.md), Ideen für die App [IDEEN.md](IDEEN.md).
+Ideen für weitere Themen stehen in [IDEEN.md](IDEEN.md#lesetexte-themen-für-später), Ideen für die App ebenda.
 
 Je Text: Kennung, Thema, Niveau (A2, B1, B2, C1), Titel, Text (Absätze mit Leerzeile), drei Fragen auf Deutsch mit drei Antworten (die erste ist richtig, die App mischt) und der Textstelle, die die Antwort belegt (wörtlich aus dem Text) und mindestens zwei Sätze zum Übernehmen mit Übersetzung. Regeln: eigene Texte, keine übernommenen Absätze aus Zeitungen, Büchern oder Wikipedia; Fakten vorher prüfen; 70 bis 260 Wörter; jeder Satz endet mit Satzzeichen (Vorlesen und Hervorheben gehen satzweise); übernehmbare Sätze stehen wörtlich als ganzer Satz im Text. `tests/unit/texts.test.js` prüft das.
 
 Das Wikipedia-Fundstück lädt zur Laufzeit über `w/api.php` (generator=categorymembers, TextExtracts) und zeigt Quelle, Auszeichnung und Lizenz (CC BY-SA 4.0). Es nimmt nur Artikel, die die Wikipedia-Gemeinschaft ausgezeichnet hat (`WIKI_CATS` in `part_read.js`: schwedisch „Utmärkta“ und „Bra artiklar“, spanisch „Artículos destacados“ und „Artículos buenos“), bevorzugt solche mit Bezug zum Kulturraum (`WIKI_NEAR`, Abgleich von Titel und Einleitung) und merkt sich die zuletzt gezeigten 400 Titel je Sprache (`DB.used.wikiSeen`), damit nichts wiederkommt. Zufällig ist nur der Einstieg in die alphabetische Liste der Kategorie. Vom Artikeltext wird nichts gespeichert. „Lückentext üben“ gibt den geladenen Text an die Lückentext-Runde weiter (`startRun('textgap', { body, title })`).
+
+### Leitlinien für Themen
+
+- Für Erwachsene, die fortgeschritten sind: B2 oder C1, etwa 170 bis 230 Wörter, drei Fragen, drei Sätze fürs Tagwerk.
+- Nicht das Erwartbare. Astrid Lindgren, Vasa, Surströmming, Siesta und Tomatina sind abgedeckt. Gesucht ist, was für Ausländer wirklich neu ist.
+- Breite Mischung: Gesellschaft, Bräuche, Lokales, Sport, Persönlichkeiten, Tiere und Pflanzen, Anekdoten. Politik und Nachrichten nur als Teil davon, nicht als Schwerpunkt.
+- Objektiv statt krampfhaft neutral: Tatsachen klar benennen. Wo etwas wirklich umstritten ist, die Lesarten nennen, ohne jede Aussage auszubalancieren.
+- Jede Zahl, jedes Datum und jedes Urteil vor dem Schreiben an Quellen prüfen (Behörden, Gesetzblätter, Gerichte, Statistikämter, seriöse Presse). Zeitgebundenes mit Jahr nennen.
+- Keine Doppelungen im Kern: zum Beispiel nur ein Lotterie-Thema (La ONCE), deshalb kein Text über El Gordo.
+
+### Geschrieben
+
+Damit sich nichts im Kern doppelt.
+
+- 24.46.0 (B2/C1): eccehomo, uvas, silbo, lince, cholitas, campoamor, ratonperez, mate.
+- 24.44.0 (B2/C1): dagenh, kalleanka, studentflak, almedalen, vargen, vasaloppet, alvamyrdal, meankieli.
+- 24.24.0 (B2/C1): offentlighet, grannenslon, kiruna, samer, friskolor, nato, systembolaget, miljonprogrammet; hora, memoria, marmenor, once, chile, uruguay, bolivia, barcelona.
+- Frühere Texte (A2 bis B2): allemansratten, vasa, midnattssol, astrid, surstromming, ishotellet, foraldraledig; espanavaciada, lenguas, siesta, castells, camino, galapagos, machupicchu, muertos, tomatina.
 
 ## Aussprachehilfen beim Nachsprechen
 

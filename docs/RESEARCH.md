@@ -12,6 +12,13 @@ Tagwerk stützt sich, wo möglich, auf Studien. Wo es keine belastbaren Ergebnis
 
 Brunmair & Richter (2019), *Psychological Bulletin*: Metaanalyse über 59 Studien und 238 Effektstärken, Hedges' g = 0,42, stärker bei ähnlichen Kategorien. Einschränkung der Autoren: bei Wörtern und Fachtexten schwächer. Tagwerk mischt darum gezielt verwechselbare Paare (Präteritum/Perfekt, ser/estar, por/para).
 
+## Fehler finden: Prüfen statt Suchen
+
+- Fehler zu erkennen (Grammatikalitätsurteil) übt nur dann das Urteil, wenn der Satz auch richtig sein kann. Steckt sicher ein Fehler im Satz und gibt es nur einen Kandidaten, wird daraus Suchen. Darum ist rund jeder dritte bis zweite Satz richtig.
+- Ob ein Satz richtig ist, entscheidet jedes Mal unabhängig der Zufall. Jede Abhängigkeit von den vorigen Sätzen (etwa „höchstens drei richtige in Folge“) wird mit der Zeit zum Hinweis und ersetzt das Urteil.
+- Die Fehlerart wird nach Wahrscheinlichkeit gewählt: mehr Übung, wo Fehler auftreten; gemischt (siehe Interleaving), aber ohne Verbot, damit keine durchschaubare Regel entsteht.
+- Wo die Verbesserung nicht aus dem Finden folgt, wird die richtige Form eingetippt (Produktion statt Wiedererkennen, vgl. Swains Output-Hypothese unten).
+
 ## Gewohnheit und Serie
 
 Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Automatisierung, Spanne 18 bis 254 Tage; ein einzelner verpasster Tag beeinflusste die Gewohnheitsbildung kaum. Daher die Serienregel mit einem Pausetag pro Woche. Ob verlorene Serien die Motivation senken, ist nicht belegt.
@@ -33,4 +40,4 @@ Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Aut
 
 ## Eigene Festlegungen ohne Studienbeleg
 
-„Gefestigt“ ab 21 Tagen Intervall (wie Ankis „mature“), „verankert“ ab 365 Tagen, die Meilenstein-Schwellen, die Stufen der Satzlänge beim Nachschub, die Wiederholungssperre von 12 Aufgaben und die Auswahlregeln des Fundstücks.
+„Gefestigt“ ab 21 Tagen Intervall (wie Ankis „mature“), „verankert“ ab 365 Tagen, die Meilenstein-Schwellen, die Stufen der Satzlänge beim Nachschub, die Wiederholungssperre von 12 Aufgaben, die Auswahlregeln des Fundstücks und bei „Fehler finden“ der Anteil richtiger Sätze (40 %) sowie die Gewichte der Fehlerarten (0,5 bis 2 nach eigener Fehlerquote, ½ für die Art der letzten Aufgabe).

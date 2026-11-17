@@ -97,19 +97,22 @@ const SUBJ_WHY = [
   [/\bes (importante|necesario|posible|mejor) que\b/i, 'Nach einer Wertung oder Möglichkeit (es importante que, es posible que) steht der Subjuntivo'],
   [/\bcuando\b/i, 'cuando mit Zukunftsbezug (es ist noch nicht passiert) verlangt den Subjuntivo']
 ];
-const PAST_POINT_ES = /\b(ayer|anoche|la semana pasada|el año pasado|el mes pasado|el verano pasado|en \d{4})\b/i;
+const PAST_POINT_ES = /\b(ayer|anoche|la semana pasada|el año pasado|el mes pasado|el verano pasado|el (lunes|martes|miércoles|jueves|viernes|sábado|domingo) pasado|en \d{4}|hace (un|una|unos|unas|dos|tres|cuatro|cinco|seis|diez|\d+) (años?|mes|meses|semanas?|días?))\b/i;
 function bankSpotsEs(){
   const out = [];
   BANK.es.forEach(it => {
-    if (!it.gap || it.gap.includes(' ') || !it.hint) return;
+    // Reflexive Indefinido-Formen („me mudé“, „nos casamos“): Das Pronomen bleibt, nur die Verbform wird zu „he mudado“
+    const refl = it.trap === 'perfecto' && /^(me|te|se|nos|os) \S+$/i.test(it.gap);
+    if (!it.gap || (it.gap.includes(' ') && !refl) || !it.hint) return;
     // Je nach Lesart ist beides richtig, also kein eindeutiger Fehler: Relativsätze („un piso que tiene/tenga“, „alguien que me ayuda/ayude“,
     // „lo que te gusta/guste“) und aunque („aunque no me crees“ als Tatsache, „aunque no me creas“ als Annahme)
     if (/\b(un|una|unos|unas) \S+ que\b|\balguien que\b|\blo que\b|\baunque\b/i.test(it.target)) return;
-    const inf = it.hint.replace(/[()]/g, '').split(',')[0].trim();
+    const inf = it.hint.replace(/[()]/g, '').split(',')[0].trim().replace(refl ? /se$/ : /$^/, '');
     if (!/^[a-zñ]+(ar|er|ir)$/.test(inf)) return;
-    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?¿¡]/g, '') === it.gap);
+    const verb = refl ? it.gap.split(' ')[1] : it.gap;
+    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?¿¡]/g, '') === verb);
     if (idx < 0) return;
-    const swapAt = (form, extra) => { const w = toks.slice(); w[idx] = toks[idx].replace(it.gap, form); if (extra) w.splice(idx + 1, 0, extra); return w; };
+    const swapAt = (form, extra) => { const w = toks.slice(); w[idx] = toks[idx].replace(verb, form); if (extra) w.splice(idx + 1, 0, extra); return w; };
     if (it.trap === 'subjuntivo') {
       // yo und él/ella haben im Subjuntivo dieselbe Form: im Zweifel dritte Person, außer der deutsche Satz sagt „ich“
       const cands = [0, 1, 2, 3, 4].filter(k => conjugate(inf, 'subj', k) === it.gap);
@@ -121,12 +124,14 @@ function bankSpotsEs(){
       const note = it.note || (why ? `${why[1]}: ${it.gap}, nicht ${ind}.` : 'Hier verlangt der Satz den Subjuntivo, etwa nach querer que, es importante que, ojalá, para que oder cuando mit Zukunftsbezug.');
       out.push(withTrap('subjuntivo', () => spotData(it.de, swapAt(ind), [idx], it.target, note, 'subjuntivo', it.gapAlts.length ? it.gapAlts : [it.gap])));
     }
-    if (it.trap === 'perfecto' && /\b(ayer|pasado|pasada|anoche|en \d{4}|\d{4})\b/i.test(it.target)) {
+    if (it.trap === 'perfecto' && /\b(ayer|pasado|pasada|anoche|en \d{4}|\d{4}|hace (un|una|unos|unas|dos|tres|cuatro|cinco|seis|diez|\d+) (años?|mes|meses|semanas?|días?))\b/i.test(it.target)) {
       const when = (it.target.match(PAST_POINT_ES) || [])[0];
-      const p = [0, 1, 2, 3, 4].find(k => conjugate(inf, 'indef', k) === it.gap);
+      const p = [0, 1, 2, 3, 4].find(k => conjugate(inf, 'indef', k) === verb);
       if (p == null) return;
-      const note = when ? `Mit „${when.toLowerCase()}“ (abgeschlossen) steht Indefinido: ${it.gap}, nicht ${HABER[p]} ${participle(inf)}.` : 'Mit einem abgeschlossenen Zeitpunkt (ayer, la semana pasada, 2015) steht Indefinido, nicht Perfecto.';
-      out.push(withTrap('perfecto', () => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto', it.gapAlts.length ? it.gapAlts : [it.gap])));
+      // Mit erkanntem Zeitpunkt eine Erklärung, die beide Formen nennt; sonst die des Satzes
+      const pron = refl ? it.gap.split(' ')[0].toLowerCase() + ' ' : '';
+      const note = when ? `Mit „${when.toLowerCase()}“ (abgeschlossen) steht Indefinido: ${pron}${verb}, nicht ${pron}${HABER[p]} ${participle(inf)}.` : it.note || 'Mit einem abgeschlossenen Zeitpunkt (ayer, la semana pasada, 2015) steht Indefinido, nicht Perfecto.';
+      out.push(withTrap('perfecto', () => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto', refl ? [verb, it.gap] : it.gapAlts.length ? it.gapAlts : [it.gap])));
     }
   });
   // gustar & Co. richten sich nach dem, was gefällt: Einzahl und Mehrzahl vertauscht (me gusta los libros). Nur einzelne Verbformen;

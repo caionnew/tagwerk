@@ -98,7 +98,8 @@ test('Auswahl nach Wahrscheinlichkeit: wacklige Themen öfter, sichere seltener,
   // 0 von 20 falsch → 0,6; 10 von 20 falsch → 1,6 (geglättet mit einem Fehler auf fünf Aufgaben vorweg)
   assert.ok(Math.abs(w.serestar - 0.6) < 1e-9 && Math.abs(w.subjuntivo - 1.6) < 1e-9, JSON.stringify(w));
   assert.equal(w.porpara * 2, w.prep);
-  assert.ok(w.perfecto > 0 && w.perfecto < w.prep);
+  // Arten aus der Satzbank mit weniger als 12 Sätzen kommen anteilig seltener (sin: 11 Sätze)
+  assert.ok(app.get('spotWeight')('sv', 'sin') < 1 && app.get('spotWeight')('es', 'perfecto') === 1);
   assert.ok(Object.values(w).every(x => x > 0));
   // Gedächtnis erst beim Zeigen
   app.get('spotSeen')('es', { cat:'gustar' });
@@ -110,4 +111,14 @@ test('Themenblatt: typischer Fehler jetzt auch für sin, gustar, Präpositionen 
   for (const [lang, trap] of [['sv', 'sin'], ['es', 'gustar'], ['sv', 'prep'], ['es', 'verbind'], ['sv', 'inversion']]) {
     const d = te(lang, trap); assert.ok(d && d.wrong.length && d.trap === trap, `${lang}/${trap}`);
   }
+});
+test('Indefinido aus der Satzbank: genug Sätze, auch mit „hace …“ und reflexiv, Erklärung nennt beide Formen', () => {
+  const all = app.get('bankSpotsEs')().filter(f => f.trap === 'perfecto').map(f => f());
+  assert.ok(all.length >= 20, String(all.length));
+  const nos = all.find(d => d.full === 'Nos casamos hace dos años.');
+  assert.equal(nos.words.join(' '), 'Nos hemos casado hace dos años.');
+  assert.match(nos.note, /„hace dos años“.*nos casamos, nicht nos hemos casado/);
+  assert.ok(nos.fix.includes('casamos'));
+  const lun = all.find(d => d.full === 'El lunes pasado empezó el curso.');
+  assert.match(lun.note, /„el lunes pasado“.*empezó, nicht ha empezado/);
 });

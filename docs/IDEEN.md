@@ -1,23 +1,28 @@
 # Ideen für Tagwerk
 
-Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
+Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 17. November 2026 (nach 24.47.0)
+Stand: 17. November 2026 (nach 24.48.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
-- **Die App ist breit, die Inhalte holen auf.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Seit 24.39 und 24.40 gibt es 317 schwedische und 364 spanische Sätze, davon 138 bzw. 172 als B2 markiert (vorher 32 bzw. 40); bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reichen die B2-Sätze drei bis vier Wochen. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
-- **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Seit 24.41 und 24.42 gibt es Verbalperiphrasen und Subjuntivo im Satzgefüge (Spanisch), Pluralklassen und Modalpartikeln (Schwedisch). Seit 24.43 dazu Redewendungen in beiden Sprachen. Die Grammatikthemen für B2/C1 sind damit vollständig. Seit 24.44 und 24.46 gibt es je 8 weitere Lesetexte auf B2/C1. Seit 24.45 ist „Fehler finden“ eine echte Prüfaufgabe: Rund 40 % der Sätze sind richtig, und Formfehler werden nach dem Finden verbessert. Seit 24.47 gibt es je Sprache sieben Fehlerarten statt vier; welche kommt, richtet sich nach deinen Fehlern.
-- **Prüfqualität ist die größte Quelle für Ärger.** In einer kurzen Durchsicht (24.34–24.35) fanden sich ein grammatischer Fehler („de el“), unidiomatisches Deutsch, richtige Antworten, die als falsch galten („i gymmet“, Subjekt vorn bei Inversion), und bei rund der Hälfte der Sätze eine Erklärung, die nicht zum Satz passte. Jede falsche „Falsch“-Wertung kostet täglich Zeit und Vertrauen. 24.37 hat alle Generatoren durchgesehen (ein grammatischer Fehler, „con ti“; sechs Auswahlaufgaben mit einer zweiten vertretbaren Option; fehlende richtige Fassungen bei Uhrzeiten und beim Umbauen). 24.38 hat die Satzbank durchgesehen: Jeder der 441 Sätze hat jetzt eine Erklärung, rund 130 weitere richtige Fassungen sind dazugekommen, und zwei Regeln gelten für alle Sätze (fehlendes „har“ im schwedischen Nebensatz, betontes spanisches Subjektpronomen).
-- **Die Browser-Tests laufen in Chromium und Firefox,** seit 24.39 beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
+- **Inhalte:** 365 schwedische und 443 spanische Sätze, davon 162 bzw. 212 auf B2, in 16 bzw. 18 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
+- **Übungen:** fast alles da. „Fehler finden“ ist seit 24.45 bis 24.48 eine echte Prüfaufgabe: Richtige Sätze sind dabei, Formfehler werden verbessert, es gibt sieben Fehlerarten je Sprache, und welche kommt, richtet sich nach deinen Fehlern.
+- **Prüfqualität bleibt das Wichtigste.** Jede falsche „Falsch“-Wertung kostet Zeit und Vertrauen. Generatoren (24.37) und Satzbank (24.38) sind durchgesehen; falsch bewertete Antworten meldest du direkt.
+- **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen.
+- **Browser-Tests** laufen in Chromium und Firefox, beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 
 ## Fahrplan
 
-Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel: Inhalte auf B2/C1. Lesetexte danach, weil sie seltener genutzt werden als das Tagwerk.
+Prüfung, Inhalte auf B2/C1 und Lesetexte sind erledigt. Als Nächstes drei kleine Bausteine, die den Kreis schließen:
 
-1. **Als Nächstes:** Wochenbilanz zum Schwerpunkt, Korrekturen aus dem Schreiben ins Tagwerk, Hörunterscheidung für die spanische Betonung.
+1. **Wochenbilanz zum Schwerpunkt (B):** wenig Aufwand, die Daten liegen in den Fehlerquellen.
+2. **Hörunterscheidung, spanische Betonung (B+):** término, termino, terminó.
+3. **Korrekturen aus dem Schreiben ins Tagwerk (B+):** greift, sobald du regelmäßig schreibst.
+
+Danach nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten.
 
 ## Bewertet: lohnend
 
@@ -48,6 +53,31 @@ Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel:
 11. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
 
+## Lesetexte: Themen für später
+
+Fakten noch nicht geprüft; vor dem Schreiben an Quellen prüfen (Leitlinien in [CONTENT.md](CONTENT.md#leitlinien-für-themen)).
+
+Schwedisch:
+- Tvättstugan: die Waschküche im Mietshaus, Buchungslisten und Zettelkriege. (Alltag)
+- Kräftskivan: Krebsessen im August, Lieder und Papierhüte. (Brauch)
+- Namnsdagar: Namenstage im Kalender. (Brauch)
+- Göteborgsvitsar: der Göteborger Wortwitz. (Lokales)
+- Älgtestet 1997: Ein schwedisches Ausweichmanöver bringt die Mercedes A-Klasse zum Kippen. (Anekdote)
+- Bandy: Hockey auf Natureis mit Ball, ein schwedischer Wintersport. (Sport)
+- Sofja Kovalevskaja: 1889 erste Professorin für Mathematik in Stockholm. (Persönlichkeit)
+- Fjällräven: der Polarfuchs in den Bergen, vom Aussterben bedroht. (Natur)
+
+Spanisch:
+- El Día de los Inocentes: Streiche am 28. Dezember. (Brauch)
+- Las Fallas: riesige Figuren, die in Valencia verbrannt werden. (Brauch)
+- La sobremesa: das Sitzenbleiben nach dem Essen. (Alltag)
+- Santiago Ramón y Cajal: Nobelpreis 1906 für die Erforschung der Nervenzellen. (Persönlichkeit)
+- El ajolote: der Axolotl von Xochimilco. (Natur)
+- Doñana: Erdbeeren, Brunnen und ein Feuchtgebiet in Not. (Natur, Umwelt)
+- Castrillo Mota de Judíos: Ein Dorf ändert 2014 seinen Namen. (Anekdote, Geschichte)
+- El Hierro: eine Insel, die mit Wind und Wasser Strom erzeugt. (Lokales)
+- La pelota vasca: Frontón und Jai alai. (Sport)
+
 ## Offen: Rückmeldung von dir
 
 Derzeit nichts.
@@ -71,8 +101,13 @@ Derzeit nichts.
 - **Kurze Dialoge zum Mitspielen (C+).** Wertvoll, aber jeder Dialog muss von Hand geschrieben und geprüft werden; Lesetexte bringen pro Aufwand mehr.
 - **Wörter zum Einbauen passend zur Schreibaufgabe (C).** Die App weiß nicht, welches Wort zu welchem Thema passt; das wäre Raten. Stattdessen gibt es seit 24.29.0 fünf Grundformen und „Andere Wörter“.
 - **Zurück auf „Heute“ in Firefox.** Die Geste verlässt dort die App, Firefox zeigt dann je nach Version eine leere Seite. Eine Web-App kann sich nicht selbst schließen, und die Geste auf „Heute“ abzufangen hieße, Nutzer in der App festzuhalten.
-
 - **„Meine ist auch richtig“ ausbauen (C).** Du meldest Fälle direkt; das bleibt der schnellere Weg zu einer Korrektur, die für alle gilt. Der Knopf bleibt für unterwegs, wie er ist.
+- **Sprichwörter als eigene Übung (C+).** Ein Sprichwort, dazu das deutsche Gegenstück auswählen; je Sprache mindestens 40. Seit 24.43 gibt es Redewendungen, die im Alltag häufiger vorkommen.
+- **Fehler finden: Mini-Text aus drei Sätzen, einer fehlerhaft (B−).** Mehr Lesen, mehrere Kandidaten; auf dem Handy aber unübersichtlich, und „zwei Kandidaten in einem Satz“ (oben) erreicht dasselbe kompakter.
+- **Fehler finden: Indefinido/Imperfecto als Fehlerart (C+).** Der Aspekt lässt oft beides zu (llovía/llovió), ein eingesetzter Fehler wäre selten eindeutig.
+- **Fehler finden: deutschen Satz ausblenden (C).** Bei por/para und Konnektoren wären dann oft zwei Lösungen richtig.
+- **Fehler finden: Begründung auswählen (C).** Macht die Übung langsamer; die Erklärung steht ohnehin nach jeder Antwort da.
+- **Endbildschirm nach fehlerfreier Runde überspringen (C).** Dann fehlen Abschluss, „Als Nächstes“ und „Noch eine Runde“.
 
 ## Bewusst nicht
 

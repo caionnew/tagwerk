@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.48.0
+**Mehr Indefinido, Doku zusammengeführt.**
+- **19 neue Sätze im Thema „Perfecto vs. Indefinido“, alle mit Indefinido und klarem Zeitpunkt.** Darunter ayer llamé, anoche vimos, el lunes pasado empezó, hace tres meses abrieron, en 1992 Barcelona organizó. Vorher hatte das Thema fast nur Perfecto, und „Fehler finden“ hatte für Indefinido nur 4 Quellsätze.
+- **„Fehler finden“ nutzt jetzt 25 Indefinido-Sätze statt 4.** Neu erkannt werden auch „hace dos años“, „el sábado pasado“ und reflexive Formen: „nos casamos“ wird zu „nos hemos casado“, das Pronomen bleibt stehen. Die Erklärung nennt beide Formen, zum Beispiel „Mit „el lunes pasado“ (abgeschlossen) steht Indefinido: empezó, nicht ha empezado.“
+- **Doku:**
+  - THEMEN.md ist aufgelöst. Die Themen für weitere Lesetexte und alle offenen Ideen stehen in IDEEN.md, die Leitlinien für Themen und die Liste der geschriebenen Texte in CONTENT.md.
+  - IDEEN.md hat ein neues Lagebild, einen Fahrplan mit drei Schritten und die heute verworfenen Varianten von „Fehler finden“ unter „zurückgestellt“.
+  - RESEARCH.md begründet, warum „Fehler finden“ richtige Sätze enthält und den Zufall nicht mit festen Regeln steuert.
+- **Wörterbuch:** 24 neue Einträge.
+- 1 neuer Einheitstest (249).
+
 ## 24.47.0
 **„Fehler finden“: sieben Fehlerarten je Sprache statt vier, Auswahl nach Wahrscheinlichkeit.**
 - **Warum:** Im Schwedischen war jede zweite Aufgabe Wortstellung, im Spanischen 70 % ser/estar oder por/para. Bei so wenigen Arten kam dieselbe oft zwei-, dreimal hintereinander.

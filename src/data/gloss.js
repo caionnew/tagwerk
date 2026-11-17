@@ -2086,6 +2086,30 @@ cuestan|costar|kosten, fallen schwer (Mehrzahl)
 alcanzan|alcanzar|reichen, erreichen (Mehrzahl)
 sienta|sentar|steht (Kleidung): te sienta bien = steht dir gut
 preguntar|preguntar|fragen
+curso|curso|Kurs; Schuljahr
+visitamos|visitar|wir besuchten / wir besuchen
+lisboa|Lisboa|Lissabon
+cambié|cambiar|ich wechselte, änderte (Indefinido)
+terminamos|terminar|wir beendeten / wir beenden
+muchísimo|muchísimo|sehr viel, sehr stark
+antigua|antiguo|alt; vor dem Nomen: ehemalig
+alquiler|alquiler|Miete
+organizó|organizar|organisierte, richtete aus (Indefinido)
+olímpicos|olímpico|olympisch; los Juegos Olímpicos = die Olympischen Spiele
+sábado|sábado|Samstag
+contestaste|contestar|du antwortetest (Indefinido)
+cerró|cerrar|schloss (Indefinido)
+visitado|visitar|besucht (Partizip)
+abierto|abrir|geöffnet, eröffnet (Partizip); offen
+olvidado|olvidar|vergessen (Partizip)
+aprendido|aprender|gelernt (Partizip)
+organizado|organizar|organisiert (Partizip)
+cenado|cenar|zu Abend gegessen (Partizip)
+contestado|contestar|geantwortet (Partizip)
+cerrado|cerrar|geschlossen (Partizip)
+empezado|empezar|angefangen (Partizip)
+casado|casarse|verheiratet, geheiratet (Partizip)
+vendido|vender|verkauft (Partizip)
 `
 };
 

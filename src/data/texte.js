@@ -530,7 +530,119 @@ El PP y el sector recurrieron el decreto, pero en 2025 el Tribunal Constituciona
      ['Welchen Einwand bringen Kritiker vor?', ['Ferienwohnungen machen nur etwa ein Prozent des Wohnungsbestands aus', 'Touristen zahlen zu wenig Steuern', 'Die Lizenzen laufen erst 2050 aus'], 'los pisos turísticos son apenas un uno por ciento de las viviendas de la ciudad']],
   keep:[['Cuando caduquen, en noviembre de 2028, esas viviendas deberán volver al uso residencial.', 'Wenn sie im November 2028 auslaufen, müssen diese Wohnungen wieder normal bewohnt werden.'],
         ['Unas semanas después, miles de personas se manifestaron con pistolas de agua contra el turismo masivo.', 'Wenige Wochen später demonstrierten Tausende mit Wasserpistolen gegen den Massentourismus.'],
-        ['Las imágenes de turistas mojados en las terrazas dieron la vuelta al mundo.', 'Die Bilder von nassen Touristen auf den Terrassen gingen um die Welt.']] }
+        ['Las imágenes de turistas mojados en las terrazas dieron la vuelta al mundo.', 'Die Bilder von nassen Touristen auf den Terrassen gingen um die Welt.']] },
+{ id:'eccehomo', topic:'Kurioses', level:'B2', title:'El Ecce Homo de Borja',
+  body:`En 1930, el pintor Elías García Martínez pintó un Ecce Homo, un Cristo coronado de espinas, en una pared del Santuario de la Misericordia, cerca de Borja, un pueblo de Zaragoza. Con los años, la humedad fue deteriorando la pintura.
+
+En el verano de 2012, Cecilia Giménez, una vecina de más de ochenta años y pintora aficionada, decidió restaurarla por su cuenta. El resultado se parecía poco al original. En agosto, la noticia dio la vuelta al mundo, y aquel rostro desfigurado se convirtió en un fenómeno viral.
+
+Lo que parecía una catástrofe resultó ser un golpe de suerte. Miles de curiosos empezaron a llegar al santuario, que desde entonces cobra entrada. En 2016 se abrió un centro de interpretación, y hasta se estrenó una ópera sobre el caso. Según el alcalde, a finales de 2025 el santuario rozaba los 300.000 visitantes, con unos ingresos de más de 600.000 euros.
+
+Cecilia Giménez sufrió burlas durante años, aunque también recibió mucho cariño. Siempre dijo que la obra no estaba terminada cuando se hizo pública. Murió en diciembre de 2025, a los 94 años, y Borja la despidió como a una vecina querida que, sin quererlo, había puesto al pueblo en el mapa.`,
+  q:[['Wer malte das ursprüngliche Bild?', ['Elías García Martínez, im Jahr 1930', 'Cecilia Giménez, im Jahr 2012', 'Ein unbekannter Mönch im Mittelalter'], 'el pintor Elías García Martínez pintó un Ecce Homo'],
+     ['Was brachte die missglückte Restaurierung dem Ort?', ['Viele Besucher und Einnahmen', 'Einen Prozess und hohe Strafen', 'Die Schließung des Heiligtums'], 'Lo que parecía una catástrofe resultó ser un golpe de suerte.'],
+     ['Was sagte Cecilia Giménez immer über ihre Arbeit?', ['Dass sie noch nicht fertig war, als sie bekannt wurde', 'Dass sie das Bild absichtlich so gemalt habe', 'Dass jemand anderes es verändert habe'], 'Siempre dijo que la obra no estaba terminada cuando se hizo pública.']],
+  keep:[['Con los años, la humedad fue deteriorando la pintura.', 'Mit den Jahren setzte die Feuchtigkeit dem Bild immer mehr zu.'],
+        ['Lo que parecía una catástrofe resultó ser un golpe de suerte.', 'Was nach einer Katastrophe aussah, erwies sich als Glücksfall.'],
+        ['Siempre dijo que la obra no estaba terminada cuando se hizo pública.', 'Sie sagte immer, die Arbeit sei noch nicht fertig gewesen, als sie bekannt wurde.']] },
+{ id:'uvas', topic:'Bräuche', level:'B2', title:'Las doce uvas',
+  body:`En España, la última noche del año tiene un ritual muy preciso. Poco antes de las doce, millones de personas se colocan delante del televisor con doce uvas preparadas. Con cada campanada del reloj de la Puerta del Sol, en Madrid, hay que comerse una. Quien termina a tiempo, dicen, tendrá un año de suerte.
+
+El reloj, inaugurado en 1866 en la Real Casa de Correos, se ha convertido en un símbolo nacional. Desde 1962, las campanadas se retransmiten por televisión, y miles de personas las siguen en directo en la propia plaza.
+
+Sobre el origen de la costumbre hay dos versiones. Según la más conocida, en 1909 los agricultores de Alicante tuvieron una cosecha excepcional y, para vender lo que sobraba, ofrecieron las uvas de la suerte. Sin embargo, ya en la década de 1880 algunos periódicos mencionan la costumbre. La burguesía madrileña había copiado de Francia la moda de tomar uvas con champán en Nochevieja, y un grupo de madrileños fue a la Puerta del Sol a imitarla en tono de burla.
+
+Probablemente la cosecha de 1909 solo dio el empujón definitivo a una costumbre que ya existía. Hoy muchas de esas uvas vienen del Vinalopó, en Alicante, donde maduran dentro de una bolsa de papel. La tradición ha llegado también a varios países de América Latina.`,
+  q:[['Wann isst man die Trauben?', ['Bei jedem der zwölf Glockenschläge um Mitternacht', 'Nach dem Mittagessen am Neujahrstag', 'Am 6. Januar zum Dreikönigsfest'], 'Con cada campanada del reloj de la Puerta del Sol'],
+     ['Was besagt die bekanntere Erklärung?', ['Bauern aus Alicante wollten 1909 eine Rekordernte verkaufen', 'Ein König führte den Brauch ein', 'Die Kirche verteilte Trauben an die Armen'], 'en 1909 los agricultores de Alicante tuvieron una cosecha excepcional'],
+     ['Was spricht gegen diese Erklärung?', ['Zeitungen erwähnen den Brauch schon in den 1880er-Jahren', 'Im Jahr 1909 gab es gar keine Ernte', 'Die Trauben kamen damals aus Frankreich'], 'ya en la década de 1880 algunos periódicos mencionan la costumbre']],
+  keep:[['Quien termina a tiempo, dicen, tendrá un año de suerte.', 'Wer rechtzeitig fertig wird, so heißt es, hat ein glückliches Jahr.'],
+        ['Sobre el origen de la costumbre hay dos versiones.', 'Über den Ursprung des Brauchs gibt es zwei Versionen.'],
+        ['Probablemente la cosecha de 1909 solo dio el empujón definitivo a una costumbre que ya existía.', 'Wahrscheinlich gab die Ernte von 1909 einem Brauch, den es schon gab, nur den letzten Anstoß.']] },
+{ id:'silbo', topic:'Sprache', level:'B2', title:'El silbo gomero',
+  body:`La Gomera, en las islas Canarias, es una isla de barrancos profundos. Dos casas pueden estar a un kilómetro en línea recta y a horas de camino. Para entenderse de una ladera a otra, sus habitantes se comunicaban silbando, y con la llegada de los castellanos el silbo pasó a reproducir el español. Un buen silbador se oye a varios kilómetros.
+
+El silbo no es un idioma distinto, sino una forma de silbar el español. Las cinco vocales se reducen a dos silbidos diferentes, y las consonantes, a cuatro. Con tan pocos sonidos, el contexto lo es todo, pero los buenos silbadores mantienen conversaciones enteras.
+
+A mediados del siglo XX estuvo a punto de desaparecer. Muchos gomeros emigraron, y con las carreteras y el teléfono el silbo dejó de ser necesario. Los jóvenes ya no lo aprendían.
+
+La recuperación llegó desde la escuela. Desde 1999, el silbo es asignatura obligatoria en primaria y secundaria en toda la isla, y en 2009 la UNESCO lo declaró Patrimonio Cultural Inmaterial de la Humanidad. Según la organización, es el único lenguaje silbado del mundo plenamente desarrollado y practicado por una comunidad numerosa. Hoy lo entienden casi todos los gomeros, y lo silban sobre todo los mayores y los jóvenes.`,
+  q:[['Warum pfiffen die Bewohner von La Gomera?', ['Um sich über tiefe Schluchten hinweg zu verständigen', 'Um Piraten zu täuschen', 'Weil Sprechen in der Kirche verboten war'], 'Para entenderse de una ladera a otra'],
+     ['Wie viele Pfeiflaute ersetzen die fünf spanischen Vokale?', ['Zwei', 'Fünf', 'Vier'], 'Las cinco vocales se reducen a dos silbidos diferentes'],
+     ['Was rettete das Silbo?', ['Der Pflichtunterricht in den Schulen seit 1999', 'Ein Film aus Hollywood', 'Die Rückkehr der Ausgewanderten'], 'La recuperación llegó desde la escuela.']],
+  keep:[['El silbo no es un idioma distinto, sino una forma de silbar el español.', 'Das Silbo ist keine eigene Sprache, sondern eine Art, Spanisch zu pfeifen.'],
+        ['A mediados del siglo XX estuvo a punto de desaparecer.', 'Mitte des 20. Jahrhunderts wäre es beinahe verschwunden.'],
+        ['La recuperación llegó desde la escuela.', 'Die Rettung kam aus der Schule.']] },
+{ id:'lince', topic:'Natur', level:'C1', title:'El regreso del lince ibérico',
+  body:`A comienzos de este siglo, el lince ibérico era el felino más amenazado del planeta. En 2002 apenas quedaban 94 ejemplares, repartidos en dos zonas de Andalucía, Doñana y Sierra Morena. Muchos daban la especie por perdida.
+
+Su problema principal tenía nombre: el conejo. El lince se alimenta casi solo de conejos, y dos enfermedades, la mixomatosis y la enfermedad hemorrágica vírica, habían diezmado sus poblaciones. A eso se sumaban la caza ilegal, los cepos y la pérdida de hábitat.
+
+La recuperación se considera uno de los grandes éxitos de la conservación en Europa. España y Portugal criaron linces en cautividad y los soltaron en nuevas zonas, repoblaron conejos y firmaron acuerdos con fincas privadas. Según el último censo oficial, en 2025 había 2.663 linces, un 11 % más que el año anterior. En 2024, la UICN lo pasó de especie en peligro a vulnerable.
+
+El peligro hoy está en el asfalto. Los atropellos causan casi ocho de cada diez muertes registradas, por lo que se construyen pasos de fauna y vallas en las carreteras que cruzan su territorio. Además, el lince sigue dependiendo de una presa tan frágil como el conejo.`,
+  q:[['Wie viele Luchse gab es 2002 noch?', ['94', '2.663', 'Etwa 1.000'], 'En 2002 apenas quedaban 94 ejemplares'],
+     ['Warum war das Kaninchen so wichtig?', ['Der Luchs frisst fast nur Kaninchen, und Krankheiten hatten sie dezimiert', 'Kaninchen übertrugen eine Krankheit auf den Luchs', 'Kaninchen fraßen die Pflanzen im Lebensraum des Luchses'], 'El lince se alimenta casi solo de conejos'],
+     ['Was ist heute die häufigste Todesursache?', ['Verkehrsunfälle', 'Wilderei', 'Krankheiten'], 'Los atropellos causan casi ocho de cada diez muertes registradas']],
+  keep:[['Muchos daban la especie por perdida.', 'Viele hielten die Art für verloren.'],
+        ['Su problema principal tenía nombre: el conejo.', 'Sein Hauptproblem hatte einen Namen: das Kaninchen.'],
+        ['El peligro hoy está en el asfalto.', 'Die Gefahr liegt heute auf dem Asphalt.']] },
+{ id:'cholitas', topic:'Sport', level:'C1', title:'Las cholitas luchadoras',
+  body:`Los domingos por la tarde, en un polideportivo de El Alto, la ciudad que se extiende por encima de La Paz a más de 4.000 metros, el público grita, ríe y abuchea. En el ring pelean mujeres aimaras con trenzas, sombrero bombín y pollera, la falda amplia de varias capas que llevan muchas mujeres indígenas de los Andes.
+
+La lucha libre llegó a Bolivia desde México hace décadas, pero hasta 2001 solo peleaban hombres. Ese año, con el público en descenso, el promotor Juan Mamani tuvo una idea: subir al ring a mujeres de pollera. Muchos luchadores se burlaron. Según ellos, una cholita servía para la cocina, no para el cuadrilátero.
+
+El espectáculo funcionó. Hoy acuden familias de El Alto y también turistas extranjeros. Las peleas están coreografiadas, como en la lucha libre mexicana, con buenas y malas, llaves aparatosas y mucho humor.
+
+Detrás del show hay algo más. Durante mucho tiempo, las mujeres de pollera sufrieron discriminación en Bolivia, y la palabra chola se usaba como insulto. Para muchas luchadoras, pelear con la ropa de sus madres es una forma de reivindicarla. Una antropóloga que las estudió observa que los turistas las ven como algo tradicional y exótico, aunque la lucha libre vino de fuera, y que ellas aprovechan esa mirada para ganar dinero y prestigio.`,
+  q:[['Seit wann steigen in El Alto Frauen in den Ring?', ['Seit 2001', 'Seit den 1950er-Jahren', 'Seit 2015'], 'hasta 2001 solo peleaban hombres'],
+     ['Wie reagierten viele Ringer zuerst?', ['Sie spotteten, Frauen gehörten in die Küche', 'Sie trainierten die Frauen begeistert', 'Sie verließen den Verband'], 'Muchos luchadores se burlaron.'],
+     ['Was bedeutet der Kampf in Pollera für viele Ringerinnen?', ['Eine Art, die Kleidung ihrer Mütter aufzuwerten', 'Eine Vorschrift des Veranstalters', 'Eine Verkleidung, die sie sonst nie tragen'], 'pelear con la ropa de sus madres es una forma de reivindicarla']],
+  keep:[['Muchos luchadores se burlaron.', 'Viele Ringer machten sich lustig.'],
+        ['El espectáculo funcionó.', 'Die Show kam an.'],
+        ['Detrás del show hay algo más.', 'Hinter der Show steckt mehr.']] },
+{ id:'campoamor', topic:'Persönlichkeiten', level:'C1', title:'Clara Campoamor y el voto femenino',
+  body:`En las elecciones de junio de 1931, las primeras de la Segunda República, las mujeres españolas podían ser elegidas, pero no votar. Tres consiguieron escaño. Una de ellas era Clara Campoamor, abogada madrileña de 43 años y diputada del Partido Radical.
+
+Campoamor defendió que la nueva Constitución reconociera el voto de las mujeres sin condiciones. El debate dividió a la izquierda republicana. Su rival más conocida fue otra diputada, la abogada Victoria Kent, del Partido Radical Socialista, que pidió aplazarlo: temía que las mujeres, muy influidas por la Iglesia, votaran a la derecha.
+
+El 1 de octubre de 1931, tras un debate que hizo historia, el Congreso aprobó el sufragio femenino por 161 votos a favor y 121 en contra. Las mujeres votaron por primera vez en las elecciones generales del 19 de noviembre de 1933.
+
+Aquellas elecciones las ganó la derecha, y muchos culparon a las mujeres y, sobre todo, a Campoamor. Ella perdió su escaño y quedó aislada políticamente. Al comenzar la Guerra Civil se marchó de España, y murió en el exilio, en Lausana, en 1972. Hoy muchas calles y colegios de España llevan su nombre.`,
+  q:[['Was durften Frauen bei den Wahlen im Juni 1931?', ['Gewählt werden, aber nicht wählen', 'Wählen, aber nicht gewählt werden', 'Weder wählen noch gewählt werden'], 'las mujeres españolas podían ser elegidas, pero no votar'],
+     ['Warum wollte Victoria Kent das Frauenwahlrecht verschieben?', ['Sie fürchtete, Frauen würden unter dem Einfluss der Kirche rechts wählen', 'Sie hielt Frauen für politisch uninteressiert', 'Sie wollte zuerst das Wahlalter senken'], 'temía que las mujeres, muy influidas por la Iglesia, votaran a la derecha'],
+     ['Was geschah mit Campoamor nach den Wahlen von 1933?', ['Sie verlor ihren Sitz und war politisch isoliert', 'Sie wurde Ministerin', 'Sie wurde Präsidentin des Parlaments'], 'Ella perdió su escaño']],
+  keep:[['Tres consiguieron escaño.', 'Drei bekamen einen Sitz.'],
+        ['Las mujeres votaron por primera vez en las elecciones generales del 19 de noviembre de 1933.', 'Frauen wählten zum ersten Mal bei der Parlamentswahl am 19. November 1933.'],
+        ['Ella perdió su escaño y quedó aislada políticamente.', 'Sie verlor ihren Sitz und war politisch isoliert.']] },
+{ id:'ratonperez', topic:'Kultur', level:'B2', title:'El ratoncito Pérez',
+  body:`Cuando a un niño español se le cae un diente de leche, lo pone debajo de la almohada. Por la noche llega el ratoncito Pérez, se lo lleva y deja a cambio una moneda o un pequeño regalo. La figura es popular también en América Latina, donde muchos lo llaman simplemente ratón Pérez.
+
+Pocos saben que el personaje tiene un origen concreto. En 1894, al pequeño rey Alfonso XIII, que tenía ocho años, se le cayó un diente. Su madre, la reina regente María Cristina, encargó un cuento al padre Luis Coloma, un jesuita y escritor cercano a la corte.
+
+En la historia, el protagonista es el rey Buby, como llamaba la reina a su hijo. Una noche, el ratón Pérez lo lleva por las cañerías de Madrid hasta su casa: una caja de galletas en el sótano de la confitería Prast, en la calle del Arenal. Por el camino, el pequeño rey descubre cómo viven los niños pobres de su ciudad.
+
+El manuscrito original se guarda en la Biblioteca del Palacio Real. Desde 2003, una placa en el número 8 de la calle del Arenal recuerda que allí vivió el famoso ratón, y en el mismo edificio hay hoy un pequeño museo dedicado a él. La casa de un personaje inventado se ha convertido así en una parada más para las familias que visitan Madrid.`,
+  q:[['Für wen schrieb Luis Coloma die Geschichte?', ['Für den achtjährigen König Alfons XIII.', 'Für die Kinder seiner Schwester', 'Für eine Madrider Schule'], 'al pequeño rey Alfonso XIII, que tenía ocho años, se le cayó un diente'],
+     ['Wo wohnt die Maus in der Geschichte?', ['In einer Keksdose im Keller einer Konditorei', 'Im Königspalast', 'In einer Kirche an der Puerta del Sol'], 'una caja de galletas en el sótano de la confitería Prast'],
+     ['Was erinnert heute in der Calle del Arenal an die Maus?', ['Eine Gedenktafel und ein kleines Museum', 'Eine große Statue vor dem Palast', 'Ein jährliches Straßenfest'], 'una placa en el número 8 de la calle del Arenal']],
+  keep:[['Cuando a un niño español se le cae un diente de leche, lo pone debajo de la almohada.', 'Wenn ein spanisches Kind einen Milchzahn verliert, legt es ihn unter das Kopfkissen.'],
+        ['Pocos saben que el personaje tiene un origen concreto.', 'Nur wenige wissen, dass die Figur einen ganz bestimmten Ursprung hat.'],
+        ['El manuscrito original se guarda en la Biblioteca del Palacio Real.', 'Das Originalmanuskript wird in der Bibliothek des Königspalasts aufbewahrt.']] },
+{ id:'mate', topic:'Bräuche', level:'B2', title:'El mate',
+  body:`En Argentina y Uruguay es habitual ver a alguien con un termo bajo el brazo y un pequeño recipiente en la mano, en la oficina, en el parque o en la playa. Es el equipo del mate, la infusión más popular de la región.
+
+El mate se prepara con yerba mate, las hojas secas y molidas de un árbol originario de la cuenca de los ríos Paraná, Paraguay y Uruguay. Los guaraníes ya la consumían antes de la llegada de los europeos. Se toma caliente con una bombilla, una especie de pajita de metal con un filtro en la punta, desde un recipiente que también se llama mate y que tradicionalmente era una calabaza.
+
+Lo más importante es que se comparte. Una persona, el cebador, echa el agua, toma el primero y va pasando el mate a los demás, uno por uno, siempre con la misma bombilla. Quien no quiere más dice simplemente gracias; decirlo antes de tiempo puede dejarte sin el siguiente.
+
+En Argentina, una ley de 2013 declaró el mate infusión nacional, y la yerba está presente en más del 90 % de los hogares. Aun así, los uruguayos consumen todavía más: unos 10 kilos de yerba por persona al año, frente a unos 6 en Argentina. En Paraguay, en cambio, se bebe mucho tereré, la versión fría.`,
+  q:[['Woraus wird Mate zubereitet?', ['Aus den getrockneten Blättern eines Baums', 'Aus gerösteten Kaffeebohnen', 'Aus Kürbiskernen'], 'las hojas secas y molidas de un árbol'],
+     ['Was sagt man, wenn man keinen Mate mehr möchte?', ['Danke', 'Genug', 'Noch einen'], 'Quien no quiere más dice simplemente gracias'],
+     ['Wo trinkt man pro Kopf mehr Yerba als in Argentinien?', ['In Uruguay', 'In Spanien', 'In Chile'], 'los uruguayos consumen todavía más']],
+  keep:[['Lo más importante es que se comparte.', 'Das Wichtigste ist, dass man ihn teilt.'],
+        ['Los guaraníes ya la consumían antes de la llegada de los europeos.', 'Die Guaraní tranken ihn schon vor der Ankunft der Europäer.'],
+        ['Quien no quiere más dice simplemente gracias; decirlo antes de tiempo puede dejarte sin el siguiente.', 'Wer nicht mehr will, sagt einfach „danke“; sagt man es zu früh, kann man den nächsten verpassen.']] }
 ]
 };
 const textSentences = body => body.split(/\n\s*\n/).map(p => p.trim().split(/(?<=[.!?])\s+(?=[A-ZÅÄÖÁÉÍÓÚÑ¿¡0-9])/));

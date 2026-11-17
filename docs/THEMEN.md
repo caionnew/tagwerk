@@ -11,19 +11,9 @@ Sammelstelle für Themen, damit keine Idee verloren geht. Format und Prüfregeln
 - Jede Zahl, jedes Datum und jedes Urteil vor dem Schreiben an Quellen prüfen (Behörden, Gesetzblätter, Gerichte, Statistikämter, seriöse Presse). Zeitgebundenes mit Jahr nennen.
 - Keine Doppelungen im Kern: zum Beispiel nur ein Lotterie-Thema (La ONCE), deshalb kein Text über El Gordo.
 
-## Nächste Runde (vorgeschlagen 16. November 2026, gewünscht)
+## Nächste Runde
 
-Die schwedischen Themen dieser Runde sind mit 24.44.0 geschrieben (siehe unten).
-
-Spanisch:
-- El Ecce Homo de Borja: Eine missglückte Restaurierung 2012 bringt einem Dorf Touristen. (Anekdote)
-- Las doce uvas: zwölf Trauben zu den Glockenschlägen an Silvester und die umstrittene Herkunft des Brauchs. (Brauch, ersetzt El Gordo)
-- El silbo gomero: die Pfeifsprache von La Gomera, Weltkulturerbe der UNESCO. (Lokales)
-- El lince ibérico: Der Iberische Luchs kommt vom Rand des Aussterbens zurück. (Natur)
-- Las cholitas luchadoras: Wrestlerinnen in Pollera in El Alto, Bolivien. (Sport)
-- Clara Campoamor: das Frauenwahlrecht 1931. (Persönlichkeit)
-- El ratoncito Pérez: Die Zahnmaus wurde für den kleinen König Alfonso XIII. erfunden. (Anekdote)
-- El mate: ein Ritual in Argentinien und Uruguay. (Brauch)
+Noch nicht festgelegt. Kandidaten stehen unter „Weitere Ideen“; vor dem Schreiben Fakten prüfen.
 
 ## Weitere Ideen (Fakten noch nicht geprüft)
 
@@ -54,6 +44,7 @@ Spanisch:
 
 ## Geschrieben
 
+- 24.46.0 (B2/C1): eccehomo, uvas, silbo, lince, cholitas, campoamor, ratonperez, mate.
 - 24.44.0 (B2/C1): dagenh, kalleanka, studentflak, almedalen, vargen, vasaloppet, alvamyrdal, meankieli.
 - 24.24.0 (B2/C1): offentlighet, grannenslon, kiruna, samer, friskolor, nato, systembolaget, miljonprogrammet; hora, memoria, marmenor, once, chile, uruguay, bolivia, barcelona.
 - Frühere Texte (A2 bis B2): allemansratten, vasa, midnattssol, astrid, surstromming, ishotellet, foraldraledig; espanavaciada, lenguas, siesta, castells, camino, galapagos, machupicchu, muertos, tomatina.

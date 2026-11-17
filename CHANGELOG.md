@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.46.0
+**8 neue spanische Lesetexte auf B2/C1**, jeder mit drei Fragen und drei Sätzen fürs Tagwerk.
+- **El Ecce Homo de Borja:** die missglückte Restaurierung von 2012, die dem Ort fast 300.000 Besucher brachte; Cecilia Giménez starb im Dezember 2025.
+- **Las doce uvas:** die Trauben zu den Glockenschlägen der Puerta del Sol. Beide Erklärungen für den Ursprung stehen im Text: Madrid in den 1880er-Jahren und die Ernte in Alicante 1909.
+- **El silbo gomero:** gepfiffenes Spanisch auf La Gomera, Pflichtfach seit 1999, UNESCO-Kulturerbe seit 2009.
+- **El regreso del lince ibérico:** von 94 Tieren im Jahr 2002 auf 2.663 laut Zählung 2025; heute sterben die meisten im Straßenverkehr.
+- **Las cholitas luchadoras:** Wrestlerinnen in Pollera in El Alto seit 2001, zwischen Selbstbehauptung und Touristenblick.
+- **Clara Campoamor y el voto femenino:** die Abstimmung vom 1. Oktober 1931 (161 zu 121), der Streit mit Victoria Kent, die erste Wahl 1933 und was danach kam.
+- **El ratoncito Pérez:** die Zahnmaus, 1894 von Luis Coloma für den achtjährigen Alfons XIII. erfunden.
+- **El mate:** Zubereitung, die Regeln beim Teilen, das Gesetz von 2013 in Argentinien, Verbrauch in Uruguay und Argentinien.
+
+Alle Zahlen und Daten sind vorher an Quellen geprüft. Zeitgebundenes steht mit Jahr im Text.
+- **Doku:** Unter „Bewertet“ steht neu die Idee „Fehler finden mit zwei Kandidaten“ (B).
+
 ## 24.45.0
 **„Fehler finden“ neu: richtig oder falsch, dann verbessern.**
 - **Warum:** Bisher steckte in jedem Satz genau ein Fehler, und jede Sorte hatte nur einen Kandidaten. Das einzige ser/estar, por/para oder Adverb im Satz war also immer die Antwort. Man suchte, statt zu prüfen.

@@ -29,8 +29,9 @@ test('Fortgeschritten mit vielen Fehlern in einem Thema: dort kommen auch einfac
   assert.ok(got.some(x => x === '1:partikel'), got.join(' '));
 });
 test('Grundlagen: leichte zuerst; Mittel: alle Stufen', () => {
-  const minOf = Object.fromEntries(['bisats', 'inversion', 'tempus', 'partikel', 'sin', 'tid', 'framtid', 'passiv', 'falska'].map(t => [t, Math.min(...BANK.sv.filter(i => i.trap === t).map(i => i.lvl))]));
-  for (const x of Array.from(pick('grund')).slice(0, 9)) { const [l, t] = x.split(':'); assert.equal(Number(l), minOf[t], x); }
+  const traps = app.get('TRAPS').sv.filter(t => t.kind !== 'gen').map(t => t.id);
+  const minOf = Object.fromEntries(traps.map(t => [t, Math.min(...BANK.sv.filter(i => i.trap === t).map(i => i.lvl))]));
+  for (const x of Array.from(pick('grund')).slice(0, traps.length)) { const [l, t] = x.split(':'); assert.equal(Number(l), minOf[t], x); }
   const m = Array.from(pick('mittel')); assert.equal(m.length, 12);
 });
 test('Schwerpunkt der Woche: schwächstes Thema, bleibt die Woche über, ein Drittel der neuen Sätze', () => {

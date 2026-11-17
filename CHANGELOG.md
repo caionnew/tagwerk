@@ -2,6 +2,24 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.42.0
+**Modalpartikeln (Schwedisch) als neues Thema, Subjuntivo im Satzgefüge (Spanisch).**
+- **Modalpartikeln:** 24 Sätze, 12 auf B1 und 12 auf B2, mit Erklärung je Satz.
+  - Abgedeckt sind ju, väl, nog, visst, då, nämligen, alltså, faktiskt, egentligen, bara, nu en gång und das Widerspruchs-jo.
+  - Die Lücke ist die Partikel. Die Erklärung nennt die deutsche Entsprechung und die Stellung, etwa „Im Nebensatz steht ju vor dem Verb: eftersom du ju ändå ska åka.“
+  - Einen Generator gibt es nicht, weil die Bedeutung am Zusammenhang hängt.
+  - Wo zwei Partikeln dasselbe sagen, zählen beide (väl und ju im Einwand, nog und säkert als Vermutung).
+- **Subjuntivo im Satzgefüge:** 12 neue Sätze auf B2 im Thema Subjuntivo.
+  - aunque mit Annahme (aunque no me creas) und mit Tatsache (aunque es rico, Indikativ).
+  - como si mit Imperfecto und Pluscuamperfecto de subjuntivo.
+  - Ein que-Satz als Subjekt (que no haya llamado me preocupa), no es que.
+  - Zeitenfolge: quería que vinieras, me pidió que la ayudara, fue una pena que no pudierais venir.
+  - Als Gegenbeispiel cuando mit Vergangenheit im Indikativ (cuando llegué).
+  - Die Regel des Themas nennt jetzt auch como si und die Zeitenfolge.
+- **Fehler finden (Spanisch):** Sätze mit aunque kommen dort nicht mehr vor. „Aunque no me crees“ ist als Tatsache auch richtig, also kein eindeutiger Fehler.
+- **Wörterbuch:** 23 neue Einträge.
+- 1 neuer Einheitstest (235); ein Test zur Auswahl nach Niveau zählt die Themen jetzt selbst, statt eine feste Liste zu haben.
+
 ## 24.41.0
 **Neue Themen: Pluralklassen (Schwedisch) und Verbalperiphrasen (Spanisch).**
 - **Pluralklassen (Schwedisch):** Neuer Generator im Grammatik-Training und im Tagwerk.

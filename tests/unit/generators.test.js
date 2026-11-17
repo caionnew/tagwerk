@@ -94,10 +94,10 @@ test('Fehler finden Spanisch: Erklärung nennt den Auslöser im Satz', () => {
   assert.ok(p && /„la semana pasada“/.test(p.note) && /perdí, nicht he perdido/.test(p.note), p && p.note);
   assert.ok(notes.every(d => d.note && d.note.length > 20));
 });
-test('Fehler finden Spanisch: keine Relativsätze, in denen auch der Indikativ stimmt (alguien que, lo que, un … que)', () => {
+test('Fehler finden Spanisch: keine Sätze, in denen auch der Indikativ stimmt (alguien que, lo que, un … que, aunque)', () => {
   app.run('BANK_SPOTS_ES = bankSpotsEs()');
   const n = run('BANK_SPOTS_ES.length');
-  for (let i = 0; i < n; i++) { const d = run(`BANK_SPOTS_ES[${i}]()`); assert.ok(!/\b(alguien que|lo que|un \S+ que|una \S+ que)\b/.test(d.full), d.full); }
+  for (let i = 0; i < n; i++) { const d = run(`BANK_SPOTS_ES[${i}]()`); assert.ok(!/\b(alguien que|lo que|un \S+ que|una \S+ que|aunque)\b/i.test(d.full), d.full); }
 });
 test('Pluralklassen: bestimmte Mehrzahl auf -na oder -en, Zeitwörter nur unbestimmt, Erklärung nennt beide Formen', () => {
   const P = app.get('PLURAL_SV');
@@ -135,4 +135,14 @@ test('Verbalperiphrasen: Lücke im Satz, erste Lösung ergibt den vollen Satz, M
   const items = app.get('BANK').es.filter(i => i.trap === 'perifrasis');
   assert.ok(items.length >= 24 && items.every(i => i.note && i.gap), String(items.length));
   assert.ok(app.get('TRAPS').sv.find(t => t.id === 'plural' && t.gen === 'plural_sv'));
+});
+test('Modalpartikeln: eigenes Satzthema, jede Lücke ist die Partikel, Erklärung je Satz', () => {
+  const tr = app.get('TRAPS').sv.find(t => t.id === 'modal');
+  assert.ok(tr && tr.kind === 'form');
+  const items = app.get('BANK').sv.filter(i => i.trap === 'modal');
+  assert.ok(items.length >= 24, String(items.length));
+  for (const i of items) {
+    assert.ok(i.note && i.gap, i.target);
+    assert.ok(/^(ju|väl|nog|jo|visst|då|nu|bara|nämligen|faktiskt|alltså|egentligen|nu en gång)$/i.test(i.gap), i.gap);
+  }
 });

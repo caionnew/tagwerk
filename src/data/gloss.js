@@ -934,6 +934,20 @@ familjer|familj|Familien
 trakten|trakt|die Gegend
 fattiga|fattig|arm (Plural)
 kontoret|kontor|das Büro
+väl|väl|wohl, doch (erwartet Zustimmung); gut
+jo|jo|doch (Widerspruch auf eine verneinte Frage)
+stämmer|stämma|stimmt
+nämligen|nämligen|nämlich
+farligt|farlig|gefährlich; det är inte så farligt = das ist nicht so schlimm
+alltså|alltså|also
+visst|visst|doch, sicher; visst …? = ist … nicht?
+betalat|betala|bezahlt (Supinum)
+ganska|ganska|ziemlich
+trevlig|trevlig|nett, angenehm
+sena|sen|spät (Plural); vi är sena = wir sind spät dran
+ville|vilja|wollte (Präteritum)
+höra|höra|hören; höra om = nachfragen, ob
+lycka|lycka|Glück; lycka till = viel Glück
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch
@@ -1978,6 +1992,15 @@ pueblo|pueblo|Dorf; Volk
 poco|poco|wenig; poco a poco = nach und nach
 durmiendo|dormir|schlafend (Gerundium)
 aceptando|aceptar|annehmend (Gerundium)
+modestia|modestia|Bescheidenheit; con modestia = bescheiden
+supiera|saber|wüsste (Imperfecto de subjuntivo)
+haya|haber|habe (Subjuntivo); que no haya llamado = dass er nicht angerufen hat
+ayudara|ayudar|hülfe, helfen würde (Imperfecto de subjuntivo)
+pudierais|poder|ihr könntet (Imperfecto de subjuntivo)
+diera|dar|gäbe (Imperfecto de subjuntivo); se diera cuenta = bemerkte
+buscábamos|buscar|wir suchten (Imperfecto)
+estuviera|estar|wäre, läge (Imperfecto de subjuntivo)
+cerca|cerca|nah; cerca de = in der Nähe von
 `
 };
 

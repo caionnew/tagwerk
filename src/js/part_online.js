@@ -12,6 +12,7 @@ const TAT_Q = {
     sin:['sin', 'sitt', 'sina', '"sin mamma"', '"sitt rum"', '"sina vänner"'],
     tid:['sedan', '"om en vecka"', '"i två"', '"på morgonen"', '"på helgen"', '"i måndags"', '"om ett år"', '"för en timme sedan"'],
     framtid:['"kommer att"', '"behöver inte"', '"får inte"', 'borde', '"skulle vilja"', '"ska resa"', '"kommer inte att"'],
+    modal:['"vet du ju"', '"väl inte"', '"nog inte"', '^visst', 'nämligen', '"då?"'],
     passiv:['"det finns"', '"finns det"', '"man kan"', '"man måste"', 'byggdes', 'såldes', 'kallas'],
     falska:ffQuery('sv')
   },
@@ -39,6 +40,7 @@ const TAT_ADV = {
     sin:['"sin egen"', '"sitt eget"', '"sina egna"', '"sin fru"', '"sina föräldrar"', '"sitt arbete"'],
     tid:['"sedan dess"', '"under tiden"', '"för länge sedan"', '"i flera år"', '"inom kort"', '"så småningom"'],
     framtid:['"skulle kunna"', '"skulle ha"', '"lär vara"', 'torde', '"kommer nog"', '"hade tänkt"'],
+    modal:['"ju inte"', '"väl ändå"', '"nog ändå"', '"nu en gång"', 'minsann', '"har ju"'],
     passiv:['"har byggts"', '"måste göras"', 'anses', 'sägs', '"har hittats"', 'diskuterades']
   },
   es:{

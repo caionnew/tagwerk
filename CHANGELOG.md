@@ -2,6 +2,21 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.32.0
+UI-Feinschliff.
+- **Fehler behoben:** Am Ende eines Lesetexts waren die Sätze mit den Antworten (grün unterstrichen) viel kleiner als der übrige Text. Ursache: Die Zahl in den Fehlerquellen und die Belegsätze teilten sich einen Klassennamen.
+- **Einheitliche Rundungen:** Flächen 18 px (Diagramme, Fundstück, Einführung, Sprachkarte, Schreibprofil hatten 16), Bedienelemente 14 px (Eingabefelder, Wortkästchen, Auswahl bei Genus, Knöpfe in Hinweisen). Wortchips waren doppelt und widersprüchlich definiert, jetzt einmal.
+- **Rückmeldung ohne farbigen Seitenstreifen:** Das Schild „Richtig“, „Fast“, „Falsch“ trägt die Farbe; der Kasten bleibt ruhig.
+- **Antippen spürbar:** Listenzeilen hellen kurz auf, kleine Knöpfe (Abspielen, Chips, Schritte) geben nach. Bewegung nur als Antwort aufs Tippen, bei reduzierter Bewegung aus.
+- **Tagwerk-Karte:** „12 Aufgaben“ groß, „etwa 5 Min.“ klein daneben (brach vorher um). Schwerpunkt der Woche und Länge je eine kurze Zeile.
+- **Kürzer, ohne Offensichtliches:** „Tippen zum Üben“ und „Tippen für die Regel“ entfallen (die Pfeile zeigen es); kürzere Beschreibungen bei „Weiter üben“, „Weitere neue Sätze lernen“, Grammatik-Training, Thema üben, Lesetexten, Fehlerquellen, Wiederholungen, „Wann du übst“ (ohne Ratschlag), Einstellungen (Sprache beim Start, Anki), Land & Leute.
+- **Einheitlich „Ins Tagwerk“:** auch in Land & Leute und auf „Heute“ statt „Satz zum Üben übernehmen“; übernommen heißt „Im Tagwerk“.
+- **„(online)“ nur noch, wenn es zählt:** Wikipedia-Fundstück und Beispielsätze suchen zeigen „Braucht eine Internetverbindung“, solange keine besteht, und sonst ihre Beschreibung. Wechselt die Verbindung, aktualisiert sich das Menü.
+- **Lesetexte:** kein „Neu“ an jedem ungelesenen Text mehr, nur der Stand bei gelesenen.
+- **Pop-ups:** Beim Nachschlagen „Bei dict.cc“ und „An Anki“ in einer Zeile (brachen um). Im Themenblatt ist „10 Aufgaben üben“ der Hauptknopf rechts, „Schließen“ links.
+- **Kleinigkeiten:** Fortschrittsbalken der Sprachseite nicht mehr direkt an der Überschrift; Lernminuten-Farbschlüssel nur bei zwei Sprachen und als eigene Zeile; Sprachkachel „90 Sätze geübt, zuletzt gestern“ statt doppeltem „geübt“; „Langsam“ beim Diktat mit demselben Symbol wie überall; Abstand über „Kopieren, um ihn Muttersprachlern zu zeigen“; „Lückentext üben“ und „Nächster Text“ in einer Reihe.
+- **Sichtprüfung** (`npm run sicht`) zeigt jetzt auch ersten Start, Schreiben, Hörrunde, Diktat, Grammatik, Land & Leute, Nachschlagen und Themenblatt.
+
 ## 24.31.0
 - **„Heute“: die andere Sprache erst nach dem Tagwerk, als Angebot.** Die Zeile „Spanisch · 9 fällig · heute geübt · Tagwerk starten“ unter dem Tagwerk ist weg. Vor dem Tagwerk brachte sie wenig: Die App wählt die Sprache des Tages ohnehin nach Bedarf (fällige Wiederholungen, Tage seit dem letzten Üben), wechseln geht oben über „Español | Svenska“, und ein zweites „Tagwerk starten“ machte dem Hauptknopf Konkurrenz. „9 fällig · heute geübt“ las sich zudem widersprüchlich. Nach dem Tagwerk steht die andere Sprache jetzt als erste Wahl unter „Wenn du noch Zeit hast“, mit Dauer und Inhalt, etwa „Spanisch-Tagwerk zusätzlich: Etwa 12 Minuten: 9 Wiederholungen, 6 neue Sätze, 4 Grammatik-Aufgaben“. Ist sie heute schon erledigt, entfällt das Angebot.
 

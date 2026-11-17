@@ -100,14 +100,14 @@ function viewTexts(){
   const lang = S.lang, done = (DB.used && DB.used.texts) || {}, niv = DB.settings.niveau || 'mittel', rank = { A2:1, B1:2, B2:3, C1:4 };
   const list = niv === 'mittel' ? TEXTS[lang] : TEXTS[lang].slice().sort((a, b) => (niv === 'fort' ? rank[b.level] - rank[a.level] : rank[a.level] - rank[b.level]));
   const cards = list.map(t => { const d = done[lang + ':' + t.id];
-    const state = d ? `<span class="tstate${d.best === t.q.length ? ' full' : ''}">${d.best} von ${t.q.length}${d.heard ? ', gehört' : ''}</span>` : '<span class="tstate new">Neu</span>';
+    const state = d ? `<span class="tstate${d.best === t.q.length ? ' full' : ''}">${d.best} von ${t.q.length}${d.heard ? ', gehört' : ''}</span>` : '';
     return `<button type="button" class="tcard" data-a="textopen" data-id="${t.id}"><span class="tchips"><span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>${state}</span><span class="ttitle" lang="${lang}">${esc(t.title)}</span><span class="tteaser" lang="${lang}">${esc(textSentences(t.body)[0][0])}</span></button>`; }).join('');
   return backBar('Lesen und Hören') + `
     <div class="seg2 tmode" role="radiogroup" aria-label="Wie möchtest du die Texte?">${[['read', 'Lesen und hören'], ['listen', 'Nur hören']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${textMode() === k}" data-a="tdefmode" data-v="${k}">${l}</button>`).join('')}</div>
-    <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verschwommen und wird vorgelesen. Danach drei Fragen, dann kannst du nachlesen.' : 'Der Text ist sichtbar. Mit „Vorlesen“ unten liest die App ihn vor, Satz für Satz hervorgehoben. Danach drei Fragen.'}</p>
+    <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verdeckt, bis die drei Fragen beantwortet sind.' : 'Lesen, auf Wunsch mit Vorlesen, danach drei Fragen.'}</p>
     <div class="tgrid2">${cards}</div>
     <h2 class="grp">Frischer Lesestoff</h2>
-    <div class="rows">${row('wiki', 'Wikipedia-Fundstück', `Ein ausgezeichneter Artikel der ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Wikipedia, möglichst mit Bezug zum ${lang === 'sv' ? 'Norden' : 'spanischsprachigen Raum'}, anspruchsvoll (online)`, '', 'book')}</div>`;
+    <div class="rows">${row('wiki', 'Wikipedia-Fundstück', navigator.onLine === false ? 'Braucht eine Internetverbindung' : 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land', '', 'book')}</div>`;
 }
 const PICO = {
   play:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
@@ -170,7 +170,7 @@ function viewText(){
   const after = finished ? `<section class="tdone">
       <p class="tdone-h">${score === t.q.length ? 'Alles verstanden.' : `${score} von ${t.q.length} richtig.`}</p>
       <p class="hint" style="margin-top:2px">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
-      <p class="keep-h">Zum Lernen: Diese Sätze kommen als neue Sätze in deine nächsten Tagwerke und werden danach wiederholt.</p>
+      <p class="keep-h">„Ins Tagwerk“ nimmt den Satz in deine nächsten Tagwerke auf.</p>
       <div class="rows" style="margin-top:8px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span><button type="button" class="link" data-a="tkeep" data-k="${i}"${has ? ' disabled' : ''}>${has ? 'Im Tagwerk' : 'Ins Tagwerk'}</button></div>`; }).join('')}</div>
       <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
     </section>` : '';

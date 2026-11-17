@@ -127,7 +127,7 @@ function errorSourcesHtml(lang){
     const list = Object.keys(s.p).map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.bad).sort((a, b) => b.bad - a.bad).slice(0, 6);
     const max = Math.max(1, ...list.map(x => x.bad));
     rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / max * 100)}%"></span></span><span class="ev">${x.bad}/${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
-    note = 'Aus welchem Thema deine Fehler kommen. Rechts: Fehler von Aufgaben im Thema. Antippen für Regel und Beispiele.';
+    note = 'Fehler von Aufgaben im Thema. Antippen für die Regel.';
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);
     rows = list.map(x => `<div class="erow"><span class="el">${esc(ERR_TYPES[x.id] || x.id)}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / x.n * 100)}%"></span></span><span class="ev">${Math.round(x.bad / x.n * 100)} %</span></div>`).join('');
@@ -153,7 +153,7 @@ function hoursHtml(){
   let best = 0, bestSum = -1; for (let i = 0; i < 24; i++) { const sum = h[i] + h[(i + 1) % 24]; if (sum > bestSum) { bestSum = sum; best = i; } }
   const bars = h.map((v, i) => `<rect x="${i * 13 + 1}" y="${H - 14 - Math.max(v ? 2 : 0, v / max * (H - 18))}" width="11" height="${Math.max(v ? 2 : 0, v / max * (H - 18))}" rx="2" class="${i === best || i === (best + 1) % 24 ? 'hb hi' : 'hb'}"/>`).join('');
   const ticks = [0, 6, 12, 18].map(i => `<text x="${i * 13 + 1}" y="${H - 2}">${i}</text>`).join('') + `<text x="${W - 12}" y="${H - 2}">24</text>`;
-  return `<h2 class="grp">Wann du übst</h2><div class="chart"><svg class="hours" viewBox="0 0 ${W} ${H}" role="img" aria-label="Aufgaben nach Uhrzeit"><line x1="0" x2="${W}" y1="${H - 13}" y2="${H - 13}" class="axis"/>${bars}${ticks}</svg><p class="legend">Am häufigsten zwischen ${best} und ${(best + 2) % 24} Uhr, aus den letzten 60 Tagen. Eine feste Zeit macht das Üben leichter zur Gewohnheit.</p></div>`;
+  return `<h2 class="grp">Wann du übst</h2><div class="chart"><svg class="hours" viewBox="0 0 ${W} ${H}" role="img" aria-label="Aufgaben nach Uhrzeit"><line x1="0" x2="${W}" y1="${H - 13}" y2="${H - 13}" class="axis"/>${bars}${ticks}</svg><p class="legend">Am häufigsten zwischen ${best} und ${(best + 2) % 24} Uhr, letzte 60 Tage.</p></div>`;
 }
 // Verschiedene Wörter (Grundformen) in deinen Sätzen
 function vocabCount(lang){

@@ -392,6 +392,8 @@ document.addEventListener('change', e => {
 });
 
 window.addEventListener('pagehide', () => { if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); });
+// Verbindung kommt oder geht: Menüs mit Online-Diensten zeigen es gleich an
+['online', 'offline'].forEach(ev => window.addEventListener(ev, () => { if (['extra', 'texts'].includes(S.view)) render(); }));
 document.addEventListener('visibilitychange', () => { if (document.hidden) { if (S.shadow) { shRecStop(); shStopPlay(); } if (S.write && S.view === 'write') { DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text }; } flushSave(); } });
 // Hell/Dunkel: Statusleiste in der Farbe der App und neu zeichnen, wenn das System umschaltet (auch mitten in einer Übung)
 function syncThemeColor(){

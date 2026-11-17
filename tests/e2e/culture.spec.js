@@ -1,4 +1,4 @@
-// Land & Leute: Karten an den passenden Karten, Beispielsatz zum Üben übernehmen.
+// Land & Leute: Karten an den passenden Karten, Beispielsatz ins Tagwerk.
 const { test, expect, APP, seed, freshDB, stored } = require('./helpers');
 for (const [lang, maps] of [['es', 8], ['sv', 3]]) {
   test(`${lang}: ${maps} Karten mit Beschriftung für Screenreader`, async ({ page }) => {

@@ -10,7 +10,7 @@
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome. Zufall ist im Browser festgelegt, damit beide Stände dasselbe zeigen.
 const path = require('path'), fs = require('fs'), os = require('os'), { execFileSync } = require('child_process');
 const { chromium } = require('@playwright/test');
-const { richDB, answerWrong, fakeVoice, speechWav, fakeMicArgs } = require('../tests/e2e/helpers.js');
+const { freshDB, richDB, answerWrong, fakeVoice, speechWav, fakeMicArgs } = require('../tests/e2e/helpers.js');
 const ROOT = path.join(__dirname, '..'), OUT = path.join(ROOT, 'sicht');
 const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
 const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz');
@@ -46,6 +46,14 @@ const SCENES = [
   ['fundstueck', rich, [mockWiki, click('[data-a=tab][data-v=extra]'), click('[data-a=wiki] >> nth=0'), bottom]],
   ['nachsprechen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]')]],
   ['nachsprechen-ergebnis', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]'), click('.shstep[data-a=shrec]'), p => p.waitForSelector('.shtiles', { timeout:15000 })]],
+  ['erster-start', () => freshDB('sv'), []],
+  ['schreiben', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=write]')]],
+  ['hoerrunde', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=radio]')]],
+  ['diktat', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=dict]')]],
+  ['grammatik', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=topics]')]],
+  ['land-und-leute', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=kultur]')]],
+  ['wort', rich, [click('.find [data-a=lookup] >> nth=1')]],
+  ['thema', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('[data-a=topic] >> nth=0')]],
   ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]],
   ['hoeren-antwort', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=tdefmode][data-v=listen]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'), click('[data-a=tpick][data-k="0"][data-i="0"]')]],
   ['lesen-ende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'),

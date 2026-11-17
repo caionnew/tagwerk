@@ -40,7 +40,7 @@ function topicSheetHtml(P){
     ${P.examples.length ? `<p class="pop-sub">Beispiele</p><ul class="exl">${P.examples.map(x => `<li><span class="wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="exg">${esc(x.de)}</span>` : ''}</li>`).join('')}</ul>` : ''}
     ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}
     ${stats || genStat ? `<p class="legend" style="margin-top:12px">${stats}${genStat}</p>` : ''}
-    <div class="popfoot">${S.view === 'run' ? '<span></span>' : `<button type="button" class="link" data-a="trapgo" data-t="${P.trap}">10 Aufgaben üben</button>`}<button type="button" class="ghost" data-a="popclose">Schließen</button></div>
+    <div class="popfoot"><button type="button" class="ghost" data-a="popclose">Schließen</button>${S.view === 'run' ? '' : `<button type="button" class="primary" data-a="trapgo" data-t="${P.trap}">10 Aufgaben üben</button>`}</div>
   </div>`;
 }
 // Wo kommt das Wort sonst noch vor? Bevorzugt Sätze, die du schon geübt hast
@@ -79,11 +79,11 @@ function kulturBody(e, lang, small){
     ${e.map ? mapSvg(e.map, mapLabel(e), small) : ''}
     ${e.vars ? `<div class="kvars">${e.vars.map((v, i) => `<div class="kv"><span class="kf" aria-hidden="true">${v[0]}</span><span class="kw" lang="${lang}">${e.map && e.map.g && i < e.map.g.length ? `<span class="kdot mg${i}${(e.map.soft || []).includes(i) ? ' msoft' : ''}" aria-hidden="true"></span>` : ''}${esc(v[1])}</span><span class="kr">${esc(v[2])}</span></div>`).join('')}</div>` : ''}
     <div class="find-p"><span class="wordrow" lang="${lang}">${linkWords(e.ex[0], lang)}</span>${speakBtn(e.ex[0], lang)}<span class="find-g">${esc(e.ex[1])}</span></div>
-    <p class="kfoot">${owned ? '<span class="kown">✓ Steht in deinen Sätzen und kommt als neuer Satz dran</span>' : `<button type="button" class="link" data-a="kultadd" data-id="${e.id}">Satz zum Üben übernehmen</button>`}</p>`;
+    <p class="kfoot">${owned ? '<span class="kown">✓ Im Tagwerk</span>' : `<button type="button" class="link" data-a="kultadd" data-id="${e.id}">Ins Tagwerk</button>`}</p>`;
 }
 function viewKultur(back){
   const lang = S.lang, list = KULTUR[lang];
-  return backBar('Land & Leute', back) + `<p class="lead-s">${lang === 'sv' ? 'Schweden und das Schwedische' : 'Spanien, Lateinamerika und das Spanische'}: Alltag, Gesellschaft, Geografie. Jeden Beispielsatz kannst du zum Üben übernehmen.</p>`
+  return backBar('Land & Leute', back) + `<p class="lead-s">${lang === 'sv' ? 'Schweden und das Schwedische' : 'Spanien, Lateinamerika und das Spanische'}: Alltag, Gesellschaft, Geografie.</p>`
     + Object.keys(KULTUR_CATS).map(cat => { const items = list.filter(e => e.cat === cat); return items.length ? `<h2 class="grp">${KULTUR_CATS[cat]}</h2>${items.map(e => `<section class="find kcard">${kulturBody(e, lang)}</section>`).join('')}` : ''; }).join('');
 }
 

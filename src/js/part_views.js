@@ -108,9 +108,9 @@ function viewHome(){
     card = `<p class="eyebrow">Heute</p><p class="num">Tagwerk erledigt</p>${todayHtml(lang)}<p class="breakdown">Wenn du noch Zeit hast:</p>
       <div class="choices">
         ${otherRow}
-        <button type="button" class="row" data-a="tab" data-v="extra"><span class="txt"><span class="rt">Weiter üben</span><span class="rd">Kurze Runden, Grammatik-Training, Schreiben oder ein Thema gezielt üben.</span></span></button>
+        <button type="button" class="row" data-a="tab" data-v="extra"><span class="txt"><span class="rt">Weiter üben</span><span class="rd">Kurze Runden, Grammatik, Lesen, Schreiben</span></span></button>
         ${(() => { const avail = BANK[lang].filter(i => !stOf(i.id)).length; if (!avail) return ''; const opts = [3, 6, 10].filter(n => n <= avail); if (!opts.length) opts.push(avail);
-          return `<div class="row chiprow"><span class="txt"><span class="rt">Weitere neue Sätze lernen</span><span class="rd">Sie kommen ab morgen zur Wiederholung dazu, die nächsten Tagwerke werden etwas länger.</span></span><span class="chips" role="group" aria-label="Wie viele?">${opts.map(n => `<button type="button" class="chip" data-a="moreNew" data-n="${n}">${n}</button>`).join('')}</span></div>`; })()}
+          return `<div class="row chiprow"><span class="txt"><span class="rt">Weitere neue Sätze lernen</span><span class="rd">Ab morgen in der Wiederholung</span></span><span class="chips" role="group" aria-label="Wie viele?">${opts.map(n => `<button type="button" class="chip" data-a="moreNew" data-n="${n}">${n}</button>`).join('')}</span></div>`; })()}
       </div>`;
   } else {
     const p = dailyPlan(lang);
@@ -118,11 +118,11 @@ function viewHome(){
     if (p.due) parts.push(`<li><b>${p.due}</b> ${p.due === 1 ? 'Wiederholung' : 'Wiederholungen'}<span>Sätze, die heute wieder dran sind</span></li>`);
     if (p.fresh) parts.push(`<li><b>${p.fresh}</b> ${p.fresh === 1 ? 'neuer Satz' : 'neue Sätze'}<span>gezielt zu typischen Fehlern</span></li>`);
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
-    card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}, etwa ${minutes(p.queue)} Minuten</p>${doneOther ? `<p class="hint" style="margin-top:2px">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig und zählt in der Statistik als ${LANG[lang].deName}-Tagwerk.</p>` : ''}
+    card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue)} Min.</span></p>${doneOther ? `<p class="hint" style="margin-top:2px">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
       <ul class="plan2">${parts.join('')}</ul>
-      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b>${esc(trapMeta(lang, ft).label)}</b>. Ein Drittel der neuen Sätze kommt daraus. <button type="button" class="link" data-a="focusnext">Anderes Thema</button></p>` : ''; })()}
+      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b>${esc(trapMeta(lang, ft).label)}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">${LANG[lang].deName}-Tagwerk starten</button>
-      <p class="hint lenlink">Länge: ${size().label}, ${size().newPer} neue Sätze pro Tag. <button type="button" class="link" data-a="toSettings">Ändern</button></p>`;
+      <p class="hint lenlink">${size().label}, ${size().newPer} neue Sätze pro Tag <button type="button" class="link" data-a="toSettings">Länge ändern</button></p>`;
     if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
   }
   const dnow = dateOf(today());
@@ -160,10 +160,12 @@ const barRow = r => `<span class="txt"><span class="rt">${esc(r.label)}</span><s
 function weakHtml(lang){
   const rows = topicRows(lang).filter(r => r.touched).sort((a, b) => a.pct - b.pct).slice(0, 3);
   if (!rows.length) return '';
-  return `<div class="grprow"><h2 class="grp">Schwächste Themen</h2><span class="grpnote">Tippen zum Üben</span></div><div class="rows">${rows.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
+  return `<h2 class="grp">Schwächste Themen</h2><div class="rows">${rows.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
+  // Dienste mit Internet: Hinweis nur, wenn gerade keine Verbindung besteht (statt immer „(online)“)
+  const net = d => navigator.onLine === false ? 'Braucht eine Internetverbindung' : d;
   const seen = BANK[lang].filter(i => stOf(i.id)).length;
   const noVoice = canSpeak() && !voiceFor(lang);
   const later = 'Geht, sobald du drei Sätze geübt hast';
@@ -177,19 +179,19 @@ function viewExtra(){
   <h2 class="grp">Kurz zwischendurch</h2>
   <div class="rows">${row('quick', 'Kurze Runde', seen < 3 ? '6 Grammatik-Aufgaben für den Anfang' : '6 Aufgaben aus bekannten Sätzen')}${g('genus', lang === 'sv' ? 'en oder ett?' : 'el oder la?', 'Das Genus in schnellen Runden', 'genus')}${g('time', 'Uhrzeiten & Zahlen', 'Für Bahnhof, Laden und Verabredung', 'time')}</div>
   <h2 class="grp">Grammatik</h2>
-  <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', 'Endlos neue Aufgaben: ' + genIds(lang).map(x => GENS[x].short || GENS[x].label).join(', '))}${g('spot', 'Fehler finden', 'Ein typischer Fehler steckt im Satz', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
+  <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', `Endlos neue Aufgaben, ${genIds(lang).length} Bereiche`)}${g('spot', 'Fehler finden', 'Ein typischer Fehler steckt im Satz', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
   <h2 class="grp">Lesen und Hören</h2>
-  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land (online)', '', 'book')}</div>
+  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', net('Ein ausgezeichneter Artikel, gern mit Bezug zum Land'), '', 'book')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
   <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canRecord() ? 'Hören, mitsprechen, aufnehmen und vergleichen' : canListen() ? 'Mitsprechen und von der Spracherkennung prüfen lassen' : 'Hören und mitsprechen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>
-  <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Prüfung (online)')}${row('tat', 'Beispielsätze suchen', 'Echte Sätze aus Tatoeba (online)')}${row('own', 'Eigenen Satz eintragen', 'Aus Podcast, Gespräch oder Korrektur')}</div>
+  <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Auswertung')}${row('tat', 'Beispielsätze suchen', net('Echte Sätze aus Tatoeba'))}${row('own', 'Eigenen Satz eintragen', 'Aus Podcast, Gespräch oder Korrektur')}</div>
   <h2 class="grp">Nachschlagen</h2>
   <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'book')}${row('ref', 'Grammatik-Begriffe', 'Supinum, Subjuntivo & Co. in Alltagssprache', ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Alltag, Gesellschaft und Geografie`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste, nach Datum sortiert`, ' data-r="feasts"', 'feast')}</div>`;
 }
 function viewPickTopic(){
   const lang = S.lang;
-  return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema, auch mit neuen Sätzen. Der Balken zeigt, wie viele Sätze des Themas schon gefestigt sind.</p><div class="rows">${topicRows(lang).map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
+  return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema. Der Balken zeigt, wie viel davon gefestigt ist.</p><div class="rows">${topicRows(lang).map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
 }
 function viewPickGen(){
   const lang = S.lang;
@@ -271,7 +273,7 @@ function viewRun(){
   } else if (ex.type === 'gen' && ex.data.kind === 'time') {
     const d = ex.data;
     const shown = d.mode === 'write' ? `<p class="clockbig">${d.clock ? esc(d.clock) : `${d.num} ${lang === 'sv' ? 'kr' : '€'}`}</p>`
-      : d.mode === 'hear' ? `<div class="btnrow tight" style="margin:4px 0 14px"><button type="button" class="ghost icon" data-a="tplay" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost" data-a="tplay" data-rate="0.65">Langsam</button></div>${done ? `<p class="de" lang="${lang}">${esc(d.say)}</p>` : ''}`
+      : d.mode === 'hear' ? `<div class="btnrow tight" style="margin:4px 0 14px"><button type="button" class="ghost icon" data-a="tplay" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="tplay" data-rate="0.65">${PICO.slow} Langsam</button></div>${done ? `<p class="de" lang="${lang}">${esc(d.say)}</p>` : ''}`
       : `<p class="de" lang="${lang}">${esc(d.say)}</p>`;
     body = `<p class="kicker">${esc(d.label)}</p>${d.mode === 'hear' ? '' : shown}
       <div class="ex-a">${d.mode === 'hear' ? shown : ''}${d.mode !== 'write' && !d.clock ? `<div class="unitwrap">` : ''}<input type="text" id="answer" class="tw${d.mode !== 'write' ? ' numin' : ''}" lang="${d.mode === 'write' ? lang : 'de'}" inputmode="${d.mode === 'write' ? 'text' : (d.clock ? 'decimal' : 'numeric')}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${d.mode === 'write' ? esc(L.ph) : d.clock ? 'z. B. 7.45' : 'z. B. 47'}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">${d.mode !== 'write' && !d.clock ? `<span class="unit" aria-hidden="true">${lang === 'sv' ? 'kr' : '€'}</span></div>` : ''}
@@ -299,7 +301,7 @@ function viewRun(){
   } else if (ex.type === 'dict') {
     const item = itemById(ex.id);
     body = `<p class="kicker">Hör zu und schreib den Satz auf${item.tat && item.tat.audio ? '<span class="hintw">echte Aufnahme</span>' : ''}</p>
-      <div class="ex-a"><div class="btnrow tight" style="margin:0 0 14px"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost" data-a="play" data-rate="0.65">Langsam</button></div>
+      <div class="ex-a"><div class="btnrow tight" style="margin:0 0 14px"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="play" data-rate="0.65">${PICO.slow} Langsam</button></div>
       <textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Was du hörst">${esc(c.input)}</textarea>
       ${done ? '' : charbar(lang)}</div>`;
   }
@@ -453,7 +455,7 @@ function topicsHtml(r){
     const inner = `<span class="txt"><span class="rt">${esc(t.label)}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span>`;
     return sheet ? `<button type="button" class="row trow" data-a="topic" data-t="${t.trap}">${inner}</button>` : `<div class="row static trow">${inner}</div>`;
   }).join('');
-  return `<div class="grprow"><h2 class="grp">Themen dieser Runde</h2><span class="grpnote">Tippen für die Regel</span></div>${bundle}<div class="rows">${rows}</div>${tps.length > 5 ? `<p class="legend">und ${plural(tps.length - 5, 'weiteres Thema', 'weitere Themen')}</p>` : ''}`;
+  return `<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${tps.length > 5 ? `<p class="legend">und ${plural(tps.length - 5, 'weiteres Thema', 'weitere Themen')}</p>` : ''}`;
 }
 // Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
 // (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).
@@ -588,7 +590,7 @@ function viewWrite(){
     ${charbar(lang)}
     ${w.prof ? profileHtml(lang, w.prof, w.extra) : ''}
     ${ltBlock}
-    ${w.copied ? '<p class="hint">Kopiert. In HelloTalk oder Tandem können Muttersprachler deinen Text korrigieren. Gute Korrekturen kannst du als eigene Sätze eintragen.</p>' : `<p class="vocab"><button type="button" class="link dim" data-a="wcopy">Kopieren, um ihn Muttersprachlern zu zeigen</button></p>`}
+    ${w.copied ? '<p class="hint">Kopiert. Muttersprachler korrigieren ihn etwa in HelloTalk oder Tandem.</p>' : `<p class="hint"><button type="button" class="link dim" data-a="wcopy">Kopieren, um ihn Muttersprachlern zu zeigen</button></p>`}
     ${archiveHtml(lang)}
     <div class="actionbar"><div class="in"><button type="button" class="ghost" data-a="wlt">Online prüfen</button><button type="button" class="primary" data-a="weval">Auswerten</button></div></div>`;
 }
@@ -802,7 +804,7 @@ function viewProgress(){
       const r30 = sumLog(l, 30, 'rev'), ok30 = sumLog(l, 30, 'revOk');
       const lastDay = Object.keys(DB.log).filter(k => (dayLog(k, l).n || 0) > 0).sort().pop();
       const ago = lastDay ? dayDiff(today(), lastDay) : null;
-      return `<button type="button" class="langsum" data-a="ptab" data-t="${l}"><span class="ls-h">${LANG[l].deName}</span><span class="ls-n">${matureCount(l)}</span><span class="ls-l">gefestigte Sätze</span><span class="ls-s">${r30 >= 10 ? `Behalten ${pct(ok30 / r30)}` : `${n} geübt`}${ago != null ? ` · ${ago === 0 ? 'heute geübt' : ago === 1 ? 'gestern geübt' : `vor ${ago} Tagen geübt`}` : ''}</span></button>`;
+      return `<button type="button" class="langsum" data-a="ptab" data-t="${l}"><span class="ls-h">${LANG[l].deName}</span><span class="ls-n">${matureCount(l)}</span><span class="ls-l">gefestigte Sätze</span><span class="ls-s">${r30 >= 10 ? `Behalten ${pct(ok30 / r30)}` : `${n} Sätze geübt`}${ago != null ? `, ${ago === 0 ? 'heute' : ago === 1 ? 'zuletzt gestern' : `zuletzt vor ${ago} Tagen`}` : ''}</span></button>`;
     }).filter(Boolean).join('');
     return `<div class="topline"><h1 class="vt">Fortschritt</h1>${gearBtn()}</div>${noticeHtml()}${tabs}
   <section class="today">
@@ -814,7 +816,7 @@ function viewProgress(){
   <div class="chart">${cal.svg}
     <p class="legend">${S.calDay ? esc(dayDetail(S.calDay)) : cal.first ? `${cal.active} von ${cal.total} Tagen geübt. Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>
     <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>Pausetag, Serie hält</span></p></div>
-  ${mins.any ? `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart">${mins.html}<p class="legend"><span class="sq m-sv"></span>Schwedisch <span class="sq m-es"></span>Spanisch. Zusammen ${mins.total} Min.${(() => { let s = 0, n = 0; Object.keys(DB.log).forEach(k => { if (dayDiff(today(), k) >= 30) return; const v = (dayLog(k, 'sv').secs || 0) + (dayLog(k, 'es').secs || 0); if (v) { s += v; n++; } }); return n >= 5 ? ` Im Schnitt ${Math.round(s / n / 60)} Min. an Übungstagen, letzte 30 Tage.` : ''; })()}${mins.unm ? ' „–“: geübt, aber noch ohne Zeitmessung.' : ''}</p></div>` : ''}
+  ${mins.any ? `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart">${mins.html}${activeLangs().length > 1 ? `<p class="legend keyrow"><span><i class="sq m-sv"></i>Schwedisch</span><span><i class="sq m-es"></i>Spanisch</span></p>` : ''}<p class="legend">Zusammen ${mins.total} Min.${(() => { let s = 0, n = 0; Object.keys(DB.log).forEach(k => { if (dayDiff(today(), k) >= 30) return; const v = (dayLog(k, 'sv').secs || 0) + (dayLog(k, 'es').secs || 0); if (v) { s += v; n++; } }); return n >= 5 ? `, im Schnitt ${Math.round(s / n / 60)} Min. pro Übungstag.` : '.'; })()}${mins.unm ? ' „–“: geübt, noch ohne Zeitmessung.' : ''}</p></div>` : ''}
   ${hoursHtml()}
 
   ${summary ? `<h2 class="grp">Sprachen</h2><div class="langsums">${summary}</div>` : ''}
@@ -844,7 +846,7 @@ function viewProgress(){
   <p class="legend distline"><span><span class="sq s-anchored"></span>${dist.anchored} <button type="button" class="term" data-a="term" data-k="verankert">verankert</button></span><span><span class="sq s-mature"></span>${dist.mature} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button></span><span><span class="sq s-young"></span>${dist.young} im Aufbau</span><span><span class="sq s-neu"></span>${dist.neu} neu</span></p></div>
   <h2 class="grp">Wiederholungen der nächsten Tage</h2>
   <div class="chart">${fc.every(f => !f.n) ? '<p class="stat" style="margin:0">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
-  ${fc.some(f => f.n > cap) ? `<p class="legend">Ein Tagwerk nimmt höchstens ${cap} Wiederholungen auf. Der Rest kommt am Tag darauf.</p>` : ''}</div>
+  ${fc.some(f => f.n > cap) ? `<p class="legend">Höchstens ${cap} je Tagwerk, der Rest kommt am Tag darauf.</p>` : ''}</div>
   ${hard.length ? `<h2 class="grp">Schwierigste Sätze</h2><div class="rows">${hard.map(i => `<div class="row static kv"><span class="txt"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span></span><span class="val dimv">${stOf(i.id).bad}× falsch</span></div>`).join('')}</div><div class="btnrow"><button type="button" class="ghost" data-a="hard">${hard.length === 1 ? 'Diesen Satz üben' : `Diese ${hard.length} Sätze üben`}</button></div>` : ''}
   ${errorSourcesHtml(lang)}
   ${topicGridHtml(lang)}
@@ -873,7 +875,7 @@ function popupHtml(){
     <div class="pophead"><span class="popw" lang="${P.lang}">${esc(P.w)}</span>${speakBtn(P.w, P.lang)}</div>
     ${body}
     ${P.si != null && S.view === 'text' ? `<button type="button" class="ghost icon popsay" data-a="tsay" data-i="${P.si}">${ICON} Ganzen Satz anhören</button>` : ''}
-    <div class="popfoot"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'} öffnen</button><button type="button" class="link" data-a="popanki">An Anki</button><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
+    <div class="popfoot"><span class="poplinks"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'}</button><button type="button" class="link" data-a="popanki">An Anki</button></span><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
   </div>`;
 }
 function renderPopup(){ const el = document.getElementById('pop'); if (el) el.innerHTML = popupHtml(); document.body.classList.toggle('has-pop', !!S.pop); }
@@ -898,7 +900,7 @@ function viewSettings(){
   <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>${v.newPer} neue Sätze, höchstens ${v.maxRev} Wiederholungen</span></button>`).join('')}</div>
   <h2 class="grp">Sprache beim Start</h2>
   <div class="seg2" role="radiogroup">${[['auto', 'Nach Bedarf'], ['last', 'Zuletzt gewählte']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.langMode || 'auto') === k}" data-a="langmode" data-v="${k}">${l}</button>`).join('')}</div>
-  <p class="setl-n">${(DB.settings.langMode || 'auto') === 'auto' ? 'Ein Tagwerk am Tag, in einer Sprache: Beim ersten Öffnen des Tages wählt die App die Sprache, die es nötiger hat (mehr fällig, länger nicht geübt). Die andere steht auf „Heute“ mit ihrem Stand; ein Wechsel von Hand gilt bis morgen.' : 'Die App öffnet in der zuletzt gewählten Sprache.'}</p>
+  <p class="setl-n">${(DB.settings.langMode || 'auto') === 'auto' ? 'Die App nimmt die Sprache, in der mehr fällig ist oder die länger nicht dran war. Ein Wechsel oben auf „Heute“ gilt bis morgen.' : 'Die App öffnet in der zuletzt gewählten Sprache.'}</p>
   <h2 class="grp">Mein Niveau</h2>
   <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
   <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen, in denen du zuletzt öfter Fehler gemacht hast. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
@@ -915,7 +917,7 @@ function viewSettings(){
     <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.refill}" data-a="refill"><span class="txt"><span class="rt">Neue Sätze automatisch von Tatoeba holen</span><span class="rd">Sobald die eingebauten Sätze zur Neige gehen und du online bist. Mit deinem Fortschritt werden die Sätze länger.${autoN ? ` Bisher ${autoN} Sätze für ${L.deName}.` : ''}</span></span><span class="sw" aria-hidden="true"></span></button>
   </div>
   <div class="rows" style="margin-top:10px">
-    <label class="row"><span class="txt"><span class="rt">Sätze aus Anki übernehmen</span><span class="rd">In AnkiDroid: Stapel exportieren als „Notizen als Klartext“. Die App erkennt Sprache und Übersetzung selbst, übernimmt bis zu ${ANKI_MAX} Sätze je Datei in Stapelreihenfolge und überspringt vorhandene. Erneut einlesen holt die nächsten.</span></span><input type="file" accept=".txt,.tsv,.csv,text/plain" data-a="ankifile" class="sr-only"></label>
+    <label class="row"><span class="txt"><span class="rt">Sätze aus Anki übernehmen</span><span class="rd">In AnkiDroid als „Notizen als Klartext“ exportieren. Bis zu ${ANKI_MAX.toLocaleString('de-DE')} Sätze je Datei, vorhandene werden übersprungen.</span></span><input type="file" accept=".txt,.tsv,.csv,text/plain" data-a="ankifile" class="sr-only"></label>
     ${S.ankiPrev ? (S.ankiPrev.error ? `<div class="row static"><span class="txt"><span class="rd">${esc(S.ankiPrev.error)}</span></span></div>` : `<div class="row static"><span class="txt"><span class="rt">${S.ankiPrev.total.toLocaleString('de-DE')} neue Sätze ${LANG[S.ankiPrev.lang].deName}${S.ankiPrev.en ? ' mit englischer Übersetzung' : ''}</span><span class="rd" lang="${S.ankiPrev.lang}">${S.ankiPrev.items.slice(0, 2).map(x => esc(x.target) + ' – ' + esc(x.de)).join('<br>')}</span></span></div>
     <div class="row static"><span class="txt"><button type="button" class="primary" data-a="ankiok">${Math.min(S.ankiPrev.total, ANKI_MAX).toLocaleString('de-DE')} übernehmen</button></span><button type="button" class="link" data-a="ankino">Abbrechen</button></div>`) : ''}
   </div>

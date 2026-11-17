@@ -688,7 +688,7 @@ function calendarSvg(){
     active, total, first, scrollable:since > 20
   };
 }
-/* ---------- Lernminuten: 14 Tage oder 12 Wochen, Antippen zeigt, was an dem Tag oder in der Woche lief ---------- */
+/* ---------- Lernminuten der letzten 14 Tage; Antippen zeigt, was an dem Tag lief (wie im Kalender) ---------- */
 const MIN_LANGS = ['sv', 'es'];
 // Summe über Tage je Sprache: Protokoll (Minuten, Aufgaben, neu, Wiederholungen, gefestigt) und Fehlerquellen (erste Versuche, Themen)
 function actOf(days, l){
@@ -705,28 +705,14 @@ function actOf(days, l){
   });
   return o;
 }
-function minSpan(mode){
+function minSpan(){
   const t = today();
-  if (mode !== 'w') return Array.from({ length:14 }, (_, k) => { const ds = addDays(t, k - 13); return { key:ds, days:[ds] }; });
-  const mo = mondayOf(t), first = totals().first;
-  const n = Math.min(12, Math.max(1, first ? Math.floor(dayDiff(mo, mondayOf(first)) / 7) + 1 : 1));
-  return Array.from({ length:n }, (_, k) => {
-    const start = addDays(mo, -7 * (n - 1 - k)), days = [];
-    for (let i = 0; i < 7; i++) { const ds = addDays(start, i); if (ds <= t) days.push(ds); }
-    return { key:start, days };
-  });
+  return Array.from({ length:14 }, (_, k) => { const ds = addDays(t, k - 13); return { key:ds, days:[ds] }; });
 }
 const minSecs = x => MIN_LANGS.reduce((a, l) => a + x.act[l].secs, 0);
 const minTasks = x => MIN_LANGS.reduce((a, l) => a + x.act[l].n, 0);
-// Wöchentlich ab 3 Wochen Übung; vorher gäbe die Wochenansicht nur ein, zwei Säulen
-const minWeeksOk = () => { const f = totals().first; return !!f && dayDiff(today(), f) >= 20; };
-function minDefault(mode, data){
-  const keys = data.map(x => x.key), want = mode === 'w' ? S.minWeek : S.minDay;
-  if (want && keys.includes(want)) return want;
-  if (mode === 'w') return keys[keys.length - 1];
-  const act = data.filter(x => minTasks(x) > 0);
-  return (act.length ? act[act.length - 1] : data[data.length - 1]).key;
-}
+// Wie im Kalender: nichts vorgewählt; ein Tipp öffnet die Karte, ein zweiter auf dieselbe Säule schließt sie
+function minPicked(data){ return S.minDay && data.some(x => x.key === S.minDay) ? S.minDay : null; }
 const fmtDayLong = ds => { const d = dateOf(ds); return `${WDAYS_FULL[d.getDay()]}, ${d.getDate()}. ${MONTHS_FULL[d.getMonth()]}`; };
 const fmtDayShort = ds => { const d = dateOf(ds); return `${d.getDate()}. ${MONTHS_FULL[d.getMonth()]}`; };
 function relDay(ds){ const k = dayDiff(today(), ds); return k === 0 ? 'heute' : k === 1 ? 'gestern' : k === 2 ? 'vorgestern' : ''; }
@@ -737,93 +723,73 @@ function hourSpans(h){
   hs.slice(1).concat(null).forEach(x => { if (x === b + 1) { b = x; return; } out.push(`${a}–${b + 1}`); if (x != null) { a = x; b = x; } });
   return (out.length > 1 ? out.slice(0, -1).join(', ') + ' und ' + out[out.length - 1] : out[0]) + ' Uhr';
 }
-function minChart(mode, data, sel){
-  const t = today(), H = 96, free = mode === 'w' ? new Set() : streakData().free;
+function minChart(data, sel){
+  const t = today(), H = 96, free = streakData().free;
   const mins = data.map(x => minSecs(x) / 60);
-  const max = Math.max(mode === 'w' ? 30 : 5, ...mins);
-  // Durchschnitt: pro Übungstag (Tage) bzw. pro abgeschlossener Woche seit Beginn (Wochen)
-  const base = mode === 'w' ? mins.slice(0, -1) : mins.filter(m => m > 0);
-  const avg = base.length >= (mode === 'w' ? 2 : 3) ? base.reduce((a, m) => a + m, 0) / base.length : 0;
+  const max = Math.max(5, ...mins);
+  // Durchschnitt pro Übungstag, ab drei Übungstagen
+  const base = mins.filter(m => m > 0), avg = base.length >= 3 ? base.reduce((a, m) => a + m, 0) / base.length : 0;
   const cols = data.map((x, i) => {
-    const m = mins[i], n = minTasks(x), unm = n > 0 && m === 0, d = dateOf(x.key);
-    const isNow = mode === 'w' ? i === data.length - 1 : x.key === t, fr = free.has(x.key) && !n;
-    const lab = mode === 'w' ? `${d.getDate()}.${d.getMonth() + 1}.` : WDAYS[d.getDay()];
-    const showLab = mode !== 'w' || data.length <= 7 || (data.length - 1 - i) % 2 === 0;
+    const m = mins[i], n = minTasks(x), unm = n > 0 && m === 0, d = dateOf(x.key), fr = free.has(x.key) && !n;
     const what = unm ? 'geübt, ohne Zeitmessung' : m ? fmtMin(minSecs(x)) : fr ? 'Pausetag' : 'nicht geübt';
-    const aria = `${mode === 'w' ? `Woche ab ${fmtDayShort(x.key)}` : fmtDayShort(x.key)}: ${what}`;
     const seg = l => (x.act[l].secs ? `<span class="m-${l}" style="height:${(x.act[l].secs / 60 / max * 100).toFixed(1)}%"></span>` : '');
     const val = unm ? '–' : m > 0 && m < 1 ? '<1' : Math.round(m) || '';
-    return `<button type="button" class="mc${x.key === sel ? ' sel' : ''}${isNow ? ' now' : ''}${unm ? ' unm' : ''}${fr ? ' fr' : ''}${mode !== 'w' && i && d.getDay() === 1 ? ' mon' : ''}" data-a="mpick" data-k="${x.key}" aria-pressed="${x.key === sel}" aria-label="${aria}"><span class="mcv">${val}</span><span class="mcb">${seg('sv')}${seg('es')}</span><span class="mcl">${showLab ? lab : ''}</span></button>`;
+    return `<button type="button" class="mc${x.key === sel ? ' sel' : ''}${x.key === t ? ' now' : ''}${unm ? ' unm' : ''}${fr ? ' fr' : ''}${i && d.getDay() === 1 ? ' mon' : ''}" data-a="mpick" data-k="${x.key}" aria-pressed="${x.key === sel}" aria-label="${fmtDayShort(x.key)}: ${what}"><span class="mcv">${val}</span><span class="mcb">${seg('sv')}${seg('es')}</span><span class="mcl">${WDAYS[d.getDay()]}</span></button>`;
   }).join('');
   const line = avg ? `<span class="mavg" style="top:${(17 + (1 - avg / max) * H).toFixed(1)}px" aria-hidden="true"></span>` : '';
-  return { html:`<div class="mchart${mode === 'w' ? ' mweeks' : ''}" role="group" aria-label="Lernminuten pro ${mode === 'w' ? 'Woche' : 'Tag'}">${line}${cols}</div>`, avg };
+  return { html:`<div class="mchart" role="group" aria-label="Lernminuten pro Tag, letzte 14 Tage">${line}${cols}</div>`, avg };
 }
-// Was an einem Tag oder in einer Woche lief, je Sprache. Schwedisch und Spanisch in der Farbe der Sprache.
-function actBlock(l, a, week, solo){
-  const facts = [];
-  if (a.n) facts.push(`<b>${a.n}</b> ${a.n === 1 ? 'Aufgabe' : 'Aufgaben'}`);
-  if (a.first >= 3) facts.push(`<b>${pct((a.first - a.bad) / a.first)}</b> auf Anhieb richtig`);
-  if (a.fresh) facts.push(`<b>${a.fresh}</b> ${a.fresh === 1 ? 'neuer Satz' : 'neue Sätze'}`);
-  if (a.rev) facts.push(`<b>${a.revOk} von ${a.rev}</b> Wiederholungen gewusst`);
-  if (a.mat) facts.push(`<b>${a.mat}</b> gefestigt`);
-  const tops = Object.entries(a.topics).filter(([, v]) => v[1] > 0).sort((x, y) => y[1][1] - x[1][1] || y[1][0] - x[1][0]).slice(0, 2)
-    .map(([id, v]) => { const tr = trapMeta(l, id); return tr ? `${tr.id !== 'eigene' ? `<button type="button" class="link inl" data-a="topic" data-l="${l}" data-t="${tr.id}">${esc(tr.label)}</button>` : esc(tr.label)} (${v[1]} von ${v[0]})` : ''; }).filter(Boolean);
-  const tw = week ? (a.tw ? `<span class="dl-tw tw-${l}">${a.tw === 1 ? '1 Tagwerk' : `${a.tw} Tagwerke`}</span>` : '') : a.tw ? `<span class="dl-tw tw-${l}">Tagwerk</span>` : '';
-  return `<div class="dl"><p class="dl-h"><i class="sq m-${l}"></i><b>${LANG[l].deName}</b>${tw}<span class="dl-m">${solo ? '' : a.secs ? fmtMin(a.secs) : a.n ? 'ohne Zeitmessung' : ''}</span></p>${facts.length ? `<p class="dl-f">${facts.map(f => `<span>${f}</span>`).join('')}</p>` : ''}${tops.length ? `<p class="dl-x">Fehler bei ${tops.join(', ')}</p>` : ''}</div>`;
+// Tag im Detail, gleich für Lernminuten und Kalender: Titel, darunter Datum und Uhrzeit,
+// dann eine kleine Tabelle je Sprache. Das Quadrat folgt dem Kalender: gefüllt = Tagwerk, Rand = nur geübt.
+const minVal = secs => (!secs ? '–' : secs < 30 ? '<1' : String(Math.round(secs / 60)));
+function actTable(rows){
+  const head = '<thead><tr><th scope="col"><span class="sr-only">Sprache</span></th><th scope="col">Min.</th><th scope="col">Aufgaben</th><th scope="col">richtig</th><th scope="col">neu</th></tr></thead>';
+  const body = rows.map(({ l, a, tw }) => `<tr><th scope="row"><i class="sq ${tw ? 'd' : 'p'}${l === 'sv' ? 's' : 'e'}" aria-hidden="true"></i>${LANG[l].deName}${tw ? '<span class="sr-only">, Tagwerk erledigt</span>' : ''}</th><td>${minVal(a.secs)}</td><td>${a.n}</td><td>${a.first ? pct((a.first - a.bad) / a.first) : '–'}</td><td>${a.fresh}</td></tr>`).join('');
+  return `<table class="dt">${head}<tbody>${body}</tbody></table>`;
+}
+// Themen mit den meisten Fehlern, über beide Sprachen; antippen öffnet das Themenblatt in der Sprache des Themas
+function errLine(rows){
+  const all = [];
+  rows.forEach(({ l, a }) => Object.entries(a.topics).forEach(([id, v]) => { if (v[1] > 0) all.push({ l, id, bad:v[1], n:v[0] }); }));
+  const top = all.sort((x, y) => y.bad - x.bad || y.n - x.n).slice(0, 2).map(x => { const tr = trapMeta(x.l, x.id); return !tr ? '' : tr.id === 'eigene' ? esc(tr.label) : `<button type="button" class="term" data-a="topic" data-l="${x.l}" data-t="${tr.id}">${esc(tr.label)}</button>`; }).filter(Boolean);
+  return top.length ? `<p class="dc-x">Fehler bei ${top.join(' und ')}.</p>` : '';
+}
+function detailCard(title, sub, rows, empty){
+  return `<div class="dcard" aria-live="polite"><p class="dc-h">${title}</p>${sub ? `<p class="dc-s">${sub}</p>` : ''}${rows.length ? actTable(rows) + errLine(rows) : `<p class="dc-n">${empty}</p>`}</div>`;
 }
 function dayCard(ds){
-  const act = Object.fromEntries(MIN_LANGS.map(l => [l, actOf([ds], l)])), on = MIN_LANGS.filter(l => act[l].n);
-  const secs = on.reduce((a, l) => a + act[l].secs, 0), rel = relDay(ds);
-  const hours = hourSpans(DB.tlog && DB.tlog[ds] && DB.tlog[ds].h);
-  const none = ds === today() ? 'Heute noch nicht geübt.' : streakData().free.has(ds) ? 'Pausetag: nicht geübt, die Serie lief weiter.' : 'Nicht geübt.';
-  return `<div class="dcard" aria-live="polite"><p class="dc-h"><b>${fmtDayLong(ds)}</b>${rel ? `<span class="dc-r">${rel}</span>` : ''}<span class="dc-t">${secs ? fmtMin(secs) : on.length ? 'ohne Zeitmessung' : ''}</span></p>
-    ${on.length ? on.map(l => actBlock(l, act[l], false, on.length === 1)).join('') : `<p class="dc-n">${none}</p>`}
-    ${on.length && hours ? `<p class="dc-f">Uhrzeit: ${hours}</p>` : ''}</div>`;
-}
-function weekCard(x){
-  const t = today(), end = addDays(x.key, 6), cur = end >= t;
-  const on = MIN_LANGS.filter(l => x.act[l].n), secs = minSecs(x);
-  const days = x.days.filter(ds => MIN_LANGS.some(l => (dayLog(ds, l).n || 0) > 0)).length;
-  const a = dateOf(x.key), b = dateOf(end);
-  const head = cur ? 'Diese Woche' : a.getMonth() === b.getMonth() ? `${a.getDate()}. bis ${b.getDate()}. ${MONTHS_FULL[b.getMonth()]}` : `${a.getDate()}. ${MONTHS_FULL[a.getMonth()]} bis ${b.getDate()}. ${MONTHS_FULL[b.getMonth()]}`;
-  return `<div class="dcard" aria-live="polite"><p class="dc-h"><b>${head}</b>${cur ? `<span class="dc-r">seit ${WDAYS_FULL[1]}</span>` : ''}<span class="dc-t">${secs ? fmtMin(secs) : ''}</span></p>
-    ${on.length ? on.map(l => actBlock(l, x.act[l], true, on.length === 1)).join('') : '<p class="dc-n">In dieser Woche nicht geübt.</p>'}
-    ${on.length ? `<p class="dc-f">An ${days} von ${x.days.length} Tagen geübt${cur && x.days.length < 7 ? ' (bisher)' : ''}.</p>` : ''}</div>`;
+  const rows = MIN_LANGS.map(l => ({ l, a:actOf([ds], l) })).filter(r => r.a.n).map(r => Object.assign(r, { tw:r.a.tw > 0 }));
+  const rel = relDay(ds), hours = rows.length ? hourSpans(DB.tlog && DB.tlog[ds] && DB.tlog[ds].h) : '';
+  const title = rel ? rel[0].toUpperCase() + rel.slice(1) : fmtDayLong(ds);
+  const sub = [rel ? fmtDayLong(ds) : '', hours].filter(Boolean).join(' · ');
+  const empty = ds === today() ? 'Noch nicht geübt.' : streakData().free.has(ds) ? 'Pausetag, die Serie lief weiter.' : 'Nicht geübt.';
+  return detailCard(title, sub, rows, empty);
 }
 function minutesHtml(){
-  const mode = S.minRange === 'w' && minWeeksOk() ? 'w' : 'd';
-  const data = minSpan(mode).map(x => Object.assign(x, { act:Object.fromEntries(MIN_LANGS.map(l => [l, actOf(x.days, l)])) }));
-  if (!data.some(x => minTasks(x) > 0) && mode === 'd' && !Object.keys(DB.log).some(k => MIN_LANGS.some(l => (dayLog(k, l).secs || 0) > 0))) return '';
-  const sel = minDefault(mode, data), ch = minChart(mode, data, sel), picked = data.find(x => x.key === sel);
-  const total = data.reduce((a, x) => a + minSecs(x), 0);
-  // Kennzahlen des Zeitraums, Vergleich mit dem Zeitraum davor, wenn damals schon geübt wurde
+  const data = minSpan().map(x => Object.assign(x, { act:Object.fromEntries(MIN_LANGS.map(l => [l, actOf(x.days, l)])) }));
+  if (!data.some(x => minTasks(x) > 0) && !Object.keys(DB.log).some(k => MIN_LANGS.some(l => (dayLog(k, l).secs || 0) > 0))) return '';
+  const sel = minPicked(data), ch = minChart(data, sel), total = data.reduce((a, x) => a + minSecs(x), 0);
   // Kennzahlen: Zahl groß, Einheit in der Beschriftung (wie „5 Stunden“ im Überblick). Ab 10 Stunden in Stunden mit Komma.
   const big = secs => { const m = Math.round(secs / 60); return m >= 600 ? [(m / 60).toFixed(1).replace('.', ','), 'Stunden'] : [String(m), m === 1 ? 'Minute' : 'Minuten']; };
-  let kp, prevTxt = '';
-  if (mode === 'w') {
-    const full = data.slice(0, -1), wAvg = full.length ? full.reduce((a, x) => a + minSecs(x), 0) / full.length : 0;
-    const best = data.reduce((a, x) => (minSecs(x) > minSecs(a) ? x : a), data[0]);
-    const [tv, tu] = big(total), [av, au] = big(wAvg), [bv, bu] = big(minSecs(best));
-    kp = [[total ? tv : '–', `${tu} in ${plural(data.length, 'Woche', 'Wochen')}`], [full.length ? av : '–', `${au} pro Woche`], [minSecs(best) ? bv : '–', `${bu} in der besten Woche`]];
-  } else {
-    const practiced = data.filter(x => minTasks(x) > 0).length, withTime = data.filter(x => minSecs(x) > 0).length;
-    const [tv, tu] = big(total), [av, au] = big(withTime ? total / withTime : 0);
-    kp = [[total ? tv : '–', `${tu} in 14 Tagen`], [`${practiced} von 14`, 'Tagen geübt'], [withTime ? av : '–', `${au} pro Übungstag`]];
-    const f = totals().first, pStart = addDays(today(), -27);
-    if (f && f <= pStart) {
-      let ps = 0; for (let k = 0; k < 14; k++) MIN_LANGS.forEach(l => { ps += dayLog(addDays(pStart, k), l).secs || 0; });
-      const [pv, pu] = big(ps), diff = Math.round(total / 60) - Math.round(ps / 60);
-      prevTxt = ps ? `Die 14 Tage davor: ${pv} ${pu}${pu === 'Minuten' && diff ? `, jetzt ${Math.abs(diff)} ${diff > 0 ? 'mehr' : 'weniger'}` : ''}.` : 'Die 14 Tage davor: nicht geübt.';
-    }
+  const practiced = data.filter(x => minTasks(x) > 0).length, withTime = data.filter(x => minSecs(x) > 0).length;
+  const [tv, tu] = big(total), [av, au] = big(withTime ? total / withTime : 0);
+  const kp = [[total ? tv : '–', `${tu} in 14 Tagen`], [`${practiced} von 14`, 'Tagen geübt'], [withTime ? av : '–', `${au} pro Übungstag`]];
+  // Vergleich mit den 14 Tagen davor, wenn damals schon geübt wurde
+  let prevTxt = '';
+  const f = totals().first, pStart = addDays(today(), -27);
+  if (f && f <= pStart) {
+    let ps = 0; for (let k = 0; k < 14; k++) MIN_LANGS.forEach(l => { ps += dayLog(addDays(pStart, k), l).secs || 0; });
+    const [pv, pu] = big(ps);
+    prevTxt = ps ? `Die 14 Tage davor: ${pv} ${pu}.` : 'Die 14 Tage davor: nicht geübt.';
   }
-  const seg = minWeeksOk() ? `<div class="seg2 pcr" role="radiogroup" aria-label="Zeitraum">${[['d', '14 Tage'], ['w', `${plural(minSpan('w').length, 'Woche', 'Wochen')}`]].map(([v, lab]) => `<button type="button" role="radio" aria-checked="${mode === v}" data-a="mrange" data-v="${v}">${lab}</button>`).join('')}</div>` : '';
-  const key = activeLangs().length > 1 ? `<p class="legend keyrow mkey"><span><i class="sq m-sv"></i>Schwedisch</span><span><i class="sq m-es"></i>Spanisch</span>${ch.avg ? `<span><i class="mavgk"></i>Durchschnitt ${mode === 'w' ? 'pro Woche' : 'pro Übungstag'}</span>` : ''}</p>` : ch.avg ? `<p class="legend keyrow mkey"><span><i class="mavgk"></i>Durchschnitt ${mode === 'w' ? 'pro Woche' : 'pro Übungstag'}</span></p>` : '';
+  const avgKey = ch.avg ? '<span><i class="mavgk"></i>Durchschnitt</span>' : '';
+  const key = activeLangs().length > 1 ? `<p class="legend keyrow mkey"><span><i class="sq m-sv"></i>Schwedisch</span><span><i class="sq m-es"></i>Spanisch</span>${avgKey}</p>` : avgKey ? `<p class="legend keyrow mkey">${avgKey}</p>` : '';
   const unm = data.some(x => minTasks(x) > 0 && !minSecs(x)) ? '<p class="legend">„–“: geübt, noch ohne Zeitmessung.</p>' : '';
-  return `<h2 class="grp">Lernminuten</h2>${seg}<div class="chart mins">
+  return `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart mins">
     <div class="kpis mk">${kp.map(([v, lab]) => `<div><b>${v}</b><span>${lab}</span></div>`).join('')}</div>
     ${prevTxt ? `<p class="legend mprev">${prevTxt}</p>` : ''}
     ${ch.html}${key}${unm}
-    ${mode === 'w' ? weekCard(picked) : dayCard(picked.key)}
+    ${sel ? dayCard(sel) : '<p class="legend mhint">Tipp auf einen Tag für Details.</p>'}
   </div>`;
 }
 function forecast(lang){
@@ -952,8 +918,8 @@ function viewProgress(){
   </section>
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
-    ${S.calDay ? dayCard(S.calDay) : `<p class="legend">${cal.first ? `${cal.active} von ${cal.total} Tagen geübt. Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>`}
-    <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>Pausetag, Serie hält</span></p></div>
+    <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>Pausetag, Serie hält</span></p>
+    ${S.calDay ? dayCard(S.calDay) : `<p class="legend chint">${cal.first ? `${cal.active} von ${cal.total} Tagen geübt. Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.` : 'Noch keine Übungstage.'}</p>`}</div>
   ${minutesHtml()}
   ${hoursHtml()}
 

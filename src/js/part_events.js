@@ -251,7 +251,7 @@ document.addEventListener('click', e => {
     case 'spotpick': choose(b.dataset.i); break;
     case 'genuspick': choose(b.dataset.v); break;
     case 'tplay': { const ex = r && r.queue[r.idx]; if (ex && ex.data) speak(ex.data.say, r.lang, Number(b.dataset.rate)); break; }
-    case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; render(); window.scrollTo(0, 0); break; }
+    case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; S.minDay = null; render(); window.scrollTo(0, 0); break; }
     case 'term': S.pop = { type:'term', k:b.dataset.k, lang:(S.view === 'run' && S.run && S.run.lang) || S.lang }; renderPopup(); break;
     case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
@@ -297,8 +297,7 @@ document.addEventListener('click', e => {
     }
     case 'autoplay': DB.settings.autoplay = !DB.settings.autoplay; save(); render(); break;
     case 'calday': S.calDay = S.calDay === b.dataset.d ? null : b.dataset.d; render(); break;
-    case 'mpick': if (S.minRange === 'w' && minWeeksOk()) S.minWeek = b.dataset.k; else S.minDay = b.dataset.k; render(); break;
-    case 'mrange': S.minRange = b.dataset.v; render(); break;
+    case 'mpick': S.minDay = S.minDay === b.dataset.k ? null : b.dataset.k; render(); break;
     case 'toSettings': case 'settings': S.notice = null; S.settingsFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'home'; goView('settings'); break;
     case 'colall': S.colAll = !S.colAll; render(); break;
     case 'findopen': S.findOpen = b.dataset.id; render(); break;

@@ -232,7 +232,6 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .mc.sel{ background:color-mix(in srgb, var(--ink) 9%, transparent); }
 .mcv{ font-size:11px; line-height:14px; color:var(--muted); height:14px; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .mcb{ width:calc(100% - 6px); height:96px; display:flex; flex-direction:column-reverse; background:var(--bg); border-radius:5px; overflow:hidden; }
-.mchart.mweeks .mcb{ width:calc(100% - 10px); }
 .mcl{ font-size:11.5px; line-height:16px; height:16px; color:var(--muted); white-space:nowrap; }
 .mc.now .mcl{ color:var(--ink); font-weight:700; }
 .mc.sel .mcv, .mc.sel .mcl{ color:var(--ink); font-weight:700; }
@@ -241,25 +240,22 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .mavg{ position:absolute; left:0; right:0; height:0; border-top:1.5px dashed color-mix(in srgb, var(--ink) 55%, transparent); pointer-events:none; z-index:1; }
 .mavgk{ display:inline-block; width:16px; height:0; border-top:1.5px dashed color-mix(in srgb, var(--ink) 55%, transparent); }
 .mkey{ margin-top:8px; }
-/* Tag oder Woche im Detail: je Sprache Minuten, Tagwerk, Aufgaben, Treffer, Neues, Wiederholungen, Fehler */
-.dcard{ margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }
-.dc-h{ display:flex; align-items:baseline; gap:8px; margin:0 0 4px; font-size:15.5px; }
-.dc-h b{ font-weight:700; }
-.dc-r{ color:var(--muted); font-size:13.5px; }
-.dc-t{ margin-left:auto; font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
-.dc-n{ color:var(--muted); font-size:14.5px; margin:4px 0 0; }
-.dc-f{ margin:8px 0 0; font-size:13px; color:var(--muted); }
-.dl{ padding:8px 0 2px; }
-.dl-h{ display:flex; align-items:center; gap:8px; margin:0; font-size:14.5px; }
-.dl-h .sq{ flex:none; width:10px; height:10px; border-radius:3px; }
-.dl-tw{ font-size:12px; font-weight:650; padding:1px 8px; border-radius:999px; background:var(--line); color:var(--ink); }
-.dl-tw.tw-sv{ background:var(--sv-soft); color:var(--sv-ink); }
-.dl-tw.tw-es{ background:var(--es-soft); color:var(--es-ink); }
-.dl-m{ margin-left:auto; color:var(--muted); font-size:14px; font-variant-numeric:tabular-nums; white-space:nowrap; }
-.dl-f{ display:flex; flex-wrap:wrap; gap:2px 14px; margin:4px 0 0 18px; font-size:13.5px; color:var(--muted); line-height:1.5; }
-.dl-f b{ color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums; }
-.dl-x{ margin:4px 0 0 18px; font-size:13.5px; color:var(--muted); line-height:1.5; }
-.dl-x .link.inl{ padding:0; font-size:inherit; }
+.mhint, .chint{ margin-top:6px; }
+/* Tag im Detail: Titel, eine Zeile Datum/Uhrzeit, kleine Tabelle je Sprache, eine Zeile Fehlerthemen */
+.dcard{ margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+.dc-h{ margin:0; font-size:15.5px; font-weight:700; line-height:1.35; }
+.dc-s{ margin:2px 0 0; font-size:13.5px; color:var(--muted); line-height:1.4; }
+.dc-n{ margin:6px 0 0; font-size:14.5px; color:var(--muted); }
+.dc-x{ margin:10px 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+.dc-x .term{ color:var(--ink); }
+.dt{ width:100%; border-collapse:collapse; margin-top:12px; font-variant-numeric:tabular-nums; }
+.dt th, .dt td{ padding:6px 0 0 18px; text-align:right; font-size:15px; font-weight:600; white-space:nowrap; }
+.dt thead th{ padding:0 0 2px 18px; font-size:12px; font-weight:500; color:var(--muted); }
+.dt th[scope="row"], .dt thead th:first-child{ padding-left:0; text-align:left; width:100%; }
+.dt th[scope="row"]{ font-size:14.5px; }
+.dt .sq{ width:10px; height:10px; margin:0 8px 0 0; vertical-align:0; }
+.sq.ps{ box-sizing:border-box; background:transparent; border:1.6px solid var(--sv); }
+.sq.pe{ box-sizing:border-box; background:transparent; border:1.6px solid var(--es); }
 .m-sv{ display:block; width:100%; background:var(--sv); } .sq.m-sv{ background:var(--sv); }
 .m-es{ display:block; width:100%; background:var(--es); } .sq.m-es{ background:var(--es); }
 .stat{ margin:0; font-size:15.5px; }

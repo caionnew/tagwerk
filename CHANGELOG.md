@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.36.1
+**Lernminuten ruhiger und einheitlich mit dem Kalender.**
+- **Tageskarte neu aufgebaut:** Titel („Heute“, „Gestern“ oder das Datum), darunter eine Zeile mit Datum und Uhrzeit, dann eine kleine Tabelle je Sprache mit festen Spalten: Min., Aufgaben, richtig (auf Anhieb), neu. Vorher standen bis zu fünf Angaben als Fließtext je Sprache, mit farbigen Schildchen und unterstrichenen Links. Ob das Tagwerk erledigt ist, zeigt das Quadrat vor der Sprache wie im Kalender: gefüllt = Tagwerk, Rand = nur geübt. Wiederholungen und gefestigte Sätze stehen nicht mehr in der Karte (sie stehen auf der Seite der Sprache). Die Gesamtminuten stehen über der gewählten Säule, nicht noch einmal in der Karte.
+- **Fehlerthemen in einer Zeile** für beide Sprachen, die zwei häufigsten, gepunktet unterstrichen wie die Grammatik-Begriffe; antippen öffnet das Themenblatt in der Sprache des Themas.
+- **Wie im Kalender:** Nichts ist vorgewählt, darunter steht „Tipp auf einen Tag für Details.“ Ein Tipp öffnet die Karte, ein zweiter auf dieselbe Säule schließt sie. Im Kalender und bei den Lernminuten steht die Karte jetzt an derselben Stelle: unter dem Diagramm und seiner Legende.
+- **Kein Umschalter mehr für Wochen.** Er erschien erst ab drei Wochen Übung, versteckte Inhalt hinter einem Tipp und doppelte den langen Blick, den „Verlauf“ und „Jahr für Jahr“ schon geben. Die Lernminuten zeigen wieder die letzten 14 Tage.
+- **Kürzer:** Legende in einer Zeile („Durchschnitt“), Vergleich nur noch „Die 14 Tage davor: 196 Minuten.“
+
 ## 24.36.0
 **Lernminuten neu gestaltet.**
 - **Tag antippen:** Jede Säule ist antippbar. Darunter steht, was an dem Tag lief, je Sprache: Minuten, ob das Tagwerk erledigt ist, Aufgaben, Anteil auf Anhieb richtig, neue Sätze, gewusste Wiederholungen, gefestigte Sätze, die Themen mit Fehlern (antippbar, öffnet das Themenblatt in der richtigen Sprache) und zu welcher Uhrzeit geübt wurde. Vorgewählt ist heute oder, wenn heute noch nichts war, der letzte Übungstag. Pausetage und nicht geübte Tage sagen das.

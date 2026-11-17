@@ -484,6 +484,7 @@ function makeFresh(g){
   // Viele Versuche: Kleine Listen (15 Fälle bei 12 gemerkten) brauchen sonst Glück
   for (let tries = 0; tries < 200 && list.includes(k); tries++) { d = GENS[g].make(); k = genKey(d); }
   list.push(k); if (list.length > GEN_MEMORY) list.splice(0, list.length - GEN_MEMORY);
+  if (GENS[g].seen) GENS[g].seen(d);
   return d;
 }
 function prepCur(){

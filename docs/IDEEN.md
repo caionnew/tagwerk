@@ -2,14 +2,14 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
 
-Stand: 17. November 2026 (nach 24.46.0)
+Stand: 17. November 2026 (nach 24.47.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
 - **Die App ist breit, die Inhalte holen auf.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Seit 24.39 und 24.40 gibt es 317 schwedische und 364 spanische Sätze, davon 138 bzw. 172 als B2 markiert (vorher 32 bzw. 40); bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reichen die B2-Sätze drei bis vier Wochen. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
-- **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Seit 24.41 und 24.42 gibt es Verbalperiphrasen und Subjuntivo im Satzgefüge (Spanisch), Pluralklassen und Modalpartikeln (Schwedisch). Seit 24.43 dazu Redewendungen in beiden Sprachen. Die Grammatikthemen für B2/C1 sind damit vollständig. Seit 24.44 und 24.46 gibt es je 8 weitere Lesetexte auf B2/C1. Seit 24.45 ist „Fehler finden“ eine echte Prüfaufgabe: Rund 40 % der Sätze sind richtig, und Formfehler werden nach dem Finden verbessert.
+- **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Seit 24.41 und 24.42 gibt es Verbalperiphrasen und Subjuntivo im Satzgefüge (Spanisch), Pluralklassen und Modalpartikeln (Schwedisch). Seit 24.43 dazu Redewendungen in beiden Sprachen. Die Grammatikthemen für B2/C1 sind damit vollständig. Seit 24.44 und 24.46 gibt es je 8 weitere Lesetexte auf B2/C1. Seit 24.45 ist „Fehler finden“ eine echte Prüfaufgabe: Rund 40 % der Sätze sind richtig, und Formfehler werden nach dem Finden verbessert. Seit 24.47 gibt es je Sprache sieben Fehlerarten statt vier; welche kommt, richtet sich nach deinen Fehlern.
 - **Prüfqualität ist die größte Quelle für Ärger.** In einer kurzen Durchsicht (24.34–24.35) fanden sich ein grammatischer Fehler („de el“), unidiomatisches Deutsch, richtige Antworten, die als falsch galten („i gymmet“, Subjekt vorn bei Inversion), und bei rund der Hälfte der Sätze eine Erklärung, die nicht zum Satz passte. Jede falsche „Falsch“-Wertung kostet täglich Zeit und Vertrauen. 24.37 hat alle Generatoren durchgesehen (ein grammatischer Fehler, „con ti“; sechs Auswahlaufgaben mit einer zweiten vertretbaren Option; fehlende richtige Fassungen bei Uhrzeiten und beim Umbauen). 24.38 hat die Satzbank durchgesehen: Jeder der 441 Sätze hat jetzt eine Erklärung, rund 130 weitere richtige Fassungen sind dazugekommen, und zwei Regeln gelten für alle Sätze (fehlendes „har“ im schwedischen Nebensatz, betontes spanisches Subjektpronomen).
 - **Die Browser-Tests laufen in Chromium und Firefox,** seit 24.39 beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 

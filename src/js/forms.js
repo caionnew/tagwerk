@@ -23,11 +23,12 @@ function spotChanged(words, fixed){
 }
 const spotVariant = (d, roll = Math.random()) => (roll < SPOT_OK ? spotOk(d) : d);
 // Schwedisch: Stellung von inte & Co. (aus den Bausteinen von genInte)
-function spotInteSv(){
+// mode: 'inv' = Inversion, 'bisats' = Stellung des Adverbs (Nebensatz oder Hauptsatz), sonst zufällig
+function spotInteSv(mode){
   const vp = pick(VP_SV), adv = pick(vp[2]), s = pick(SUBJ_INTE);
   const fill = t => t.replace('{S}', s[1]).replace('{s}', s[2]).replace('{V}', vp[3][s[3]]).replace('{A}', ADV_DE[adv]);
   const rest = vp[1] ? vp[1].split(' ') : [];
-  const roll = Math.random();
+  const roll = mode === 'inv' ? 0.5 : mode === 'bisats' ? (Math.random() < 0.65 ? 0.2 : 0.9) : Math.random();
   if (roll < 0.45) {
     const intro = pick(INTRO_SV.filter(x => x[2].split(' ').includes(adv) && !(x[3] === 0 && s[3] === 0)));
     const head = intro[0].split(' ');
@@ -60,7 +61,7 @@ function spotNpSv(){
   const type = pick(['indef', 'def', 'defpl']);
   if (type === 'indef') {
     const good = ett ? f.t : f.base, bad = ett ? f.base : f.t;
-    if (good === bad) return spotTempusSv();
+    if (good === bad) return spotNpSv();
     return spotData(`Da ist ${da[0]} ${A[1]}${da[2]} ${de}.`, ['Där', 'är', art, bad, sv], [3], `Där är ${art} ${good} ${sv}.`, `${sv} ist ein ${art}-Wort, darum ${ett ? 'die t-Form' : 'die Grundform'}: ${art} ${good} ${sv}.`, 'species');
   }
   if (type === 'def') {
@@ -118,27 +119,101 @@ function bankSpotsEs(){
       if (!ind || ind === it.gap) return;
       const why = SUBJ_WHY.find(([re]) => re.test(it.target));
       const note = it.note || (why ? `${why[1]}: ${it.gap}, nicht ${ind}.` : 'Hier verlangt der Satz den Subjuntivo, etwa nach querer que, es importante que, ojalá, para que oder cuando mit Zukunftsbezug.');
-      out.push(() => spotData(it.de, swapAt(ind), [idx], it.target, note, 'subjuntivo', it.gapAlts.length ? it.gapAlts : [it.gap]));
+      out.push(withTrap('subjuntivo', () => spotData(it.de, swapAt(ind), [idx], it.target, note, 'subjuntivo', it.gapAlts.length ? it.gapAlts : [it.gap])));
     }
     if (it.trap === 'perfecto' && /\b(ayer|pasado|pasada|anoche|en \d{4}|\d{4})\b/i.test(it.target)) {
       const when = (it.target.match(PAST_POINT_ES) || [])[0];
       const p = [0, 1, 2, 3, 4].find(k => conjugate(inf, 'indef', k) === it.gap);
       if (p == null) return;
       const note = when ? `Mit „${when.toLowerCase()}“ (abgeschlossen) steht Indefinido: ${it.gap}, nicht ${HABER[p]} ${participle(inf)}.` : 'Mit einem abgeschlossenen Zeitpunkt (ayer, la semana pasada, 2015) steht Indefinido, nicht Perfecto.';
-      out.push(() => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto', it.gapAlts.length ? it.gapAlts : [it.gap]));
+      out.push(withTrap('perfecto', () => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto', it.gapAlts.length ? it.gapAlts : [it.gap])));
     }
+  });
+  // gustar & Co. richten sich nach dem, was gefällt: Einzahl und Mehrzahl vertauscht (me gusta los libros). Nur einzelne Verbformen;
+  // „da“ (me da igual) bleibt draußen, weil „me dan igual“ mit einem Bezug in der Mehrzahl auch richtig wäre.
+  BANK.es.forEach(it => {
+    if (it.trap !== 'gustar' || it.tat || it.own || !it.gap || it.gap.includes(' ') || it.gap.length < 4) return;
+    const g = it.gap, wrongForm = /ían$/.test(g) ? g.slice(0, -1) : /ía$/.test(g) ? g + 'n' : /[ae]n$/.test(g) ? g.slice(0, -1) : /[ae]$/.test(g) ? g + 'n' : null;
+    if (!wrongForm || it.gapAlts.includes(wrongForm)) return;
+    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?¿¡]/g, '') === g);
+    if (idx < 0) return;
+    const w = toks.slice(); w[idx] = toks[idx].replace(g, wrongForm);
+    out.push(withTrap('gustar', () => spotData(it.de, w, [idx], it.target, it.note, 'gustar')));
   });
   return out;
 }
-let BANK_SPOTS_ES = null;
-function genSpotSv(){ const r = Math.random(); return spotVariant(r < 0.5 ? spotInteSv() : r < 0.75 ? spotTempusSv() : spotNpSv()); }
-function genSpotEs(){
-  if (!BANK_SPOTS_ES) BANK_SPOTS_ES = bankSpotsEs();
-  const r = Math.random();
-  if (r < 0.3 && BANK_SPOTS_ES.length) return spotVariant(pick(BANK_SPOTS_ES)());
-  if (r < 0.65) return spotVariant(spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar'));
-  return spotVariant(spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara'));
+const withTrap = (trap, f) => Object.assign(f, { trap });
+// Schwedisch aus der Satzbank: hans/hennes/deras/dess, wo „sin“ nicht stehen kann. Das ist der Fall im Subjekt („Lisa och hennes man“,
+// „… att hennes bror är sjuk“, „om hans pappa“) und bei jag/du/vi/ni als Subjekt. Umgekehrt (sin → hans) wäre es nicht eindeutig falsch:
+// „Anna ringer hennes mamma“ geht auch, dann ist es die Mutter einer anderen.
+function svNounKind(w){
+  const e = lookupWord('sv', w); if (!e) return null;
+  if (/\(Plural\)/.test(e.de)) return 'pl';
+  const ett = NOUNS.some(n => n[3] === w && n[4] === 'ett') || PLURAL_SV.some(n => n[0] === w && n[1] === 'ett') || GENUS.sv.some(g => g[0] === w && g[1] === 'ett') || /ett-Wort/.test(e.de);
+  return ett ? 'ett' : 'en';
 }
+function bankSpotsSv(){
+  const out = [];
+  BANK.sv.forEach(it => {
+    if (it.trap !== 'sin' || it.tat || it.own || !['hans', 'hennes', 'deras', 'dess'].includes(it.gap)) return;
+    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?]/g, '') === it.gap);
+    if (idx < 1) return;
+    const prev = toks[idx - 1].toLowerCase(), first = toks[0].toLowerCase();
+    if (!(prev === 'och' || prev === 'att' || (prev === 'om' && /\bob\b/.test(it.de)) || ['jag', 'du', 'vi', 'ni'].includes(first))) return;
+    const kind = toks[idx + 1] && svNounKind(toks[idx + 1].replace(/[.,!?]/g, ''));
+    if (!kind) return;
+    const w = toks.slice(); w[idx] = { pl:'sina', ett:'sitt', en:'sin' }[kind];
+    out.push(withTrap('sin', () => spotData(it.de, w, [idx], it.target, it.note, 'sin', it.gapAlts.length ? it.gapAlts : [it.gap])));
+  });
+  return out;
+}
+let BANK_SPOTS_SV = null;
+// Aus Auswahlaufgaben (Präpositionen, Konnektoren): Eine der falschen Optionen steht im Satz. Diese Listen haben genau eine richtige Option,
+// auch ohne den deutschen Satz, also ist die eingesetzte sicher falsch. Welche von zwei anderen richtig ist, folgt nicht aus dem Finden: eintippen.
+function spotChoice(list, trap){
+  const [p, a, opts, de, note] = pick(list), wrongOpt = pick(opts.filter(o => o.toLowerCase() !== a.toLowerCase()));
+  const [before, after] = p.split('___'), fit = o => (before ? o.toLowerCase() : capFirst(o.toLowerCase()));
+  const words = (before + fit(wrongOpt) + after).split(' '), start = before ? before.trim().split(' ').length : 0;
+  return spotData(de, words, wrongOpt.split(' ').map((_, k) => start + k), before + fit(a) + after, note, trap, [a.toLowerCase()]);
+}
+let BANK_SPOTS_ES = null;
+function bankSpots(lang){
+  if (lang === 'es') return BANK_SPOTS_ES || (BANK_SPOTS_ES = bankSpotsEs());
+  return BANK_SPOTS_SV || (BANK_SPOTS_SV = bankSpotsSv());
+}
+const fromBank = (lang, trap) => () => pick(bankSpots(lang).filter(f => f.trap === trap))();
+// Fehlerarten je Sprache. Arten aus der Satzbank mit wenigen Sätzen kommen seltener (Gewicht = Sätze / 12), damit sich nicht dieselben vier Sätze häufen.
+const SPOT_CATS = {
+  sv:{ bisats:() => spotInteSv('bisats'), inversion:() => spotInteSv('inv'), tempus:spotTempusSv, species:spotNpSv, sin:fromBank('sv', 'sin'), prep:() => spotChoice(PREP_SV, 'prep'), verbind:() => spotChoice(VERB_SV, 'verbind') },
+  es:{ serestar:() => spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar'), porpara:() => spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara'), subjuntivo:fromBank('es', 'subjuntivo'), perfecto:fromBank('es', 'perfecto'), gustar:fromBank('es', 'gustar'), prep:() => spotChoice(PREP_ES, 'prep'), verbind:() => spotChoice(VERB_ES, 'verbind') }
+};
+const BANK_CATS = { sv:['sin'], es:['subjuntivo', 'perfecto', 'gustar'] };
+function spotWeight(lang, k){
+  if (!BANK_CATS[lang].includes(k)) return 1;
+  return Math.min(1, bankSpots(lang).filter(f => f.trap === k).length / 12);
+}
+// Welche Fehlerart kommt: nur Wahrscheinlichkeiten, keine festen Regeln, die man mit der Zeit durchschaut. Jede Art kann jederzeit kommen,
+// auch zweimal hintereinander. Gewicht = Grundgewicht (Satzbank-Arten mit wenigen Sätzen seltener) × eigene Fehlerquote im Thema
+// in den letzten 30 Tagen (sichere Arten halb so oft, wacklige bis doppelt so oft) × ½ für die Art der letzten Aufgabe (mischt, ohne zu verbieten).
+// Richtig oder fehlerhaft entscheidet jedes Mal unabhängig der Zufall (40 %): Aus den vorigen Sätzen lässt sich nichts ablesen.
+function spotWeights(lang){
+  const p = errStats(lang, 30).p, last = ((DB.used || {}).spotLast || {})[lang];
+  const w = {};
+  Object.keys(SPOT_CATS[lang]).forEach(k => {
+    const [n, bad] = p[k] || [0, 0], rate = (bad + 1) / (n + 5);
+    w[k] = spotWeight(lang, k) * Math.min(2, Math.max(0.5, 0.5 + 2.5 * rate)) * (k === last ? 0.5 : 1);
+  });
+  return w;
+}
+function genSpot(lang){
+  const w = spotWeights(lang), keys = Object.keys(w).filter(k => w[k] > 0), total = keys.reduce((a, k) => a + w[k], 0);
+  let r = Math.random() * total, cat = keys[keys.length - 1];
+  for (const k of keys) { r -= w[k]; if (r < 0) { cat = k; break; } }
+  return Object.assign(spotVariant(SPOT_CATS[lang][cat]()), { cat });
+}
+// Gedächtnis für das halbe Gewicht: schreibt makeFresh über seen(), erst wenn die Aufgabe wirklich gezeigt wird
+function spotSeen(lang, d){ const u = DB.used = DB.used || {}; (u.spotLast = u.spotLast || {})[lang] = d.cat; }
+const genSpotSv = () => genSpot('sv'), genSpotEs = () => genSpot('es');
 
 /* ---------- 2) Umbauen: einen Satz umformen, ohne Deutsch ---------- */
 const SV_PRES = { äta:'äter', dricka:'dricker', skriva:'skriver', läsa:'läser', se:'ser', gå:'går', komma:'kommer', göra:'gör', ta:'tar', köpa:'köper', träffa:'träffar', springa:'springer', flyga:'flyger', simma:'simmar', vinna:'vinner', glömma:'glömmer', ringa:'ringer', hitta:'hittar', sjunga:'sjunger', få:'får', sova:'sover', åka:'åker' };
@@ -317,8 +392,8 @@ function genGenus(lang){
 
 /* ---------- Registrierung: als Generatoren mit Kennzeichen „form“ ---------- */
 Object.assign(GENS, {
-  spot_sv:{ lang:'sv', form:true, daily:true, label:'Fehler finden', make:genSpotSv },
-  spot_es:{ lang:'es', form:true, daily:true, label:'Fehler finden', make:genSpotEs },
+  spot_sv:{ lang:'sv', form:true, daily:true, label:'Fehler finden', make:genSpotSv, seen:d => spotSeen('sv', d) },
+  spot_es:{ lang:'es', form:true, daily:true, label:'Fehler finden', make:genSpotEs, seen:d => spotSeen('es', d) },
   trans_sv:{ lang:'sv', form:true, daily:true, label:'Umbauen', make:genTransSv },
   trans_es:{ lang:'es', form:true, daily:true, label:'Umbauen', make:genTransEs },
   time_sv:{ lang:'sv', form:true, daily:true, label:'Uhrzeiten & Zahlen', make:() => genTime('sv') },

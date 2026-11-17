@@ -1,14 +1,9 @@
 /* ---------- Nachschlagen: Themenblatt, Listen, Beispiele im Wörterbuch ---------- */
 // Ein typischer Fehler zum Thema, aus denselben Bausteinen wie „Fehler finden“
 function typicalError(lang, trap){
-  if (lang === 'es' && (trap === 'subjuntivo' || trap === 'perfecto')) {
-    if (!BANK_SPOTS_ES) BANK_SPOTS_ES = bankSpotsEs();
-    const c = BANK_SPOTS_ES.map(f => f()).filter(d => d.trap === trap);
-    return c.length ? pick(c) : null;
-  }
-  const gen = lang === 'sv'
-    ? { bisats:spotInteSv, inversion:spotInteSv, tempus:spotTempusSv, species:spotNpSv }[trap]
-    : { serestar:() => spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar'), porpara:() => spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara') }[trap];
+  const c = bankSpots(lang).filter(f => f.trap === trap);
+  if (c.length) return pick(c)();
+  const gen = SPOT_CATS[lang][trap];
   if (!gen) return null;
   for (let k = 0; k < 40; k++) { const d = gen(); if (d.trap === trap) return d; }
   return null;

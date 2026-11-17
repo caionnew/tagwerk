@@ -64,3 +64,50 @@ test('Rundenthemen nach dem Thema der erzeugten Aufgabe; nach fehlerfreier Runde
   assert.match(html, /Indefinido vs\. Imperfecto/); assert.match(html, /4 von 10/);
   assert.equal(app.get('nextTopicHtml')(Object.assign({}, r, { bad:1 })), '');
 });
+test('jede Fehlerart einzeln: genau eine Fehlerstelle, die Verbesserung passt zum richtigen Satz', () => {
+  const CATS = app.get('SPOT_CATS');
+  for (const lang of ['sv', 'es']) for (const k of Object.keys(CATS[lang])) for (let i = 0; i < 40; i++) {
+    const d = CATS[lang][k](), shown = d.words.join(' ');
+    assert.notEqual(shown.toLowerCase(), d.full.toLowerCase(), `${lang}/${k}: ${shown}`);
+    assert.ok(d.wrong.length && d.wrong.every(x => x >= 0 && x < d.words.length), `${lang}/${k}: ${shown}`);
+    assert.equal(d.trap, k === 'bisats' || k === 'inversion' ? d.trap : k, `${lang}/${k}`);
+    assert.ok(d.note, `${lang}/${k}: ohne Erklärung`);
+    if (d.fix) assert.ok(d.fix.some(f => d.full.toLowerCase().includes(f.toLowerCase())), `${lang}/${k}: ${d.full} / ${d.fix}`);
+  }
+});
+test('sin/hans aus der Satzbank: nur wo „sin“ nicht stehen kann, mit passender Form und Besitzer zum Eintippen', () => {
+  const all = app.get('bankSpotsSv')().map(f => f()), by = Object.fromEntries(all.map(d => [d.words.join(' '), d]));
+  assert.equal(by['Lisa och sin man bor i Lund.'].fix.join(), 'hennes');
+  assert.equal(by['Jonas tror att sina kollegor inte gillar honom.'].fix.join(), 'hans');
+  assert.equal(by['Grannarna och sin hund har rest bort.'].fix.join(), 'deras');
+  assert.equal(by['Jag lånar sin bil.'].fix.join(), 'hans');
+  assert.ok(by['Företaget och sina kunder har kommit överens.'].fix.includes('dess'));
+  // „Peter tycker om sin syster“ wäre ein richtiger Satz (seine eigene Schwester), also keine Aufgabe
+  assert.ok(!Object.keys(by).some(s => s.startsWith('Peter tycker om')));
+});
+test('gustar & Co.: Einzahl und Mehrzahl vertauscht, ohne „me da igual“ und ohne Wendungen aus zwei Wörtern', () => {
+  const all = app.get('bankSpotsEs')().filter(f => f.trap === 'gustar').map(f => f().words.join(' '));
+  assert.ok(all.includes('Me gusta los libros.') && all.includes('Me duele los pies.') && all.includes('Me encantan la música.'));
+  assert.ok(all.every(s => !/\bdan? (igual|pena)\b/.test(s)), all.find(s => /\bdan? /.test(s)));
+});
+test('Auswahl nach Wahrscheinlichkeit: wacklige Themen öfter, sichere seltener, die letzte Art halb so oft, nichts ausgeschlossen', () => {
+  const d = app.get('today')();
+  app.run(`DB.tlog = { '${d}': { es:{ 'p:serestar':[20, 0], 'p:subjuntivo':[20, 10] } } }; DB.used = DB.used || {}; DB.used.spotLast = { es:'porpara' };`);
+  const w = app.get('spotWeights')('es');
+  assert.ok(w.subjuntivo > w.prep && w.prep > w.serestar, JSON.stringify(w));
+  // 0 von 20 falsch → 0,6; 10 von 20 falsch → 1,6 (geglättet mit einem Fehler auf fünf Aufgaben vorweg)
+  assert.ok(Math.abs(w.serestar - 0.6) < 1e-9 && Math.abs(w.subjuntivo - 1.6) < 1e-9, JSON.stringify(w));
+  assert.equal(w.porpara * 2, w.prep);
+  assert.ok(w.perfecto > 0 && w.perfecto < w.prep);
+  assert.ok(Object.values(w).every(x => x > 0));
+  // Gedächtnis erst beim Zeigen
+  app.get('spotSeen')('es', { cat:'gustar' });
+  assert.equal(app.run('DB.used.spotLast.es'), 'gustar');
+  app.run('DB.tlog = {}; DB.used.spotLast = {};');
+});
+test('Themenblatt: typischer Fehler jetzt auch für sin, gustar, Präpositionen und Konnektoren', () => {
+  const te = app.get('typicalError');
+  for (const [lang, trap] of [['sv', 'sin'], ['es', 'gustar'], ['sv', 'prep'], ['es', 'verbind'], ['sv', 'inversion']]) {
+    const d = te(lang, trap); assert.ok(d && d.wrong.length && d.trap === trap, `${lang}/${trap}`);
+  }
+});

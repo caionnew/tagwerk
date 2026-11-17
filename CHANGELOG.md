@@ -2,6 +2,27 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.47.0
+**„Fehler finden“: sieben Fehlerarten je Sprache statt vier, Auswahl nach Wahrscheinlichkeit.**
+- **Warum:** Im Schwedischen war jede zweite Aufgabe Wortstellung, im Spanischen 70 % ser/estar oder por/para. Bei so wenigen Arten kam dieselbe oft zwei-, dreimal hintereinander.
+- **Neu, Schwedisch:**
+  - **sin/hans:** aus der Satzbank, nur wo „sin“ nicht stehen kann, etwa „Lisa och sin man bor i Lund“ oder „… att sin bror är sjuk“. Danach den richtigen Besitzer eintippen (hennes, hans, deras, dess).
+  - **Präpositionen** (blev förvånad på → över) und **feste Verbindungen** (göra ett beslut → fatta) aus den Auswahllisten. Danach das richtige Wort eintippen.
+  - Wortstellung ist jetzt zwei getrennte Arten: Stellung von inte & Co. und Inversion.
+- **Neu, Spanisch:**
+  - **gustar & Co.:** Einzahl und Mehrzahl vertauscht, aus der Satzbank (me gusta los libros, me duele los pies).
+  - **Präpositionen** (me olvidé en llamarte → de) und **Konnektoren** (por lo tanto → sin embargo, auch aus mehreren Wörtern). Danach das richtige Wort eintippen.
+- **Nicht aufgenommen:** sin → hans („Anna ringer hennes mamma“ ist auch richtig, dann mit anderem Besitzer) und „me da igual“ → „me dan igual“. In beiden Fällen wäre der Fehler nicht eindeutig.
+- **Auswahl nach Wahrscheinlichkeit, ohne feste Regeln.** Feste Regeln wie „nie zweimal dieselbe Art“ oder „höchstens drei richtige Sätze in Folge“ durchschaut man mit der Zeit, und dann verraten die vorigen Aufgaben die nächste.
+  - **Richtig oder fehlerhaft:** Das entscheidet jedes Mal unabhängig der Zufall (40 % richtig). Aus den vorigen Sätzen lässt sich nichts ablesen.
+  - **Welche Fehlerart:**
+    - Eigene Fehler zählen: Themen, in denen in den letzten 30 Tagen viel danebenging, kommen bis doppelt so oft, sichere halb so oft.
+    - Die Art der letzten Aufgabe hat halbes Gewicht. Sie bleibt möglich (rund 8 % statt 14 %), nur mischt es sich besser.
+    - Arten mit wenigen Sätzen in der Satzbank (Indefinido: 4) kommen seltener, damit sich nicht dieselben Sätze häufen.
+- **Themenblatt:** Den „typischen Fehler“ gibt es jetzt auch für sin/hans, gustar, Präpositionen und Konnektoren.
+- **Wörterbuch:** 18 neue Einträge für die eingesetzten falschen Formen (encantan, städa, såsom …).
+- 5 neue Einheitstests (248).
+
 ## 24.46.0
 **8 neue spanische Lesetexte auf B2/C1**, jeder mit drei Fragen und drei Sätzen fürs Tagwerk.
 - **El Ecce Homo de Borja:** die missglückte Restaurierung von 2012, die dem Ort fast 300.000 Besucher brachte; Cecilia Giménez starb im Dezember 2025.

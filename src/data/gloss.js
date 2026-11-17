@@ -985,6 +985,13 @@ blöt|blöt|nass; i blöt = ins Nasse
 småspik|småspik|kleine Nägel; det regnar småspik = es schüttet
 skinn|skinn|Haut, Fell
 klistret|klister|der Kleister; sitta i klistret = in der Patsche sitzen
+mot|mot|gegen, nach (Richtung)
+städa|städa|aufräumen, putzen
+putsa|putsa|putzen, polieren
+såsom|såsom|wie, so wie (gehoben)
+fattade|fatta|fasste (Präteritum); fatta ett beslut = eine Entscheidung treffen
+sålunda|sålunda|so, auf diese Weise (gehoben)
+satte|sätta|setzte (Präteritum)
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch
@@ -2068,6 +2075,17 @@ quedé|quedarse|ich blieb, wurde (Indefinido); me quedé de piedra = ich war wie
 piedra|piedra|Stein
 anoche|anoche|gestern Abend, letzte Nacht
 pegué|pegar|ich klebte (Indefinido); no pegar ojo = kein Auge zutun
+alegrarían|alegrar|würden freuen (Konditional, Mehrzahl)
+encantarían|encantar|würden sehr gefallen (Konditional, Mehrzahl)
+encantan|encantar|gefallen sehr (Mehrzahl): me encantan los libros
+molestan|molestar|stören (Mehrzahl): me molestan los ruidos
+parecen|parecer|scheinen (Mehrzahl); ¿qué te parecen? = was hältst du davon?
+apetecen|apetecer|haben Lust auf (Mehrzahl): me apetecen unas tapas
+interesan|interesar|interessieren (Mehrzahl): me interesan los idiomas
+cuestan|costar|kosten, fallen schwer (Mehrzahl)
+alcanzan|alcanzar|reichen, erreichen (Mehrzahl)
+sienta|sentar|steht (Kleidung): te sienta bien = steht dir gut
+preguntar|preguntar|fragen
 `
 };
 

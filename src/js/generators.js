@@ -243,7 +243,7 @@ const SUBJ_ES = [
 ];
 const plEs = w => (/[aeiouáéó]$/.test(w) ? w + 's' : w + 'es');
 const agree = (m, f, s) => { const sg = s.g === 'f' ? f : m; return s.p >= 3 ? plEs(sg) : sg; };
-const SE_STATE = [['cansado', 'cansada', 'müde'], ['enfermo', 'enferma', 'krank'], ['contento', 'contenta', 'zufrieden'], ['nervioso', 'nerviosa', 'nervös'], ['preocupado', 'preocupada', 'besorgt'], ['ocupado', 'ocupada', 'beschäftigt'], ['triste', 'triste', 'traurig']];
+const SE_STATE = [['cansado', 'cansada', 'müde'], ['enfermo', 'enferma', 'krank'], ['contento', 'contenta', 'zufrieden'], ['nervioso', 'nerviosa', 'nervös', 'Heute, also im Moment: estar nervioso. ser nervioso hieße: ein nervöser Mensch.'], ['preocupado', 'preocupada', 'besorgt'], ['ocupado', 'ocupada', 'beschäftigt'], ['triste', 'triste', 'traurig', 'Heute, also im Moment: estar triste. ser triste hieße: ein trauriger Mensch.']];
 const SE_CHAR = [['alto', 'alta', 'groß'], ['simpático', 'simpática', 'nett'], ['inteligente', 'inteligente', 'intelligent'], ['tímido', 'tímida', 'schüchtern'], ['puntual', 'puntual', 'pünktlich'], ['generoso', 'generosa', 'großzügig'], ['divertido', 'divertida', 'lustig']];
 const SE_PROF = [['médico', 'médica', 'médicos', 'médicas', 'Arzt', 'Ärztin', 'Ärzte', 'Ärztinnen'], ['profesor', 'profesora', 'profesores', 'profesoras', 'Lehrer', 'Lehrerin', 'Lehrer', 'Lehrerinnen'], ['enfermero', 'enfermera', 'enfermeros', 'enfermeras', 'Krankenpfleger', 'Krankenpflegerin', 'Krankenpfleger', 'Krankenpflegerinnen'], ['estudiante', 'estudiante', 'estudiantes', 'estudiantes', 'Student', 'Studentin', 'Studenten', 'Studentinnen']];
 const SE_FROM = [['Alemania', 'Deutschland'], ['Austria', 'Österreich'], ['Suiza', 'der Schweiz'], ['Colombia', 'Kolumbien']];
@@ -259,14 +259,14 @@ const SE_SHIFT = [
   ['Yo ___ aburrido.', 'Ich langweile mich.', 'estoy', 'aburrido mit estar: gelangweilt. Mit ser: langweilig.'],
   ['Ana ___ muy lista.', 'Ana ist sehr klug.', 'es', 'listo mit ser: klug. Mit estar: fertig.'],
   ['Nosotros ___ listos.', 'Wir sind fertig.', 'estamos', 'listo mit estar: fertig. Mit ser: klug.'],
-  ['La sopa ___ muy rica.', 'Die Suppe ist sehr lecker.', 'está', 'rico mit estar: lecker. Mit ser: reich.'],
-  ['Su tío ___ muy rico.', 'Sein Onkel ist sehr reich.', 'es', 'rico mit ser: reich. Mit estar: lecker.'],
+  ['La sopa ___ muy rica.', 'Die Suppe ist sehr lecker.', 'está', 'Von diesem Essen jetzt: estar rico, lecker. Bei Personen heißt ser rico reich.'],
+  ['Su tío ___ muy rico.', 'Sein Onkel ist sehr reich.', 'es', 'Bei Personen heißt ser rico reich. estar rico sagt man von Essen: lecker.'],
   ['Pablo ___ muy guapo hoy.', 'Pablo sieht heute sehr gut aus.', 'está', 'guapo mit estar: wie jemand gerade aussieht. Mit ser: wie jemand grundsätzlich ist.']
 ];
 function genSerEstar(){
   const s = pick(SUBJ_ES);
   const frames = [
-    [1.4, () => { const a = pick(SE_STATE), today = Math.random() < 0.5; return [`${s.es} ___ ${agree(a[0], a[1], s)}${today ? ' hoy' : ''}.`, `${s.de} ${SEIN[s.p]}${today ? ' heute' : ''} ${a[2]}.`, ESTAR[s.p], 'Zustand, also wie es jemandem gerade geht: estar.']; }],
+    [1.4, () => { const a = pick(SE_STATE), today = !!a[3] || Math.random() < 0.5; return [`${s.es} ___ ${agree(a[0], a[1], s)}${today ? ' hoy' : ''}.`, `${s.de} ${SEIN[s.p]}${today ? ' heute' : ''} ${a[2]}.`, ESTAR[s.p], a[3] || 'Zustand, also wie es jemandem gerade geht: estar.']; }],
     [1, () => { const a = pick(SE_CHAR); return [`${s.es} ___ muy ${agree(a[0], a[1], s)}.`, `${s.de} ${SEIN[s.p]} sehr ${a[2]}.`, SER[s.p], 'Eigenschaft, also wie jemand ist: ser.']; }],
     [1, () => { const a = pick(SE_PROF), pl = s.p >= 3, f = s.g === 'f'; return [`${s.es} ___ ${a[(pl ? 2 : 0) + (f ? 1 : 0)]}.`, `${s.de} ${SEIN[s.p]} ${a[4 + (pl ? 2 : 0) + (f ? 1 : 0)]}.`, SER[s.p], 'Beruf: ser, und zwar ohne Artikel.']; }],
     [0.8, () => { const a = pick(SE_FROM); return [`${s.es} ___ de ${a[0]}.`, `${s.de} ${KOMMEN[s.p]} aus ${a[1]}.`, SER[s.p], 'Herkunft: ser de. Auch wenn man im Deutschen „kommen aus“ sagt.']; }],
@@ -335,7 +335,7 @@ const VP_SV = [
   ['plockar', 'svamp', ['aldrig', 'alltid', 'ofta'], ['sammle', 'sammelst', 'sammelt', 'sammeln', 'sammeln'], '{S} {V} {A} Pilze', '{s} {A} Pilze {V}', 'På hösten', 'Im Herbst'],
   ['spelar', 'innebandy', ['aldrig', 'alltid', 'ofta'], ['spiele', 'spielst', 'spielt', 'spielen', 'spielen'], '{S} {V} {A} Unihockey', '{s} {A} Unihockey {V}', 'På onsdagar', 'Mittwochs'],
   ['jobbar', 'hemifrån', ['aldrig', 'alltid', 'ofta'], ['arbeite', 'arbeitest', 'arbeitet', 'arbeiten', 'arbeiten'], '{S} {V} {A} von zu Hause', '{s} {A} von zu Hause {V}', 'På måndagar', 'Montags'],
-  ['tar', 'semester i juli', ['aldrig', 'alltid', 'ofta'], ['mache', 'machst', 'macht', 'machen', 'machen'], '{S} {V} {A} im Juli Urlaub', '{s} {A} im Juli Urlaub {V}', 'Numera', 'Inzwischen', [['åker', 'på semester i juli']]],
+  ['tar', 'semester i juli', ['aldrig', 'alltid', 'ofta'], ['mache', 'machst', 'macht', 'machen', 'machen'], '{S} {V} {A} im Juli Urlaub', '{s} {A} im Juli Urlaub {V}', 'Numera', 'Inzwischen', [['åker', 'på semester i juli'], ['har', 'semester i juli']]],
   ['glömmer', 'nycklarna', ['aldrig', 'alltid', 'ofta'], ['vergesse', 'vergisst', 'vergisst', 'vergessen', 'vergessen'], '{S} {V} {A} die Schlüssel', '{s} {A} die Schlüssel {V}', 'På morgonen', 'Morgens'],
   ['hittar', 'glasögonen', ['inte'], ['finde', 'findest', 'findet', 'finden', 'finden'], '{S} {V} die Brille {A}', '{s} die Brille {A} {V}', 'Just nu', 'Gerade'],
   ['vet', 'svaret', ['inte'], ['weiß', 'weißt', 'weiß', 'wissen', 'wissen'], '{S} {V} die Antwort {A}', '{s} die Antwort {A} {V}', 'Ärligt talat', 'Ehrlich gesagt'],
@@ -391,13 +391,13 @@ const VERB_SV = [
   ['Vi ___ hänsyn till grannarna.', 'tar', ['tar', 'ger', 'gör'], 'Wir nehmen Rücksicht auf die Nachbarn.', 'ta hänsyn till = Rücksicht nehmen auf.'],
   ['Han ___ ett löfte till sin mamma.', 'gav', ['gav', 'gjorde', 'sa'], 'Er gab seiner Mutter ein Versprechen.', 'ge ett löfte = ein Versprechen geben.'],
   ['Det ___ ingen roll.', 'spelar', ['spelar', 'gör', 'har'], 'Das spielt keine Rolle.', 'det spelar ingen roll = das spielt keine Rolle, das ist egal.'],
-  ['Glöm inte att ___ tänderna.', 'borsta', ['borsta', 'tvätta', 'putsa'], 'Vergiss nicht, die Zähne zu putzen.', 'Zähne borstar man; putsa = polieren (Schuhe, Fenster).'],
-  ['Hon ___ examen i juni.', 'tog', ['tog', 'gjorde', 'fick'], 'Sie hat im Juni ihren Abschluss gemacht.', 'ta examen = den Abschluss machen.'],
-  ['Det ___ tid att lära sig ett språk.', 'tar', ['tar', 'kostar', 'behöver'], 'Es braucht Zeit, eine Sprache zu lernen.', 'det tar tid = es dauert, es braucht Zeit.'],
+  ['Glöm inte att ___ tänderna.', 'borsta', ['borsta', 'städa', 'putsa'], 'Vergiss nicht, die Zähne zu putzen.', 'Zähne borstar man. putsa = polieren (Schuhe, Fenster), städa = putzen im Sinn von sauber machen (Wohnung).'],
+  ['Hon ___ examen i juni.', 'tog', ['tog', 'gjorde', 'gav'], 'Sie hat im Juni ihren Abschluss gemacht.', 'ta examen = den Abschluss machen.'],
+  ['Det ___ tid att lära sig ett språk.', 'tar', ['tar', 'gör', 'behöver'], 'Es braucht Zeit, eine Sprache zu lernen.', 'det tar tid = es dauert, es braucht Zeit.'],
   ['Tåget var försenat. ___ missade vi mötet.', 'Följaktligen', ['Följaktligen', 'Däremot', 'Dessutom'], 'Der Zug hatte Verspätung. Folglich verpassten wir das Treffen.', 'följaktligen = folglich (gehoben). Danach Inversion: Följaktligen missade vi.'],
   ['Han har bott här i tio år. ___ pratar han nästan ingen svenska.', 'Ändå', ['Ändå', 'Därför', 'Alltså'], 'Er wohnt seit zehn Jahren hier. Trotzdem spricht er kaum Schwedisch.', 'ändå = trotzdem. Danach Inversion: Ändå pratar han.'],
   ['___ jag vet har ingen ringt.', 'Såvitt', ['Såvitt', 'Såsom', 'Sålunda'], 'Soweit ich weiß, hat niemand angerufen.', 'såvitt jag vet = soweit ich weiß.'],
-  ['Du får låna bilen ___ du kör försiktigt.', 'förutsatt att', ['förutsatt att', 'trots att', 'så att'], 'Du darfst das Auto leihen, vorausgesetzt, dass du vorsichtig fährst.', 'förutsatt att = vorausgesetzt, dass.'],
+  ['Du får låna bilen ___ du kör försiktigt.', 'förutsatt att', ['förutsatt att', 'trots att', 'så att'], 'Du darfst dir das Auto leihen, vorausgesetzt, du fährst vorsichtig.', 'förutsatt att = vorausgesetzt, dass.'],
   ['Vi åker ___ det regnar eller inte.', 'oavsett om', ['oavsett om', 'eftersom', 'medan'], 'Wir fahren, egal ob es regnet oder nicht.', 'oavsett om = egal ob.'],
   ['___ priserna har stigit handlar folk mindre.', 'I och med att', ['I och med att', 'Trots att', 'Innan'], 'Da die Preise gestiegen sind, kaufen die Leute weniger ein.', 'i och med att = dadurch dass, da. Nach dem Nebensatz folgt Inversion: handlar folk.'],
   ['Hon pluggar ___ hon arbetar heltid.', 'samtidigt som', ['samtidigt som', 'innan', 'sedan'], 'Sie studiert und arbeitet gleichzeitig Vollzeit.', 'samtidigt som = gleichzeitig, während.'],
@@ -435,7 +435,7 @@ const VERB_ES = [
   ['Vamos a ___ un paseo.', 'dar', ['dar', 'hacer', 'tomar'], 'Lass uns einen Spaziergang machen.', 'dar un paseo = spazieren gehen.'],
   ['Ella siempre ___ razón.', 'tiene', ['tiene', 'da', 'hace'], 'Sie hat immer recht.', 'tener razón = recht haben.'],
   ['Mi abuelo ___ cien años el mes que viene.', 'cumple', ['cumple', 'tiene', 'hace'], 'Mein Großvater wird nächsten Monat hundert.', 'cumplir años = ein Alter erreichen, Geburtstag haben.'],
-  ['Este viaje me ___ mucha ilusión.', 'hace', ['hace', 'da', 'pone'], 'Auf diese Reise freue ich mich sehr.', 'hacer ilusión = Vorfreude machen.'],
+  ['Este viaje me ___ mucha ilusión.', 'hace', ['hace', 'tiene', 'pone'], 'Auf diese Reise freue ich mich sehr.', 'hacer ilusión = Vorfreude machen.'],
   ['Hay que ___ cola para entrar.', 'hacer', ['hacer', 'tomar', 'poner'], 'Man muss Schlange stehen, um reinzukommen.', 'hacer cola = Schlange stehen.'],
   ['Mi hijo nunca me ___ caso.', 'hace', ['hace', 'da', 'pone'], 'Mein Sohn hört nie auf mich.', 'hacer caso a alguien = auf jemanden hören.'],
   ['Le ___ las gracias por su ayuda.', 'di', ['di', 'hice', 'dije'], 'Ich habe mich für seine Hilfe bedankt.', 'dar las gracias = sich bedanken.'],
@@ -450,12 +450,12 @@ const VERB_ES = [
   ['Hacía mucho calor, ___ nos quedamos en casa.', 'así que', ['así que', 'aunque', 'para que'], 'Es war sehr heiß, also blieben wir zu Hause.', 'así que = also, deshalb (Folge).'],
   ['Mi hermano es muy ordenado, ___ yo soy un desastre.', 'mientras que', ['mientras que', 'ya que', 'así que'], 'Mein Bruder ist sehr ordentlich, während ich ein Chaot bin.', 'mientras que = während (Gegensatz).'],
   ['___ a la economía, el informe es optimista.', 'En cuanto', ['En cuanto', 'A pesar', 'Por lo tanto'], 'Was die Wirtschaft betrifft, ist der Bericht optimistisch.', 'en cuanto a = was … betrifft.'],
-  ['___ lo que dices, mañana hará buen tiempo.', 'Según', ['Según', 'Mientras', 'Aunque'], 'Nach dem, was du sagst, wird morgen schönes Wetter.', 'según = laut, nach.'],
+  ['___ lo que dices, mañana hará buen tiempo.', 'Según', ['Según', 'Mientras', 'Aunque'], 'Nach dem, was du sagst, wird das Wetter morgen schön.', 'según = laut, nach.'],
   ['Estudia mucho ___ aprobar.', 'con el fin de', ['con el fin de', 'a pesar de', 'en lugar de'], 'Er lernt viel, um zu bestehen.', 'con el fin de + Infinitiv = um zu (gehoben).'],
   ['Te ___ de menos.', 'echo', ['echo', 'tengo', 'hago'], 'Ich vermisse dich.', 'echar de menos = vermissen (in Spanien; in Lateinamerika meist extrañar).'],
   ['Hay que ___ en cuenta el precio.', 'tener', ['tener', 'poner', 'dar'], 'Man muss den Preis berücksichtigen.', 'tener en cuenta = berücksichtigen.'],
   ['La empresa ___ a cabo una reforma.', 'llevó', ['llevó', 'hizo', 'tomó'], 'Das Unternehmen führte eine Reform durch.', 'llevar a cabo = durchführen.'],
-  ['No me ___ cuenta de la hora.', 'di', ['di', 'hice', 'tomé'], 'Ich habe nicht auf die Uhrzeit geachtet.', 'darse cuenta de = merken, bemerken.'],
+  ['No me ___ cuenta de la hora.', 'di', ['di', 'hice', 'tomé'], 'Ich habe nicht gemerkt, wie spät es war.', 'darse cuenta de = merken, bemerken.'],
   ['Siempre ___ prisa por las mañanas.', 'tengo', ['tengo', 'hago', 'doy'], 'Morgens habe ich es immer eilig.', 'tener prisa = es eilig haben.'],
   ['Me ___ vergüenza hablar en público.', 'da', ['da', 'hace', 'pone'], 'Es ist mir peinlich, öffentlich zu sprechen.', 'dar vergüenza = peinlich sein.'],
   ['Tenemos que ___ las paces.', 'hacer', ['hacer', 'dar', 'tener'], 'Wir müssen uns versöhnen.', 'hacer las paces = sich versöhnen.'],
@@ -504,7 +504,7 @@ const PREP_SV = [
   ['Jag är beroende ___ kaffe.', 'av', ['av', 'på', 'för'], 'Ich bin abhängig von Kaffee.', 'beroende av = abhängig von.'],
   ['Hon var nöjd ___ resultatet.', 'med', ['med', 'på', 'av'], 'Sie war mit dem Ergebnis zufrieden.', 'nöjd med = zufrieden mit.'],
   ['Jag är van ___ det.', 'vid', ['vid', 'med', 'på'], 'Ich bin daran gewöhnt.', 'van vid = gewöhnt an.'],
-  ['Hon blev förvånad ___ beskedet.', 'över', ['över', 'på', 'med'], 'Sie war überrascht über die Nachricht.', 'förvånad över = überrascht über.'],
+  ['Hon blev förvånad ___ beskedet.', 'över', ['över', 'på', 'med'], 'Sie war über die Nachricht überrascht.', 'förvånad över = überrascht über.'],
   ['Han är känd ___ sina böcker.', 'för', ['för', 'av', 'på'], 'Er ist für seine Bücher bekannt.', 'känd för = bekannt für.'],
   ['Vilket lag håller du ___?', 'på', ['på', 'med', 'för'], 'Für welche Mannschaft bist du?', 'hålla på ett lag = Fan sein; hålla med = zustimmen.'],
   ['Jag ser fram ___ semestern.', 'emot', ['emot', 'på', 'till'], 'Ich freue mich auf den Urlaub.', 'se fram emot = sich freuen auf.'],
@@ -533,7 +533,7 @@ const PREP_ES = [
   ['Pienso mucho ___ ti.', 'en', ['en', 'de', 'a'], 'Ich denke viel an dich.', 'pensar en = denken an. pensar de = halten von.'],
   ['Se enamoró ___ su vecina.', 'de', ['de', 'con', 'en'], 'Er verliebte sich in seine Nachbarin.', 'enamorarse de = sich verlieben in.'],
   ['Me acuerdo ___ aquel verano.', 'de', ['de', 'en', 'con'], 'Ich erinnere mich an jenen Sommer.', 'acordarse de = sich erinnern an.'],
-  ['Tardamos una hora ___ llegar.', 'en', ['en', 'de', 'para'], 'Wir brauchten eine Stunde, um anzukommen.', 'tardar en = brauchen (Zeit), um.'],
+  ['Tardamos una hora ___ llegar.', 'en', ['en', 'de', 'para'], 'Wir brauchten eine Stunde, bis wir ankamen.', 'tardar en = brauchen (Zeit), um.'],
   ['Dejé ___ fumar hace años.', 'de', ['de', 'a', 'con'], 'Ich habe vor Jahren aufgehört zu rauchen.', 'dejar de = aufhören zu.'],
   ['Empezó ___ llover.', 'a', ['a', 'de', 'en'], 'Es fing an zu regnen.', 'empezar a = anfangen zu.'],
   ['Confío ___ ti.', 'en', ['en', 'a', 'con'], 'Ich vertraue dir.', 'confiar en = vertrauen.'],
@@ -562,16 +562,16 @@ const PREP_ES = [
   ['Se casó ___ un actor.', 'con', ['con', 'de', 'a'], 'Sie heiratete einen Schauspieler.', 'casarse con = heiraten.'],
   ['Me cuesta acostumbrarme ___ horario.', 'al', ['al', 'en', 'con'], 'Es fällt mir schwer, mich an die Zeiten zu gewöhnen.', 'acostumbrarse a = sich gewöhnen an.'],
   ['Trato ___ entenderte.', 'de', ['de', 'a', 'en'], 'Ich versuche, dich zu verstehen.', 'tratar de = versuchen zu.'],
-  ['Quedamos ___ las ocho.', 'a', ['a', 'en', 'por'], 'Wir haben uns für acht Uhr verabredet.', 'quedar a una hora = sich verabreden für.'],
+  ['Quedamos ___ las ocho.', 'a', ['a', 'con', 'de'], 'Wir haben uns für acht Uhr verabredet.', 'quedar a una hora = sich verabreden für.'],
   ['Me equivoqué ___ número.', 'de', ['de', 'en', 'con'], 'Ich habe mich verwählt.', 'equivocarse de = das Falsche nehmen (Nummer, Zug, Tür).'],
   ['Se convirtió ___ un problema.', 'en', ['en', 'a', 'de'], 'Es wurde zu einem Problem.', 'convertirse en = werden zu.'],
   ['Volví ___ casa tarde.', 'a', ['a', 'en', 'de'], 'Ich kam spät nach Hause.', 'volver a casa = nach Hause zurückkommen.'],
   ['Vuelve ___ intentarlo.', 'a', ['a', 'de', 'en'], 'Versuch es noch einmal.', 'volver a + Infinitiv = etwas noch einmal tun.'],
   ['Acabo ___ llegar.', 'de', ['de', 'a', 'en'], 'Ich bin gerade angekommen.', 'acabar de + Infinitiv = gerade etwas getan haben.'],
-  ['Estoy de acuerdo ___ ti.', 'con', ['con', 'de', 'en'], 'Ich bin deiner Meinung.', 'estar de acuerdo con = einverstanden sein mit.'],
+  ['Estoy de acuerdo ___ tu propuesta.', 'con', ['con', 'de', 'en'], 'Ich bin mit deinem Vorschlag einverstanden.', 'estar de acuerdo con = einverstanden sein mit.'],
   ['Huele ___ café.', 'a', ['a', 'de', 'con'], 'Es riecht nach Kaffee.', 'oler a = riechen nach.'],
   ['Sabe ___ limón.', 'a', ['a', 'de', 'con'], 'Es schmeckt nach Zitrone.', 'saber a = schmecken nach.'],
-  ['Se fía ___ su instinto.', 'de', ['de', 'en', 'con'], 'Er verlässt sich auf seinen Instinkt.', 'fiarse de = vertrauen, sich verlassen auf.'],
+  ['Se fía ___ su instinto.', 'de', ['de', 'con', 'por'], 'Er verlässt sich auf seinen Instinkt.', 'fiarse de = vertrauen, sich verlassen auf (seltener auch fiarse en).'],
   ['Siempre presume ___ su coche.', 'de', ['de', 'con', 'en'], 'Er gibt immer mit seinem Auto an.', 'presumir de = angeben mit.'],
   ['Me arrepiento ___ lo que dije.', 'de', ['de', 'en', 'a'], 'Ich bereue, was ich gesagt habe.', 'arrepentirse de = bereuen.'],
   ['Se empeñó ___ comprar la casa.', 'en', ['en', 'de', 'a'], 'Er bestand darauf, das Haus zu kaufen.', 'empeñarse en = darauf bestehen, sich in den Kopf setzen.'],
@@ -611,11 +611,13 @@ function genTextGap(lang){
 }
 
 /* ---------- Begleiter: min/mitt/mina, den här + bestimmte Form; nuestro/a/os/as, este/esa, Adjektiv-Übereinstimmung ---------- */
+// „mitt väder“, „ditt ögonblick“: richtig gebeugt, aber so sagt es niemand
+const NO_POSS_SV = ['väder', 'ögonblick'];
 const POSS_SV = [['mein', 'min', 'mitt', 'mina'], ['dein', 'din', 'ditt', 'dina'], ['unser', 'vår', 'vårt', 'våra']];
 function genDetSv(){
   const type = pick(['poss', 'poss', 'possnoun', 'posspl', 'dem', 'demnoun', 'dempl']);
   if (type === 'poss' || type === 'possnoun') {
-    const [w, g, de] = pick(GENUS.sv), parts = de.split(' '), P = pick(POSS_SV), det = g === 'ett' ? P[2] : P[1];
+    const [w, g, de] = pick(GENUS.sv.filter(x => !NO_POSS_SV.includes(x[0]))), parts = de.split(' '), P = pick(POSS_SV), det = g === 'ett' ? P[2] : P[1];
     const deL = `${P[0]}${parts[0] === 'die' ? 'e' : ''} ${parts.slice(1).join(' ')}`;
     if (type === 'poss') return { prompt:`___ ${w}`, deLine:deL, answers:[det], label:'Welches Possessivpronomen?', hint:P[0], gap:true, full:`${det} ${w}`, note:`${w} ist ein ${g}-Wort, also ${det} ${w}.` };
     return { prompt:`${det} ___`, deLine:deL, answers:[w], label:'Welche Form nach dem Possessivpronomen?', hint:w, gap:true, full:`${det} ${w}`, note:`Nach min, mitt und mina steht die unbestimmte Form: ${det} ${w}.` };
@@ -628,7 +630,14 @@ function genDetSv(){
 }
 const POSS_ES = [['mein', 'mi', 'mi', 'mis', 'mis'], ['dein', 'tu', 'tu', 'tus', 'tus'], ['unser', 'nuestro', 'nuestra', 'nuestros', 'nuestras']];
 const DEM_ES = [['dieser hier', 'este', 'esta', 'estos', 'estas'], ['dieser da', 'ese', 'esa', 'esos', 'esas']];
-const ADJ_ES = ['nuevo', 'viejo', 'pequeño', 'bonito', 'perfecto', 'típico'];
+// Welche Adjektive inhaltlich zum Nomen passen (n nuevo, v viejo, k pequeño, b bonito, p perfecto, t típico).
+// Fehlt ein Nomen, gibt es dazu keine Adjektiv-Aufgabe: „la sangre bonita“ wäre richtig gebeugt, aber kein Spanisch, das jemand sagt.
+const ADJ_FIT_ES = { problema:'nt', día:'pt', mapa:'nvkb', idioma:'n', tema:'nt', sistema:'nvpt', clima:'pt', sofá:'nvkb', planeta:'k', mano:'kb', foto:'nvkbpt', moto:'nvkb',
+  coche:'nvkbpt', noche:'pt', clase:'nkpt', puente:'nvkb', color:'bpt', crisis:'t', viaje:'nbpt', calle:'nvkbt', lunes:'t', ciudad:'nvkbpt', nube:'kb', diente:'nk', pared:'nv',
+  reloj:'nvkb', llave:'nvk', café:'pt', flor:'kb', árbol:'vkb', nariz:'kb', luz:'p', lápiz:'nvk', cama:'nvkb', hospital:'nvk', estación:'nvkb', aeropuerto:'nvk', playa:'kbpt',
+  billete:'nv', maleta:'nvkb', pasaporte:'nv', mesa:'nvkb', silla:'nvkb', luna:'n', cuchillo:'nvk', cuchara:'nvk', tenedor:'nvk', lugar:'nbpt', pie:'k', papel:'nv',
+  canción:'nvbpt', examen:'npt', imagen:'nvbpt' };
+const ADJ_ES = { n:'nuevo', v:'viejo', k:'pequeño', b:'bonito', p:'perfecto', t:'típico' };
 const NO_PL_ES = ['leche', 'sal', 'sangre', 'gente', 'mar', 'crisis', 'lunes', 'miedo'];
 // Männlich Einzahl bei Nomen auf -o wäre geschenkt (Lösung = Hinweis); bleibt drin nur bei männlichen Nomen auf -a (el problema bonito)
 function genDetEs(){
@@ -640,9 +649,9 @@ function genDetEsOne(){
   const [w, g, de, extra] = pick(GENUS.es.filter(x => x[0] !== 'agua')), fem = g === 'la';
   const pl = /[aeiouáéó]$/.test(w) && !NO_PL_ES.includes(w) && Math.random() < 0.4, noun = pl ? w + 's' : w, k = 1 + (fem ? 1 : 0) + (pl ? 2 : 0);
   const deL = pl ? `${de}, Mehrzahl` : de, why = `${w} ist ${fem ? 'weiblich' : 'männlich'}${pl ? ', hier in der Mehrzahl' : ''}.${extra ? ' ' + extra : ''}`;
-  const type = pick(['poss', 'dem', 'adj', 'adj']);
+  const fit = ADJ_FIT_ES[w], type = pick(fit ? ['poss', 'dem', 'adj', 'adj'] : ['poss', 'dem']);
   if (type === 'poss' || type === 'dem') { const P = pick(type === 'poss' ? POSS_ES : DEM_ES), f = P[k]; return { prompt:`___ ${noun}`, deLine:deL, answers:[f], label:'Welche Form passt?', hint:P[0], gap:true, full:`${f} ${noun}`, note:`${why} Also ${f} ${noun}.` }; }
-  const a = pick(ADJ_ES), af = a.replace(/o$/, fem ? 'a' : 'o') + (pl ? 's' : ''), art = pl ? (fem ? 'las' : 'los') : g;
+  const a = ADJ_ES[pick(fit.split(''))], af = a.replace(/o$/, fem ? 'a' : 'o') + (pl ? 's' : ''), art = pl ? (fem ? 'las' : 'los') : g;
   return { prompt:`${art} ${noun} ___`, deLine:deL, answers:[af], label:'Adjektiv anpassen', hint:a, gap:true, full:`${art} ${noun} ${af}`, note:`${why} Also ${af}.` };
 }
 const GENS = {

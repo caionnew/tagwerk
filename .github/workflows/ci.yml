@@ -1,4 +1,5 @@
 # Bei jedem Push und Pull Request: bauen, Einheitstests, Browser-Tests.
+# Firefox läuft als eigener Job zur Information: Fehler dort machen den Lauf nicht rot, stehen aber im Bericht.
 name: CI
 on: [push, pull_request]
 jobs:
@@ -12,7 +13,22 @@ jobs:
       - run: npm run build
       - run: npm run test:unit
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test
+      - run: npx playwright test --project=chromium
       - uses: actions/upload-artifact@v7
         if: failure()
         with: { name: playwright-report, path: test-results/ }
+  firefox:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps firefox
+      - run: npx playwright test --project=firefox
+        env: { PW_FIREFOX: '1' }
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with: { name: playwright-report-firefox, path: test-results/ }

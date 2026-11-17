@@ -21,7 +21,7 @@ function spotInteSv(){
   }
   const S0 = capFirst(s[0]);
   const right = [S0, vp[0], adv].concat(rest), wrong = [S0, adv, vp[0]].concat(rest);
-  return spotData(`${fill(vp[4])}.`, wrong, [1, 2], right.join(' ') + '.', `Im Hauptsatz steht „${adv}“ nach dem Verb. Vor dem Verb steht es nur im Nebensatz.`, 'bisats');
+  return spotData(`${fill(vp[4])}.`, wrong, [1, 2], right.join(' ') + '.', `Im Hauptsatz steht „${adv}“ nach dem Verb: ${s[0]} ${vp[0]} ${adv}. Vor dem Verb steht es nur im Nebensatz.`, 'bisats');
 }
 // Schwedisch: Präteritum statt „har …“ bei einem Zeitpunkt
 const PAST_TIMES = [['Gestern', 'Igår'], ['Letzte Woche', 'Förra veckan'], ['Letzten Sommer', 'I somras'], ['Vor zwei Jahren', 'För två år sedan']];
@@ -65,6 +65,18 @@ function spotSwapEs(gen, swap, trap){
 const HABER = ['he', 'has', 'ha', 'hemos', 'han'];
 const PART_IRR = { hacer:'hecho', decir:'dicho', ver:'visto', escribir:'escrito', poner:'puesto', volver:'vuelto', abrir:'abierto', romper:'roto', morir:'muerto', leer:'leído', traer:'traído', caer:'caído', oír:'oído' };
 const participle = inf => PART_IRR[inf] || (inf.endsWith('ar') ? inf.slice(0, -2) + 'ado' : inf.slice(0, -2) + 'ido');
+// Warum hier Subjuntivo: nach dem Auslöser im Satz, sonst die Erklärung des Satzes oder die allgemeine Regel
+const SUBJ_WHY = [
+  [/\bojalá\b/i, 'Nach ojalá (hoffentlich) steht immer der Subjuntivo'],
+  [/\bno creo que\b/i, 'Nach verneintem creer que (Zweifel) steht der Subjuntivo'],
+  [/\b(quiero|quieres|quiere|queremos|quieren) que\b/i, 'Nach querer que (jemand will, dass ein anderer etwas tut) steht der Subjuntivo'],
+  [/\b(espero|esperas|espera|esperamos|esperan) que\b/i, 'Nach esperar que (Wunsch) steht der Subjuntivo'],
+  [/\balegro de que\b/i, 'Nach einem Gefühl (me alegro de que) steht der Subjuntivo'],
+  [/\bpara que\b/i, 'Nach para que (damit) steht immer der Subjuntivo'],
+  [/\bes (importante|necesario|posible|mejor) que\b/i, 'Nach einer Wertung oder Möglichkeit (es importante que, es posible que) steht der Subjuntivo'],
+  [/\bcuando\b/i, 'cuando mit Zukunftsbezug (es ist noch nicht passiert) verlangt den Subjuntivo']
+];
+const PAST_POINT_ES = /\b(ayer|anoche|la semana pasada|el año pasado|el mes pasado|el verano pasado|en \d{4})\b/i;
 function bankSpotsEs(){
   const out = [];
   BANK.es.forEach(it => {
@@ -83,12 +95,16 @@ function bankSpotsEs(){
       const p = cands.includes(2) && cands.includes(0) ? (/\b(dass|wenn|bevor|damit|ob) ich\b/.test(it.de) ? 0 : 2) : cands[0];
       const ind = conjugate(inf, 'pres', p);
       if (!ind || ind === it.gap) return;
-      out.push(() => spotData(it.de, swapAt(ind), [idx], it.target, 'Hier verlangt der Satz den Subjuntivo, etwa nach querer que, es importante que, ojalá, para que oder cuando mit Zukunftsbezug.', 'subjuntivo'));
+      const why = SUBJ_WHY.find(([re]) => re.test(it.target));
+      const note = it.note || (why ? `${why[1]}: ${it.gap}, nicht ${ind}.` : 'Hier verlangt der Satz den Subjuntivo, etwa nach querer que, es importante que, ojalá, para que oder cuando mit Zukunftsbezug.');
+      out.push(() => spotData(it.de, swapAt(ind), [idx], it.target, note, 'subjuntivo'));
     }
     if (it.trap === 'perfecto' && /\b(ayer|pasado|pasada|anoche|en \d{4}|\d{4})\b/i.test(it.target)) {
+      const when = (it.target.match(PAST_POINT_ES) || [])[0];
       const p = [0, 1, 2, 3, 4].find(k => conjugate(inf, 'indef', k) === it.gap);
       if (p == null) return;
-      out.push(() => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, 'Mit einem abgeschlossenen Zeitpunkt (ayer, la semana pasada, 2015) steht Indefinido, nicht Perfecto.', 'perfecto'));
+      const note = when ? `Mit „${when.toLowerCase()}“ (abgeschlossen) steht Indefinido: ${it.gap}, nicht ${HABER[p]} ${participle(inf)}.` : 'Mit einem abgeschlossenen Zeitpunkt (ayer, la semana pasada, 2015) steht Indefinido, nicht Perfecto.';
+      out.push(() => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto'));
     }
   });
   return out;
@@ -115,9 +131,9 @@ function genTransSv(){
     const alt = x => (/\bidag\b/.test(x) ? [x, x.replace('idag', 'i dag')] : [x]);
     if (r < 0.38) {
       const intro = pick(INTRO_SV.filter(x => x[2].split(' ').includes(adv) && !(x[3] === 0 && s[3] === 0)));
-      return transData(main, intro[0] + ' ', alt(`${intro[0]} ${s[0]} ${adv} ${vp[0]}${rest}.`), `Im Nebensatz rückt „${adv}“ vor das Verb.`, 'bisats');
+      return transData(main, intro[0] + ' ', alt(`${intro[0]} ${s[0]} ${adv} ${vp[0]}${rest}.`), `Im Nebensatz rückt „${adv}“ vor das Verb: … ${s[0]} ${adv} ${vp[0]}.`, 'bisats');
     }
-    return transData(main, vp[6] + ' ', alt(`${vp[6]} ${vp[0]} ${s[0]} ${adv}${rest}.`), 'Das Verb bleibt an zweiter Stelle, das Subjekt rückt dahinter.', 'inversion');
+    return transData(main, vp[6] + ' ', alt(`${vp[6]} ${vp[0]} ${s[0]} ${adv}${rest}.`), `Das Verb bleibt an zweiter Stelle, das Subjekt rückt dahinter: ${vp[6]} ${vp[0]} ${s[0]}.`, 'inversion');
   }
   const v = pick(VERBS_SV), s = pick(SUBJ_SV);
   const src = `${capFirst(s[1])} ${SV_PRES[v[0]]} ${v[4]}.`;
@@ -125,10 +141,13 @@ function genTransSv(){
   return transData(src, 'Igår ', [ans, ans.replace('Igår', 'I går')], `Zwei Dinge ändern sich: Präteritum (${v[1]}) und Inversion, weil „igår“ vorn steht.`, 'tempus');
 }
 // Spanisch: Bausteine für Subjuntivo und Zeiten
-const ES_VP = [['venir', 'mañana'], ['llegar', 'a tiempo'], ['estudiar', 'más'], ['tener', 'paciencia'], ['hacer', 'los deberes'], ['estar', 'en casa'], ['decir', 'la verdad'], ['salir', 'temprano'], ['llamar', 'a su madre'], ['volver', 'pronto'],
+const ES_VP = [['venir', 'mañana'], ['llegar', 'a tiempo'], ['estudiar', 'más'], ['tener', 'paciencia'], ['hacer', 'los deberes'], ['estar', 'en casa'], ['decir', 'la verdad'], ['salir', 'temprano'], ['llamar', 'a los abuelos'], ['volver', 'pronto'],
   ['escribir', 'más a menudo'], ['comer', 'mejor'], ['trabajar', 'menos'], ['aprender', 'a nadar'], ['viajar', 'en verano'], ['ayudar', 'en casa']];
 const ES_SUBJ = [['', 1], ['Ana', 2], ['', 3], ['Los niños', 4]];
 const ES_TRIG = ['Quiero que', 'Es importante que', 'Ojalá', 'Espero que', 'No creo que'];
+// Das Subjektpronomen darf im Spanischen dastehen (betont): „Quiero que tú vengas“, „Ayer yo trabajé“ sind auch richtig
+const ES_PRON = ['yo', 'tú', '', 'nosotros'];
+const withPron = (list, lead, p) => (ES_PRON[p] ? list.concat(list.map(a => a.replace(lead + ' ', `${lead} ${ES_PRON[p]} `))) : list);
 const ES_DAY = [['trabajar', 'mucho'], ['comer', 'en casa'], ['salir', 'temprano'], ['ver', 'una película'], ['leer', 'el periódico'], ['estar', 'en casa'], ['tener', 'tiempo'], ['dormir', 'bien'], ['hacer', 'deporte'], ['ir', 'al cine'],
   ['escribir', 'un correo largo'], ['correr', 'por el parque'], ['comprar', 'fruta en el mercado'], ['estudiar', 'para el examen'], ['escuchar', 'la radio'], ['viajar', 'en tren'], ['cocinar', 'para todos'], ['bailar', 'salsa'], ['recibir', 'un paquete'], ['aprender', 'algo nuevo'], ['llamar', 'a la abuela'], ['ayudar', 'a los vecinos']];
 function genTransEs(){
@@ -138,18 +157,20 @@ function genTransEs(){
     const pres = conjugate(inf, 'pres', p), subjF = conjugate(inf, 'subj', p);
     const src = `${subj ? subj + ' ' : ''}${subj ? pres : capFirst(pres)} ${comp}.`;
     const ans = `${trig} ${subj ? subj.toLowerCase() === 'los niños' ? 'los niños ' : subj + ' ' : ''}${subjF} ${comp}.`;
-    return transData(src, trig + ' ', [ans], `Nach „${trig.toLowerCase()}“ folgt der Subjuntivo: ${subjF}.`, 'subjuntivo');
+    const answers = withPron([ans], trig, subj ? 2 : p);
+    if (trig === 'Ojalá') answers.slice().forEach(a => answers.push(a.replace('Ojalá ', 'Ojalá que ')));
+    return transData(src, trig + ' ', answers, `Nach „${trig.toLowerCase()}“ folgt der Subjuntivo: ${subjF}.`, 'subjuntivo');
   }
   const [inf, comp] = pick(ES_DAY), p = pick([0, 2, 3]);
   const who = p === 2 ? 'Ana ' : '';
   if (r < 0.75) {
     const src = `Hoy ${who}${conjugate(inf, 'pres', p)} ${comp}.`;
     const ans = `Ayer ${who}${conjugate(inf, 'indef', p)} ${comp}.`;
-    return transData(src, 'Ayer ', [ans], `Mit „ayer“ steht Indefinido: ${conjugate(inf, 'indef', p)}.`, 'pasado');
+    return transData(src, 'Ayer ', withPron([ans], 'Ayer', p), `Mit „ayer“ steht Indefinido: ${conjugate(inf, 'indef', p)}.`, 'pasado');
   }
   const src = `Ayer ${who}${conjugate(inf, 'indef', p)} ${comp}.`;
   const perf = `Hoy ${who}${HABER[p]} ${participle(inf)} ${comp}.`;
-  return transData(src, 'Hoy ', [perf, `Hoy ${who}${conjugate(inf, 'indef', p)} ${comp}.`], `Mit „hoy“ nimmt man in Spanien das Perfecto (${HABER[p]} ${participle(inf)}). In Lateinamerika ist auch Indefinido üblich.`, 'perfecto', 'Dieselbe Handlung, nur heute schon passiert (nicht: passiert gerade).');
+  return transData(src, 'Hoy ', withPron([perf, `Hoy ${who}${conjugate(inf, 'indef', p)} ${comp}.`], 'Hoy', p), `Mit „hoy“ nimmt man in Spanien das Perfecto (${HABER[p]} ${participle(inf)}). In Lateinamerika ist auch Indefinido üblich.`, 'perfecto', 'Dieselbe Handlung, nur heute schon passiert (nicht: passiert gerade).');
 }
 
 /* ---------- 3) Uhrzeiten & Zahlen ---------- */
@@ -160,14 +181,20 @@ function timeWords(lang, h, m){
   if (lang === 'sv') {
     const H = SV_H[n], X = SV_H[nx];
     const map = { 0:[`klockan ${H}`, H], 5:[`fem över ${H}`], 10:[`tio över ${H}`], 15:[`kvart över ${H}`], 20:[`tjugo över ${H}`, `tio i halv ${X}`], 25:[`fem i halv ${X}`], 30:[`halv ${X}`], 35:[`fem över halv ${X}`], 40:[`tjugo i ${X}`, `tio över halv ${X}`], 45:[`kvart i ${X}`], 50:[`tio i ${X}`], 55:[`fem i ${X}`] };
-    return map[m];
+    // „klockan kvart över tre“ und „klockan är kvart över tre“ sind genauso richtig
+    const forms = map[m];
+    return [...new Set(forms.concat(forms.map(f => `klockan ${f.replace(/^klockan /, '')}`), forms.map(f => `klockan är ${f.replace(/^klockan /, '')}`)))];
   }
   const art = k => (k === 1 ? 'la' : 'las'), verb = k => (k === 1 ? 'Es' : 'Son');
   const H = `${art(n)} ${ES_H[n]}`, X = `${art(nx)} ${ES_H[nx]}`;
   const map = { 0:[H], 5:[`${H} y cinco`], 10:[`${H} y diez`], 15:[`${H} y cuarto`], 20:[`${H} y veinte`], 25:[`${H} y veinticinco`], 30:[`${H} y media`], 35:[`${X} menos veinticinco`], 40:[`${X} menos veinte`], 45:[`${X} menos cuarto`], 50:[`${X} menos diez`], 55:[`${X} menos cinco`] };
-  const forms = map[m];
-  const v = m >= 35 ? verb(nx) : verb(n);
-  return forms.concat(forms.map(f => `${v.toLowerCase()} ${f}`));
+  // Auch richtig: „las tres en punto“ und die Digitalform „las tres y cuarenta“ (in Lateinamerika und bei Ansagen üblich)
+  const ES_MIN = { 5:'cinco', 10:'diez', 15:'quince', 20:'veinte', 25:'veinticinco', 30:'treinta', 35:'treinta y cinco', 40:'cuarenta', 45:'cuarenta y cinco', 50:'cincuenta', 55:'cincuenta y cinco' };
+  const withVerb = (fs, v) => fs.concat(fs.map(f => `${v.toLowerCase()} ${f}`));
+  const main = withVerb(map[m], m >= 35 ? verb(nx) : verb(n));
+  // Bei 5, 10, 20 und 25 ist die Digitalform dieselbe wie die übliche
+  const extra = m === 0 ? [`${H} en punto`] : m === 15 || m >= 30 ? [`${H} y ${ES_MIN[m]}`] : [];
+  return main.concat(withVerb(extra, verb(n)));
 }
 const TIME_NOTE = {
   sv:{ 25:'fem i halv … heißt „fünf vor halb …“, also 25 nach der vollen Stunde.', 30:'halv åtta = halb acht, genau wie im Deutschen: 7:30.', 35:'fem över halv … heißt „fünf nach halb …“.', 45:'kvart i … = Viertel vor …', 15:'kvart över … = Viertel nach …' },
@@ -234,10 +261,10 @@ const GENUS = {
     ['idioma', 'el', 'die Sprache', 'Viele Wörter auf -ma sind männlich.'], ['tema', 'el', 'das Thema', 'Viele Wörter auf -ma sind männlich.'], ['sistema', 'el', 'das System', 'Viele Wörter auf -ma sind männlich.'],
     ['clima', 'el', 'das Klima', 'Viele Wörter auf -ma sind männlich.'], ['sofá', 'el', 'das Sofa'], ['planeta', 'el', 'der Planet', 'Ausnahme: endet auf -a, ist aber männlich.'],
     ['mano', 'la', 'die Hand', 'Ausnahme: endet auf -o, ist aber weiblich.'], ['foto', 'la', 'das Foto', 'Kurz für la fotografía, darum weiblich.'], ['moto', 'la', 'das Motorrad', 'Kurz für la motocicleta, darum weiblich.'],
-    ['radio', 'la', 'das Radio', 'In Spanien la radio, in Teilen Lateinamerikas el radio für das Gerät.'], ['agua', 'el', 'das Wasser', 'Eigentlich weiblich (el agua fría), aber vor betontem a steht el.'],
+    ['agua', 'el', 'das Wasser', 'Eigentlich weiblich (el agua fría), aber vor betontem a steht el.'],
     ['leche', 'la', 'die Milch'], ['sal', 'la', 'das Salz'], ['coche', 'el', 'das Auto'], ['noche', 'la', 'die Nacht'], ['clase', 'la', 'der Unterricht'], ['gente', 'la', 'die Leute', 'Spanisch Einzahl: la gente es simpática.'],
     ['puente', 'el', 'die Brücke'], ['sangre', 'la', 'das Blut'], ['color', 'el', 'die Farbe'], ['crisis', 'la', 'die Krise'], ['viaje', 'el', 'die Reise'], ['calle', 'la', 'die Straße'],
-    ['mar', 'el', 'das Meer'], ['carne', 'la', 'das Fleisch'], ['lunes', 'el', 'der Montag'], ['ciudad', 'la', 'die Stadt', 'Wörter auf -dad sind weiblich.'], ['nube', 'la', 'die Wolke'], ['diente', 'el', 'der Zahn'],
+    ['carne', 'la', 'das Fleisch'], ['lunes', 'el', 'der Montag'], ['ciudad', 'la', 'die Stadt', 'Wörter auf -dad sind weiblich.'], ['nube', 'la', 'die Wolke'], ['diente', 'el', 'der Zahn'],
     ['pared', 'la', 'die Wand'], ['reloj', 'el', 'die Uhr'], ['llave', 'la', 'der Schlüssel'], ['café', 'el', 'der Kaffee'], ['verdad', 'la', 'die Wahrheit', 'Wörter auf -dad sind weiblich.'], ['flor', 'la', 'die Blume'],
     ['árbol', 'el', 'der Baum'], ['nariz', 'la', 'die Nase'], ['viento', 'el', 'der Wind'], ['luz', 'la', 'das Licht'], ['lápiz', 'el', 'der Bleistift'], ['cama', 'la', 'das Bett'],
     ['hospital', 'el', 'das Krankenhaus'], ['estación', 'la', 'der Bahnhof', 'Wörter auf -ción sind weiblich.'], ['aeropuerto', 'el', 'der Flughafen'], ['playa', 'la', 'der Strand'], ['billete', 'el', 'die Fahrkarte'], ['maleta', 'la', 'der Koffer'],

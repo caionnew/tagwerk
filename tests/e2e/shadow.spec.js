@@ -2,6 +2,7 @@
 const os = require('os'), path = require('path');
 const { test, expect, APP, seed, richDB, stored, fakeVoice, speechWav, fakeMicArgs } = require('./helpers.js');
 const WAV = speechWav(path.join(os.tmpdir(), `tagwerk-shadow-${process.pid}.wav`), [['s', 0.5], ['v', 0.8], ['s', 0.6], ['v', 0.7], ['s', 5]]);
+test.skip(({ browserName }) => browserName !== 'chromium', 'Vorgetäuschtes Mikrofon gibt es nur in Chromium');
 test.use({ launchOptions:{ ...(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {}), args:fakeMicArgs(WAV) } });
 
 // Merkt sich alle Mikrofon-Streams, um zu prüfen, dass nichts offen bleibt

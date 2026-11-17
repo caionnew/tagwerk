@@ -33,14 +33,14 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, ESLint, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (222 Tests)
+npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (229 Tests)
 npx playwright install chromium
 npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (81 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 npm run sicht -- --vs origin/main   # Bildschirmfotos aller Ansichten, vorher/nachher
 ```
 
-Eigenes Chromium statt Download: `CHROMIUM_PATH=/pfad/zu/chrome npm run test:e2e`.
+Eigenes Chromium statt Download: `CHROMIUM_PATH=/pfad/zu/chrome npm run test:e2e`. Zusätzlich in Firefox: `npx playwright install firefox`, dann `PW_FIREFOX=1 npx playwright test --project=firefox` (Nachsprechen mit vorgetäuschtem Mikrofon nur in Chromium). Die CI führt Firefox als eigenen Job zur Information.
 
 Weitere Befehle: `npm run icons -- <name>` erzeugt die App-Symbole aus einem Entwurf in `design/icons/`, `npm run geo` erzeugt die Kartendaten neu, `npm run screenshots` die Bilder oben, `npm run lint` die ESLint-Prüfung allein, `python3 tools/fsrs_reference.py` die FSRS-Referenz (braucht `pip install fsrs==6.3.3`).
 

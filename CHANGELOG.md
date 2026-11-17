@@ -2,6 +2,37 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.37.0
+**Erzeugte Aufgaben durchgesehen, Browser-Tests auch in Firefox.**
+Alle Ausgaben aller 21 Generatoren aufgelistet und von Hand geprüft.
+- **Fehler behoben:** „Estoy de acuerdo con ti“ war falsch (richtig: contigo). Der Satz heißt jetzt „Estoy de acuerdo con tu propuesta“.
+- **Weitere richtige Fassungen:**
+  - Uhrzeiten: „klockan är kvart över tre“ und „klockan kvart över tre“, „las tres en punto“ und die Digitalform („las doce y cuarenta“, „las tres y quince“), wie in Lateinamerika und bei Ansagen üblich.
+  - Umbauen Spanisch: das betonte Subjektpronomen („Quiero que tú vengas“, „Ayer nosotros dormimos bien“) und „Ojalá que …“.
+  - Wortstellung: „har semester i juli“ neben „tar semester“ und „åker på semester“.
+- **Genau eine richtige Option:** Sechs Auswahlaufgaben hatten eine zweite vertretbare Antwort unter den falschen. Ersetzt wurden:
+  - „fiarse en“ (selten, aber korrekt)
+  - „kostar tid“
+  - „me da ilusión“
+  - „quedamos en las ocho“
+  - „tvätta tänderna“, dafür jetzt „städa“ als typische Falle für „putzen“
+  - „fick examen“
+- **Keine Wörter mit zwei richtigen Genera bei „el oder la?“:** radio (Spanien la, Lateinamerika el) und mar (la mar bei Seeleuten und Dichtern). Die Schreibprüfung markiert sie auch nicht mehr; im Wörterbuch stehen beide mit Hinweis.
+- **ser/estar:** „nervioso“ und „triste“ kommen nur noch mit „hoy“, weil ohne Zeitangabe auch ser richtig wäre (ein nervöser Mensch). Die Erklärung sagt das. Bei „rico“ ist die Erklärung genauer: ser rico heißt bei Personen reich, bei Essen allgemein lecker.
+- **Adjektive, die passen:** „Begleiter & Adjektive“ (Spanisch) kombiniert nur noch sinnvolle Paare (la playa bonita, el día perfecto), nicht mehr „la sangre bonita“ oder „el miedo viejo“. Ohne passendes Adjektiv gibt es zu einem Wort nur Begleiter-Aufgaben. Auf Schwedisch kein „mitt väder“ mehr.
+- **Erklärungen auf den Satz zugeschnitten:**
+  - Fehler finden Spanisch nennt den Auslöser im Satz („Nach querer que … steht der Subjuntivo: vengas, nicht vienes.“, „Mit „la semana pasada“ (abgeschlossen) steht Indefinido: perdí, nicht he perdido.“) und nimmt die Erklärung des Satzes, wo es eine gibt.
+  - Wortstellung und Umbauen Schwedisch zeigen die richtige Stellung am Satz.
+- **Deutsch geglättet:**
+  - „Wir brauchten eine Stunde, bis wir ankamen.“
+  - „Nach dem, was du sagst, wird das Wetter morgen schön.“
+  - „Ich habe nicht gemerkt, wie spät es war.“
+  - „Du darfst dir das Auto leihen, vorausgesetzt, du fährst vorsichtig.“
+  - „Sie war über die Nachricht überrascht.“
+  - Beim Umbauen „Llamas a los abuelos“ statt „Llamas a su madre“.
+- **Firefox:** Die Browser-Tests laufen auch in Firefox (`PW_FIREFOX=1 npx playwright test --project=firefox`). In GitHub Actions ist das ein eigener Job zur Information: Fehler dort stehen im Bericht, halten das Update aber nicht auf. Nachsprechen mit vorgetäuschtem Mikrofon bleibt Chromium vorbehalten.
+- 7 neue Einheitstests (229).
+
 ## 24.36.2
 **Kopf von „Heute“: zwei Zeilen, gemeinsame Grundlinien.**
 - Oben Gruß und Woche: Die sieben Quadrate stehen auf der Grundlinie des Grußes, etwa in Höhe seiner Kleinbuchstaben. Unten Datum und Serie („3 in Folge“) auf derselben Grundlinie und in derselben Schrift (14 px; die Serie war 12 px). Vorher hatte die rechte Seite drei Zeilen, deren Grundlinien zwischen denen links lagen; „3 in Folge“ stand knapp 6 px tiefer als das Datum.

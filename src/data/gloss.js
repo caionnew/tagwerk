@@ -898,6 +898,7 @@ caso||Fall; hacer caso = beachten, auf jemanden hören
 esa|ese|diese
 evidente||offensichtlich
 proyecto||Projekt
+propuesta||Vorschlag
 planificado|planificar|geplant
 será|ser|wird sein; findet statt (bei Ereignissen)
 sala||Saal, Raum
@@ -1253,7 +1254,8 @@ madre||Mutter
 madrid||Madrid
 mamá||Mama
 mantel||Tischdecke
-mar||Meer
+mar||das Meer (el mar; la mar sagen Seeleute und Dichter)
+radio||das Radio (in Spanien la radio, in Lateinamerika oft el radio)
 mañana||morgen; Morgen
 mañanas|mañana|todas las mañanas = jeden Morgen
 me||mich, mir

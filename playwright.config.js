@@ -1,7 +1,10 @@
 // Browser-Tests gegen dist/ (vorher: npm run build), ausgeliefert über einen lokalen Server wie auf GitHub Pages:
 // mit Service Worker, eigenem Speicher je Test und echtem Neuladen. Handygröße wie ein typisches Android-Gerät.
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome npm run test:e2e
+// Zusätzlich Firefox: PW_FIREFOX=1 npx playwright test --project=firefox (vorher: npx playwright install firefox)
 const { defineConfig } = require('@playwright/test');
+const chromium = { name:'chromium', use:{ browserName:'chromium', launchOptions:process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {} } };
+const firefox = { name:'firefox', use:{ browserName:'firefox' } };
 module.exports = defineConfig({
   testDir:'tests/e2e',
   timeout:60000,
@@ -12,7 +15,7 @@ module.exports = defineConfig({
     viewport:{ width:412, height:860 },
     deviceScaleFactor:2,
     colorScheme:'dark',
-    actionTimeout:5000,
-    launchOptions:process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {}
-  }
+    actionTimeout:5000
+  },
+  projects:process.env.PW_FIREFOX ? [chromium, firefox] : [chromium]
 });

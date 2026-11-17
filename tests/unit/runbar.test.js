@@ -91,14 +91,14 @@ test('Statistik: Fehler neben richtig gesetzter Stellung belastet das Thema nich
   answer(ex, 'vi tränar till gymmet alltid'); run(`recordAnswer('sv', S.run.queue[0], S.run.cur, false)`);
   assert.deepEqual(run(`DB.tlog[today()].sv['p:bisats']`), [2, 1]);
 });
-test('Generator: „i gymmet“ und „åker på semester“ sind richtige Fassungen', () => {
+test('Generator: „i gymmet“, „åker på semester“ und „har semester“ sind richtige Fassungen', () => {
   const genInte = app.get('genInte');
   const found = { gym:0, sem:0 };
   withSeed(11, () => {
     for (let i = 0; i < 600; i++) {
       const d = genInte(), a0 = d.answers[0];
       if (/ på gymmet\./.test(a0)) { found.gym++; assert.ok(d.answers.includes(a0.replace('på gymmet', 'i gymmet')), a0); assert.equal(answer({ type:'gen', gen:'inte', data:d }, a0.replace('på gymmet', 'i gymmet')).result, 'ok'); }
-      if (/ tar semester i juli\./.test(a0)) { found.sem++; assert.ok(d.answers.includes(a0.replace('tar semester', 'åker på semester')), a0); }
+      if (/ tar semester i juli\./.test(a0)) { found.sem++; assert.ok(d.answers.includes(a0.replace('tar semester', 'åker på semester')), a0); assert.ok(d.answers.includes(a0.replace('tar semester', 'har semester')), a0); }
     }
   });
   assert.ok(found.gym > 0 && found.sem > 0, JSON.stringify(found));

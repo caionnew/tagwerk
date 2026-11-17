@@ -23,7 +23,7 @@ const NUM_EQUIV = {
 function equiv(t, lang){
   let x = t.split(' ').map(w => (NUM_EQUIV[lang] && w in NUM_EQUIV[lang] ? String(NUM_EQUIV[lang][w]) : w)).join(' ');
   if (lang === 'sv') {
-    x = x.replace(/\barbet(a|ar|ade|at)\b/g, 'jobb$1').replace(/\b(m|d|s)ej\b/g, '$1ig')
+    x = x.replace(/\barbet(a|ar|ade|at)\b/g, 'jobb$1').replace(/\b(m|d|s)ej\b/g, '$1ig').replace(/\bmail(et|en|a|ar|ade|at)?\b/g, 'mejl$1')
       .replace(/\bsen dess\b/g, 'sedan dess').replace(/\b(för \S+ \S+) sen\b/g, '$1 sedan').replace(/^sen /, 'sedan ');
   }
   return x;
@@ -56,6 +56,33 @@ function typoKind(x, y){
   }
   return null;
 }
+// Weitere richtige Fassungen, die für jeden übersetzten Satz gelten (nicht im Diktat und nicht bei Lücken):
+// Schwedisch: „har“/„hade“ vor dem Supinum darf im Nebensatz fehlen (… att han aldrig fått mejlet).
+const HA_SUPINE = new Set(('sett setts träffats träffat ringt ätit fått vetat varit haft gjort sagt kommit gått hört läst skrivit köpt glömt hittat tänkt bott jobbat arbetat pratat ' +
+  'flyttat börjat slutat hunnit kunnat velat blivit tagit gett givit sovit druckit sprungit vunnit förlorat missat lärt förstått betalat bokat hänt sålt lovat svarat frågat väntat ' +
+  'stannat rest åkt flugit simmat lagat städat tvättat öppnat stängt tappat lämnat skickat mejlat fyllt försökt bestämt hämtat ätits stulits byggts skrivits').split(' '));
+const SV_SUB = /^(att|som|om|eftersom|när|innan|förrän|fast|medan|ifall|tills|sedan|varför|vad|vem|hur|vilken|vilket|vilka)$/;
+function svHaDrop(ans){
+  const w = ans.split(' '), out = [], bare = t => t.toLowerCase().replace(/[.,!?;:]+$/, '');
+  for (let i = 1; i < w.length - 1; i++) {
+    const sup = bare(w[i + 1]);
+    if (!/^(har|hade)$/i.test(w[i]) || !(HA_SUPINE.has(sup) || /\(Supinum/.test((lookupWord('sv', sup) || {}).de || ''))) continue;
+    // Nebensatz: ein einleitendes Wort davor ohne Satzgrenze dazwischen. Fragewörter am Satzanfang leiten einen Hauptsatz ein (Vad har hänt?).
+    for (let j = i - 1; j >= 0; j--) {
+      const t = bare(w[j]);
+      if (/^(och|men|eller)$/.test(t) || (j < i - 1 && /[,;:]$/.test(w[j]))) break;
+      if (SV_SUB.test(t)) { if (!(j === 0 && /^(varför|vad|vem|hur|vilken|vilket|vilka|sedan)$/.test(t))) out.push(w.slice(0, i).concat(w.slice(i + 1)).join(' ')); break; }
+    }
+  }
+  return out;
+}
+// Spanisch: ein betontes Subjektpronomen vor dem Verb ist auch richtig (Creo que él tiene razón), wenn der deutsche Satz dieselbe Person nennt.
+// Am Satzanfang erledigt das schon norm().
+const ES_SUBJ_DE = { yo:'ich', tú:'du', él:'er', ella:'sie', nosotros:'wir', nosotras:'wir', vosotros:'ihr', vosotras:'ihr', ellos:'sie', ellas:'sie' };
+function esProDrop(n, de){
+  const w = n.split(' ');
+  return w.map((t, i) => (i > 0 && i < w.length - 1 && ES_SUBJ_DE[t] && new RegExp(`(^|[^a-zäöüß])${ES_SUBJ_DE[t]}([^a-zäöüß]|$)`, 'i').test(de) ? w.slice(0, i).concat(w.slice(i + 1)).join(' ') : null)).filter(Boolean);
+}
 function judgeX(input, answers, lang, opt){
   const o = Object.assign({ equiv:true, typo:true, protect:[] }, opt || {});
   const n = norm(input, lang);
@@ -63,6 +90,10 @@ function judgeX(input, answers, lang, opt){
   const E = t => (o.equiv ? equiv(t, lang) : t);
   const ne = E(n);
   if (answers.some(a => norm(a, lang) === n || E(norm(a, lang)) === ne)) return { res:'ok' };
+  if (o.de && o.equiv) {
+    if (lang === 'sv' && answers.some(a => svHaDrop(a).some(v => E(norm(v, lang)) === ne))) return { res:'ok' };
+    if (lang === 'es' && esProDrop(n, o.de).some(v => answers.some(a => E(norm(a, lang)) === E(v)))) return { res:'ok' };
+  }
   if (answers.some(a => deacc(E(norm(a, lang))) === deacc(ne))) return { res:'near', why:{ kind:'accent' } };
   if (o.typo) {
     const protect = new Set(o.protect.flatMap(p => deacc(norm(p, lang)).split(' ')));
@@ -111,10 +142,10 @@ function judgeOpts(ex){
   if (ex.type === 'gen') {
     const d = ex.data;
     if (d.gap || d.kind === 'time') return { equiv:false, typo:false };
-    return { protect:(d.key || []).concat(ex.gen === 'np' ? (d.answers[0] || '').split(' ') : []) };
+    return { protect:(d.key || []).concat(ex.gen === 'np' ? (d.answers[0] || '').split(' ') : []), de:d.deLine || (d.kind ? '' : d.prompt) || '' };
   }
   const item = ex.id ? itemById(ex.id) : null;
-  return { protect:item ? (item.gapAlts.length ? item.gapAlts : item.gap ? [item.gap] : []) : [] };
+  return { protect:item ? (item.gapAlts.length ? item.gapAlts : item.gap ? [item.gap] : []) : [], de:item ? item.de : '' };
 }
 // Der geprüfte Teil einer Aufgabe: Lückenwort, Schlüsselwort der Grammatik oder die knifflige Stelle im Satz
 function testedPart(ex){

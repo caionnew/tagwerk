@@ -8,7 +8,7 @@ const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 
 function bankIds(lang, n){
   const src = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'data', 'content.js'), 'utf8');
   const part = lang === 'sv' ? src.slice(0, src.indexOf('es: {')) : src.slice(src.indexOf('es: {'));
-  return part.split('\n').map(l => l.split('|').map(x => x.trim())).filter(p => p.length === 5 && !p[0].startsWith('/*')).map(p => `${lang}:${hash(p[1])}`).slice(0, n);
+  return part.split('\n').map(l => l.split('|').map(x => x.trim())).filter(p => p.length >= 5 && !p[0].startsWith('/*')).map(p => `${lang}:${hash(p[1])}`).slice(0, n);
 }
 const freshDB = lang => ({ v:3, settings:{ size:'normal', lang, refill:false }, st:{}, own:{ sv:[], es:[] }, tat:{ sv:[], es:[] }, log:{}, done:{}, gen:{}, run:null, used:{ intro:true, lookup:true } });
 // Sechs Wochen Nutzung: Übungstage, Lernzeit, Fehlerquellen, Uhrzeiten, 90 geübte Sätze

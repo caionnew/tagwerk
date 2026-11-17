@@ -22,7 +22,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `data/texte.js` | Lesetexte mit Fragen und übernehmbaren Sätzen |
 | `js/part_head.js` | Konstanten, Themen (`TRAPS`), Speicher, Satzbank-Aufbau, Tagesplan, Runden, Wiederholungssperre, Serie, Tagesstand |
 | `js/part_fsrs.js` | FSRS-6 (Wiederholungsplanung) |
-| `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Meine ist auch richtig“ |
+| `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Meine ist auch richtig“. Beim Übersetzen (nicht im Diktat, nicht bei Lücken; erkennbar an `de` aus `judgeOpts`) zusätzlich: fehlendes „har“/„hade“ im schwedischen Nebensatz (`svHaDrop`), betontes spanisches Subjektpronomen passend zum deutschen Satz (`esProDrop`) |
 | `js/part_online.js` | Tatoeba (Nachschub, Suche, Aufnahmen), LanguageTool |
 | `js/part_speech.js` | Vorlesen (auf Wunsch mit Meldungen zu Beginn, Wortgrenzen und Ende) |
 | `js/part_radio.js` | Hörrunde: Sätze nebenbei hören |

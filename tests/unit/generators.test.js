@@ -89,7 +89,7 @@ test('Fehler finden Spanisch: Erklärung nennt den Auslöser im Satz', () => {
   const n = run('BANK_SPOTS_ES.length'), notes = [];
   for (let i = 0; i < n; i++) notes.push(run(`BANK_SPOTS_ES[${i}]()`));
   const q = notes.find(d => d.full === 'Quiero que vengas.');
-  assert.ok(q && /querer que/.test(q.note) && /vengas, nicht vienes/.test(q.note), q && q.note);
+  assert.ok(q && /querer que/.test(q.note) && /vengas/.test(q.note), q && q.note);
   const p = notes.find(d => d.full === 'La semana pasada perdí las llaves.');
   assert.ok(p && /„la semana pasada“/.test(p.note) && /perdí, nicht he perdido/.test(p.note), p && p.note);
   assert.ok(notes.every(d => d.note && d.note.length > 20));

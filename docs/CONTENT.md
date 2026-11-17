@@ -14,9 +14,9 @@ Ich bleibe zu Hause, weil … | Jag stannar hemma eftersom jag inte mår bra. | 
 
 - **Lücke**: Wort für Lückenaufgaben; weitere richtige Füllungen mit `/` (`gick/for`). Muss im Zielsatz vorkommen.
 - **Hinweis**: nur, wenn er die Lösung nicht verrät (etwa die Grundform).
-- **Alternativen**: weitere richtige Übersetzungen, getrennt mit `;;`.
+- **Alternativen**: weitere richtige Übersetzungen, getrennt mit `;;`. Was für jeden Satz gilt, prüft die App selbst und gehört nicht hierher: Groß- und Kleinschreibung, Satzzeichen, „i dag“/„idag“, Zahlen als Wort oder Ziffer, „jobba“/„arbeta“, „mejl“/„mail“, ein fehlendes „har“/„hade“ vor dem Supinum im schwedischen Nebensatz (att han aldrig fått mejlet) und ein betontes spanisches Subjektpronomen, wenn der deutsche Satz dieselbe Person nennt (Creo que él tiene razón). Gehören dagegen hierher: andere Wortstellungen, Synonyme, Varianten aus Lateinamerika, wo sie dort üblich sind (perdí statt he perdido, carro, celular).
 - **Niveau** (optional, sechste Spalte): `A2`, `B1` oder `B2`. Fehlt es, schätzt `estLevel()` nach Länge, Nebensätzen und anspruchsvollen Formen. Für „Fortgeschritten“ zählt diese Angabe.
-- **Erklärung** (optional, siebte Spalte; die sechste darf dafür leer bleiben): erscheint bei falscher Antwort statt der allgemeinen Regel des Themas. Nötig, wenn die Themenregel nicht zum Satz passt, etwa im Thema Konditional bei einer höflichen Bitte oder einem realen si-Satz. Eine Erklärung zur gemachten Verwechslung (Perfecto statt Indefinido usw.) geht weiter vor.
+- **Erklärung** (siebte Spalte; die sechste darf dafür leer bleiben): erscheint bei falscher Antwort statt der allgemeinen Regel des Themas. Jeder Satz hat eine (`tests/unit/content.test.js` prüft das). Sie nennt die Regel am Satz selbst (… att han inte kommer, nicht nur „inte vor dem Verb“), höchstens etwa 160 Zeichen. Sie geht auch der allgemeinen Diagnose („Perfekt mit har“) vor, weil die nur sieht, ob „har“ fehlt.
 - Die Kennung eines Satzes ist ein Hash des Zielsatzes. **Einen Zielsatz zu ändern, setzt seinen Lernstand zurück.** Tippfehler im Deutschen sind unkritisch.
 
 Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TRAPS` in `src/js/part_head.js`.

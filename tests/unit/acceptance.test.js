@@ -87,3 +87,25 @@ test('Lösungsanzeige: „imorgon“ getippt markiert „i morgon“ nicht als f
   assert.match(d('Det kommer att regna i morgon.', 'Det kommer att snöa imorgon').html, /w-miss[^>]*>regna</);
   assert.equal(app.run(`judgeX('Det kommer att regna imorgon', ['Det kommer att regna i morgon.'], 'sv').res`), 'ok');
 });
+test('Übersetzen: „har“ darf im schwedischen Nebensatz fehlen, nicht im Hauptsatz und nicht im Diktat', () => {
+  const item = BANK.sv.find(i => i.target === 'Han påstår att han aldrig har fått mejlet.');
+  const opt = judgeOpts({ type:'free', id:item.id });
+  const answers = [item.target].concat(item.alts);
+  assert.equal(res('Han påstår att han aldrig fått mejlet.', answers, 'sv', opt), 'ok');
+  assert.equal(res('Han påstår att han aldrig fått mailet.', answers, 'sv', opt), 'ok', 'mail = mejl');
+  assert.equal(res('Han påstår att han aldrig fått mejlet.', answers, 'sv'), 'bad', 'Diktat: so schreiben, wie es klingt');
+  assert.equal(res('Vad hänt?', ['Vad har hänt?'], 'sv', { de:'Was ist passiert?' }), 'bad', 'Fragewort vorn: Hauptsatz');
+  assert.equal(res('När jag kom hem hon ätit.', ['När jag kom hem hade hon ätit.'], 'sv', { de:'x' }), 'bad');
+  assert.equal(res('Vet du om restaurangen öppet idag?', ['Vet du om restaurangen har öppet idag?'], 'sv', { de:'x' }), 'bad', 'öppet ist kein Supinum');
+  const fast = BANK.sv.find(i => i.target.startsWith('Fast vi inte hade setts'));
+  assert.equal(res('Fast vi inte setts på länge kände jag igen henne direkt.', [fast.target].concat(fast.alts), 'sv', judgeOpts({ type:'free', id:fast.id })), 'ok');
+});
+test('Übersetzen: betontes Subjektpronomen im Spanischen ist richtig, wenn der deutsche Satz dieselbe Person nennt', () => {
+  const item = BANK.es.find(i => i.target === 'Creo que tiene razón.');
+  const opt = judgeOpts({ type:'free', id:item.id }), answers = [item.target].concat(item.alts);
+  assert.equal(res('Creo que él tiene razón.', answers, 'es', opt), 'ok');
+  assert.equal(res('Creo que ella tiene razón.', answers, 'es', opt), 'bad', 'der deutsche Satz sagt „er“');
+  const q = BANK.es.find(i => i.target === 'Quiero que vengas.');
+  assert.equal(res('Quiero que tú vengas.', [q.target], 'es', judgeOpts({ type:'free', id:q.id })), 'ok');
+  assert.equal(res('Quiero que tú vengas.', [q.target], 'es'), 'bad', 'ohne deutschen Satz (Diktat) nicht');
+});

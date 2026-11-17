@@ -2,6 +2,22 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.38.0
+**Satzbank durchgesehen: Erklärung zu jedem Satz, mehr richtige Fassungen.**
+Alle 441 Sätze nach Regeln je Thema geprüft, ohne Nutzerdaten.
+- **Erklärung zu jedem Satz:** 226 Sätze hatten keine eigene und zeigten bei einem Fehler nur die allgemeine Regel des Themas. Jetzt hat jeder Satz eine, und sie nennt die Regel am Satz selbst („Im att-Satz steht „inte“ vor dem Verb: att han inte kommer.“, „gustar richtet sich nach los libros (Mehrzahl), also gustan.“). Ein Test hält das für neue Sätze fest.
+- **Fehler behoben:** Bei einem Satz zur Wortstellung erschien „Ohne Zeitpunkt, als Erfahrung oder bis heute andauernd: Perfekt mit „har …““, sobald in der Antwort kein „har“ stand, auch wenn es um etwas ganz anderes ging. Die eigene Erklärung des Satzes geht jetzt vor.
+- **128 weitere richtige Fassungen,** zum Beispiel:
+  - Schwedisch: „förrän“ nach Verneinung, „gå en promenad“, „Det är filmen jag aldrig har sett“, „Vi träffade varandra 2019“, „Jag minns inte hans namn“, „akta dig“.
+  - Spanisch: Indefinido, wo es in Lateinamerika üblich ist („Nunca estuve en México“), „Ojalá que …“, „Antes de irte, apaga la luz“, „Puede que venga“, „Hace tres años que vivo aquí“, carro und auto.
+  - Füllungen, die bisher nur in der Lückenaufgabe galten, gelten jetzt auch beim freien Übersetzen (etwa „Hon är på arbetet“, „Mi compañía está en Madrid“).
+- **Zwei Regeln für alle Sätze** statt einzelner Alternativen:
+  - Schwedisch: „har“/„hade“ darf im Nebensatz vor dem Supinum fehlen („… att han aldrig fått mejlet“). Nicht im Hauptsatz und nicht im Hördiktat.
+  - Spanisch: Ein betontes Subjektpronomen mitten im Satz ist richtig, wenn der deutsche Satz dieselbe Person nennt („Creo que él tiene razón“ zu „… dass er recht hat“). Mit „ella“ bleibt es falsch.
+  - Dazu „mail“ gleich „mejl“.
+- **Doppelte deutsche Sätze aufgelöst:** „Plötzlich ging das Licht aus.“ stand zweimal; der zweite heißt jetzt „Plötzlich war der Strom weg.“ (se fue la luz). „An deiner Stelle würde ich das nicht machen.“ ebenso; der zweite heißt jetzt „Wenn ich du wäre, …“ (yo que tú). Die Lernstände bleiben, weil die Zielsätze gleich sind.
+- 3 neue Einheitstests (232).
+
 ## 24.37.0
 **Erzeugte Aufgaben durchgesehen, Browser-Tests auch in Firefox.**
 Alle Ausgaben aller 21 Generatoren aufgelistet und von Hand geprüft.

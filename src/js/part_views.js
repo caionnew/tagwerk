@@ -393,8 +393,9 @@ function feedbackHtml(r, ex, c){
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {
     if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. Der Unterschied liegt woanders.</p>`;
-    // Erzeugte Aufgaben mit eigener Erklärung: die passt genau zum Satz und geht vor der allgemeinen Diagnose
-    else if (!(ex.type === 'gen' && (ex.data.kind || ex.data.note)) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
+    // Eigene Erklärung (Satzbank oder erzeugte Aufgabe) passt genau zum Satz und geht vor der allgemeinen Diagnose.
+    // Die Diagnose sieht nur, ob „har …“ fehlt; bei einem Satz zur Wortstellung führte sie in die Irre.
+    else if (!(ex.type === 'gen' && (ex.data.kind || ex.data.note)) && !(item && item.note) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
     else if (ex.type === 'gen') out += `<p class="expl">${termify(ex.data.note)}</p>`;
     else if (tr && (item.note || tr.short)) out += `<p class="expl">${termify(item.note || tr.short)}</p>${tr.id !== 'eigene' ? `<button type="button" class="link more-l" data-a="topic" data-t="${tr.id}">Regel und Beispiele</button>` : ''}`;
     if (ex.type === 'free' && !c.gaveUp && c.input) {

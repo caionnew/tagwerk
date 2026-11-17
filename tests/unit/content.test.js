@@ -65,3 +65,12 @@ test('Erklärung je Satz: steht bei falscher Antwort statt der allgemeinen Theme
   const real = BANK.es.find(i => i.target === 'Si llueve mañana, nos quedamos en casa.');
   assert.match(real.note, /si \+ Präsens/);
 });
+test('jeder Satz der Satzbank hat eine Erklärung, kein deutscher Satz kommt in einer Sprache doppelt vor', () => {
+  const BANK = app.get('BANK');
+  for (const l of ['sv', 'es']) {
+    const missing = BANK[l].filter(i => !i.note).map(i => i.target);
+    assert.equal(missing.length, 0, `${l}: ohne Erklärung: ${missing.join(" | ")}`);
+    const seen = new Map();
+    BANK[l].forEach(i => { assert.ok(!seen.has(i.de), `${l}: „${i.de}“ doppelt (${seen.get(i.de)} / ${i.target})`); seen.set(i.de, i.target); });
+  }
+});

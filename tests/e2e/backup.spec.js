@@ -65,16 +65,22 @@ function fullDB(){
   db.settings = Object.assign(db.settings, { shHints:false, niveau:'fort', textMode:'listen', langMode:'last', haptics:false, size:'lang' });
   return db;
 }
+// Die App ergänzt beim Anzeigen eigene Merker (Sprache des Tages, Schwerpunkt der Woche, Tagesstand) und speichert verzögert.
+// Deshalb ohne Zeitabhängigkeit: Nichts aus dem Ausgangsstand fehlt; das Backup gleicht dem gespeicherten Stand (der Export
+// speichert vorher), bis auf das danach gesetzte Datum des letzten Backups.
+const noStamp = d => { const x = Object.assign({}, d); delete x.lastBackup; return x; };
 test('Backup: der ganze Stand kommt zurück, auch alles, was in späteren Versionen dazukam', async ({ page, browser }) => {
-  await seed(page, fullDB());
+  const start = fullDB();
+  await seed(page, start);
   await page.goto(APP);
   await page.click('[data-a=settings] >> nth=0');
-  const before = await stored(page);
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('[data-a=export]')]);
   const file = path.join(os.tmpdir(), `tw-full-${Date.now()}.json`);
   await dl.saveAs(file);
   const exported = JSON.parse(fs.readFileSync(file, 'utf8'));
-  expect(exported).toEqual(before);
+  expect(exported).toMatchObject(start);
+  await expect.poll(async () => (await stored(page)).lastBackup).toBeTruthy();
+  expect(noStamp(await stored(page))).toEqual(noStamp(exported));
   const ctx = await browser.newContext({ viewport:{ width:412, height:860 } });
   const fresh = await ctx.newPage();
   const errors = []; fresh.on('pageerror', e => errors.push(e.message));
@@ -83,8 +89,7 @@ test('Backup: der ganze Stand kommt zurück, auch alles, was in späteren Versio
   await fresh.setInputFiles('#importFile', file);
   await expect(fresh.locator('.notice')).toContainText('Backup eingespielt');
   // Alles, was im Backup steht, steht danach genauso im Speicher (die App darf eigene Merker ergänzen, nichts verlieren)
-  const after = await stored(fresh);
-  for (const k of Object.keys(exported)) expect(after[k], k).toEqual(exported[k]);
+  expect(await stored(fresh)).toMatchObject(exported);
   expect(errors).toEqual([]);
   await ctx.close();
 });

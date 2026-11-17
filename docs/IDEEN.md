@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
 
-Stand: 17. November 2026 (nach 24.34.0)
+Stand: 17. November 2026 (nach 24.34.1)
 
 ## Als Nächstes
 
@@ -23,8 +23,6 @@ Stand: 17. November 2026 (nach 24.34.0)
 6. **Diktat ganzer Lesetexte (B).** Einen bekannten Text Satz für Satz mitschreiben: längeres Hören mit Zusammenhang statt Einzelsätzen. Nutzt Lesetexte und Diktat, die es schon gibt.
 
 7. **Schriftgröße einstellbar (B).** Größere Schrift für Lesetexte und Übungssätze, in den Einstellungen. Wenig Aufwand. Die Übungen sind auf feste Höhen ausgelegt (Antwortzone, Leiste unten); die Layout-Tests müssen dann mit der größeren Stufe laufen.
-
-8. **Inversion beim freien Übersetzen: Subjekt vorn als „auch richtig“ (B).** „Heute Abend sehe ich ihn nicht.“ – „Jag träffar honom inte ikväll.“ ist richtig, zählt beim freien Übersetzen aber als falsch (bei Wortkästchen ist es seit 24.34.0 eindeutig). Besser als jede Variante als Alternative einzutragen: erkennen, dass nur der Satzanfang ans Ende gewandert ist, „fast richtig“ geben und die Fassung mit Umstellung zeigen. Bis dahin hilft „Meine ist auch richtig“.
 
 ## Nach echter Nutzung nachstellen
 

@@ -56,33 +56,60 @@ test('Weiter merkt sich das Ergebnis an der Aufgabe, auch beim zweiten Versuch',
   assert.deepEqual(got, [['bad', false], ['near', false], ['ok', true]]);
 });
 
-// Stellungs-Übung: Stimmt die geprüfte Stellung, ist ein anderer Fehler nur „fast richtig“, und die Regel wird nicht als Erklärung gezeigt
-const answer = (ex, input) => run(`(() => { const ex = ${JSON.stringify(ex)}; S.run = { kind:'quick', lang:'sv', queue:[ex], idx:0, ok:0, bad:0, res:[], missed:[], combo:0, best:0 }; S.view = 'run'; S.run.cur = { input:${JSON.stringify(input)}, state:'answer', result:null }; check(); const c = S.run.cur; return { result:c.result, why:c.why && c.why.kind, kind:c.kind || null, fb:feedbackHtml(S.run, ex, c) }; })()`);
+// Stellungs-Übung: Stimmt die geprüfte Stellung, bleibt ein anderer Fehler falsch, aber die Erklärung ist nicht die Regel, die man richtig angewandt hat
+const answer = (ex, input) => run(`(() => { const ex = ${JSON.stringify(ex)}; S.run = { kind:'quick', lang:'sv', queue:[ex], idx:0, ok:0, bad:0, res:[], missed:[], combo:0, best:0 }; S.view = 'run'; S.run.cur = { input:${JSON.stringify(input)}, state:'answer', result:null }; check(); const c = S.run.cur; return { result:c.result, kind:c.kind || null, posOk:!!c.posOk, fb:feedbackHtml(S.run, ex, c) }; })()`);
 const inte = (de, sv, pos, adv) => ({ type:'gen', gen:'inte', data:{ prompt:de, answers:[sv], label:'Übersetze ins Schwedische', note:'REGEL', pos, posLabel:`Die Stellung von „${adv}“ stimmt` } });
-test('Hauptsatz: Adverb richtig nach dem Verb, andere Präposition → fast richtig mit passender Erklärung', () => {
+const POS_OK = /Die Stellung von „alltid“ stimmt\. Der Unterschied liegt woanders\./;
+test('Hauptsatz: Adverb richtig, anderer Fehler → falsch, Erklärung sagt, dass die Stellung stimmt', () => {
   const ex = inte('Wir trainieren immer im Fitnessstudio.', 'Vi tränar alltid på gymmet.', ['vi', '*', 'alltid'], 'alltid');
-  const a = answer(ex, 'vi tränar alltid i gymmet');
-  assert.equal(a.result, 'near'); assert.equal(a.why, 'pos');
-  assert.match(a.fb, /Die Stellung von „alltid“ stimmt\. Der Unterschied liegt woanders\./);
-  assert.doesNotMatch(a.fb, /REGEL/);
-  // Anderes Verb, Stellung stimmt: ebenso
-  assert.equal(answer(inte('Ich mache immer im Juli Urlaub.', 'Jag tar alltid semester i juli.', ['jag', '*', 'alltid'], 'alltid'), 'jag är alltid på semester i juli').result, 'near');
-  // Adverb falsch: bleibt falsch, mit der Regel
+  const a = answer(ex, 'vi tränar alltid till gymmet');
+  assert.equal(a.result, 'bad'); assert.ok(a.posOk);
+  assert.match(a.fb, POS_OK); assert.doesNotMatch(a.fb, /REGEL/);
+  // Andere Bedeutung („bin im Urlaub“ statt „mache Urlaub“): falsch
+  assert.equal(answer(inte('Ich mache immer im Juli Urlaub.', 'Jag tar alltid semester i juli.', ['jag', '*', 'alltid'], 'alltid'), 'jag är alltid på semester i juli').result, 'bad');
+  // Adverb falsch: falsch, mit der Regel
   const b = answer(ex, 'vi tränar på gymmet alltid');
-  assert.equal(b.result, 'bad'); assert.match(b.fb, /REGEL/);
+  assert.equal(b.result, 'bad'); assert.ok(!b.posOk); assert.match(b.fb, /REGEL/);
   assert.equal(answer(ex, 'vi alltid tränar på gymmet').result, 'bad');
 });
-test('Nebensatz: Infinitiv statt Präsens ist kein „anderes Wort, Grammatik passt“', () => {
+test('Nebensatz: Infinitiv statt Präsens ist falsch, nicht „anderes Wort, Grammatik passt“', () => {
   const ex = inte('Sie sagt, dass wir immer Pilze sammeln.', 'Hon säger att vi alltid plockar svamp.', ['att', 'vi', 'alltid'], 'alltid');
   const a = answer(ex, 'hon säger att vi alltid samla svamp');
-  assert.equal(a.result, 'near'); assert.equal(a.why, 'pos'); assert.equal(a.kind, 'word');
-  assert.doesNotMatch(a.fb, /Die Grammatik passt/);
+  assert.equal(a.result, 'bad'); assert.equal(a.kind, 'word');
+  assert.match(a.fb, POS_OK); assert.doesNotMatch(a.fb, /Die Grammatik passt/);
   assert.equal(answer(ex, 'hon säger att vi samlar alltid svamp').result, 'bad');
 });
 test('Inversion vorn: Verb, Subjekt, Adverb', () => {
   const ex = inte('Nach der Arbeit trainieren wir immer im Fitnessstudio.', 'Efter jobbet tränar vi alltid på gymmet.', ['jobbet', '*', 'vi', 'alltid'], 'alltid');
-  assert.equal(answer(ex, 'efter jobbet tränar vi alltid i gymmet').result, 'near');
-  assert.equal(answer(ex, 'efter jobbet vi tränar alltid på gymmet').result, 'bad');
+  assert.ok(answer(ex, 'efter jobbet tränar vi alltid till gymmet').posOk);
+  assert.ok(!answer(ex, 'efter jobbet vi tränar alltid på gymmet').posOk);
+});
+test('Statistik: Fehler neben richtig gesetzter Stellung belastet das Thema nicht, falsche Stellung schon', () => {
+  const ex = inte('Wir trainieren immer im Fitnessstudio.', 'Vi tränar alltid på gymmet.', ['vi', '*', 'alltid'], 'alltid');
+  run(`DB.tlog = {}`);
+  answer(ex, 'vi tränar alltid till gymmet'); run(`recordAnswer('sv', S.run.queue[0], S.run.cur, false)`);
+  answer(ex, 'vi tränar till gymmet alltid'); run(`recordAnswer('sv', S.run.queue[0], S.run.cur, false)`);
+  assert.deepEqual(run(`DB.tlog[today()].sv['p:bisats']`), [2, 1]);
+});
+test('Generator: „i gymmet“ und „åker på semester“ sind richtige Fassungen', () => {
+  const genInte = app.get('genInte');
+  const found = { gym:0, sem:0 };
+  withSeed(11, () => {
+    for (let i = 0; i < 600; i++) {
+      const d = genInte(), a0 = d.answers[0];
+      if (/ på gymmet\./.test(a0)) { found.gym++; assert.ok(d.answers.includes(a0.replace('på gymmet', 'i gymmet')), a0); assert.equal(answer({ type:'gen', gen:'inte', data:d }, a0.replace('på gymmet', 'i gymmet')).result, 'ok'); }
+      if (/ tar semester i juli\./.test(a0)) { found.sem++; assert.ok(d.answers.includes(a0.replace('tar semester', 'åker på semester')), a0); }
+    }
+  });
+  assert.ok(found.gym > 0 && found.sem > 0, JSON.stringify(found));
+});
+test('Inversion beim Übersetzen: Subjekt vorn ist ebenfalls richtig', () => {
+  const BANK = app.get('BANK');
+  const item = BANK.sv.find(i => i.target === 'Ikväll träffar jag honom inte.');
+  run(`DB.st = {}`);
+  assert.equal(answer({ type:'free', id:item.id }, 'Jag träffar honom inte ikväll.').result, 'ok');
+  assert.equal(answer({ type:'free', id:item.id }, 'Ikväll träffar jag honom inte.').result, 'ok');
+  assert.equal(answer({ type:'free', id:item.id }, 'Ikväll jag träffar honom inte.').result, 'bad');
 });
 test('Generator: Die eigene Lösung erfüllt immer die geprüfte Stellung, der Satz „Urlaub“ ist idiomatisch', () => {
   const genInte = app.get('genInte'), seqIn = app.get('seqIn'), norm = app.get('norm');

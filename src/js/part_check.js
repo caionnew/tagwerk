@@ -162,7 +162,7 @@ function check(){
       if (ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.mine = mineHtml(c.input, best, r.lang);
       const toks = ' ' + norm(c.input, r.lang) + ' ';
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
-      if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) c.keyOk = ex.data.posLabel;
+      if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) { c.keyOk = ex.data.posLabel; c.posOk = true; }
       if (ex.type === 'free') { const item = itemById(ex.id); const g = item.gapAlts.find(x => toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
     }
     if (res === 'bad' && ex.type !== 'cloze') {
@@ -174,8 +174,6 @@ function check(){
         if (ex.type === 'gen' && !ex.data.gap && ex.data.kind !== 'time') { c.result = 'near'; c.why = { kind:'vocab' }; }
       }
     }
-    // Stellungs-Übungen: Steht das Adverb richtig, ist die geprüfte Regel getroffen. Andere Abweichungen machen es „fast richtig“.
-    if (c.result === 'bad' && ex.type === 'gen' && ex.data.pos && c.keyOk) { c.result = 'near'; c.why = { kind:'pos' }; }
   }
   finishAnswer(r, ex, c);
 }

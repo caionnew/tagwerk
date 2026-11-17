@@ -384,7 +384,6 @@ function feedbackHtml(r, ex, c){
   out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
   if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
-  else if (c.result === 'near' && c.why && c.why.kind === 'pos') out += `<p class="expl">${termify(c.keyOk)}. Der Unterschied liegt woanders.</p>`;
   else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {

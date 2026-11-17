@@ -308,7 +308,7 @@ function genPorPara(){
 /* ---------- Stellung von „inte“ und anderen Satzadverbien ---------- */
 const ADV_DE = { inte:'nicht', aldrig:'nie', alltid:'immer', ofta:'oft' };
 const SUBJ_INTE = [['jag', 'Ich', 'ich', 0], ['du', 'Du', 'du', 1], ['han', 'Er', 'er', 2], ['hon', 'Sie', 'sie', 2], ['vi', 'Wir', 'wir', 3], ['de', 'Sie', 'sie', 4]];
-// v, Rest, Adverbien, deutsche Verbformen, Hauptsatz, Nebensatz, vorn (sv), vorn (de)
+// v, Rest, Adverbien, deutsche Verbformen, Hauptsatz, Nebensatz, vorn (sv), vorn (de), weitere richtige Fassungen [v, Rest] (optional)
 const VP_SV = [
   ['kommer', 'idag', ['inte'], ['komme', 'kommst', 'kommt', 'kommen', 'kommen'], '{S} {V} heute {A}', '{s} heute {A} {V}', 'Tyvärr', 'Leider'],
   ['förstår', 'frågan', ['inte'], ['verstehe', 'verstehst', 'versteht', 'verstehen', 'verstehen'], '{S} {V} die Frage {A}', '{s} die Frage {A} {V}', 'Tyvärr', 'Leider'],
@@ -322,7 +322,7 @@ const VP_SV = [
   // Alltag, Arbeit, Natur, Freizeit: damit nicht jede Runde dieselben Bausteine bringt
   ['läser', 'nyheterna', ['aldrig', 'alltid', 'ofta'], ['lese', 'liest', 'liest', 'lesen', 'lesen'], '{S} {V} {A} die Nachrichten', '{s} {A} die Nachrichten {V}', 'På morgonen', 'Morgens'],
   ['cyklar', 'till jobbet', ['aldrig', 'alltid', 'ofta'], ['fahre', 'fährst', 'fährt', 'fahren', 'fahren'], '{S} {V} {A} mit dem Rad zur Arbeit', '{s} {A} mit dem Rad zur Arbeit {V}', 'På sommaren', 'Im Sommer'],
-  ['tränar', 'på gymmet', ['aldrig', 'alltid', 'ofta'], ['trainiere', 'trainierst', 'trainiert', 'trainieren', 'trainieren'], '{S} {V} {A} im Fitnessstudio', '{s} {A} im Fitnessstudio {V}', 'Efter jobbet', 'Nach der Arbeit'],
+  ['tränar', 'på gymmet', ['aldrig', 'alltid', 'ofta'], ['trainiere', 'trainierst', 'trainiert', 'trainieren', 'trainieren'], '{S} {V} {A} im Fitnessstudio', '{s} {A} im Fitnessstudio {V}', 'Efter jobbet', 'Nach der Arbeit', [['tränar', 'i gymmet']]],
   ['lyssnar', 'på radio', ['aldrig', 'alltid', 'ofta'], ['höre', 'hörst', 'hört', 'hören', 'hören'], '{S} {V} {A} Radio', '{s} {A} Radio {V}', 'I bilen', 'Im Auto'],
   ['pratar', 'svenska', ['aldrig', 'alltid', 'ofta'], ['spreche', 'sprichst', 'spricht', 'sprechen', 'sprechen'], '{S} {V} {A} Schwedisch', '{s} {A} Schwedisch {V}', 'Med grannarna', 'Mit den Nachbarn'],
   ['promenerar', 'i skogen', ['aldrig', 'alltid', 'ofta'], ['gehe', 'gehst', 'geht', 'gehen', 'gehen'], '{S} {V} {A} im Wald spazieren', '{s} {A} im Wald spazieren {V}', 'På helgerna', 'Am Wochenende'],
@@ -335,7 +335,7 @@ const VP_SV = [
   ['plockar', 'svamp', ['aldrig', 'alltid', 'ofta'], ['sammle', 'sammelst', 'sammelt', 'sammeln', 'sammeln'], '{S} {V} {A} Pilze', '{s} {A} Pilze {V}', 'På hösten', 'Im Herbst'],
   ['spelar', 'innebandy', ['aldrig', 'alltid', 'ofta'], ['spiele', 'spielst', 'spielt', 'spielen', 'spielen'], '{S} {V} {A} Unihockey', '{s} {A} Unihockey {V}', 'På onsdagar', 'Mittwochs'],
   ['jobbar', 'hemifrån', ['aldrig', 'alltid', 'ofta'], ['arbeite', 'arbeitest', 'arbeitet', 'arbeiten', 'arbeiten'], '{S} {V} {A} von zu Hause', '{s} {A} von zu Hause {V}', 'På måndagar', 'Montags'],
-  ['tar', 'semester i juli', ['aldrig', 'alltid', 'ofta'], ['mache', 'machst', 'macht', 'machen', 'machen'], '{S} {V} {A} im Juli Urlaub', '{s} {A} im Juli Urlaub {V}', 'Numera', 'Inzwischen'],
+  ['tar', 'semester i juli', ['aldrig', 'alltid', 'ofta'], ['mache', 'machst', 'macht', 'machen', 'machen'], '{S} {V} {A} im Juli Urlaub', '{s} {A} im Juli Urlaub {V}', 'Numera', 'Inzwischen', [['åker', 'på semester i juli']]],
   ['glömmer', 'nycklarna', ['aldrig', 'alltid', 'ofta'], ['vergesse', 'vergisst', 'vergisst', 'vergessen', 'vergessen'], '{S} {V} {A} die Schlüssel', '{s} {A} die Schlüssel {V}', 'På morgonen', 'Morgens'],
   ['hittar', 'glasögonen', ['inte'], ['finde', 'findest', 'findet', 'finden', 'finden'], '{S} {V} die Brille {A}', '{s} die Brille {A} {V}', 'Just nu', 'Gerade'],
   ['vet', 'svaret', ['inte'], ['weiß', 'weißt', 'weiß', 'wissen', 'wissen'], '{S} {V} die Antwort {A}', '{s} die Antwort {A} {V}', 'Ärligt talat', 'Ehrlich gesagt'],
@@ -347,29 +347,28 @@ const INTRO_SV = [['Jag vet att', 'Ich weiß, dass', 'inte aldrig alltid ofta', 
 function genInte(){
   const vp = pick(VP_SV), adv = pick(vp[2]), s = pick(SUBJ_INTE);
   const fill = (t, cap) => t.replace('{S}', s[1]).replace('{s}', s[2]).replace('{V}', vp[3][s[3]]).replace('{A}', ADV_DE[adv]);
-  const rest = vp[1] ? ' ' + vp[1] : '';
   const roll = Math.random();
   // pos: die geprüfte Stellung als Wortfolge, * = ein beliebiges Wort (das Verb). Stimmt sie, liegt ein Fehler woanders.
-  let sv, de, note, pos;
+  let mk, de, note, pos;
   if (roll < 0.5) {
     const intro = pick(INTRO_SV.filter(x => x[2].split(' ').includes(adv) && !(x[3] === 0 && s[3] === 0)));
-    sv = `${intro[0]} ${s[0]} ${adv} ${vp[0]}${rest}.`;
+    mk = (v, r) => `${intro[0]} ${s[0]} ${adv} ${v}${r ? ' ' + r : ''}.`;
     de = `${intro[1]} ${fill(vp[5])}.`;
     note = `Im Nebensatz steht „${adv}“ vor dem Verb: … ${s[0]} ${adv} ${vp[0]}.`;
     pos = [intro[0].split(' ').pop().toLowerCase(), s[0], adv];
   } else if (roll < 0.75) {
-    sv = `${s[0][0].toUpperCase() + s[0].slice(1)} ${vp[0]} ${adv}${rest}.`;
+    mk = (v, r) => `${s[0][0].toUpperCase() + s[0].slice(1)} ${v} ${adv}${r ? ' ' + r : ''}.`;
     de = `${fill(vp[4])}.`;
     note = `Im Hauptsatz steht „${adv}“ direkt nach dem Verb: ${s[0]} ${vp[0]} ${adv}.`;
     pos = [s[0], '*', adv];
   } else {
-    sv = `${vp[6]} ${vp[0]} ${s[0]} ${adv}${rest}.`;
+    mk = (v, r) => `${vp[6]} ${v} ${s[0]} ${adv}${r ? ' ' + r : ''}.`;
     de = `${vp[7]} ${fill(vp[4].replace('{S} {V}', '{V} {s}'))}.`;
     note = `Steht etwas anderes vorn, folgt erst das Verb, dann das Subjekt, dann „${adv}“: ${vp[6]} ${vp[0]} ${s[0]} ${adv}.`;
     pos = [vp[6].split(' ').pop().toLowerCase(), '*', s[0], adv];
   }
-  const answers = [sv];
-  if (/\bidag\b/.test(sv)) answers.push(sv.replace('idag', 'i dag'));
+  const answers = [mk(vp[0], vp[1])].concat((vp[8] || []).map(([v, r]) => mk(v, r)));
+  answers.slice().forEach(a => { if (/\bidag\b/.test(a)) answers.push(a.replace('idag', 'i dag')); });
   return { prompt:de, answers, label:'Übersetze ins Schwedische', note, pos, posLabel:`Die Stellung von „${adv}“ stimmt` };
 }
 

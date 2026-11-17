@@ -28,29 +28,29 @@ Ich wäre gekommen, wenn ich gewusst hätte, dass du nicht allein bist. | Jag ha
 Kein Wunder, dass die Leute nicht mehr Zug fahren, wenn die Züge ständig Verspätung haben. | Det är inte konstigt att folk inte åker tåg längre när tågen hela tiden är försenade. |  |  | Det är inte konstigt att folk slutar åka tåg när tågen hela tiden är försenade.;; Det är inte konstigt att folk inte längre åker tåg när tågen hela tiden är försenade.;; Det är inte konstigt att folk inte åker tåg längre när tågen ständigt är försenade. | B2
 `,
 inversion: `
-Heute arbeite ich nicht. | Idag jobbar jag inte. | | | Idag arbetar jag inte.
-Morgen fahren wir nach Göteborg. | I morgon åker vi till Göteborg. | | |
-Am Wochenende schlafe ich immer lange. | På helgen sover jag alltid länge. | | | På helgerna sover jag alltid länge.
-Jetzt verstehe ich das. | Nu förstår jag det. | | |
-Im Sommer wohnen sie auf dem Land. | På sommaren bor de på landet. | | |
-Leider kann ich nicht kommen. | Tyvärr kan jag inte komma. | | |
-Den Film habe ich schon gesehen. | Den filmen har jag redan sett. | | |
-Wenn ich nach Hause komme, koche ich. | När jag kommer hem lagar jag mat. | | |
-Normalerweise trinke ich keinen Kaffee. | Vanligtvis dricker jag inte kaffe. | | | Normalt dricker jag inte kaffe.
-Um acht Uhr beginnt der Kurs. | Klockan åtta börjar kursen. | | |
+Heute arbeite ich nicht. | Idag jobbar jag inte. | | | Idag arbetar jag inte.;; Jag jobbar inte idag.
+Morgen fahren wir nach Göteborg. | I morgon åker vi till Göteborg. | | | Vi åker till Göteborg i morgon.
+Am Wochenende schlafe ich immer lange. | På helgen sover jag alltid länge. | | | På helgerna sover jag alltid länge.;; Jag sover alltid länge på helgen.
+Jetzt verstehe ich das. | Nu förstår jag det. | | | Jag förstår det nu.
+Im Sommer wohnen sie auf dem Land. | På sommaren bor de på landet. | | | De bor på landet på sommaren.
+Leider kann ich nicht kommen. | Tyvärr kan jag inte komma. | | | Jag kan tyvärr inte komma.
+Den Film habe ich schon gesehen. | Den filmen har jag redan sett. | | | Jag har redan sett den filmen.
+Wenn ich nach Hause komme, koche ich. | När jag kommer hem lagar jag mat. | | | Jag lagar mat när jag kommer hem.
+Normalerweise trinke ich keinen Kaffee. | Vanligtvis dricker jag inte kaffe. | | | Normalt dricker jag inte kaffe.;; Jag dricker vanligtvis inte kaffe.
+Um acht Uhr beginnt der Kurs. | Klockan åtta börjar kursen. | | | Kursen börjar klockan åtta.
 Vielleicht kommt sie später. | Kanske kommer hon senare. | | | Kanske hon kommer senare.;; Hon kommer kanske senare.
-In Schweden trinkt man viel Kaffee. | I Sverige dricker man mycket kaffe. | | |
-Nach dem Essen machen wir einen Spaziergang. | Efter maten tar vi en promenad. | | |
-Heute Abend sehe ich ihn nicht. | Ikväll träffar jag honom inte. | | | Ikväll träffar jag inte honom.
-Im Winter wird es früh dunkel. | På vintern blir det mörkt tidigt. | | |
-Nach der Arbeit gehe ich oft ins Fitnessstudio. | Efter jobbet går jag ofta till gymmet. | | | Efter jobbet går jag ofta på gym.;; Efter arbetet går jag ofta till gymmet.
-Zum Glück hat niemand etwas gemerkt. | Som tur var märkte ingen något. | | | Lyckligtvis märkte ingen något.;; Som tur var märkte ingen någonting.
+In Schweden trinkt man viel Kaffee. | I Sverige dricker man mycket kaffe. | | | Man dricker mycket kaffe i Sverige.
+Nach dem Essen machen wir einen Spaziergang. | Efter maten tar vi en promenad. | | | Vi tar en promenad efter maten.
+Heute Abend sehe ich ihn nicht. | Ikväll träffar jag honom inte. | | | Ikväll träffar jag inte honom.;; Jag träffar honom inte ikväll.;; Jag träffar inte honom ikväll.
+Im Winter wird es früh dunkel. | På vintern blir det mörkt tidigt. | | | Det blir mörkt tidigt på vintern.
+Nach der Arbeit gehe ich oft ins Fitnessstudio. | Efter jobbet går jag ofta till gymmet. | | | Efter jobbet går jag ofta på gym.;; Efter arbetet går jag ofta till gymmet.;; Jag går ofta till gymmet efter jobbet.
+Zum Glück hat niemand etwas gemerkt. | Som tur var märkte ingen något. | | | Lyckligtvis märkte ingen något.;; Som tur var märkte ingen någonting.;; Ingen märkte något, som tur var.
 Vielleicht regnet es morgen. | Kanske regnar det i morgon. | | | Det regnar kanske i morgon.;; Kanske det regnar i morgon.
 Hier wohne ich seit fünf Jahren. | Här har jag bott i fem år. | | | Jag har bott här i fem år.
-Morgen früh muss ich arbeiten. | I morgon bitti måste jag jobba. | | | I morgon bitti måste jag arbeta.
-Hätte ich das früher gewusst, hätte ich anders gehandelt. | Hade jag vetat det tidigare hade jag gjort annorlunda. |  |  | Om jag hade vetat det tidigare hade jag gjort annorlunda.;; Hade jag vetat det tidigare skulle jag ha gjort annorlunda.;; Om jag hade vetat det tidigare skulle jag ha gjort annorlunda.;; Hade jag vetat det tidigare hade jag handlat annorlunda. | B2
+Morgen früh muss ich arbeiten. | I morgon bitti måste jag jobba. | | | I morgon bitti måste jag arbeta.;; Jag måste jobba i morgon bitti.
+Hätte ich das früher gewusst, hätte ich anders gehandelt. | Hade jag vetat det tidigare hade jag gjort annorlunda. |  |  | Om jag hade vetat det tidigare hade jag gjort annorlunda.;; Hade jag vetat det tidigare skulle jag ha gjort annorlunda.;; Om jag hade vetat det tidigare skulle jag ha gjort annorlunda.;; Hade jag vetat det tidigare hade jag handlat annorlunda.;; Jag hade gjort annorlunda om jag hade vetat det tidigare. | B2
 Erst als es dunkel wurde, merkten wir, wie spät es war. | Först när det blev mörkt märkte vi hur sent det var. |  |  |  | B2
-Trotz des schlechten Wetters kamen fast alle zum Fest. | Trots det dåliga vädret kom nästan alla till festen. |  |  |  | B2
+Trotz des schlechten Wetters kamen fast alle zum Fest. | Trots det dåliga vädret kom nästan alla till festen. |  |  | Nästan alla kom till festen trots det dåliga vädret. | B2
 Am meisten vermisse ich die langen Sommerabende. | Mest saknar jag de långa sommarkvällarna. |  |  | Jag saknar de långa sommarkvällarna mest.;; Det jag saknar mest är de långa sommarkvällarna. | B2
 `,
 tempus: `

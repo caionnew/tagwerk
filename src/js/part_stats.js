@@ -95,9 +95,9 @@ function recordAnswer(lang, ex, c, good){
   const typed = ['free', 'gap', 'hear', 'trans'].includes(type) || (type === 'time' && ex.data.mode === 'write');
   const k = !good && typed && c.input && !c.gaveUp ? (c.kind || errKind(c.input, answersFor(ex), lang, testedPart(ex))) : null;
   if (k) L['e:' + k] = (L['e:' + k] || 0) + 1;
-  // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes
+  // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes, ebenso ein Fehler neben der richtig gesetzten Stellung
   const trap = ex.type === 'gen' ? (ex.data.trap || (GENS[ex.gen] && GENS[ex.gen].trap)) : (itemById(ex.id) || {}).trap;
-  if (trap) add('p:' + trap, good || k === 'vocab' || k === 'spell');
+  if (trap) add('p:' + trap, good || k === 'vocab' || k === 'spell' || !!c.posOk);
   if (type) add('t:' + type, good);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
 }

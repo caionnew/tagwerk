@@ -119,3 +119,28 @@ test('Backup aus einer alten Version: wird übernommen und umgerechnet', async (
   await page.click('.today [data-a=daily]');
   await expect(page.locator('.runbar')).toBeVisible();
 });
+test('Backup mit offenem Tagwerk: auf einem leeren Gerät eingespielt, geht es mit denselben Farben weiter', async ({ page, browser }) => {
+  const db = richDB('sv'), ids = Object.keys(db.st), t = new Date(), pad = n => String(n).padStart(2, '0');
+  const queue = [{ type:'free', id:ids[0], got:'ok' }, { type:'free', id:ids[1], got:'bad' }, { type:'free', id:ids[2], got:'near' }, { type:'free', id:ids[3] }, { type:'free', id:ids[1], requeue:true }];
+  db.run = { date:`${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`, lang:'sv', queue, idx:3, ok:2, bad:1, res:[], missed:[], secs:60, combo:0, best:1 };
+  await seed(page, db);
+  await page.goto(APP);
+  await page.click('[data-a=settings] >> nth=0');
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('[data-a=export]')]);
+  const file = path.join(os.tmpdir(), `tw-run-${Date.now()}.json`);
+  await dl.saveAs(file);
+  expect(JSON.parse(fs.readFileSync(file, 'utf8')).run.queue.map(e => e.got || null)).toEqual(['ok', 'bad', 'near', null, null]);
+  const ctx = await browser.newContext({ viewport:{ width:412, height:860 } });
+  const fresh = await ctx.newPage();
+  const errors = []; fresh.on('pageerror', e => errors.push(e.message));
+  await fresh.goto(APP);
+  await fresh.click('[data-a=settings] >> nth=0');
+  await fresh.setInputFiles('#importFile', file);
+  await expect(fresh.locator('.notice')).toContainText('Backup eingespielt');
+  await fresh.click('[data-a=tab][data-v=home]');
+  await fresh.click('.today [data-a=daily]');
+  await expect(fresh.locator('.count')).toHaveText('4/5');
+  expect(await fresh.$$eval('.progress .seg', els => els.map(e => e.className.replace('seg', '').trim()))).toEqual(['s-ok', 's-bad', 's-near', 's-cur', 're re1']);
+  expect(errors).toEqual([]);
+  await ctx.close();
+});

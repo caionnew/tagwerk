@@ -51,7 +51,7 @@ Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `run
 
 ## Datenspeicher
 
-`DB` liegt als JSON unter `localStorage['tagwerk-offline-v1']` und wird 150 ms nach jeder Änderung gespeichert, sofort beim Wechsel in den Hintergrund. Backup und Wiederherstellung exportieren genau dieses Objekt (`backupText`, `parseBackup`, `applyBackup` in `part_head.js`). Der Speicher gehört zur Adresse (Origin), nicht zu den Dateien: Ein Update unter demselben Link behält den Stand.
+`DB` liegt als JSON unter `localStorage['tagwerk-offline-v1']` und wird 150 ms nach jeder Änderung gespeichert, sofort beim Wechsel in den Hintergrund. Backup und Wiederherstellung exportieren genau dieses Objekt (`backupText`, `parseBackup`, `applyBackup` in `part_head.js`). Nach dem Einspielen und nach „Rückgängig“ kommt ein offenes Tagwerk aus dem neuen Stand (`runsFromDB`), nicht aus dem Arbeitsspeicher. Der Speicher gehört zur Adresse (Origin), nicht zu den Dateien: Ein Update unter demselben Link behält den Stand.
 
 | Feld | Inhalt |
 |---|---|

@@ -6,7 +6,7 @@ const LANG = {
 const FALSE_FRIEND = 'Falscher Freund: Das ähnliche Wort bedeutet etwas anderes.';
 const TRAPS = {
   sv:[
-    { id:'bisats', label:'Wortstellung im Nebensatz', kind:'order', gen:'inte', short:'Im Nebensatz steht „inte“ vor dem Verb, und das Verb wandert nicht ans Ende.', rule:'Gilt nach att, eftersom, om, när, som, fast und ähnlichen Wörtern. Auch aldrig, alltid, kanske und ofta stehen dort vor dem Verb: …att han inte kommer, …eftersom jag alltid glömmer det.' },
+    { id:'bisats', label:'Wortstellung im Nebensatz', kind:'order', gen:'inte', short:'Im Nebensatz stehen inte, aldrig, alltid und ähnliche Wörter vor dem Verb, und das Verb wandert nicht ans Ende.', rule:'Gilt nach att, eftersom, om, när, som, fast und ähnlichen Wörtern. Auch aldrig, alltid, kanske und ofta stehen dort vor dem Verb: …att han inte kommer, …eftersom jag alltid glömmer det.' },
     { id:'inversion', label:'Inversion & „inte“', kind:'order', short:'Das Verb steht an zweiter Stelle. Steht etwas anderes vorn, folgt das Subjekt erst danach.', rule:'Idag jobbar jag inte. När jag kommer hem lagar jag mat. „inte“ kommt erst nach dem Subjekt.' },
     { id:'tempus', label:'Präteritum oder Perfekt', kind:'form', gen:'tempus', short:'Mit Zeitpunkt in der Vergangenheit: Präteritum. Ohne Zeitpunkt, als Erfahrung oder bis heute andauernd: Perfekt.', rule:'Igår åt jag pizza, auch wenn man im Deutschen „habe gegessen“ sagt. Perfekt (har + Supinum) für Erfahrungen und Ergebnisse: Jag har aldrig varit i Kiruna.' },
     { id:'prep', label:'Verben mit Präposition', kind:'gen', gen:'prep_sv', short:'Viele Verben und Adjektive haben eine feste Präposition, oft eine andere als im Deutschen.', rule:'Am besten als Ganzes lernen: tänka på, vänta på, rädd för, intresserad av, stolt över, vänja sig vid.' },
@@ -31,7 +31,7 @@ const TRAPS = {
     { id:'perfecto', label:'Perfecto vs. Indefinido', kind:'form', short:'In Spanien: heute, diese Woche, Erfahrung = Perfecto. Gestern, 2018 = Indefinido.', rule:'In Lateinamerika steht meist Indefinido, auch für heute. Beides wird verstanden.' },
     { id:'subjuntivo', label:'Subjuntivo oder Indikativ', kind:'form', short:'Nach Wunsch, Gefühl, Zweifel und „cuando“ mit Zukunftsbezug: Subjuntivo.', rule:'quiero que, me alegro de que, no creo que, es importante que, para que, antes de que, ojalá. Aber: creo que tiene razón (Indikativ).' },
     { id:'porpara', label:'por oder para', kind:'form', gen:'porpara', short:'para = Zweck, Ziel, Frist. por = Grund, Preis, durch.', rule:'para ti, para el viernes, para trabajar. gracias por, por 200 euros, por el parque, por correo, por eso.' },
-    { id:'pronombres', label:'Objektpronomen', kind:'order', short:'Pronomen vor das konjugierte Verb oder an Infinitiv und Imperativ hängen.', rule:'te lo doy, ¿puedes explicármelo?, dámelo. le/les + lo/la wird zu se lo/se la.' },
+    { id:'pronombres', label:'Objektpronomen', kind:'order', short:'Pronomen vor das konjugierte Verb oder an Infinitiv, Gerundium und bejahten Imperativ hängen.', rule:'te lo doy, ¿puedes explicármelo?, dámelo. le/les + lo/la wird zu se lo/se la.' },
     { id:'gustar', label:'gustar & Co.', kind:'form', short:'Das Verb richtet sich nach dem, was gefällt: me gustan los libros.', rule:'Genauso encantar, interesar, doler, faltar, parecer, quedar, molestar.' },
     { id:'condicional', label:'Konditional & si-Sätze', kind:'form', short:'Irreal: si + tuviera, dann Konditional (viajaría).', rule:'Realer Fall: si + Präsens (si llueve, nos quedamos). Höflich: me gustaría, podrías, deberías.' },
     { id:'reflexivo', label:'Reflexivverben & „se“', kind:'form', short:'Reflexives Verb: Das Pronomen gehört dazu.', rule:'levantarse, acordarse de, quedarse, irse. se me olvidó, se me cayó: Es ist mir passiert. se habla: man spricht.' },
@@ -172,7 +172,10 @@ function parseBackup(text){
     return d;
   } catch (e) { return null; }
 }
-function applyBackup(d){ adoptDB(d); flushSave(); buildBank(); }
+function applyBackup(d){ adoptDB(d); flushSave(); buildBank(); runsFromDB(); }
+// Nach Einspielen oder Rückgängig: Ein offenes Tagwerk kommt aus dem neuen Stand, nicht aus dem Arbeitsspeicher von vorher
+// (sonst ginge „Fortsetzen“ ins alte Tagwerk, und das nächste Speichern schriebe es über das eingespielte).
+function runsFromDB(){ S.run = null; S.dailyRun = null; restoreRun(); }
 function backupSummary(){
   const n = Object.keys(DB.st || {}).length, days = Object.keys(DB.log || {}).length;
   return `${n === 1 ? '1 Satz' : `${n} Sätze`}, ${days === 1 ? '1 Übungstag' : `${days} Übungstage`}`;

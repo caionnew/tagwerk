@@ -74,7 +74,7 @@ function kulturBody(e, lang, small){
   return `<div class="khead"><p class="find-h"><span class="wordrow" lang="${lang}">${linkWords(e.title, lang)}</span></p>${add}</div>
     <p class="find-t">${esc(e.text)}</p>
     ${e.map ? mapSvg(e.map, mapLabel(e), small) : ''}
-    ${e.vars ? `<div class="kvars">${e.vars.map((v, i) => `<div class="kv${v[0] ? '' : ' nf'}">${v[0] ? `<span class="kf" aria-hidden="true">${v[0]}</span>` : ''}<span class="kw" lang="${lang}">${e.map && e.map.g && i < e.map.g.length ? `<span class="kdot mg${i}${(e.map.soft || []).includes(i) ? ' msoft' : ''}" aria-hidden="true"></span>` : ''}${esc(v[1])}</span><span class="kr">${esc(v[2])}</span></div>`).join('')}</div>` : ''}
+    ${e.vars ? `<div class="kvars">${e.vars.map((v, i) => `<div class="kvar${v[0] ? '' : ' nf'}">${v[0] ? `<span class="kf" aria-hidden="true">${v[0]}</span>` : ''}<span class="kw" lang="${lang}">${e.map && e.map.g && i < e.map.g.length ? `<span class="kdot mg${i}${(e.map.soft || []).includes(i) ? ' msoft' : ''}" aria-hidden="true"></span>` : ''}${esc(v[1])}</span><span class="kr">${esc(v[2])}</span></div>`).join('')}</div>` : ''}
     <div class="find-p"><span class="wordrow" lang="${lang}">${linkWords(e.ex[0], lang)}</span>${speakBtn(e.ex[0], lang)}<span class="find-g">${esc(e.ex[1])}</span></div>
     ${texts.length ? `<p class="kmore">${texts.length > 1 ? 'Lesetexte' : 'Lesetext'}: ${texts.map(t => `<button type="button" class="link" data-a="textopen" data-id="${t.id}" data-back="ref">${esc(t.title)}</button>`).join(' · ')}</p>` : ''}`;
 }

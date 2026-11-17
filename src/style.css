@@ -538,9 +538,9 @@ button.row[disabled]::after{ display:none; }
 
 /* Land & Leute */
 .kvars{ display:grid; gap:6px; margin:10px 0 2px; }
-.kv{ display:grid; grid-template-columns:28px auto 1fr; align-items:baseline; gap:8px; }
+.kvar{ display:grid; grid-template-columns:28px auto 1fr; align-items:baseline; gap:8px; }
 .kf{ font-size:19px; line-height:1; }
-.kv.nf{ grid-template-columns:auto 1fr; }
+.kvar.nf{ grid-template-columns:auto 1fr; }
 .kw{ font-family:var(--serif); font-size:17px; color:var(--accent-ink); white-space:nowrap; }
 .kr{ font-size:13px; color:var(--muted); }
 .find.kcard{ margin-bottom:10px; }

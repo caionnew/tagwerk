@@ -2,6 +2,9 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.50.2
+- **Fortschritt, „Schwierigste Sätze“:** Die Sätze standen in einer schmalen Spalte, ein Wort je Zeile, und „2× falsch“ ragte hinein. Ursache: Die Variantenzeilen von „Land & Leute“ nutzten denselben Klassennamen `kv` mit festem Raster (28 px für die Flagge). Sie heißen jetzt `kvar`; der Satz nimmt wieder die volle Breite, die Zahl steht rechts. Neuer Browser-Test prüft das für beide Sprachen.
+
 ## 24.50.1
 - **Üben, Zeile „Land & Leute“:** „22 Einblicke in Sprache, Alltag und Gesellschaft“ statt „22 Einblicke, 13 davon mit Karte“. Die Zeile sagt jetzt, worum es geht; die Zahl der Karten half bei der Entscheidung nicht, und die Karten sieht man drinnen ohnehin.
 

@@ -57,7 +57,11 @@ Ruhig und sachlich, keine Ausrufezeichen, keine Füllwörter, Fakten nur, wenn s
 
 ## Bausteine der Generatoren
 
-Wortstellung (`inte`), Fehler finden und Umbauen auf Schwedisch ziehen aus `VP_SV` in `src/js/generators.js`. Eine Zeile:
+Wortstellung (`inte`), Fehler finden und Umbauen auf Schwedisch ziehen aus `VP_SV` in `src/js/generators.js`.
+
+Fehler finden (`src/js/forms.js`): Jede Aufgabe entsteht als fehlerhafter Satz mit genau einer Fehlerstelle und dem richtigen Satz dazu. Rund 40 % kommen als richtiger Satz (`spotVariant`), damit man das kritische Wort prüfen muss, statt es nur zu suchen; die Erklärung muss deshalb für beide Fälle passen (sie beschreibt die Regel am richtigen Satz). `fix` nur, wo die Verbesserung nicht aus dem Finden folgt (Subjuntivo, Indefinido, Präteritum, bestimmte Form); bei Paaren (ser/estar, por/para, en/ett, Stellung) bleibt es beim Antippen.
+
+Eine Zeile aus `VP_SV`:
 
 ```
 ['plockar', 'svamp', ['aldrig', 'alltid', 'ofta'], ['sammle', 'sammelst', 'sammelt', 'sammeln', 'sammeln'],

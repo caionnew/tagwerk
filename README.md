@@ -12,7 +12,7 @@ Eine Lern-App für **Schwedisch und Spanisch**, die jeden Tag ein kurzes „Tagw
 ## Was die App kann
 
 - **Sätze statt Vokabeln**, geplant mit FSRS-6 (dem Verfahren aus Anki), geprüft gegen die offizielle Referenz.
-- **Übungsformen:** Wortkästchen, Lücken, freies Übersetzen, Hördiktat, Nachsprechen (hören, mitsprechen, aufnehmen; Tempo und Stocken werden auf dem Gerät ausgewertet, dazu Aussprachehilfen), Fehler finden, Umbauen, Uhrzeiten & Zahlen, Genus. Grammatik-Generatoren erzeugen beliebig viele neue Aufgaben, ohne sich zu wiederholen.
+- **Übungsformen:** Wortkästchen, Lücken, freies Übersetzen, Hördiktat, Nachsprechen (hören, mitsprechen, aufnehmen; Tempo und Stocken werden auf dem Gerät ausgewertet, dazu Aussprachehilfen), Fehler finden (richtig oder falsch, dann verbessern), Umbauen, Uhrzeiten & Zahlen, Genus. Grammatik-Generatoren erzeugen beliebig viele neue Aufgaben, ohne sich zu wiederholen.
 - **Gezielt zu typischen Fehlern** deutschsprachiger Lernender: Inversion, „inte“ im Nebensatz, Präteritum oder Perfekt, ser oder estar, Subjuntivo, por oder para und mehr. Zu jedem Thema ein Blatt mit Regel, Beispielen und typischem Fehler; Fachbegriffe sind antippbar.
 - **Schreiben** mit Textprofil (Zeitformen, Nebensätze, Satzlänge, LIX), treffsicheren Offline-Hinweisen, freiwilligen Extra-Aufgaben und Archiv. Online-Prüfung mit LanguageTool auf Wunsch.
 - **Wörterbuch** für jedes angezeigte Wort, offline, mit Beispielen aus den eigenen Sätzen.
@@ -33,9 +33,9 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, ESLint, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (236 Tests)
+npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (243 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (79 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (81 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 npm run sicht -- --vs origin/main   # Bildschirmfotos aller Ansichten, vorher/nachher
 ```

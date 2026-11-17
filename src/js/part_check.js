@@ -175,6 +175,13 @@ function check(){
     const j = judgeX(c.input, [item.target].concat(item.alts || []), r.lang);
     if (!j) return;
     c.result = j.res; c.why = j.why; c.diff = diffHtml(item.target, c.input, r.lang);
+  } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
+    // Zweiter Schritt bei „Fehler finden“: die richtige Form zur gefundenen Stelle (oder der ganze verbesserte Satz)
+    const box = $('#answer'); c.input = box ? box.value : c.input;
+    if (!c.fixing || !c.input.trim()) return;
+    const d = ex.data, j = judgeX(c.input, d.fix, r.lang, { equiv:false, typo:false }), whole = judgeX(c.input, [d.full], r.lang, { typo:false });
+    c.result = [j, whole].some(x => x && x.res === 'ok') ? 'ok' : [j, whole].some(x => x && x.res === 'near') ? 'near' : 'bad';
+    if (c.result === 'bad') c.fixBad = true;
   } else if (ex.type === 'gen' && ex.data.kind === 'time' && ex.data.mode !== 'write') {
     const box = $('#answer'); c.input = box ? box.value : c.input;
     if (!c.input.trim()) return;
@@ -213,7 +220,16 @@ function choose(value){
   const r = S.run, ex = r && r.queue[r.idx], c = r && r.cur;
   if (!c || c.state !== 'answer' || !ex || ex.type !== 'gen') return;
   const d = ex.data;
-  if (d.kind === 'spot') { c.pick = Number(value); c.input = d.words[c.pick]; c.result = d.wrong.includes(c.pick) ? 'ok' : 'bad'; }
+  if (d.kind === 'spot') {
+    if (c.fixing) return;
+    if (value === 'none') { c.pick = null; c.none = true; c.input = 'Kein Fehler'; c.result = d.wrong.length ? 'bad' : 'ok'; }
+    else {
+      c.pick = Number(value); c.input = d.words[c.pick];
+      // Richtige Stelle gefunden: Wo die Verbesserung nicht von selbst folgt, kommt die richtige Form dazu
+      if (d.wrong.includes(c.pick) && d.fix) { c.fixing = true; c.input = ''; S.focus = true; render(); return; }
+      c.result = d.wrong.includes(c.pick) ? 'ok' : 'bad';
+    }
+  }
   else if (d.kind === 'genus') { c.input = value; c.result = value === d.answer ? 'ok' : 'bad'; }
   else return;
   finishAnswer(r, ex, c);
@@ -284,7 +300,7 @@ function next(){
     if (counts) {
       recordAnswer(r.lang, ex, c, good);
       const item = ex.id ? itemById(ex.id) : null;
-      (r.res = r.res || []).push({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' });
+      (r.res = r.res || []).push({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, trap:ex.type === 'gen' && ex.data ? ex.data.trap : undefined, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' });
     }
     if (ex.id && ex.type !== 'dict') {
       const prev = DB.st[ex.id] || { ok:0, bad:0, alts:[] };

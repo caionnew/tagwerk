@@ -32,7 +32,7 @@ async function seed(page, db){
 async function answerWrong(page){
   if (await page.$('.tiles-pool')) { while (await page.$('.tiles-pool .tile:not(.ghost)')) await page.click('.tiles-pool .tile:not(.ghost)'); await page.click('[data-a=check]'); }
   else if (await page.$('#answer')) { await page.fill('#answer', 'zzz qqq'); await page.click('[data-a=check]'); }
-  else if (await page.$('[data-a=spotpick]')) { const o = await page.$$('[data-a=spotpick]'); await o[o.length - 1].click(); }
+  else if (await page.$('[data-a=spotpick]')) await page.click('[data-a=giveup]');
   else if (await page.$('[data-a=genuspick]')) await page.click('[data-a=genuspick] >> nth=0');
   else if (await page.$('[data-a=giveup]')) await page.click('[data-a=giveup]');
 }

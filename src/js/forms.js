@@ -1,7 +1,27 @@
 /* ===================== Neue Übungsformen ===================== */
 
-/* ---------- 1) Fehler finden: ein typischer Fehler steckt im Satz ---------- */
-const spotData = (de, wrongWords, wrongIdx, fixed, note, trap) => ({ kind:'spot', deLine:de, words:wrongWords, wrong:wrongIdx, full:fixed, answers:[fixed], note, trap, label:'Finde den Fehler' });
+/* ---------- 1) Fehler finden: Satz prüfen, den typischen Fehler finden und verbessern ---------- */
+// Ein Teil der Sätze ist richtig („Kein Fehler“). Sonst wäre die Aufgabe nur Suchen: Das einzige ser/estar oder por/para im Satz muss falsch sein.
+// fix: die richtige Form zum Eintippen, nur wo sie nicht schon aus dem Finden folgt (Subjuntivo, Indefinido, Präteritum, bestimmte Form).
+// Bei Paaren (ser/estar, por/para, en/ett, Stellung) ergibt sich die Verbesserung von selbst, da reicht das Antippen.
+const spotData = (de, wrongWords, wrongIdx, fixed, note, trap, fix) => {
+  const words = wrongWords.slice(), last = words.length - 1;
+  if (/[.!?]$/.test(fixed) && !/[.!?]$/.test(words[last])) words[last] += fixed.slice(-1);
+  return { kind:'spot', deLine:de, words, wrong:wrongIdx, full:fixed, answers:[fixed], note, trap, fix:fix || null, label:'Finde den Fehler' };
+};
+// Dieselbe Aufgabe als richtiger Satz
+const spotOk = d => Object.assign({}, d, { words:d.full.split(' '), wrong:[], fix:null });
+const SPOT_OK = 0.4;
+// Welche Wörter der Lösung neu sind: alles außerhalb der längsten gemeinsamen Wortfolge (ohne Satzzeichen, Groß/klein egal)
+function spotChanged(words, fixed){
+  const k = w => w.replace(/[.,!?¿¡]/g, '').toLowerCase(), a = words.map(k), b = fixed.map(k), m = a.length, n = b.length;
+  const dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const keep = new Set(); let i = 0, j = 0;
+  while (i < m && j < n) { if (a[i] === b[j]) { keep.add(j); i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+  return new Set(b.map((_, x) => x).filter(x => !keep.has(x)));
+}
+const spotVariant = (d, roll = Math.random()) => (roll < SPOT_OK ? spotOk(d) : d);
 // Schwedisch: Stellung von inte & Co. (aus den Bausteinen von genInte)
 function spotInteSv(){
   const vp = pick(VP_SV), adv = pick(vp[2]), s = pick(SUBJ_INTE);
@@ -31,7 +51,7 @@ function spotTempusSv(){
   const front = tm[1].split(' ');
   const right = front.concat([v[1], s[1]], obj), wrong = front.concat(['har', s[1], v[2]], obj);
   const de = `${tm[0]} ${v[6] === 's' ? s[3] : s[2]} ${s[0]} ${v[3]} ${v[5]}.`;
-  return spotData(de, wrong, [front.length, front.length + 2], right.join(' ') + '.', `Mit einem Zeitpunkt in der Vergangenheit steht Präteritum (${v[1]}), nicht „har ${v[2]}“.`, 'tempus');
+  return spotData(de, wrong, [front.length, front.length + 2], right.join(' ') + '.', `Mit einem Zeitpunkt in der Vergangenheit steht Präteritum (${v[1]}), nicht „har ${v[2]}“.`, 'tempus', [v[1], `${v[1]} ${s[1]}`]);
 }
 // Schwedisch: Adjektiv und bestimmte Form
 function spotNpSv(){
@@ -45,11 +65,11 @@ function spotNpSv(){
   }
   if (type === 'def') {
     const artDef = ett ? 'det' : 'den';
-    if (Math.random() < 0.5) return spotData(`Da ist ${da[1]} ${A[1]}e ${de}.`, ['Där', 'är', artDef, f.defSg, sv], [4], `Där är ${artDef} ${f.defSg} ${def}.`, `Doppelte Bestimmtheit: ${artDef} ${f.defSg} ${def}. Das Substantiv bekommt trotzdem die Endung.`, 'species');
+    if (Math.random() < 0.5) return spotData(`Da ist ${da[1]} ${A[1]}e ${de}.`, ['Där', 'är', artDef, f.defSg, sv], [4], `Där är ${artDef} ${f.defSg} ${def}.`, `Doppelte Bestimmtheit: ${artDef} ${f.defSg} ${def}. Das Substantiv bekommt trotzdem die Endung.`, 'species', [def]);
     const wrongArt = ett ? 'den' : 'det';
     return spotData(`Da ist ${da[1]} ${A[1]}e ${de}.`, ['Där', 'är', wrongArt, f.defSg, def], [2], `Där är ${artDef} ${f.defSg} ${def}.`, `${sv} ist ein ${art}-Wort, darum ${artDef}: ${artDef} ${f.defSg} ${def}.`, 'species');
   }
-  return spotData(`Da sind die ${A[1]}en ${dePl}.`, ['Där', 'är', 'de', f.pl, pl], [4], `Där är de ${f.pl} ${defPl}.`, `Im Plural mit de braucht auch das Substantiv die bestimmte Form: de ${f.pl} ${defPl}.`, 'species');
+  return spotData(`Da sind die ${A[1]}en ${dePl}.`, ['Där', 'är', 'de', f.pl, pl], [4], `Där är de ${f.pl} ${defPl}.`, `Im Plural mit de braucht auch das Substantiv die bestimmte Form: de ${f.pl} ${defPl}.`, 'species', [defPl]);
 }
 // Spanisch: ser/estar und por/para vertauscht (aus den Generatoren)
 const SE_SWAP = { soy:'estoy', eres:'estás', es:'está', somos:'estamos', son:'están', estoy:'soy', estás:'eres', está:'es', estamos:'somos', están:'son' };
@@ -98,26 +118,26 @@ function bankSpotsEs(){
       if (!ind || ind === it.gap) return;
       const why = SUBJ_WHY.find(([re]) => re.test(it.target));
       const note = it.note || (why ? `${why[1]}: ${it.gap}, nicht ${ind}.` : 'Hier verlangt der Satz den Subjuntivo, etwa nach querer que, es importante que, ojalá, para que oder cuando mit Zukunftsbezug.');
-      out.push(() => spotData(it.de, swapAt(ind), [idx], it.target, note, 'subjuntivo'));
+      out.push(() => spotData(it.de, swapAt(ind), [idx], it.target, note, 'subjuntivo', it.gapAlts.length ? it.gapAlts : [it.gap]));
     }
     if (it.trap === 'perfecto' && /\b(ayer|pasado|pasada|anoche|en \d{4}|\d{4})\b/i.test(it.target)) {
       const when = (it.target.match(PAST_POINT_ES) || [])[0];
       const p = [0, 1, 2, 3, 4].find(k => conjugate(inf, 'indef', k) === it.gap);
       if (p == null) return;
       const note = when ? `Mit „${when.toLowerCase()}“ (abgeschlossen) steht Indefinido: ${it.gap}, nicht ${HABER[p]} ${participle(inf)}.` : 'Mit einem abgeschlossenen Zeitpunkt (ayer, la semana pasada, 2015) steht Indefinido, nicht Perfecto.';
-      out.push(() => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto'));
+      out.push(() => spotData(it.de, swapAt(HABER[p], participle(inf)), [idx, idx + 1], it.target, note, 'perfecto', it.gapAlts.length ? it.gapAlts : [it.gap]));
     }
   });
   return out;
 }
 let BANK_SPOTS_ES = null;
-function genSpotSv(){ const r = Math.random(); return r < 0.5 ? spotInteSv() : r < 0.75 ? spotTempusSv() : spotNpSv(); }
+function genSpotSv(){ const r = Math.random(); return spotVariant(r < 0.5 ? spotInteSv() : r < 0.75 ? spotTempusSv() : spotNpSv()); }
 function genSpotEs(){
   if (!BANK_SPOTS_ES) BANK_SPOTS_ES = bankSpotsEs();
   const r = Math.random();
-  if (r < 0.3 && BANK_SPOTS_ES.length) return pick(BANK_SPOTS_ES)();
-  if (r < 0.65) return spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar');
-  return spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara');
+  if (r < 0.3 && BANK_SPOTS_ES.length) return spotVariant(pick(BANK_SPOTS_ES)());
+  if (r < 0.65) return spotVariant(spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar'));
+  return spotVariant(spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara'));
 }
 
 /* ---------- 2) Umbauen: einen Satz umformen, ohne Deutsch ---------- */

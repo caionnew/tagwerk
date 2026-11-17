@@ -249,6 +249,7 @@ document.addEventListener('click', e => {
     case 'haptics': DB.settings.haptics = DB.settings.haptics === false; save(); render(); if (DB.settings.haptics !== false) buzz('ok'); break;
     case 'form': startRun('form', { gen:b.dataset.g }); break;
     case 'spotpick': choose(b.dataset.i); break;
+    case 'spotnone': choose('none'); break;
     case 'genuspick': choose(b.dataset.v); break;
     case 'tplay': { const ex = r && r.queue[r.idx]; if (ex && ex.data) speak(ex.data.say, r.lang, Number(b.dataset.rate)); break; }
     case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; S.minDay = null; render(); window.scrollTo(0, 0); break; }

@@ -100,6 +100,7 @@ label.row{ cursor:pointer; }
 .actionbar .in{ max-width:620px; margin:0 auto; display:flex; gap:10px; }
 .actionbar .primary{ flex:1; width:auto; }
 .actionbar .ghost{ flex:0 1 auto; }
+.actionbar .ghost.wide{ flex:1; }
 
 /* Übung */
 .runbar{ display:flex; align-items:center; gap:12px; margin:6px 0 2px; }
@@ -462,8 +463,12 @@ button.row[disabled]::after{ display:none; }
 .sw-w:not([disabled]):active{ background:var(--accent-soft); }
 .sw-w[disabled]{ color:var(--ink); border-bottom-color:transparent; cursor:default; }
 .sw-w.hit{ background:color-mix(in srgb, var(--ok) 22%, transparent); color:var(--ok); }
-.sw-w.miss{ background:color-mix(in srgb, var(--bad) 20%, transparent); color:var(--bad); text-decoration:line-through; }
 .sw-w.was{ outline:1.5px dashed var(--bad); outline-offset:1px; color:var(--bad); }
+.sw-w.alarm{ background:color-mix(in srgb, var(--bad) 16%, transparent); color:var(--bad); }
+.sw-w.found{ background:var(--accent-soft); color:var(--accent-ink); text-decoration:line-through; text-decoration-thickness:1.5px; }
+.fixlbl{ display:block; margin:14px 0 6px; font-size:15px; color:var(--muted); }
+.fixlbl span{ color:var(--ink); }
+.expl.spotline{ margin-top:0; }
 .sol .w-fix{ color:var(--ok); font-weight:700; }
 /* Genus */
 .genus{ text-align:center; margin:18px 0 6px; }

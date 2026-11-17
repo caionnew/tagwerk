@@ -184,7 +184,7 @@ function viewExtra(){
   <h2 class="grp">Kurz zwischendurch</h2>
   <div class="rows">${row('quick', 'Kurze Runde', seen < 3 ? '6 Grammatik-Aufgaben für den Anfang' : '6 Aufgaben aus bekannten Sätzen')}${g('genus', lang === 'sv' ? 'en oder ett?' : 'el oder la?', 'Das Genus in schnellen Runden', 'genus')}${g('time', 'Uhrzeiten & Zahlen', 'Für Bahnhof, Laden und Verabredung', 'time')}</div>
   <h2 class="grp">Grammatik</h2>
-  <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', `Endlos neue Aufgaben, ${genIds(lang).length} Bereiche`)}${g('spot', 'Fehler finden', 'Ein typischer Fehler steckt im Satz', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
+  <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', `Endlos neue Aufgaben, ${genIds(lang).length} Bereiche`)}${g('spot', 'Fehler finden', 'Richtig oder falsch? Fehler finden und verbessern', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
   <h2 class="grp">Lesen und Hören</h2>
   <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', net('Ein ausgezeichneter Artikel, gern mit Bezug zum Land'), '', 'book')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
@@ -286,12 +286,17 @@ function viewRun(){
       <div class="ex-a"><textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}"${done ? ' readonly' : ''}>${esc(c.input)}</textarea>
       ${done ? '' : `<div class="inrow">${charbar(lang)}${canListen() ? `<button type="button" class="micbtn${S.listening ? ' on' : ''}" data-a="dictate" aria-label="Antwort sprechen">${ICONS.mic}</button>` : ''}</div>`}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
-    const d = ex.data;
-    body = `<p class="kicker">Ein typischer Fehler steckt im Satz. Tipp auf das falsche Wort.</p><p class="de" lang="de">${esc(d.deLine)}</p>
+    const d = ex.data, fixing = !done && c.fixing, locked = done || fixing;
+    // Gefundene Stelle beim Verbessern; nach der Lösung: getroffen, daneben (im richtigen Satz ohne Durchstreichen), übersehen
+    const wrongText = d.wrong.map((i, k) => (k && i > d.wrong[k - 1] + 1 ? '… ' : '') + d.words[i].replace(/[.,!?]$/, '')).join(' ');
+    const kicker = c.fixing ? 'Gefunden. Wie heißt es richtig?' : 'Tipp auf das falsche Wort. Stimmt der Satz, tipp auf „Kein Fehler“.';
+    body = `<p class="kicker">${kicker}</p><p class="de" lang="de">${esc(d.deLine)}</p>
       <div class="ex-a"><p class="spot${c.intro ? ' enter' : ''}" lang="${lang}">${d.words.map((w, i) => {
-        const cls = !done ? '' : i === c.pick ? (d.wrong.includes(i) ? ' hit' : ' miss') : d.wrong.includes(i) ? ' was' : '';
-        return `<button type="button" class="sw-w${cls}" data-a="spotpick" data-i="${i}"${done ? ' disabled' : ''}>${esc(w)}</button>`;
-      }).join(' ')}</p></div>`;
+        const cls = c.fixing ? (d.wrong.includes(i) ? (done && c.result !== 'bad' ? ' hit' : ' found') : '') : !done ? '' : i === c.pick ? (d.wrong.includes(i) ? ' hit' : ' alarm') : d.wrong.includes(i) ? ' was' : '';
+        return `<button type="button" class="sw-w${cls}" data-a="spotpick" data-i="${i}"${locked ? ' disabled' : ''}>${esc(w)}</button>`;
+      }).join(' ')}</p>${c.fixing ? `<label class="fixlbl" for="answer">Statt <span lang="${lang}">„${esc(wrongText)}“</span>:</label>
+      <input type="text" id="answer" class="tw" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Richtige Form">
+      ${done ? '' : charbar(lang)}` : ''}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'genus') {
     const d = ex.data;
     body = `<p class="kicker">${esc(d.label)}</p>
@@ -334,7 +339,8 @@ function viewRun(){
   }
   let actions;
   if (!done) {
-    actions = ex.type === 'gen' && (ex.data.kind === 'spot' || ex.data.kind === 'genus') ? '<button type="button" class="ghost" data-a="giveup">Weiß ich nicht</button>' : `${ex.type === 'tiles' ? `<button type="button" class="ghost" data-a="resetTiles"${ex.picked.length ? '' : ' disabled'}>Zurücksetzen</button>` : '<button type="button" class="ghost" data-a="giveup">Weiß ich nicht</button>'}<button type="button" class="primary" data-a="check">Prüfen</button>`;
+    actions = ex.type === 'gen' && ex.data.kind === 'spot' && !c.fixing ? '<button type="button" class="ghost" data-a="giveup">Weiß ich nicht</button><button type="button" class="ghost wide" data-a="spotnone">Kein Fehler</button>'
+      : ex.type === 'gen' && ex.data.kind === 'genus' ? '<button type="button" class="ghost" data-a="giveup">Weiß ich nicht</button>' : `${ex.type === 'tiles' ? `<button type="button" class="ghost" data-a="resetTiles"${ex.picked.length ? '' : ' disabled'}>Zurücksetzen</button>` : '<button type="button" class="ghost" data-a="giveup">Weiß ich nicht</button>'}<button type="button" class="primary" data-a="check">Prüfen</button>`;
   } else {
     // Eindeutige Aufgaben: Auswahl (Fehler finden, Genus, ser/estar, por/para), Verbform in der Lücke, Uhrzeit als Zahl
     const fixedAnswer = ex.type === 'gen' && (['spot', 'genus'].includes(ex.data.kind) || ex.data.gap || (ex.data.kind === 'time' && ex.data.mode !== 'write'));
@@ -353,8 +359,15 @@ function feedbackHtml(r, ex, c){
   const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${c.combo} in Folge</span>` : '';
   let out = `<div class="vrow">${pill}${combo}${next}</div>`;
   if (ex.type === 'gen' && ex.data.kind === 'spot') {
-    const d = ex.data, fixed = d.full.split(' ');
-    const changed = new Set(); fixed.forEach((w, i) => { if (w.replace(/[.,!?]/g, '') !== (d.words[i] || '').replace(/[.,!?]/g, '')) changed.add(i); });
+    const d = ex.data, fixed = d.full.split(' '), clean = d.wrong.length === 0;
+    // Geänderte Wörter über die längste gemeinsame Folge: auch wenn die Verbesserung kürzer ist („he ido“ → „fui“)
+    const changed = spotChanged(d.words, fixed);
+    const fixWord = d.fix ? d.fix[0] : '';
+    const line = clean ? (c.result === 'ok' ? 'Der Satz stimmt.' : 'Der Satz war richtig.')
+      : c.none ? `Hier steckt ein Fehler: <span lang="${lang}">„${esc(d.wrong.map(i => d.words[i].replace(/[.,!?]$/, '')).join(' '))}“</span>.`
+      : c.fixBad ? `Fehler gefunden, aber richtig heißt es <span lang="${lang}">„${esc(fixWord)}“</span>.`
+      : c.result === 'near' ? (lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.') : '';
+    if (line) out += `<p class="expl spotline">${line}</p>`;
     out += `<div class="solrow"><p class="sol" lang="${lang}">${fixed.map((w, i) => `<span data-a="lookup" data-w="${esc(w.replace(/[.,!?¿¡]/g, ''))}"${changed.has(i) ? ' class="w-fix"' : ''}>${esc(w)}</span>`).join(' ')}</p>${speakBtn(d.full, lang)}</div>`;
     out += `<p class="expl">${termify(d.note)}</p>`;
     const tr = trapMeta(lang, d.trap); if (tr) out += `<p class="src">Thema: ${esc(tr.label)}</p>`;
@@ -460,6 +473,7 @@ function roundTopics(r){
   (r.res || []).forEach(x => {
     let key, label, trap = null;
     if (x.id) { const it = itemById(x.id), tr = it && trapMeta(lang, it.trap); if (!tr) return; key = tr.id; label = tr.label; trap = tr.id; }
+    else if (x.gen && x.trap && trapMeta(lang, x.trap)) { const tr = trapMeta(lang, x.trap); key = tr.id; label = tr.label; trap = tr.id; }
     else if (x.gen && GENS[x.gen]) { const tr = TRAPS[lang].find(t => t.gen === x.gen); key = tr ? tr.id : x.gen; label = tr ? tr.label : GENS[x.gen].label; trap = tr ? tr.id : null; }
     else return;
     const t = map.get(key) || { key, label, trap, gen:x.gen || null, dots:[], bad:0 };
@@ -467,6 +481,18 @@ function roundTopics(r){
     map.set(key, t);
   });
   return [...map.values()].sort((a, b) => b.bad - a.bad || b.dots.length - a.dots.length);
+}
+// Nach einer fehlerfreien Übungsrunde: das Thema, das in den letzten 30 Tagen am häufigsten hakte (ab 5 Aufgaben, mindestens jede fünfte falsch).
+// Noch eine Runde vom selben bringt dann am wenigsten.
+function nextTopicHtml(r){
+  if (r.kind === 'daily' || r.bad || (r.ok || 0) < 3) return '';
+  const lang = r.lang, s = errStats(lang, 30), here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean));
+  const list = Object.keys(s.p).filter(id => id !== 'eigene' && trapMeta(lang, id) && !here.has(id))
+    .map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.n >= 5 && x.bad * 5 >= x.n)
+    .sort((a, b) => b.bad / b.n - a.bad / a.n || b.n - a.n);
+  if (!list.length) return '';
+  const x = list[0];
+  return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(trapLabel(lang, x.id))}</b>: in den letzten 30 Tagen ${x.bad} von ${x.n} falsch. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
 }
 function topicsHtml(r){
   const tps = roundTopics(r);
@@ -596,6 +622,7 @@ function viewRunDone(){
     ${strip}${kpis}${span}
     ${ms}${sk}${tomorrow}
     ${topicsHtml(r)}
+    ${nextTopicHtml(r)}
     ${missedHtml}
     ${bonusHtml(r)}
     ${nudge}

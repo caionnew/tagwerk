@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.45.0
+**„Fehler finden“ neu: richtig oder falsch, dann verbessern.**
+- **Warum:** Bisher steckte in jedem Satz genau ein Fehler, und jede Sorte hatte nur einen Kandidaten. Das einzige ser/estar, por/para oder Adverb im Satz war also immer die Antwort. Man suchte, statt zu prüfen.
+- **Rund 40 % der Sätze sind jetzt richtig.** Neben „Weiß ich nicht“ steht „Kein Fehler“. Wer im richtigen Satz ein Wort antippt, sieht „Der Satz war richtig.“ (das Wort rot hinterlegt, nicht durchgestrichen) und die Regel dazu. Wer bei einem fehlerhaften Satz „Kein Fehler“ wählt, sieht die übersehene Stelle.
+- **Formfehler werden verbessert.** Bei Subjuntivo, Indefinido statt Perfecto, schwedischem Präteritum statt „har …“ und der bestimmten Form („det stora hus“) folgt dem Finden ein Eingabefeld: „Statt „he ido“:“. Gilt als richtig mit der Form („fui“) oder dem ganzen verbesserten Satz. Bei fehlendem Akzent fast richtig; bei falscher Form falsch mit „Fehler gefunden, aber richtig heißt es „fui““.
+- **Paare** (ser/estar, por/para, en/ett, den/det, Stellung von inte und Inversion) bleiben beim Antippen. Dort folgt die Verbesserung aus dem Finden.
+- **Kleinigkeiten:**
+  - Schwedische Sätze in der Übung enden mit Punkt wie die Lösung.
+  - In der Lösung ist nur das Geänderte markiert, auch wenn die Verbesserung kürzer ist (vorher war bei „he ido“ → „fui“ der Rest des Satzes mitmarkiert).
+- **Ende einer Übungsrunde:**
+  - Erzeugte Aufgaben zählen unter ihrem Thema (ser oder estar, Subjuntivo …), nicht mehr pauschal als „Fehler finden“. Damit erscheinen auch nach „Fehler finden“ die „Themen dieser Runde“.
+  - **Nach einer fehlerfreien Runde** steht neu „Als Nächstes“: das Thema, das in den letzten 30 Tagen am häufigsten danebenging (ab 5 Aufgaben, mindestens jede fünfte falsch), mit „Thema üben“.
+- 7 neue Einheitstests (243), 2 neue Browser-Tests (81).
+
 ## 24.44.0
 **8 neue schwedische Lesetexte auf B2/C1**, jeder mit drei Fragen und drei Sätzen fürs Tagwerk.
 - **Dagen H:** der Wechsel zum Rechtsverkehr 1967, gegen eine Volksabstimmung mit fast 83 Prozent Nein.

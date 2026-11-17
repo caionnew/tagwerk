@@ -2120,6 +2120,8 @@ cogemos|coger|wir nehmen (Spanien)
 taxi|taxi|Taxi
 agarrar|agarrar|nehmen, greifen, packen
 cena|cena|Abendessen; auch: isst zu Abend (cenar)
+ceuta|Ceuta|Ceuta, spanische Stadt in Nordafrika
+melilla|Melilla|Melilla, spanische Stadt in Nordafrika
 `
 };
 

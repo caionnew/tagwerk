@@ -38,9 +38,11 @@ Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeug
 
 ## Karten
 
-Karten hängen an Einträgen in `kultur.js`: `map:{ v:'hisp' | 'nord', g:[[…Ländercodes Gruppe 1], [… Gruppe 2]], ctx:[…], pts:[…] }`. Gruppe *i* bekommt dieselbe Farbe wie der Punkt an Variante *i*. Ländercodes und Orte stehen in `tools/build_geo.js`; neue Orte dort ergänzen und `npm run geo` ausführen.
+Karten hängen an Einträgen in `kultur.js`: `map:{ v:'hisp' | 'nord' | 'iber', g:[[…Ländercodes Gruppe 1], [… Gruppe 2]], ctx:[…], pts:[…], soft:[Gruppen heller], half:[einzelne Gebiete heller] }`. Gruppe *i* bekommt dieselbe Farbe wie der Punkt an Variante *i*. Ländercodes und Orte stehen in `tools/build_geo.js`; neue Orte dort ergänzen und `npm run geo` ausführen.
 
-Eine Region innerhalb eines Landes (bisher Schonen) färbt `clip:{ k:'SWE', p:'skaneClip', g:0 }`: das Land, beschnitten auf ein grobes Polygon aus `build_geo.js`, in der Farbe von Gruppe *g*. Das Polygon im Uhrzeigersinn angeben, sonst deutet d3-geo es als „alles außer“. Für ganze Länder reicht `g`; Regionen nur, wenn ihre Grenze für die Aussage zählt und auf der Karte noch sichtbar ist.
+Der Ausschnitt `iber` zeigt Spanien mit seinen autonomen Gemeinschaften, Schlüssel nach ISO 3166-2 (`ES-CT` Katalonien, `ES-GA` Galicien, `ES-PV` Baskenland, `ES-NC` Navarra, `ES-CE` Ceuta usw.), dazu `AND` für Andorra; die Kanaren (`ES-CN`) stehen im Kasten unten links. Grundlage sind die Provinzen aus Natural Earth „admin 1“ (10m, gemeinfrei), zusammengelegt mit topojson. Die Datei ist rund 40 MB groß und bleibt außerhalb von Git; den Befehl zum Laden nennt der Kopf von `tools/build_geo.js`. `half` färbt ein Gebiet heller, wenn die Aussage dort nur für einen Teil gilt (Baskisch im Norden Navarras).
+
+Eine Region innerhalb eines Landes auf den anderen Karten (bisher Schonen) färbt `clip:{ k:'SWE', p:'skaneClip', g:0 }`: das Land, beschnitten auf ein grobes Polygon aus `build_geo.js`, in der Farbe von Gruppe *g*. Das Polygon im Uhrzeigersinn angeben, sonst deutet d3-geo es als „alles außer“. Für ganze Länder reicht `g`; Regionen nur, wenn ihre Grenze für die Aussage zählt und auf der Karte noch sichtbar ist.
 
 ### Projektionen
 

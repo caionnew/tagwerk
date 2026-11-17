@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.50.0
+**Neue Spanienkarte mit den autonomen Gemeinschaften; Regionalsprachen auf der Karte, vos-Karte korrigiert.**
+- **Neue Karte „Spanien“** aus Natural Earth (gemeinfrei): 17 autonome Gemeinschaften, Ceuta, Melilla und Andorra. Die Kanaren stehen verkleinert im Kasten unten links.
+- **catalán, gallego, euskera** hat jetzt eine Karte, und der Text ist vollständig. Vorher nannte er nur Katalonien, Galicien und das Baskenland. Jetzt: Katalanisch ist auch auf den Balearen und in Valencia Amtssprache (dort valenciano genannt), in Andorra die einzige. Baskisch gilt auch im Norden Navarras, nur in der zona vascófona; auf der Karte ist Navarra deshalb heller.
+- **las comunidades autónomas** hat eine Karte: Andalusien als bevölkerungsreichste Gemeinschaft, rund 8,7 Millionen Einwohner (INE, 1. Januar 2025), Ceuta und Melilla als Punkte.
+- **vos sos: Karte korrigiert.** Sie färbte Paraguay und ganz Mittelamerika als „tú“. Laut Diccionario panhispánico de dudas ist vos in Argentinien, Uruguay und Paraguay allgemein üblich und in den meisten Ländern Mittelamerikas verbreitet. Jetzt steht Paraguay bei Argentinien und Uruguay, Mittelamerika ist heller eingefärbt. Der Text sagt dasselbe.
+- Varianten ohne Flagge rücken nicht mehr ein.
+- **Werkzeug:** Für die Spanienkarte braucht `npm run geo` Natural Earth „admin 1“ (rund 40 MB, bleibt außerhalb von Git; Befehl im Kopf von build_geo.js) und topojson-server.
+- **Wörterbuch:** Ceuta und Melilla.
+- 1 neuer Einheitstest (255).
+
 ## 24.49.0
 **Land & Leute neu gegliedert, vier neue Karten; Grammatik-Begriffe je Sprache.**
 - **Land & Leute:**

@@ -74,7 +74,7 @@ function kulturBody(e, lang, small){
   return `<div class="khead"><p class="find-h"><span class="wordrow" lang="${lang}">${linkWords(e.title, lang)}</span></p>${add}</div>
     <p class="find-t">${esc(e.text)}</p>
     ${e.map ? mapSvg(e.map, mapLabel(e), small) : ''}
-    ${e.vars ? `<div class="kvars">${e.vars.map((v, i) => `<div class="kv"><span class="kf" aria-hidden="true">${v[0]}</span><span class="kw" lang="${lang}">${e.map && e.map.g && i < e.map.g.length ? `<span class="kdot mg${i}${(e.map.soft || []).includes(i) ? ' msoft' : ''}" aria-hidden="true"></span>` : ''}${esc(v[1])}</span><span class="kr">${esc(v[2])}</span></div>`).join('')}</div>` : ''}
+    ${e.vars ? `<div class="kvars">${e.vars.map((v, i) => `<div class="kv${v[0] ? '' : ' nf'}">${v[0] ? `<span class="kf" aria-hidden="true">${v[0]}</span>` : ''}<span class="kw" lang="${lang}">${e.map && e.map.g && i < e.map.g.length ? `<span class="kdot mg${i}${(e.map.soft || []).includes(i) ? ' msoft' : ''}" aria-hidden="true"></span>` : ''}${esc(v[1])}</span><span class="kr">${esc(v[2])}</span></div>`).join('')}</div>` : ''}
     <div class="find-p"><span class="wordrow" lang="${lang}">${linkWords(e.ex[0], lang)}</span>${speakBtn(e.ex[0], lang)}<span class="find-g">${esc(e.ex[1])}</span></div>
     ${texts.length ? `<p class="kmore">${texts.length > 1 ? 'Lesetexte' : 'Lesetext'}: ${texts.map(t => `<button type="button" class="link" data-a="textopen" data-id="${t.id}" data-back="ref">${esc(t.title)}</button>`).join(' · ')}</p>` : ''}`;
 }
@@ -94,7 +94,8 @@ let mapSeq = 0;
 function mapSvg(m, label, small){
   const g = GEO[m.v]; if (!g) return '';
   const col = {}; (m.g || []).forEach((keys, i) => keys.forEach(k => { col[k] = i; }));
-  const cls = k => col[k] != null ? `mg${col[k]}${(m.soft || []).includes(col[k]) ? ' msoft' : ''}` : (m.ctx || []).includes(k) ? 'mctx' : 'mland';
+  // soft: ganze Gruppe heller (Minderheit), half: einzelne Gebiete heller (gilt dort nur in einem Teil)
+  const cls = k => col[k] != null ? `mg${col[k]}${(m.soft || []).includes(col[k]) || (m.half || []).includes(k) ? ' msoft' : ''}` : (m.ctx || []).includes(k) ? 'mctx' : 'mland';
   let extra = '';
   if (m.norrland && g.c.SWE) { const id = 'nc' + (++mapSeq); extra += `<clipPath id="${id}"><path d="${g.norrClip}"/></clipPath><path d="${g.c.SWE}" clip-path="url(#${id})" class="mnorr"/>`; }
   // Ein Teil eines Landes in Gruppenfarbe, etwa Schonen: das Land, beschnitten auf die Region
@@ -102,7 +103,7 @@ function mapSvg(m, label, small){
   if (m.polar && g.polar) extra += `<path d="${g.polar}" class="mpolar"/><text x="6" y="${(g.pts.Kiruna ? g.pts.Kiruna[1] + 12 : 40)}" class="mlab mlab-s">Polarkreis</text>`;
   // Ortsname rechts vom Punkt, mit „<“ am Ende links davon
   (m.pts || []).forEach(raw => { const left = raw.endsWith('<'), n = raw.replace(/[<>]$/, ''), p = g.pts[n]; if (!p) return; const right = raw.endsWith('>') || (!left && p[0] < g.w * 0.62); extra += `<circle cx="${p[0]}" cy="${p[1]}" r="2.6" class="mpt"/><text x="${p[0] + (right ? 5 : -5)}" y="${p[1] + 3.5}" text-anchor="${right ? 'start' : 'end'}" class="mlab">${n}</text>`; });
-  return `<svg class="map${small ? ' map-sm' : ''} map-${m.v}" viewBox="0 0 ${g.w} ${g.h}" role="img" aria-label="${esc(label)}"><path d="${g.base}" class="mland"/>${Object.keys(g.c).map(k => `<path d="${g.c[k]}" class="${cls(k)}"/>`).join('')}${extra}</svg>`;
+  return `<svg class="map${small ? ' map-sm' : ''} map-${m.v}" viewBox="0 0 ${g.w} ${g.h}" role="img" aria-label="${esc(label)}"><path d="${g.base}" class="mland"/>${g.frame ? `<path d="${g.frame}" class="mframe"/>` : ''}${Object.keys(g.c).map(k => `<path d="${g.c[k]}" class="${cls(k)}"/>`).join('')}${extra}</svg>`;
 }
 function mapLabel(e){
   if (e.vars && e.map && e.map.g && e.map.g.length) return 'Karte: ' + e.vars.slice(0, e.map.g.length).map(v => `${v[1]}: ${v[2]}`).join('; ');

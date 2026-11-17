@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 17. November 2026 (nach 24.49.0)
+Stand: 18. November 2026 (nach 24.50.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -102,7 +102,14 @@ Derzeit nichts.
 - **Zurück auf „Heute“ in Firefox.** Die Geste verlässt dort die App, Firefox zeigt dann je nach Version eine leere Seite. Eine Web-App kann sich nicht selbst schließen, und die Geste auf „Heute“ abzufangen hieße, Nutzer in der App festzuhalten.
 - **„Meine ist auch richtig“ ausbauen (C).** Du meldest Fälle direkt; das bleibt der schnellere Weg zu einer Korrektur, die für alle gilt. Der Knopf bleibt für unterwegs, wie er ist.
 - **Sprichwörter als eigene Übung (C+).** Ein Sprichwort, dazu das deutsche Gegenstück auswählen; je Sprache mindestens 40. Seit 24.43 gibt es Redewendungen, die im Alltag häufiger vorkommen. Mit Land & Leute überschneiden sie sich kaum (nur „Det är lugnt“ und „Ta det lugnt“, das stärkt sich gegenseitig).
-- **Weitere Land-&-Leute-Karten (C+).** Geprüft in 24.49: „rolig“ steht schon bei den falschen Freunden, weitere Wortvarianten (piso, departamento) bringen keinen neuen Gedanken, eine Sápmi-Karte bräuchte eine Grenze quer durch vier Länder, die die Quellen unterschiedlich ziehen. Neue Karten, wenn ein guter Gedanke auftaucht, nicht auf Vorrat.
+- **Weitere Land-&-Leute-Karten.** Neue Karten, wenn ein guter Gedanke auftaucht, nicht auf Vorrat. Geprüft in 24.49 und 24.50:
+  - **vale, dale, sale (B):** „vale“ ist typisch für Spanien, in Lateinamerika sagt man anderes. Lohnend, aber die Verteilung der Ersatzwörter ist schwer sauber zu belegen.
+  - **Systembolaget und allemansrätten im Vergleich (B−):** Norwegen und Finnland haben ebenfalls staatliche Alkoholläden und ein Jedermannsrecht, Dänemark nicht. Neue Fakten, die erst geprüft werden müssen.
+  - **Mate (B−):** Argentinien, Uruguay, Paraguay steht schon im Text; die Karte brächte wenig.
+  - **seseo auf der Spanienkarte (C+):** Die Karte zeigt Spanien gegenüber Lateinamerika, darum geht es; Andalusien und die Kanaren im Detail würden davon ablenken.
+  - **Tonfall: Finnlandschwedisch ohne Wortmelodien (C+):** stimmt, ist aber für Lernende in Schweden kaum von Nutzen.
+  - **Sápmi (C):** Die Grenze verläuft quer durch vier Länder und wird je nach Quelle anders gezogen.
+  - **„rolig“ (C):** steht schon bei den falschen Freunden. Weitere Wortvarianten wie piso oder departamento bringen keinen neuen Gedanken.
 - **Fehler finden: Mini-Text aus drei Sätzen, einer fehlerhaft (B−).** Mehr Lesen, mehrere Kandidaten; auf dem Handy aber unübersichtlich, und „zwei Kandidaten in einem Satz“ (oben) erreicht dasselbe kompakter.
 - **Fehler finden: Indefinido/Imperfecto als Fehlerart (C+).** Der Aspekt lässt oft beides zu (llovía/llovió), ein eingesetzter Fehler wäre selten eindeutig.
 - **Fehler finden: deutschen Satz ausblenden (C).** Bei por/para und Konnektoren wären dann oft zwei Lösungen richtig.

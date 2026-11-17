@@ -57,6 +57,15 @@ test('Land & Leute: Kategorien, eindeutige ids, Karten mit passenden Varianten, 
       if (e.vars && e.map.g) assert.ok(e.map.g.length <= e.vars.length, e.id);
       if (e.map.clip) { assert.ok(GEO[e.map.v][e.map.clip.p], e.id); assert.ok(GEO[e.map.v].c[e.map.clip.k], e.id); assert.ok(e.map.clip.g < e.vars.length, e.id); }
       (e.map.pts || []).forEach(p => assert.ok(GEO[e.map.v].pts[p.replace(/[<>]$/, '')], `${e.id} ${p}`));
+      (e.map.half || []).forEach(k => assert.ok((e.map.g || []).flat().includes(k), `${e.id} half ${k}`));
     }
   }
+});
+test('Karte Spanien: alle 17 Gemeinschaften, Ceuta, Melilla und Andorra, Kasten für die Kanaren', () => {
+  const g = GEO.iber, es = Object.keys(g.c).filter(k => k.startsWith('ES-'));
+  assert.equal(es.length, 19);
+  assert.ok(g.c.AND && g.c['ES-CN'] && g.frame);
+  const box = g.frame.match(/^M2 ([\d.]+)h([\d.]+)v([\d.]+)/).map(Number);
+  assert.ok(box[1] + box[3] <= g.h && box[2] < g.w / 2, 'Kasten unten links');
+  for (const p of ['Ceuta', 'Melilla']) assert.ok(g.pts[p][0] > box[2] + 2, `${p} liegt rechts vom Kasten`);
 });

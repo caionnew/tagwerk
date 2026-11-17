@@ -540,6 +540,7 @@ button.row[disabled]::after{ display:none; }
 .kvars{ display:grid; gap:6px; margin:10px 0 2px; }
 .kv{ display:grid; grid-template-columns:28px auto 1fr; align-items:baseline; gap:8px; }
 .kf{ font-size:19px; line-height:1; }
+.kv.nf{ grid-template-columns:auto 1fr; }
 .kw{ font-family:var(--serif); font-size:17px; color:var(--accent-ink); white-space:nowrap; }
 .kr{ font-size:13px; color:var(--muted); }
 .find.kcard{ margin-bottom:10px; }
@@ -644,6 +645,7 @@ button.erow:active{ background:var(--accent-soft); }
 .map .mg3{ fill:var(--m3); stroke:var(--surface); stroke-width:.5; }
 .map .mnorr{ fill:var(--m0); opacity:.85; }
 .map .mpolar{ fill:none; stroke:var(--muted); stroke-width:.8; stroke-dasharray:3 2; }
+.map .mframe{ fill:var(--surface); stroke:var(--line); stroke-width:.8; }
 .map .mpt{ fill:var(--ink); stroke:var(--surface); stroke-width:1; }
 .map .mlab{ font-size:9.5px; fill:var(--ink); paint-order:stroke; stroke:var(--surface); stroke-width:2.5px; stroke-linejoin:round; }
 .map .mlab-s{ font-size:8.5px; fill:var(--muted); }

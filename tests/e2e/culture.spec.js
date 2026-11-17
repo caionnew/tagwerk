@@ -1,7 +1,7 @@
 // Land & Leute: Karten an den passenden Karten, Filter nach Kategorie, Beispielsatz ins Tagwerk, Lesetexte mit Rückweg.
 // Grammatik-Begriffe: Liste und Erklärung je Sprache.
 const { test, expect, APP, seed, freshDB, stored } = require('./helpers');
-for (const [lang, maps] of [['es', 11], ['sv', 4]]) {
+for (const [lang, maps] of [['es', 13], ['sv', 4]]) {
   test(`${lang}: ${maps} Karten mit Beschriftung für Screenreader`, async ({ page }) => {
     await seed(page, freshDB(lang));
     await page.goto(APP);

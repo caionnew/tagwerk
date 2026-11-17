@@ -2,6 +2,10 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.34.2
+- **Fehler behoben:** „Me quejé ___ el ruido.“ mit der Lösung „de“ ergab „Me quejé de el ruido“, richtig ist „del“. Jetzt „Me quejé ___ ruido.“ mit der Lösung „del“ (Auswahl del, al, en). Ein Test prüft alle spanischen Lückensätze auf „a el“ und „de el“.
+- **„dar a“ idiomatisch auf Deutsch:** „Mein Haus geht auf den Platz hinaus“ war schief; „hinausgehen auf“ sagt man von Fenstern und Zimmern. Jetzt „Mi ventana da ___ la plaza.“ – „Mein Fenster geht auf den Platz hinaus.“
+
 ## 24.34.1
 Strenger nach Richtigkeit: Was falsch ist, bleibt falsch; was richtig ist, zählt als richtig.
 - **Stellungs-Übung: kein „Fast richtig“ mehr, nur weil das Adverb richtig steht.** „Fast richtig“ zählt als richtig, und 24.34.0 gab es auch bei echten Fehlern neben der richtigen Stellung, etwa „samla“ (Infinitiv) statt „plockar“ oder „jag är på semester“ statt „jag tar semester“. Jetzt ist das wieder „Falsch“. Es bleibt bei der passenden Erklärung („Die Stellung von „alltid“ stimmt. Der Unterschied liegt woanders.“) statt der Regel, die man richtig angewandt hat. Das Grammatikthema in der Fehlerstatistik belastet so ein Fehler nicht, wie schon bei Wortschatz- und Tippfehlern.

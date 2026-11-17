@@ -19,3 +19,8 @@ test('Konnektoren & feste Verbindungen: genug Fälle, Lösung unter den Optionen
     for (const [p, a, opts] of list) { assert.ok(p.includes('___'), p); assert.ok(opts.includes(a), p); assert.equal(new Set(opts).size, 3, p); }
   }
 });
+test('Spanische Lückensätze: a und de vor „el“ sind zusammengezogen (al, del)', () => {
+  for (const name of ['PREP_ES', 'VERB_ES']) {
+    for (const [p, a] of app.get(name)) assert.doesNotMatch(p.replace('___', a), /\b(a|de) el\b/i, `${name}: ${p}`);
+  }
+});

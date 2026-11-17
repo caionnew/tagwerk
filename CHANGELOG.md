@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.41.0
+**Neue Themen: Pluralklassen (Schwedisch) und Verbalperiphrasen (Spanisch).**
+- **Pluralklassen (Schwedisch):** Neuer Generator im Grammatik-Training und im Tagwerk.
+  - 52 Wörter aus allen Klassen: -or (flickor), -ar (bilar, nycklar, somrar), -er (datorer, museer), -r (skor), -n (äpplen, ögon), ohne Endung (hus, lärare, fönster) und mit Umlaut (böcker, män, möss, döttrar).
+  - Gefragt ist die Mehrzahl, unbestimmt („två ___“, „zwei Bücher“) oder bestimmt („de här ___“, „diese Bücher hier“). Zeitwörter wie dag, natt oder sommar kommen nur unbestimmt vor, damit kein schiefer Satz entsteht.
+  - Die Erklärung nennt beide Formen und die Regel der Klasse, etwa „lärare → lärare, bestimmt lärarna. Personen auf -are bleiben gleich; bestimmt -arna, das e fällt weg.“
+- **Verbalperiphrasen (Spanisch):** neues Thema mit Generator (42 Aufgaben) und 24 Sätzen (12 auf B1, 12 auf B2).
+  - Formen: llevar + Gerundium, acabar de, volver a, soler, ponerse a und echarse a, dejar de, estar a punto de, seguir + Gerundium, ir und venir + Gerundium, acabar + Gerundium, deber de.
+  - Wo ein anderes Hilfsverb auch passt, zählt es (empezó a llover, continúa lloviendo, no para de llover).
+  - Bei den Sätzen zählen auch Fassungen ohne Periphrase, wenn sie dasselbe sagen: hace tres años que estudio, todavía vive con sus padres, otra vez.
+  - Der Nachschub von Tatoeba sucht für das Thema eigene Muster.
+- **Wörterbuch:** 64 neue Einträge; die Formen der Pluralwörter kommen von selbst dazu.
+- 4 neue Einheitstests (234).
+
 ## 24.40.0
 **132 neue Sätze Spanisch auf B2/C1.**
 - **Neue Sätze:** 12 je Thema, alle mit Erklärung am Satz und weiteren richtigen Fassungen, alle als B2 markiert. Spanisch hat jetzt 364 Sätze, davon 172 auf B2 (vorher 40). Bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reicht das etwa vier Wochen.

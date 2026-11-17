@@ -654,13 +654,111 @@ function genDetEsOne(){
   const a = ADJ_ES[pick(fit.split(''))], af = a.replace(/o$/, fem ? 'a' : 'o') + (pl ? 's' : ''), art = pl ? (fem ? 'las' : 'los') : g;
   return { prompt:`${art} ${noun} ___`, deLine:deL, answers:[af], label:'Adjektiv anpassen', hint:a, gap:true, full:`${art} ${noun} ${af}`, note:`${why} Also ${af}.` };
 }
+/* ---------- Pluralklassen: flickor, bilar, datorer, äpplen, hus, böcker, män ---------- */
+// [Einzahl, en/ett, Mehrzahl, Mehrzahl bestimmt, deutsch Einzahl, deutsch Mehrzahl, Klasse, Rahmen: m = beweglich (auch „Var är …?“), t = Zeit (nur unbestimmt)]
+const PLURAL_SV = [
+  ['flicka', 'en', 'flickor', 'flickorna', 'Mädchen', 'Mädchen', 'or', 'm'], ['klocka', 'en', 'klockor', 'klockorna', 'Uhr', 'Uhren', 'or', 'm'], ['gata', 'en', 'gator', 'gatorna', 'Straße', 'Straßen', 'or', ''],
+  ['kvinna', 'en', 'kvinnor', 'kvinnorna', 'Frau', 'Frauen', 'or', 'm'], ['lampa', 'en', 'lampor', 'lamporna', 'Lampe', 'Lampen', 'or', 'm'], ['ros', 'en', 'rosor', 'rosorna', 'Rose', 'Rosen', 'or2', 'm'],
+  ['våg', 'en', 'vågor', 'vågorna', 'Welle', 'Wellen', 'or2', ''], ['bil', 'en', 'bilar', 'bilarna', 'Auto', 'Autos', 'ar', 'm'], ['pojke', 'en', 'pojkar', 'pojkarna', 'Junge', 'Jungen', 'ar_e', 'm'],
+  ['nyckel', 'en', 'nycklar', 'nycklarna', 'Schlüssel', 'Schlüssel', 'ar_x', 'm'], ['sjö', 'en', 'sjöar', 'sjöarna', 'See', 'Seen', 'ar', ''], ['fågel', 'en', 'fåglar', 'fåglarna', 'Vogel', 'Vögel', 'ar_x', 'm'],
+  ['dag', 'en', 'dagar', 'dagarna', 'Tag', 'Tage', 'ar', 't'], ['sommar', 'en', 'somrar', 'somrarna', 'Sommer', 'Sommer', 'ar_x', 't'], ['vinter', 'en', 'vintrar', 'vintrarna', 'Winter', 'Winter', 'ar_x', 't'],
+  ['morgon', 'en', 'morgnar', 'morgnarna', 'Morgen', 'Morgen', 'ar_x', 't'], ['syster', 'en', 'systrar', 'systrarna', 'Schwester', 'Schwestern', 'ar_x', 'm'], ['dotter', 'en', 'döttrar', 'döttrarna', 'Tochter', 'Töchter', 'uml_ar', 'm'],
+  ['dator', 'en', 'datorer', 'datorerna', 'Computer', 'Computer', 'er', 'm'], ['telefon', 'en', 'telefoner', 'telefonerna', 'Telefon', 'Telefone', 'er', 'm'], ['restaurang', 'en', 'restauranger', 'restaurangerna', 'Restaurant', 'Restaurants', 'er', ''],
+  ['park', 'en', 'parker', 'parkerna', 'Park', 'Parks', 'er', ''], ['idé', 'en', 'idéer', 'idéerna', 'Idee', 'Ideen', 'er', 't'], ['museum', 'ett', 'museer', 'museerna', 'Museum', 'Museen', 'um', ''],
+  ['sko', 'en', 'skor', 'skorna', 'Schuh', 'Schuhe', 'r', 'm'], ['ko', 'en', 'kor', 'korna', 'Kuh', 'Kühe', 'r', 'm'], ['bro', 'en', 'broar', 'broarna', 'Brücke', 'Brücken', 'bro', ''],
+  ['äpple', 'ett', 'äpplen', 'äpplena', 'Apfel', 'Äpfel', 'n', 'm'], ['hjärta', 'ett', 'hjärtan', 'hjärtana', 'Herz', 'Herzen', 'n', ''], ['öga', 'ett', 'ögon', 'ögonen', 'Auge', 'Augen', 'on', ''],
+  ['öra', 'ett', 'öron', 'öronen', 'Ohr', 'Ohren', 'on', ''], ['hus', 'ett', 'hus', 'husen', 'Haus', 'Häuser', 'zero', ''], ['barn', 'ett', 'barn', 'barnen', 'Kind', 'Kinder', 'zero', 'm'],
+  ['bord', 'ett', 'bord', 'borden', 'Tisch', 'Tische', 'zero', 'm'], ['rum', 'ett', 'rum', 'rummen', 'Zimmer', 'Zimmer', 'zero_mm', ''], ['program', 'ett', 'program', 'programmen', 'Programm', 'Programme', 'zero_mm', ''],
+  ['fönster', 'ett', 'fönster', 'fönstren', 'Fenster', 'Fenster', 'zero_er', ''], ['lärare', 'en', 'lärare', 'lärarna', 'Lehrer', 'Lehrer', 'zero_p', 'm'], ['läkare', 'en', 'läkare', 'läkarna', 'Arzt', 'Ärzte', 'zero_p', 'm'],
+  ['finger', 'ett', 'fingrar', 'fingrarna', 'Finger', 'Finger', 'finger', ''], ['bok', 'en', 'böcker', 'böckerna', 'Buch', 'Bücher', 'uml_er', 'm'], ['fot', 'en', 'fötter', 'fötterna', 'Fuß', 'Füße', 'uml_er', ''],
+  ['hand', 'en', 'händer', 'händerna', 'Hand', 'Hände', 'uml_er', ''], ['stad', 'en', 'städer', 'städerna', 'Stadt', 'Städte', 'uml_er', ''], ['natt', 'en', 'nätter', 'nätterna', 'Nacht', 'Nächte', 'uml_er', 't'],
+  ['tand', 'en', 'tänder', 'tänderna', 'Zahn', 'Zähne', 'uml_er', ''], ['son', 'en', 'söner', 'sönerna', 'Sohn', 'Söhne', 'uml_er', 'm'], ['bonde', 'en', 'bönder', 'bönderna', 'Bauer', 'Bauern', 'uml_er', 'm'],
+  ['land', 'ett', 'länder', 'länderna', 'Land', 'Länder', 'uml_er', ''], ['bror', 'en', 'bröder', 'bröderna', 'Bruder', 'Brüder', 'uml_er', 'm'], ['man', 'en', 'män', 'männen', 'Mann', 'Männer', 'uml', 'm'],
+  ['mus', 'en', 'möss', 'mössen', 'Maus', 'Mäuse', 'uml', 'm'], ['gås', 'en', 'gäss', 'gässen', 'Gans', 'Gänse', 'uml', 'm']
+];
+const PLURAL_NOTE = {
+  or:'en-Wörter auf -a: aus -a wird -or.', or2:'Einige en-Wörter ohne -a gehen auch auf -or.', ar:'Viele einsilbige en-Wörter bekommen -ar.',
+  ar_e:'Bei en-Wörtern auf -e fällt das e weg, dann -ar.', ar_x:'Das unbetonte e, a oder o vor l, r oder n fällt weg, dann -ar.',
+  er:'Lehnwörter und Wörter mit betonter Endsilbe bekommen -er.', um:'Wörter auf -um verlieren es, dann -er.', r:'en-Wörter auf betonten Vokal bekommen nur -r.',
+  bro:'Hier -ar trotz betontem Vokal. Nicht verwechseln mit bror (Bruder).', n:'ett-Wörter auf Vokal bekommen -n, bestimmt -na.', on:'Alte Pluralform auf -on.',
+  zero:'ett-Wörter auf Konsonant bleiben gleich, bestimmt kommt -en dazu.', zero_mm:'Bleibt gleich; bestimmt wird das m verdoppelt.', zero_er:'ett-Wörter auf -er bleiben gleich; bestimmt fällt das e weg.',
+  zero_p:'Personen auf -are bleiben gleich; bestimmt -arna, das e fällt weg.', finger:'ett finger geht wie die en-Wörter auf -er: e fällt weg, dann -ar.',
+  uml_er:'Umlaut und -er, ähnlich wie im Deutschen.', uml:'Nur Umlaut, keine Endung, ähnlich wie im Deutschen.', uml_ar:'Umlaut und -ar.'
+};
+// Rahmen: unbestimmt (två, många, några) oder bestimmt (de här, Var är …?)
+const PLURAL_FRAMES = [
+  ['två ___', 'zwei {p}', 0, ''], ['många ___', 'viele {p}', 0, ''], ['några ___', 'einige {p}', 0, ''],
+  ['de här ___', 'diese {p} hier', 1, 'nt'], ['Var är ___?', 'Wo sind die {p}?', 1, 'm']
+];
+function genPluralSv(){
+  const n = pick(PLURAL_SV), [sg, art, pl, defPl, , dePl, cls, fl] = n;
+  const frames = PLURAL_FRAMES.filter(f => !f[3] || (f[3] === 'm' ? fl === 'm' : fl !== 't'));
+  const f = pick(frames.concat(frames.filter(x => !x[2])));
+  const ans = f[2] ? defPl : pl, prompt = f[0];
+  return { prompt, deLine:f[1].replace('{p}', dePl), answers:[ans], label:f[2] ? 'Setz die bestimmte Mehrzahl ein' : 'Setz die Mehrzahl ein', hint:`${art} ${sg}`,
+    note:`${sg} → ${pl}, bestimmt ${defPl}. ${PLURAL_NOTE[cls]}`, gap:true, full:prompt.replace('___', ans) };
+}
+
+/* ---------- Verbalperiphrasen: llevar + Gerundium, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de, seguir … ---------- */
+// [Satz mit ___, richtige Formen, Muster, Deutsch, Erklärung]
+const PERI_ES = [
+  ['___ dos horas esperando.', ['Llevo'], 'llevar + Gerundium', 'Ich warte schon seit zwei Stunden.', 'llevar + Zeitraum + Gerundium = seit … etwas tun: llevo dos horas esperando.'],
+  ['¿Cuánto tiempo ___ estudiando español?', ['llevas'], 'llevar + Gerundium', 'Wie lange lernst du schon Spanisch?', 'Wie lange schon: ¿cuánto tiempo llevas + Gerundium?'],
+  ['___ un año viviendo allí cuando nació nuestra hija.', ['Llevábamos'], 'llevar + Gerundium', 'Wir wohnten schon ein Jahr dort, als unsere Tochter geboren wurde.', 'Dauer bis zu einem Punkt in der Vergangenheit: llevar im Imperfecto (llevábamos).'],
+  ['___ toda la mañana intentando llamarte.', ['Llevo'], 'llevar + Gerundium', 'Ich versuche schon den ganzen Vormittag, dich anzurufen.', 'llevar + Zeitraum + Gerundium: llevo toda la mañana intentando.'],
+  ['___ treinta años casados.', ['Llevan'], 'llevar + Partizip', 'Sie sind seit dreißig Jahren verheiratet.', 'llevar + Zeitraum + Partizip oder Adjektiv: llevan treinta años casados.'],
+  ['___ de hablar con ella.', ['Acabo'], 'acabar de + Infinitiv', 'Ich habe gerade mit ihr gesprochen.', 'acabar de + Infinitiv = gerade etwas getan haben: acabo de hablar.'],
+  ['___ de llegar.', ['Acabamos'], 'acabar de + Infinitiv', 'Wir sind gerade angekommen.', 'acabar de + Infinitiv = gerade etwas getan haben: acabamos de llegar.'],
+  ['Cuando llamaste, ___ de salir.', ['acababa'], 'acabar de + Infinitiv', 'Als du angerufen hast, war ich gerade gegangen.', 'In der Vergangenheit: acababa de + Infinitiv = war gerade …'],
+  ['___ de empezar a nevar.', ['Acaba'], 'acabar de + Infinitiv', 'Es hat gerade angefangen zu schneien.', 'Zwei Periphrasen hintereinander: acaba de (gerade) + empezar a (anfangen).'],
+  ['___ a llover.', ['Vuelve'], 'volver a + Infinitiv', 'Es regnet wieder.', 'volver a + Infinitiv = wieder, noch einmal etwas tun: vuelve a llover.'],
+  ['No ___ a hacerlo.', ['vuelvas'], 'volver a + Infinitiv', 'Mach das nie wieder.', 'Verneinter Imperativ: no vuelvas a hacerlo = tu das nicht noch einmal.'],
+  ['___ a leer el libro el verano pasado.', ['Volví'], 'volver a + Infinitiv', 'Letzten Sommer habe ich das Buch noch einmal gelesen.', 'volver a + Infinitiv, mit el verano pasado im Indefinido: volví a leer.'],
+  ['Hoy ___ a olvidar las llaves.', ['he vuelto', 'volví'], 'volver a + Infinitiv', 'Heute habe ich schon wieder die Schlüssel vergessen.', 'volver a = schon wieder; mit hoy in Spanien he vuelto, in Lateinamerika volví.'],
+  ['Ya no ___ a confiar en él.', ['vuelvo', 'volveré'], 'volver a + Infinitiv', 'Ich werde ihm nie wieder vertrauen.', 'no volver a + Infinitiv = nie wieder etwas tun.'],
+  ['___ desayunar en casa.', ['Suelo'], 'soler + Infinitiv', 'Normalerweise frühstücke ich zu Hause.', 'soler + Infinitiv = gewöhnlich etwas tun: suelo desayunar.'],
+  ['Los domingos ___ comer con mis padres.', ['solemos'], 'soler + Infinitiv', 'Sonntags essen wir meistens mit meinen Eltern.', 'soler + Infinitiv = gewöhnlich, meistens: solemos comer.'],
+  ['De pequeño ___ pasar los veranos en el pueblo.', ['solía'], 'soler + Infinitiv', 'Als Kind verbrachte ich die Sommer meistens im Dorf.', 'Gewohnheit in der Vergangenheit: solía + Infinitiv (Imperfecto).'],
+  ['En invierno ___ oscurecer muy pronto.', ['suele'], 'soler + Infinitiv', 'Im Winter wird es meist sehr früh dunkel.', 'soler + Infinitiv = gewöhnlich: suele oscurecer.'],
+  ['___ llegar tarde, pero hoy ha llegado pronto.', ['Suele'], 'soler + Infinitiv', 'Meistens kommt er zu spät, aber heute war er früh da.', 'soler + Infinitiv = gewöhnlich, meistens: suele llegar tarde.'],
+  ['___ ir a la playa todos los fines de semana.', ['Solíamos'], 'soler + Infinitiv', 'Früher sind wir jedes Wochenende an den Strand gefahren.', 'Gewohnheit in der Vergangenheit: solíamos + Infinitiv.'],
+  ['De repente ___ a llover.', ['se puso', 'empezó', 'comenzó'], 'ponerse a + Infinitiv', 'Plötzlich fing es an zu regnen.', 'ponerse a + Infinitiv = (plötzlich) anfangen zu; auch empezar a.'],
+  ['Cuando le conté la noticia, ___ a llorar.', ['se puso', 'se echó', 'empezó', 'comenzó'], 'ponerse a + Infinitiv', 'Als ich ihr die Nachricht erzählte, fing sie an zu weinen.', 'ponerse a oder echarse a llorar = anfangen zu weinen.'],
+  ['___ a trabajar en cuanto llego a la oficina.', ['Me pongo', 'Empiezo'], 'ponerse a + Infinitiv', 'Ich mache mich an die Arbeit, sobald ich ins Büro komme.', 'ponerse a + Infinitiv = sich an etwas machen, anfangen zu.'],
+  ['___ a estudiar a las ocho y no paré hasta medianoche.', ['Me puse', 'Empecé', 'Comencé'], 'ponerse a + Infinitiv', 'Ich habe um acht angefangen zu lernen und bis Mitternacht nicht aufgehört.', 'ponerse a + Infinitiv = anfangen zu, hier im Indefinido: me puse a estudiar.'],
+  ['Al ver la escena, todos ___ a reír.', ['se echaron', 'se pusieron', 'empezaron', 'comenzaron'], 'echarse a + Infinitiv', 'Als sie die Szene sahen, fingen alle an zu lachen.', 'echarse a reír, llorar, correr = plötzlich anfangen zu …'],
+  ['___ de fumar hace cinco años.', ['Dejé'], 'dejar de + Infinitiv', 'Ich habe vor fünf Jahren aufgehört zu rauchen.', 'dejar de + Infinitiv = aufhören zu: dejé de fumar.'],
+  ['¿Por qué ___ de venir a clase?', ['has dejado', 'dejaste'], 'dejar de + Infinitiv', 'Warum kommst du nicht mehr zum Unterricht?', 'dejar de + Infinitiv = nicht mehr tun; in Spanien has dejado, in Lateinamerika dejaste.'],
+  ['No ___ de llover desde ayer.', ['deja', 'para'], 'dejar de + Infinitiv', 'Es hört seit gestern nicht auf zu regnen.', 'no dejar de (oder no parar de) + Infinitiv = nicht aufhören zu.'],
+  ['___ de vernos cuando ella se mudó.', ['Dejamos'], 'dejar de + Infinitiv', 'Wir hörten auf, uns zu treffen, als sie umzog.', 'dejar de + Infinitiv = aufhören zu: dejamos de vernos.'],
+  ['___ a punto de llamarte.', ['Estaba'], 'estar a punto de + Infinitiv', 'Ich wollte dich gerade anrufen.', 'estar a punto de + Infinitiv = gleich etwas tun, kurz davor sein; hier im Imperfecto.'],
+  ['El tren ___ a punto de salir.', ['está'], 'estar a punto de + Infinitiv', 'Der Zug fährt gleich ab.', 'estar a punto de + Infinitiv = gleich, kurz davor.'],
+  ['___ a punto de perder el avión.', ['Estuvimos'], 'estar a punto de + Infinitiv', 'Wir hätten beinahe den Flug verpasst.', 'estar a punto de im Indefinido: estuvimos a punto de = beinahe hätten wir …'],
+  ['___ a punto de cerrar la tienda.', ['Están'], 'estar a punto de + Infinitiv', 'Sie schließen gleich den Laden.', 'estar a punto de + Infinitiv = gleich etwas tun.'],
+  ['___ a punto de irnos cuando llegaste.', ['Estábamos'], 'estar a punto de + Infinitiv', 'Wir wollten gerade gehen, als du kamst.', 'Kurz davor in der Vergangenheit: estábamos a punto de; das Ereignis im Indefinido (llegaste).'],
+  ['___ lloviendo.', ['Sigue', 'Continúa'], 'seguir + Gerundium', 'Es regnet immer noch.', 'seguir + Gerundium = immer noch, weiterhin: sigue lloviendo.'],
+  ['¿___ trabajando en la misma empresa?', ['Sigues', 'Continúas'], 'seguir + Gerundium', 'Arbeitest du immer noch bei derselben Firma?', 'seguir + Gerundium = immer noch: ¿sigues trabajando …?'],
+  ['A pesar del ruido, ___ durmiendo.', ['siguió', 'continuó'], 'seguir + Gerundium', 'Trotz des Lärms schlief er weiter.', 'seguir + Gerundium = weiter etwas tun: siguió durmiendo.'],
+  ['¿___ viviendo tu hermano en Berlín?', ['Sigue', 'Continúa'], 'seguir + Gerundium', 'Wohnt dein Bruder immer noch in Berlin?', 'seguir + Gerundium = immer noch: ¿sigue viviendo …?'],
+  ['___ mejorando poco a poco.', ['Va', 'Está'], 'ir + Gerundium', 'Es wird nach und nach besser.', 'ir + Gerundium = allmählich, nach und nach: va mejorando.'],
+  ['___ diciéndolo desde hace meses.', ['Vengo'], 'venir + Gerundium', 'Das sage ich schon seit Monaten.', 'venir + Gerundium = schon seit einiger Zeit (bis jetzt) etwas tun: vengo diciéndolo.'],
+  ['___ aceptando su propuesta.', ['Acabé', 'Terminé'], 'acabar + Gerundium', 'Am Ende habe ich seinen Vorschlag angenommen.', 'acabar oder terminar + Gerundium = am Ende doch etwas tun: acabé aceptando.'],
+  ['___ de ser las nueve.', ['Deben'], 'deber de + Infinitiv', 'Es wird wohl neun Uhr sein.', 'deber de + Infinitiv = Vermutung (dürfte, wird wohl). deber ohne de heißt eigentlich müssen.']
+];
+function genPerifrasis(){
+  const [p, ans, pat, de, note] = pick(PERI_ES);
+  return { prompt:p, deLine:de, answers:ans.map(a => a.toLowerCase()), label:'Setz die passende Form ein', hint:`(${pat})`, note, gap:true, full:p.replace('___', ans[0]) };
+}
+
 const GENS = {
   // Abwechslung: Adjektivendungen und Begleiter (min/mitt/mina, den här + bestimmte Form) im selben Thema
+  plural_sv:{ lang:'sv', trap:'plural', short:'Pluralformen', label:'Pluralklassen', make:genPluralSv },
   np:{ lang:'sv', trap:'species', short:'Adjektivendungen', label:'Adjektivendungen & bestimmte Form', make:() => (Math.random() < 0.4 ? genDetSv() : genNP()) },
   tempus:{ lang:'sv', trap:'tempus', short:'Zeitformen', label:'Präteritum oder Perfekt', make:genTempus },
   inte:{ lang:'sv', trap:'bisats', short:'Wortstellung', label:'Stellung von „inte“, „aldrig“ & Co.', make:genInte },
   conj:{ lang:'es', trap:'konjugation', short:'Verbformen', label:'Verbformen', make:genConj },
   serestar:{ lang:'es', trap:'serestar', short:'ser/estar', label:'ser oder estar', make:genSerEstar },
+  perifrasis:{ lang:'es', trap:'perifrasis', short:'Periphrasen', label:'Verbalperiphrasen', make:genPerifrasis },
   porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara },
   det_es:{ lang:'es', trap:'concord', short:'Übereinstimmung', label:'Begleiter & Adjektive anpassen', make:genDetEs },
   verbind_sv:{ lang:'sv', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_SV) },

@@ -99,3 +99,40 @@ test('Fehler finden Spanisch: keine Relativsätze, in denen auch der Indikativ s
   const n = run('BANK_SPOTS_ES.length');
   for (let i = 0; i < n; i++) { const d = run(`BANK_SPOTS_ES[${i}]()`); assert.ok(!/\b(alguien que|lo que|un \S+ que|una \S+ que)\b/.test(d.full), d.full); }
 });
+test('Pluralklassen: bestimmte Mehrzahl auf -na oder -en, Zeitwörter nur unbestimmt, Erklärung nennt beide Formen', () => {
+  const P = app.get('PLURAL_SV');
+  assert.ok(P.length >= 36, String(P.length));
+  for (const [sg, art, pl, defPl, , , cls, fl] of P) {
+    assert.ok(/(na|en)$/.test(defPl), defPl);
+    assert.ok(['en', 'ett'].includes(art), sg);
+    assert.ok(app.get('PLURAL_NOTE')[cls], cls);
+    assert.ok(['', 'm', 't'].includes(fl), sg);
+    assert.ok(pl.length >= 2, sg);
+  }
+  const seen = new Set();
+  withSeed(4, () => {
+    for (let i = 0; i < 800; i++) {
+      const d = run('genPluralSv()'), n = P.find(x => x[2] === d.answers[0] || x[3] === d.answers[0]);
+      assert.ok(n, d.full);
+      if (n[7] === 't') assert.ok(!/^(de här|Var är)/.test(d.prompt), d.full);
+      if (n[7] !== 'm') assert.ok(!/^Var är/.test(d.prompt), d.full);
+      assert.match(d.note, new RegExp(`${n[0]} → ${n[2]}, bestimmt ${n[3]}`));
+      seen.add(n[0]);
+    }
+  });
+  assert.ok(seen.size > 40, String(seen.size));
+});
+test('Verbalperiphrasen: Lücke im Satz, erste Lösung ergibt den vollen Satz, Muster als Hinweis, Thema mit Sätzen', () => {
+  const L = app.get('PERI_ES');
+  assert.ok(L.length >= 36, String(L.length));
+  assert.equal(new Set(L.map(x => x[0])).size, L.length, 'doppelte Sätze');
+  for (const [p, ans, pat, de, note] of L) {
+    assert.ok(p.includes('___') && ans.length >= 1 && pat && de && note, p);
+    assert.doesNotMatch(p.replace('___', ans[0]), /\b(a|de) el\b/i, p);
+  }
+  const tr = app.get('TRAPS').es.find(t => t.id === 'perifrasis');
+  assert.ok(tr && tr.gen === 'perifrasis' && tr.kind === 'form');
+  const items = app.get('BANK').es.filter(i => i.trap === 'perifrasis');
+  assert.ok(items.length >= 24 && items.every(i => i.note && i.gap), String(items.length));
+  assert.ok(app.get('TRAPS').sv.find(t => t.id === 'plural' && t.gen === 'plural_sv'));
+});

@@ -1914,6 +1914,70 @@ escritorio|escritorio|Schreibtisch
 estantería|estantería|Regal
 lado|lado|Seite; al lado de = neben
 terminas|terminar|du beendest, du bist fertig
+estudiando|estudiar|lernend, studierend (Gerundium)
+suelo|soler|ich pflege zu, gewöhnlich (soler + Infinitiv); el suelo = der Boden
+suele|soler|pflegt zu, gewöhnlich (soler + Infinitiv)
+solemos|soler|wir pflegen zu, gewöhnlich (soler + Infinitiv)
+solía|soler|pflegte zu, früher gewöhnlich (Imperfecto)
+solíamos|soler|wir pflegten zu, früher gewöhnlich (Imperfecto)
+andando|andar|zu Fuß (Gerundium); ir andando = zu Fuß gehen
+nevar|nevar|schneien
+punto|punto|Punkt; estar a punto de = kurz davor sein
+contrato|contrato|Vertrag
+varios|varios|mehrere
+parar|parar|aufhören, anhalten; sin parar = ununterbrochen
+pelea|pelea|Streit
+dejaron|dejar|hörten auf (dejar de); ließen
+hablarse|hablarse|miteinander sprechen
+acabó|acabar|endete; acabó cediendo = gab am Ende nach
+acabé|acabar|ich beendete; acabé aceptando = am Ende nahm ich an
+cediendo|ceder|nachgebend (Gerundium)
+situación|situación|Lage, Situation
+empeorando|empeorar|schlechter werdend (Gerundium)
+mejorando|mejorar|besser werdend (Gerundium)
+diciendo|decir|sagend (Gerundium)
+diciéndolo|decir|es sagend (Gerundium + lo)
+necesitamos|necesitar|wir brauchen
+personal|personal|Personal; persönlich
+oír|oír|hören
+noticia|noticia|Nachricht, Neuigkeit
+echó|echarse|warf; se echó a llorar = brach in Tränen aus
+echaron|echarse|warfen; se echaron a reír = fingen an zu lachen
+llorar|llorar|weinen
+reír|reír|lachen
+debe|deber|muss, soll; debe de = dürfte, wird wohl
+deben|deber|müssen, sollen; deben de = dürften, werden wohl
+terminar|terminar|beenden, fertig werden
+cuánto|cuánto|wie viel; ¿cuánto tiempo? = wie lange?
+paro|paro|Arbeitslosigkeit; estar en paro = arbeitslos sein
+llevan|llevar|tragen; llevan treinta años casados = sind seit dreißig Jahren verheiratet
+casados|casado|verheiratet (Plural)
+desayunar|desayunar|frühstücken
+dejamos|dejar|wir hörten auf (dejar de); wir lassen
+vernos|verse|uns sehen, uns treffen
+mudó|mudarse|zog um (Indefinido)
+escena|escena|Szene
+olvidar|olvidar|vergessen
+acabamos|acabar|wir beenden; acabamos de llegar = wir sind gerade angekommen
+acababa|acabar|beendete; acababa de salir = war gerade gegangen
+confiar|confiar|vertrauen
+perder|perder|verlieren, verpassen
+avión|avión|Flugzeug
+conté|contar|ich erzählte (Indefinido)
+invierno|invierno|Winter
+oscurecer|oscurecer|dunkel werden
+intentando|intentar|versuchend (Gerundium)
+hacerlo|hacer|es tun
+irnos|irse|gehen (wir), aufbrechen
+allí|allí|dort
+nació|nacer|wurde geboren (Indefinido)
+paré|parar|ich hörte auf (Indefinido)
+medianoche|medianoche|Mitternacht
+misma|mismo|dieselbe
+pueblo|pueblo|Dorf; Volk
+poco|poco|wenig; poco a poco = nach und nach
+durmiendo|dormir|schlafend (Gerundium)
+aceptando|aceptar|annehmend (Gerundium)
 `
 };
 
@@ -1950,6 +2014,11 @@ function buildGloss(){
     if (f[3]) put('sv', f[3], f[0], `${deBase} (bestimmte Form)`, true);
     if (f[4]) put('sv', f[4], f[0], `${deBase} (Plural)`, true);
   }));
+  PLURAL_SV.forEach(([sg, art, pl, defPl, de, dePl]) => {
+    put('sv', sg, '', `${de} (${art}-Wort)`, true);
+    put('sv', pl, sg, `${dePl} (Plural)`, true);
+    put('sv', defPl, sg, `die ${dePl}`, true);
+  });
   VERBS_SV.forEach(v => {
     const de = SV_VERB_DE[v[0]] || '';
     put('sv', v[0], '', de, true);

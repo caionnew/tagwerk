@@ -33,7 +33,7 @@ Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeug
 | `src/data/terms.js` | Grammatik- und App-Begriffe zum Antippen; Suchmuster als regulärer Ausdruck |
 | `src/data/fundstueck.js` | Feste mit Datumsfunktion (bewegliche Feste über `easter()`), falsche Freunde, Begrüßungen |
 | `src/js/forms.js` | Genus-Wörter, Fehler-finden-Rahmen, Umbauen, Uhrzeiten |
-| `src/js/generators.js` | Grammatik-Generatoren (Adjektivendungen, Zeitformen, Konjugation, ser/estar, por/para, Konnektoren `VERB_SV`/`VERB_ES`, Verben mit Präposition `PREP_SV`/`PREP_ES`). Jeder Generator braucht mindestens 36 verschiedene Aufgaben, dreimal die Wiederholungssperre; `tests/unit/variety.test.js` prüft das |
+| `src/js/generators.js` | Grammatik-Generatoren (Adjektivendungen, Pluralklassen `PLURAL_SV`, Zeitformen, Konjugation, ser/estar, Verbalperiphrasen `PERI_ES`, por/para, Konnektoren `VERB_SV`/`VERB_ES`, Verben mit Präposition `PREP_SV`/`PREP_ES`). Jeder Generator braucht mindestens 36 verschiedene Aufgaben, dreimal die Wiederholungssperre; `tests/unit/variety.test.js` prüft das |
 | `src/data/geo.js` | Kartendaten, **nicht von Hand bearbeiten**: `npm run geo` erzeugt sie aus Natural Earth |
 
 ## Karten

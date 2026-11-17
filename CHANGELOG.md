@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.43.0
+**Redewendungen als neues Thema in beiden Sprachen.**
+- **Je 24 Sätze, 12 auf B1 und 12 auf B2.** Die Lücke sitzt auf dem Schlüsselwort des Bildes. Die Erklärung nennt die deutsche Entsprechung und die wörtliche Bedeutung, etwa „ha tummen mitt i handen = zwei linke Hände haben (wörtlich: den Daumen mitten in der Hand)“.
+- **Schwedisch, zum Beispiel:**
+  - ta det lugnt, ingen fara, kosta skjortan, det är inte mitt bord, slå två flugor i en smäll, gå som smort.
+  - Dazu dra alla över en kam, ingen ko på isen, gå som katten kring het gröt, inte ha alla hästar hemma, lägga näsan i blöt, det regnar småspik, ta någon på sängen, ha skinn på näsan, sitta i klistret.
+- **Spanisch, zum Beispiel:**
+  - no pasa nada, estar hecho polvo, costar un ojo de la cara, ser pan comido, tomar el pelo, meter la pata, ponerse las pilas, dar en el clavo.
+  - Dazu no tener pelos en la lengua, andarse por las ramas, buscarle tres pies al gato, hablar por los codos, ser uña y carne, no ver tres en un burro, quedarse de piedra, no pegar ojo.
+- **Weitere richtige Fassungen:** Neben dem Bild zählt auch die schlichte Fassung, wo sie dasselbe sagt (kostar en förmögenhet, Det öser ner, costó una fortuna, me quedé helado).
+- Der Nachschub von Tatoeba sucht für das Thema eigene Muster.
+- **Wörterbuch:** 67 neue Einträge.
+- 1 neuer Einheitstest (236).
+
 ## 24.42.0
 **Modalpartikeln (Schwedisch) als neues Thema, Subjuntivo im Satzgefüge (Spanisch).**
 - **Modalpartikeln:** 24 Sätze, 12 auf B1 und 12 auf B2, mit Erklärung je Satz.

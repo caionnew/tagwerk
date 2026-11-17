@@ -20,6 +20,7 @@ const TRAPS = {
     { id:'tid', label:'Präpositionen bei Zeit & Ort', kind:'form', short:'Dauer: i två år. Vor: för … sedan. In (Zukunft): om.', rule:'på måndag = kommenden Montag, i måndags = letzten Montag. Verneinte Dauer mit på: inte på flera veckor. Ort: på jobbet, hos läkaren.' },
     { id:'framtid', label:'Zukunft & Modalverben', kind:'form', short:'behöver inte = muss nicht, får = darf, ska = Plan, kommer att = Prognose.', rule:'„Du musst nicht“ heißt du behöver inte. „måste inte“ ist mehrdeutig, „får inte“ heißt „darf nicht“. bli = werden, stanna = bleiben.' },
     { id:'passiv', label:'s-Passiv, „man“ & „det finns“', kind:'form', short:'Passiv mit -s (öppnas, byggdes). „es gibt“ heißt det finns.', rule:'Allgemeine Aussagen oft mit man: Här talar man svenska.' },
+    { id:'idiom', label:'Redewendungen', kind:'form', short:'Feste Bilder, die man nicht Wort für Wort übersetzt: ta det lugnt, kosta skjortan, ha tummen mitt i handen.', rule:'Manche Bilder gibt es in beiden Sprachen (slå två flugor i en smäll), andere nur im Schwedischen (ingen ko på isen, inte ha alla hästar hemma). Am besten als Ganzes lernen.' },
     { id:'falska', label:'Falsche Freunde', kind:'form', short:FALSE_FRIEND, rule:'bleiben = stanna, lustig = rolig, Urlaub = semester, Semester = termin, Fahrt = resa, Rock = kjol, brav = snäll, bekommen = få, Termin = tid.' }
   ],
   es:[
@@ -39,6 +40,7 @@ const TRAPS = {
     { id:'condicional', label:'Konditional & si-Sätze', kind:'form', short:'Irreal: si + tuviera, dann Konditional (viajaría).', rule:'Realer Fall: si + Präsens (si llueve, nos quedamos). Höflich: me gustaría, podrías, deberías.' },
     { id:'reflexivo', label:'Reflexivverben & „se“', kind:'form', short:'Reflexives Verb: Das Pronomen gehört dazu.', rule:'levantarse, acordarse de, quedarse, irse. se me olvidó, se me cayó: Es ist mir passiert. se habla: man spricht.' },
     { id:'preposiciones', label:'Präpositionen & „a“', kind:'form', short:'Feste Präposition oder persönliches „a“, nicht wörtlich aus dem Deutschen.', rule:'veo a mi hermana, pienso en ti, sueño con, depende de, se casó con, se enamoró de, tarda en. desde hace = seit, hace = vor.' },
+    { id:'idiom', label:'Redewendungen', kind:'form', short:'Feste Bilder, die man nicht Wort für Wort übersetzt: costar un ojo de la cara, meter la pata, tomar el pelo.', rule:'Manche Bilder gibt es in beiden Sprachen (tirar la toalla), andere nur im Spanischen (no tener pelos en la lengua, hablar por los codos). Am besten als Ganzes lernen.' },
     { id:'falsos', label:'Falsche Freunde', kind:'form', short:FALSE_FRIEND, rule:'Firma = empresa (firma = Unterschrift), Mantel = abrigo (mantel = Tischdecke), Gymnasium = instituto, Rente = pensión, Konkurrenz = competencia, Prospekt = folleto.' }
   ]
 };

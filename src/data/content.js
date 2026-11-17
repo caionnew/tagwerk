@@ -330,6 +330,32 @@ Ich wollte nur kurz fragen, ob du morgen Zeit hast. | Jag ville bara höra om du
 Das war ja klar. | Det var ju klart. | ju |  | Det var ju självklart.;; Det var ju väntat. | B2 | ju = ja (das war zu erwarten): Det var ju klart.
 Na, dann viel Glück! | Lycka till då! | då |  | Ja, lycka till då! | B2 | då am Ende = dann, na dann: Lycka till då!
 `,
+idiom: `
+Immer mit der Ruhe, wir schaffen das schon. | Ta det lugnt, vi fixar det. | lugnt |  | Ta det lugnt, vi klarar det.;; Ta det lugnt, vi ska nog fixa det. | B1 | ta det lugnt = immer mit der Ruhe. fixa = hinkriegen (umgangssprachlich).
+Keine Sorge, das macht nichts. | Ingen fara, det gör ingenting. | fara |  | Ingen fara, det gör inget.;; Det är ingen fara, det gör ingenting. | B1 | ingen fara = keine Sorge, kein Problem (fara heißt eigentlich Gefahr).
+Das ist doch nicht das Ende der Welt. | Det är väl inte hela världen. | världen |  | Det är ju inte hela världen.;; Det är inte hela världen. | B1 | det är inte hela världen = das ist nicht so schlimm (wörtlich: nicht die ganze Welt).
+Eine Wohnung in der Innenstadt kostet ein Vermögen. | En lägenhet i innerstaden kostar skjortan. | skjortan |  | En lägenhet i innerstan kostar skjortan.;; En lägenhet i city kostar skjortan.;; En lägenhet i innerstaden kostar en förmögenhet. | B1 | kosta skjortan = ein Vermögen kosten (wörtlich: das Hemd).
+Das ist nicht mein Bier. | Det är inte mitt bord. | bord |  | Det är inte mitt problem. | B1 | det är inte mitt bord = das ist nicht mein Bier, nicht meine Aufgabe (wörtlich: nicht mein Tisch).
+Damit haben wir zwei Fliegen mit einer Klappe geschlagen. | Då slog vi två flugor i en smäll. | flugor |  | Därmed slog vi två flugor i en smäll.;; Så slog vi två flugor i en smäll. | B1 | slå två flugor i en smäll = zwei Fliegen mit einer Klappe schlagen.
+Ich lege jetzt die Karten auf den Tisch. | Nu lägger jag korten på bordet. | korten |  | Jag lägger korten på bordet nu. | B1 | lägga korten på bordet = die Karten auf den Tisch legen, offen sagen, was ist.
+Wir sitzen alle im selben Boot. | Vi sitter alla i samma båt. | båt |  | Vi är alla i samma båt.;; Alla sitter vi i samma båt. | B1 | sitta i samma båt = im selben Boot sitzen.
+Mach mir nichts vor, ich bin nicht von gestern. | Lura mig inte, jag är inte född i går. | född |  | Försök inte lura mig, jag är inte född i går. | B1 | inte vara född i går = nicht von gestern sein (wörtlich: nicht gestern geboren).
+Seit wir das neue System haben, läuft alles wie geschmiert. | Sedan vi fick det nya systemet går allt som smort. | smort |  | Sedan vi fick det nya systemet går allting som smort. | B1 | det går som smort = es läuft wie geschmiert.
+Diese Woche habe ich alle Hände voll zu tun. | Den här veckan har jag fullt upp. | fullt |  | Jag har fullt upp den här veckan.;; Den här veckan har jag mycket att göra. | B1 | ha fullt upp = alle Hände voll zu tun haben.
+Das ist keine Kunst, das kann jeder. | Det är ingen konst, det kan alla. | konst |  | Det är ingen konst, det kan vem som helst.;; Det är ingen konst, det klarar alla. | B1 | det är ingen konst = das ist keine Kunst.
+Man sollte nicht alle über einen Kamm scheren. | Man ska inte dra alla över en kam. | kam |  | Man bör inte dra alla över en kam. | B2 | dra alla över en kam = alle über einen Kamm scheren; im Schwedischen „ziehen“ statt „scheren“.
+Kein Grund zur Panik, wir haben noch Zeit. | Det är ingen ko på isen, vi har fortfarande tid. | ko |  | Ingen ko på isen, vi har fortfarande tid.;; Det är ingen ko på isen, vi har tid än.;; Det är ingen fara, vi har fortfarande tid. | B2 | ingen ko på isen = kein Grund zur Sorge, keine Eile (wörtlich: keine Kuh auf dem Eis).
+Mein Bruder hat zwei linke Hände. | Min bror har tummen mitt i handen. | tummen |  |  | B2 | ha tummen mitt i handen = zwei linke Hände haben (wörtlich: den Daumen mitten in der Hand).
+Hör auf, um den heißen Brei herumzureden! | Sluta gå som katten kring het gröt! | gröt |  |  | B2 | gå som katten kring het gröt = um den heißen Brei herumreden (wörtlich: wie die Katze um heißen Brei schleichen).
+Das war der Tropfen, der das Fass zum Überlaufen brachte. | Det var droppen som fick bägaren att rinna över. | droppen |  |  | B2 | droppen som fick bägaren att rinna över = der Tropfen, der das Fass (hier: den Becher) zum Überlaufen brachte.
+Der hat doch nicht alle Tassen im Schrank. | Han har ju inte alla hästar hemma. | hästar |  | Han har inte alla hästar hemma. | B2 | inte ha alla hästar hemma = nicht alle Tassen im Schrank haben (wörtlich: nicht alle Pferde zu Hause).
+Da muss man eben die Zähne zusammenbeißen. | Det är bara att bita ihop. | bita |  | Man får bita ihop.;; Man måste bita ihop. | B2 | bita ihop = die Zähne zusammenbeißen. det är bara att … = da hilft nur …
+Steck deine Nase nicht in fremde Angelegenheiten! | Lägg inte näsan i blöt! | näsan |  | Lägg dig inte i! | B2 | lägga näsan i blöt = sich einmischen (wörtlich: die Nase ins Nasse stecken).
+Draußen schüttet es wie aus Eimern. | Det regnar småspik ute. | småspik |  | Ute regnar det småspik.;; Det öser ner ute.;; Det spöregnar ute. | B2 | det regnar småspik = es schüttet (wörtlich: es regnet kleine Nägel); auch det öser ner, det spöregnar.
+Die Frage hat mich kalt erwischt. | Frågan tog mig på sängen. | sängen |  | Frågan överraskade mig. | B2 | ta någon på sängen = jemanden kalt erwischen, überrumpeln (wörtlich: im Bett).
+Sie lässt sich nichts gefallen. | Hon har skinn på näsan. | skinn |  |  | B2 | ha skinn på näsan = sich nichts gefallen lassen, sich durchsetzen (wörtlich: Haut auf der Nase).
+Jetzt sitzen wir richtig in der Patsche. | Nu sitter vi verkligen i klistret. | klistret |  | Nu sitter vi rejält i klistret.;; Nu sitter vi i klistret.;; Nu är vi verkligen illa ute. | B2 | sitta i klistret = in der Patsche sitzen (wörtlich: im Kleister).
+`,
 falska: `
 Ich bleibe heute zu Hause. | Jag stannar hemma idag. | stannar |  | Idag stannar jag hemma. |  | bleiben = stanna. „bli“ heißt werden.
 Das war wirklich lustig! | Det var verkligen roligt! | roligt/kul |  | Det var verkligen kul! |  | lustig (witzig) = rolig oder kul. Schwedisch „lustig“ heißt oft seltsam.
@@ -757,6 +783,32 @@ Er muss wohl krank sein, er ist nicht gekommen. | Debe de estar enfermo, porque 
 Ich musste die Prüfung noch einmal machen. | Tuve que volver a hacer el examen. | volver | (volver a) | He tenido que volver a hacer el examen.;; Tuve que repetir el examen.;; Tuve que hacer otra vez el examen. | B2 | volver a + Infinitiv nach einem Modalverb: tuve que volver a hacer = musste noch einmal machen.
 Wir sind kurz davor, das Projekt abzuschließen. | Estamos a punto de terminar el proyecto. | Estamos | (estar a punto de) | Estamos a punto de acabar el proyecto.;; Estamos a punto de concluir el proyecto. | B2 | estar a punto de + Infinitiv = kurz davor sein.
 Wie lange bist du schon arbeitslos? | ¿Cuánto tiempo llevas en paro? | llevas | (llevar) | ¿Cuánto llevas en paro?;; ¿Cuánto tiempo llevas sin trabajo?;; ¿Cuánto tiempo llevas desempleado?;; ¿Cuánto tiempo hace que estás en paro? | B2 | Wie lange schon: ¿cuánto tiempo llevas …?, auch ohne Gerundium (llevas en paro, llevas sin trabajo).
+`,
+idiom: `
+Keine Sorge, das macht nichts. | No te preocupes, no pasa nada. | pasa |  | Tranquilo, no pasa nada.;; Tranquila, no pasa nada. | B1 | no pasa nada = das macht nichts, kein Problem.
+Nach der Arbeit bin ich fix und fertig. | Después del trabajo estoy hecho polvo. | polvo |  | Después del trabajo estoy hecha polvo.;; Después del trabajo estoy agotado.;; Después del trabajo estoy agotada. | B1 | estar hecho polvo = fix und fertig sein (wörtlich: zu Staub gemacht).
+Das Auto hat ein Vermögen gekostet. | El coche costó un ojo de la cara. | ojo |  | El coche me costó un ojo de la cara.;; El carro costó un ojo de la cara.;; El coche costó una fortuna. | B1 | costar un ojo de la cara = ein Vermögen kosten (wörtlich: ein Auge aus dem Gesicht).
+Die Prüfung war ein Kinderspiel. | El examen fue pan comido. | pan |  | El examen fue facilísimo. | B1 | ser pan comido = ein Kinderspiel sein (wörtlich: gegessenes Brot).
+Du nimmst mich auf den Arm! | ¡Me estás tomando el pelo! | pelo |  | ¡Me tomas el pelo! | B1 | tomar el pelo a alguien = jemanden auf den Arm nehmen (wörtlich: an den Haaren ziehen).
+Heute bist du mit den Gedanken ganz woanders. | Hoy estás en las nubes. | nubes |  | Hoy estás en la luna. | B1 | estar en las nubes (oder en la luna) = mit den Gedanken woanders sein.
+Kannst du mir kurz helfen? | ¿Me echas una mano? | mano |  | ¿Me puedes echar una mano?;; ¿Puedes echarme una mano?;; ¿Me ayudas? | B1 | echar una mano = mit anpacken, helfen.
+Da bin ich ins Fettnäpfchen getreten. | Metí la pata. | pata |  | He metido la pata. | B1 | meter la pata = ins Fettnäpfchen treten, einen Fehler machen (wörtlich: die Pfote hineinstecken).
+Wenn du die Prüfung bestehen willst, musst du dich ranhalten. | Si quieres aprobar el examen, tienes que ponerte las pilas. | pilas |  | Si quieres aprobar, tienes que ponerte las pilas. | B1 | ponerse las pilas = sich ranhalten, Gas geben (wörtlich: die Batterien einlegen).
+Da hast du den Nagel auf den Kopf getroffen. | Has dado en el clavo. | clavo |  | Diste en el clavo. | B1 | dar en el clavo = den Nagel auf den Kopf treffen.
+In der neuen Firma fühlt sie sich pudelwohl. | En la nueva empresa está como pez en el agua. | pez |  | En la nueva empresa se siente como pez en el agua. | B1 | estar como pez en el agua = sich pudelwohl fühlen (wörtlich: wie ein Fisch im Wasser).
+So schlagen wir zwei Fliegen mit einer Klappe. | Así matamos dos pájaros de un tiro. | pájaros |  |  | B1 | matar dos pájaros de un tiro = zwei Fliegen mit einer Klappe schlagen (wörtlich: zwei Vögel mit einem Schuss).
+Meine Großmutter nimmt kein Blatt vor den Mund. | Mi abuela no tiene pelos en la lengua. | pelos |  | Mi abuela dice lo que piensa. | B2 | no tener pelos en la lengua = kein Blatt vor den Mund nehmen (wörtlich: keine Haare auf der Zunge).
+Hör auf, um den heißen Brei herumzureden! | ¡Deja de andarte por las ramas! | ramas |  | ¡No te andes por las ramas!;; ¡Deja de irte por las ramas!;; ¡Deja de dar rodeos! | B2 | andarse (oder irse) por las ramas = um den heißen Brei herumreden (wörtlich: sich in den Ästen bewegen).
+Das war der Tropfen, der das Fass zum Überlaufen brachte. | Fue la gota que colmó el vaso. | gota |  | Esa fue la gota que colmó el vaso.;; Fue la gota que derramó el vaso. | B2 | la gota que colma el vaso = der Tropfen, der das Fass (hier: das Glas) zum Überlaufen bringt.
+Ich stecke in der Zwickmühle. | Estoy entre la espada y la pared. | espada |  |  | B2 | estar entre la espada y la pared = in der Zwickmühle stecken (wörtlich: zwischen Schwert und Wand).
+Du suchst immer das Haar in der Suppe. | Siempre le buscas tres pies al gato. | pies |  |  | B2 | buscarle tres pies al gato = das Haar in der Suppe suchen, Probleme sehen, wo keine sind (wörtlich: der Katze drei Füße suchen).
+Mein Kollege redet wie ein Wasserfall. | Mi compañero habla por los codos. | codos |  | Mi colega habla por los codos. | B2 | hablar por los codos = wie ein Wasserfall reden (wörtlich: durch die Ellbogen reden).
+Die beiden sind ein Herz und eine Seele. | Esos dos son uña y carne. | uña |  | Los dos son uña y carne. | B2 | ser uña y carne = ein Herz und eine Seele sein (wörtlich: Nagel und Fleisch).
+Wirf nicht so schnell das Handtuch! | ¡No tires la toalla tan pronto! | toalla |  | ¡No tires la toalla tan rápido!;; ¡No te rindas tan pronto! | B2 | tirar la toalla = das Handtuch werfen, aufgeben.
+Draußen schüttet es wie aus Eimern. | Fuera está lloviendo a cántaros. | cántaros |  | Fuera llueve a cántaros.;; Afuera está lloviendo a cántaros.;; Está lloviendo a cántaros.;; Fuera está diluviando. | B2 | llover a cántaros = wie aus Eimern schütten (wörtlich: krugweise).
+Ohne Brille bin ich blind wie ein Maulwurf. | Sin gafas no veo tres en un burro. | burro |  | Sin lentes no veo tres en un burro.;; Sin gafas no veo nada. | B2 | no ver tres en un burro = blind wie ein Maulwurf sein (wörtlich: nicht drei auf einem Esel sehen).
+Als ich das hörte, war ich wie vom Donner gerührt. | Cuando lo oí, me quedé de piedra. | piedra |  | Al oírlo, me quedé de piedra.;; Cuando lo oí, me quedé helado.;; Cuando lo oí, me quedé helada. | B2 | quedarse de piedra = wie vom Donner gerührt sein, sprachlos sein (wörtlich: zu Stein werden).
+Gestern Abend habe ich kein Auge zugetan. | Anoche no pegué ojo. | ojo |  | Anoche no pegué el ojo.;; Anoche no dormí nada. | B2 | no pegar ojo = kein Auge zutun.
 `,
 falsos: `
 Meine Firma ist in Madrid. | Mi empresa está en Madrid. | empresa/compañía |  | Mi compañía está en Madrid. |  | Firma = empresa. Spanisch „firma“ heißt Unterschrift.

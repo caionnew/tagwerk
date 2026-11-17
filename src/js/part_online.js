@@ -14,6 +14,7 @@ const TAT_Q = {
     framtid:['"kommer att"', '"behöver inte"', '"får inte"', 'borde', '"skulle vilja"', '"ska resa"', '"kommer inte att"'],
     modal:['"vet du ju"', '"väl inte"', '"nog inte"', '^visst', 'nämligen', '"då?"'],
     passiv:['"det finns"', '"finns det"', '"man kan"', '"man måste"', 'byggdes', 'såldes', 'kallas'],
+    idiom:['"ta det lugnt"', '"ingen fara"', '"kostar skjortan"', '"samma båt"', '"fullt upp"', '"bita ihop"'],
     falska:ffQuery('sv')
   },
   es:{
@@ -28,6 +29,7 @@ const TAT_Q = {
     condicional:['"si tuviera"', '"me gustaría"', 'deberías', 'podrías', '"me encantaría"', 'sería', 'podríamos'],
     reflexivo:['"se me"', '"me acuerdo"', '"me levanto"', '"nos vamos"', '"se llama"', '"nos vemos"'],
     preposiciones:['"pienso en"', '"depende de"', '"desde hace"', '"se casó con"', '"sueño con"', '"tarda en"', '"se olvidó de"'],
+    idiom:['"no pasa nada"', '"una mano"', '"la pata"', '"el pelo"', '"pan comido"', '"hecho polvo"'],
     falsos:ffQuery('es')
   }
 };
@@ -41,6 +43,7 @@ const TAT_ADV = {
     tid:['"sedan dess"', '"under tiden"', '"för länge sedan"', '"i flera år"', '"inom kort"', '"så småningom"'],
     framtid:['"skulle kunna"', '"skulle ha"', '"lär vara"', 'torde', '"kommer nog"', '"hade tänkt"'],
     modal:['"ju inte"', '"väl ändå"', '"nog ändå"', '"nu en gång"', 'minsann', '"har ju"'],
+    idiom:['"över en kam"', '"ko på isen"', '"het gröt"', '"skinn på näsan"', '"i klistret"', '"mitt i handen"'],
     passiv:['"har byggts"', '"måste göras"', 'anses', 'sägs', '"har hittats"', 'diskuterades']
   },
   es:{
@@ -51,6 +54,7 @@ const TAT_ADV = {
     perifrasis:['llevaba', '"acababa de"', '"volvió a"', '"se echó a"', 'solía', '"estuvo a punto de"', '"va mejorando"', '"acabó por"'],
     porpara:['"por lo menos"', '"por si acaso"', '"para siempre"', '"por fin"', '"por lo visto"', '"para colmo"'],
     pronombres:['"se los"', '"se las"', 'díselo', 'dámelo', '"me lo dijo"', '"te lo prometo"'],
+    idiom:['"pelos en la lengua"', '"por las ramas"', '"colmó el vaso"', '"pies al gato"', '"por los codos"', '"uña y carne"'],
     gustar:['"me molesta"', '"me importa"', '"me cae"', '"me hace falta"', '"me preocupa"', '"le sorprende"'],
     condicional:['habría', '"si hubiera"', '"yo que tú"', '"sería mejor"', '"de haberlo sabido"', '"me habría gustado"'],
     reflexivo:['"se dio cuenta"', '"me quedé"', '"se puso"', '"nos llevamos"', '"se atrevió"', '"se arrepintió"'],

@@ -948,6 +948,43 @@ sena|sen|spät (Plural); vi är sena = wir sind spät dran
 ville|vilja|wollte (Präteritum)
 höra|höra|hören; höra om = nachfragen, ob
 lycka|lycka|Glück; lycka till = viel Glück
+fixar|fixa|kriegt hin, macht (umgangssprachlich)
+fara|fara|Gefahr; ingen fara = keine Sorge
+ingenting|ingenting|nichts
+världen|värld|die Welt
+innerstaden|innerstad|die Innenstadt
+skjortan|skjorta|das Hemd; kosta skjortan = ein Vermögen kosten
+slog|slå|schlug (Präteritum)
+flugor|fluga|Fliegen
+smäll|smäll|Knall, Schlag; i en smäll = mit einer Klappe
+korten|kort|die Karten
+sitter|sitta|sitzt
+samma|samma|derselbe, dieselbe, dasselbe
+lura|lura|reinlegen, täuschen
+född|född|geboren
+smort|smord|geschmiert; det går som smort = es läuft wie geschmiert
+konst|konst|Kunst
+kam|kam|Kamm
+isen|is|das Eis
+tummen|tumme|der Daumen
+handen|hand|die Hand
+sluta|sluta|aufhören
+katten|katt|die Katze
+kring|kring|um … herum
+het|het|heiß
+gröt|gröt|Brei
+droppen|droppe|der Tropfen
+bägaren|bägare|der Becher
+rinna|rinna|fließen, rinnen; rinna över = überlaufen
+hästar|häst|Pferde
+bita|bita|beißen; bita ihop = die Zähne zusammenbeißen
+ihop|ihop|zusammen
+lägg|lägga|leg (Imperativ)
+näsan|näsa|die Nase
+blöt|blöt|nass; i blöt = ins Nasse
+småspik|småspik|kleine Nägel; det regnar småspik = es schüttet
+skinn|skinn|Haut, Fell
+klistret|klister|der Kleister; sitta i klistret = in der Patsche sitzen
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch
@@ -2001,6 +2038,36 @@ diera|dar|gäbe (Imperfecto de subjuntivo); se diera cuenta = bemerkte
 buscábamos|buscar|wir suchten (Imperfecto)
 estuviera|estar|wäre, läge (Imperfecto de subjuntivo)
 cerca|cerca|nah; cerca de = in der Nähe von
+polvo|polvo|Staub; estar hecho polvo = fix und fertig sein
+ojo|ojo|Auge
+pan|pan|Brot; ser pan comido = ein Kinderspiel sein
+tomando|tomar|nehmend (Gerundium); tomar el pelo = auf den Arm nehmen
+metí|meter|ich steckte (Indefinido); meter la pata = ins Fettnäpfchen treten
+pata|pata|Pfote, Bein (Tier)
+ponerte|ponerse|dich setzen, stellen; ponerse las pilas = sich ranhalten
+clavo|clavo|Nagel
+pez|pez|Fisch (lebend)
+matamos|matar|wir töten; matar dos pájaros de un tiro = zwei Fliegen mit einer Klappe schlagen
+pájaros|pájaro|Vögel
+tiro|tiro|Schuss
+andarte|andarse|dich bewegen; andarse por las ramas = um den heißen Brei herumreden
+ramas|rama|Äste, Zweige
+gota|gota|Tropfen
+colmó|colmar|füllte bis zum Rand (Indefinido)
+entre|entre|zwischen
+espada|espada|Schwert
+gato|gato|Katze, Kater
+compañero|compañero|Kollege, Mitschüler
+codos|codo|Ellbogen
+uña|uña|Fingernagel
+tires|tirar|du wirfst (Subjuntivo); no tires la toalla = wirf nicht das Handtuch
+toalla|toalla|Handtuch
+burro|burro|Esel
+oí|oír|ich hörte (Indefinido)
+quedé|quedarse|ich blieb, wurde (Indefinido); me quedé de piedra = ich war wie vom Donner gerührt
+piedra|piedra|Stein
+anoche|anoche|gestern Abend, letzte Nacht
+pegué|pegar|ich klebte (Indefinido); no pegar ojo = kein Auge zutun
 `
 };
 

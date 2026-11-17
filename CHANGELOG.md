@@ -2,6 +2,24 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.39.0
+**108 neue Sätze Schwedisch auf B2/C1, Firefox-Tests verbindlich, Anki-Anbindung entfernt.**
+- **Neue Sätze:** 12 je Thema, alle mit Erklärung am Satz und weiteren richtigen Fassungen; 106 als B2 markiert, 2 als B1. Schwedisch hat jetzt 317 Sätze, davon 138 auf B2 (vorher 32). Bei „Fortgeschritten“ und 6 neuen Sätzen am Tag reicht das gut drei Wochen.
+- **Beispiele je Thema:**
+  - Wortstellung im Nebensatz: „inte ens“, „inte längre“, „som om“.
+  - Inversion nach „knappt“, „först efter“, „ju … desto“.
+  - Präteritum und Perfekt im selben Satz.
+  - Partikelverben wie „stå ut med“, „ställa in“, „gå ut på“, „se till att“, „säga upp sig“.
+  - sin, dess und deras im Infinitivsatz.
+  - Zeitangaben mit „inom“, „under kvällens gång“, „före jul“.
+  - Modalverben wie „lär“, „borde ha“, „höll på att“.
+  - s-Passiv im Perfekt und bei Partikelverben.
+  - Falsche Freunde wie eventuell, Bad, rar, Rat, Kissen, Öl, Ende, Hochzeit, Ansicht, arm, Büro.
+- **Wörterbuch:** 180 neue Einträge, damit jedes Wort der neuen Sätze nachschlagbar ist.
+- **Firefox:** Der Firefox-Job in GitHub Actions ist jetzt verbindlich wie Chromium; nach zwei grünen Läufen gab es keinen Grund mehr, ihn nur zur Information laufen zu lassen.
+- **Anki-Anbindung entfernt:** „An Anki“ im Wörterbuch-Fenster und „Sätze aus Anki übernehmen“ in den Einstellungen. Beides wurde nicht genutzt. Früher übernommene Sätze bleiben, wie sie sind.
+- Einheitstests 229 (3 zu Anki entfallen), Browser-Tests 79 (2 zu Anki entfallen).
+
 ## 24.38.0
 **Satzbank durchgesehen: Erklärung zu jedem Satz, mehr richtige Fassungen.**
 Alle 441 Sätze nach Regeln je Thema geprüft, ohne Nutzerdaten.

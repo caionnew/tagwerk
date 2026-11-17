@@ -754,6 +754,186 @@ god|god|gut; lecker; God jul = Frohe Weihnachten
 jul||Weihnachten
 gott|god|gut (ett-Form); Gott nytt år = Frohes neues Jahr
 någon||jemand; irgendein (en-Wort); någon gång = schon einmal
+bett|be|gebeten (Supinum); be om ursäkt = sich entschuldigen
+förvånande|förvånande|erstaunlich, überraschend
+ens|ens|einmal; inte ens = nicht einmal
+frågade|fråga|fragte (Präteritum)
+förstått|förstå|verstanden (Supinum)
+kunde|kunna|konnte (Präteritum)
+hyran|hyra|die Miete
+sällan|sällan|selten
+egentligen|egentligen|eigentlich
+men|men|aber
+följer|följa|folgt; följa med = mitkommen
+äntligen|äntligen|endlich
+pratat|prata|geredet (Supinum); prata ut = sich aussprechen
+knappt|knappt|kaum
+låtsas|låtsas|so tun, als ob
+tydligt|tydlig|deutlich, klar
+hinna|hinna|rechtzeitig schaffen; hinna med tåget = den Zug erreichen
+efterhand|efterhand|i efterhand = im Nachhinein
+hjälp|hjälp|Hilfe
+klarat|klara|geschafft (Supinum)
+älgar|älg|Elche (Plural)
+förrän|förrän|bevor, erst als; inte … förrän = erst wenn
+började|börja|begann (Präteritum)
+helst|helst|am liebsten
+ju|ju|ja, doch; ju … desto = je … desto
+desto|desto|desto
+osäkrare|osäker|unsicherer
+gången|gång|das Mal; för första gången = zum ersten Mal
+syskon|syskon|Geschwister
+samlade|samlad|versammelt, beisammen (Plural)
+viktigaste|viktig|das Wichtigste
+växte|växa|wuchs (Präteritum); växa upp = aufwachsen
+inga|ingen|keine (Plural)
+affärer|affär|Läden, Geschäfte (Plural)
+naturligtvis|naturligtvis|natürlich
+erkänt|erkänna|zugegeben (Supinum)
+skolan|skola|die Schule
+tittade|titta|schaute (Präteritum); titta på = ansehen, besichtigen
+uthyrd|uthyrd|vermietet
+hittills|hittills|bisher, bis jetzt
+hört|höra|gehört (Supinum); höra av sig = sich melden
+gotland|Gotland|Gotland (Insel in der Ostsee)
+någonsin|någonsin|jemals
+funderat|fundera|nachgedacht (Supinum)
+emigrera|emigrera|auswandern
+halvår|halvår|Halbjahr; ett halvår = ein halbes Jahr
+barnet|barn|das Kind
+reser|resa|reist
+fortfarande|fortfarande|immer noch
+slutet|slut|das Ende
+stått|stå|gestanden (Supinum)
+veta|veta|wissen; få veta = erfahren
+gravid|gravid|schwanger
+studerade|studera|studierte (Präteritum)
+sagt|säga|gesagt (Supinum); säga hej då = sich verabschieden
+då|då|dann, da; hej då = tschüss
+ställde|ställa|stellte (Präteritum); ställa en fråga = eine Frage stellen
+brutit|bryta|gebrochen (Supinum); bryta samman = zusammenbrechen
+samman|samman|zusammen
+står|stå|steht; stå ut med = aushalten
+oljudet|oljud|der Lärm
+ställdes|ställa|wurde gestellt (Passiv); ställa in = absagen
+grund|grund|Grund; på grund av = wegen
+stormen|storm|der Sturm
+räknat|räkna|gerechnet (Supinum); räkna med = rechnen mit
+sa|säga|sagte (Präteritum); säga upp sig = kündigen
+fabriken|fabrik|die Fabrik
+läggas|lägga|gelegt werden (Passiv); läggas ner = stillgelegt werden
+lade|lägga|legte (Präteritum); lägga märke till = bemerken
+ur|ur|aus; gå ut ur = hinausgehen aus
+läraren|lärare|der Lehrer, die Lehrerin
+bad|be|bat (Präteritum); ett bad = ein Bad (das Baden)
+eleverna|elev|die Schüler
+lägga|lägga|legen; lägga undan = weglegen
+undan|undan|weg, beiseite
+mobiler|mobil|Handys (Plural)
+anställd|anställd|angestellt; en anställd = ein Mitarbeiter
+skrivbord|skrivbord|Schreibtisch
+systers|syster|der Schwester (Genitiv)
+kläder|kläder|Kleider, Kleidung
+städade|städa|räumte auf, putzte (Präteritum)
+själva|själv|selbst (Plural)
+dess|dess|dessen, deren (bei Sachen und Firmen)
+kunder|kund|Kunden (Plural)
+lever|leva|lebt; en lever = eine Leber
+åsikt|åsikt|Meinung, Ansicht
+vek|vika|wich (Präteritum); vika från någons sida = nicht von jemandes Seite weichen
+ägares|ägare|des Besitzers (Genitiv)
+sida|sida|Seite
+deras|deras|ihr (mehreren gehörend, nicht dem Subjekt)
+planer|plan|Pläne (Plural)
+rest|resa|gereist (Supinum); resa bort = verreisen
+kollegor|kollega|Kollegen (Plural)
+utställningen|utställning|die Ausstellung
+ni|ni|ihr; Sie (höflich)
+sågs|ses|sahen sich (Präteritum)
+beställer|beställa|bestellt
+inom|inom|innerhalb
+dagar|dag|Tage (Plural)
+väntade|vänta|wartete (Präteritum)
+klaga|klaga|sich beschweren, klagen
+nuförtiden|nuförtiden|heutzutage
+tillbaka|tillbaka|zurück
+under|under|unter; während
+kvällens|kväll|des Abends (Genitiv); under kvällens gång = im Laufe des Abends
+stämningen|stämning|die Stimmung
+fullt|full|voll; fullt upp = viel zu tun
+några|någon|einige, ein paar
+fort|fort|schnell; så fort = sobald
+hundra|hundra|hundert
+fanns|finnas|gab es (Präteritum); det fanns = es gab
+torsdag|torsdag|Donnerstag
+stämma|stämma|stimmen
+själv|själv|selbst
+vara|vara|sein
+rik|rik|reich
+flyget|flyg|der Flug, das Flugzeug
+vänta|vänta|warten
+hända|hända|geschehen; det kan hända att = es kann sein, dass
+tänkte|tänka|dachte, hatte vor (Präteritum)
+emellan|emellan|dazwischen
+klart|klar|fertig, klar
+blanketten|blankett|das Formular
+fungerar|fungera|funktioniert
+fel|fel|Fehler; falsch; det var inte ditt fel = es war nicht deine Schuld
+gärningsmannen|gärningsman|der Täter
+greps|gripa|wurde gefasst (Passiv, Präteritum)
+förväntas|förvänta|wird erwartet (Passiv)
+fortsätter|fortsätta|macht weiter, setzt fort
+stiga|stiga|steigen
+beslutet|beslut|die Entscheidung, der Beschluss
+fattas|fatta|getroffen werden (Passiv); fatta ett beslut = eine Entscheidung treffen
+röks|röka|wird geraucht (Passiv)
+översatts|översätta|übersetzt worden (Passiv, Supinum)
+färre|få|weniger (zählbar); allt färre = immer weniger
+bondgårdar|bondgård|Bauernhöfe (Plural)
+valet|val|die Wahl
+hålls|hålla|wird abgehalten (Passiv)
+vart|vart|wohin; vart fjärde år = alle vier Jahre
+fjärde|fjärde|vierte
+felet|fel|der Fehler
+upptäcktes|upptäcka|wurde entdeckt (Passiv, Präteritum)
+sträng|sträng|streng
+museet|museum|das Museum
+byggs|bygga|wird gebaut (Passiv); byggas om = umgebaut werden
+försvunna|försvunnen|verschwundenen, vermissten (bestimmt, Plural)
+hittades|hitta|wurde gefunden (Passiv, Präteritum)
+grundades|grunda|wurde gegründet (Passiv, Präteritum)
+1200-talet|1200-tal|das 13. Jahrhundert
+tyska|tysk|deutsche (Plural)
+köpmän|köpman|Kaufleute
+lite|lite|ein bisschen, etwas
+ifall|ifall|falls
+badrummet|badrum|das Badezimmer
+övervåningen|övervåning|das Obergeschoss
+bredvid|bredvid|neben
+sovrummet|sovrum|das Schlafzimmer
+sådana|sådan|solche
+växter|växt|Pflanzen
+blivit|bli|geworden (Supinum)
+sällsynta|sällsynt|selten (Plural)
+råd|råd|Rat, Ratschlag
+förbereda|förbereda|vorbereiten
+hotellet|hotell|das Hotel
+extra|extra|zusätzlich, extra
+kudde|kudde|Kissen
+verkstaden|verkstad|die Werkstatt
+bytte|byta|wechselte, tauschte (Präteritum)
+olja|olja|Öl
+grät|gråta|weinte (Präteritum)
+salongen|salong|der Saal, hier: Kinosaal
+varit|vara|gewesen (Supinum)
+hölls|hålla|wurde abgehalten, fand statt (Passiv, Präteritum)
+ö|ö|Insel
+enligt|enligt|laut, nach; enligt min åsikt = meiner Ansicht nach
+agerat|agera|gehandelt (Supinum)
+familjer|familj|Familien
+trakten|trakt|die Gegend
+fattiga|fattig|arm (Plural)
+kontoret|kontor|das Büro
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch

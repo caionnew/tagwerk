@@ -1,5 +1,4 @@
-# Bei jedem Push und Pull Request: bauen, Einheitstests, Browser-Tests.
-# Firefox läuft als eigener Job zur Information: Fehler dort machen den Lauf nicht rot, stehen aber im Bericht.
+# Bei jedem Push und Pull Request: bauen, Einheitstests, Browser-Tests in Chromium und Firefox (eigener Job, läuft parallel).
 name: CI
 on: [push, pull_request]
 jobs:
@@ -19,7 +18,6 @@ jobs:
         with: { name: playwright-report, path: test-results/ }
   firefox:
     runs-on: ubuntu-24.04
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7

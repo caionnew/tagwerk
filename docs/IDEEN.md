@@ -2,22 +2,22 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
 
-Stand: 17. November 2026 (nach 24.38.0)
+Stand: 17. November 2026 (nach 24.39.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
-- **Die App ist breit, die Inhalte sind schmal.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Aber es gibt 209 schwedische und 232 spanische Sätze, davon nur 32 bzw. 40 als B2 markiert. Bei „Normal“ (6 neue Sätze am Tag) reichen sie 35 bzw. 39 Tage; bei „Fortgeschritten“ kommen die B2-Sätze zuerst und sind nach gut einer Woche verbraucht. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
+- **Die App ist breit, die Inhalte sind schmal.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Seit 24.39 gibt es 317 schwedische Sätze, davon 138 als B2 markiert (vorher 209 und 32); bei „Fortgeschritten“ reichen die B2-Sätze bei 6 neuen am Tag gut drei Wochen. Spanisch hat 232 Sätze, davon nur 40 als B2, die nach knapp einer Woche verbraucht sind. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
 - **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Was auf B2/C1 schwer bleibt, fehlt: Modalpartikeln, Verbalperiphrasen, Subjuntivo im Satzgefüge, Redewendungen, Pluralklassen.
 - **Prüfqualität ist die größte Quelle für Ärger.** In einer kurzen Durchsicht (24.34–24.35) fanden sich ein grammatischer Fehler („de el“), unidiomatisches Deutsch, richtige Antworten, die als falsch galten („i gymmet“, Subjekt vorn bei Inversion), und bei rund der Hälfte der Sätze eine Erklärung, die nicht zum Satz passte. Jede falsche „Falsch“-Wertung kostet täglich Zeit und Vertrauen. 24.37 hat alle Generatoren durchgesehen (ein grammatischer Fehler, „con ti“; sechs Auswahlaufgaben mit einer zweiten vertretbaren Option; fehlende richtige Fassungen bei Uhrzeiten und beim Umbauen). 24.38 hat die Satzbank durchgesehen: Jeder der 441 Sätze hat jetzt eine Erklärung, rund 130 weitere richtige Fassungen sind dazugekommen, und zwei Regeln gelten für alle Sätze (fehlendes „har“ im schwedischen Nebensatz, betontes spanisches Subjektpronomen).
-- **Seit 24.37 laufen die Browser-Tests auch in Firefox,** vorerst als Information in der CI; der erste Lauf fand keinen Fehler in der App. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
+- **Die Browser-Tests laufen in Chromium und Firefox,** seit 24.39 beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 
 ## Fahrplan
 
 Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel: Inhalte auf B2/C1. Lesetexte danach, weil sie seltener genutzt werden als das Tagwerk.
 
-1. **24.39 und 24.40: B2/C1-Sätze.** Je Thema 12 neue Sätze (Schwedisch rund 130, Spanisch rund 140), alle mit Niveau, Erklärung und Alternativen von Anfang an. Damit reicht „Fortgeschritten“ für Monate statt eine Woche.
+1. **24.40: B2/C1-Sätze Spanisch.** Je Thema 12 neue Sätze (rund 130), alle mit Niveau, Erklärung und Alternativen; Varianten aus Lateinamerika, wo sie dort üblich sind. Schwedisch ist mit 24.39 erledigt.
 2. **24.41: Neue Themen für Fortgeschrittene.** Spanisch: Verbalperiphrasen (llevar + Gerundium, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de) mit Generator und Sätzen. Schwedisch: Pluralklassen mit bestimmten Pluralformen als Generator. Danach Modalpartikeln (Schwedisch) und Subjuntivo im Satzgefüge (Spanisch) als Satzthemen.
 3. **24.42: Redewendungen** in beiden Sprachen als Thema in der Satzbank (statt Sprichwörtern als eigene Übung, siehe unten).
 4. **24.43 und 24.44: 16 Lesetexte B2/C1** aus [THEMEN.md](THEMEN.md), Abschnitt „Nächste Runde“, je 8 Schwedisch und Spanisch.
@@ -27,7 +27,7 @@ Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel:
 
 ### Inhalte und Niveau
 
-1. **B2/C1-Sätze, je Thema 12 neue (A).** Der größte Hebel: wirkt jeden Tag und behebt den Engpass oben. Aufwand hoch, Fehlerrisiko beherrschbar mit denselben Regeln wie bei der Durchsicht (Erklärung je Satz, Alternativen, idiomatisches Deutsch, Prüfung an Quellen bei Zweifel).
+1. **B2/C1-Sätze, je Thema 12 neue (A; Schwedisch erledigt mit 24.39, Spanisch offen).** Der größte Hebel: wirkt jeden Tag und behebt den Engpass oben. Aufwand hoch, Fehlerrisiko beherrschbar mit denselben Regeln wie bei der Durchsicht (Erklärung je Satz, Alternativen, idiomatisches Deutsch, Prüfung an Quellen bei Zweifel).
 2. **Verbalperiphrasen, Spanisch (A−).** Auf B2 häufig und für Deutschsprachige ungewohnt (llevamos dos horas esperando, acabo de llegar, vuelve a intentarlo). Feste Bausteine, daher als Generator machbar.
 3. **Pluralklassen, Schwedisch (B+).** Auch Fortgeschrittene greifen bei datorer, äpplen, möss daneben, dazu die bestimmten Pluralformen. Als Generator aus einer geprüften Liste (mindestens 36 Wörter, dreimal die Wiederholungssperre). Steht in deiner Liste „Offen“.
 4. **Modalpartikeln, Schwedisch (B+).** ju, väl, nog, visst, ändå, då, nämligen: Sie machen Sprache natürlich, und Deutsch hat Gegenstücke (ja, wohl, doch, eben), die aber nicht eins zu eins passen. Nur als Sätze mit Erklärung, nicht erzeugt; die Bedeutung hängt am Zusammenhang.
@@ -57,13 +57,10 @@ Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel:
 16. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
 17. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
-### Technik
-
-18. **Firefox-Job verbindlich machen (B).** Erster Lauf (24.37.0): 76 bestanden, 4 übersprungen (Nachsprechen), 1 Fehler, und der lag im Test selbst (Textsuche statt Wortvergleich, behoben). Offline-Start, Backup und Teilen laufen also auch in Gecko. Nach zwei, drei weiteren grünen Läufen zählt er wie Chromium.
 
 ## Offen: Rückmeldung von dir
 
-- Ob „An Anki“ in Firefox Vorder- und Rückseite richtig an AnkiDroid übergibt.
+Derzeit nichts.
 
 ## Nach echter Nutzung nachstellen
 
@@ -90,6 +87,7 @@ Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel:
 ## Bewusst nicht
 
 - **Freies Sprechen mit Spracherkennung (D).** Firefox hat keine Spracherkennung; bei dir käme es nicht an. Nachsprechen wertet Tempo und Pausen ohne Erkennung aus.
+- **Anki-Anbindung (D, entfernt in 24.39).** Du nutzt Anki nicht. „An Anki“ im Wörterbuch und der Import aus Anki-Exporten sind weg; die Wiederholung plant die App selbst mit FSRS.
 - **Abgleich zwischen Geräten (D).** Bräuchte Server und Konto. Das Backup leistet das von Hand.
 - **Prüfungsvorbereitung (Swedex, DELE) (D).** Andere Ziele, andere Inhalte.
 - Ranglisten, Herzen, Belohnungen, Konfetti, Wortschatz-Schätzungen als Spielerei; KI, Konto, Tracker. Sie widersprechen den Grundsätzen der App oder bringen beim Lernen wenig.

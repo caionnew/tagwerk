@@ -2,6 +2,9 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.50.1
+- **Üben, Zeile „Land & Leute“:** „22 Einblicke in Sprache, Alltag und Gesellschaft“ statt „22 Einblicke, 13 davon mit Karte“. Die Zeile sagt jetzt, worum es geht; die Zahl der Karten half bei der Entscheidung nicht, und die Karten sieht man drinnen ohnehin.
+
 ## 24.50.0
 **Neue Spanienkarte mit den autonomen Gemeinschaften; Regionalsprachen auf der Karte, vos-Karte korrigiert.**
 - **Neue Karte „Spanien“** aus Natural Earth (gemeinfrei): 17 autonome Gemeinschaften, Ceuta, Melilla und Andorra. Die Kanaren stehen verkleinert im Kasten unten links.

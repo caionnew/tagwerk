@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.36.2
+**Kopf von „Heute“: zwei Zeilen, gemeinsame Grundlinien.**
+- Oben Gruß und Woche: Die sieben Quadrate stehen auf der Grundlinie des Grußes, etwa in Höhe seiner Kleinbuchstaben. Unten Datum und Serie („3 in Folge“) auf derselben Grundlinie und in derselben Schrift (14 px; die Serie war 12 px). Vorher hatte die rechte Seite drei Zeilen, deren Grundlinien zwischen denen links lagen; „3 in Folge“ stand knapp 6 px tiefer als das Datum.
+- Die Wochentagsbuchstaben unter den Quadraten entfallen. „M D F S S M D“ war mehrdeutig (Mo/Mi, Di/Do, Sa/So) und machte die dritte Zeile; die Reihe endet immer mit heute, und heute ist umrandet. Ein Tipp auf die Quadrate oder die Serie führt wie bisher zum Kalender.
+- Rechte Kante: Die Umrandung von heute, der Text der Serie und das Zahnrad enden auf derselben Linie, 4 px innerhalb der Karten, wie links Gruß und Datum. Auf „Üben“ und „Fortschritt“ sitzt das Zahnrad ebenso; der Titel „Fortschritt“ steht auf der Linie der Abschnittsüberschriften (vorher 4 px weiter links).
+- Ein Layout-Test hält Grundlinien und Kanten fest.
+
 ## 24.36.1
 **Lernminuten ruhiger und einheitlich mit dem Kalender.**
 - **Tageskarte neu aufgebaut:** Titel („Heute“, „Gestern“ oder das Datum), darunter eine Zeile mit Datum und Uhrzeit, dann eine kleine Tabelle je Sprache mit festen Spalten: Min., Aufgaben, richtig (auf Anhieb), neu. Vorher standen bis zu fünf Angaben als Fließtext je Sprache, mit farbigen Schildchen und unterstrichenen Links. Ob das Tagwerk erledigt ist, zeigt das Quadrat vor der Sprache wie im Kalender: gefüllt = Tagwerk, Rand = nur geübt. Wiederholungen und gefestigte Sätze stehen nicht mehr in der Karte (sie stehen auf der Seite der Sprache). Die Gesamtminuten stehen über der gewählten Säule, nicht noch einmal in der Karte.

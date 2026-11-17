@@ -42,22 +42,26 @@ const GEAR = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
 const gearBtn = () => `<button type="button" class="iconbtn" data-a="settings" aria-label="Einstellungen">${GEAR}</button>`;
 function topLine(){ return `<div class="topline">${langSeg()}${gearBtn()}</div>`; }
 // Woche im Kopf von „Heute“: dieselbe Kodierung wie die Übungstage (gefüllt = Tagwerk, Farbe = Sprache, beide geteilt;
-// Rand = nur geübt; gestrichelt = Pausetag, die Serie hält). Darunter nur die Serie als Zahl; Tipp führt zum Kalender.
+// Rand = nur geübt; gestrichelt = Pausetag, die Serie hält). Zwei Teile für zwei Zeilen: die Quadrate stehen auf der
+// Grundlinie des Grußes, die Serie auf der Grundlinie des Datums. Beide führen zum Kalender; vorgelesen wird nur das erste.
 function weekStrip(){
   // Die letzten sieben Tage bis heute (statt Kalenderwoche): auch montags aussagekräftig
   const sd = streakData(), t = today(), y = addDays(t, -1);
   const cells = Array.from({ length:7 }, (_, i) => addDays(t, i - 6)).map(ds => {
-    const l = WDAYS[dateOf(ds).getDay()][0], sv = (dayLog(ds, 'sv').n || 0) > 0, es = (dayLog(ds, 'es').n || 0) > 0;
+    const sv = (dayLog(ds, 'sv').n || 0) > 0, es = (dayLog(ds, 'es').n || 0) > 0;
     let cls = '';
     if (DB.done[ds]) { const a = doneIn(ds, 'sv'), b = doneIn(ds, 'es'); cls = a && b ? 'db' : a ? 'ds' : b ? 'de' : sv && es ? 'db' : sv ? 'ds' : 'de'; }
     else if (sv || es) cls = sv && es ? 'pb' : sv ? 'ps' : 'pe';
     else if (sd.free.has(ds)) cls = 'fr';
-    return `<span class="wk${cls ? ' ' + cls : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' fillnow' : ''}"><i></i>${l}</span>`;
+    return `<span class="wk${cls ? ' ' + cls : ''}${ds === t ? ' now' : ''}${ds > t ? ' fut' : ''}${ds === t && S.justDone === t ? ' fillnow' : ''}"><i></i></span>`;
   }).join('');
   const risk = sd.current && !DB.done[t] && sd.free.has(y);
   const cap = sd.current ? `${sd.current} in Folge` : 'Serie startet heute';
   const label = `${plural(sd.current, 'Tag', 'Tage')} in Folge${DB.done[t] ? ', heute erledigt' : risk ? ', gestern war dein Pausetag, heute braucht es ein Tagwerk' : ''}`;
-  return `<button type="button" class="weekstrip" data-a="tab" data-v="progress" aria-label="${label}. Zum Kalender"><span class="wks">${cells}</span><span class="wkc${risk ? ' warn' : ''}">${risk ? 'heute nötig' : cap}</span></button>`;
+  return {
+    strip:`<button type="button" class="weekstrip" data-a="tab" data-v="progress" aria-label="${label}. Zum Kalender"><span class="wks">${cells}</span></button>`,
+    count:`<button type="button" class="wkc${risk ? ' warn' : ''}" data-a="tab" data-v="progress" tabindex="-1" aria-hidden="true">${risk ? 'heute nötig' : cap}</button>`
+  };
 }
 function findHtml(lang){
   const f = fundstueck(lang);
@@ -126,7 +130,8 @@ function viewHome(){
     if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
   }
   const dnow = dateOf(today());
-  const hello = `<header class="hello"><div class="hello-t"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p><p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p></div>${weekStrip()}</header>`;
+  const ws = weekStrip();
+  const hello = `<header class="hello"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p>${ws.strip}<p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p>${ws.count}</header>`;
   return `${topLine()}${hello}${noticeHtml() || storeHint() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${weakHtml(lang)}${findHtml(lang)}`;
 }
 // Was heute in dieser Sprache passiert ist: Zeit, Neues, Wiederholungen, alles Üben des Tages zusammen

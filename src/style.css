@@ -50,7 +50,7 @@ body.has-actions .wrap{ display:flex; flex-direction:column; min-height:calc(100
 .bottomnav button{ flex:1; max-width:190px; border:0; background:none; padding:11px 4px; border-radius:12px; font-size:14.5px; font-weight:650; color:var(--muted); }
 .bottomnav button[aria-current="page"]{ background:var(--accent-soft); color:var(--accent-ink); }
 .backbar{ display:flex; align-items:center; gap:12px; margin:6px 0 18px; }
-.vt{ font-size:19px; font-weight:700; margin:0; }
+.vt{ font-size:19px; font-weight:700; margin:0 0 0 4px; }
 .x{ flex:none; min-width:40px; height:40px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--muted); font-size:22px; line-height:1; padding:0 12px; }
 .x.armed{ color:var(--bad); font-size:15px; font-weight:650; }
 
@@ -394,6 +394,8 @@ button.row[disabled]::after{ display:none; }
 .topline{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .iconbtn{ flex:none; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; border:0; background:none; color:var(--muted); }
 .iconbtn:active{ background:var(--surface); }
+/* Optisch bündig: Das Symbol endet 4 px innerhalb der Karten, wie Gruß, Titel und Überschriften links */
+.topline .iconbtn{ margin-right:-6px; }
 /* Fundstück */
 .find{ margin:22px 0 0; padding:14px 16px; border-radius:18px; border:1px solid var(--line); background:var(--surface); }
 .find-k{ margin:0 0 4px; font-size:13px; font-weight:600; color:var(--muted); }
@@ -436,7 +438,7 @@ button.row[disabled]::after{ display:none; }
 /* Begrüßung */
 .hello{ margin:6px 4px 14px; }
 .hello-g{ margin:0; font-family:var(--serif); font-size:27px; line-height:1.2; color:var(--accent-ink); }
-.hello-d{ margin:2px 0 0; font-size:14px; color:var(--muted); }
+.hello-d{ margin:0; font-size:14px; color:var(--muted); }
 /* Hauptkarte in der Farbe der Sprache */
 .today.hero{ background:linear-gradient(155deg, color-mix(in srgb, var(--accent) 14%, var(--surface)) 0%, var(--surface) 62%); border-color:color-mix(in srgb, var(--accent) 25%, var(--line)); }
 /* Mikrofon */
@@ -788,21 +790,21 @@ section.ex #fb:empty{ display:none; }
 .gapdone.bad{ color:var(--bad); text-decoration-line:line-through; text-decoration-color:var(--bad); font-weight:500; }
 
 /* Kopf von „Heute“: Gruß links, Woche rechts */
-.hello{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-.hello-t{ min-width:0; flex:1; }
-.weekstrip{ display:flex; flex-direction:column; align-items:flex-end; gap:4px; background:none; border:0; padding:6px 0 0; margin:0; color:inherit; flex:none; }
+/* Kopf: zwei Zeilen, zwei gemeinsame Grundlinien. Oben Gruß und Woche (die Quadrate stehen auf der Grundlinie des Grußes),
+   unten Datum und Serie in gleicher Schrift. Rechte Kante: Umrandung von heute und Text der Serie bündig. */
+.hello{ display:grid; grid-template-columns:minmax(0, 1fr) auto; column-gap:12px; row-gap:2px; align-items:baseline; }
+.weekstrip{ justify-self:end; background:none; border:0; padding:0; margin:0 3px 0 0; color:inherit; line-height:0; }
+.wkc{ justify-self:end; background:none; border:0; padding:0; margin:0; font:inherit; font-size:14px; color:var(--muted); font-variant-numeric:tabular-nums; }
 .wks{ display:flex; gap:4px; }
-.wk{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(--muted); width:14px; }
+.wk{ display:block; width:14px; }
 .wk i{ display:block; width:14px; height:14px; border-radius:3px; background:var(--line); box-sizing:border-box; }
 .wk.ds i{ background:var(--sv); } .wk.de i{ background:var(--es); } .wk.db i{ background:linear-gradient(135deg, var(--sv) 50%, var(--es) 50%); }
 .wk.ps i, .wk.pe i{ background:transparent; border:1.6px solid var(--muted); }
 .wk.ps i{ border-color:var(--sv); } .wk.pe i{ border-color:var(--es); }
 .wk.fr i{ background:transparent; border:1.2px dashed var(--muted); }
 .wk.now i{ outline:1.5px solid var(--ink); outline-offset:1.5px; }
-.wk.now{ color:var(--ink); font-weight:650; }
 .wk.fut{ opacity:.45; }
 .wk.fillnow i{ animation:dotPop .5s cubic-bezier(.2,.8,.3,1.4) .15s both; }
-.wkc{ font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
 .wkc.warn{ color:var(--warn); font-weight:650; }
 /* Andere Sprache: eine Zeile */
 /* Überblick: vier Kacheln */

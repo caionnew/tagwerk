@@ -1,28 +1,73 @@
 # Ideen für Tagwerk
 
-Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
+Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für Lesetexte stehen getrennt in [THEMEN.md](THEMEN.md).
 
-Stand: 17. November 2026 (nach 24.34.1)
+Stand: 17. November 2026 (nach 24.36.2)
 
-## Als Nächstes
+Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
-**16 Lesetexte B2/C1** aus [THEMEN.md](THEMEN.md), Abschnitt „Nächste Runde“. Fakten vorher an Quellen prüfen, objektiv statt krampfhaft ausgewogen, je drei Fragen und Sätze fürs Tagwerk.
+## Lagebild
 
-## Lohnend
+- **Die App ist breit, die Inhalte sind schmal.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Aber es gibt 209 schwedische und 232 spanische Sätze, davon nur 32 bzw. 40 als B2 markiert. Bei „Normal“ (6 neue Sätze am Tag) reichen sie 35 bzw. 39 Tage; bei „Fortgeschritten“ kommen die B2-Sätze zuerst und sind nach gut einer Woche verbraucht. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
+- **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Was auf B2/C1 schwer bleibt, fehlt: Modalpartikeln, Verbalperiphrasen, Subjuntivo im Satzgefüge, Redewendungen, Pluralklassen.
+- **Prüfqualität ist die größte Quelle für Ärger.** In einer kurzen Durchsicht (24.34–24.35) fanden sich ein grammatischer Fehler („de el“), unidiomatisches Deutsch, richtige Antworten, die als falsch galten („i gymmet“, Subjekt vorn bei Inversion), und bei rund der Hälfte der Sätze eine Erklärung, die nicht zum Satz passte. Jede falsche „Falsch“-Wertung kostet täglich Zeit und Vertrauen.
+- **Getestet wird nur in Chromium, genutzt wird Firefox.** Firefox hat zudem keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 
-1. **Korrekturen aus dem Schreiben ins Tagwerk (A−).** Schlägt LanguageTool eine Korrektur vor, nimmt ein Tippen den verbesserten Satz als eigenen Satz ins Tagwerk auf. Aus eigenen Fehlern lernt man am meisten; Prüfung und eigene Sätze gibt es schon. Grenze: Für Schwedisch prüft LanguageTool vor allem die Rechtschreibung. Den Satz vor dem Übernehmen zeigen und bearbeitbar lassen; LanguageTool kann danebenliegen.
+## Fahrplan
 
-2. **Hörunterscheidung, Minimalpaare (B+, Spanisch A).** „Welches Wort hörst du?“ Spanisch: Betonung (término, termino, terminó; público, publico, publicó), r und rr (pero, perro; caro, carro). Schwedisch: kurzer und langer Vokal (tak, tack; glas, glass), sj- und tj-Laut. Die Computerstimme spricht das zuverlässig. Den schwedischen Wortton (anden, anden; tomten, tomten) weglassen, solange die Stimme ihn nicht sicher trifft. Paare nur aus geprüften Listen, nicht erzeugt.
+Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel: Inhalte auf B2/C1. Lesetexte danach, weil sie seltener genutzt werden als das Tagwerk.
 
-3. **Muttersprachler-Aufnahmen offline (B+).** Einmal gehörte Tatoeba-Aufnahmen im Cache des Service Workers ablegen (eigener Speicher, nicht der Lernstand in localStorage), mit Obergrenze. Dann haben Hörrunde, Nachsprechen und Diktat auch ohne Netz echte Stimmen statt der Computerstimme. Prüfen: ob Tatoeba das Abspielen aus dem Cache erlaubt (undurchsichtige Antworten), Speicherbedarf je Aufnahme.
+1. **24.37: Prüfqualität I, Generatoren und Firefox.** Browser-Tests zusätzlich in Firefox (GitHub Actions, Playwright Firefox; Nachsprechen mit vorgetäuschtem Mikrofon nur in Chromium). Alle Ausgaben jedes Generators auflisten und durchsehen: weitere richtige Fassungen aufnehmen (wie „i gymmet“, „åker på semester“), schiefes Deutsch korrigieren, Erklärungen auf den Satz zuschneiden.
+2. **24.38: Prüfqualität II, Satzbank mit deinen Daten.** Du schickst ein Backup; ich werte deine „Meine ist auch richtig“-Fälle aus (sie stehen je Satz im Lernstand) und nehme berechtigte als Alternative in die Satzbank auf, unberechtigte bekommen eine Erklärung. Dazu alle 441 Sätze auf weitere Wortstellungen und Synonyme prüfen.
+3. **24.39 und 24.40: B2/C1-Sätze.** Je Thema 12 neue Sätze (Schwedisch rund 130, Spanisch rund 140), alle mit Niveau, Erklärung und Alternativen von Anfang an. Damit reicht „Fortgeschritten“ für Monate statt eine Woche.
+4. **24.41: Neue Themen für Fortgeschrittene.** Spanisch: Verbalperiphrasen (llevar + Gerundium, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de) mit Generator und Sätzen. Schwedisch: Pluralklassen mit bestimmten Pluralformen als Generator. Danach Modalpartikeln (Schwedisch) und Subjuntivo im Satzgefüge (Spanisch) als Satzthemen.
+5. **24.42: Redewendungen** in beiden Sprachen als Thema in der Satzbank (statt Sprichwörtern als eigene Übung, siehe unten).
+6. **24.43 und 24.44: 16 Lesetexte B2/C1** aus [THEMEN.md](THEMEN.md), Abschnitt „Nächste Runde“, je 8 Schwedisch und Spanisch.
+7. **Danach:** Wochenbilanz zum Schwerpunkt, Korrekturen aus dem Schreiben ins Tagwerk, Hörunterscheidung für die spanische Betonung.
 
-4. **Nachschub nach Worthäufigkeit (B+).** Beim Nachschub von Tatoeba Sätze bevorzugen, die häufige Wörter enthalten, die noch in keinem eigenen Satz vorkommen. Braucht je Sprache eine frei lizenzierte Häufigkeitsliste (etwa 5 000 Grundformen, rund 50 KB). Unsichtbar, macht den Nachschub aber nützlicher.
+## Bewertet: lohnend
 
-5. **Sprichwörter als eigene Übung (B+).** Bedeutung erkennen (Auswahl), Lücke ergänzen, in einem eigenen Satz verwenden, dazu kurz Herkunft und Gebrauch. Eine Liste je Sprache mit mindestens 36 geprüften Einträgen (dreimal die Wiederholungssperre). Idee des Nutzers.
+### Inhalte und Niveau
 
-6. **Diktat ganzer Lesetexte (B).** Einen bekannten Text Satz für Satz mitschreiben: längeres Hören mit Zusammenhang statt Einzelsätzen. Nutzt Lesetexte und Diktat, die es schon gibt.
+1. **B2/C1-Sätze, je Thema 12 neue (A).** Der größte Hebel: wirkt jeden Tag und behebt den Engpass oben. Aufwand hoch, Fehlerrisiko beherrschbar mit denselben Regeln wie bei der Durchsicht (Erklärung je Satz, Alternativen, idiomatisches Deutsch, Prüfung an Quellen bei Zweifel).
+2. **Verbalperiphrasen, Spanisch (A−).** Auf B2 häufig und für Deutschsprachige ungewohnt (llevamos dos horas esperando, acabo de llegar, vuelve a intentarlo). Feste Bausteine, daher als Generator machbar.
+3. **Pluralklassen, Schwedisch (B+).** Auch Fortgeschrittene greifen bei datorer, äpplen, möss daneben, dazu die bestimmten Pluralformen. Als Generator aus einer geprüften Liste (mindestens 36 Wörter, dreimal die Wiederholungssperre). Steht in deiner Liste „Offen“.
+4. **Modalpartikeln, Schwedisch (B+).** ju, väl, nog, visst, ändå, då, nämligen: Sie machen Sprache natürlich, und Deutsch hat Gegenstücke (ja, wohl, doch, eben), die aber nicht eins zu eins passen. Nur als Sätze mit Erklärung, nicht erzeugt; die Bedeutung hängt am Zusammenhang.
+5. **Subjuntivo im Satzgefüge, Spanisch (B+).** aunque mit Tatsache oder Annahme, como si, sin que, el que + Subjuntivo, Zeitenfolge (quería que vinieras). Erweitert das vorhandene Thema um die B2-Fälle.
+6. **Redewendungen statt Sprichwörter (B+).** Im Alltag hört man „ta det lugnt“, „dra alla över en kam“, „no tener pelos en la lengua“ viel öfter als Sprichwörter. Als Thema in der Satzbank laufen sie durch Tagwerk und Wiederholung; eine eigene Übungsform bräuchte es nicht. Ersetzt die frühere Idee „Sprichwörter als eigene Übung“ (Idee des Nutzers, B+ → hier aufgegangen).
+7. **16 Lesetexte B2/C1 (B+).** Gewünscht und wertvoll fürs Leseverstehen. Seltener genutzt als das Tagwerk und aufwendig (Fakten prüfen), daher nach den Sätzen.
+8. **Adjektivsteigerung, Schwedisch (B).** bra, bättre, bäst; gammal, äldre, äldst; få, färre, färst. Kleiner Generator, begrenzter Nutzen auf B2.
 
-7. **Schriftgröße einstellbar (B).** Größere Schrift für Lesetexte und Übungssätze, in den Einstellungen. Wenig Aufwand. Die Übungen sind auf feste Höhen ausgelegt (Antwortzone, Leiste unten); die Layout-Tests müssen dann mit der größeren Stufe laufen.
+### Prüfung und Rückmeldung
+
+9. **Generatoren durchsehen, alle Ausgaben (A).** Erzeugte Aufgaben kommen in jedem Tagwerk; ein schiefer Baustein wirkt hundertfach. Auflisten per Skript, dann von Hand prüfen.
+10. **Satzbank mit deinen „Meine ist auch richtig“-Fällen (A−).** Deine Fälle zeigen genau die Lücken. Braucht ein Backup von dir; die Daten bleiben bei dir, ins Repo kommen nur Alternativen und Erklärungen.
+11. **Verwechslung beim Namen nennen (B).** Erkennt die Prüfung ein vertauschtes Paar (por/para, ser/estar, en/ett, sin/hans), steht in einer Zeile, was hier gilt und warum. Ergänzt die Erklärung je Satz um die gemachte Verwechslung; für Präteritum/Perfekt gibt es das schon.
+
+### Hören und Sprechen
+
+12. **Hörunterscheidung, spanische Betonung (B+), sonst Minimalpaare (B).** término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
+13. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
+14. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
+15. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
+
+### Schreiben
+
+16. **Korrekturen aus dem Schreiben ins Tagwerk (B+, vorher A−).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
+
+### Planung und Rückblick
+
+17. **Wochenbilanz zum Schwerpunkt (B).** „Wortstellung im Nebensatz: vor der Woche 38 % Fehler, in der Woche 15 %.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Wenig Aufwand. Steht in deiner Liste „Offen“.
+18. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
+19. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
+
+### Technik
+
+20. **Browser-Tests auch in Firefox (A−).** Du nutzt Firefox; alle 81 Browser-Tests laufen bisher nur in Chromium. Gecko weicht bei CSS, Sprachausgabe und Medien ab. Wenig Aufwand; Nachsprechen mit vorgetäuschtem Mikrofon bleibt Chromium vorbehalten.
+
+## Offen: Rückmeldung von dir
+
+- Ob „An Anki“ in Firefox Vorder- und Rückseite richtig an AnkiDroid übergibt.
 
 ## Nach echter Nutzung nachstellen
 
@@ -31,6 +76,12 @@ Stand: 17. November 2026 (nach 24.34.1)
 
 ## Geprüft und zurückgestellt
 
+- **Schriftgröße einstellbar (C+, vorher B).** Bisher kein Bedarf; die Übungen sind auf feste Höhen ausgelegt, jede Stufe bräuchte eigene Layout-Tests.
+- **Üben-Seite straffen (C+).** 20 Einträge in sechs Gruppen; lang, aber gegliedert. Erst angehen, wenn etwas Neues dazukommt.
+- **Eigene FSRS-Parameter aus deinen Wiederholungen (C).** Bräuchte ein Protokoll jeder Wiederholung (Speicher) und Monate an Daten; die Standardparameter treffen im Benchmark bereits gut.
+- **Größeres Offline-Wörterbuch (C).** Frei lizenzierte Deutsch-Schwedisch-Daten sind dünn, dict.cc ist nicht frei; Wiktionary gibt es online schon.
+- **Vorlesen schneller als normal (C+).** Für Fortgeschrittene denkbar (1,1-fach), aber die Computerstimme klingt dann gepresst; echte Aufnahmen wären der bessere Weg.
+- **Code in kleinere Dateien teilen (C).** Kein Nutzen für dich; erst, wenn eine Datei beim Ändern stört.
 - **Schriftgrößen zusammenlegen (C).** Elf Größen zwischen 12 und 17 px; Zusammenlegen verschiebt überall halbe Pixel, ohne sichtbaren Gewinn. Erst bei einer größeren Gestaltungsrunde.
 - **Konjugation beim Nachschlagen (C+).** Tabellen gibt es intern, auf Fortgeschrittenen-Niveau selten gebraucht.
 - **Erinnerung über eine Kalenderdatei (C+).** Ohne Server keine verlässlichen Benachrichtigungen; ein täglicher Kalendertermin mit Link zur App ginge, ersetzt aber kaum einen selbst gestellten Wecker.
@@ -40,4 +91,7 @@ Stand: 17. November 2026 (nach 24.34.1)
 
 ## Bewusst nicht
 
-Ranglisten, Herzen, Belohnungen, Konfetti, Wortschatz-Schätzungen als Spielerei; KI, Konto, Tracker. Sie widersprechen den Grundsätzen der App oder bringen beim Lernen wenig.
+- **Freies Sprechen mit Spracherkennung (D).** Firefox hat keine Spracherkennung; bei dir käme es nicht an. Nachsprechen wertet Tempo und Pausen ohne Erkennung aus.
+- **Abgleich zwischen Geräten (D).** Bräuchte Server und Konto. Das Backup leistet das von Hand.
+- **Prüfungsvorbereitung (Swedex, DELE) (D).** Andere Ziele, andere Inhalte.
+- Ranglisten, Herzen, Belohnungen, Konfetti, Wortschatz-Schätzungen als Spielerei; KI, Konto, Tracker. Sie widersprechen den Grundsätzen der App oder bringen beim Lernen wenig.

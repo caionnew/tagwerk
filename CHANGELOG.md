@@ -2,6 +2,10 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.34.3
+- **Erklärung passt zum Satz (Konditional & si-Sätze).** Bei falscher Antwort kam für jeden Satz des Themas dieselbe Regel „Irreal: si + tuviera, dann Konditional (viajaría)“, auch bei höflichen Bitten („¿Me pasarías la sal?“), Ratschlägen („Yo que tú, no lo haría“), der Vermutung „Serían las diez“ und sogar beim realen si-Satz „Si llueve mañana …“, wo die Lösung Präsens ist. Jetzt hat jeder der 22 Sätze seine eigene Erklärung, bei unregelmäßigen Formen mit dem Stamm (har-, dir-, saldr-, podr-). „pases“ bei „¿Me ___ la sal?“ bleibt falsch (Subjuntivo, kein korrektes Spanisch).
+- **Satzbank: neue, optionale siebte Spalte „Erklärung“** (docs/CONTENT.md). Sie steht bei falscher Antwort statt der allgemeinen Themenregel; eine Erklärung zur erkannten Verwechslung geht weiter vor.
+
 ## 24.34.2
 - **Fehler behoben:** „Me quejé ___ el ruido.“ mit der Lösung „de“ ergab „Me quejé de el ruido“, richtig ist „del“. Jetzt „Me quejé ___ ruido.“ mit der Lösung „del“ (Auswahl del, al, en). Ein Test prüft alle spanischen Lückensätze auf „a el“ und „de el“.
 - **„dar a“ idiomatisch auf Deutsch:** „Mein Haus geht auf den Platz hinaus“ war schief; „hinausgehen auf“ sagt man von Fenstern und Zimmern. Jetzt „Mi ventana da ___ la plaza.“ – „Mein Fenster geht auf den Platz hinaus.“

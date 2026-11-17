@@ -4,13 +4,14 @@ const { loadApp } = require('../helpers/load.js');
 const app = loadApp();
 const CONTENT = app.get('CONTENT'), conjugate = app.get('conjugate');
 
-test('jede Zeile der Satzbank hat fünf Felder (sechstes optional: Niveau), keine Doppelungen, die Lücke steht im Zielsatz', () => {
+test('jede Zeile der Satzbank hat fünf Felder (sechstes optional: Niveau, siebtes optional: Erklärung), keine Doppelungen, die Lücke steht im Zielsatz', () => {
   const problems = [], seen = new Set(); let n = 0;
   for (const lang of ['sv', 'es']) for (const [trap, raw] of Object.entries(CONTENT[lang])) {
     raw.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
       n++;
       const p = line.split('|').map(x => x.trim());
-      if (p.length !== 5 && !(p.length === 6 && /^(A2|B1|B2)$/.test(p[5]))) problems.push(`Felder ${p.length}: ${line}`);
+      const lvlOk = p.length < 6 || /^(A2|B1|B2|)$/.test(p[5]) && (p.length === 7 || p[5]);
+      if (p.length < 5 || p.length > 7 || !lvlOk || (p.length === 7 && p[6].length < 10)) problems.push(`Felder ${p.length}: ${line}`);
       const [, target, gap] = p;
       if (seen.has(lang + target)) problems.push(`doppelt: ${target}`);
       seen.add(lang + target);
@@ -50,4 +51,17 @@ test('jede Lücke sitzt auf einem ganzen Wort, nie mitten in einem anderen (etwa
   assert.deepEqual(bad, []);
   assert.equal(gapPos('Pienso mucho en ti.', 'en'), 13);
   assert.equal(gapPos('La fiesta es en casa de Ana.', 'es'), 10);
+});
+
+test('Erklärung je Satz: steht bei falscher Antwort statt der allgemeinen Themenregel', () => {
+  const BANK = app.get('BANK');
+  const item = BANK.es.find(i => i.target === '¿Me pasarías la sal?');
+  assert.ok(item && item.note);
+  const fb = app.run(`(() => { DB.st = {}; const ex = { type:'cloze', id:${JSON.stringify(item.id)} }; S.run = { kind:'quick', lang:'es', queue:[ex], idx:0, ok:0, bad:0, res:[], missed:[], combo:0, best:0 }; S.view = 'run'; S.run.cur = { input:'pases', state:'answer', result:null }; check(); return S.run.cur.result + ' ' + feedbackHtml(S.run, ex, S.run.cur); })()`);
+  assert.match(fb, /^bad /);
+  assert.match(fb, /Höfliche Bitte/);
+  assert.doesNotMatch(fb, /si \+ tuviera/);
+  // Realer si-Satz: keine Regel zum irrealen Fall
+  const real = BANK.es.find(i => i.target === 'Si llueve mañana, nos quedamos en casa.');
+  assert.match(real.note, /si \+ Präsens/);
 });

@@ -396,28 +396,28 @@ Uns bleiben nur noch zwei Urlaubstage. | Nos quedan solo dos días de vacaciones
 Es tut mir leid, dass du so früh gehst. | Me da pena que te vayas tan pronto. | da pena/da lástima | (dar pena) | Me da lástima que te vayas tan pronto. | B2
 `,
 condicional: `
-Ich hätte gern einen Kaffee. | Me gustaría un café. | gustaría | (gustar) | Quería un café.;; Quisiera un café.
-Du solltest mehr schlafen. | Deberías dormir más. | Deberías | (deber) |
-Könntest du mir helfen? | ¿Podrías ayudarme? | Podrías | (poder) | ¿Me podrías ayudar?
-Wenn ich Zeit hätte, würde ich mehr reisen. | Si tuviera tiempo, viajaría más. | tuviera/tuviese | (tener) | Si tuviese tiempo, viajaría más.
-Wenn es morgen regnet, bleiben wir zu Hause. | Si llueve mañana, nos quedamos en casa. | llueve | (llover) | Si llueve mañana, nos quedaremos en casa.
-An deiner Stelle würde ich das nicht machen. | Yo en tu lugar no lo haría. | haría | (hacer) | Yo que tú, no lo haría.;; En tu lugar, no lo haría.
-Wenn ich reich wäre, würde ich ein Haus am Meer kaufen. | Si fuera rico, compraría una casa junto al mar. | compraría | (comprar) | Si fuera rica, compraría una casa junto al mar.;; Si fuera rico, compraría una casa en la playa.
-Was würdest du tun? | ¿Qué harías? | harías | (hacer) |
-Es wäre besser, morgen zu gehen. | Sería mejor ir mañana. | Sería | (ser) |
-Würdest du mir das Salz reichen? | ¿Me pasarías la sal? | pasarías | (pasar) |
-Wenn ich du wäre, würde ich das Angebot annehmen. | Yo que tú, aceptaría la oferta. | aceptaría | (aceptar) | Si fuera tú, aceptaría la oferta.;; En tu lugar, aceptaría la oferta.
-Ich würde dich sehr gern sehen. | Me encantaría verte. | encantaría | (encantar) |
-Wenn es nicht regnen würde, würden wir spazieren gehen. | Si no lloviera, saldríamos a pasear. | saldríamos | (salir) | Si no lloviese, saldríamos a pasear.
-Was würdest du an meiner Stelle sagen? | ¿Qué dirías tú en mi lugar? | dirías | (decir) | ¿Qué dirías en mi lugar?
-Wir könnten morgen ins Kino gehen. | Podríamos ir al cine mañana. | Podríamos | (poder) | Mañana podríamos ir al cine.
-An deiner Stelle würde ich das nicht machen. | Yo que tú, no lo haría. | haría | (hacer) | Yo en tu lugar no lo haría.;; En tu lugar no lo haría.;; Yo que tú no lo haría.
-Es wäre toll, dich zu sehen. | Sería genial verte. | Sería/Estaría | (ser) | Sería estupendo verte.;; Estaría genial verte.
-Würdest du mit mir ins Kino gehen? | ¿Irías al cine conmigo? | Irías | (ir) |
-An deiner Stelle würde ich nichts unterschreiben, ohne es vorher zu lesen. | Yo en tu lugar no firmaría nada sin leerlo antes. | firmaría | (firmar) | Yo que tú no firmaría nada sin leerlo antes. | B2
-Wenn du mir Bescheid gesagt hättest, hätte ich dich am Bahnhof abgeholt. | Si me hubieras avisado, te habría recogido en la estación. | habría recogido/hubiera recogido | (recoger) | Si me hubieras avisado, te hubiera recogido en la estación.;; Si me hubieses avisado, te habría recogido en la estación. | B2
-Es dürfte etwa zehn gewesen sein, als er ankam. | Serían las diez cuando llegó. | Serían/Eran | (ser) | Eran más o menos las diez cuando llegó. | B2
-Würde es dir etwas ausmachen, das Fenster zu schließen? | ¿Te importaría cerrar la ventana? | importaría | (importar) |  | B2
+Ich hätte gern einen Kaffee. | Me gustaría un café. | gustaría | (gustar) | Quería un café.;; Quisiera un café. |  | Höflicher Wunsch: Konditional, me gustaría = ich hätte gern.
+Du solltest mehr schlafen. | Deberías dormir más. | Deberías | (deber) |  |  | Rat: Konditional von deber, deberías = du solltest.
+Könntest du mir helfen? | ¿Podrías ayudarme? | Podrías | (poder) | ¿Me podrías ayudar? |  | Höfliche Bitte: Konditional, podrías = könntest du (Stamm podr-).
+Wenn ich Zeit hätte, würde ich mehr reisen. | Si tuviera tiempo, viajaría más. | tuviera/tuviese | (tener) | Si tuviese tiempo, viajaría más. |  | Irreal (gedacht, nicht wirklich): si + Imperfecto de subjuntivo (tuviera), im Hauptsatz Konditional (viajaría).
+Wenn es morgen regnet, bleiben wir zu Hause. | Si llueve mañana, nos quedamos en casa. | llueve | (llover) | Si llueve mañana, nos quedaremos en casa. |  | Realer Fall, der eintreten kann: si + Präsens (si llueve). Im si-Satz (wenn) nie Futur, Konditional oder Subjuntivo Präsens.
+An deiner Stelle würde ich das nicht machen. | Yo en tu lugar no lo haría. | haría | (hacer) | Yo que tú, no lo haría.;; En tu lugar, no lo haría. |  | Rat mit yo en tu lugar: Konditional, hacer hat den Stamm har- (haría).
+Wenn ich reich wäre, würde ich ein Haus am Meer kaufen. | Si fuera rico, compraría una casa junto al mar. | compraría | (comprar) | Si fuera rica, compraría una casa junto al mar.;; Si fuera rico, compraría una casa en la playa. |  | Irreal: si + Imperfecto de subjuntivo (fuera), im Hauptsatz Konditional (compraría).
+Was würdest du tun? | ¿Qué harías? | harías | (hacer) |  |  | Gedachte Situation: Konditional, harías = würdest du tun; hacer hat den Stamm har-.
+Es wäre besser, morgen zu gehen. | Sería mejor ir mañana. | Sería | (ser) |  |  | Abgeschwächte Aussage: Konditional, sería = es wäre.
+Würdest du mir das Salz reichen? | ¿Me pasarías la sal? | pasarías | (pasar) |  |  | Höfliche Bitte („würdest du“): Konditional, pasarías.
+Wenn ich du wäre, würde ich das Angebot annehmen. | Yo que tú, aceptaría la oferta. | aceptaría | (aceptar) | Si fuera tú, aceptaría la oferta.;; En tu lugar, aceptaría la oferta. |  | Rat mit yo que tú: Konditional (aceptaría).
+Ich würde dich sehr gern sehen. | Me encantaría verte. | encantaría | (encantar) |  |  | Wunsch: Konditional, me encantaría = ich würde sehr gern.
+Wenn es nicht regnen würde, würden wir spazieren gehen. | Si no lloviera, saldríamos a pasear. | saldríamos | (salir) | Si no lloviese, saldríamos a pasear. |  | Irreal: si + lloviera, im Hauptsatz Konditional; salir hat den Stamm saldr- (saldríamos).
+Was würdest du an meiner Stelle sagen? | ¿Qué dirías tú en mi lugar? | dirías | (decir) | ¿Qué dirías en mi lugar? |  | Gedachte Situation: Konditional, decir hat den Stamm dir- (dirías).
+Wir könnten morgen ins Kino gehen. | Podríamos ir al cine mañana. | Podríamos | (poder) | Mañana podríamos ir al cine. |  | Vorschlag: Konditional, podríamos = wir könnten (Stamm podr-).
+An deiner Stelle würde ich das nicht machen. | Yo que tú, no lo haría. | haría | (hacer) | Yo en tu lugar no lo haría.;; En tu lugar no lo haría.;; Yo que tú no lo haría. |  | Rat mit yo que tú: Konditional, hacer hat den Stamm har- (haría).
+Es wäre toll, dich zu sehen. | Sería genial verte. | Sería/Estaría | (ser) | Sería estupendo verte.;; Estaría genial verte. |  | Gedachte Situation: Konditional, sería = es wäre.
+Würdest du mit mir ins Kino gehen? | ¿Irías al cine conmigo? | Irías | (ir) |  |  | Höfliche Frage, Einladung: Konditional, irías = würdest du gehen.
+An deiner Stelle würde ich nichts unterschreiben, ohne es vorher zu lesen. | Yo en tu lugar no firmaría nada sin leerlo antes. | firmaría | (firmar) | Yo que tú no firmaría nada sin leerlo antes. | B2 | Rat mit yo en tu lugar: Konditional (firmaría).
+Wenn du mir Bescheid gesagt hättest, hätte ich dich am Bahnhof abgeholt. | Si me hubieras avisado, te habría recogido en la estación. | habría recogido/hubiera recogido | (recoger) | Si me hubieras avisado, te hubiera recogido en la estación.;; Si me hubieses avisado, te habría recogido en la estación. | B2 | Irreal in der Vergangenheit: si + hubiera + Partizip, im Hauptsatz habría (oder hubiera) + Partizip.
+Es dürfte etwa zehn gewesen sein, als er ankam. | Serían las diez cuando llegó. | Serían/Eran | (ser) | Eran más o menos las diez cuando llegó. | B2 | Vermutung über die Vergangenheit: Konditional, serían las diez = es dürfte etwa zehn gewesen sein.
+Würde es dir etwas ausmachen, das Fenster zu schließen? | ¿Te importaría cerrar la ventana? | importaría | (importar) |  | B2 | Höfliche Bitte: Konditional, ¿te importaría …? = würde es dir etwas ausmachen …?
 `,
 reflexivo: `
 Ich stehe um sieben auf. | Me levanto a las siete. | Me levanto | (levantarse) |

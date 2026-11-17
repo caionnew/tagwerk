@@ -16,6 +16,7 @@ Ich bleibe zu Hause, weil … | Jag stannar hemma eftersom jag inte mår bra. | 
 - **Hinweis**: nur, wenn er die Lösung nicht verrät (etwa die Grundform).
 - **Alternativen**: weitere richtige Übersetzungen, getrennt mit `;;`.
 - **Niveau** (optional, sechste Spalte): `A2`, `B1` oder `B2`. Fehlt es, schätzt `estLevel()` nach Länge, Nebensätzen und anspruchsvollen Formen. Für „Fortgeschritten“ zählt diese Angabe.
+- **Erklärung** (optional, siebte Spalte; die sechste darf dafür leer bleiben): erscheint bei falscher Antwort statt der allgemeinen Regel des Themas. Nötig, wenn die Themenregel nicht zum Satz passt, etwa im Thema Konditional bei einer höflichen Bitte oder einem realen si-Satz. Eine Erklärung zur gemachten Verwechslung (Perfecto statt Indefinido usw.) geht weiter vor.
 - Die Kennung eines Satzes ist ein Hash des Zielsatzes. **Einen Zielsatz zu ändern, setzt seinen Lernstand zurück.** Tippfehler im Deutschen sind unkritisch.
 
 Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TRAPS` in `src/js/part_head.js`.

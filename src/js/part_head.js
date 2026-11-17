@@ -96,7 +96,7 @@ function buildBank(){
       raw.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
         const p = line.split('|').map(x => x.trim());
         if (p.length < 2) return;
-        const [de, target, gap = '', hint = '', alts = '', level = ''] = p;
+        const [de, target, gap = '', hint = '', alts = '', level = '', note = ''] = p;
         const gaps = gap ? gap.split('/').map(x => x.trim()).filter(Boolean) : [];
         const altList = alts ? alts.split(';;').map(x => x.trim()).filter(Boolean) : [];
         if (gaps[0]) {
@@ -105,7 +105,7 @@ function buildBank(){
           const pre = target.slice(0, pos), post = target.slice(pos + gaps[0].length);
           altList.forEach(a => { if (pos >= 0 && a.startsWith(pre) && a.endsWith(post) && a.length > pre.length + post.length) { const fill = a.slice(pre.length, a.length - post.length).trim(); if (fill && !gaps.includes(fill)) gaps.push(fill); } });
         }
-        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0 });
+        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0, note });
       });
     });
     (DB.own[lang] || []).forEach(o => BANK[lang].push({ id:o.id, lang, trap:'eigene', kind:'order', de:o.de, target:o.target, gap:'', gapAlts:[], hint:'', alts:[], own:true }));

@@ -71,7 +71,7 @@ Je Sprache drei Quellen, vom leichten Einstieg bis zur normalen Zeitung. Bedingu
 
 ## Lesetexte (`src/data/texte.js`)
 
-Themen, Leitlinien und Ideen für weitere Texte sammelt [THEMEN.md](THEMEN.md).
+Themen, Leitlinien und Ideen für weitere Texte sammelt [THEMEN.md](THEMEN.md), Ideen für die App [IDEEN.md](IDEEN.md).
 
 Je Text: Kennung, Thema, Niveau (A2, B1, B2, C1), Titel, Text (Absätze mit Leerzeile), drei Fragen auf Deutsch mit drei Antworten (die erste ist richtig, die App mischt) und der Textstelle, die die Antwort belegt (wörtlich aus dem Text) und mindestens zwei Sätze zum Übernehmen mit Übersetzung. Regeln: eigene Texte, keine übernommenen Absätze aus Zeitungen, Büchern oder Wikipedia; Fakten vorher prüfen; 70 bis 260 Wörter; jeder Satz endet mit Satzzeichen (Vorlesen und Hervorheben gehen satzweise); übernehmbare Sätze stehen wörtlich als ganzer Satz im Text. `tests/unit/texts.test.js` prüft das.
 

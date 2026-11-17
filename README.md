@@ -59,11 +59,11 @@ tests/
   unit/               Node-Tests ohne Browser
   e2e/                Playwright-Tests
   helpers/, fixtures/ Lader für die VM, FSRS-Referenzdaten
-docs/                 Installation, Architektur, Inhalte, Forschungsgrundlagen
+docs/                 Installation, Architektur, Inhalte, Forschungsgrundlagen, Ideen
 .github/workflows/    CI (Tests) und Pages (Veröffentlichung)
 ```
 
-Details: [Architektur](docs/ARCHITECTURE.md) · [Inhalte pflegen](docs/CONTENT.md) · [Forschungsgrundlagen](docs/RESEARCH.md) · [Änderungen](CHANGELOG.md)
+Details: [Architektur](docs/ARCHITECTURE.md) · [Inhalte pflegen](docs/CONTENT.md) · [Forschungsgrundlagen](docs/RESEARCH.md) · [Ideen](docs/IDEEN.md) · [Änderungen](CHANGELOG.md)
 
 ## Daten und Datenschutz
 

@@ -38,8 +38,10 @@ test('Lücke nach dem Prüfen: falsch = durchgestrichen + Lösung, kein Eingabef
   await expect(page.locator('.cloze s.gapdone.bad')).toHaveText('zzz');
   await expect(page.locator('.cloze .gapdone.fix')).toHaveCount(1);
   await expect(page.locator('#answer')).toHaveCount(0);
-  const want = await page.locator('.cloze .gapdone.fix').textContent();
-  expect(await page.locator('.cloze').textContent()).not.toContain(want + ' ' + want);
+  // Ganze Wörter vergleichen: eine Textsuche nach „a a“ schlüge bei „Me comprometo a ayudarte“ an
+  const want = (await page.locator('.cloze .gapdone.fix').textContent()).trim();
+  const words = (await page.locator('.cloze').textContent()).split(/\s+/).map(w => w.replace(/[.,;:!?¿¡]/g, ''));
+  expect(words.some((w, i) => w === want && words[i + 1] === want), words.join(' ')).toBe(false);
 });
 test('Wochenstreifen färbt nach Sprache des Tagwerks, beide geteilt', async ({ page }) => {
   const db = richDB('sv'); const pad = n => String(n).padStart(2, '0'), t = new Date();

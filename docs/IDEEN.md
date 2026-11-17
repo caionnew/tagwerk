@@ -11,7 +11,7 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 - **Die App ist breit, die Inhalte sind schmal.** Übungsformen, Wiederholung, Schreiben, Lesen, Hören, Nachsprechen, Statistik: fast alles da. Aber es gibt 209 schwedische und 232 spanische Sätze, davon nur 32 bzw. 40 als B2 markiert. Bei „Normal“ (6 neue Sätze am Tag) reichen sie 35 bzw. 39 Tage; bei „Fortgeschritten“ kommen die B2-Sätze zuerst und sind nach gut einer Woche verbraucht. Danach bleibt nur der Nachschub von Tatoeba: ohne Themenwahl nach Fehlern, ohne Erklärung je Satz, ohne geprüfte Alternativen.
 - **Die Themen sind die klassischen A2/B1-Fallen** (Inversion, „inte“, ser/estar, por/para). Was auf B2/C1 schwer bleibt, fehlt: Modalpartikeln, Verbalperiphrasen, Subjuntivo im Satzgefüge, Redewendungen, Pluralklassen.
 - **Prüfqualität ist die größte Quelle für Ärger.** In einer kurzen Durchsicht (24.34–24.35) fanden sich ein grammatischer Fehler („de el“), unidiomatisches Deutsch, richtige Antworten, die als falsch galten („i gymmet“, Subjekt vorn bei Inversion), und bei rund der Hälfte der Sätze eine Erklärung, die nicht zum Satz passte. Jede falsche „Falsch“-Wertung kostet täglich Zeit und Vertrauen. 24.37 hat alle Generatoren durchgesehen (ein grammatischer Fehler, „con ti“; sechs Auswahlaufgaben mit einer zweiten vertretbaren Option; fehlende richtige Fassungen bei Uhrzeiten und beim Umbauen). 24.38 hat die Satzbank durchgesehen: Jeder der 441 Sätze hat jetzt eine Erklärung, rund 130 weitere richtige Fassungen sind dazugekommen, und zwei Regeln gelten für alle Sätze (fehlendes „har“ im schwedischen Nebensatz, betontes spanisches Subjektpronomen).
-- **Seit 24.37 laufen die Browser-Tests auch in Firefox,** vorerst als Information in der CI. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
+- **Seit 24.37 laufen die Browser-Tests auch in Firefox,** vorerst als Information in der CI; der erste Lauf fand keinen Fehler in der App. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 
 ## Fahrplan
 
@@ -59,12 +59,11 @@ Erst die Prüfung absichern (alles Neue baut darauf auf), dann der große Hebel:
 
 ### Technik
 
-18. **Firefox-Job verbindlich machen (B).** Sobald er ein paar Läufe grün ist, zählt er wie Chromium. Bis dahin zeigt er Abweichungen, ohne ein Update aufzuhalten.
+18. **Firefox-Job verbindlich machen (B).** Erster Lauf (24.37.0): 76 bestanden, 4 übersprungen (Nachsprechen), 1 Fehler, und der lag im Test selbst (Textsuche statt Wortvergleich, behoben). Offline-Start, Backup und Teilen laufen also auch in Gecko. Nach zwei, drei weiteren grünen Läufen zählt er wie Chromium.
 
 ## Offen: Rückmeldung von dir
 
 - Ob „An Anki“ in Firefox Vorder- und Rückseite richtig an AnkiDroid übergibt.
-- Wie der Firefox-Job nach dem Push ausgeht (GitHub → Actions → CI → Job „firefox“). Bei Rot genügt ein Bildschirmfoto der Fehlerliste.
 
 ## Nach echter Nutzung nachstellen
 

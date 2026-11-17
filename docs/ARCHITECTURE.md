@@ -47,6 +47,8 @@ Nachsprechen (`part_shadow.js`) führt je Satz durch drei Schritte: Hören, Mits
 
 Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster Antwort (Satz-ID oder Generator, richtig, fast, neu). `roundTopics` gruppiert danach nach Thema, `topicsHtml` zeigt die Punkte und bündelt Fehler, wenn ein Thema klar vorn liegt. `bonusCands` wählt die Ausdrücke für den Bonus „Eigener Satz“ (Lücke, sonst das in der Satzbank seltenste Inhaltswort), `bonusCheck` prüft ohne Netz. Der Bonus-Stand liegt in `S.run.bonus` und wird nicht gespeichert.
 
+Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `runMarks` liefert den Stand: Ergebnis aus `got` an der Aufgabe (ältere Runden ohne `got`: der Reihe nach aus `res`), die aktuelle Aufgabe nach dem Prüfen schon mit ihrem Ergebnis. Farben wie die Ergebnisleiste am Rundenende; zweite Versuche stehen als eigene Gruppe am Ende.
+
 ## Datenspeicher
 
 `DB` liegt als JSON unter `localStorage['tagwerk-offline-v1']` und wird 150 ms nach jeder Änderung gespeichert, sofort beim Wechsel in den Hintergrund. Backup und Wiederherstellung exportieren genau dieses Objekt (`backupText`, `parseBackup`, `applyBackup` in `part_head.js`). Der Speicher gehört zur Adresse (Origin), nicht zu den Dateien: Ein Update unter demselben Link behält den Stand.
@@ -57,6 +59,7 @@ Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster
 | `st[id]` | Lernstand je Satz: FSRS-Stabilität `s`, Schwierigkeit `d`, Intervall `ivl`, `due`, `last`, Zähler, eigene richtige Fassungen |
 | `log[datum][sprache]` | Aufgaben, neue Sätze, Wiederholungen, gefestigt, Sekunden |
 | `done[datum]` | Tagwerk erledigt |
+| `run` | offenes Tagwerk von heute (Pause): Aufgaben `queue` (zweite Versuche mit `requeue`, nach der Antwort Ergebnis `got`: ok, near, bad), Stand `idx`, Rundenergebnis `res`, verpasste Sätze `missed` |
 | `snap[datum][sprache]` | Tagesstand (älter als 120 Tage nur sonntags und am Monatsende, `compactSnaps`): geübt `n`, gefestigt `m`, abrufbar `k`, Wortschatz `w`, gefestigt je Thema `t` |
 | `tlog[datum]` | Fehlerquellen je Thema (`p:`), Übungsart (`t:`), Fehlerart (`e:`), Stunden `h`; nach 120 Tagen gelöscht |
 | `gen`, `genus` | Ergebnisse der erzeugten Aufgaben und der Genus-Wörter |
@@ -74,7 +77,7 @@ Firefox erlaubt pro Adresse etwa 5 MB localStorage, und alle Seiten unter `caion
 
 ## Bewegung
 
-Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), der Fortschrittsbalken füllt sich, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich. `prefers-reduced-motion: reduce` schaltet alles ab.
+Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), ein Feld der Fortschrittsleiste färbt sich beim Prüfen, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich. `prefers-reduced-motion: reduce` schaltet alles ab.
 
 ## Online und offline
 
@@ -84,7 +87,7 @@ Offline funktioniert alles außer: Wikipedia-Fundstück, Nachschub und Suche bei
 
 - `tests/unit/` (Node, ohne Browser): Inhalte, Wörterbuch-Abdeckung, FSRS gegen die Referenz, Wiederholungssperre, Rundenauswahl, Serienregel, Feste, Fehlerart, Schreibprüfung. `tests/helpers/load.js` lädt die Quellen in eine VM und ersetzt die Oberfläche durch Platzhalter.
 - `tests/unit/lint.test.js` prüft mit ESLint (`tools/lint.js`) das Gesamtskript in Bau-Reihenfolge, wie es im Browser läuft: undefinierte und doppelt vergebene Namen, doppelte Schlüssel, unbenutzte Variablen, toter Code. Einzelne Dateien allein ergäben Fehlalarme, weil sie Namen aus anderen Dateien benutzen. Funde nennen Datei und Zeile der Quelle.
-- `tests/e2e/` (Playwright, Handygröße): Start, kompletter Tagwerk-Durchlauf, Wortkästchen, „Meine ist auch richtig“, Nachschlagen, Fortschritt, Schreiben, Land & Leute, Teilen, Schnellzugriff, reduzierte Bewegung, Offline-Start, Speicheranzeige. Jeder Test schlägt fehl, sobald die Seite einen JavaScript-Fehler wirft. Die Tests laufen gegen `tools/serve.js` unter `http://127.0.0.1:4173/` (startet `playwright.config.js` selbst), also mit Service Worker, eigenem Speicher je Test und echtem Neuladen.
+- `tests/e2e/` (Playwright, Handygröße): Start, kompletter Tagwerk-Durchlauf, Fortschrittsleiste, Wortkästchen, „Meine ist auch richtig“, Nachschlagen, Fortschritt, Schreiben, Land & Leute, Teilen, Schnellzugriff, reduzierte Bewegung, Offline-Start, Speicheranzeige. Jeder Test schlägt fehl, sobald die Seite einen JavaScript-Fehler wirft. Die Tests laufen gegen `tools/serve.js` unter `http://127.0.0.1:4173/` (startet `playwright.config.js` selbst), also mit Service Worker, eigenem Speicher je Test und echtem Neuladen.
 
 ## Sichtprüfung
 

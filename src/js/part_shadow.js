@@ -636,7 +636,7 @@ function viewShadow(){
   if (!item) return shSummaryHtml();
   const hints = DB.settings.shHints !== false, leg = hints ? shLegend(item.target, lang) : [];
   if (hints && !leg.length) leg.push('In diesem Satz nichts Besonderes zur Aussprache.');
-  const head = `<div class="runbar"><button type="button" class="x xt" data-a="shquit">Beenden</button><div class="progress" aria-hidden="true">${sh.ids.map((_, i) => `<span class="seg${i < sh.idx ? ' pass' : i === sh.idx ? ' cur' : ''}"></span>`).join('')}</div><span class="count">${sh.idx + 1}/${sh.ids.length}</span></div>`;
+  const head = `<div class="runbar"><button type="button" class="x xt" data-a="shquit">Beenden</button><div class="progress" aria-hidden="true">${sh.ids.map((_, i) => `<i class="seg${i < sh.idx ? ' s-done' : i === sh.idx ? ' s-cur' : ''}"></i>`).join('')}</div><span class="count">${sh.idx + 1}/${sh.ids.length}</span></div>`;
   const src = shNative(item) && navigator.onLine !== false ? 'Aufnahme von Tatoeba' : 'Computerstimme';
   return head + `<section class="ex shex">
     <div class="shhead"><span class="tag">${src}</span><button type="button" class="tag shhint${hints ? ' on' : ''}" data-a="shhints" aria-pressed="${hints}">Aussprachehilfen</button></div>

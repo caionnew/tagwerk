@@ -103,10 +103,20 @@ label.row{ cursor:pointer; }
 
 /* Übung */
 .runbar{ display:flex; align-items:center; gap:12px; margin:6px 0 2px; }
-.progress{ flex:1; display:flex; gap:3px; }
-.seg{ flex:1; height:6px; border-radius:3px; background:var(--line); }
-.seg.pass{ background:var(--accent); }
-.seg.cur{ background:var(--muted); }
+/* Fortschritt: ein Feld je Aufgabe. Farben wie in der Auswertung (richtig, fast, falsch), offen grau, noch nicht dran dunkel.
+   Zweite Versuche stehen als eigene Gruppe am Ende, solange offen mit einem Hauch Rot. */
+.progress{ flex:1; min-width:0; display:flex; align-items:center; gap:3px; }
+.progress.d1{ gap:2px; }
+.progress.d2{ gap:1px; }
+.seg{ flex:1 1 0; min-width:2px; height:6px; border-radius:3px; background:var(--line); transition:background-color .2s; }
+.seg.re{ background:color-mix(in srgb, var(--bad) 32%, var(--line)); }
+.seg.re1{ margin-left:5px; }
+.progress.d1 .seg.re1, .progress.d2 .seg.re1{ margin-left:4px; }
+.seg.s-cur{ background:var(--muted); }
+.seg.s-done{ background:var(--accent); }
+.seg.s-ok{ background:var(--ok); }
+.seg.s-near{ background:var(--warn); }
+.seg.s-bad{ background:var(--bad); }
 .count{ font-size:14px; color:var(--muted); font-variant-numeric:tabular-nums; }
 .count.grow{ flex:1; }
 .topic{ font-size:14px; color:var(--muted); margin:6px 0 20px; }
@@ -700,8 +710,7 @@ section.ex{ flex:1 0 auto; display:flex; flex-direction:column; }
 section.ex #fb:empty{ display:none; }
 
 /* Bewegung nur als Antwort auf eine Handlung */
-.seg.just{ animation:segFill .35s ease-out; transform-origin:left center; }
-@keyframes segFill{ from{ transform:scaleX(0); } to{ transform:none; } }
+.seg.just{ animation:dotPop .3s ease-out; }
 @keyframes dotPop{ 0%{ transform:scale(.4); opacity:.4; } 100%{ transform:none; opacity:1; } }
 
 /* Übungstage: Form = Einsatz, Farbe = Sprache */

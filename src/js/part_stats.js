@@ -18,6 +18,15 @@ function sameWord(lang, a, b){
   const x = deacc(a), y = deacc(b); let k = 0; while (k < x.length && x[k] === y[k]) k++;
   return k >= 4 || (k >= 3 && Math.min(x.length, y.length) <= 4);
 }
+// Grundform gegen gebeugte Form ist auch bei einem anderen Wort ein Formfehler, kein reiner Wortschatzfehler:
+// „samla“ (Infinitiv) statt „plockar“ (Präsens), „comer“ statt „bebo“. Zählt nur, was so im Wörterbuch steht
+// (nicht erschlossene Mehrzahl oder weibliche Formen). Schwedisch, Wort unbekannt: -a statt einer Präsensform auf -r.
+function formDiff(lang, x, m){
+  const kind = w => { const g = GLOSS[lang][String(w).toLowerCase()]; return !g || g.multi ? null : g.l ? 'form' : 'base'; };
+  const kx = kind(x), km = kind(m);
+  if (kx && km) return kx !== km;
+  return lang === 'sv' && !lookupWord(lang, x) && km === 'form' && /r$/i.test(m) && /a$/i.test(x);
+}
 function lev(a, b){
   const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
   let prev = Array.from({ length:n + 1 }, (_, j) => j);
@@ -58,9 +67,13 @@ function mistake(input, answers, lang, tested){
   const free = extra.slice(), pairs = [];
   missing.forEach(m => { if (!free.length) return; let bi = 0; free.forEach((x, i) => { if (lev(x, m) < lev(free[bi], m)) bi = i; }); pairs.push([orig(raw, free[bi]), orig(rawB, m)]); free.splice(bi, 1); });
   const gram = extra.length !== missing.length
-    ? missing.concat(extra).some(w => isFunc(lang, w) || test.has(w)) || pairs.some(([x, m]) => sameWord(lang, x, m))
-    : pairs.some(([x, m]) => test.has(deacc(m)) || isFunc(lang, m) || isFunc(lang, x) || sameWord(lang, x, m));
-  return { kind:gram ? 'word' : 'vocab', pairs };
+    ? missing.concat(extra).some(w => isFunc(lang, w) || test.has(w)) || pairs.some(([x, m]) => sameWord(lang, x, m) || formDiff(lang, x, m))
+    : pairs.some(([x, m]) => test.has(deacc(m)) || isFunc(lang, m) || isFunc(lang, x) || sameWord(lang, x, m) || formDiff(lang, x, m));
+  if (gram) return { kind:'word', pairs };
+  // Wortschatz nur, wenn sonst alles stimmt, auch die Stellung: „att vi samlar alltid“ ist ein Stellungsfehler
+  const swap = new Map(pairs.map(([x, m]) => [deacc(x), deacc(m)])), sub = A.map(w => swap.get(w) || w);
+  if (sub.length > 1 && sub.join(' ') !== best.join(' ') && key(sub) === key(best)) return { kind:'order', pairs };
+  return { kind:'vocab', pairs };
 }
 function errType(ex){
   if (ex.type === 'free') return 'free';

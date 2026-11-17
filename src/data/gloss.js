@@ -147,6 +147,7 @@ hösten|höst|der Herbst; på hösten = im Herbst
 innebandy||Unihockey
 juli||Juli
 kontant||bar; betala kontant = bar zahlen
+numera||inzwischen, heutzutage
 kvällen|kväll|der Abend; på kvällen = abends
 kör|köra|fährt (ein Fahrzeug); köra bil = Auto fahren
 lyssnar|lyssna|hört zu; lyssna på radio = Radio hören

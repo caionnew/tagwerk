@@ -485,7 +485,9 @@ function prepCur(){
   if (ex.type === 'gen' && !ex.data) ex.data = makeFresh(ex.gen);
   if (ex.type === 'tiles' && !ex.pool) {
     const item = itemById(ex.id);
-    const toks = tileTokens(item.target);
+    // Inversion: Das erste Wort bleibt groß. Sonst ginge auch die Wortstellung mit dem Subjekt vorn („jag träffar honom inte ikväll“),
+    // und geübt werden soll die Umstellung nach dem Satzanfang.
+    const toks = tileTokens(item.target, item.trap === 'inversion');
     const extra = distractorFor(item, toks);
     ex.extra = !!extra;
     ex.pool = shuffle(toks.map((t, i) => ({ t, i })).concat(extra ? [{ t:extra, i:toks.length, extra:true }] : []));
@@ -504,9 +506,9 @@ function distractorFor(item, toks){
   if (item.trap === 'pronombres' && low.some(t => ['lo', 'la', 'los', 'las'].includes(t)) && !low.includes('le')) return 'le';
   return null;
 }
-function tileTokens(sentence){
+function tileTokens(sentence, keepFirst){
   const t = tokens(sentence);
-  if (t.length && !NAMES.includes(t[0].toLowerCase())) t[0] = t[0].toLowerCase();
+  if (t.length && !keepFirst && !NAMES.includes(t[0].toLowerCase())) t[0] = t[0].toLowerCase();
   return t;
 }
 const tileKey = s => tileTokens(s).map(x => x.toLowerCase()).join(' ');

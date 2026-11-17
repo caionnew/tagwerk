@@ -335,7 +335,7 @@ const VP_SV = [
   ['plockar', 'svamp', ['aldrig', 'alltid', 'ofta'], ['sammle', 'sammelst', 'sammelt', 'sammeln', 'sammeln'], '{S} {V} {A} Pilze', '{s} {A} Pilze {V}', 'På hösten', 'Im Herbst'],
   ['spelar', 'innebandy', ['aldrig', 'alltid', 'ofta'], ['spiele', 'spielst', 'spielt', 'spielen', 'spielen'], '{S} {V} {A} Unihockey', '{s} {A} Unihockey {V}', 'På onsdagar', 'Mittwochs'],
   ['jobbar', 'hemifrån', ['aldrig', 'alltid', 'ofta'], ['arbeite', 'arbeitest', 'arbeitet', 'arbeiten', 'arbeiten'], '{S} {V} {A} von zu Hause', '{s} {A} von zu Hause {V}', 'På måndagar', 'Montags'],
-  ['tar', 'semester', ['aldrig', 'alltid', 'ofta'], ['mache', 'machst', 'macht', 'machen', 'machen'], '{S} {V} {A} Urlaub', '{s} {A} Urlaub {V}', 'I juli', 'Im Juli'],
+  ['tar', 'semester i juli', ['aldrig', 'alltid', 'ofta'], ['mache', 'machst', 'macht', 'machen', 'machen'], '{S} {V} {A} im Juli Urlaub', '{s} {A} im Juli Urlaub {V}', 'Numera', 'Inzwischen'],
   ['glömmer', 'nycklarna', ['aldrig', 'alltid', 'ofta'], ['vergesse', 'vergisst', 'vergisst', 'vergessen', 'vergessen'], '{S} {V} {A} die Schlüssel', '{s} {A} die Schlüssel {V}', 'På morgonen', 'Morgens'],
   ['hittar', 'glasögonen', ['inte'], ['finde', 'findest', 'findet', 'finden', 'finden'], '{S} {V} die Brille {A}', '{s} die Brille {A} {V}', 'Just nu', 'Gerade'],
   ['vet', 'svaret', ['inte'], ['weiß', 'weißt', 'weiß', 'wissen', 'wissen'], '{S} {V} die Antwort {A}', '{s} die Antwort {A} {V}', 'Ärligt talat', 'Ehrlich gesagt'],
@@ -349,24 +349,28 @@ function genInte(){
   const fill = (t, cap) => t.replace('{S}', s[1]).replace('{s}', s[2]).replace('{V}', vp[3][s[3]]).replace('{A}', ADV_DE[adv]);
   const rest = vp[1] ? ' ' + vp[1] : '';
   const roll = Math.random();
-  let sv, de, note;
+  // pos: die geprüfte Stellung als Wortfolge, * = ein beliebiges Wort (das Verb). Stimmt sie, liegt ein Fehler woanders.
+  let sv, de, note, pos;
   if (roll < 0.5) {
     const intro = pick(INTRO_SV.filter(x => x[2].split(' ').includes(adv) && !(x[3] === 0 && s[3] === 0)));
     sv = `${intro[0]} ${s[0]} ${adv} ${vp[0]}${rest}.`;
     de = `${intro[1]} ${fill(vp[5])}.`;
     note = `Im Nebensatz steht „${adv}“ vor dem Verb: … ${s[0]} ${adv} ${vp[0]}.`;
+    pos = [intro[0].split(' ').pop().toLowerCase(), s[0], adv];
   } else if (roll < 0.75) {
     sv = `${s[0][0].toUpperCase() + s[0].slice(1)} ${vp[0]} ${adv}${rest}.`;
     de = `${fill(vp[4])}.`;
     note = `Im Hauptsatz steht „${adv}“ direkt nach dem Verb: ${s[0]} ${vp[0]} ${adv}.`;
+    pos = [s[0], '*', adv];
   } else {
     sv = `${vp[6]} ${vp[0]} ${s[0]} ${adv}${rest}.`;
     de = `${vp[7]} ${fill(vp[4].replace('{S} {V}', '{V} {s}'))}.`;
     note = `Steht etwas anderes vorn, folgt erst das Verb, dann das Subjekt, dann „${adv}“: ${vp[6]} ${vp[0]} ${s[0]} ${adv}.`;
+    pos = [vp[6].split(' ').pop().toLowerCase(), '*', s[0], adv];
   }
   const answers = [sv];
   if (/\bidag\b/.test(sv)) answers.push(sv.replace('idag', 'i dag'));
-  return { prompt:de, answers, label:'Übersetze ins Schwedische', note };
+  return { prompt:de, answers, label:'Übersetze ins Schwedische', note, pos, posLabel:`Die Stellung von „${adv}“ stimmt` };
 }
 
 

@@ -205,13 +205,35 @@ function runBar(r){
   else topic = trapMeta(r.lang, itemById(ex.id).trap).label;
   const prog = r.endless
     ? `<span class="count grow">${r.ok} richtig, ${r.bad} falsch</span>`
-    : `<div class="progress" aria-hidden="true">${r.queue.map((_, i) => `<span class="seg${i < r.idx ? ' pass' : i === r.idx ? ' cur' : ''}${i === r.idx - 1 && r.cur && r.cur.intro ? ' just' : ''}"></span>`).join('')}</div><span class="count">${r.idx + 1}/${r.queue.length}</span>`;
+    : progressBar(r);
   const x = r.kind === 'daily'
     ? `<button type="button" class="x xt" data-a="quit" aria-label="Pausieren, später an derselben Stelle weitermachen">Pause</button>`
     : `<button type="button" class="x xt" data-a="${r.endless ? 'endrun' : 'quit'}" aria-label="Runde jetzt beenden, Antworten bleiben gespeichert">Beenden</button>`;
   const chosen = r.kind === 'trap' || r.kind === 'gen';
   const line = chosen ? esc(topic) + (ex.requeue ? ', zweiter Versuch' : '') : (ex.requeue ? 'Zweiter Versuch' : '');
   return `<div class="runbar">${x}${prog}</div>${line ? `<p class="topic">${line}</p>` : '<div class="topic-sp"></div>'}`;
+}
+// Stand je Aufgabe der Runde: ok, near, bad (beantwortet), done (Ergebnis unbekannt), cur (offen), '' (kommt noch). Farben wie in der Auswertung am Ende.
+// Erste Versuche ohne gespeichertes Ergebnis (Runde aus einer älteren Version) nehmen es aus r.res, das sie in Reihenfolge enthält.
+function runMarks(r){
+  const res = r.res || []; let k = 0;
+  return r.queue.map((ex, i) => {
+    if (i < r.idx) { const x = ex.requeue ? null : res[k++]; return ex.got || (x ? (x.good ? (x.near ? 'near' : 'ok') : 'bad') : 'done'); }
+    if (i === r.idx) return r.cur && r.cur.state === 'done' && r.cur.result ? r.cur.result : 'cur';
+    return '';
+  });
+}
+// Fortschritt als Leiste: ein Feld je Aufgabe, beantwortete in der Farbe ihres Ergebnisses (schon beim Prüfen),
+// zweite Versuche als eigene Gruppe am Ende. Bei vielen Aufgaben rücken die Felder enger zusammen.
+function progressBar(r){
+  const marks = runMarks(r), n = r.queue.length, c = r.cur;
+  const re1 = r.queue.findIndex(ex => ex.requeue);
+  const cnt = { ok:0, near:0, bad:0 }; let open = 0;
+  marks.forEach((m, i) => { if (r.queue[i].requeue) { if (!m || m === 'cur') open++; } else if (cnt[m] != null) cnt[m]++; });
+  const parts = [cnt.ok && `${cnt.ok} richtig`, cnt.near && `${cnt.near} fast richtig`, cnt.bad && `${cnt.bad} falsch`, open && plural(open, 'zweiter Versuch folgt', 'zweite Versuche folgen')].filter(Boolean);
+  const aria = `Aufgabe ${r.idx + 1} von ${n}${parts.length ? ': ' + parts.join(', ') : ''}`;
+  const segs = marks.map((m, i) => `<i class="seg${m ? ' s-' + m : ''}${r.queue[i].requeue ? ' re' : ''}${i === re1 ? ' re1' : ''}${i === r.idx && c && c.enter && m !== 'cur' ? ' just' : ''}"></i>`).join('');
+  return `<div class="progress${n > 44 ? ' d2' : n > 30 ? ' d1' : ''}" role="img" aria-label="${aria}">${segs}</div><span class="count" aria-hidden="true">${r.idx + 1}/${n}</span>`;
 }
 // Hinweis als Chip. Bei „Fortgeschritten“ bleibt die Grundform verdeckt, bis man sie antippt; Auswahl-Hinweise (ser oder estar, Optionen) bleiben immer sichtbar.
 function tipChip(text, lang, c){
@@ -362,6 +384,7 @@ function feedbackHtml(r, ex, c){
   out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
   if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
+  else if (c.result === 'near' && c.why && c.why.kind === 'pos') out += `<p class="expl">${termify(c.keyOk)}. Der Unterschied liegt woanders.</p>`;
   else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {

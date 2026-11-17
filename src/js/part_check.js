@@ -100,6 +100,11 @@ function diffHtml(target, typed, lang){
   }
   return { html:T.map((w, k) => `<span class="w-${st[k]}" data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>`).join(' '), score:m ? hit / m : 0 };
 }
+// Kommt die Wortfolge pat (mit * als beliebigem Wort) zusammenhängend in den Wörtern t vor?
+function seqIn(t, pat){
+  for (let i = 0; i + pat.length <= t.length; i++) if (pat.every((p, k) => p === '*' || deacc(t[i + k]) === deacc(p))) return true;
+  return false;
+}
 // Was bei dieser Aufgabe streng geprüft wird: das Lückenwort, die ausgeschriebene Uhrzeit, das Schlüsselwort der Grammatik
 function judgeOpts(ex){
   if (ex.type === 'cloze') return { equiv:false, typo:false };
@@ -157,6 +162,7 @@ function check(){
       if (ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.mine = mineHtml(c.input, best, r.lang);
       const toks = ' ' + norm(c.input, r.lang) + ' ';
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
+      if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) c.keyOk = ex.data.posLabel;
       if (ex.type === 'free') { const item = itemById(ex.id); const g = item.gapAlts.find(x => toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
     }
     if (res === 'bad' && ex.type !== 'cloze') {
@@ -168,6 +174,8 @@ function check(){
         if (ex.type === 'gen' && !ex.data.gap && ex.data.kind !== 'time') { c.result = 'near'; c.why = { kind:'vocab' }; }
       }
     }
+    // Stellungs-Übungen: Steht das Adverb richtig, ist die geprüfte Regel getroffen. Andere Abweichungen machen es „fast richtig“.
+    if (c.result === 'bad' && ex.type === 'gen' && ex.data.pos && c.keyOk) { c.result = 'near'; c.why = { kind:'pos' }; }
   }
   finishAnswer(r, ex, c);
 }
@@ -232,6 +240,8 @@ function next(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur;
   if (c && c.state === 'done') {
     const good = c.result === 'ok' || c.result === 'near';
+    // Für die Fortschrittsleiste: Ergebnis an der Aufgabe merken (auch beim zweiten Versuch)
+    ex.got = good ? c.result : 'bad';
     // Das Rundenergebnis zählt nur den ersten Versuch. Der zweite kommt kurz nach der Lösung und sagt wenig.
     const counts = !ex.requeue;
     if (counts) { if (good) r.ok++; else r.bad++; }

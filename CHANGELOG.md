@@ -2,6 +2,9 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.31.0
+- **„Heute“: die andere Sprache erst nach dem Tagwerk, als Angebot.** Die Zeile „Spanisch · 9 fällig · heute geübt · Tagwerk starten“ unter dem Tagwerk ist weg. Vor dem Tagwerk brachte sie wenig: Die App wählt die Sprache des Tages ohnehin nach Bedarf (fällige Wiederholungen, Tage seit dem letzten Üben), wechseln geht oben über „Español | Svenska“, und ein zweites „Tagwerk starten“ machte dem Hauptknopf Konkurrenz. „9 fällig · heute geübt“ las sich zudem widersprüchlich. Nach dem Tagwerk steht die andere Sprache jetzt als erste Wahl unter „Wenn du noch Zeit hast“, mit Dauer und Inhalt, etwa „Spanisch-Tagwerk zusätzlich: Etwa 12 Minuten: 9 Wiederholungen, 6 neue Sätze, 4 Grammatik-Aufgaben“. Ist sie heute schon erledigt, entfällt das Angebot.
+
 ## 24.30.0
 - **„Pausetag“ statt „freier Tag“.** Gemeint ist ein ausgelassener Tag, der die Serie nicht unterbricht (einer pro Woche); „frei“ ließ sich als „leer“ lesen. Legende: „Pausetag, Serie hält“. Ebenso in der Serienerklärung („ein Pausetag pro Woche hält die Serie“), im Tagesdetail im Kalender und im Hinweis der Wochenleiste.
 - **Legende der Übungstage aufgeräumt:** „nur etwas geübt“ ohne den Zusatz „(Rand in Sprachfarbe)“, den das Symbol schon zeigt. Die Einträge stehen in zwei gleichen Spalten statt unregelmäßig umzubrechen; bricht ein Eintrag auf schmalen Geräten doch um, steht das Symbol neben der ersten Zeile.

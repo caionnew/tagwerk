@@ -102,8 +102,12 @@ function viewHome(){
     const left = od.queue.length - od.idx;
     card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx))} Minuten. Du machst dort weiter, wo du aufgehört hast.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
   } else if (doneToday) {
+    // Die andere Sprache erst hier, als Angebot: vorher wählt die App die Sprache des Tages nach Bedarf, und oben lässt sie sich wechseln
+    const other = activeLangs().find(l => l !== lang), op = other && !doneIn(today(), other) ? dailyPlan(other) : null;
+    const otherRow = op && op.queue.length ? `<button type="button" class="row" data-a="otherdaily" data-l="${other}"><span class="txt"><span class="rt">${LANG[other].deName}-Tagwerk zusätzlich</span><span class="rd">Etwa ${minutes(op.queue)} Minuten${[op.due ? plural(op.due, 'Wiederholung', 'Wiederholungen') : '', op.fresh ? plural(op.fresh, 'neuer Satz', 'neue Sätze') : '', op.genN ? plural(op.genN, 'Grammatik-Aufgabe', 'Grammatik-Aufgaben') : ''].filter(Boolean).map((x, i) => (i ? ', ' : ': ') + x).join('')}.</span></span></button>` : '';
     card = `<p class="eyebrow">Heute</p><p class="num">Tagwerk erledigt</p>${todayHtml(lang)}<p class="breakdown">Wenn du noch Zeit hast:</p>
       <div class="choices">
+        ${otherRow}
         <button type="button" class="row" data-a="tab" data-v="extra"><span class="txt"><span class="rt">Weiter üben</span><span class="rd">Kurze Runden, Grammatik-Training, Schreiben oder ein Thema gezielt üben.</span></span></button>
         ${(() => { const avail = BANK[lang].filter(i => !stOf(i.id)).length; if (!avail) return ''; const opts = [3, 6, 10].filter(n => n <= avail); if (!opts.length) opts.push(avail);
           return `<div class="row chiprow"><span class="txt"><span class="rt">Weitere neue Sätze lernen</span><span class="rd">Sie kommen ab morgen zur Wiederholung dazu, die nächsten Tagwerke werden etwas länger.</span></span><span class="chips" role="group" aria-label="Wie viele?">${opts.map(n => `<button type="button" class="chip" data-a="moreNew" data-n="${n}">${n}</button>`).join('')}</span></div>`; })()}
@@ -123,19 +127,7 @@ function viewHome(){
   }
   const dnow = dateOf(today());
   const hello = `<header class="hello"><div class="hello-t"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p><p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p></div>${weekStrip()}</header>`;
-  // Die andere Sprache bleibt sichtbar: Stand und ein Weg dorthin, ohne umschalten zu müssen
-  const other = activeLangs().filter(l => l !== lang)[0];
-  let otherHtml = '';
-  if (other) {
-    const n = langNeed(other), dueN = n.due, last = lastPractice(other);
-    const since = last ? dayDiff(today(), last) : null;
-    const when = since === 0 ? 'heute geübt' : since === 1 ? 'zuletzt gestern' : since == null || since >= 7 ? 'länger nicht geübt' : `zuletzt vor ${since} Tagen`;
-    const oDone = doneIn(today(), other);
-    const state = oDone ? 'Tagwerk heute erledigt' : `${dueN ? dueN + ' fällig' : 'nichts fällig'} · ${when.replace('zuletzt ', '')}`;
-    const btn = oDone ? `<button type="button" class="link" data-a="lang" data-l="${other}">Ansehen</button>` : `<button type="button" class="link" data-a="otherdaily" data-l="${other}" aria-label="${LANG[other].deName}-Tagwerk starten">${dayDone ? 'Zusätzlich starten' : 'Tagwerk starten'}</button>`;
-    otherHtml = `<div class="otherlang"><span class="sq rl-${other}-sq" aria-hidden="true"></span><p><b>${LANG[other].deName}</b> <span class="ol-m">${state}</span></p>${btn}</div>`;
-  }
-  return `${topLine()}${hello}${noticeHtml() || storeHint() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${otherHtml}${weakHtml(lang)}${findHtml(lang)}`;
+  return `${topLine()}${hello}${noticeHtml() || storeHint() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${weakHtml(lang)}${findHtml(lang)}`;
 }
 // Was heute in dieser Sprache passiert ist: Zeit, Neues, Wiederholungen, alles Üben des Tages zusammen
 function todayHtml(lang){

@@ -291,7 +291,6 @@ function doneIn(ds, l){
   return (a >= b ? 'sv' : 'es') === l;
 }
 function tagwerkCount(l, from, to){ return Object.keys(DB.done || {}).filter(d => DB.done[d] && (!from || d >= from) && (!to || d <= to) && doneIn(d, l)).length; }
-function lastPractice(l){ return Object.keys(DB.log || {}).filter(d => (dayLog(d, l).n || 0) > 0).sort().pop() || null; }
 function activeLangs(){ return ['sv', 'es'].filter(l => BANK[l].some(i => stOf(i.id)) || Object.keys(DB.log || {}).some(d => (dayLog(d, l).n || 0) > 0)); }
 function langNeed(l){
   const t = today(), due = dueItems(l).length, cap = Math.max(1, size().maxRev);

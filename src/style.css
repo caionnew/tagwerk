@@ -745,10 +745,6 @@ section.ex #fb:empty{ display:none; }
 .y-l .sq{ margin-right:6px; }
 .pcr{ margin:0 0 10px; }
 
-.otherlang{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:10px 2px 0; padding:12px 14px; border:1px solid var(--line); border-radius:14px; font-size:15px; color:var(--muted); }
-.otherlang p{ margin:0; line-height:1.45; }
-.otherlang b{ color:var(--ink); font-weight:650; }
-.otherlang .link{ white-space:nowrap; }
 
 .hintw.tipbtn{ border:1px dashed currentColor; background:none; cursor:pointer; font:inherit; font-size:inherit; }
 
@@ -776,10 +772,6 @@ section.ex #fb:empty{ display:none; }
 .wkc{ font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
 .wkc.warn{ color:var(--warn); font-weight:650; }
 /* Andere Sprache: eine Zeile */
-.otherlang{ align-items:center; }
-.otherlang .sq{ flex:none; width:10px; height:10px; border-radius:3px; }
-.otherlang p{ flex:1; }
-.ol-m{ color:var(--muted); }
 /* Überblick: vier Kacheln */
 .kpis.k4{ grid-template-columns:repeat(4, 1fr); }
 /* Unter den Zahlen, je in eigener Zeile: Tagwerke nach Sprache, Startdatum. Gleiche Schrift, gleichmäßige Abstände */

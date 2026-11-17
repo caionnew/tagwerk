@@ -1,4 +1,4 @@
-// Tagwerk je Sprache: Nach dem spanischen Tagwerk zeigt Schwedisch sein eigenes (freiwilliges) Tagwerk, und Spanisch steht als „heute erledigt“.
+// Tagwerk je Sprache: Nach dem spanischen Tagwerk zeigt Schwedisch sein eigenes (freiwilliges) Tagwerk; im erledigten Spanisch steht Schwedisch als Wahl für „Wenn du noch Zeit hast“.
 const { test, expect, APP, seed, richDB } = require('./helpers');
 test('Spanisch erledigt, Schwedisch-Tagwerk zusätzlich startbar, Stand stimmt', async ({ page }) => {
   const db = richDB('sv'); const pad = n => String(n).padStart(2, '0'), t = new Date();
@@ -10,11 +10,16 @@ test('Spanisch erledigt, Schwedisch-Tagwerk zusätzlich startbar, Stand stimmt',
   await page.goto(APP);
   await expect(page.locator('.today .eyebrow')).toContainText('Zusätzlich');
   await expect(page.locator('.today [data-a=daily]')).toContainText('Schwedisch-Tagwerk starten');
-  await expect(page.locator('.otherlang')).toContainText('Spanisch');
-  await expect(page.locator('.otherlang')).toContainText('Tagwerk heute erledigt');
+  await expect(page.locator('.today')).toContainText('Spanisch');
+  // Spanisch ist erledigt: kein Angebot, es noch einmal zu starten
+  await expect(page.locator('[data-a=otherdaily]')).toHaveCount(0);
   await page.click('[data-a=lang][data-l=es]');
   await expect(page.locator('.today')).toContainText('Tagwerk erledigt');
-  await expect(page.locator('.otherlang [data-a=otherdaily]')).toContainText('Zusätzlich starten');
-  await page.click('.otherlang [data-a=otherdaily]');
+  // Nach dem Tagwerk: die andere Sprache als erste Wahl unter „Wenn du noch Zeit hast“, mit Dauer und Inhalt
+  const row = page.locator('.today .choices .row').first();
+  await expect(row).toHaveAttribute('data-a', 'otherdaily');
+  await expect(row.locator('.rt')).toHaveText('Schwedisch-Tagwerk zusätzlich');
+  await expect(row.locator('.rd')).toContainText(/^Etwa \d+ Minuten/);
+  await row.click();
   await expect(page.locator('.runbar')).toBeVisible();
 });

@@ -43,7 +43,7 @@ document.addEventListener('click', e => {
     case 'daily': { const d = openDaily(); if (d && d.lang === S.lang) { resumeDaily(); render(); window.scrollTo(0, 0); } else startRun('daily'); break; }
     case 'quick': startRun('quick'); break;
     case 'pickTopic': goView('pickTopic'); break;
-    case 'trapgo': startRun('trap', { trap:b.dataset.t }); break;
+    case 'trapgo': if (b.dataset.l && b.dataset.l !== S.lang) S.lang = b.dataset.l; startRun('trap', { trap:b.dataset.t }); break;
     case 'forms': { const g = genIds(S.lang); if (g.length === 1) startRun('gen', { gen:g[0] }); else goView('pickGen'); break; }
     case 'gengo': startRun('gen', { gen:b.dataset.g }); break;
     case 'dict': startRun('dict'); break;
@@ -253,7 +253,7 @@ document.addEventListener('click', e => {
     case 'tplay': { const ex = r && r.queue[r.idx]; if (ex && ex.data) speak(ex.data.say, r.lang, Number(b.dataset.rate)); break; }
     case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; render(); window.scrollTo(0, 0); break; }
     case 'term': S.pop = { type:'term', k:b.dataset.k, lang:(S.view === 'run' && S.run && S.run.lang) || S.lang }; renderPopup(); break;
-    case 'topic': openTopic(((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
+    case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
     case 'popanki': { const P = S.pop; if (!P) break; const e = lookupWord(P.lang, P.w); const ctx = P.sent || ''; shareToAnki(P.w, (e ? (e.l && e.l !== P.w ? e.l + ': ' : '') + e.de : '') + (ctx ? '\n\n' + ctx : '')); break; }
@@ -297,6 +297,8 @@ document.addEventListener('click', e => {
     }
     case 'autoplay': DB.settings.autoplay = !DB.settings.autoplay; save(); render(); break;
     case 'calday': S.calDay = S.calDay === b.dataset.d ? null : b.dataset.d; render(); break;
+    case 'mpick': if (S.minRange === 'w' && minWeeksOk()) S.minWeek = b.dataset.k; else S.minDay = b.dataset.k; render(); break;
+    case 'mrange': S.minRange = b.dataset.v; render(); break;
     case 'toSettings': case 'settings': S.notice = null; S.settingsFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'home'; goView('settings'); break;
     case 'colall': S.colAll = !S.colAll; render(); break;
     case 'findopen': S.findOpen = b.dataset.id; render(); break;

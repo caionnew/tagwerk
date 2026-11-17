@@ -2,6 +2,16 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.36.0
+**Lernminuten neu gestaltet.**
+- **Tag antippen:** Jede Säule ist antippbar. Darunter steht, was an dem Tag lief, je Sprache: Minuten, ob das Tagwerk erledigt ist, Aufgaben, Anteil auf Anhieb richtig, neue Sätze, gewusste Wiederholungen, gefestigte Sätze, die Themen mit Fehlern (antippbar, öffnet das Themenblatt in der richtigen Sprache) und zu welcher Uhrzeit geübt wurde. Vorgewählt ist heute oder, wenn heute noch nichts war, der letzte Übungstag. Pausetage und nicht geübte Tage sagen das.
+- **Wochen:** Ab drei Wochen Übung schaltet „14 Tage | 12 Wochen“ auf Wochensäulen (seit Beginn, höchstens 12). Eine Woche antippen zeigt dasselbe für die Woche, dazu die Zahl der Tagwerke je Sprache und an wie vielen Tagen geübt wurde.
+- **Kennzahlen über dem Diagramm:** Minuten im Zeitraum, Übungstage (11 von 14), Minuten pro Übungstag bzw. pro Woche und beste Woche. Darunter der Vergleich mit den 14 Tagen davor, sobald es die gab („Die 14 Tage davor: 196 Minuten, jetzt 11 weniger.“).
+- **Diagramm:** gestrichelte Linie für den Durchschnitt, feine Trenner vor jedem Montag, Pausetage gestrichelt wie im Kalender, höhere Säulen, gewählter Tag hinterlegt. Bildschirmleser lesen je Säule Datum und Minuten.
+- **Kalender:** Ein Tipp auf einen Tag zeigt jetzt dieselbe Karte statt einer Textzeile, für jeden Tag seit Beginn (Treffer, Themen und Uhrzeit, soweit die Fehlerquellen noch gespeichert sind, also 120 Tage).
+- **Fehler behoben:** „10 Aufgaben üben“ im Themenblatt einer anderen Sprache als der gerade gewählten startete die Übung in der falschen Sprache.
+- Keine neuen gespeicherten Daten; alles kommt aus dem Tagesprotokoll und den Fehlerquellen, die es schon gibt.
+
 ## 24.35.0
 - **Erklärungen passen zum Satz, in allen Themen.** Alle 20 Themen in beiden Sprachen geprüft: Die allgemeine Regel des Themas passte bei rund der Hälfte der Sätze nicht oder nur ungefähr. Beispiele: Im Thema ser/estar hieß es „estar für Ort“ auch bei „La fiesta es en casa de Ana“ (Ort eines Ereignisses: ser) und bei der Uhrzeit. Bei „¡No se lo digas!“ stand „an den Imperativ hängen“, beim verneinten Imperativ stehen die Pronomen aber davor. Bei Plusquamperfekt-Sätzen (hade gått, se había ido) war nur von Präteritum und Perfekt bzw. Indefinido und Imperfecto die Rede, bei „Lisa och hennes man“ hätte die Regel sogar „sin“ nahegelegt. 193 Sätze haben jetzt eine eigene Erklärung (mit den 22 aus 24.34.3 sind es 215 von 441). Bei den Falschen Freunden steht jeweils, was das ähnliche Wort wirklich heißt (mantel = Tischdecke, termin = Semester). Alle Lösungen wurden dabei mitgeprüft.
 - **Zwei Themenregeln korrigiert:** Wortstellung im Nebensatz nennt jetzt inte, aldrig, alltid und ähnliche Wörter (vorher nur „inte“). Objektpronomen: angehängt an Infinitiv, Gerundium und **bejahten** Imperativ.

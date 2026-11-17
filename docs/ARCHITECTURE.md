@@ -47,6 +47,8 @@ Nachsprechen (`part_shadow.js`) führt je Satz durch drei Schritte: Hören, Mits
 
 Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster Antwort (Satz-ID oder Generator, richtig, fast, neu). `roundTopics` gruppiert danach nach Thema, `topicsHtml` zeigt die Punkte und bündelt Fehler, wenn ein Thema klar vorn liegt. `bonusCands` wählt die Ausdrücke für den Bonus „Eigener Satz“ (Lücke, sonst das in der Satzbank seltenste Inhaltswort), `bonusCheck` prüft ohne Netz. Der Bonus-Stand liegt in `S.run.bonus` und wird nicht gespeichert.
 
+Die Lernminuten auf „Fortschritt“ (`minutesHtml`) zeigen 14 Tage oder bis zu 12 Wochen als gestapelte Säulen je Sprache. `actOf` summiert für eine Reihe von Tagen je Sprache das Tagesprotokoll `DB.log` (Minuten, Aufgaben, neu, Wiederholungen, gefestigt), die Tagwerke und die Fehlerquellen `DB.tlog` (erste Versuche und Fehler je Übungsart und Thema). `dayCard` und `weekCard` zeigen das für den angetippten Tag bzw. die Woche; der Kalender nutzt `dayCard` ebenso. Die Auswahl liegt nur in `S` (`minDay`, `minWeek`, `minRange`).
+
 Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `runMarks` liefert den Stand: Ergebnis aus `got` an der Aufgabe (ältere Runden ohne `got`: der Reihe nach aus `res`), die aktuelle Aufgabe nach dem Prüfen schon mit ihrem Ergebnis. Farben wie die Ergebnisleiste am Rundenende; zweite Versuche stehen als eigene Gruppe am Ende.
 
 ## Datenspeicher

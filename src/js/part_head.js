@@ -451,7 +451,6 @@ function startRun(kind, opts){
     if (t) queue = shuffle(gapSentences(t)).map(x => textGapData(lang, x, t.title)).filter(Boolean).slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
   }
   else if (kind === 'dict') queue = freshFirst(BANK[lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'dict_' + lang, 10).map(i => ({ type:'dict', id:i.id }));
-  else if (kind === 'hard') queue = hardItems(lang).map(i => ({ type:'free', id:i.id }));
   else if (kind === 'extraNew') queue = pickNew(lang, (opts && opts.n) || size().newPer).map(exFor);
   if (!queue.length) { note('Dafür gibt es gerade nichts zu üben.', 'warn'); render(); return; }
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
@@ -459,11 +458,6 @@ function startRun(kind, opts){
   S.notice = null;
   S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, strongBefore:strongCount(lang), res:[], missed:[], secs:0, combo:0, best:0 };
   S.view = 'run'; prepCur(); persistRun(); render(); window.scrollTo(0, 0);
-}
-function hardItems(lang){
-  // Nur Sätze, die noch nicht gefestigt sind: Wer einen Satz seit Monaten kann, soll ihn hier nicht ewig sehen
-  return BANK[lang].filter(i => { const s = stOf(i.id); return s && s.bad >= 2 && (s.ivl || 0) < MATURE; })
-    .sort((a, b) => { const x = stOf(a.id), y = stOf(b.id); return ((y.d || 5) - (x.d || 5)) || (y.bad - x.bad); }).slice(0, 5);
 }
 // Zufallsauswahl ohne Wiederholung der letzten Runden: zuletzt Gewähltes kommt nach hinten, solange es genug anderes gibt
 // prefer: unter den länger nicht gezeigten zuerst diese (etwa Sätze mit echter Aufnahme)

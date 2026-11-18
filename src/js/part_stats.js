@@ -130,13 +130,34 @@ function errStats(lang, days){
   return out;
 }
 const trapLabel = (lang, id) => { const tr = trapMeta(lang, id); if (tr) return tr.label; return { genus:lang === 'sv' ? 'en oder ett' : 'el oder la', zeit:'Uhrzeiten', zahl:'Zahlen', eigene:'Eigene Sätze' }[id] || id; };
+// Hartnäckige Sätze: bei späteren Wiederholungen mindestens zweimal nicht gewusst (lapses; der erste Kontakt zählt nicht),
+// noch nicht gefestigt und in den letzten 30 Tagen geübt. Wer einen Satz inzwischen kann, sieht ihn hier nicht mehr.
+function hardSentences(lang){
+  const t = today();
+  return BANK[lang].filter(i => { const st = stOf(i.id); return st && (st.lapses || 0) >= 2 && (st.ivl || 0) < MATURE && st.last && dayDiff(t, st.last) < 30; })
+    .sort((a, b) => { const x = stOf(a.id), y = stOf(b.id); return (y.lapses - x.lapses) || ((y.d || 5) - (x.d || 5)); }).slice(0, 6);
+}
+// Gemeinsames Thema der hartnäckigen Sätze: das Muster ist aufschlussreicher als der einzelne Satz
+function hardPattern(lang, list){
+  const n = {}; list.forEach(i => { if (i.trap && trapMeta(lang, i.trap)) n[i.trap] = (n[i.trap] || 0) + 1; });
+  const top = Object.keys(n).sort((a, b) => n[b] - n[a])[0];
+  return top && n[top] >= 2 ? { trap:top, n:n[top] } : null;
+}
 function errorSourcesHtml(lang){
-  const s = errStats(lang, 30), tab = S.errTab || 'p';
+  const s = errStats(lang, 30), hard = hardSentences(lang), few = s.bad < 8;
   const head = `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2>`;
-  if (s.bad < 8) return `${head}<div class="chart"><p class="legend" style="margin:0">${s.n ? `${plural(s.bad, 'Fehler', 'Fehler')} bei ${s.n} Aufgaben. ` : ''}Die Auswertung erscheint ab 8 Fehlern in 30 Tagen.</p></div>`;
-  const seg = `<div class="minseg errseg" role="radiogroup">${[['p', 'Thema'], ['t', 'Übungsart'], ['e', 'Fehlerart']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
+  const gate = `${s.n ? `${plural(s.bad, 'Fehler', 'Fehler')} bei ${s.n} Aufgaben. ` : ''}Die Auswertung erscheint ab 8 Fehlern in 30 Tagen.`;
+  if (few && !hard.length) return `${head}<div class="chart"><p class="legend" style="margin:0">${gate}</p></div>`;
+  const tab = S.errTab || (few ? 's' : 'p');
+  const seg = `<div class="minseg errseg" role="radiogroup">${[['p', 'Thema'], ['t', 'Übungsart'], ['e', 'Fehlerart'], ['s', 'Sätze']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
   let rows = '', note = '';
-  if (tab === 'p') {
+  if (tab === 's') {
+    rows = hard.map(i => { const st = stOf(i.id), tap = !!(i.trap && trapMeta(lang, i.trap)); return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="erow srow"><span class="el"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span>${tap ? `<span class="stp">${esc(trapLabel(lang, i.trap))}</span>` : ''}</span><span class="ev">${st.lapses}×</span></${tap ? 'button' : 'div'}>`; }).join('');
+    const pat = hardPattern(lang, hard);
+    note = !hard.length ? 'Gerade kein Satz, den du bei Wiederholungen mehrmals nicht wusstest.'
+      : `${pat ? `<b>${esc(trapLabel(lang, pat.trap))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Antippen für die Regel.`;
+  } else if (few) note = gate;
+  else if (tab === 'p') {
     const list = Object.keys(s.p).map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.bad).sort((a, b) => b.bad - a.bad).slice(0, 6);
     const max = Math.max(1, ...list.map(x => x.bad));
     rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / max * 100)}%"></span></span><span class="ev">${x.bad}/${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');

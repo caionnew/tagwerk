@@ -21,22 +21,25 @@ test('Sprachreiter: Kennzahlen, Themenraster und Fehlerquellen', async ({ page }
   await page.click('button.erow >> nth=0');
   await expect(page.locator('.pop .pop-h')).toBeVisible();
 });
-test('Schwierigste Sätze: in beiden Sprachen gleich, Satz nutzt die volle Zeilenbreite', async ({ page }) => {
+test('Fehlerquellen, Reiter „Sätze“: hartnäckige Sätze in beiden Sprachen, volle Zeilenbreite, Tipp öffnet die Regel', async ({ page }) => {
   for (const lang of ['sv', 'es']) {
     const db = richDB(lang);
-    // Zwei Sätze mehrfach falsch und noch nicht gefestigt
-    Object.keys(db.st).slice(1, 3).forEach(id => Object.assign(db.st[id], { bad:3, ivl:6, d:8 }));
+    // Zwei Sätze bei Wiederholungen mehrfach nicht gewusst und noch nicht gefestigt
+    Object.keys(db.st).slice(1, 3).forEach((id, k) => Object.assign(db.st[id], { bad:3 - k, lapses:3 - k, ivl:6, d:8 }));
     const p = await page.context().newPage();
     await seed(p, db);
     await p.goto(APP);
     await p.click('[data-a=tab][data-v=progress]');
     await p.click(`[data-a=ptab][data-t=${lang}]`);
-    const rows = p.locator('.row.kv');
+    await expect(p.locator('[data-a=hard]')).toHaveCount(0);
+    await p.click('[data-a=errtab][data-t=s]');
+    const rows = p.locator('.erows .srow');
     await expect(rows).toHaveCount(2);
-    const g = await rows.first().evaluate(r => { const t = r.querySelector('.txt').getBoundingClientRect(), v = r.querySelector('.val').getBoundingClientRect(), b = r.getBoundingClientRect(); return { row:b.width, txt:t.width, valRight:b.right - v.right }; });
-    expect(g.txt).toBeGreaterThan(g.row * 0.5);
-    expect(g.valRight).toBeLessThan(40);
-    await expect(p.locator('[data-a=hard]')).toHaveText('Diese 2 Sätze üben');
+    await expect(rows.first().locator('.ev')).toHaveText('3×');
+    const g = await rows.first().evaluate(r => ({ row:r.getBoundingClientRect().width, txt:r.querySelector('.el').getBoundingClientRect().width }));
+    expect(g.txt).toBeGreaterThan(g.row * 0.7);
+    await p.click('button.srow >> nth=0');
+    await expect(p.locator('.pop .pop-h')).toBeVisible();
     await p.close();
   }
 });

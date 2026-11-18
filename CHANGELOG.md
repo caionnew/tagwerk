@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.51.0
+**„Schwierigste Sätze“ wird zum Reiter „Sätze“ unter „Fehlerquellen“; der Knopf zum Extra-Üben entfällt.**
+- **Neuer Reiter „Sätze“** neben Thema, Übungsart und Fehlerart. Er zeigt bis zu 6 hartnäckige Sätze: bei Wiederholungen mindestens zweimal nicht gewusst, noch nicht gefestigt, in den letzten 30 Tagen geübt. Fehler beim ersten Kontakt mit einem neuen Satz zählen nicht mehr mit; vorher reichten zwei Fehler insgesamt.
+- **Thema je Satz:** Unter jedem Satz steht sein Thema, ein Tipp öffnet die Regel mit „10 Aufgaben üben“. Teilen sich mindestens zwei Sätze ein Thema, nennt die Zeile darunter das Muster, etwa „Konditional & si-Sätze steckt in 2 von 3 Sätzen“.
+- **Knopf „Diese Sätze üben“ entfernt.** Die Lösungen standen direkt darüber, die Runde prüfte also kaum Abruf, zählte aber als Wiederholung und verschob die nächste planmäßige. Die Sätze kommen im Tagwerk ohnehin öfter.
+- Bei weniger als 8 Fehlern in 30 Tagen öffnet der Abschnitt direkt mit „Sätze“, sofern es welche gibt.
+
 ## 24.50.2
 - **Fortschritt, „Schwierigste Sätze“:** Die Sätze standen in einer schmalen Spalte, ein Wort je Zeile, und „2× falsch“ ragte hinein. Ursache: Die Variantenzeilen von „Land & Leute“ nutzten denselben Klassennamen `kv` mit festem Raster (28 px für die Flagge). Sie heißen jetzt `kvar`; der Satz nimmt wieder die volle Breite, die Zahl steht rechts. Neuer Browser-Test prüft das für beide Sprachen.
 

@@ -608,11 +608,9 @@ function viewRunDone(){
     <div class="rows">${missed.slice(0, 6).map(x => `<div class="row static"><span class="txt"><span class="rt wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="rd">${esc(x.de)}</span>` : ''}</span>${speakBtn(x.target, lang)}</div>`).join('')}</div>
     ${missed.length > 6 ? `<p class="legend">und ${missed.length - 6} weitere</p>` : ''}${missed.some(x => x.id) ? '<p class="legend">Sie kommen morgen wieder.</p>' : ''}` : '';
   const nudge = !daily && !DB.done[today()] && !S.dailyRun ? `<div class="notice ok"><span>Das Tagwerk für heute steht noch aus.</span><button type="button" class="link" data-a="daily">Starten</button></div>` : !daily && S.dailyRun && S.dailyRun.lang === lang ? `<div class="notice ok"><span>Dein Tagwerk ist noch offen.</span><button type="button" class="link" data-a="daily">Fortsetzen</button></div>` : '';
-  const again = !daily && r.kind !== 'hard';
   const buttons = daily
     ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button><button type="button" class="primary" data-a="tab" data-v="home">Fertig</button>'
-    : again ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>'
-    : '<button type="button" class="primary" data-a="tab" data-v="extra">Fertig</button>';
+    : '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   return `<div class="donebox">
     ${daily ? `<svg class="stamp${r.stamped ? '' : ' draw'}" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/></svg>` : ''}
@@ -930,7 +928,6 @@ function viewProgress(){
   const fc = forecast(lang), fcMax = Math.max(1, ...fc.map(f => f.n)), cap = size().maxRev;
   const dist = { anchored:0, mature:0, young:0, neu:0 };
   items.forEach(i => { const st = stOf(i.id); if (!st) dist.neu++; else if ((st.ivl || 0) >= ANCHORED) dist.anchored++; else if ((st.ivl || 0) >= MATURE) dist.mature++; else dist.young++; });
-  const hard = hardItems(lang);
   const collected = DB.own[lang].map(o => ({ id:o.id, de:o.de, target:o.target })).concat(DB.tat[lang].filter(o => !o.auto).map(o => ({ id:o.id, de:o.de, target:o.target })));
   const firstDate = tot.first ? dateOf(tot.first) : null;
   const ret = rev30 >= 10 ? revOk30 / rev30 : null;
@@ -984,7 +981,6 @@ function viewProgress(){
   <h2 class="grp">Wiederholungen der nächsten Tage</h2>
   <div class="chart">${fc.every(f => !f.n) ? '<p class="stat" style="margin:0">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
   ${fc.some(f => f.n > cap) ? `<p class="legend">Höchstens ${cap} je Tagwerk, der Rest kommt am Tag darauf.</p>` : ''}</div>
-  ${hard.length ? `<h2 class="grp">Schwierigste Sätze</h2><div class="rows">${hard.map(i => `<div class="row static kv"><span class="txt"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span></span><span class="val dimv">${stOf(i.id).bad}× falsch</span></div>`).join('')}</div><div class="btnrow"><button type="button" class="ghost" data-a="hard">${hard.length === 1 ? 'Diesen Satz üben' : `Diese ${hard.length} Sätze üben`}</button></div>` : ''}
   ${errorSourcesHtml(lang)}
   ${topicGridHtml(lang)}
   ${writingTrendHtml(lang)}

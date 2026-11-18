@@ -300,7 +300,6 @@ document.addEventListener('click', e => {
     case 'toSettings': case 'settings': S.notice = null; S.settingsFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'home'; goView('settings'); break;
     case 'colall': S.colAll = !S.colAll; render(); break;
     case 'findopen': S.findOpen = b.dataset.id; render(); break;
-    case 'hard': startRun('hard'); break;
     case 'export': {
       flushSave();
       const name = backupName(), blob = new Blob([backupText()], { type:'application/json' });

@@ -320,7 +320,9 @@ function next(){
         if (!good && !(r.missed || []).some(x => x.id === ex.id)) (r.missed = r.missed || []).push({ id:ex.id, target:item.target, de:item.de });
       }
     }
-    if (ex.type === 'gen' && !good && counts) (r.missed = r.missed || []).push({ target:ex.data.full || ex.data.answers[0], de:ex.data.deLine || (ex.data.gap ? '' : ex.data.prompt), gen:ex.gen, data:ex.data });
+    // Lesetext-Lücke: unter dem Satz das gesuchte Wort mit Bedeutung, nicht die Bedeutung allein (sähe aus wie eine Übersetzung)
+    if (ex.type === 'gen' && !good && counts) (r.missed = r.missed || []).push({ target:ex.data.full || ex.data.answers[0], de:ex.data.mean ? `${ex.data.answers[0]} = ${ex.data.mean}` : ex.data.deLine || (ex.data.gap ? '' : ex.data.prompt), gen:ex.gen, data:ex.data });
+    if (ex.type === 'gen' && good && ex.data.looked) lookedDone(ex.data.looked);
     if (ex.type === 'gen'  && counts) {
       const g = DB.gen[ex.gen] || (DB.gen[ex.gen] = { ok:0, bad:0 });
       if (good) g.ok++; else g.bad++;

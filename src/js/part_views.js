@@ -321,7 +321,7 @@ function viewRun(){
     if (d.gap) {
       const pos = d.prompt.indexOf('___');
       const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
-      const field = done ? gapDone(c, d.full.slice(pos, d.full.length - (d.prompt.length - pos - 3)), lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Lücke">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
+      const field = done ? gapDone(c, d.full.slice(pos, d.full.length - (d.prompt.length - pos - 3)), lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${d.ph ? ` placeholder="${esc(d.ph)}"` : ''}${done ? ' readonly' : ''} aria-label="Lücke${d.ph ? `, beginnt mit ${esc(d.ph.replace('…', ''))}` : ''}">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
       body = `<p class="kicker">${esc(d.label)}${d.hint ? tipChip(d.hint, lang, c) : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
         <div class="ex-a"><p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
         ${done ? '' : charbar(lang)}</div>`;

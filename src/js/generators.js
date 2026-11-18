@@ -589,25 +589,143 @@ const PREP_ES = [
   ['Huyó ___ la policía.', 'de', ['de', 'a', 'por'], 'Er floh vor der Polizei.', 'huir de = fliehen vor.']
 ];
 const genPrep = list => () => { const d = genVerbind(list)(); d.label = 'Welche Präposition?'; return d; };
-/* ---------- Lücken aus Lesetexten: ein gebeugtes Wort aus einem Satz eines gelesenen Textes ---------- */
-function textGapData(lang, sentence, title){
-  const toks = sentence.split(' ');
-  const cand = toks.map((w, i) => ({ w:w.replace(/[.,;:!?¡¿«»"„“()]/g, ''), i })).filter(x => x.w.length >= 5 && /^[a-zà-ÿ]+$/i.test(x.w) && (x.i === 0 || x.w[0] === x.w[0].toLowerCase()));
-  if (!cand.length) return null;
-  const withL = cand.map(x => { const e = typeof lookupWord === 'function' ? lookupWord(lang, x.w) : null; return Object.assign(x, { lemma:e && e.l && e.l.toLowerCase() !== x.w.toLowerCase() ? e.l : null }); });
-  const pool = withL.some(x => x.lemma) ? withL.filter(x => x.lemma) : withL;
-  const x = pool[Math.floor(Math.random() * pool.length)];
-  const prompt = toks.map((w, i) => (i === x.i ? w.replace(x.w, '___') : w)).join(' ');
-  return { prompt, answers:[x.w.toLowerCase()], label:title ? `Aus „${title}“` : 'Ergänze aus dem Text', hint:x.lemma ? `Grundform: ${x.lemma}` : `beginnt mit „${x.w.slice(0, 2).toLowerCase()}…“`, gap:true, full:sentence, note:'' };
+/* ---------- Lücken aus Lesetexten: ein Wort aus einem Satz eines gelesenen Textes, die deutsche Bedeutung als Hinweis ---------- */
+// Die Bedeutung legt fest, welches Wort fehlt; die Form ergibt sich aus dem Satz. Die Grundform gibt es zusätzlich (bei
+// „Fortgeschritten“ erst auf Tipp). Anfangsbuchstaben nur noch bei nachgeschlagenen Wörtern ohne Wörterbucheintrag.
+// Häufige Wörter üben hier nichts mehr: Funktionswörter und Grundwortschatz fallen heraus, dazu alles aus den A2-Sätzen
+// der Satzbank. Gebeugte Verbformen bleiben (consiguieron, tände), dort steckt die Übung in der Form; nur Hilfsverben nicht.
+const GAP_COMMON = {
+  sv:new Set(`i och på som en ett med av det den de för att till men om inte man ut från sedan sig efter upp under all alla allt någon något några eller när därför först så där också samma ofta hur bara då över ändå nästan fram sin sitt sina två tre ingen inget inga flera varje länge mellan mot bland genom hos utan vid åt bakom framför innan medan eftersom fast fastän trots även redan aldrig alltid nu här hit dit hem borta inne ute igen kanske ju väl nog mycket lite litet mer mest mindre minst många fler flest jag du han hon vi ni dom mig dig honom henne oss er dem min mitt mina din ditt dina hans hennes vår vårt våra ert era deras vem vad vilken vilket vilka var varför denna detta dessa sådan själv annan andra halv tusen hundra
+    år dag gång tid liv värld hus land del sätt fråga barn människa kvinna mamma pappa familj vän stad arbete jobb sak vecka månad natt kväll morgon vatten namn problem bok bil skola mat pengar exempel
+    ny gammal stor liten lång kort hög låg bra dålig god bättre bäst sämre sämst första sista hel egen viktig vanlig
+    vara ha bli få kunna vilja ska skola måste göra säga gå komma se ta ge veta stå ligga sitta finnas tycka tro tänka leva bo heta börja sluta prata läsa skriva äta dricka sova köpa`.split(/\s+/)),
+  es:new Set(`a al ante bajo con contra de del desde durante en entre hacia hasta mediante para por según sin sobre tras y e o u ni pero sino aunque porque pues que si como cuando donde mientras ya todavía aún muy más menos mucho poco tan tanto bastante demasiado casi solo sólo siempre nunca jamás ahora antes después luego entonces hoy ayer mañana aquí allí ahí allá acá bien mal así sí no quizá quizás también tampoco además incluso algo alguien nada nadie alguno ninguno otro mismo todo cada cualquiera varios este ese aquel esto eso aquello mi tu su nuestro vuestro mío tuyo suyo yo tú él ella ello nosotros vosotros ellos ellas usted ustedes me te se nos os lo la le les los las el un uno una qué quién cuál cuánto cómo dónde cuándo cual quien cuyo cuanto mil cien ciento millón
+    año día vez vida tiempo mundo casa parte país persona gente hombre mujer niño hijo madre padre familia amigo ciudad trabajo cosa forma manera momento caso lugar hora semana mes noche tarde agua nombre problema idea historia grupo punto mano palabra libro calle coche escuela comida dinero ejemplo verdad número final lado señor
+    nuevo grande gran pequeño bueno malo mejor peor mayor menor viejo joven largo corto alto primero segundo último propio importante posible difícil fácil igual cierto claro único
+    ser estar haber tener hacer poder decir ir ver dar saber querer llegar pasar deber poner parecer quedar creer hablar llevar dejar seguir encontrar llamar venir pensar salir volver tomar conocer vivir sentir mirar contar empezar esperar buscar entrar trabajar escribir perder entender pedir recibir recordar terminar comer beber dormir comprar gustar necesitar usar leer abrir cerrar jugar estudiar`.split(/\s+/))
+};
+const GAP_AUX = { sv:new Set('vara ha bli få kunna vilja ska skola måste finnas göra'.split(' ')), es:new Set('ser estar haber tener ir poder hacer'.split(' ')) };
+const GAP_VERBFORM = /\((Präteritum|Supinum|Präsens|Indefinido|Imperfecto|Subjuntivo|Partizip)/;
+// Vor einem Artikel, Begleiter oder einer Präposition steht kein gebeugtes Verb: Dort ist die Form ein Nomen
+// (el vino, la cocina, de lucha, nya lagar), und die Verbbedeutung aus dem Wörterbuch wäre falsch.
+const GAP_NOUNCUE = {
+  sv:new Set('en ett den det de denna detta dessa min mitt mina din ditt dina sin sitt sina hans hennes deras vår vårt våra alla flera många några inga nya två tre i på av med för till från om'.split(' ')),
+  es:new Set('el la los las un una unos unas su sus mi mis tu tus este esta estos estas ese esa esos esas aquel aquella del al nuestro nuestra nuestros nuestras cada otro otra de en con por para sin sobre entre'.split(' '))
+};
+// Bedeutungen ohne Grammatik-Angaben und Artikel: „verteidigen (Indefinido, él)“ → „verteidigen“, „Dorf; Volk“ → „Dorf, Volk“.
+// Alle Bedeutungen (bis 40 Zeichen), damit auch die im Satz gemeinte dabei ist; Wendungen mit „=“ fallen weg.
+function gapMeaning(de){
+  const seg = [...new Set(String(de || '').split(';').filter(x => !x.includes('=')).map(x => x.replace(/\([^)]*\)/g, '').replace(/^\s*(der|die|das) /, '').replace(/\s+/g, ' ').trim()).filter(Boolean))];
+  let out = '';
+  for (const x of seg) { const next = out ? out + ', ' + x : x; if (out && next.length > 40) break; out = next; }
+  return out;
+}
+const GAP_A2 = {};
+function gapA2(lang){
+  if (GAP_A2[lang]) return GAP_A2[lang];
+  const s = new Set();
+  BANK[lang].filter(i => !i.own && !i.tat && (i.lvl || 1) === 1).forEach(i => i.target.split(/\s+/).forEach(t => {
+    const w = t.replace(/[^a-zà-ÿ]/gi, '').toLowerCase(), e = w && lookupWord(lang, w);
+    if (w) s.add(e && !e.multi && e.l ? e.l.toLowerCase() : w);
+  }));
+  return GAP_A2[lang] = s;
+}
+const gapToken = t => t.replace(/[.,;:!?¡¿«»"„“”()…]/g, '');
+const gapWordOk = (w, i) => w.length >= 4 && /^[a-zà-ÿ]+$/i.test(w) && (i === 0 || w[0] === w[0].toLowerCase());
+// Ein Wort als mögliche Lücke: Bedeutung, Grundform, ob gebeugtes Verb. own = nachgeschlagen (kommt auch ohne Bedeutung dran).
+function gapInfo(lang, w, i, own, toks){
+  const prev = i && toks ? gapToken(toks[i - 1]) : '';
+  const lw = w.toLowerCase(), e = lookupWord(lang, lw);
+  const bare = own ? { w, i, own, mean:'', lemma:null, verb:false } : null;
+  if (!e || e.multi) return bare;
+  const lemma = (e.l || lw).toLowerCase(), base = e.l ? lookupWord(lang, e.l) : e;
+  // Ohne Eintrag der Grundform wäre die Bedeutung die einer Einzelform („trato“ = ich versuche): lieber keine Lücke
+  if (!base || base.multi) return bare;
+  // Spanische Partizipien als Adjektiv (querida, conocidas) bedeuten oft etwas anderes als das Verb
+  if (lang === 'es' && /\(Partizip/.test(e.de) && !GLOSS.es[lw]) return bare;
+  const verb = !!e.l && GAP_VERBFORM.test(e.de);
+  if (verb && !/Partizip|Supinum/.test(e.de) && GAP_NOUNCUE[lang].has(String(prev || '').toLowerCase())) return bare;
+  // Spanisch: erste Person Präsens ist in Lesetexten fast immer ein gleich lautendes Nomen (juego, camino, paso)
+  if (verb && lang === 'es' && /Präsens, yo\)/.test(e.de)) return bare;
+  // Schwedisch: Plural eines Nomens, das genauso aussieht wie ein Verb (lagar = Gesetze oder kocht): lieber keine Lücke
+  if (lang === 'sv' && /(ar|er|or)$/.test(lw) && !verb) { const n = GLOSS.sv[lw.slice(0, -2)]; if (n && !n.l && lw.slice(0, -2) !== lemma && /^[A-ZÄÖÜ]/.test(n.de)) return bare; }
+  let mean = gapMeaning(base.de);
+  // Feste Wendung aus dem Wörterbuch im Satz (så fort = sobald): deren Bedeutung gilt
+  const ctx = ' ' + (toks || []).map(t => gapToken(t).toLowerCase()).join(' ') + ' ';
+  const phrase = (e.de + ';' + base.de).split(';').map(x => x.split('=')).find(p => p.length === 2 && p[0].trim().split(' ').length > 1 && p[0].trim().split(' ').includes(lw) && ctx.includes(' ' + p[0].trim().toLowerCase() + ' '));
+  if (phrase) mean = gapMeaning(phrase[1]);
+  // Weibliche Form auf die männliche zurückgeführt: bei Adjektiven richtig (famosa → famoso), bei Nomen nicht (partida ≠ partido)
+  if (lang === 'es' && !GLOSS.es[lw] && /as?$/.test(lw) && /o$/.test(lemma) && /^[A-ZÄÖÜ]/.test(mean)) return bare;
+  // Mit se/me/te davor ist es oft ein anderes Verb (se llama = heißt): Bedeutung nur, wenn das Wörterbuch die rückbezügliche Form kennt
+  if (lang === 'es' && /^(se|me|te|nos|os)$/i.test(prev || '') && /(ar|er|ir)$/.test(lemma)) { const r = lookupWord('es', lemma + 'se'); if (!r || r.multi) return bare; mean = gapMeaning(r.de); }
+  const words = mean.toLowerCase().split(/[\s,]+/);
+  // Kein Hinweis, der die Lösung verrät („Radio“ → radio) oder nur eine Zahl ist
+  if (!mean || /\d/.test(mean) || words.includes(lw) || words.includes(lemma)) return bare;
+  if (!own && (verb ? GAP_AUX[lang].has(lemma) : GAP_COMMON[lang].has(lemma) || gapA2(lang).has(lemma))) return null;
+  return { w, i, own, mean, lemma:lemma !== lw ? lemma : null, verb };
+}
+// opts.prefer: nachgeschlagene Wörter (klein geschrieben), die zuerst drankommen; opts.looked: Eintrag zum Abhaken;
+// opts.lenient: direkt nach dem Lesen auch ohne Wörterbucheintrag (dann wie früher mit Grundform oder Anfangsbuchstaben)
+function textGapData(lang, sentence, title, opts = {}){
+  const toks = sentence.split(' '), prefer = opts.prefer || new Set();
+  const cand = toks.map((t, i) => ({ w:gapToken(t), i })).filter(x => gapWordOk(x.w, x.i));
+  let pool = cand.map(x => gapInfo(lang, x.w, x.i, prefer.has(x.w.toLowerCase()), toks)).filter(Boolean);
+  if (!pool.length && opts.lenient) pool = cand.filter(x => x.w.length >= 5).map(x => { const e = lookupWord(lang, x.w), l = e && !e.multi && e.l; return { w:x.w, i:x.i, own:false, mean:'', lemma:l && l.toLowerCase() !== x.w.toLowerCase() ? l : null, lenient:true }; });
+  if (!pool.length) return null;
+  const own = pool.filter(x => x.own);
+  // Gebeugte Verben doppelt im Topf: Zeitform und Modus aus dem Zusammenhang sind für Fortgeschrittene die eigentliche Arbeit
+  const x = own.length ? pick(own) : pick(pool.reduce((a, y) => a.concat(y.verb ? [y, y] : [y]), []));
+  const prompt = toks.map((t, i) => (i === x.i ? t.replace(x.w, '___') : t)).join(' ');
+  // Anfangsbuchstabe als Platzhalter in der Lücke: Mit der Bedeutung zusammen ist das Wort eindeutig (Sprache, l… = lengua, nicht idioma).
+  // Ohne Bedeutung zwei Buchstaben, wie bisher.
+  const d = { prompt, answers:[x.w.toLowerCase()], label:title ? `${x.own ? 'Nachgeschlagen in' : 'Aus'} „${title}“` : 'Ergänze aus dem Text', deLine:x.mean, mean:x.mean,
+    hint:x.lemma ? `Grundform: ${x.lemma}` : '', ph:x.w.slice(0, x.mean ? 1 : 2).toLowerCase() + '…', gap:true, full:sentence, note:'' };
+  if (x.own && opts.looked) d.looked = opts.looked;
+  return d;
 }
 const gapSentences = t => t.body.replace(/\n+/g, ' ').split(/(?<=[.!?])\s+/).filter(x => x.split(' ').length >= 5);
+// Gelesen = die Fragen zum Text beantwortet (Schlüssel „sv:vasa“)
+const readTexts = lang => { const done = (DB.used && DB.used.texts) || {}; return TEXTS[lang].filter(t => done[lang + ':' + t.id]); };
+// Nachgeschlagene Wörter aus gelesenen Texten, frühestens am Tag danach, ohne die zuletzt gezeigten Sätze
+function lookedDue(lang, texts, recent){
+  const all = (DB.used && DB.used.looked) || {}, t0 = today(), out = [];
+  texts.forEach(t => {
+    const key = lang + ':' + t.id, m = all[key]; if (!m) return;
+    Object.keys(m).filter(w => m[w] < t0).forEach(w => {
+      const s = gapSentences(t).find(x => x.split(' ').some((tok, i) => gapToken(tok).toLowerCase() === w && gapWordOk(gapToken(tok), i)));
+      if (s && !recent.includes(s.toLowerCase())) out.push({ t, s, w, key });
+    });
+  });
+  return out;
+}
 function genTextGap(lang){
   return () => {
-    const read = (DB.used && DB.used.texts) || {};
-    const ts = TEXTS[lang].filter(t => read[t.id]); const list = ts.length ? ts : TEXTS[lang];
-    for (let k = 0; k < 20; k++) { const t = pick(list), d = textGapData(lang, pick(gapSentences(t)), t.title); if (d) return d; }
-    return textGapData(lang, gapSentences(TEXTS[lang][0])[0], TEXTS[lang][0].title);
+    // Ohne gelesenen Text wird die Übung nicht angeboten (avail); alle Texte nur als Sicherheitsnetz
+    const ts = readTexts(lang), list = ts.length ? ts : TEXTS[lang];
+    const recent = (DB.used && DB.used.genRecent && DB.used.genRecent['textgap_' + lang]) || [];
+    const due = lookedDue(lang, ts, recent);
+    if (due.length) { const o = pick(due), d = textGapData(lang, o.s, o.t.title, { prefer:new Set([o.w]), looked:{ k:o.key, w:o.w } }); if (d) return d; }
+    for (let k = 0; k < 30; k++) { const t = pick(list), d = textGapData(lang, pick(gapSentences(t)), t.title); if (d && (k > 20 || !recent.includes(d.full.toLowerCase()))) return d; }
+    for (const t of list) for (const s of gapSentences(t)) { const d = textGapData(lang, s, t.title); if (d) return d; }
+    for (const t of list) for (const s of gapSentences(t)) { const d = textGapData(lang, s, t.title, { lenient:true }); if (d) return d; }
+    return null;
   };
+}
+// Nachgeschlagenes Wort an einem späteren Tag richtig ergänzt: abgehakt. Falsch oder am selben Tag: bleibt.
+function lookedDone(lk){
+  const m = DB.used && DB.used.looked && DB.used.looked[lk.k];
+  if (!m || !m[lk.w] || m[lk.w] >= today()) return;
+  delete m[lk.w]; if (!Object.keys(m).length) delete DB.used.looked[lk.k];
+}
+// Beim Lesen nachgeschlagen: merken (höchstens 300 je Sprache, die ältesten fallen heraus)
+function rememberLooked(lang, id, w){
+  const lw = String(w || '').toLowerCase().replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, '');
+  if (!id || !gapWordOk(lw, 0)) return;
+  DB.used = DB.used || {}; const all = DB.used.looked = DB.used.looked || {};
+  const m = all[lang + ':' + id] = all[lang + ':' + id] || {};
+  if (!m[lw]) m[lw] = today();
+  const mine = Object.keys(all).filter(k => k.startsWith(lang + ':')).flatMap(k => Object.keys(all[k]).map(x => [k, x, all[k][x]]));
+  if (mine.length > 300) mine.sort((a, b) => (a[2] < b[2] ? -1 : a[2] > b[2] ? 1 : 0)).slice(0, mine.length - 300).forEach(([k, x]) => { delete all[k][x]; if (!Object.keys(all[k]).length) delete all[k]; });
 }
 
 /* ---------- Begleiter: min/mitt/mina, den här + bestimmte Form; nuestro/a/os/as, este/esa, Adjektiv-Übereinstimmung ---------- */
@@ -765,6 +883,6 @@ const GENS = {
   verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) },
   prep_sv:{ lang:'sv', trap:'prep', short:'Präpositionen', label:'Verben mit Präposition', make:genPrep(PREP_SV) },
   prep_es:{ lang:'es', trap:'prep', short:'Preposiciones', label:'Verben mit Präposition', make:genPrep(PREP_ES) },
-  textgap_sv:{ lang:'sv', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('sv'), noGloss:true },
-  textgap_es:{ lang:'es', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('es'), noGloss:true }
+  textgap_sv:{ lang:'sv', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('sv'), noGloss:true, avail:() => readTexts('sv').length > 0, unavail:'Lies zuerst einen Text und beantworte die Fragen dazu. Danach kommen Lücken aus diesem Text.' },
+  textgap_es:{ lang:'es', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('es'), noGloss:true, avail:() => readTexts('es').length > 0, unavail:'Lies zuerst einen Text und beantworte die Fragen dazu. Danach kommen Lücken aus diesem Text.' }
 };

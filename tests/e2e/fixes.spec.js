@@ -7,8 +7,8 @@ test('Wochenstreifen sitzt im Kopf von „Heute“, der Punkt für heute bleibt 
   expect(r.pos).not.toBe('fixed');
   expect(r.inHeader).toBe(true);
 });
-test('Fortgeschritten: Grundform verdeckt, Tipp zeigt sie, Eingabe bleibt', async ({ page }) => {
-  const db = freshDB('es'); db.settings.niveau = 'fort';
+test('Fortgeschritten: Grundform verdeckt, Tipp zeigt sie, Eingabe bleibt; Lesetext-Lücke mit Bedeutung und Anfangsbuchstabe', async ({ page }) => {
+  const db = freshDB('es'); db.settings.niveau = 'fort'; db.used.texts = { 'es:campoamor':{ best:3, n:1, last:'2026-01-01' } };
   await seed(page, db);
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
@@ -17,6 +17,8 @@ test('Fortgeschritten: Grundform verdeckt, Tipp zeigt sie, Eingabe bleibt', asyn
   let checked = false;
   for (let k = 0; k < 8 && !checked; k++) {
     const tip = page.locator('[data-a=showtip]');
+    await expect(page.locator('.ex .de')).not.toBeEmpty();
+    expect(await page.locator('#answer').getAttribute('placeholder')).toMatch(/^[a-zà-ÿ]…$/);
     if (await tip.count()) {
       await expect(page.locator('.kicker')).not.toContainText('Grundform:');
       await page.fill('#answer', 'abc');

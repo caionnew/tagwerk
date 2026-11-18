@@ -67,7 +67,7 @@ Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `run
 | `gen`, `genus` | Ergebnisse der erzeugten Aufgaben und der Genus-Wörter |
 | `own`, `tat` | eigene Sätze, Sätze von Tatoeba |
 | `texts` | Textarchiv mit Messwerten (höchstens 500) |
-| `used` | Hinweise, Wiederholungsgedächtnis der Generatoren und Runden, Schreibaufgaben |
+| `used` | Hinweise, Wiederholungsgedächtnis der Generatoren und Runden, Schreibaufgaben, gelesene Texte (`texts`, Schlüssel `sv:vasa`), beim Lesen nachgeschlagene Wörter (`looked['sv:vasa'][wort] = datum`, höchstens 300 je Sprache; fehlt in älteren Ständen) |
 
 Ältere Speicherstände werden beim Laden ergänzt; Felder werden nie umbenannt, damit Backups aus allen Versionen lesbar bleiben.
 

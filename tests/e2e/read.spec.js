@@ -19,6 +19,8 @@ test('Lesen: Fragen erst nach dem Text, einzeln mit Textstelle, Wörter in „Na
   await expect(page.locator('.tq')).toHaveCount(0);
   expect(await page.locator('.reader [data-a=lookup]').count()).toBeGreaterThan(50);
   await page.click('.reader [data-a=lookup][data-w=krigsskeppet]');
+  // Für Lesetext-Lücken gemerkt (mit Datum), auch nach dem Schließen des Textes
+  await expect.poll(async () => Object.keys(((await stored(page)).used.looked || {})['sv:vasa'] || {})).toEqual(['krigsskeppet']);
   await page.click('[data-a=tsay]');
   await expect.poll(() => page.evaluate(() => window.__said[0] || '')).toBe('Den 10 augusti 1628 seglade det nya krigsskeppet Vasa ut från Stockholm.');
   await page.click('[data-a=tplayall]');

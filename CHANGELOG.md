@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.52.0
+**Lücken aus Lesetexten neu: nur aus gelesenen Texten, deutsche Bedeutung als Hinweis, nachgeschlagene Wörter zuerst.**
+- **Fehler behoben:** Die Übung sollte nur gelesene Texte nehmen, suchte aber unter „vasa“, während unter „sv:vasa“ gespeichert wird. Der Filter griff nie, die Lücken kamen aus allen Texten. Ohne gelesenen Text wird die Übung jetzt gar nicht angeboten; das Thema nennt den Grund.
+- **Hinweis ist die deutsche Bedeutung**, groß über dem Satz, dazu der Anfangsbuchstabe als Platzhalter in der Lücke (Sprache, l… = lengua, nicht idioma). Die Grundform bleibt zweiter Hinweis, bei „Fortgeschritten“ auf Tipp. Vorher half entweder die Grundform (madre → madres, nur Endung anhängen) oder es gab nur zwei Anfangsbuchstaben (di… → raten). Im Spanischen waren 28 % der Lücken Raten und 34 % nur eine Endung.
+- **Wortwahl:** nur Wörter, deren Grundform im Wörterbuch steht. Funktionswörter, Grundwortschatz und alles aus A2-Sätzen fallen heraus, gebeugte Verben kommen doppelt so oft (pidió, volvieron, gick), Hilfsverben nie. Abgefangen werden gleich lautende Nomen (la cocina, lagar), weibliche Nomen (partida ≠ partido), Partizipien als Adjektiv, se-Verben und feste Wendungen (så fort = sobald).
+- **Beim Lesen nachgeschlagene Wörter** werden gemerkt und kommen ab dem Tag danach zuerst dran, „Nachgeschlagen in …“. Richtig ergänzt an einem späteren Tag: abgehakt. Falsch: bleibt. Ohne Wörterbucheintrag mit zwei Anfangsbuchstaben. Neues Feld `used.looked`, ältere Stände laden unverändert.
+- **„Lückentext üben“ nach dem Lesen** bringt eben nachgeschlagene Wörter zuerst; reichen die Wörter mit Bedeutung nicht für acht Lücken, füllt es wie bisher auf.
+- **Rundenende:** Bei einer verpassten Lücke steht unter dem Satz „pidió = bestellen, bitten“ statt der Bedeutung allein, die wie eine Übersetzung aussah.
+- **Grenze:** Nur 26 % der Textwörter ab fünf Buchstaben stehen im Wörterbuch. Eine Lücke hergeben derzeit 40 % der schwedischen und 55 % der spanischen Textsätze.
+- 8 neue Einheitstests (266), zwei Browser-Tests erweitert.
+
 ## 24.51.0
 **„Schwierigste Sätze“ wird zum Reiter „Sätze“ unter „Fehlerquellen“; der Knopf zum Extra-Üben entfällt.**
 - **Neuer Reiter „Sätze“** neben Thema, Übungsart und Fehlerart. Er zeigt bis zu 6 hartnäckige Sätze: bei Wiederholungen mindestens zweimal nicht gewusst, noch nicht gefestigt, in den letzten 30 Tagen geübt. Fehler beim ersten Kontakt mit einem neuen Satz zählen nicht mehr mit; vorher reichten zwei Fehler insgesamt.

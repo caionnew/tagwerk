@@ -280,7 +280,10 @@ document.addEventListener('click', e => {
       const lang = (S.view === 'run' && S.run && S.run.lang) || (S.view === 'text' && S.text && S.text.lang) || (S.view === 'shadow' && S.shadow && S.shadow.lang) || S.lang;
       const sent = S.view === 'text' && b.closest('.rs-s[data-i]');
       if (S.view === 'text' && S.text && S.text.looked && !S.text.looked.includes(w)) { S.text.looked.push(w); setTimeout(render, 0); }
-      DB.used = DB.used || {}; DB.used.lookup = true; save();
+      DB.used = DB.used || {}; DB.used.lookup = true;
+      // Für Lesetext-Lücken merken (nur eingebaute Texte, Wikipedia-Fundstücke haben keine feste Kennung)
+      if (S.view === 'text' && S.text && S.text.id) rememberLooked(lang, S.text.id, w);
+      save();
       S.pop = { lang, w, entry:lookupWord(lang, w), status:'idle', web:[], si:sent ? Number(sent.dataset.i) : null, sent:sent ? sent.textContent.trim() : '' };
       renderPopup(); break;
     }

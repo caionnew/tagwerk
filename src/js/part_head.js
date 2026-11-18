@@ -10,7 +10,7 @@ const TRAPS = {
     { id:'inversion', label:'Inversion & „inte“', kind:'order', short:'Das Verb steht an zweiter Stelle. Steht etwas anderes vorn, folgt das Subjekt erst danach.', rule:'Idag jobbar jag inte. När jag kommer hem lagar jag mat. „inte“ kommt erst nach dem Subjekt.' },
     { id:'tempus', label:'Präteritum oder Perfekt', kind:'form', gen:'tempus', short:'Mit Zeitpunkt in der Vergangenheit: Präteritum. Ohne Zeitpunkt, als Erfahrung oder bis heute andauernd: Perfekt.', rule:'Igår åt jag pizza, auch wenn man im Deutschen „habe gegessen“ sagt. Perfekt (har + Supinum) für Erfahrungen und Ergebnisse: Jag har aldrig varit i Kiruna.' },
     { id:'prep', label:'Verben mit Präposition', kind:'gen', gen:'prep_sv', short:'Viele Verben und Adjektive haben eine feste Präposition, oft eine andere als im Deutschen.', rule:'Am besten als Ganzes lernen: tänka på, vänta på, rädd för, intresserad av, stolt över, vänja sig vid.' },
-    { id:'lesen', label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_sv', short:'Ein Wort aus einem Satz eines gelesenen Textes ergänzen, mit Grundform als Hilfe.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
+    { id:'lesen', label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_sv', short:'Ein Wort aus einem gelesenen Text ergänzen. Die deutsche Bedeutung sagt, welches; beim Lesen Nachgeschlagenes kommt zuerst.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
     { id:'verbind', label:'Konnektoren & feste Verbindungen', kind:'gen', gen:'verbind_sv', short:'därför, dessutom, däremot verbinden Sätze; Verben und Nomen gehören fest zusammen.', rule:'Nach därför, dessutom und däremot am Satzanfang folgt Inversion. Feste Verbindungen lernt man als Ganzes: fatta ett beslut, ställa en fråga, ta hänsyn till, det spelar ingen roll.' },
     { id:'species', label:'Adjektivendungen & bestimmte Form', kind:'gen', gen:'np', short:'Doppelt bestimmt: den/det/de + Adjektiv auf -a + bestimmte Form. min/mitt/mina richten sich nach en/ett; danach unbestimmt, nach den här bestimmt.', rule:'Adjektiv in der Grundform bei en-Wörtern (en stor bil), mit -t bei ett-Wörtern (ett stort hus), mit -a im Plural und in der bestimmten Form (det stora huset).' },
     { id:'plural', label:'Pluralformen', kind:'gen', gen:'plural_sv', short:'Mehrzahl auf -or (flickor), -ar (bilar), -er (datorer), -n (äpplen) oder ohne Endung (hus), manchmal mit Umlaut (böcker, män). Bestimmt kommt -na oder -en dazu.', rule:'flicka → flickor → flickorna, bil → bilar → bilarna, dator → datorer → datorerna, äpple → äpplen → äpplena, hus → hus → husen, lärare → lärare → lärarna, bok → böcker → böckerna, man → män → männen.' },
@@ -25,7 +25,7 @@ const TRAPS = {
   ],
   es:[
     { id:'prep', label:'Verben mit Präposition', kind:'gen', gen:'prep_es', short:'Viele Verben und Adjektive haben eine feste Präposition, oft eine andere als im Deutschen.', rule:'Am besten als Ganzes lernen: soñar con, pensar en, acordarse de, dejar de, empezar a, confiar en, tener ganas de.' },
-    { id:'lesen', label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_es', short:'Ein Wort aus einem Satz eines gelesenen Textes ergänzen, mit Grundform als Hilfe.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
+    { id:'lesen', label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_es', short:'Ein Wort aus einem gelesenen Text ergänzen. Die deutsche Bedeutung sagt, welches; beim Lesen Nachgeschlagenes kommt zuerst.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
     { id:'concord', label:'Begleiter & Adjektive anpassen', kind:'gen', gen:'det_es', short:'Possessiv, Demonstrativ und Adjektiv richten sich nach Geschlecht und Zahl des Nomens.', rule:'nuestro/nuestra/nuestros/nuestras, este/esta/estos/estas, mi/mis. Vorsicht bei Ausnahmen: el problema, el día, el mapa, la mano, la foto, la radio: nuestro problema, las manos pequeñas.' },
     { id:'verbind', label:'Konnektoren & feste Verbindungen', kind:'gen', gen:'verbind_es', short:'sin embargo, por lo tanto, en cambio verbinden Sätze; Verben und Nomen gehören fest zusammen.', rule:'para que, en cuanto (Zukunft) und siempre que verlangen Subjuntivo. Feste Verbindungen als Ganzes lernen: tomar una decisión, hacer una pregunta, dar un paseo, tener razón.' },
     { id:'konjugation', label:'Verbformen', kind:'gen', gen:'conj', short:'Signale: normalmente = Präsens, ayer = Indefinido, antes/siempre = Imperfecto, es importante que = Subjuntivo.', rule:'Unregelmäßige Formen wie tuve, hice, fui, sea, vaya lohnen sich auswendig.' },
@@ -377,7 +377,9 @@ function pickNew(lang, n, onlyTrap){
   }
   return out;
 }
-const genIds = lang => Object.keys(GENS).filter(g => GENS[g].lang === lang && !GENS[g].form);
+// avail: Übung gerade möglich (Lesetext-Lücken erst nach einem gelesenen Text)
+const genOk = g => !GENS[g].avail || GENS[g].avail();
+const genIds = lang => Object.keys(GENS).filter(g => GENS[g].lang === lang && !GENS[g].form && genOk(g));
 const formIds = lang => Object.keys(GENS).filter(g => GENS[g].lang === lang && GENS[g].form);
 function dayGen(lang){
   const g = genIds(lang);
@@ -415,7 +417,7 @@ const minutes = queue => Math.max(1, Math.round(queue.reduce((s, ex) => s + (SEC
 
 function startRun(kind, opts){
   const lang = S.lang;
-  let queue = [];
+  let queue = [], empty = 'Dafür gibt es gerade nichts zu üben.';
   if (kind === 'daily') queue = dailyPlan(lang).queue;
   else if (kind === 'quick') {
     queue = dueItems(lang).slice(0, 6).map(exFor);
@@ -429,7 +431,7 @@ function startRun(kind, opts){
     while (queue.length < 6 && g.length) queue.push({ type:'gen', gen:pick(g) });
   } else if (kind === 'trap') {
     const tr = trapMeta(lang, opts.trap);
-    if (tr.kind === 'gen') { for (let i = 0; i < 10; i++) queue.push({ type:'gen', gen:tr.gen }); }
+    if (tr.kind === 'gen') { if (genOk(tr.gen)) for (let i = 0; i < 10; i++) queue.push({ type:'gen', gen:tr.gen }); else empty = GENS[tr.gen].unavail; }
     else {
       const items = BANK[lang].filter(i => i.trap === tr.id);
       const t = today();
@@ -443,16 +445,24 @@ function startRun(kind, opts){
       mem['trap_' + tr.id] = queue.map(x => x.id);
       for (let i = 0; i < nGen; i++) queue.splice(Math.round((i + 1) * queue.length / (nGen + 1)) + i, 0, { type:'gen', gen:tr.gen });
     }
-  } else if (kind === 'gen') queue = [{ type:'gen', gen:opts.gen }];
+  } else if (kind === 'gen') { if (genOk(opts.gen)) queue = [{ type:'gen', gen:opts.gen }]; else empty = GENS[opts.gen].unavail; }
   else if (kind === 'form') queue = Array.from({ length:10 }, () => ({ type:'gen', gen:opts.gen }));
   else if (kind === 'textgap') {
     // Eigener Lesetext oder Wikipedia-Fundstück (Text kommt dann mit)
     const t = opts.body ? { body:opts.body, title:opts.title } : TEXTS[lang].find(x => x.id === opts.text);
-    if (t) queue = shuffle(gapSentences(t)).map(x => textGapData(lang, x, t.title)).filter(Boolean).slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
+    // Direkt nach dem Lesen: eben nachgeschlagene Wörter zuerst; reichen die Wörter mit Bedeutung nicht, wie früher auffüllen
+    if (t) {
+      const prefer = new Set(((S.text && S.text.looked) || []).map(w => w.toLowerCase()).concat(t.id ? Object.keys((DB.used.looked || {})[lang + ':' + t.id] || {}) : []));
+      const has = s => s.split(' ').some(w => prefer.has(gapToken(w).toLowerCase()));
+      const sents = shuffle(gapSentences(t)).sort((a, b) => has(b) - has(a));
+      let items = sents.map(x => textGapData(lang, x, t.title, { prefer })).filter(Boolean);
+      if (items.length < 8) items = items.concat(sents.filter(x => !items.some(d => d.full === x)).map(x => textGapData(lang, x, t.title, { lenient:true })).filter(Boolean));
+      queue = items.slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
+    }
   }
   else if (kind === 'dict') queue = freshFirst(BANK[lang].filter(i => stOf(i.id) && (canSpeak() || (i.tat && i.tat.audio && !i.tat.audio.blocked))), 'dict_' + lang, 10).map(i => ({ type:'dict', id:i.id }));
   else if (kind === 'extraNew') queue = pickNew(lang, (opts && opts.n) || size().newPer).map(exFor);
-  if (!queue.length) { note('Dafür gibt es gerade nichts zu üben.', 'warn'); render(); return; }
+  if (!queue.length) { note(empty, 'warn'); render(); return; }
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;
   S.notice = null;

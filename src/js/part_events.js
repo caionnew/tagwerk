@@ -333,6 +333,8 @@ document.addEventListener('click', e => {
         Object.values(DB.log).forEach(d => { delete d[lang]; });
         if (DB.snap) Object.values(DB.snap).forEach(d => { delete d[lang]; });
         if (DB.genus) delete DB.genus[lang];
+        // Beim Lesen nachgeschlagene Wörter dieser Sprache (für Lesetext-Lücken)
+        if (DB.used && DB.used.looked) Object.keys(DB.used.looked).forEach(k => { if (k.startsWith(lang + ':')) delete DB.used.looked[k]; });
         if (DB.run && DB.run.lang === lang) DB.run = null;
         if (S.dailyRun && S.dailyRun.lang === lang) S.dailyRun = null;
         S.armed = null; save(); buildBank(); note(`${LANG[lang].deName} ist zurückgesetzt.`, 'ok');

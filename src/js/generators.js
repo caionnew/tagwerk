@@ -615,7 +615,8 @@ const GAP_NOUNCUE = {
 // Bedeutungen ohne Grammatik-Angaben und Artikel: „verteidigen (Indefinido, él)“ → „verteidigen“, „Dorf; Volk“ → „Dorf, Volk“.
 // Alle Bedeutungen (bis 40 Zeichen), damit auch die im Satz gemeinte dabei ist; Wendungen mit „=“ fallen weg.
 function gapMeaning(de){
-  const seg = [...new Set(String(de || '').split(';').filter(x => !x.includes('=')).map(x => x.replace(/\([^)]*\)/g, '').replace(/^\s*(der|die|das) /, '').replace(/\s+/g, ' ').trim()).filter(Boolean))];
+  // Erklärungen nach Doppelpunkt fallen weg („Sameby: Gemeinschaft für …“ → „Sameby“)
+  const seg = [...new Set(String(de || '').split(';').filter(x => !x.includes('=')).map(x => x.replace(/\([^)]*\)/g, '').split(': ')[0].replace(/^\s*(der|die|das) /, '').replace(/\s+/g, ' ').replace(/\s+,/g, ',').trim()).filter(Boolean))];
   let out = '';
   for (const x of seg) { const next = out ? out + ', ' + x : x; if (out && next.length > 40) break; out = next; }
   return out;

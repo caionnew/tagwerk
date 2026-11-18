@@ -40,9 +40,13 @@ test('jede mögliche Lücke: Bedeutung als Hinweis, verrät die Lösung nicht, k
 test('die beiden Fälle aus der Rückmeldung und bekannte Stolperstellen', () => {
   fresh('es');
   const info = (lang, sentence, word) => run(`(() => { const toks = ${JSON.stringify(sentence)}.split(' '); const i = toks.findIndex(t => gapToken(t) === ${JSON.stringify(word)}); return gapInfo('${lang}', ${JSON.stringify(word)}, i, false, toks); })()`);
-  // madres: Grundwortschatz; diputada: nicht im Wörterbuch, also nicht ohne Hinweis ratbar
+  // madres: Grundwortschatz, keine Lücke; diputada: mit Bedeutung, also nicht mehr geraten (directora scheidet aus)
   assert.equal(info('es', 'Para muchas luchadoras, pelear con la ropa de sus madres es una forma de reivindicarla.', 'madres'), null);
-  assert.equal(info('es', 'Una de ellas era Clara Campoamor, abogada madrileña de 43 años y diputada del Partido Radical.', 'diputada'), null);
+  const dip = info('es', 'Una de ellas era Clara Campoamor, abogada madrileña de 43 años y diputada del Partido Radical.', 'diputada');
+  assert.match(dip.mean, /Abgeordnete/); assert.equal(dip.lemma, 'diputado');
+  // Erklärung nach dem Doppelpunkt fällt weg, kein Leerzeichen vor dem Komma
+  assert.equal(run("gapMeaning('Los (der ONCE), Coupon')"), 'Los, Coupon');
+  assert.equal(run("gapMeaning('Sameby: Gemeinschaft für die Rentierhaltung (en-Wort)')"), 'Sameby');
   // Feste Wendung: så fort = sobald, nicht „schnell“
   assert.equal(info('sv', 'Några älskar det, andra flyr så fort burken öppnas.', 'fort').mean, 'sobald');
   // lagar = Gesetze, nicht „kocht“
@@ -79,7 +83,7 @@ test('nachgeschlagene Wörter: ab dem Tag danach zuerst, richtig an einem späte
   const d = withSeed(5, () => run('GENS.textgap_es.make()'));
   assert.equal(d.answers[0], 'diputada');
   assert.equal(d.label, 'Nachgeschlagen in „Clara Campoamor y el voto femenino“');
-  assert.equal(d.ph, 'di…', 'ohne Wörterbucheintrag zwei Buchstaben');
+  assert.equal(d.ph, 'd…'); assert.match(d.deLine, /Abgeordnete/);
   assert.deepEqual(d.looked, { k:'es:campoamor', w:'diputada' });
   assert.equal(answer(d, 'directora').res, 'bad');
   assert.ok(run("DB.used.looked['es:campoamor'].diputada"), 'falsch: bleibt');
@@ -88,6 +92,12 @@ test('nachgeschlagene Wörter: ab dem Tag danach zuerst, richtig an einem späte
   app.run("rememberLooked('es', 'campoamor', 'diputada')");
   answer(d, 'diputada');
   assert.ok(run("DB.used.looked['es:campoamor'].diputada"), 'am selben Tag nachgeschlagen: bleibt');
+});
+
+test('nachgeschlagenes Wort ohne verwertbaren Eintrag: trotzdem Lücke, dann mit zwei Anfangsbuchstaben', () => {
+  fresh('es');
+  const d = run(`textGapData('es', 'Ayer vimos un zorgoplo en el campo de trigo.', 'Test', { prefer:new Set(['zorgoplo']), looked:{ k:'es:x', w:'zorgoplo' } })`);
+  assert.equal(d.answers[0], 'zorgoplo'); assert.equal(d.ph, 'zo…'); assert.equal(d.deLine, ''); assert.deepEqual(d.looked, { k:'es:x', w:'zorgoplo' });
 });
 
 test('nachgeschlagen: höchstens 300 je Sprache, die ältesten fallen heraus; alte Stände ohne Feld laufen', () => {

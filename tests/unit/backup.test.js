@@ -43,3 +43,37 @@ test('Backup aus der Zeit vor 24.34.0 (Tagwerk ohne got): Farben kommen aus dem 
   run('S.dailyRun.cur = { state:"answer" }');
   assert.deepEqual(segs(), ['s-ok', 's-bad', 's-cur', 're re1']);
 });
+
+// Lesetext-Lücken (24.52.0): gelesene Texte, nachgeschlagene Wörter und eine offene Lücke im Tagwerk überstehen Backup und Einspielen
+test('Backup: nachgeschlagene Wörter und gelesene Texte kommen zurück und wirken danach wie vorher', () => {
+  const lk = { k:'es:campoamor', w:'diputada' };
+  const db = { v:3, settings:{ size:'normal', lang:'es', niveau:'fort' }, st:{}, log:{}, done:{}, gen:{},
+    used:{ texts:{ 'es:campoamor':{ best:3, n:1, last:'2026-01-01' } }, looked:{ 'es:campoamor':{ diputada:'2026-01-01' }, 'sv:vasa':{ krigsskeppet:'2026-01-02' } } },
+    run:{ date:run('today()'), lang:'es', idx:0, ok:0, bad:0, res:[], missed:[], secs:0, combo:0, best:0,
+      queue:[{ type:'gen', gen:'textgap_es', data:{ prompt:'Una de ellas era Clara Campoamor, abogada madrileña de 43 años y ___ del Partido Radical.', answers:['diputada'], label:'Nachgeschlagen in „Clara Campoamor y el voto femenino“', deLine:'', mean:'', hint:'', ph:'di…', gap:true, full:'Una de ellas era Clara Campoamor, abogada madrileña de 43 años y diputada del Partido Radical.', note:'', looked:lk } }] } };
+  app.setDB(db);
+  const text = app.run('backupText()');
+  run('DB = freshDB(); S.run = null; S.dailyRun = null;');
+  run(`applyBackup(parseBackup(${JSON.stringify(text)}))`);
+  assert.deepEqual(run('DB.used.looked'), db.used.looked);
+  assert.deepEqual(run('DB.used.texts'), db.used.texts);
+  assert.deepEqual(run('S.dailyRun.queue[0].data.looked'), lk, 'offene Lücke im Tagwerk mit Merker');
+  // Danach wie vorher: Lücke aus dem gelesenen Text, das nachgeschlagene Wort zuerst; richtig beantwortet ist es abgehakt
+  run("S.lang = 'es'; DB.used.genRecent = {};");
+  assert.equal(run('GENS.textgap_es.make().answers[0]'), 'diputada');
+  run(`(() => { S.run = S.dailyRun; S.run.cur = { state:'answer', input:'diputada' }; check(); next(); })()`);
+  assert.deepEqual(run('DB.used.looked'), { 'sv:vasa':{ krigsskeppet:'2026-01-02' } });
+  // Und das Backup danach enthält den neuen Stand
+  assert.deepEqual(JSON.parse(app.run('backupText()')).used.looked, { 'sv:vasa':{ krigsskeppet:'2026-01-02' } });
+});
+test('Backup aus der Zeit vor 24.52.0 (ohne gelesene Texte und Nachgeschlagenes): läuft, merkt sich danach Neues', () => {
+  run('S.run = null; S.dailyRun = null;');
+  run(`applyBackup(parseBackup(JSON.stringify({ v:3, settings:{ lang:'es' }, st:{}, log:{}, done:{} })))`);
+  assert.deepEqual(run('DB.used'), {});
+  assert.equal(run("genIds('es').includes('textgap_es')"), false, 'ohne gelesenen Text keine Lesetext-Lücke');
+  run("rememberLooked('es', 'campoamor', 'diputada')");
+  assert.deepEqual(run("Object.keys(DB.used.looked['es:campoamor'])"), ['diputada']);
+  run(`applyBackup(parseBackup(JSON.stringify({ v:3, settings:{ lang:'es' }, st:{}, log:{}, done:{}, used:{ texts:{ 'es:campoamor':{ best:2, n:1 } } } })))`);
+  assert.equal(run("genIds('es').includes('textgap_es')"), true);
+  assert.ok(run('GENS.textgap_es.make().prompt').includes('___'));
+});

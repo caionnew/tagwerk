@@ -60,7 +60,8 @@ function fullDB(){
   db.texts = [{ id:'w1', lang:'sv', date:days[0], prompt:'Beschreib dein Zimmer.', text:'Mitt rum är litet men ljust.' }];
   db.own = { sv:[{ id:'sv:own1', target:'Jag har ont i huvudet.', de:'Ich habe Kopfschmerzen.', trap:'eigene', created:days[1] }], es:[] };
   db.tat = { sv:[], es:[{ id:'es:t1', target:'Hace frío hoy.', de:'Heute ist es kalt.', trap:'eigene', owner:'x', license:'CC BY 2.0 FR', audio:{ url:'https://audio.tatoeba.org/x.mp3', author:'y' }, created:days[2], auto:true }] };
-  db.used = Object.assign(db.used, { wikiSeen:{ sv:['Vasaskeppet'] }, recentPick:{ shadow_sv:['sv:own1'] } });
+  db.used = Object.assign(db.used, { wikiSeen:{ sv:['Vasaskeppet'] }, recentPick:{ shadow_sv:['sv:own1'] },
+    texts:{ 'sv:vasa':{ best:3, n:1, last:days[0], heard:false } }, looked:{ 'sv:vasa':{ krigsskeppet:days[0] }, 'es:campoamor':{ diputada:days[1] } } });
   db.focus = { [days[3]]:{ sv:'bisats' } };
   db.settings = Object.assign(db.settings, { shHints:false, niveau:'fort', textMode:'listen', langMode:'last', haptics:false, size:'lang' });
   return db;
@@ -90,8 +91,33 @@ test('Backup: der ganze Stand kommt zurück, auch alles, was in späteren Versio
   await expect(fresh.locator('.notice')).toContainText('Backup eingespielt');
   // Alles, was im Backup steht, steht danach genauso im Speicher (die App darf eigene Merker ergänzen, nichts verlieren)
   expect(await stored(fresh)).toMatchObject(exported);
+  // Und es wirkt: Die Lesetext-Lücke bringt das nachgeschlagene Wort zuerst; richtig ergänzt ist es abgehakt, das spanische bleibt
+  await fresh.click('.backbar [data-a=tab]');
+  await fresh.click('[data-a=tab][data-v=extra]');
+  if (await fresh.$('[data-a=form][data-g=textgap_sv]')) await fresh.click('[data-a=form][data-g=textgap_sv]');
+  else { await fresh.click('[data-a=forms]'); await fresh.click('[data-a=gengo][data-g=textgap_sv]'); }
+  await expect(fresh.locator('.kicker')).toContainText('Nachgeschlagen in „Regalskeppet Vasa“');
+  await fresh.fill('#answer', 'krigsskeppet'); await fresh.click('[data-a=check]'); await fresh.click('[data-a=next]');
+  await expect.poll(async () => (await stored(fresh)).used.looked).toEqual({ 'es:campoamor':start.used.looked['es:campoamor'] });
   expect(errors).toEqual([]);
   await ctx.close();
+});
+test('Rückgängig nach dem Einspielen bringt auch die nachgeschlagenen Wörter zurück; Zurücksetzen löscht sie nur für die eine Sprache', async ({ page }) => {
+  const db = richDB('sv');
+  db.used = Object.assign(db.used, { looked:{ 'sv:vasa':{ krigsskeppet:'2026-01-01' }, 'es:campoamor':{ diputada:'2026-01-02' } } });
+  await seed(page, db);
+  await page.goto(APP);
+  await page.click('[data-a=settings] >> nth=0');
+  const empty = path.join(os.tmpdir(), `tw-empty2-${Date.now()}.json`);
+  fs.writeFileSync(empty, JSON.stringify({ v:3, st:{}, log:{}, done:{} }));
+  await page.setInputFiles('#importFile', empty);
+  await expect(page.locator('.notice')).toContainText('Backup eingespielt: 0 Sätze');
+  await expect.poll(async () => (await stored(page)).used.looked).toBeUndefined();
+  await page.click('.notice [data-a=undoimport]');
+  await expect.poll(async () => (await stored(page)).used.looked).toEqual(db.used.looked);
+  await page.click('[data-a=reset][data-l=sv]'); await page.click('[data-a=reset][data-l=sv]');
+  await expect(page.locator('.notice')).toContainText('zurückgesetzt');
+  await expect.poll(async () => (await stored(page)).used.looked).toEqual({ 'es:campoamor':{ diputada:'2026-01-02' } });
 });
 test('Backup aus einer alten Version: wird übernommen und umgerechnet', async ({ page }) => {
   await page.goto(APP);

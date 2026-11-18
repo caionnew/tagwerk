@@ -994,6 +994,1547 @@ sålunda|sålunda|so, auf diese Weise (gehoben)
 satte|sätta|setzte (Präteritum)
 skånska|skånska|Schonisch, der Dialekt aus Skåne (Schonen)
 hörs|höras|ist zu hören; det hörs = das hört man
+röra||bewegen, berühren; röra sig = sich bewegen
+fritt|fri|frei (t-Form)
+naturen|natur|die Natur
+natur||Natur (en-Wort)
+även||auch, sogar
+mark||Boden, Land (en-Wort)
+annan||anderer, andere; någon annan = jemand anderes
+äger|äga|besitzen (Präsens)
+äga||besitzen
+kallas||genannt werden, heißen (Passiv)
+vandra||wandern
+bada||baden
+tälta||zelten
+dygn||Tag und Nacht, 24 Stunden (ett-Wort)
+ställe||Stelle, Ort (ett-Wort)
+rätten||das Recht; auch: das Gericht, das Gericht (Speise)
+ansvar||Verantwortung (ett-Wort)
+störa||stören
+människor|människa|Menschen (Plural)
+människa||Mensch (en-Wort)
+skada||schaden, verletzen, beschädigen; Schaden (en-Wort)
+lämna||lassen, verlassen, hinterlassen
+skräp||Müll, Abfall (ett-Wort)
+eld||Feuer (en-Wort); göra upp eld = Feuer machen
+förbjudet|förbjuden|verboten (t-Form)
+förbjuden||verboten
+torrt|torr|trocken (t-Form)
+torr||trocken
+regeln|regel|die Regel
+regel||Regel (en-Wort)
+enkel||einfach
+förstöra||zerstören
+vanlig||gewöhnlich, üblich
+paragrafer|paragraf|Paragrafen (Plural)
+paragraf||Paragraf (en-Wort)
+sedvänja||Brauch, Gewohnheitsrecht (en-Wort)
+nämns|nämna|erwähnt werden (Passiv)
+nämna||erwähnen, nennen
+grundlagen|grundlag|das Grundgesetz, die Verfassung
+grundlag||Grundgesetz, Verfassung (en-Wort)
+regalskeppet|regalskepp|das königliche Kriegsschiff
+regalskepp||königliches Kriegsschiff (ett-Wort)
+vasa||Vasa (Kriegsschiff von 1628; Königshaus)
+seglade|segla|segeln (Präteritum)
+segla||segeln
+krigsskeppet|krigsskepp|das Kriegsschiff
+krigsskepp||Kriegsschiff (ett-Wort)
+skeppet|skepp|das Schiff
+skepp||Schiff (ett-Wort)
+kanoner|kanon|Kanonen (Plural)
+kanon||Kanone (en-Wort)
+kungen|kung|der König
+kung||König (en-Wort)
+gustav||Gustav (Vorname)
+ii||II, der Zweite (bei Herrschernamen)
+adolf||Adolf (Vorname)
+visa||zeigen
+europa||Europa
+mäktigt|mäktig|mächtig (t-Form)
+mäktig||mächtig
+drygt||gut, knapp über (vor Zahlen)
+tusen||tausend
+meter||Meter
+vindby||Windböe (en-Wort)
+lutade|luta|sich neigen, Schlagseite haben (Präteritum)
+luta||sich neigen, lehnen
+vatten||Wasser (ett-Wort)
+forsade|forsa|strömen, rauschen (Präteritum)
+forsa||strömen, rauschen
+genom||durch
+kanonportarna|kanonport|die Kanonenpforten
+kanonport||Kanonenpforte (en-Wort)
+sjönk|sjunka|sinken (Präteritum)
+sjunka||sinken
+hamnen|hamn|der Hafen
+hamn||Hafen (en-Wort)
+helt||ganz, völlig; helt enkelt = einfach, schlicht
+enkelt|enkel|einfach (t-Form); helt enkelt = einfach, schlicht
+smalt|smal|schmal (t-Form)
+smal||schmal
+högt|hög|hoch (t-Form)
+låg|ligga|liegen (Präteritum); auch: niedrig
+botten||Boden, Grund (en-Wort)
+östersjöns|östersjön|der Ostsee (Genitiv)
+östersjön||die Ostsee
+innehåller|innehålla|enthalten (Präsens)
+innehålla||enthalten
+salt||Salz (ett-Wort); salzig
+skeppsmasken|skeppsmask|der Schiffsbohrwurm
+skeppsmask||Schiffsbohrwurm (en-Wort)
+leva||leben
+träet|trä|das Holz
+trä||Holz (ett-Wort)
+bevarat|bevara|bewahrt, erhalten (t-Form)
+bevara||bewahren, erhalten
+lyftes|lyfta|heben (Präteritum Passiv)
+lyfta||heben
+vasamuseet||das Vasa-Museum (Stockholm)
+besökta|besöka|besucht (Plural)
+besöka||besuchen
+skandinavien||Skandinavien
+midnattssol||Mitternachtssonne (en-Wort)
+mörkertid||Polarnacht, dunkle Jahreszeit (en-Wort)
+norr||Norden; norr om = nördlich von
+polcirkeln|polcirkel|der Polarkreis
+polcirkel||Polarkreis (en-Wort)
+kontraster|kontrast|Gegensätze, Kontraste (Plural)
+kontrast||Gegensatz, Kontrast (en-Wort)
+midnattssolen|midnattssol|die Mitternachtssonne
+maj||Mai
+mitten||Mitte; i mitten av = Mitte (zeitlich)
+svårt|svår|schwer, schwierig (t-Form); ha svårt att = sich schwertun
+mörka|mörk|dunkel (Plural und bestimmte Form)
+mörk||dunkel
+gardiner|gardin|Vorhänge (Plural)
+gardin||Vorhang, Gardine (en-Wort)
+tvärtom||umgekehrt
+horisonten|horisont|der Horizont
+horisont||Horizont (en-Wort)
+himlen|himmel|der Himmel
+himmel||Himmel (en-Wort)
+blå||blau
+rosa||rosa
+snön|snö|der Schnee
+snö||Schnee (en-Wort)
+lyser|lysa|leuchten (Präsens); lysa upp = erhellen
+lysa||leuchten
+landskapet|landskap|die Landschaft
+landskap||Landschaft; historische Provinz (ett-Wort)
+grillar|grilla|grillen (Präsens)
+grilla||grillen
+levande||lebendig; levande ljus = Kerzen
+norrsken||Polarlicht, Nordlicht (ett-Wort)
+astrid||Astrid (Vorname)
+lindgren||Lindgren (Familienname)
+föddes|födas|geboren werden (Präteritum)
+födas||geboren werden
+gård||Hof, Bauernhof (en-Wort)
+utanför||außerhalb, vor
+vimmerby||Vimmerby (Stadt in Småland)
+småland||Småland (Landschaft in Südschweden)
+lekte|leka|spielen (Präteritum)
+leka||spielen (Kinder)
+berättelser|berättelse|Erzählungen, Geschichten (Plural)
+berättelse||Erzählung, Geschichte (en-Wort)
+fria|fri|frei (Plural und bestimmte Form)
+fri||frei
+allvar||Ernst (ett-Wort); på allvar = ernsthaft, richtig
+karin||Karin (Vorname)
+saga||Märchen (en-Wort)
+namnet|namn|der Name
+pippi||Pippi (Name)
+långstrump||Langstrumpf; Pippi Långstrump = Pippi Langstrumpf
+succé||Erfolg (en-Wort)
+starkare|stark|stärker (Komparativ)
+vuxna|vuxen|Erwachsene (Plural)
+vuxen||erwachsen; Erwachsener
+häst||Pferd (en-Wort)
+apa||Affe (en-Wort)
+bestämmer|bestämma|bestimmen, entscheiden (Präsens)
+bestämma||bestimmen, entscheiden
+liv||Leben (ett-Wort)
+emil||Emil (Vorname); Emil i Lönneberga = Michel aus Lönneberga
+lönneberga||Lönneberga (Ort in Småland)
+ronja||Ronja (Vorname)
+rövardotter||Räubertochter; Ronja Rövardotter = Ronja Räubertochter
+lejonhjärta||Löwenherz; bröderna Lejonhjärta = die Brüder Löwenherz
+översatta|översätta|übersetzt (Plural)
+översätta||übersetzen
+surströmming||Surströmming, gesäuerter Ostseehering (en-Wort)
+strömming||Ostseehering (en-Wort)
+jäsa||gären
+fisken|fisk|der Fisch
+läggs|lägga|gelegt werden (Präsens Passiv)
+saltlake||Salzlake (en-Wort)
+burkar|burk|Dosen (Plural)
+burk||Dose (en-Wort)
+jäsningen|jäsning|die Gärung
+jäsning||Gärung (en-Wort)
+bildas|bilda|entstehen, sich bilden (Präsens Passiv)
+bilda||bilden, gründen
+gaser|gas|Gase (Plural)
+gas||Gas (en-Wort)
+burkarna|burk|die Dosen
+runda|rund|rund (Plural und bestimmte Form)
+rund||rund
+buckliga|bucklig|verbeult, gewölbt (Plural und bestimmte Form)
+bucklig||verbeult, gewölbt
+lukten|lukt|der Geruch
+lukt||Geruch (en-Wort)
+berömd||berühmt
+fruktansvärd||furchtbar, schrecklich
+burken|burk|die Dose
+utomhus||draußen, im Freien
+hink||Eimer (en-Wort)
+vågar|våga|wagen, sich trauen (Präsens)
+våga||wagen, sich trauen
+smaka||schmecken, probieren
+tunnbröd||dünnes Fladenbrot (ett-Wort)
+potatis||Kartoffel (en-Wort)
+lök||Zwiebel (en-Wort)
+gräddfil||saure Sahne, Schmand (en-Wort)
+traditionen|tradition|die Tradition
+tradition||Tradition (en-Wort)
+starkast|stark|am stärksten (Superlativ)
+särskilt||besonders
+längs||entlang
+kusten|kust|die Küste; Höga kusten = die Hohe Küste (Landschaft in Nordschweden)
+kust||Küste (en-Wort)
+säsongen|säsong|die Saison
+säsong||Saison (en-Wort)
+bjuder|bjuda|einladen, anbieten (Präsens); bjuda in = einladen
+bjuda||einladen, anbieten
+surströmmingsfest||Surströmming-Fest (en-Wort)
+flyr|fly|fliehen (Präsens)
+fly||fliehen
+is||Eis (en-Wort)
+jukkasjärvi||Jukkasjärvi (Ort bei Kiruna)
+långt|lång|weit (Adverb); lång = lang
+tas|ta|genommen werden (Präsens Passiv)
+torne||Torne; Torne älv = der Fluss Torne
+älv||Fluss, Strom (en-Wort)
+våren||der Frühling; på våren = im Frühling
+sparas|spara|aufbewahrt werden (Präsens Passiv)
+spara||sparen, aufbewahren
+hallar|hall|Hallen (Plural)
+hall||Halle (en-Wort)
+används|använda|verwendet werden (Präsens Passiv)
+använda||verwenden, benutzen
+konstnärer|konstnär|Künstler (Plural)
+konstnär||Künstler (en-Wort)
+formar|forma|formen, gestalten (Präsens)
+forma||formen, gestalten
+runt||rund um, ringsum; ungefähr
+minus||minus
+grader|grad|Grad (Plural)
+grad||Grad (en-Wort)
+gästerna|gäst|die Gäste
+gäst||Gast (en-Wort)
+varma|varm|warm (Plural und bestimmte Form)
+sovsäckar|sovsäck|Schlafsäcke (Plural)
+sovsäck||Schlafsack (en-Wort)
+renfällar|renfäll|Rentierfelle (Plural)
+renfäll||Rentierfell (en-Wort)
+smälter|smälta|schmelzen (Präsens)
+smälta||schmelzen
+vattnet|vatten|das Wasser
+rinner|rinna|fließen, rinnen (Präsens)
+älven|älv|der Fluss
+del||Teil (en-Wort)
+kylning||Kühlung (en-Wort)
+drivs|driva|betrieben werden (Präsens Passiv)
+driva||treiben, betreiben
+solenergi||Sonnenenergie (en-Wort)
+föräldraledighet||Elternzeit (en-Wort)
+rätt||Recht, Anspruch (en-Wort); richtig; ha rätt = recht haben
+föräldrapenning||Elterngeld (en-Wort)
+per||pro, je
+delas|dela|geteilt werden (Präsens Passiv)
+dela||teilen
+mellan||zwischen
+reserverade|reservera|reserviert (Plural)
+reservera||reservieren
+dem||sie, ihnen (Objektform von de)
+förälder||Elternteil (en-Wort)
+försvinner|försvinna|verschwinden (Präsens)
+försvinna||verschwinden
+infördes|införa|eingeführt werden (Präteritum Passiv)
+införa||einführen
+pappor|pappa|Väter (Plural)
+föräldralediga|föräldraledig|in Elternzeit (Plural)
+ersättning||Entschädigung, Vergütung, Ersatz (en-Wort)
+vanligt|vanlig|üblich, gewöhnlich (t-Form)
+barnvagn||Kinderwagen (en-Wort)
+ibland||manchmal
+lattepappor|lattepappa|Latte-Papas (Plural)
+lattepappa||Latte-Papa: Vater in Elternzeit, oft mit Kinderwagen im Café (en-Wort)
+mammor|mamma|Mütter (Plural)
+flesta|flest|die meisten; de flesta = die meisten
+debatten|debatt|die Debatte
+ledigheten|ledighet|die freie Zeit, die Elternzeit
+ledighet||freie Zeit, Urlaub (en-Wort)
+jämnt|jämn|gleichmäßig (Adverb)
+jämn||gleichmäßig, eben
+offentlighetsprincipen|offentlighetsprincip|das Öffentlichkeitsprinzip
+offentlighetsprincip||Öffentlichkeitsprinzip: Akten der Behörden sind öffentlich (en-Wort)
+tryckfrihetsförordning||Pressefreiheitsverordnung (en-Wort)
+världens|värld|der Welt (Genitiv)
+pressfrihet||Pressefreiheit (en-Wort)
+myndigheternas|myndighet|der Behörden (Genitiv Plural)
+myndighet||Behörde (en-Wort)
+handlingar|handling|Unterlagen, Akten (Plural); auch: Handlungen
+handling||Unterlage, Akte; Handlung (en-Wort)
+principen|princip|das Prinzip
+princip||Prinzip (en-Wort)
+gäller|gälla|gelten (Präsens)
+gälla||gelten
+praktiken|praktik|die Praxis; i praktiken = in der Praxis
+praktik||Praxis (en-Wort)
+betyder|betyda|bedeuten (Präsens)
+betyda||bedeuten
+vem||wer; vem som helst = jeder (Beliebige)
+vända||wenden; vända sig till = sich wenden an
+kommun||Gemeinde, Kommune (en-Wort)
+departement||Ministerium (ett-Wort)
+begära||verlangen, beantragen; begära ut = anfordern
+avtal||Vertrag, Abkommen (ett-Wort)
+mejl||E-Mail (ett-Wort)
+berätta||erzählen
+uppgifterna|uppgift|die Angaben, die Daten
+uppgift||Angabe; Aufgabe (en-Wort)
+myndigheten|myndighet|die Behörde
+heller||auch nicht; inte heller = auch nicht
+försöka||versuchen
+handlingarna|handling|die Unterlagen, die Akten
+lämnas|lämna|herausgegeben, abgegeben werden (Präsens Passiv); lämnas ut = herausgegeben werden
+skyndsamt|skyndsam|zügig, umgehend (Adverb)
+skyndsam||zügig, umgehend
+undantag||Ausnahme (ett-Wort)
+uppgifter|uppgift|Angaben, Daten (Plural)
+någons|någon|von jemandem, jemandes (Genitiv)
+hälsa||Gesundheit (en-Wort); grüßen
+försvaret|försvar|die Verteidigung, das Militär
+försvar||Verteidigung (ett-Wort)
+pågående||laufend, andauernd
+brottsutredningar|brottsutredning|Ermittlungen in Strafsachen (Plural)
+brottsutredning||strafrechtliche Ermittlung (en-Wort)
+beläggas|belägga|belegt werden (Passiv); beläggas med sekretess = unter Geheimhaltung gestellt werden
+belägga||belegen, versehen mit
+sekretess||Geheimhaltung, Verschwiegenheit (en-Wort)
+huvudregeln|huvudregel|die Grundregel
+huvudregel||Grundregel, Hauptregel (en-Wort)
+öppenhet||Offenheit, Transparenz (en-Wort)
+sekretessen|sekretess|die Geheimhaltung
+motiveras|motivera|begründet werden (Präsens Passiv)
+motivera||begründen; motivieren
+journalister|journalist|Journalisten (Plural)
+journalist||Journalist (en-Wort)
+viktigt|viktig|wichtig (t-Form)
+verktyg||Werkzeug (ett-Wort)
+granskningar|granskning|Recherchen, Prüfungen (Plural)
+granskning||Prüfung, kritische Recherche (en-Wort)
+slöseri||Verschwendung (ett-Wort)
+maktmissbruk||Machtmissbrauch (ett-Wort)
+börjat|börja|anfangen (Supinum)
+begäran||Antrag, Ersuchen (en-Wort)
+dokument||Dokument (ett-Wort)
+meddelarfriheten|meddelarfrihet|die Informantenfreiheit
+meddelarfrihet||Informantenfreiheit: Recht von Angestellten, den Medien Auskunft zu geben (en-Wort)
+offentlig||öffentlich
+sektor||Sektor (en-Wort)
+medierna|medium|die Medien
+medium||Medium (ett-Wort)
+missförhållanden|missförhållande|Missstände (Plural)
+missförhållande||Missstand (ett-Wort)
+leta||suchen; leta efter = suchen nach
+källan|källa|die Quelle
+källa||Quelle (en-Wort)
+utländska|utländsk|ausländisch (Plural und bestimmte Form)
+utländsk||ausländisch
+besökare||Besucher (en-Wort)
+verka||wirken, scheinen
+märkligt|märklig|merkwürdig (t-Form)
+märklig||merkwürdig
+svenskar|svensk|Schweden (Plural, Personen)
+självklart|självklar|selbstverständlich (t-Form)
+självklar||selbstverständlich
+makten|makt|die Macht
+makt||Macht (en-Wort)
+tåla||ertragen, aushalten, vertragen
+insyn||Einblick, Transparenz (en-Wort)
+grannens|granne|des Nachbarn (Genitiv)
+granne||Nachbar (en-Wort)
+lön||Lohn, Gehalt (en-Wort)
+lönen|lön|der Lohn, das Gehalt
+privatsak||Privatsache (en-Wort)
+deklarationerna|deklaration|die Steuererklärungen
+deklaration||Steuererklärung (en-Wort)
+hamnar|hamna|landen, geraten (Präsens)
+hamna||landen, geraten
+skatteverket||das Skatteverket (schwedische Steuerbehörde)
+räknas|räkna|gelten als, gezählt werden (Präsens Passiv)
+räkna||rechnen, zählen
+allmänna|allmän|öffentlich, allgemein (Plural und bestimmte Form); allmänna handlingar = öffentliche Akten
+allmän||allgemein, öffentlich
+kunnat|kunna|können (Supinum)
+person||Person (en-Wort)
+tjänar|tjäna|verdienen (Präsens)
+tjäna||verdienen; dienen
+såldes|sälja|verkauft werden (Präteritum Passiv)
+tjocka|tjock|dick (Plural und bestimmte Form)
+tjock||dick
+kallade||genannt (Plural); så kallade = sogenannte
+taxeringskalendrar|taxeringskalender|Steuerkalender (Plural): Bücher mit den Einkommen aller Steuerzahler
+taxeringskalender||Steuerkalender: Buch mit den Einkommen aller Steuerzahler (en-Wort)
+grannar|granne|Nachbarn (Plural)
+kolleger|kollega|Kollegen (Plural)
+kollega||Kollege (en-Wort)
+kändisar|kändis|Prominente (Plural)
+kändis||Promi, Prominente (en-Wort)
+sköts|sköta|erledigt, betrieben werden (Präsens Passiv)
+sköta||erledigen, sich kümmern um
+mesta|mest|das meiste; det mesta = das meiste
+webbtjänster|webbtjänst|Webdienste (Plural)
+webbtjänst||Webdienst (en-Wort)
+ratsit||Ratsit (schwedischer Auskunftsdienst)
+merinfo||Merinfo (schwedischer Auskunftsdienst)
+summa||Summe, Betrag (en-Wort)
+inkomst||Einkommen (en-Wort)
+adress||Adresse (en-Wort)
+ålder||Alter (en-Wort)
+tjänsterna|tjänst|die Dienste
+tjänst||Dienst; Stelle; inkomst av tjänst = Einkommen aus Anstellung (en-Wort)
+utgivningsbevis||Herausgeberbescheinigung, die einem Dienst den Schutz der Pressefreiheit gibt (ett-Wort)
+eu:s|eu|der EU (Genitiv)
+eu||EU, Europäische Union
+dataskyddsregler|dataskyddsregel|Datenschutzregeln (Plural)
+dataskyddsregel||Datenschutzregel (en-Wort)
+kritikerna|kritiker|die Kritiker
+kritiker||Kritiker (en-Wort)
+användas|använda|verwendet werden (Passiv)
+bedragare||Betrüger (en-Wort)
+hotad|hota|bedroht
+hota||drohen, bedrohen
+hittas|hitta|gefunden werden (Präsens Passiv)
+försvararna|försvarare|die Verteidiger, die Befürworter
+försvarare||Verteidiger, Befürworter (en-Wort)
+menar|mena|meinen (Präsens)
+mena||meinen
+öppenheten|öppenhet|die Offenheit, die Transparenz
+motverkar|motverka|entgegenwirken (Präsens)
+motverka||entgegenwirken
+fusk||Schummeln, Betrug (ett-Wort)
+löneskillnader|löneskillnad|Lohnunterschiede (Plural)
+löneskillnad||Lohnunterschied (en-Wort)
+synliga|synlig|sichtbar (Plural und bestimmte Form)
+synlig||sichtbar
+steg||Schritt (ett-Wort)
+integritet||Privatsphäre, Integrität (en-Wort)
+togs|ta|genommen werden (Präteritum Passiv)
+bedömer|bedöma|beurteilen, einschätzen (Präsens)
+bedöma||beurteilen, einschätzen
+näringsverksamhet||Gewerbe, selbstständige Tätigkeit (en-Wort)
+offentliga|offentlig|öffentlich (Plural und bestimmte Form)
+inkomståret|inkomstår|das Einkommensjahr
+inkomstår||Einkommensjahr (ett-Wort)
+sammanlagda|sammanlagd|gesamt (Plural und bestimmte Form)
+sammanlagd||gesamt, insgesamt
+förvärvsinkomsten|förvärvsinkomst|das Erwerbseinkommen
+förvärvsinkomst||Erwerbseinkommen (en-Wort)
+järnmalmsgruva||Eisenerzgrube (en-Wort)
+statliga|statlig|staatlich (Plural und bestimmte Form)
+statlig||staatlich
+lkab||LKAB (staatlicher schwedischer Bergbaukonzern)
+bryter|bryta|brechen; abbauen (Erz) (Präsens)
+bryta||brechen; abbauen (Erz)
+malmen|malm|das Erz
+malm||Erz (en-Wort)
+djupt|djup|tief (Adverb)
+djup||tief
+jorden|jord|die Erde; under jorden = unter Tage, unter der Erde
+jord||Erde (en-Wort)
+största|stor|größte (Superlativ)
+underjordiska|underjordisk|unterirdisch (Plural und bestimmte Form)
+underjordisk||unterirdisch
+gruvor|gruva|Gruben, Bergwerke (Plural)
+gruva||Grube, Bergwerk (en-Wort)
+marken|mark|der Boden
+ovanför||oberhalb, über
+sprickor|spricka|Risse (Plural)
+spricka||Riss (en-Wort); reißen, platzen
+kryper|krypa|kriechen (Präsens)
+krypa||kriechen
+närmare|nära|näher (Komparativ)
+stadskärnan|stadskärna|der Stadtkern
+stadskärna||Stadtkern (en-Wort)
+bestämdes|bestämma|beschlossen werden (Präteritum Passiv)
+österut||nach Osten, ostwärts
+centrum||Zentrum (ett-Wort)
+stadshus||Rathaus (ett-Wort)
+vuxit|växa|wachsen (Supinum); vuxit fram = entstanden, vuxit upp = aufgewachsen
+växa||wachsen
+tusentals||Tausende
+bostäder|bostad|Wohnungen (Plural)
+bostad||Wohnung (en-Wort)
+rivits|riva|abgerissen werden (Supinum Passiv)
+riva||abreißen
+ersatts|ersätta|ersetzt werden (Supinum Passiv)
+ersätta||ersetzen
+kostnaden|kostnad|die Kosten
+kostnad||Kosten (en-Wort)
+vissa|viss|gewisse, manche (Plural)
+viss||gewiss, bestimmt
+byggnader|byggnad|Gebäude (Plural)
+byggnad||Gebäude (en-Wort)
+värdefulla|värdefull|wertvoll (Plural und bestimmte Form)
+värdefull||wertvoll
+träkyrkan|träkyrka|die Holzkirche
+träkyrka||Holzkirche (en-Wort)
+röstades|rösta|gewählt werden (Präteritum Passiv); röstas fram = gekürt werden
+rösta||abstimmen, wählen
+sveriges|sverige|Schwedens (Genitiv)
+vackraste|vacker|schönste (Superlativ)
+fjärrstyrda|fjärrstyrd|ferngesteuert (Plural und bestimmte Form)
+fjärrstyrd||ferngesteuert
+specialvagnar|specialvagn|Spezialwagen (Plural)
+specialvagn||Spezialwagen (en-Wort)
+rullade|rulla|rollen (Präteritum)
+rulla||rollen
+timmen|timme|die Stunde; i timmen = pro Stunde
+stod|stå|stehen (Präteritum)
+svt||SVT (öffentlich-rechtliches schwedisches Fernsehen)
+sände|sända|senden (Präteritum); sända direkt = live übertragen
+sända||senden, übertragen
+flytten|flytt|der Umzug
+flytt||Umzug (en-Wort)
+väcker|väcka|wecken, hervorrufen (Präsens)
+väcka||wecken, hervorrufen
+blandade|blandad|gemischt (Plural und bestimmte Form)
+blandad||gemischt
+känslor|känsla|Gefühle (Plural)
+känsla||Gefühl (en-Wort)
+gruvan|gruva|die Grube, das Bergwerk
+skatteintäkter|skatteintäkt|Steuereinnahmen (Plural)
+skatteintäkt||Steuereinnahme (en-Wort)
+knappast||kaum
+finnas||vorhanden sein, existieren; det finns = es gibt
+invånare||Einwohner (en-Wort)
+sörjer|sörja|trauern (Präsens); sörja = trauern um
+sörja||trauern
+kvarter||Viertel, Häuserblock (ett-Wort)
+samebyarna|sameby|die Samendörfer
+sameby||Samendorf: Gemeinschaft für die Rentierhaltung in einem Gebiet (en-Wort)
+området|område|das Gebiet
+område||Gebiet, Bereich (ett-Wort)
+innebär|innebära|bedeuten, mit sich bringen (Präsens)
+innebära||bedeuten, mit sich bringen
+gruvplaner|gruvplan|Bergbaupläne (Plural)
+gruvplan||Bergbauplan (en-Wort)
+betesmark||Weideland (en-Wort)
+renarna||die Rentiere
+samernas|same|der Samen (Genitiv Plural)
+same||Same: Angehöriger des samischen Volkes (en-Wort)
+rättigheter|rättighet|Rechte (Plural)
+rättighet||Recht (en-Wort)
+samerna|same|die Samen
+urfolk||indigenes Volk (ett-Wort)
+levde|leva|leben (Präteritum)
+sträcker|sträcka|strecken (Präsens); sträcka sig = sich erstrecken
+sträcka||strecken; sträcka sig = sich erstrecken; Strecke (en-Wort)
+finland||Finnland
+ryssland||Russland
+nationsgränser|nationsgräns|Staatsgrenzen (Plural)
+nationsgräns||Staatsgrenze (en-Wort)
+renskötseln|renskötsel|die Rentierhaltung
+renskötsel||Rentierhaltung (en-Wort)
+viktig||wichtig
+kulturen|kultur|die Kultur
+kultur||Kultur (en-Wort)
+samer|same|Samen (Plural)
+yrken|yrke|Berufe (Plural)
+yrke||Beruf (ett-Wort)
+1900-talet||das 20. Jahrhundert
+förde|föra|führen (Präteritum)
+föra||führen
+staten|stat|der Staat
+stat||Staat (en-Wort)
+hård||hart
+politik||Politik (en-Wort)
+samisk||samisch
+skicka||schicken
+nomadskolor|nomadskola|Nomadenschulen (Plural)
+nomadskola||Nomadenschule: Sonderschule für samische Kinder (en-Wort)
+språket|språk|die Sprache
+trycktes|trycka|gedrückt werden (Präteritum Passiv); tryckas undan = unterdrückt werden
+trycka||drücken; drucken
+statligt|statlig|staatlich (t-Form)
+institut||Institut (ett-Wort)
+rasbiologi||Rassenbiologie (en-Wort)
+mätte|mäta|messen (Präteritum)
+mäta||messen
+forskare||Forscher (en-Wort)
+samers|same|der Samen (Genitiv Plural)
+skallar|skalle|Schädel (Plural)
+skalle||Schädel (en-Wort)
+sametinget|sameting|das Sameting, das samische Parlament
+sameting||samisches Parlament (ett-Wort)
+både||sowohl; både … och = sowohl … als auch
+folkvalt|folkvald|vom Volk gewählt (t-Form)
+folkvald||vom Volk gewählt
+organ||Organ (ett-Wort)
+inrättades|inrätta|eingerichtet werden (Präteritum Passiv)
+inrätta||einrichten, gründen
+dom||Urteil (en-Wort); umgangssprachlich auch: sie
+betydelse||Bedeutung (en-Wort)
+högsta|hög|höchste (Superlativ); Högsta domstolen = der Oberste Gerichtshof
+domstolen|domstol|das Gericht
+domstol||Gericht (en-Wort)
+girjas||Girjas (Samendorf in Norrbotten)
+upplåta||überlassen, vergeben (Rechte)
+småviltsjakt||Niederwildjagd (en-Wort)
+fiske||Fischerei, Angeln (ett-Wort)
+odlingsgränsen|odlingsgräns|die Kulturgrenze: Grenze, oberhalb der früher kein Ackerbau betrieben wurde
+odlingsgräns||Kulturgrenze: Grenze, oberhalb der früher kein Ackerbau betrieben wurde (en-Wort)
+jaga||jagen
+fiska||fischen, angeln
+skälet|skäl|der Grund
+skäl||Grund (ett-Wort)
+använt|använda|verwenden (Supinum)
+urminnes||uralt; sedan urminnes tider = seit Urzeiten
+tider|tid|Zeiten (Plural)
+domen|dom|das Urteil
+hyllades|hylla|gefeiert werden (Präteritum Passiv)
+hylla||feiern, ehren; Regal (en-Wort)
+ilska||Wut (en-Wort)
+jägare||Jäger (en-Wort)
+efteråt||danach, hinterher
+hot||Drohung (ett-Wort)
+trakasserier||Schikanen, Belästigungen (Plural)
+september||September
+lämnade|lämna|abgeben, verlassen (Präteritum)
+sanningskommission||Wahrheitskommission (en-Wort)
+slutrapport||Abschlussbericht (en-Wort)
+statens|stat|des Staates (Genitiv)
+följder|följd|Folgen (Plural)
+följd||Folge (en-Wort)
+kommissionen|kommission|die Kommission
+kommission||Kommission (en-Wort)
+föreslår|föreslå|vorschlagen (Präsens)
+föreslå||vorschlagen
+bland||unter; bland annat = unter anderem
+folket||das Volk
+riksdagen|riksdag|der Reichstag, das schwedische Parlament
+riksdag||Reichstag, Parlament (en-Wort)
+avgjort|avgöra|entschieden (t-Form)
+avgöra||entscheiden
+skolor|skola|Schulen (Plural)
+vinst||Gewinn (en-Wort)
+genomförde|genomföra|durchführen (Präteritum)
+genomföra||durchführen
+bildt||Bildt (Carl Bildt, Ministerpräsident 1991–1994)
+skolreform||Schulreform (en-Wort)
+unikt|unik|einzigartig (t-Form)
+unik||einzigartig
+skolpeng||Schulgeld je Schüler, das die Schule vom Staat bekommt (en-Wort)
+elev||Schüler (en-Wort)
+familjen|familj|die Familie
+väljer|välja|wählen (Präsens)
+välja||wählen
+dit||dorthin
+stiftelse||Stiftung (en-Wort)
+privat||privat
+företag||Unternehmen (ett-Wort)
+ovanliga|ovanlig|ungewöhnlich (Plural und bestimmte Form); det ovanliga = das Ungewöhnliche
+ovanlig||ungewöhnlich
+aktiebolag||Aktiengesellschaft (ett-Wort)
+ägarna|ägare|die Eigentümer
+ägare||Eigentümer (en-Wort)
+internationellt|internationell|international (Adverb)
+internationell||international
+sällsynt||selten
+skattefinansierade|skattefinansierad|steuerfinanziert (Plural und bestimmte Form)
+skattefinansierad||steuerfinanziert
+friskolorna|friskola|die freien Schulen
+friskola||freie Schule (staatlich finanziert, privat betrieben) (en-Wort)
+avgiftsfria|avgiftsfri|gebührenfrei (Plural und bestimmte Form)
+avgiftsfri||gebührenfrei
+familjerna|familj|die Familien
+skolkoncernen|skolkoncern|der Schulkonzern
+skolkoncern||Schulkonzern (en-Wort)
+börsnoterad||börsennotiert
+snabbt|snabb|schnell (Adverb)
+läsåret|läsår|das Schuljahr
+läsår||Schuljahr (ett-Wort)
+ungefär||ungefähr
+sjätte||sechste
+grundskoleelev||Schüler der Grundschule (Klasse 1–9) (en-Wort)
+tredje||dritte
+gymnasieelev||Gymnasiast (en-Wort)
+fristående||frei, unabhängig; fristående skola = freie Schule
+anhängarna|anhängare|die Anhänger, die Befürworter
+anhängare||Anhänger, Befürworter (en-Wort)
+valfriheten|valfrihet|die Wahlfreiheit
+valfrihet||Wahlfreiheit (en-Wort)
+gett|ge|geben (Supinum)
+fler||mehr (zählbar)
+alternativ||Alternative (ett-Wort)
+tvingat|tvinga|zwingen (Supinum)
+tvinga||zwingen
+kommunala|kommunal|kommunal (Plural und bestimmte Form)
+kommunal||kommunal
+skolorna|skola|die Schulen
+pekar|peka|zeigen (Präsens); peka på = hinweisen auf
+peka||zeigen
+vinstdrivande||gewinnorientiert
+behöriga|behörig|qualifiziert, ausgebildet (Plural und bestimmte Form)
+behörig||qualifiziert, befugt
+betygen|betyg|die Noten
+betyg||Note, Zeugnis (ett-Wort)
+snabbare|snabb|schneller (Komparativ)
+kunskaperna|kunskap|die Kenntnisse
+kunskap||Wissen, Kenntnis (en-Wort)
+varnar|varna|warnen (Präsens)
+varna||warnen
+elever|elev|Schüler (Plural)
+välutbildade|välutbildad|gut ausgebildet (Plural und bestimmte Form)
+välutbildad||gut ausgebildet
+samlas|samla|sich sammeln (Präsens Passiv)
+samla||sammeln
+tyngsta|tung|schwerste (Superlativ)
+forskningen|forskning|die Forschung
+forskning||Forschung (en-Wort)
+entydigt|entydig|eindeutig (t-Form)
+entydig||eindeutig
+delat|dela|teilen, spalten (Supinum)
+årtionden|årtionde|Jahrzehnte (Plural)
+årtionde||Jahrzehnt (ett-Wort)
+alliansfrihet||Bündnisfreiheit (en-Wort)
+nato||NATO
+krig||Krieg (ett-Wort)
+freden|fred|der Frieden
+fred||Frieden (en-Wort)
+neutralt|neutral|neutral (t-Form)
+neutral||neutral
+medlare||Vermittler (en-Wort)
+öst||Osten
+väst||Westen
+kriget|krig|der Krieg; kalla kriget = der Kalte Krieg
+samarbetade|samarbeta|zusammenarbeiten (Präteritum)
+samarbeta||zusammenarbeiten
+visserligen||zwar
+hemlighet||Geheimnis (en-Wort); i hemlighet = heimlich
+västmakterna|västmakt|die Westmächte
+västmakt||Westmacht (en-Wort)
+officiellt|officiell|offiziell (Adverb)
+officiell||offiziell
+allianser|allians|Bündnisse (Plural)
+allians||Bündnis, Allianz (en-Wort)
+rysslands|ryssland|Russlands (Genitiv)
+fullskaliga|fullskalig|umfassend, in vollem Umfang (Plural und bestimmte Form)
+fullskalig||umfassend, in vollem Umfang
+invasion||Invasion (en-Wort)
+ukraina||die Ukraine
+februari||Februar
+svängde|svänga|umschwenken, sich drehen (Präteritum)
+svänga||schwenken, abbiegen
+opinionen|opinion|die öffentliche Meinung
+opinion||öffentliche Meinung (en-Wort)
+socialdemokraterna|socialdemokrat|die Sozialdemokraten
+socialdemokrat||Sozialdemokrat (en-Wort)
+ändrade|ändra|ändern (Präteritum)
+ändra||ändern
+ståndpunkt||Standpunkt (en-Wort)
+ansökan||Antrag, Bewerbung (en-Wort)
+turkiet||die Türkei
+ungern||Ungarn
+dröjde|dröja|zögern, dauern (Präteritum); dröja med = zögern mit
+dröja||zögern, auf sich warten lassen
+godkänna||genehmigen, billigen
+natos|nato|der NATO (Genitiv)
+32:a||32. (zweiunddreißigste)
+medlem||Mitglied (en-Wort)
+värnplikten|värnplikt|die Wehrpflicht
+värnplikt||Wehrpflicht (en-Wort)
+vilat|vila|ruhen (Supinum)
+vila||ruhen; Ruhe (en-Wort)
+aktiverades|aktivera|aktiviert werden (Präteritum Passiv)
+aktivera||aktivieren
+november||November
+hushåll||Haushalt (ett-Wort)
+broschyr||Broschüre (en-Wort)
+förbereder|förbereda|vorbereiten (Präsens)
+kris||Krise (en-Wort)
+fredsmäklare||Friedensvermittler (en-Wort)
+neutraliteten|neutralitet|die Neutralität
+neutralitet||Neutralität (en-Wort)
+allierade|allierad|Verbündete (Plural); verbündet
+allierad||verbündet; Verbündeter
+vin||Wein (ett-Wort)
+sprit||Spirituosen, Schnaps (en-Wort)
+starköl||Starkbier (über 3,5 % Alkohol) (ett-Wort)
+butik||Geschäft, Laden (en-Wort)
+bolaget|bolag|die Gesellschaft, das Unternehmen
+bolag||Gesellschaft, Unternehmen (ett-Wort)
+ensamrätt||Alleinrecht, Monopol (en-Wort)
+sälja||verkaufen
+alkohol||Alkohol (en-Wort)
+privatpersoner|privatperson|Privatpersonen (Plural)
+privatperson||Privatperson (en-Wort)
+handla||einkaufen; handeln; handla om = handeln von
+butikerna|butik|die Geschäfte
+begränsade|begränsad|begrenzt (Plural und bestimmte Form)
+begränsad||begrenzt
+öppettider|öppettid|Öffnungszeiten (Plural)
+öppettid||Öffnungszeit (en-Wort)
+stängda|stängd|geschlossen (Plural)
+stängd||geschlossen
+söndagar|söndag|Sonntage (Plural)
+bakgrunden|bakgrund|der Hintergrund
+bakgrund||Hintergrund (en-Wort)
+kamp||Kampf (en-Wort)
+supandet|supande|das Saufen, der übermäßige Alkoholkonsum
+supande||Saufen, Trinkerei (ett-Wort)
+röstade|rösta|abstimmen (Präteritum)
+svenskarna|svensk|die Schweden
+totalförbud||Totalverbot (ett-Wort)
+förbudet|förbud|das Verbot
+förbud||Verbot (ett-Wort)
+föll|falla|fallen (Präteritum); scheitern
+falla||fallen
+procent||Prozent
+stället|ställe|die Stelle; i stället = stattdessen
+fortsatte|fortsätta|fortsetzen, weitermachen (Präteritum)
+fortsätta||fortsetzen, weitermachen
+motboken|motbok|das Alkoholbuch
+motbok||Alkoholbuch: Bezugsheft für Spirituosen (1914–1955) (en-Wort)
+införts|införa|eingeführt werden (Supinum Passiv)
+köpare||Käufer (en-Wort)
+personlig||persönlich
+ranson||Ration, Zuteilung (en-Wort)
+egen||eigen
+avskaffades|avskaffa|abgeschafft werden (Präteritum Passiv)
+avskaffa||abschaffen
+monopolet|monopol|das Monopol
+monopol||Monopol (ett-Wort)
+folkhälsan|folkhälsa|die Volksgesundheit
+folkhälsa||Volksgesundheit (en-Wort)
+locka||locken, verlocken
+köp||Kauf (ett-Wort)
+extrapriser|extrapris|Sonderangebote (Plural)
+extrapris||Sonderangebot, Sonderpreis (ett-Wort)
+personalen|personal|das Personal
+personal||Personal (en-Wort)
+legitimation||Ausweis (en-Wort)
+kunden|kund|der Kunde
+kund||Kunde (en-Wort)
+reglerna|regel|die Regeln
+krångliga|krånglig|kompliziert, umständlich (Plural und bestimmte Form)
+krånglig||kompliziert, umständlich
+populärt|populär|beliebt (t-Form)
+populär||beliebt, populär
+mätningar|mätning|Umfragen, Messungen (Plural)
+mätning||Messung, Umfrage (en-Wort)
+klar||klar, deutlich; fertig
+majoritet||Mehrheit (en-Wort)
+behålla||behalten
+delvis||teilweise
+sortimentet|sortiment|das Sortiment
+sortiment||Sortiment (ett-Wort)
+kunnig||kundig, sachkundig
+miljonprogrammet|miljonprogram|das Millionenprogramm (Wohnungsbau 1965–1974)
+miljonprogram||Millionenprogramm: Wohnungsbauprogramm 1965–1974 (ett-Wort)
+1960-talet||die 1960er-Jahre
+bostadsbristen|bostadsbrist|die Wohnungsnot
+bostadsbrist||Wohnungsnot (en-Wort)
+akut||akut
+landsbygden|landsbygd|das Land, die ländliche Gegend
+landsbygd||ländliche Gegend, Land (en-Wort)
+trångt|trång|eng (Adverb)
+trång||eng
+beslutade|besluta|beschließen (Präteritum)
+besluta||beschließen
+miljon||Million (en-Wort)
+byggas|bygga|gebaut werden (Passiv)
+domineras|dominera|beherrscht werden (Präsens Passiv)
+dominera||beherrschen, dominieren
+grå||grau
+betonghus||Betonhaus (ett-Wort)
+förorter|förort|Vororte, Vorstädte (Plural)
+förort||Vorort, Vorstadt (en-Wort)
+rinkeby||Rinkeby (Stadtteil von Stockholm)
+rosengård||Rosengård (Stadtteil von Malmö)
+hammarkullen||Hammarkullen (Stadtteil von Göteborg)
+tredjedel||Drittel (en-Wort)
+bostäderna|bostad|die Wohnungen
+villor|villa|Einfamilienhäuser (Plural)
+villa||Einfamilienhaus (en-Wort)
+radhus||Reihenhaus (ett-Wort)
+moderna|modern|modern (Plural und bestimmte Form)
+modern||modern
+rymliga|rymlig|geräumig (Plural und bestimmte Form)
+rymlig||geräumig
+balkong||Balkon (en-Wort)
+grönområden|grönområde|Grünflächen (Plural)
+grönområde||Grünfläche (ett-Wort)
+områden|område|Gebiete (Plural)
+rykte||Ruf (ett-Wort)
+vidare||weiter
+svårast|svår|am schwersten (Superlativ)
+annanstans||anderswo
+nyanlända|nyanländ|Neuankömmlinge (Plural); neu angekommen
+nyanländ||neu angekommen
+områdena|område|die Gebiete
+polisens|polis|der Polizei (Genitiv)
+lista||Liste (en-Wort)
+utsatta|utsatt|benachteiligt, gefährdet (Plural und bestimmte Form); utsatta områden = Problemviertel
+utsatt||ausgesetzt, gefährdet
+arbetslöshet||Arbeitslosigkeit (en-Wort)
+kriminella|kriminell|kriminell (Plural und bestimmte Form)
+kriminell||kriminell
+nätverk||Netzwerk (ett-Wort)
+åren|år|die Jahre
+trivs|trivas|sich wohlfühlen (Präsens)
+trivas||sich wohlfühlen
+kraftiga|kraftig|kräftig, stark (Plural und bestimmte Form)
+hyreshöjningar|hyreshöjning|Mieterhöhungen (Plural)
+hyreshöjning||Mieterhöhung (en-Wort)
+renoveringar|renovering|Renovierungen (Plural)
+renovering||Renovierung (en-Wort)
+tvingar|tvinga|zwingen (Präsens)
+boende||Bewohner; Wohnen (ett-Wort)
+rustar|rusta|renovieren, ausrüsten (Präsens); rusta upp = sanieren
+rusta||ausrüsten; rusta upp = sanieren
+h||H (Buchstabe); Dagen H = Tag der Umstellung auf Rechtsverkehr (1967)
+körde|köra|fahren (Präteritum)
+köra||fahren (Auto)
+vänster||links; Linke
+grannländerna|grannland|die Nachbarländer
+grannland||Nachbarland (ett-Wort)
+högertrafik||Rechtsverkehr (en-Wort)
+ratten|ratt|das Lenkrad
+ratt||Lenkrad (en-Wort)
+omkörningar|omkörning|Überholmanöver (Plural)
+omkörning||Überholen, Überholmanöver (en-Wort)
+smala|smal|schmal (Plural und bestimmte Form)
+landsvägar|landsväg|Landstraßen (Plural)
+landsväg||Landstraße (en-Wort)
+riskabla|riskabel|riskant (Plural und bestimmte Form)
+riskabel||riskant
+folkomröstning||Volksabstimmung (en-Wort)
+byta||wechseln, tauschen
+omröstningen|omröstning|die Abstimmung
+omröstning||Abstimmung (en-Wort)
+rådgivande||beratend
+förberedelserna|förberedelse|die Vorbereitungen
+förberedelse||Vorbereitung (en-Wort)
+omkring||ungefär, etwa; um … herum
+vägskyltar|vägskylt|Verkehrsschilder (Plural)
+vägskylt||Verkehrsschild (en-Wort)
+flyttas||versetzt, umgesetzt werden (Passiv)
+bytas|byta|ausgetauscht werden (Passiv); bytas ut = ersetzt werden
+korsningar|korsning|Kreuzungen (Plural)
+korsning||Kreuzung (en-Wort)
+bussar|buss|Busse (Plural)
+förses|förse|versehen werden (Passiv)
+förse||versehen, ausstatten
+dörrar|dörr|Türen (Plural)
+höger||rechts; Rechte
+informationskampanj||Informationskampagne (en-Wort)
+nådde|nå|erreichen (Präteritum)
+nå||erreichen
+varenda||jeder einzelne
+ordnade|ordna|organisieren, veranstalten (Präteritum)
+ordna||ordnen, organisieren
+tävling||Wettbewerb (en-Wort)
+bästa|bra|beste (Superlativ)
+låten|låt|das Lied
+låt||Lied (en-Wort); lass
+bytet|byte|der Wechsel
+byte||Wechsel, Tausch (ett-Wort)
+skedde|ske|geschehen (Präteritum)
+ske||geschehen
+söndagsmorgon||Sonntagmorgen (en-Wort)
+nödvändiga|nödvändig|notwendig (Plural und bestimmte Form)
+nödvändig||notwendig
+fordon||Fahrzeug (ett-Wort)
+körfält||Fahrspur (ett-Wort)
+prick||Punkt (en-Wort); klockan fem prick = Punkt fünf Uhr
+följande||folgend
+veckorna|vecka|die Wochen
+antalet|antal|die Anzahl
+antal||Anzahl (ett-Wort)
+olyckor|olycka|Unfälle (Plural)
+olycka||Unfall, Unglück (en-Wort)
+troligen||wahrscheinlich
+ovanligt|ovanlig|ungewöhnlich (Adverb)
+effekten|effekt|die Wirkung
+effekt||Wirkung, Effekt (en-Wort)
+dock||jedoch
+olyckstalen|olyckstal|die Unfallzahlen
+olyckstal||Unfallzahl (ett-Wort)
+nivå||Niveau (en-Wort)
+omläggningen|omläggning|die Umstellung
+omläggning||Umstellung (en-Wort)
+kalle||Kalle (Vorname); Kalle Anka = Donald Duck
+anka||Ente (en-Wort); Kalle Anka = Donald Duck
+firas|fira|gefeiert werden (Präsens Passiv)
+fira||feiern
+julen|jul|Weihnachten
+julafton||Heiligabend (en-Wort)
+december||Dezember
+eftermiddagen|eftermiddag|der Nachmittag
+eftermiddag||Nachmittag (en-Wort)
+miljontals||Millionen von
+framför||vor
+önskar|önska|wünschen (Präsens)
+önska||wünschen
+disneyfilmer|disneyfilm|Disneyfilme (Plural)
+disneyfilm||Disneyfilm (en-Wort)
+visat|visa|zeigen (Supinum)
+programmet|program|die Sendung
+korta||kurz (Plural und bestimmte Form)
+tecknade|tecknad|gezeichnet (Plural und bestimmte Form); tecknad film = Zeichentrickfilm
+tecknad||gezeichnet; tecknad film = Zeichentrickfilm
+klipp||Ausschnitt, Clip (ett-Wort)
+långfilmer|långfilm|Spielfilme (Plural)
+långfilm||Spielfilm (en-Wort)
+askungen||Aschenputtel
+lady||Lady; Lady och Lufsen = Susi und Strolch
+lufsen||Strolch; Lady och Lufsen = Susi und Strolch
+likt|lik|ähnlich (t-Form); allt är sig likt = alles ist wie immer
+lik||ähnlich
+poängen|poäng|der Witz, der springende Punkt
+poäng||Punkt; Pointe (en-Wort)
+replikerna|replik|die Repliken, die Dialogzeilen
+replik||Replik, Dialogzeile (en-Wort)
+utantill||auswendig
+skrattar|skratta|lachen (Präsens)
+skratta||lachen
+ställen|ställe|Stellen (Plural)
+rot||Wurzel (en-Wort); slå rot = Wurzeln schlagen
+förklaring||Erklärung (en-Wort)
+sändas|sända|gesendet werden (Passiv)
+tv-kanal||Fernsehsender (en-Wort)
+usa||USA
+sällsynthet||Seltenheit (en-Wort)
+1970-talet||die 1970er-Jahre
+kritiserades|kritisera|kritisiert werden (Präteritum Passiv)
+kritisera||kritisieren
+reklam||Werbung (en-Wort)
+amerikanskt|amerikansk|amerikanisch (t-Form)
+amerikansk||amerikanisch
+storföretag||Großunternehmen, Konzern (ett-Wort)
+protesterna|protest|die Proteste
+protest||Protest (en-Wort)
+planerna|plan|die Pläne
+lades|lägga|gelegt werden (Präteritum Passiv); läggas ner = eingestellt werden
+larmcentralerna|larmcentral|die Notrufzentralen
+larmcentral||Notrufzentrale (en-Wort)
+märkbart|märkbar|merklich (Adverb)
+märkbar||merklich
+samtal||Anruf, Gespräch (ett-Wort)
+anka-effekten||Kalle-Anka-Effekt: weniger Notrufe während der Sendung
+rekordet|rekord|der Rekord
+rekord||Rekord (ett-Wort)
+sattes|sätta|gesetzt, aufgestellt werden (Präteritum Passiv)
+miljoner|miljon|Millionen (Plural)
+siffrorna|siffra|die Zahlen
+siffra||Zahl, Ziffer (en-Wort)
+sjunkit|sjunka|sinken (Supinum)
+studentflaket|studentflak|der Abiturwagen
+studentflak||Abiturwagen: Lastwagen mit Ladefläche, auf dem Abiturienten feiern (ett-Wort)
+början||Anfang; i början av = Anfang (zeitlich)
+lastbilar|lastbil|Lastwagen (Plural)
+lastbil||Lastwagen (en-Wort)
+traktorer|traktor|Traktoren (Plural)
+traktor||Traktor (en-Wort)
+släp||Anhänger (ett-Wort)
+fulla|full|voll (Plural und bestimmte Form)
+sjungande||singend
+ungdomar|ungdom|Jugendliche (Plural)
+ungdom||Jugend; Jugendlicher (en-Wort)
+mössor|mössa|Mützen (Plural)
+mössa||Mütze (en-Wort)
+studenten|student|das Abitur; der Student; ta studenten = Abitur machen
+student||Student; Abiturient (en-Wort)
+gymnasiet|gymnasium|das Gymnasium (Oberstufe)
+gymnasium||Gymnasium, Oberstufe (ett-Wort)
+firar|fira|feiern (Präsens)
+champagnefrukost||Champagnerfrühstück (en-Wort)
+utspringet|utspring|das Hinausstürmen (der Abiturienten aus der Schule)
+utspring||Hinausstürmen der Abiturienten aus der Schule (ett-Wort)
+klassen|klass|die Klasse
+klass||Klasse (en-Wort)
+rusar|rusa|stürmen, rennen (Präsens)
+rusa||stürmen, rennen
+släkt||Verwandtschaft (en-Wort)
+skyltar|skylt|Schilder (Plural)
+skylt||Schild (en-Wort)
+visar|visa|zeigen (Präsens)
+studentens|student|des Abiturienten (Genitiv)
+barnbild||Kinderfoto (en-Wort)
+därefter||danach
+kliver|kliva|steigen (Präsens)
+kliva||steigen
+flaket|flak|die Ladefläche
+flak||Ladefläche (ett-Wort)
+pyntat|pynta|geschmückt (t-Form)
+pynta||schmücken
+ballonger|ballong|Luftballons (Plural)
+ballong||Luftballon (en-Wort)
+banderoll||Banner, Spruchband (en-Wort)
+skämtsam||scherzhaft
+slogan||Slogan (en-Wort)
+musik||Musik (en-Wort)
+studentfiranden|studentfirande|die Abiturfeiern
+studentfirande||Abiturfeier (ett-Wort)
+stränga|sträng|streng (Plural und bestimmte Form)
+villkor||Bedingung (ett-Wort)
+högst||höchstens
+vägar|väg|Straßen, Wege (Plural)
+hastighetsgränsen|hastighetsgräns|die Geschwindigkeitsbegrenzung
+hastighetsgräns||Geschwindigkeitsbegrenzung (en-Wort)
+räcket|räcke|das Geländer
+räcke||Geländer (ett-Wort)
+minst||mindestens
+centimeter||Zentimeter
+föraren|förare|der Fahrer
+förare||Fahrer (en-Wort)
+fyllt|fylla|füllen (Supinum); fylla år = Geburtstag haben, fyllt 21 år = 21 Jahre alt geworden
+fylla||füllen
+polisen|polis|die Polizei
+polis||Polizei; Polizist (en-Wort)
+meddelas|meddela|benachrichtigt werden (Präsens Passiv)
+meddela||mitteilen, benachrichtigen
+förväg||i förväg = im Voraus
+studenter|student|Abiturienten, Studenten (Plural)
+ramlat|ramla|fallen, stürzen (Supinum)
+ramla||fallen, stürzen
+skadats|skada|verletzt werden (Supinum Passiv)
+enstaka||einzeln, vereinzelt
+fall||Fall (ett-Wort)
+dödligt|dödlig|tödlich (Adverb)
+dödlig||tödlich
+rekommenderar|rekommendera|empfehlen (Präsens)
+rekommendera||empfehlen
+flakvärdar|flakvärd|Aufpasser auf dem Abiturwagen (Plural)
+flakvärd||Aufpasser auf dem Abiturwagen (en-Wort)
+personer|person|Personen (Plural)
+kontakt||Kontakt (en-Wort)
+pandemin|pandemi|die Pandemie
+pandemi||Pandemie (en-Wort)
+flaken|flak|die Abiturwagen, die Ladeflächen
+förbjudna|förbjuden|verboten (Plural)
+protesterade|protestera|protestieren (Präteritum)
+protestera||protestieren
+rullar|rulla|rollen (Präsens)
+almedalsveckan|almedalsvecka|die Almedalswoche
+almedalsvecka||Almedalswoche: politisches Treffen in Visby (en-Wort)
+julidag||Julitag (en-Wort)
+klev|kliva|steigen (Präteritum)
+utbildningsministern|utbildningsminister|der Bildungsminister
+utbildningsminister||Bildungsminister (en-Wort)
+olof||Olof (Vorname)
+palme||Palme (Olof Palme, Ministerpräsident 1969–1976 und 1982–1986)
+lastbilsflak||Ladefläche eines Lastwagens (ett-Wort)
+parken|park|der Park
+almedalen||Almedalen (Park in Visby)
+visby||Visby (Hauptort von Gotland)
+åtminstone||zumindest
+berättelsen|berättelse|die Erzählung, die Geschichte
+talade|tala|sprechen, reden (Präteritum)
+tala||sprechen, reden
+semesterfirare||Urlauber (en-Wort)
+tillbringade|tillbringa|verbringen (Präteritum)
+tillbringa||verbringen
+improviserat|improvisera|improvisiert (t-Form)
+improvisera||improvisieren
+ana||ahnen
+politiska|politisk|politisch (Plural und bestimmte Form)
+politisk||politisch
+traditioner|tradition|Traditionen (Plural)
+politiker||Politiker (en-Wort)
+myndigheter|myndighet|Behörden (Plural)
+organisationer|organisation|Organisationen (Plural)
+organisation||Organisation (en-Wort)
+riksdagsparti||im Reichstag vertretene Partei (ett-Wort)
+partiledarnas|partiledare|der Parteivorsitzenden (Genitiv Plural)
+partiledare||Parteivorsitzender (en-Wort)
+sänds|sända|gesendet werden (Präsens Passiv)
+pågår|pågå|andauern, stattfinden (Präsens)
+pågå||andauern, im Gange sein
+seminarier|seminarium|Seminare (Plural)
+seminarium||Seminar (ett-Wort)
+debatter|debatt|Debatten (Plural)
+mingel||Mingeln, zwangloses Treffen (ett-Wort)
+medeltida||mittelalterlich
+innanför||innerhalb
+ringmuren|ringmur|die Stadtmauer
+ringmur||Ringmauer, Stadtmauer (en-Wort)
+programpunkter|programpunkt|Programmpunkte (Plural)
+programpunkt||Programmpunkt (en-Wort)
+genomfördes|genomföra|durchgeführt werden (Präteritum Passiv)
+evenemang||Veranstaltung (ett-Wort)
+arrangörer|arrangör|Veranstalter (Plural)
+arrangör||Veranstalter (en-Wort)
+förtjusta|förtjust|begeistert (Plural)
+förtjust||begeistert, angetan
+mässa||Messe (en-Wort)
+lobbyister|lobbyist|Lobbyisten (Plural)
+lobbyist||Lobbyist (en-Wort)
+pr-byråer|pr-byrå|PR-Agenturen (Plural)
+pr-byrå||PR-Agentur (en-Wort)
+skattebetalarnas|skattebetalare|der Steuerzahler (Genitiv Plural); Skattebetalarnas förening = Bund der Steuerzahler
+skattebetalare||Steuerzahler (en-Wort)
+förening||Verein, Verband (en-Wort)
+ifrågasatt|ifrågasätta|infrage stellen (Supinum)
+ifrågasätta||infrage stellen
+kommuner|kommun|Gemeinden (Plural)
+skattepengar||Steuergelder (Plural)
+resor|resa|Reisen (Plural)
+minister||Minister (en-Wort)
+mordet|mord|der Mord
+partier|parti|Parteien (Plural)
+parti||Partei (ett-Wort)
+liknande||ähnlich
+startats|starta|gestartet werden (Supinum Passiv)
+starta||starten
+danmark||Dänemark
+estland||Estland
+vargen|varg|der Wolf
+varg||Wolf (en-Wort)
+starka|stark|stark (Plural und bestimmte Form)
+1800-talet||das 19. Jahrhundert
+förföljdes|förfölja|verfolgt werden (Präteritum Passiv)
+förfölja||verfolgen
+hårt|hård|hart (Adverb)
+fredades|freda|unter Schutz gestellt werden (Präteritum Passiv)
+freda||schützen, unter Schutz stellen
+handfull||Handvoll (en-Wort)
+1980-talet||die 1980er-Jahre
+invandrat|invandra|eingewandert (t-Form)
+invandra||einwandern
+par||Paar (ett-Wort)
+valpar|valp|Welpen (Plural)
+valp||Welpe (en-Wort)
+värmland||Värmland (Landschaft in Westschweden)
+dagens|dag|des heutigen, von heute (Genitiv)
+stam||Bestand, Stamm (en-Wort)
+härstammar|härstamma|abstammen (Präsens)
+härstamma||abstammen
+fåtal||geringe Anzahl (ett-Wort); ett fåtal = wenige
+inaveln|inavel|die Inzucht
+inavel||Inzucht (en-Wort)
+räknades|räkna|gezählt werden (Präteritum Passiv)
+vargar|varg|Wölfe (Plural)
+mellersta||mittlere
+delen|del|der Teil
+alldeles||ganz, völlig; alldeles för = viel zu
+river|riva|reißen, töten (Raubtier) (Präsens); abreißen
+dödar|döda|töten (Präsens)
+döda||töten
+jakthundar|jakthund|Jagdhunde (Plural)
+jakthund||Jagdhund (en-Wort)
+konflikterna|konflikt|die Konflikte
+konflikt||Konflikt (en-Wort)
+minskas|minska|verringert werden (Passiv)
+minska||verringern, abnehmen
+stängsel||Zaun (ett-Wort)
+politiskt|politisk|politisch (Adverb)
+striden|strid|der Streit, der Kampf
+strid||Streit, Kampf (en-Wort)
+referensvärdet|referensvärde|der Referenzwert
+referensvärde||Referenzwert (ett-Wort)
+minsta|liten|kleinste (Superlativ)
+behövs|behöva|gebraucht werden, nötig sein (Präsens Passiv)
+stammen|stam|der Bestand
+anses|anse|angesehen werden, gelten als (Präsens Passiv)
+anse||meinen, halten für
+livskraftig||lebensfähig
+sänkte|sänka|senken (Präteritum)
+sänka||senken
+eu-kommissionen||die EU-Kommission
+menade|mena|meinen (Präteritum)
+siffran|siffra|die Zahl
+saknade|sakna|fehlen, vermissen (Präteritum)
+sakna||vermissen; nicht haben
+vetenskapligt|vetenskaplig|wissenschaftlich (t-Form)
+vetenskaplig||wissenschaftlich
+stöd||Unterstützung, Grundlage (ett-Wort)
+domstolarna|domstol|die Gerichte
+stoppade|stoppa|stoppen (Präteritum)
+stoppa||stoppen
+licensjakt||Lizenzjagd: genehmigte Jagd auf geschützte Arten (en-Wort)
+höjde|höja|erhöhen (Präteritum)
+höja||erhöhen
+värdet|värde|der Wert
+värde||Wert (ett-Wort)
+oktober||Oktober
+länsstyrelserna|länsstyrelse|die Provinzialregierungen
+länsstyrelse||Provinzialregierung (en-Wort)
+fällas|fälla|erlegt werden (Passiv)
+fälla||fällen, erlegen; Falle (en-Wort)
+näst||zweit-; näst största = zweitgrößte
+vargjakten|vargjakt|die Wolfsjagd
+vargjakt||Wolfsjagd (en-Wort)
+naturskyddsföreningen||der schwedische Naturschutzbund
+anser|anse|meinen, halten für (Präsens)
+jakten|jakt|die Jagd
+jakt||Jagd (en-Wort)
+äventyrar|äventyra|gefährden (Präsens)
+äventyra||gefährden, aufs Spiel setzen
+stammens|stam|des Bestands (Genitiv)
+framtid||Zukunft (en-Wort)
+jägareförbundet||der schwedische Jägerverband
+kritiserat|kritisera|kritisieren (Supinum)
+skarpt|skarp|scharf (Adverb)
+skarp||scharf
+vinterns|vinter|des Winters (Genitiv)
+stoppades|stoppa|gestoppt werden (Präteritum Passiv)
+vasaloppet|vasalopp|der Wasalauf
+vasalopp||Wasalauf: Skilanglauf von Sälen nach Mora (ett-Wort)
+försökte|försöka|versuchen (Präteritum)
+unge|ung|junge (bestimmte Form, männlich)
+adelsmannen|adelsman|der Adlige
+adelsman||Adliger (en-Wort)
+eriksson||Eriksson (Familienname)
+mora||Mora (Ort in Dalarna)
+danske|dansk|dänisch (bestimmte Form, männlich)
+dansk||dänisch
+vägrade|vägra|sich weigern (Präteritum)
+vägra||sich weigern, verweigern
+flydde|fly|fliehen (Präteritum)
+västerut||nach Westen, westwärts
+ångrade|ångra|bereuen (Präteritum); ångra sig = es sich anders überlegen
+ångra||bereuen
+moraborna|morabo|die Einwohner von Mora
+morabo||Einwohner von Mora (en-Wort)
+skickliga|skicklig|geschickt, tüchtig (Plural und bestimmte Form)
+skicklig||geschickt, tüchtig
+skidlöpare||Skiläufer (en-Wort)
+engelbrekt||Engelbrekt (Vorname)
+lars||Lars (Vorname)
+hann|hinna|es schaffen, rechtzeitig kommen (Präteritum); hinna upp = einholen
+sälen||Sälen (Ort in Dalarna)
+föreslog|föreslå|vorschlagen (Präteritum)
+tidningsredaktör||Zeitungsredakteur (en-Wort)
+skidlopp||Skirennen (ett-Wort)
+minne||Erinnerung, Gedenken (ett-Wort); till minne av = zur Erinnerung an
+flykten|flykt|die Flucht
+flykt||Flucht (en-Wort)
+åkare||Läufer, Fahrer (bei Skirennen) (en-Wort)
+startlinjen|startlinje|die Startlinie
+startlinje||Startlinie (en-Wort)
+praktiska|praktisk|praktisch (Plural und bestimmte Form)
+praktisk||praktisch
+loppet|lopp|das Rennen
+lopp||Rennen, Lauf (ett-Wort)
+motsatt||entgegengesetzt
+håll||Richtung (ett-Wort)
+äldsta|gammal|älteste (Superlativ)
+längdskidlopp||Skilanglaufrennen (ett-Wort)
+söndagen|söndag|der Sonntag
+startar|starta|starten (Präsens)
+berga||Berga; Berga by = Dorf bei Sälen, Start des Wasalaufs
+by||Dorf (en-Wort)
+sträckan|sträcka|die Strecke
+klassisk||klassisch
+stil||Stil (en-Wort)
+målportalen|målportal|das Zieltor
+målportal||Zieltor (en-Wort)
+loppets|lopp|des Rennens (Genitiv)
+motto||Motto (ett-Wort)
+fäders|fader|der Väter (Genitiv Plural, gehoben); i fäders spår = auf den Spuren der Väter
+fader||Vater (gehoben) (en-Wort)
+spår||Spur (ett-Wort)
+framtids|framtid|der Zukunft (Genitiv); för framtids segrar = für künftige Siege
+segrar|seger|Siege (Plural)
+seger||Sieg (en-Wort)
+margit||Margit (Vorname)
+nordin||Nordin (Familienname)
+mål||Ziel; Tor (ett-Wort)
+förbjöds|förbjuda|verboten werden (Präteritum Passiv)
+förbjuda||verbieten
+delta||teilnehmen
+hävdes|häva|aufgehoben werden (Präteritum Passiv)
+häva||aufheben
+koras|kora|gekürt werden (Präsens Passiv)
+kora||küren, wählen
+vinnare||Gewinner, Sieger (en-Wort)
+damerna|dam|die Damen
+dam||Dame (en-Wort)
+nils||Nils (Vorname)
+karlsson||Karlsson (Familienname)
+mora-nisse||Mora-Nisse (Spitzname von Nils Karlsson)
+alva||Alva (Vorname)
+myrdal||Myrdal (Familienname)
+1900-talets||des 20. Jahrhunderts
+inflytelserika|inflytelserik|einflussreich (Plural und bestimmte Form)
+inflytelserik||einflussreich
+tillsammans||zusammen
+nationalekonomen|nationalekonom|der Volkswirt
+nationalekonom||Volkswirt, Ökonom (en-Wort)
+gunnar||Gunnar (Vorname)
+befolkningsfrågan|befolkningsfråga|die Bevölkerungsfrage
+befolkningsfråga||Bevölkerungsfrage (en-Wort)
+födelsetalen|födelsetal|die Geburtenzahlen
+födelsetal||Geburtenzahl (ett-Wort)
+paret|par|das Paar
+samhället|samhälle|die Gesellschaft
+samhälle||Gesellschaft (ett-Wort)
+större|stor|größer (Komparativ)
+barnfamiljerna|barnfamilj|die Familien mit Kindern
+barnfamilj||Familie mit Kindern (en-Wort)
+förskolor|förskola|Vorschulen, Kitas (Plural)
+förskola||Vorschule, Kita (en-Wort)
+förvärvsarbeta||erwerbstätig sein
+familj||Familie (en-Wort)
+dagordningen|dagordning|die Tagesordnung
+dagordning||Tagesordnung (en-Wort)
+välfärdsstaten|välfärdsstat|der Wohlfahrtsstaat
+välfärdsstat||Wohlfahrtsstaat (en-Wort)
+förordade|förorda|befürworten (Präteritum)
+förorda||befürworten
+sterilisering||Sterilisation (en-Wort)
+ansågs|anse|angesehen werden, gelten als (Präteritum Passiv)
+olämpliga|olämplig|ungeeignet (Plural und bestimmte Form)
+olämplig||ungeeignet
+tanke||Gedanke (en-Wort)
+brett|bred|breit (t-Form)
+kritik||Kritik (en-Wort)
+världskriget|världskrig|der Weltkrieg
+världskrig||Weltkrieg (ett-Wort)
+avdelning||Abteilung (en-Wort)
+fn||UN, Vereinte Nationen
+post||Posten; Post (en-Wort)
+ledde|leda|leiten, führen (Präteritum)
+leda||leiten, führen
+unescos|unesco|der UNESCO (Genitiv)
+unesco||UNESCO
+samhällsvetenskapliga|samhällsvetenskaplig|sozialwissenschaftlich (Plural und bestimmte Form)
+samhällsvetenskaplig||sozialwissenschaftlich
+ambassadör||Botschafter (en-Wort)
+indien||Indien
+nedrustningen|nedrustning|die Abrüstung
+nedrustning||Abrüstung (en-Wort)
+delegationen|delegation|die Delegation
+delegation||Delegation (en-Wort)
+genève||Genf
+statsråd||Minister, Regierungsmitglied (ett-Wort)
+kritiserade|kritisera|kritisieren (Präteritum)
+sovjetunionen||die Sowjetunion
+kapprustningen|kapprustning|das Wettrüsten
+kapprustning||Wettrüsten (en-Wort)
+nobels|nobel|Nobels (Genitiv); Nobels fredspris = Friedensnobelpreis
+nobel||Nobel; vornehm
+fredspris||Friedenspreis (ett-Wort)
+mexikanen|mexikan|der Mexikaner
+mexikan||Mexikaner (en-Wort)
+alfonso||Alfonso (Vorname)
+garcía||García (Familienname)
+robles||Robles (Familienname)
+meänkieli||Meänkieli: Sprache der Tornedalfinnen
+tornedalen||das Tornedal (an der Grenze zu Finnland)
+skiljer|skilja|trennen (Präsens)
+skilja||trennen, unterscheiden
+finskan|finska|das Finnische
+svenskan|svenska|das Schwedische
+kallades||genannt werden (Präteritum Passiv)
+tornedalsfinska||Tornedalfinnisch (en-Wort)
+byggde|bygga|bauen (Präteritum)
+enda||einzig
+undervisningsspråket|undervisningsspråk|die Unterrichtssprache
+undervisningsspråk||Unterrichtssprache (ett-Wort)
+äldre|gammal|ältere (Komparativ); Ältere
+berättat|berätta|erzählen (Supinum)
+skämmas||sich schämen
+modersmål||Muttersprache (ett-Wort)
+fördes|föra|weitergegeben, geführt werden (Präteritum Passiv)
+ummikko||Ummikko: jemand, der die Sprache seiner Familie nicht spricht
+nationella|nationell|national (Plural und bestimmte Form)
+nationell||national
+minoritetsspråk||Minderheitensprache (ett-Wort)
+romani||Romani; romani chib = Sprache der Roma
+chib||romani chib = Sprache der Roma
+jiddisch||Jiddisch
+uppskattningarna|uppskattning|die Schätzungen
+uppskattning||Schätzung; Wertschätzung (en-Wort)
+isär||auseinander
+sannings-||Wahrheits- (in: sannings- och försoningskommission)
+försoningskommission||Versöhnungskommission (en-Wort)
+funnits|finnas|existieren (Supinum)
+beskriver|beskriva|beschreiben (Präsens)
+beskriva||beschreiben
+försvenskningspolitik||Schwedisierungspolitik (en-Wort)
+nedvärderade|nedvärdera|abwerten (Präteritum)
+nedvärdera||abwerten, herabsetzen
+minoritetens|minoritet|der Minderheit (Genitiv)
+minoritet||Minderheit (en-Wort)
+bred||breit
+publik||Publikum (en-Wort)
+mikael||Mikael (Vorname)
+niemis|niemi|Niemis (Genitiv); Mikael Niemi = schwedischer Schriftsteller
+niemi||Niemi (Mikael Niemi, schwedischer Schriftsteller)
+roman||Roman (en-Wort)
+populärmusik||Popmusik (en-Wort)
+vittula||Vittula (Ortsteil von Pajala)
+utspelar|utspela|spielen (Präsens); utspela sig = sich abspielen
+utspela||utspela sig = sich abspielen
+pajala||Pajala (Ort im Tornedal)
+augustpriset||der Augustpreis (schwedischer Literaturpreis)
+hög||hoch
+ligga||liegen
+stark||stark
+varm||warm
+flest||die meisten
+värld||Welt (en-Wort)
+börja||anfangen, beginnen
+kunna||können
+stå||stehen
+skola||Schule (en-Wort)
+snabb||schnell
+tung||schwer
+söndag||Sonntag (en-Wort)
+bygga||bauen
+kraftig||kräftig, stark
+plan||Plan (en-Wort); Ebene
+sätta||setzen
+full||voll
+väg||Weg, Straße (en-Wort)
+behöva||brauchen
+ung||jung
+all||all, ganz; alla = alle, allt = alles
+allemansrätt||Jedermannsrecht (en-Wort)
+hel||ganz
+sol||Sonne (en-Wort)
+bo||wohnen
+tända||anzünden
+tycka||meinen, finden; tycka om = mögen
+älska||lieben
+system||System (ett-Wort)
+lätt||leicht
+affär||Geschäft, Laden (en-Wort)
+regering||Regierung (en-Wort)
+svara||antworten
+pengar||Geld (Plural)
+dålig||schlecht
+renovera||renovieren
+höst||Herbst (en-Wort)
+vilken||welcher
+tydlig||deutlich
+minut||Minute (en-Wort)
+försiktig||vorsichtig
+hålla||halten
+bestå||bestehen; bestå av = bestehen aus
+titta||schauen, gucken
+böra||sollen (bör = sollte)
+skida||Ski (en-Wort)
+förhandling||Verhandlung (en-Wort)
+heta||heißen
+känna||kennen; fühlen
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch
@@ -1350,7 +2891,7 @@ contestar||antworten
 correo||Post; correo electrónico = E-Mail
 creo|creer|ich glaube
 cuando||wenn, als
-cuenta||darse cuenta = merken; Rechnung
+cuenta||Rechnung; Konto; darse cuenta = merken
 cómo||wie
 de||von, aus
 deberías|deber|du solltest
@@ -2122,6 +3663,1270 @@ agarrar|agarrar|nehmen, greifen, packen
 cena|cena|Abendessen; auch: isst zu Abend (cenar)
 ceuta|Ceuta|Ceuta, spanische Stadt in Nordafrika
 melilla|Melilla|Melilla, spanische Stadt in Nordafrika
+vaciada|vaciar|geleert, entleert (Partizip); la España vaciada = das entleerte Spanien (Landflucht)
+vaciar||leeren, entleeren
+último||letzter
+décadas|década|Jahrzehnte
+década||Jahrzehnt
+interior||Inneres; Landesinnere; innen
+perdiendo|perder|verlieren (Gerundio)
+habitantes|habitante|Einwohner (Plural)
+habitante||Einwohner
+joven||jung; junger Mensch
+marchan|marchar|gehen (Präsens); marcharse = weggehen
+marchar||gehen, marschieren
+marcharse||weggehen, fortgehen
+mayor||älter, größer; personas mayores = ältere Menschen
+comarcas|comarca|Landkreise, Gegenden
+comarca||Landkreis, Gegend
+kilómetro||Kilometer
+cuadrado||quadratisch; Quadrat; kilómetro cuadrado = Quadratkilometer
+describir||beschreiben
+fenómeno||Phänomen
+término||Begriff, Ausdruck; Ende
+casual||zufällig
+sugiere|sugerir|nahelegen, andeuten (Präsens)
+sugerir||nahelegen, vorschlagen
+campo||Land (im Gegensatz zur Stadt); Feld
+quedado|quedar|bleiben (Partizip); quedarse vacío = leer werden
+quedarse||bleiben; quedarse vacío = leer werden
+vacío||leer
+sí||ja; sich (nach Präposition); por sí solo = von selbst
+dejando|dejar|lassen, zurücklassen (Gerundio); dejar atrás = hinter sich lassen
+atrás||hinten, zurück; dejar atrás = hinter sich lassen
+señales|señal|Zeichen, Anzeichen
+señal||Zeichen, Signal
+extendió|extender|ausbreiten (Indefinido); extenderse = sich ausbreiten
+extender||ausbreiten, ausdehnen
+extenderse||sich ausbreiten
+teletrabajo||Homeoffice, Telearbeit
+familia||Familie
+instalarse||sich niederlassen, sich einrichten
+donde||wo
+tranquilo||ruhig
+tendencia||Tendenz, Trend
+mantenga|mantener|halten (Subjuntivo); mantenerse = sich halten
+mantener||halten, aufrechterhalten
+mantenerse||sich halten, erhalten bleiben
+dependerá|depender|abhängen (Futur)
+sobre||über, auf; sobre todo = vor allem
+fibra||Faser; fibra óptica = Glasfaser
+óptico||optisch; fibra óptica = Glasfaser
+escuela||Schule
+país||Land, Staat
+vario||verschieden; varios = mehrere
+cooficial||mitoffiziell, ebenfalls Amtssprache
+vasco||baskisch; País Vasco = Baskenland
+especial||besonders, Sonder-
+emparentado||verwandt
+ninguno||kein, keiner
+otro||anderer
+región||Region, Gegend
+romanos|romano|Römer (Plural)
+romano||römisch; Römer
+dictadura||Diktatur
+franco||Franco (Francisco Franco, Diktator 1939–1975); offen, frei
+uso||Gebrauch, Verwendung
+limitado||begrenzt, eingeschränkt
+transmitirlas|transmitir|sie weitergeben (Infinitiv mit Pronomen)
+transmitir||weitergeben, übertragen
+enseñan|enseñar|unterrichten, lehren (Präsens)
+enseñar||lehren, unterrichten; zeigen
+santiago||Santiago (de Compostela); Jakobus
+habitual||üblich
+carteles|cartel|Schilder, Plakate
+cartel||Schild, Plakat
+quien||wer, derjenige, der
+conviene|convenir|ratsam sein, sich lohnen (Präsens)
+convenir||ratsam sein, passen
+saberlo|saber|es wissen (Infinitiv mit Pronomen)
+siesta||Mittagsschlaf, Siesta
+cree|creer|glauben (Präsens)
+mayoría||Mehrheit
+pausa||Pause
+mediodía||Mittag
+cierran|cerrar|schließen (Präsens)
+tranquilamente||in Ruhe, ruhig
+corto||kurz
+alguno||irgendein; algunos = einige
+minutos|minuto|Minuten
+minuto||Minute
+suficiente||genug, ausreichend
+despertarte|despertarse|aufwachen (du; Infinitiv mit Pronomen)
+despertarse||aufwachen
+castells|castell|Menschentürme (katalanisch, Plural)
+castell||Menschenturm (katalanisch: Burg)
+cataluña||Katalonien
+grupos|grupo|Gruppen
+grupo||Gruppe
+construyen|construir|bauen (Präsens)
+construir||bauen
+torres|torre|Türme
+torre||Turm
+humano||menschlich
+significa|significar|bedeuten (Präsens)
+significar||bedeuten
+castillos|castillo|Burgen, Schlösser
+castillo||Burg, Schloss
+abajo||unten
+cientos||Hunderte
+forman|formar|bilden (Präsens)
+formar||bilden, formen
+pinya||Pinya: der Unterbau aus vielen Menschen bei einem castell (katalanisch)
+base||Basis, Grundlage, Sockel
+fuerte||stark, fest
+sostiene|sostener|tragen, halten (Präsens)
+sostener||tragen, halten, stützen
+encima||oben, obendrauf
+hombros|hombro|Schultern
+hombro||Schulter
+ligero||leicht
+arriba||oben; arriba del todo = ganz oben
+casco||Helm
+saludar||grüßen
+tradición||Tradition
+doscientos||zweihundert
+patrimonio||Erbe; Patrimonio de la Humanidad = Welterbe
+cultural||kulturell
+inmaterial||immateriell
+humanidad||Menschheit
+camino||Weg; el Camino de Santiago = der Jakobsweg
+caminan|caminar|gehen, wandern (Präsens)
+caminar||gehen, wandern
+hacia||nach, in Richtung
+compostela||Compostela: Pilgerurkunde; Santiago de Compostela
+galicia||Galicien
+noroeste||Nordwesten
+caminos|camino|Wege
+diferente||verschieden, anders
+francés||französisch; el Camino Francés = der Französische Weg
+pirineos||die Pyrenäen
+ochocientos||achthundert
+kilómetros|kilómetro|Kilometer (Plural)
+peregrinos|peregrino|Pilger (Plural)
+peregrino||Pilger
+albergues|albergue|Herbergen
+albergue||Herberge
+credencial||Pilgerausweis
+bares|bar|Bars, Kneipen
+bar||Bar, Kneipe
+e||und (vor i- und hi-)
+iglesias|iglesia|Kirchen
+iglesia||Kirche
+sellos|sello|Stempel
+sello||Stempel; Briefmarke
+camina|caminar|gehen, wandern (Präsens)
+certificado||Bescheinigung, Zertifikat
+meta||Ziel
+isla||Insel
+galápagos||Galápagos (Inseln im Pazifik, zu Ecuador)
+océano||Ozean
+pacífico||friedlich; el océano Pacífico = der Pazifik
+ecuador||Ecuador; Äquator
+volcánico||vulkanisch
+volcanes|volcán|Vulkane
+volcán||Vulkan
+activo||aktiv
+animales|animal|Tiere
+animal||Tier
+existen|existir|existieren, vorkommen (Präsens)
+existir||existieren
+ningún|ninguno|kein (vor männlichem Nomen)
+tortugas|tortuga|Schildkröten
+tortuga||Schildkröte
+gigantes|gigante|riesig (Plural); tortuga gigante = Riesenschildkröte
+gigante||riesig; Riese
+iguanas|iguana|Leguane
+iguana||Leguan
+nadan|nadar|schwimmen (Präsens)
+casi||fast
+enemigos|enemigo|Feinde
+enemigo||Feind
+charles||Charles (Vorname)
+darwin||Darwin (Charles Darwin, Naturforscher)
+observó|observar|beobachten (Indefinido)
+observar||beobachten
+desarrollar||entwickeln
+teoría||Theorie
+evolución||Evolution, Entwicklung
+archipiélago||Inselgruppe, Archipel
+nacional||national; parque nacional = Nationalpark
+zonas|zona|Zonen, Gebiete
+zona||Gebiet, Zone
+visitar||besuchen
+guía||Führer, Fremdenführer; Reiseführer (Buch)
+machu||Machu Picchu (Inkastadt in Peru)
+picchu||Machu Picchu (Inkastadt in Peru)
+inca||Inka; inkaisch
+construida|construir|gebaut (Partizip)
+siglo||Jahrhundert
+montañas|montaña|Berge
+montaña||Berg, Gebirge
+cuatrocientos||vierhundert
+metros|metro|Meter (Plural)
+metro||Meter; U-Bahn
+altura||Höhe
+incas|inca|Inka (Plural)
+construyeron|construir|bauen (Indefinido)
+cortado||geschnitten
+cabe|caber|passen, Platz haben (Präsens)
+caber||passen, hineinpassen
+abandonado||verlassen
+encontraron|encontrar|finden (Indefinido)
+conservó|conservar|erhalten, bewahren (Indefinido); conservarse = erhalten bleiben
+conservar||erhalten, bewahren
+conservarse||erhalten bleiben
+explorador||Forscher, Entdecker
+estadounidense||US-amerikanisch; US-Amerikaner
+hiram||Hiram (Vorname)
+bingham||Bingham (Familienname)
+campesinos|campesino|Bauern
+campesino||Bauer, Landbewohner
+ruinas|ruina|Ruinen
+ruina||Ruine
+américa||Amerika
+protegerla|proteger|sie schützen (Infinitiv mit Pronomen)
+proteger||schützen
+visitantes|visitante|Besucher (Plural)
+visitante||Besucher
+noviembre||November
+celebra|celebrar|feiern (Präsens); celebrarse = gefeiert werden, stattfinden
+celebrar||feiern
+celebrarse||gefeiert werden, stattfinden
+recuerdan|recordar|sich erinnern an, gedenken (Präsens)
+muerto||tot; Toter
+creen|creer|glauben (Präsens)
+visitarlas|visitar|sie besuchen (Infinitiv mit Pronomen)
+preparan|preparar|vorbereiten, zubereiten (Präsens)
+preparar||vorbereiten, zubereiten
+ofrenda||Opfergabe, Gabentisch
+especie||Art; una especie de = eine Art
+altar||Altar
+velas|vela|Kerzen
+vela||Kerze; Segel
+cempasúchil||Studentenblume, Totenblume (Mexiko)
+también||auch
+favorito||Lieblings-
+dulce||süß; Süßigkeit
+pasan|pasar|verbringen; vorbeigehen (Präsens)
+cementerio||Friedhof
+limpian|limpiar|putzen, reinigen (Präsens)
+limpiar||putzen, reinigen
+tumbas|tumba|Gräber
+tumba||Grab
+decoran|decorar|schmücken (Präsens)
+decorar||schmücken, dekorieren
+calaveras|calavera|Totenköpfe, Schädel
+calavera||Totenkopf, Schädel
+azúcar||Zucker
+símbolos|símbolo|Symbole
+símbolo||Symbol
+tomatina||Tomatina: Tomatenschlacht in Buñol
+miércoles||Mittwoch
+agosto||August
+buñol||Buñol (Ort bei Valencia)
+rojo||rot
+camiones|camión|Lastwagen (Plural)
+lleno||voll
+tiran|tirar|werfen (Präsens)
+tirar||werfen; wegwerfen
+reglas|regla|Regeln
+regla||Regel
+aplastar||zerdrücken, zerquetschen
+tirarlos|tirar|sie werfen (Infinitiv mit Pronomen)
+daño||Schaden; hacer daño = wehtun
+romper||zerreißen, kaputt machen
+ropa||Kleidung
+termina|terminar|enden, aufhören (Präsens)
+cubierto||bedeckt
+bomberos|bombero|Feuerwehrleute
+bombero||Feuerwehrmann
+participantes|participante|Teilnehmer
+participante||Teilnehmer
+lavan|lavar|waschen (Präsens); lavarse = sich waschen
+lavar||waschen
+lavarse||sich waschen
+exactamente||genau
+mira|mirar|ansehen, schauen (Präsens)
+franja||Streifen
+longitud||Länge; geografische Länge
+reino||Königreich; el Reino Unido = das Vereinigte Königreich
+unido||vereint; el Reino Unido = das Vereinigte Königreich
+portugal||Portugal
+meridiano||Meridian, Längengrad
+greenwich||Greenwich
+incluso||sogar
+atraviesa|atravesar|durchqueren (Präsens)
+atravesar||durchqueren, überqueren
+marcan|marcar|anzeigen; markieren (Präsens)
+marcar||anzeigen, markieren
+varsovia||Warschau
+exacto||genau
+marzo||März
+saltaron|saltar|springen (Indefinido)
+saltar||springen
+directamente||direkt
+contarse|contar|erzählt werden (Infinitiv mit se)
+gesto||Geste
+nazi||Nazi-; nationalsozialistisch
+europa||Europa
+occidental||westlich
+adelantaron|adelantar|vorstellen (Uhr), vorziehen (Indefinido)
+adelantar||vorstellen (Uhr), vorziehen; überholen
+tampoco||auch nicht
+canarias||die Kanaren
+detrás||hinten; por detrás = zurück, hinterher
+ahí||da, dort
+frase||Satz
+consecuencia||Folge
+pleno||voll; en pleno verano = mitten im Sommer
+expertos|experto|Experten
+experto||Experte
+relacionan|relacionar|in Verbindung bringen (Präsens)
+relacionar||in Verbindung bringen
+desfase||Verschiebung, Abweichung
+europeo||europäisch; Europäer
+raíces|raíz|Wurzeln
+raíz||Wurzel
+jornadas|jornada|Arbeitstage
+jornada||Arbeitstag; jornada partida = geteilter Arbeitstag mit langer Mittagspause
+posguerra||Nachkriegszeit
+propuesto|proponer|vorschlagen (Partizip)
+proponer||vorschlagen
+cambiar||ändern, wechseln
+costumbres|costumbre|Gewohnheiten, Bräuche
+costumbre||Gewohnheit, Brauch
+memoria||Erinnerung, Gedächtnis; memoria histórica = Erinnerungskultur
+divide|dividir|spalten, teilen (Präsens)
+dividir||teilen, spalten
+valle||Tal
+caídos|caído|Gefallene; el Valle de los Caídos = Tal der Gefallenen
+caído||gefallen; Gefallener
+sierra||Gebirge, Bergkette; Säge
+francisco||Francisco (Vorname)
+monumento||Denkmal
+construyó|construir|bauen (Indefinido); construirse = gebaut werden
+parte||Teil; en parte = teilweise
+presos|preso|Gefangene
+preso||Gefangener; gefangen
+político||politisch; Politiker
+criptas|cripta|Krypten, Grüfte
+cripta||Krypta, Gruft
+reposan|reposar|ruhen (Präsens)
+reposar||ruhen
+víctimas|víctima|Opfer (Plural)
+víctima||Opfer
+civil||zivil, bürgerlich; guerra civil = Bürgerkrieg
+ambos||beide
+bandos|bando|Seiten, Lager
+bando||Seite, Lager (im Konflikt)
+trasladado||überführt, verlegt
+permiso||Erlaubnis
+tras||nach
+muerte||Tod
+transición||Übergang; la Transición = der Übergang zur Demokratie (1975–1982)
+apostó|apostar|setzen auf, wetten (Indefinido)
+apostar||wetten; apostar por = setzen auf
+mirar||schauen; mirar hacia delante = nach vorn schauen
+ley||Gesetz
+amnistía||Amnestie
+liberó|liberar|befreien, freilassen (Indefinido)
+liberar||befreien, freilassen
+impidió|impedir|verhindern (Indefinido)
+impedir||verhindern
+juzgar||richten, vor Gericht stellen
+crímenes|crimen|Verbrechen (Plural)
+crimen||Verbrechen
+régimen||Regime
+pacto||Pakt; el pacto del olvido = der Pakt des Vergessens
+olvido||Vergessen
+xxi||21 (römisch); siglo XXI = 21. Jahrhundert
+asociaciones|asociación|Verbände, Vereine
+asociación||Verband, Verein
+familiares|familiar|Angehörige
+familiar||Angehöriger; familiär
+fosas|fosa|Gruben, Gräber
+fosa||Grube; fosa común = Massengrab
+común||gemeinsam; fosa común = Massengrab
+voluntarios|voluntario|Freiwillige
+voluntario||Freiwilliger; freiwillig
+decenas|decena|Dutzende, Zehner
+decena||Zehnergruppe; decenas de miles = Zehntausende
+desaparecido||verschwunden; Verschwundener
+octubre||Oktober
+gobierno||Regierung
+pedro||Pedro (Vorname)
+sánchez||Sánchez (Pedro Sánchez, spanischer Ministerpräsident seit 2018)
+exhumó|exhumar|exhumieren (Indefinido)
+exhumar||exhumieren
+trasladó|trasladar|überführen, verlegen (Indefinido)
+trasladar||überführen, verlegen
+pardo||El Pardo (Ort bei Madrid); braun
+democrático||demokratisch
+rebautizó|rebautizar|umbenennen (Indefinido)
+rebautizar||umbenennen
+cuelgamuros||Cuelgamuros (Tal nördlich von Madrid)
+tarea||Aufgabe
+búsqueda||Suche
+defensores|defensor|Verteidiger, Befürworter
+defensor||Verteidiger, Befürworter
+justicia||Gerechtigkeit; Justiz
+dignidad||Würde
+popular||Volks-; beliebt; Partido Popular = spanische Volkspartei
+vox||Vox (spanische Partei)
+consideran|considerar|halten für, betrachten (Präsens)
+considerar||halten für, betrachten
+reabre|reabrir|wieder öffnen (Präsens)
+reabrir||wieder öffnen
+heridas|herida|Wunden
+herida||Wunde
+prometido|prometer|versprechen (Partizip)
+prometer||versprechen
+derogarla|derogar|es aufheben (Infinitiv mit Pronomen)
+derogar||aufheben (Gesetz)
+forenses|forense|Gerichtsmediziner
+forense||Gerichtsmediziner; gerichtsmedizinisch
+sacado|sacar|herausholen (Partizip)
+sacar||herausholen, herausnehmen
+cuerpos|cuerpo|Körper, Leichen
+cuerpo||Körper; Leiche
+laguna||Lagune
+derechos|derecho|Rechte
+derecho||Recht; Rechtswissenschaft
+menor||kleiner, geringer; el Mar Menor = Lagune in Murcia
+murcia||Murcia (Region im Südosten Spaniens)
+salado||salzig
+estrecho||eng, schmal
+arena||Sand
+manga||Ärmel; La Manga = Nehrung am Mar Menor
+separa|separar|trennen (Präsens)
+separar||trennen
+mediterráneo||Mittelmeer; mediterran
+paraíso||Paradies
+bañistas|bañista|Badegäste
+bañista||Badegast
+enfermando|enfermar|krank werden (Gerundio)
+enfermar||krank werden
+fertilizantes|fertilizante|Düngemittel
+fertilizante||Düngemittel
+agricultura||Landwirtschaft
+intensivo||intensiv
+cartagena||Cartagena (Stadt in Murcia)
+alimentaban|alimentar|ernähren, nähren (Imperfecto)
+alimentar||ernähren, nähren
+dejaban|dejar|lassen (Imperfecto)
+fondo||Grund, Boden
+oxígeno||Sauerstoff
+verde||grün
+turbio||trüb
+aparecieron|aparecer|erscheinen, auftauchen (Indefinido)
+aparecer||erscheinen, auftauchen
+toneladas|tonelada|Tonnen
+tonelada||Tonne
+peces|pez|Fische
+entonces||dann, damals
+filosofía||Philosophie
+teresa||Teresa (Vorname)
+vicente||Vicente (Vorname, Familienname)
+propuso|proponer|vorschlagen (Indefinido)
+inédito||neuartig, noch nie dagewesen
+darle|dar|ihr/ihm geben (Infinitiv mit Pronomen)
+personalidad||Persönlichkeit; personalidad jurídica = Rechtspersönlichkeit
+jurídico||juristisch, rechtlich
+persona||Person, Mensch
+ciudadanos|ciudadano|Bürger
+ciudadano||Bürger
+firmaron|firmar|unterschreiben (Indefinido)
+iniciativa||Initiative; iniciativa popular = Volksbegehren
+cortes||las Cortes = das spanische Parlament
+aprobaron|aprobar|verabschieden, genehmigen (Indefinido)
+apoyo||Unterstützung
+salvo||außer
+primer|primero|erster (vor männlichem Nomen)
+ecosistema||Ökosystem
+evolucionar||sich entwickeln
+forma||Form; Art und Weise
+natural||natürlich
+protegido|proteger|geschützt (Partizip)
+restaurado|restaurar|wiederhergestellt (Partizip)
+restaurar||wiederherstellen, restaurieren
+práctica||Praxis; en la práctica = in der Praxis
+ahora||jetzt
+defender||verteidigen
+ante||vor
+tribunales|tribunal|Gerichte
+tribunal||Gericht; Tribunal Constitucional = Verfassungsgericht
+constitucional||Verfassungs-, verfassungsmäßig
+confirmó|confirmar|bestätigen (Indefinido)
+confirmar||bestätigen
+agricultores|agricultor|Landwirte
+agricultor||Landwirt
+temen|temer|fürchten (Präsens)
+temer||fürchten
+restricciones|restricción|Einschränkungen
+restricción||Einschränkung
+critican|criticar|kritisieren (Präsens)
+criticar||kritisieren
+culpe|culpar|beschuldigen (Subjuntivo)
+culpar||beschuldigen, die Schuld geben
+discute|discutir|bestreiten, diskutieren (Präsens)
+discutir||diskutieren, streiten; bestreiten
+necesitará|necesitar|brauchen (Futur)
+recuperarse||sich erholen
+quiosco||Kiosk
+cupones|cupón|Lose (der ONCE)
+cupón||Los (der ONCE), Coupon
+organización||Organisation
+ciego||blind; Blinder
+lotería||Lotterie
+diciembre||Dezember
+santo||heilig; Santa Lucía = die heilige Lucia
+lucía||Lucía, Lucia (Vorname)
+patrona||Schutzheilige
+rechazó|rechazar|ablehnen (Indefinido)
+rechazar||ablehnen
+prefirió|preferir|vorziehen (Indefinido)
+preferir||vorziehen, lieber wollen
+unir||vereinen, zusammenlegen
+rifas|rifa|Tombolas, Verlosungen
+rifa||Tombola, Verlosung
+ganarse||sich verdienen; ganarse la vida = seinen Lebensunterhalt verdienen
+venderse|vender|verkauft werden (Infinitiv mit se)
+financia|financiar|finanzieren (Präsens)
+financiar||finanzieren
+braille||Brailleschrift, Blindenschrift
+vendedores|vendedor|Verkäufer
+vendedor||Verkäufer
+discapacidad||Behinderung
+empleo||Arbeitsplatz, Beschäftigung
+estable||stabil, fest
+amplió|ampliar|erweitern (Indefinido)
+ampliar||erweitern
+labor||Arbeit, Tätigkeit
+creó|crear|gründen, schaffen (Indefinido)
+crear||schaffen, gründen
+fundación||Stiftung
+lavandería||Wäscherei
+limpieza||Reinigung
+emplea|emplear|beschäftigen (Präsens)
+emplear||beschäftigen; verwenden
+social||sozial, gesellschaftlich
+dependa|depender|abhängen (Subjuntivo)
+responde|responder|antworten (Präsens)
+regulado||geregelt, reguliert
+beneficio||Gewinn; Nutzen
+sociedad||Gesellschaft
+constituciones|constitución|Verfassungen
+constitución||Verfassung
+fallido||gescheitert
+chileno||chilenisch; Chilene
+pesos|peso|Pesos (Währung); Gewichte
+peso||Peso (Währung); Gewicht
+saltarse||überspringen; saltarse los torniquetes = über die Drehkreuze springen (schwarzfahren)
+torniquetes|torniquete|Drehkreuze
+torniquete||Drehkreuz
+protestas|protesta|Proteste
+protesta||Protest
+lema||Motto, Slogan
+resumía|resumir|zusammenfassen (Imperfecto)
+resumir||zusammenfassen
+apuntaban|apuntar|zielen auf, sich richten gegen (Imperfecto)
+apuntar||zielen; notieren
+desigualdad||Ungleichheit
+pensiones|pensión|Renten
+privado||privat
+redactado||verfasst
+redactó|redactar|verfassen (Indefinido)
+redactar||verfassen
+bajo||unter; niedrig
+pinochet||Pinochet (Augusto Pinochet, Diktator in Chile 1973–1990)
+reformado||reformiert, geändert
+calmar||beruhigen
+acordaron||vereinbarten (Indefinido von acordar)
+proceso||Prozess, Verfahren
+constituyente||verfassunggebend
+votó|votar|stimmen, wählen (Indefinido)
+votar||abstimmen, wählen
+convención||Konvent, Versammlung
+elegido||gewählt
+paritario||paritätisch (gleich viele Frauen und Männer)
+escaños|escaño|Sitze (im Parlament)
+escaño||Parlamentssitz
+reservado||reserviert
+indígena||indigen; Indigener
+texto||Text
+progresista||progressiv, fortschrittlich
+septiembre||September
+voto||Stimme; Wahlrecht
+obligatorio||verpflichtend, Pflicht-
+críticos|crítico|Kritiker
+crítico||Kritiker; kritisch
+radical||radikal
+culparon|culpar|beschuldigen (Indefinido)
+campañas|campaña|Kampagnen
+campaña||Kampagne
+desinformación||Desinformation
+intentó|intentar|versuchen (Indefinido)
+intentar||versuchen
+consejo||Rat; Ratschlag
+dominado||beherrscht
+derecha||Rechte (politisch); rechte Seite
+cansancio||Müdigkeit, Überdruss
+cannabis||Cannabis
+farmacia||Apotheke
+uruguay||Uruguay
+regular||regulieren; regelmäßig
+cultivo||Anbau
+venta||Verkauf
+aprobó|aprobar|verabschieden, genehmigen (Indefinido); aprobarse = verabschiedet werden
+josé||José (Vorname)
+mujica||Mujica (José Mujica, Präsident Uruguays 2010–2015)
+austero||bescheiden, karg
+argumento||Argument
+sencillo||einfach, schlicht
+controla|controlar|kontrollieren (Präsens)
+controlar||kontrollieren
+quita|quitar|wegnehmen (Präsens)
+quitar||wegnehmen
+narcotraficantes|narcotraficante|Drogenhändler
+narcotraficante||Drogenhändler
+ofrece|ofrecer|anbieten (Präsens)
+ofrecer||anbieten
+cultivar||anbauen
+club||Klub, Verein
+cannábico||Cannabis-; club cannábico = Cannabis-Klub
+residente||Einwohner mit festem Wohnsitz
+inscrito||eingetragen, registriert
+registro||Register
+estatal||staatlich
+turistas|turista|Touristen
+turista||Tourist
+farmacias|farmacia|Apotheken
+julio||Juli
+máximo||höchstens; Maximum; como máximo = höchstens
+gramos|gramo|Gramm (Plural)
+gramo||Gramm
+confirma|confirmar|bestätigen (Präsens)
+huella||Spur, Abdruck; huella dactilar = Fingerabdruck
+dactilar||Finger-; huella dactilar = Fingerabdruck
+fija|fijar|festlegen (Präsens)
+fijar||festlegen, befestigen
+principio||Anfang; Prinzip; al principio = am Anfang
+hubo|haber|es gab (Indefinido)
+inesperado||unerwartet
+amenazaron|amenazar|drohen (Indefinido)
+amenazar||drohen, bedrohen
+normas|norma|Vorschriften, Normen
+norma||Norm, Vorschrift
+unidos|unido|vereint (Plural); Estados Unidos = Vereinigte Staaten
+funciona|funcionar|funktionieren (Präsens)
+funcionar||funktionieren
+participan|participar|teilnehmen, mitmachen (Präsens)
+participar||teilnehmen
+señalan|señalar|hinweisen, darauf hinweisen (Präsens)
+señalar||hinweisen, zeigen
+consumo||Konsum, Verbrauch
+bajado|bajar|sinken, senken (Partizip)
+bajar||sinken; hinuntergehen; senken
+legal||legal
+quitado|quitar|wegnehmen (Partizip)
+clientes|cliente|Kunden
+cliente||Kunde
+traficantes|traficante|Händler (Drogen)
+traficante||Händler (illegal)
+plurinacional||plurinational, mehrere Nationen umfassend
+bolivia||Bolivien
+aprobado||verabschiedet, genehmigt
+referéndum||Volksabstimmung, Referendum
+evo||Evo (Vorname)
+morales||Morales (Evo Morales, Präsident Boliviens 2006–2019); moralisch (Plural)
+presidente||Präsident
+reconoce|reconocer|anerkennen (Präsens)
+reconocer||anerkennen; wiedererkennen
+conviven|convivir|zusammenleben (Präsens)
+convivir||zusammenleben
+artículo||Artikel
+quinto||fünfter
+declara|declarar|erklären (Präsens)
+declarar||erklären
+aimara||Aymara (Sprache und Volk der Anden)
+quechua||Quechua (Sprache und Volk der Anden)
+central||zentral, Zentral-
+departamental||Departements- (Verwaltungseinheit)
+usar||benutzen, verwenden
+administración||Verwaltung
+exige|exigir|verlangen, fordern (Präsens)
+exigir||verlangen, fordern
+bandera||Flagge, Fahne
+amarillo||gelb
+wiphala||Wiphala: karierte, bunte Flagge der Andenvölker
+cuadros|cuadro|Karos, Vierecke; Bilder
+cuadro||Bild, Gemälde; Karo
+andino||andin, Anden-
+aplican|aplicar|anwenden (Präsens)
+aplicar||anwenden
+siglos|siglo|Jahrhunderte
+excluido||ausgeschlossen
+reconocimiento||Anerkennung
+histórico||historisch
+tierras|tierra|Länder, Gebiete; tierras bajas = Tiefland
+tierra||Erde, Land
+oriente||Osten
+dominando|dominar|vorherrschen, beherrschen (Gerundio)
+dominar||beherrschen, vorherrschen
+medios|medio|Medien; Mittel
+medio||Mitte; Mittel; halb; medios = Medien
+contra||gegen
+turístico||touristisch; piso turístico = Ferienwohnung
+alojan|alojar|unterbringen (Präsens); alojarse = übernachten
+alojar||unterbringen
+alojarse||übernachten, unterkommen
+alquilado||gemietet, vermietet
+través||a través de = über, durch
+plataformas|plataforma|Plattformen
+plataforma||Plattform
+airbnb||Airbnb (Vermittlungsplattform)
+barrios|barrio|Stadtviertel
+barrio||Stadtviertel
+barceloneta||Barceloneta (Viertel in Barcelona)
+gòtic||Gòtic (Altstadtviertel in Barcelona, katalanisch)
+escalera||Treppe, Treppenhaus
+junio||Juni
+alcalde||Bürgermeister
+jaume||Jaume (katalanischer Vorname)
+collboni||Collboni (Jaume Collboni, Bürgermeister von Barcelona seit 2023)
+anunció|anunciar|ankündigen (Indefinido)
+anunciar||ankündigen
+medida||Maßnahme
+drástico||drastisch
+renovará|renovar|erneuern, verlängern (Futur)
+renovar||erneuern, verlängern
+licencias|licencia|Lizenzen
+licencia||Lizenz, Genehmigung
+caduquen|caducar|ablaufen (Subjuntivo)
+caducar||ablaufen, verfallen
+deberán|deber|müssen (Futur)
+residencial||Wohn-; uso residencial = Wohnnutzung
+decreto||Verordnung, Dekret
+generalitat||Generalitat: katalanische Regionalregierung
+permite|permitir|erlauben (Präsens)
+permitir||erlauben
+manifestaron|manifestarse|demonstrieren (Indefinido)
+manifestarse||demonstrieren
+pistolas|pistola|Pistolen; pistola de agua = Wasserpistole
+pistola||Pistole
+turismo||Tourismus
+masivo||Massen-
+imágenes|imagen|Bilder
+mojado||nass
+pp||PP: Partido Popular (spanische Partei)
+sector||Branche, Sektor
+recurrieron|recurrir|anfechten, Rechtsmittel einlegen (Indefinido)
+recurrir||anfechten; zurückgreifen auf
+avaló|avalar|billigen, bestätigen (Indefinido)
+avalar||billigen, bestätigen
+ciento||hundert; por ciento = Prozent
+crezca|crecer|wachsen (Subjuntivo)
+crecer||wachsen
+ilegal||illegal
+datos|dato|Daten, Angaben
+dato||Angabe, Information
+alrededor||ringsum; alrededor de = ungefähr, etwa
+ecce||Ecce Homo: Darstellung Christi mit Dornenkrone (lateinisch)
+homo||Ecce Homo: Darstellung Christi mit Dornenkrone (lateinisch)
+borja||Borja (Ort in der Provinz Zaragoza)
+pintor||Maler
+elías||Elías (Vorname)
+garcía||García (Familienname)
+martínez||Martínez (Familienname)
+pintó|pintar|malen (Indefinido)
+pintar||malen
+cristo||Christus
+coronado||gekrönt
+espinas|espina|Dornen
+espina||Dorn
+santuario||Wallfahrtsort, Heiligtum
+misericordia||Barmherzigkeit
+humedad||Feuchtigkeit
+deteriorando|deteriorar|beschädigen, verschlechtern (Gerundio)
+deteriorar||beschädigen, verschlechtern
+pintura||Malerei, Gemälde; Farbe
+cecilia||Cecilia (Vorname)
+giménez||Giménez (Familienname)
+pintora||Malerin
+aficionado||Amateur-; Fan
+restaurarla|restaurar|es restaurieren (Infinitiv mit Pronomen)
+resultado||Ergebnis
+parecía|parecer|scheinen; ähneln (Imperfecto); parecerse a = ähneln
+parecerse||ähneln
+original||Original; ursprünglich
+rostro||Gesicht
+desfigurado||entstellt
+viral||viral
+catástrofe||Katastrophe
+resultó|resultar|sich erweisen als (Indefinido)
+resultar||sich erweisen als, ergeben
+golpe||Schlag; golpe de suerte = Glücksfall
+suerte||Glück
+curiosos|curioso|Neugierige
+curioso||neugierig; Neugieriger
+cobra|cobrar|kassieren, verlangen (Präsens); cobrar entrada = Eintritt verlangen
+cobrar||kassieren, verlangen
+entrada||Eintritt; Eingang
+interpretación||Interpretation; centro de interpretación = Besucherzentrum
+estrenó|estrenar|uraufführen (Indefinido); estrenarse = uraufgeführt werden
+ópera||Oper
+rozaba|rozar|streifen, an etwas heranreichen (Imperfecto)
+rozar||streifen
+ingresos|ingreso|Einnahmen
+ingreso||Einnahme; Aufnahme
+sufrió|sufrir|erleiden (Indefinido)
+sufrir||leiden, erleiden
+burlas|burla|Spott
+burla||Spott
+cariño||Zuneigung
+murió|morir|sterben (Indefinido)
+morir||sterben
+despidió|despedir|verabschieden (Indefinido)
+despedir||verabschieden; entlassen
+quererlo|querer|es wollen (Infinitiv mit Pronomen); sin quererlo = ungewollt
+querida||lieb, geliebt (weiblich)
+uvas|uva|Weintrauben
+uva||Weintraube
+ritual||Ritual
+preciso||genau, präzise
+colocan|colocar|stellen, platzieren (Präsens); colocarse = sich hinstellen
+colocar||stellen, platzieren
+colocarse||sich hinstellen, sich aufstellen
+televisor||Fernseher
+preparado||vorbereitet, bereit
+campanada||Glockenschlag
+campanadas|campanada|Glockenschläge
+comerse||aufessen, verspeisen
+tendrá|tener|haben (Futur)
+inaugurado||eingeweiht, eröffnet
+real||königlich; wirklich; Real Casa de Correos = Königliches Posthaus (Madrid)
+convertido|convertir|verwandeln (Partizip); convertirse en = werden zu
+convertir||verwandeln, umwandeln
+convertirse||werden zu, sich verwandeln in
+retransmiten|retransmitir|übertragen (Präsens)
+retransmitir||übertragen (Radio, Fernsehen)
+televisión||Fernsehen
+directo||direkt; en directo = live
+origen||Ursprung, Herkunft
+versiones|versión|Versionen, Fassungen
+versión||Version, Fassung
+alicante||Alicante (Stadt und Provinz im Osten Spaniens)
+cosecha||Ernte
+excepcional||außergewöhnlich
+sobraba|sobrar|übrig bleiben (Imperfecto)
+sobrar||übrig bleiben, zu viel sein
+ofrecieron|ofrecer|anbieten (Indefinido)
+mencionan|mencionar|erwähnen (Präsens)
+mencionar||erwähnen
+burguesía||Bürgertum
+madrileño||aus Madrid; Madrilene
+copiado|copiar|kopieren, abschauen (Partizip)
+copiar||kopieren, abschauen
+francia||Frankreich
+moda||Mode
+champán||Champagner, Sekt
+nochevieja||Silvester
+imitarla|imitar|sie nachahmen (Infinitiv mit Pronomen)
+imitar||nachahmen
+tono||Ton; en tono de burla = spöttisch
+probablemente||wahrscheinlich
+empujón||Stoß, Schubs
+definitivo||endgültig, entscheidend
+existía|existir|existieren (Imperfecto)
+vinalopó||Vinalopó (Tal in Alicante)
+maduran|madurar|reifen (Präsens)
+madurar||reifen
+dentro||drinnen; dentro de = in, innerhalb
+bolsa||Tüte, Beutel; Börse
+latino||lateinisch; América Latina = Lateinamerika
+silbo||Pfeifen; el silbo gomero = die Pfeifsprache von La Gomera
+gomero||von La Gomera; Gomero (Bewohner)
+gomera||La Gomera (Kanarische Insel)
+barrancos|barranco|Schluchten
+barranco||Schlucht
+profundo||tief
+línea||Linie; en línea recta = Luftlinie
+recto||gerade
+entenderse||sich verständigen
+ladera||Hang, Abhang
+comunicaban|comunicarse|sich verständigen (Imperfecto)
+comunicarse||sich verständigen, kommunizieren
+silbando|silbar|pfeifen (Gerundio)
+silbar||pfeifen
+pasó|pasar|vorbeigehen; geschehen; übergehen (Indefinido)
+reproducir||wiedergeben, nachbilden
+silbador||Pfeifer
+oye|oír|hören (Präsens); oírse = zu hören sein
+oírse||zu hören sein
+distinto||verschieden, anders
+vocales|vocal|Vokale
+vocal||Vokal
+reducen|reducir|reduzieren (Präsens)
+reducir||reduzieren, verringern
+silbidos|silbido|Pfiffe, Pfeiftöne
+silbido||Pfiff, Pfeifton
+consonantes|consonante|Konsonanten
+consonante||Konsonant
+sonidos|sonido|Laute, Töne
+sonido||Laut, Ton
+contexto||Zusammenhang, Kontext
+silbadores|silbador|Pfeifer (Plural)
+mantienen|mantener|führen, aufrechterhalten (Präsens)
+conversaciones|conversación|Gespräche
+conversación||Gespräch
+entero||ganz, vollständig
+mediados||a mediados de = Mitte (zeitlich)
+xx||20 (römisch); siglo XX = 20. Jahrhundert
+desaparecer||verschwinden
+gomeros|gomero|Bewohner von La Gomera
+emigraron|emigrar|auswandern (Indefinido)
+emigrar||auswandern
+carreteras|carretera|Landstraßen
+carretera||Landstraße
+dejó|dejar|lassen; aufhören (Indefinido); dejar de = aufhören zu
+necesario||notwendig
+recuperación||Wiederbelebung, Erholung
+asignatura||Schulfach
+primaria||Grundschule
+secundaria||Sekundarstufe
+unesco||UNESCO
+declaró|declarar|erklären (Indefinido)
+único||einzig
+lenguaje||Sprache (Ausdrucksweise)
+silbado||gepfiffen
+plenamente||voll, vollständig
+desarrollado||entwickelt
+practicado||praktiziert, gepflegt
+numeroso||zahlreich
+entienden|entender|verstehen (Präsens)
+silban|silbar|pfeifen (Präsens)
+regreso||Rückkehr
+lince||Luchs; lince ibérico = Pardelluchs
+ibérico||iberisch
+comienzos|comienzo|Anfänge; a comienzos de = Anfang (zeitlich)
+comienzo||Anfang, Beginn
+felino||Raubkatze; katzenartig
+amenazado||bedroht
+quedaban|quedar|übrig bleiben (Imperfecto)
+ejemplares|ejemplar|Exemplare, Tiere
+ejemplar||Exemplar
+repartido||verteilt
+doñana||Doñana (Nationalpark in Andalusien)
+morena||Sierra Morena (Gebirge in Andalusien); dunkelhaarig
+principal||Haupt-, wichtigster
+conejo||Kaninchen
+alimenta|alimentarse|sich ernähren (Präsens)
+alimentarse||sich ernähren
+conejos|conejo|Kaninchen (Plural)
+enfermedades|enfermedad|Krankheiten
+enfermedad||Krankheit
+mixomatosis||Myxomatose (Kaninchenseuche)
+hemorrágico||hämorrhagisch, mit Blutungen
+vírico||viral, Virus-
+habían|haber|hatten (Imperfecto, Hilfsverb)
+diezmado|diezmar|dezimieren (Partizip)
+diezmar||dezimieren
+poblaciones|población|Bestände, Bevölkerungen
+población||Bevölkerung; Bestand
+sumaban|sumarse|hinzukommen (Imperfecto)
+sumarse||hinzukommen, sich anschließen
+caza||Jagd
+cepos|cepo|Fallen (Tellereisen)
+cepo||Falle, Tellereisen
+pérdida||Verlust
+hábitat||Lebensraum
+considera|considerar|halten für, betrachten (Präsens); considerarse = gelten als
+considerarse||gelten als
+conservación||Erhaltung, Naturschutz
+criaron|criar|züchten, aufziehen (Indefinido)
+criar||züchten, aufziehen
+linces|lince|Luchse
+cautividad||Gefangenschaft
+soltaron|soltar|freilassen, loslassen (Indefinido)
+soltar||freilassen, loslassen
+repoblaron|repoblar|wieder ansiedeln (Indefinido)
+repoblar||wieder ansiedeln, wieder besiedeln
+fincas|finca|Landgüter
+finca||Landgut, Grundstück
+censo||Zählung, Zensus
+anterior||vorherig
+uicn||IUCN, Weltnaturschutzunion
+peligro||Gefahr; en peligro = gefährdet
+vulnerable||gefährdet, verletzlich
+asfalto||Asphalt
+atropellos|atropello|Verkehrsunfälle mit Tieren, Überfahren
+atropello||Überfahren (durch ein Fahrzeug)
+causan|causar|verursachen (Präsens)
+causar||verursachen
+muertes|muerte|Todesfälle
+registrado||registriert
+pasos|paso|Übergänge; Schritte; paso de fauna = Wildtierquerung
+paso||Schritt; Durchgang
+fauna||Tierwelt
+vallas|valla|Zäune
+valla||Zaun
+cruzan|cruzar|überqueren (Präsens)
+cruzar||überqueren
+territorio||Gebiet, Territorium
+dependiendo|depender|abhängen (Gerundio)
+presa||Beute; Stausee
+frágil||zerbrechlich, anfällig
+cholitas|cholita|Cholitas (Plural)
+cholita||Cholita: indigene Frau in traditioneller Kleidung (Bolivien)
+luchadoras|luchadora|Kämpferinnen, Ringerinnen
+luchadora||Kämpferin, Ringerin
+polideportivo||Sporthalle
+extiende|extenderse|sich erstrecken (Präsens)
+paz||Frieden; La Paz = Regierungssitz Boliviens
+grita|gritar|schreien (Präsens)
+gritar||schreien
+ríe|reír|lachen (Präsens)
+abuchea|abuchear|ausbuhen (Präsens)
+abuchear||ausbuhen
+ring||Ring (Boxen, Wrestling)
+pelean|pelear|kämpfen (Präsens)
+pelear||kämpfen, streiten
+mujer||Frau
+aimaras|aimara|Aymara (Plural)
+trenzas|trenza|Zöpfe
+trenza||Zopf
+sombrero||Hut
+bombín||Melone (Hut)
+pollera||Pollera: weiter Rock der Andenfrauen
+falda||Rock
+amplio||weit, breit
+capas|capa|Schichten
+capa||Schicht; Umhang
+andes||die Anden
+lucha||Kampf; lucha libre = Wrestling
+libre||frei; lucha libre = Wrestling
+peleaban|pelear|kämpfen (Imperfecto)
+hombre||Mann; Mensch
+descenso||Rückgang, Abstieg
+promotor||Veranstalter, Promoter
+mamani||Mamani (Familienname)
+luchadores|luchador|Kämpfer, Ringer
+luchador||Kämpfer, Ringer
+burlaron|burlarse|sich lustig machen (Indefinido)
+burlarse||sich lustig machen
+servía|servir|dienen, taugen (Imperfecto)
+servir||dienen, taugen; servieren
+cuadrilátero||Ring (Boxen, Wrestling)
+espectáculo||Show, Schauspiel
+funcionó|funcionar|funktionieren (Indefinido)
+acuden|acudir|kommen, hingehen (Präsens)
+acudir||kommen, hingehen
+coreografiado||choreografiert
+mexicano||mexikanisch
+malo||schlecht, böse; las malas = die Bösen
+aparatoso||spektakulär, auffällig
+humor||Humor
+show||Show
+sufrieron|sufrir|erleiden (Indefinido)
+discriminación||Diskriminierung
+palabra||Wort
+chola||Chola: Bezeichnung für indigene Frauen, früher als Beleidigung
+usaba|usar|benutzen (Imperfecto); usarse = verwendet werden
+insulto||Beleidigung
+reivindicarla|reivindicar|sie aufwerten, für sie einstehen (Infinitiv mit Pronomen)
+reivindicar||einfordern, für etwas einstehen, aufwerten
+antropóloga||Anthropologin
+observa|observar|beobachten, feststellen (Präsens)
+tradicional||traditionell
+exótico||exotisch
+aprovechan|aprovechar|nutzen (Präsens)
+aprovechar||nutzen, ausnutzen
+mirada||Blick
+ganar||gewinnen; verdienen
+prestigio||Ansehen, Prestige
+campoamor||Campoamor (Clara Campoamor, 1888–1972, Politikerin und Frauenrechtlerin)
+femenino||weiblich, Frauen-; voto femenino = Frauenwahlrecht
+elecciones|elección|Wahlen
+elección||Wahl
+segundo||zweiter; Segunda República = Zweite Republik (1931–1939)
+república||Republik
+consiguieron|conseguir|erreichen, bekommen (Indefinido)
+conseguir||erreichen, bekommen, schaffen
+abogada|abogado|Anwältin
+abogado||Anwalt, Anwältin
+diputada|diputado|Abgeordnete
+diputado||Abgeordneter, Abgeordnete
+defendió|defender|verteidigen, eintreten für (Indefinido)
+reconociera|reconocer|anerkennen (Subjuntivo Imperfecto)
+condiciones|condición|Bedingungen
+condición||Bedingung
+debate||Debatte
+dividió|dividir|spalten (Indefinido)
+izquierda||Linke (politisch); linke Seite
+republicano||republikanisch
+rival||Rivalin, Rivale, Gegner
+victoria||Victoria (Vorname); Sieg
+kent||Kent (Victoria Kent, Politikerin, 1891–1987)
+socialista||sozialistisch
+aplazarlo|aplazar|es verschieben (Infinitiv mit Pronomen)
+aplazar||verschieben, vertagen
+temía|temer|fürchten (Imperfecto)
+influido||beeinflusst
+votaran|votar|wählen (Subjuntivo Imperfecto)
+congreso||Kongress; el Congreso = das spanische Parlament (Abgeordnetenhaus)
+sufragio||Wahlrecht; sufragio femenino = Frauenwahlrecht
+votos|voto|Stimmen
+votaron|votar|wählen (Indefinido)
+general||allgemein; elecciones generales = Parlamentswahlen
+ganó|ganar|gewinnen (Indefinido)
+perdió|perder|verlieren (Indefinido)
+quedó|quedar|bleiben (Indefinido); quedarse aislado = isoliert dastehen
+aislado||isoliert
+políticamente||politisch (Adverb)
+comenzar||beginnen
+marchó|marcharse|weggehen (Indefinido)
+exilio||Exil
+lausana||Lausanne
+ratoncito|ratón|Mäuschen; el ratoncito Pérez = die Zahnmaus (bringt Geld für Milchzähne)
+pérez||Pérez (Familienname); el ratoncito Pérez = die Zahnmaus
+debajo||unten; debajo de = unter
+almohada||Kopfkissen
+moneda||Münze; Währung
+figura||Figur, Gestalt
+simplemente||einfach
+ratón||Maus
+personaje||Figur (in einer Geschichte); Persönlichkeit
+concreto||konkret, bestimmt
+rey||König
+alfonso||Alfonso (Vorname); Alfonso XIII = spanischer König (1886–1931)
+xiii||13 (römisch); Alfonso XIII = Alfons XIII.
+reina||Königin
+regente||Regentin, Regent
+maría||María (Vorname)
+cristina||Cristina (Vorname)
+encargó|encargar|in Auftrag geben (Indefinido)
+encargar||in Auftrag geben, bestellen
+luis||Luis (Vorname)
+coloma||Coloma (Luis Coloma, Schriftsteller, 1851–1915)
+jesuita||Jesuit
+escritor||Schriftsteller
+cercano||nah, nahestehend
+corte||Hof (eines Königs); Schnitt
+protagonista||Hauptfigur
+buby||Buby (Kosename des jungen Alfons XIII.)
+cañerías|cañería|Rohrleitungen, Abwasserrohre
+cañería||Rohrleitung
+caja||Kasten, Schachtel, Dose
+galletas|galleta|Kekse
+galleta||Keks
+sótano||Keller
+confitería||Konditorei
+prast||Prast (ehemalige Konditorei in Madrid)
+arenal||Sandfläche; calle del Arenal = Straße in Madrid
+descubre|descubrir|entdecken (Präsens)
+descubrir||entdecken
+pobre||arm
+manuscrito||Manuskript, Handschrift
+guarda|guardar|aufbewahren (Präsens); guardarse = aufbewahrt werden
+guardar||aufbewahren
+biblioteca||Bibliothek
+palacio||Palast; Palacio Real = Königspalast
+placa||Gedenktafel; Platte
+mismo||gleich, selbst
+edificio||Gebäude
+museo||Museum
+dedicado||gewidmet
+inventado||erfunden
+parada||Halt, Station
+visitan|visitar|besuchen (Präsens)
+mate||Mate (Tee); Mategefäß
+argentina||Argentinien
+termo||Thermoskanne
+brazo||Arm
+recipiente||Gefäß, Behälter
+equipo||Ausrüstung; Mannschaft
+infusión||Aufguss, Tee
+prepara|preparar|zubereiten (Präsens); prepararse = zubereitet werden
+yerba||Kraut; yerba mate = Mate (getrocknete Blätter)
+hojas|hoja|Blätter
+hoja||Blatt
+seco||trocken
+molido||gemahlen
+originario||stammend, ursprünglich; originario de = stammend aus
+cuenca||Becken (Fluss), Einzugsgebiet
+paraná||Paraná (Fluss in Südamerika)
+paraguay||Paraguay
+guaraníes|guaraní|Guaraní (Plural): indigenes Volk
+guaraní||Guaraní: indigenes Volk und Sprache (Paraguay)
+consumían|consumir|konsumieren, zu sich nehmen (Imperfecto)
+consumir||konsumieren, verbrauchen
+caliente||heiß, warm
+bombilla||Trinkhalm für Mate; Glühbirne
+pajita||Trinkhalm
+metal||Metall
+filtro||Filter
+tradicionalmente||traditionell
+calabaza||Kürbis
+comparte|compartir|teilen (Präsens)
+compartir||teilen
+cebador||der, der den Mate aufgießt
+pasando|pasar|weiterreichen (Gerundio)
+decirlo|decir|es sagen (Infinitiv mit Pronomen)
+dejarte|dejar|dich lassen (Infinitiv mit Pronomen)
+siguiente||nächster, folgender
+presente||anwesend, vorhanden
+hogares|hogar|Haushalte
+hogar||Zuhause, Haushalt
+aun||sogar; aun así = trotzdem
+uruguayos|uruguayo|Uruguayer
+uruguayo||uruguayisch; Uruguayer
+consumen|consumir|konsumieren (Präsens)
+kilos|kilo|Kilo (Plural)
+kilo||Kilo
+frente||frente a = gegenüber, im Vergleich zu; Front; Stirn
+tereré||Tereré: kalt aufgegossener Mate (Paraguay)
+quedar||bleiben; übrig bleiben; sich verabreden
+dejar||lassen; verlassen; dejar de = aufhören zu
+depender||abhängen; depender de = abhängen von
+creer||glauben
+recordar||sich erinnern an; erinnern an
+necesitar||brauchen
+haber||haben (Hilfsverb); hay = es gibt
+deber||müssen, sollen; schulden
+parecer||scheinen; parecerse a = ähneln
+entender||verstehen
+estrenarse||uraufgeführt werden
+jóvenes|joven|junge Leute; jung (Plural)
+comunes|común|gemeinsam (Plural); fosas comunes = Massengräber
+española|español|spanisch (weiblich); Spanierin
+españolas|español|spanisch (weiblich, Plural); Spanierinnen
+aquella|aquel|jene
+aquellas|aquel|jene (Plural)
+buscar||suchen; en busca de = auf der Suche nach
+autónomo||autonom, selbstständig; comunidad autónoma = autonome Region
+bueno||gut
+llevar||tragen; bringen; dauern; llevar su nombre = seinen Namen tragen
+pájaro||Vogel
+tomate||Tomate
+soler||pflegen zu (etwas gewöhnlich tun)
+seguir||folgen; weitermachen; sigue + Gerundio = immer noch
+tratar||behandeln; tratar de = versuchen zu
+tratarse||sich handeln um; se trata de = es geht um
+cualquiera||jeder (beliebige)
+nacer||geboren werden; entstehen
+planta||Pflanze; Etage
+nación||Nation
+millón||Million
+vecino||Nachbar; Bewohner
+euro||Euro
+domingo||Sonntag
+caer||fallen
+caerse||hinfallen; ausfallen (Zahn)
+echar||werfen; gießen (Wasser)
+subir||hochgehen, steigen; erhöhen
+llamar||anrufen; rufen, nennen
+llamarse||heißen
 `
 };
 
@@ -2191,7 +4996,8 @@ function buildGloss(){
   });
 }
 function lookupWord(lang, w){
-  const k = String(w || '').toLowerCase().replace(/^[¿¡"„“«(]+|[.!?,;"„“”»)…]+$/g, '');
+  // Auch ein Doppelpunkt am Ende („pocas:“), damit Mehrzahl und weibliche Formen gefunden werden
+  const k = String(w || '').toLowerCase().replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, '');
   const hit = GLOSS[lang][k] || GLOSS[lang][k.replace(/:/g, '')];
   if (hit || lang !== 'es') return hit || null;
   // Spanisch: Mehrzahl und weibliche Formen auf die Grundform zurückführen (casas → casa, ciudades → ciudad, nuevas → nuevo)

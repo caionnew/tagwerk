@@ -2,6 +2,18 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.53.0
+**Jedes Wort der Lesetexte steht im Wörterbuch; Lücken aus Lesetexten kommen jetzt aus fast jedem Satz.**
+- **Wörterbuch:** 2.800 neue Einträge für die 48 Lesetexte, mit der im Text gemeinten Bedeutung zuerst (vindby = Windböe, diputada = Abgeordnete, så fort = sobald). Antippen im Text zeigt die deutsche Bedeutung jetzt auch offline; vorher fehlten 1.098 schwedische und 1.004 spanische Wörter. Gebeugte Formen verweisen auf ihre Grundform, die selbst einen Eintrag hat.
+- **Lesetext-Lücken:** Statt 40 % der schwedischen und 55 % der spanischen Sätze geben jetzt 262 von 263 und 256 von 260 eine Lücke her, mit gut 900 verschiedenen Wörtern je Sprache statt 83 und 149. Die seltenen Wörter, um die es beim Lesen geht, sind jetzt dabei. Hinweise ohne Erklärung nach dem Doppelpunkt („Sameby“ statt „Sameby: Gemeinschaft für …“).
+- **Bedeutungen ergänzt:** cuenta auch Konto, skada auch verletzen, subir auch erhöhen, llamar auch nennen, llamarse = heißen. Wo die vorhandene Grundform ein anderes Wort meint (vår = unser, kalla = kalt, ren = sauber, acordar = sich erinnern), haben die Formen im Text eine eigene Bedeutung (våren = der Frühling).
+- **Nachschlagen:** Ein Doppelpunkt nach dem Wort („pocas:“) verhindert nicht mehr, dass Mehrzahl und weibliche Formen gefunden werden.
+- **Zurücksetzen einer Sprache** löscht auch deren beim Lesen nachgeschlagene Wörter.
+- **Backup:** Nachgeschlagene Wörter, gelesene Texte und eine offene Lesetext-Lücke im Tagwerk überstehen Export, Einspielen auf einem leeren Gerät und Rückgängig; danach wirken sie wie vorher. Neue Tests dafür.
+- **Doku:** Regeln für Wörterbucheinträge zu neuen Texten in docs/CONTENT.md.
+- Die App wird dadurch rund 95 KB größer (1.138 KB).
+- 5 neue Einheitstests (271), 1 neuer und 1 erweiterter Browser-Test (87).
+
 ## 24.52.0
 **Lücken aus Lesetexten neu: nur aus gelesenen Texten, deutsche Bedeutung als Hinweis, nachgeschlagene Wörter zuerst.**
 - **Fehler behoben:** Die Übung sollte nur gelesene Texte nehmen, suchte aber unter „vasa“, während unter „sv:vasa“ gespeichert wird. Der Filter griff nie, die Lücken kamen aus allen Texten. Ohne gelesenen Text wird die Übung jetzt gar nicht angeboten; das Thema nennt den Grund.

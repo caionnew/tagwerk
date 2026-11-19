@@ -51,8 +51,9 @@ test('die beiden Fälle aus der Rückmeldung und bekannte Stolperstellen', () =>
   assert.equal(info('sv', 'Några älskar det, andra flyr så fort burken öppnas.', 'fort').mean, 'sobald');
   // lagar = Gesetze, nicht „kocht“
   assert.equal(info('sv', 'Redan 1766 fick Sverige en tryckfrihetsförordning, en av världens första lagar om pressfrihet.', 'lagar'), null);
-  // la cocina = Küche, nicht „kocht“; se llama = heißt, nicht „ruft an“
-  assert.equal(info('es', 'Según ellos, una cholita servía para la cocina, no para el cuadrilátero.', 'cocina'), null);
+  // la cocina = Küche, nicht „kocht“ (seit 24.60.0 mit eigenem Eintrag); se llama = heißt, nicht „ruft an“
+  const coc = info('es', 'Según ellos, una cholita servía para la cocina, no para el cuadrilátero.', 'cocina');
+  assert.ok(!coc || coc.mean === 'Küche', coc && coc.mean);
   const llama = info('es', 'El recipiente se llama mate.', 'llama');
   assert.ok(!llama || !/anrufen/.test(llama.mean));
   // Gebeugtes Verb: Grundform als zweiter Hinweis, Bedeutung der Grundform ohne Grammatik-Angabe

@@ -3136,7 +3136,7 @@ nuestros|nuestro|unsere
 amigos|amigo|Freunde
 encargo|encargarse|ich kümmere mich; encargarse de = sich kümmern um
 error||Fehler
-consiste|consistir|besteht; consistir en = bestehen aus
+consiste|consistir|besteht; consistir en = bestehen in, darin bestehen
 partes|parte|Teile
 preocupo|preocuparse|ich mache mir Sorgen; preocuparse por = sich sorgen um
 dedica|dedicarse|widmet sich; dedicarse a = beruflich machen
@@ -3275,7 +3275,7 @@ acostumbrarás|acostumbrarse|du wirst dich gewöhnen
 ritmo||Rhythmus
 esto||das, dies
 jefe||Chef
-final||Ende; al final = am Ende
+final||Ende; la final = das Finale; al final = am Ende
 queja|quejarse|beschwert sich
 pero||aber
 chico||Junge, junger Mann
@@ -3395,7 +3395,7 @@ carrera||Studium
 carta||Brief
 casa||Haus; en casa = zu Hause
 casó|casarse|se casó con = heiratete
-cayó|caerse|se me cayó = mir ist … heruntergefallen
+cayó|caer|fiel (Indefinido); se me cayó = mir ist … heruntergefallen; me cayó bien = war mir sympathisch
 celular||Handy (Lateinamerika)
 centro||Zentrum
 chaqueta||Jacke
@@ -3422,7 +3422,7 @@ de||von, aus
 deberías|deber|du solltest
 del||de + el: vom, des
 demasiado||zu (sehr)
-departamento||Wohnung (Lateinamerika)
+departamento||Abteilung; in Lateinamerika: Wohnung
 depende|depender|hängt ab
 desde||seit, ab; desde hace = seit
 di|dar|me di cuenta = ich merkte; ich gab
@@ -3506,7 +3506,7 @@ hacía|hacer|machte; hacía frío = es war kalt
 haría|hacer|ich würde machen
 harías|hacer|du würdest machen
 has|haber|hast (Hilfsverb)
-hay||es gibt
+hay||es gibt; hay que = man muss
 he|haber|habe (Hilfsverb)
 hemos|haber|haben (wir, Hilfsverb)
 hermana||Schwester
@@ -3524,7 +3524,7 @@ interesa|interesar|interessiert
 ir||gehen, fahren
 juan||Juan (Name)
 jugábamos|jugar|wir spielten (Imperfecto)
-junto||junto al mar = am Meer
+junto||junto a = neben, bei; junto al mar = am Meer
 la||die (Artikel); sie, es (Objekt)
 las||die (Plural); sie (Objekt)
 le||ihm, ihr (Objekt)
@@ -3543,7 +3543,7 @@ llamo|llamar|ich rufe an; me llamo = ich heiße
 llamó|llamar|rief an
 llaves|llave|Schlüssel
 llegues|llegar|(wenn) du ankommst (Subjuntivo)
-lleva|llevar|bringt, nimmt mit
+lleva|llevar|bringt, nimmt mit; lleva tres días aquí = ist seit drei Tagen hier
 llevo|llevar|llevo tres años = ich bin seit drei Jahren
 lloviendo|llover|regnend
 llovía|llover|es regnete (Imperfecto)
@@ -3782,7 +3782,7 @@ navidad||Weihnachten
 nuevo||neu; Año Nuevo = Neujahr
 menos||weniger; bei Uhrzeiten: vor (las ocho menos cuarto = 7:45)
 cuarto||Viertel; Zimmer
-cuesta|costar|kostet
+cuesta|costar|kostet; la cuesta = der Hang, die Steigung
 euros|euro|Euro
 paciencia||Geduld
 deberes||Hausaufgaben
@@ -3849,7 +3849,7 @@ prestármelos|prestar|sie mir leihen
 remoto||fern; control remoto = Fernbedienung
 resfriada|resfriado|erkältet
 resfriado||erkältet; Erkältung
-rompió|romperse|se rompió = brach sich
+rompió|romper|brach, zerbrach (Indefinido); se rompió = brach sich; rompió a llover = es fing heftig an zu regnen
 roto|romperse|gebrochen, kaputt
 rápidamente||schnell
 rápido||schnell
@@ -4222,7 +4222,7 @@ vacío||leer
 sí||ja; sich (nach Präposition); por sí solo = von selbst
 dejando|dejar|lassen, zurücklassen (Gerundio); dejar atrás = hinter sich lassen
 atrás||hinten, zurück; dejar atrás = hinter sich lassen
-señales|señal|Zeichen, Anzeichen
+señales|señal|Zeichen, Anzeichen; Schilder
 señal||Zeichen, Signal
 extendió|extender|ausbreiten (Indefinido); extenderse = sich ausbreiten
 extender||ausbreiten, ausdehnen
@@ -4310,7 +4310,7 @@ hombros|hombro|Schultern
 hombro||Schulter
 ligero||leicht
 arriba||oben; arriba del todo = ganz oben
-casco||Helm
+casco||Helm; casco antiguo = Altstadt
 saludar||grüßen
 tradición||Tradition
 doscientos||zweihundert
@@ -5000,7 +5000,7 @@ curiosos|curioso|Neugierige
 curioso||neugierig; Neugieriger
 cobra|cobrar|kassieren, verlangen (Präsens); cobrar entrada = Eintritt verlangen
 cobrar||kassieren, verlangen
-entrada||Eintritt; Eingang
+entrada||Eintrittskarte, Eintritt; Eingang
 interpretación||Interpretation; centro de interpretación = Besucherzentrum
 estrenó|estrenar|uraufführen (Indefinido); estrenarse = uraufgeführt werden
 ópera||Oper
@@ -5345,7 +5345,7 @@ protagonista||Hauptfigur
 buby||Buby (Kosename des jungen Alfons XIII.)
 cañerías|cañería|Rohrleitungen, Abwasserrohre
 cañería||Rohrleitung
-caja||Kasten, Schachtel, Dose
+caja||Kasten, Schachtel, Dose; Kasse; caja fuerte = Tresor
 galletas|galleta|Kekse
 galleta||Keks
 sótano||Keller
@@ -5455,6 +5455,217 @@ echar||werfen; gießen (Wasser)
 subir||hochgehen, steigen; erhöhen
 llamar||anrufen; rufen, nennen
 llamarse||heißen
+acento||Akzent, Betonung
+aceptar||annehmen, akzeptieren
+actos|acto|Akte, Veranstaltungen; salón de actos = Aula, Festsaal
+acusarme|acusar|mich beschuldigen; acusar de = beschuldigen, vorwerfen
+alquilan|alquilar|vermieten, mieten; se alquilan = zu vermieten
+anda|andar|geht; anda diciendo = erzählt herum
+anfitriona|anfitrión|Gastgeberin
+antiguo||alt; casco antiguo = Altstadt
+apuesta|apostar|setzt; apostar por = setzen auf
+aseguro|asegurar|ich versichere
+atrevió|atreverse|traute sich (Indefinido)
+avalista||Bürge
+avísenos|avisar|sagen Sie uns Bescheid (Imperativ, usted)
+bajaba|bajar|fuhr hinunter (Imperfecto)
+bandeja||Tablett
+bastante||ziemlich, genug
+basura||Müll
+bizcocho||Rührkuchen, Biskuit
+bola||Kugel, Ball; no dar pie con bola = nichts auf die Reihe kriegen
+botas|bota|Stiefel (Plural); ponerse las botas = sich den Bauch vollschlagen
+burlaban|burlarse|machten sich lustig (Imperfecto)
+cabra||Ziege; estar como una cabra = nicht ganz dicht sein
+callejuelas|callejuela|Gassen
+campeón||Meister, Sieger
+canadá||Kanada
+capítulos|capítulo|Kapitel (Plural)
+carácter||Charakter
+celebrará|celebrar|wird stattfinden, wird gefeiert (Futur)
+ceremonia||Feier, Zeremonie
+cero||Null; un cero a la izquierda = eine Null
+chimenea||Kamin
+chocolate||Schokolade
+chocó|chocar|prallte (Indefinido); chocar contra = prallen gegen
+cita||Termin, Verabredung
+clarísima|claro|ganz klar, eindeutig
+comenté|comentar|ich erwähnte (Indefinido)
+comisiones|comisión|Gebühren
+comprarse|comprar|sich kaufen
+concedernos|conceder|uns gewähren
+conductor||Fahrer
+contradecir||widersprechen
+costal||Sack; harina de otro costal = ein anderes Paar Schuhe
+cuidarme|cuidar|auf mich aufpassen
+cumplió|cumplir|wurde (Jahre alt), erfüllte (Indefinido)
+declararse|declarar|sich erklären; declararse en quiebra = Konkurs anmelden
+dentista||Zahnarzt
+deportivo||Sport-; puerto deportivo = Jachthafen
+desayunamos|desayunar|wir frühstückten
+despedirse||sich verabschieden; despedirse de = sich verabschieden von
+dudarlo|dudar|zögern, es bezweifeln
+dásela|dar|gib sie ihm/ihr (Imperativ)
+déjame|dejar|lass mich (Imperativ)
+eches|echar|wirfst (Subjuntivo); no eches = wirf nicht
+empanadas|empanada|Teigtaschen (Plural)
+energías|energía|Energien
+enfades|enfadarse|du dich ärgerst (Subjuntivo)
+enfrentará|enfrentarse|wird antreten (Futur); enfrentarse a = antreten gegen
+escapado|escaparse|entwischt, abgehauen (Partizip)
+escucharlos|escuchar|sie anhören
+estropeó|estropearse|ging kaputt (Indefinido)
+explique|explicar|erkläre (Subjuntivo)
+exámenes|examen|Prüfungen
+falla|fallar|versagt, lässt im Stich
+fallaron|fallar|versagten (Indefinido)
+falsificado|falsificar|gefälscht (Partizip)
+fastidia|fastidiar|ärgert, nervt
+formulario||Formular
+fregar||abwaschen, spülen
+frenos|freno|Bremsen
+fuego||Feuer
+fíjate|fijarse|achte (Imperativ); fijarse en = achten auf
+gano|ganar|ich verdiene, ich gewinne
+gorda|gordo|dick; hacer la vista gorda = ein Auge zudrücken
+graduación||Abschlussfeier
+granada||Granada
+grúa||Abschleppwagen, Kran
+habitaciones|habitación|Zimmer (Plural)
+harina||Mehl
+harán|hacer|werden machen (Futur); harán falta = werden gebraucht
+importa|importar|ist wichtig; no me importa = es ist mir egal
+influye|influir|beeinflusst; influir en = beeinflussen
+interrumpan|interrumpir|unterbrechen (Subjuntivo)
+inunde|inundar|überschwemmt (Subjuntivo); inundarse = unter Wasser stehen
+inversores|inversor|Investoren
+jefa|jefe|Chefin
+jubilaron|jubilarse|gingen in Rente (Indefinido)
+ladrones|ladrón|Diebe
+leña||Brennholz
+liebre||Hase; dar gato por liebre = übers Ohr hauen
+llegaré|llegar|ich werde ankommen (Futur)
+llevamos|llevar|wir tragen, wir bringen; llevarse bien = sich verstehen
+mandamos|mandar|wir schicken
+mandato||Amtszeit, Mandat
+mango||Griff, Stiel; auch: Mango
+mantenerlo|mantener|ihn unterhalten, erhalten
+marcado|marcar|markiert (Partizip)
+marinar||marinieren
+marinas|marino|Meeres-; tortugas marinas = Meeresschildkröten
+marisco||Meeresfrüchte
+mayúsculas|mayúscula|Großbuchstaben
+mercadillos|mercadillo|Flohmärkte, Wochenmärkte
+mudaron|mudarse|zogen um (Indefinido)
+narices|nariz|Nasen, Nasenlöcher; estar hasta las narices = die Nase voll haben
+nata||Sahne
+negociación||Verhandlung
+negra|negro|schwarz
+online||online
+oponen|oponerse|sind dagegen; oponerse a = sich widersetzen
+orquesta||Orchester; director de orquesta = Dirigent
+oveja||Schaf
+padrinos|padrino|Paten
+pase|pasar|vergeht, geht über (Subjuntivo)
+pegas|pega|Einwände; poner pegas = Einwände haben
+perfectamente||bestens, problemlos
+pino||Pinie, Kiefer; en el quinto pino = sehr weit weg
+pizarra||Tafel (in der Schule)
+portátil||Laptop; tragbar
+postres|postre|Nachtische
+potable||trinkbar; agua potable = Trinkwasser
+pregúntale|preguntar|frag ihn/sie (Imperativ)
+preocupéis|preocuparse|ihr euch sorgt (Subjuntivo); no os preocupéis = macht euch keine Sorgen
+preparó|preparar|bereitete zu (Indefinido)
+presentarse|presentar|kandidieren, sich vorstellen
+presté|prestar|ich lieh (Indefinido)
+prima||Cousine
+protección||Schutz
+préstamo||Kredit, Darlehen
+página||Seite
+quiebra||Konkurs, Pleite
+reclamó|reclamar|beschwerte sich (Indefinido)
+refugio||Hütte, Berghütte, Zuflucht
+regional||regional
+rellenar||ausfüllen
+renovables|renovable|erneuerbar
+renunció|renunciar|verzichtete (Indefinido); renunciar a = verzichten auf
+repartimos|repartir|wir verteilten
+reservar||reservieren, buchen
+respira|respirar|atmet
+reverencia||Verbeugung
+revistas|revista|Zeitschriften
+roce||Reiberei, Reibung
+sacos|saco|Säcke; sacos de dormir = Schlafsäcke
+saludó|saludar|grüßte (Indefinido)
+salón||Saal, Wohnzimmer; salón de actos = Aula
+sartén||Pfanne
+secreto||Geheimnis
+sendero||Wanderweg, Pfad
+sentarnos|sentarse|uns setzen
+servido|servir|serviert (Partizip)
+siquiera||ni siquiera = nicht einmal
+sobraron|sobrar|blieben übrig (Indefinido)
+sorprende|sorprender|überrascht
+sorpresa||Überraschung
+taladro||Bohrmaschine
+tarta||Torte, Kuchen
+tercero||Dritter; el tercero = der dritte Stock
+terminarla|terminar|sie beenden, abschließen
+testigos|testigo|Zeugen
+toca|tocar|ist dran; te toca = du bist dran
+transporte||Verkehr, Transport; transporte público = öffentlicher Verkehr
+tratan|tratar|behandeln
+trayendo|traer|bringend (Gerundium)
+universidad||Universität
+vaciando|vaciar|ausräumend, leerend (Gerundium)
+velero||Segelboot
+velocidad||Geschwindigkeit
+volante||Lenkrad, Steuer
+volumen||Lautstärke
+árbitro||Schiedsrichter
+área||Strafraum; Bereich
+trabajo||Arbeit, Stelle, Job (auch: ich arbeite)
+bebidas|bebida|Getränke
+os||euch
+invitados|invitado|Gäste; eingeladen
+preocupa|preocupar|beunruhigt, macht Sorgen; me preocupa = ich mache mir Sorgen
+sola|solo|allein (weiblich)
+como||wie, als (auch: ich esse); como si = als ob
+vista||Blick, Sicht; hacer la vista gorda = ein Auge zudrücken
+tía||Tante
+hija||Tochter
+cocina||Küche (auch: kocht)
+encuentra|encontrar|findet (er, sie, Sie)
+repite|repetir|wiederholt, erzählt immer wieder
+sorprenden|sorprender|überraschen
+preocupan|preocupar|beunruhigen
+importan|importar|sind wichtig
+tocan|tocar|berühren; sind dran
+fastidian|fastidiar|ärgern, nerven
+fallan|fallar|versagen, lassen im Stich
+convienen|convenir|sind ratsam
+pagado|pagar|bezahlt (Partizip); bien pagado = gut bezahlt
+embajada||Botschaft
+viendo|ver|sehend, beim Ansehen (Gerundium)
+escritora|escritor|Schriftstellerin
+editorial||Verlag
+trimestral||Quartals-, vierteljährlich
+dáselo|dar|gib es ihm/ihr (Imperativ)
+trámite||Behördengang, Formalität
+detecta|detectar|entdeckt, bemerkt
+enviamos|enviar|wir schicken
+corregido|corregir|korrigiert (Partizip)
+sindicatos|sindicato|Gewerkschaften
+escasez||Mangel, Knappheit
+pesquero||Fischer-; pueblo pesquero = Fischerdorf
+frontera||Grenze
+plazos|plazo|Fristen; plazo de entrega = Abgabetermin
+entrega||Abgabe, Lieferung
+fuga||Leck; Flucht
+conseguido|conseguir|bekommen, geschafft (Partizip)
+festival||Festival
+jazz||Jazz
 `
 };
 

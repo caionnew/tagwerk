@@ -30,6 +30,8 @@ Neue B2-Sätze kommen in Paketen (Fahrplan in [IDEEN.md](IDEEN.md#inhalte-satzpa
 
 Zwei Fallen aus Paket 4: Eine Lücke aus mehreren Wörtern (ska inte behöva) darf keine Inversion enthalten, sonst steht sie nicht zusammenhängend im Satz; das Subjekt dann nach vorn stellen. Und Formen mit zwei Bedeutungen prüfen, was das Wörterbuch anzeigt (händer erscheint als „Hände“, nicht als „geschieht“); passt es nicht, den Satz umbauen oder einen eigenen Eintrag anlegen. Falsche Freunde nur, wo die ähnliche Form wirklich in die Irre führt (Tal/tal, Laden/lada), nicht bei Wörtern, die dasselbe bedeuten (also/alltså).
 
+Aus Paket 5: Bei Objektpronomen (Wörter legen) kommt „le“ als Ablenkwort dazu, sobald lo/la/los/las im Satz steht; darum kein lo für eine männliche Person, sonst wäre le (Leísmo) auch richtig. Bei gustar & Co. setzt „Fehler finden“ die andere Zahl ein; darum keine Sammelnamen (la mayoría de) und keine Subjekte aus zwei Teilen, bei denen beide Zahlen gingen. Verwandtschaftswörter wie tía, hija, prima ohne Grundform eintragen (Tante ist ein anderes Wort als Onkel), sonst zählt eine Verwechslung als Formfehler. Erklärungen im Wörterbuch, die nicht als Lückenhinweis erscheinen sollen, in Klammern setzen (cocina = Küche (auch: kocht)).
+
 Plural im Wörterbuch kennzeichnen (`hyror|hyra|Mieten (Plural)`): „Fehler finden“ setzt bei hans/hennes/deras im Nebensatz die falsche Form sin/sitt/sina nach Genus und Zahl des folgenden Nomens ein und erkennt die Mehrzahl an diesem Vermerk.
 
 ## Wörterbuch (`src/data/gloss.js`)

@@ -2,6 +2,26 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.60.0
+**Paket 5: 84 neue spanische B2-Sätze für Objektpronomen, gustar & Co., Reflexivverben, Präpositionen, Verbalperiphrasen, Redewendungen und falsche Freunde.**
+- Je 12 Sätze pro Thema, jeder mit Erklärung, jedes Wort im Wörterbuch.
+- Neu geübt werden unter anderem:
+  - Pronomen: das vorangestellte Objekt (El portátil no te lo puedo prestar), lo für ein Adjektiv (no lo es), Pronomen am Gerundium (trayéndonoslas)
+  - gustar & Co.: importar, fastidiar, sobrar, tocar, convenir, caer bien
+  - Reflexivverben: atreverse, negarse, arrepentirse, das Passiv mit se (se alquilan) und das unpersönliche se (se tarda)
+  - Präpositionen: oponerse a, consistir en, carecer de, influir en, apostar por
+  - Periphrasen: llevar sin, no acabar de, andar + Gerundium, tener + Partizip, terminar por, llegar a, romper a, seguir sin, hay que
+- Zwölf neue Redewendungen mit wörtlicher Bedeutung, darunter estar en el quinto pino, dar gato por liebre und ser harina de otro costal.
+- Zwölf neue falsche Freunde, etwa Aula/aula, Torte/torta, Termin/término, Kamin/camino, Tempo/tiempo, Konkurs/concurso.
+- „Fehler finden“ bekommt sieben neue gustar-Sätze. Jeder dort eingesetzte Fehler ist sicher falsch: keine Sammelnamen, keine Subjekte aus zwei Teilen.
+- Abwechslung gemessen mit `tools/vielfalt.js`: 41 % neue Inhaltswörter, im Schnitt 12,3 Wörter je Satz.
+- Themenblatt Verbalperiphrasen um terminar por, llegar a und tener + Partizip ergänzt; die Regel nennt jetzt auch das Partizip.
+- Wörterbuch berichtigt, auch bei älteren Sätzen:
+  - os = euch (vorher „oder“), tía = Tante, hija = Tochter (vorher Onkel, Sohn)
+  - consistir en = bestehen in (vorher „bestehen aus“)
+  - como = wie (vorher „ich esse“), cocina = Küche (vorher „kocht“), bebidas = Getränke, la cuesta = der Hang
+  - un trabajo = eine Stelle, el departamento = die Abteilung
+
 ## 24.59.0
 **Paket 4: 68 neue schwedische Sätze für Zeit & Ort, Zukunft & Modalverben, Modalpartikeln, falsche Freunde und Redewendungen.**
 - Je 16 Sätze für Zeit & Ort und Zukunft, je 12 für die übrigen drei Themen, fast alle B2. Jeder Satz hat eine Erklärung, jedes Wort steht im Wörterbuch.

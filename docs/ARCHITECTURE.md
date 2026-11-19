@@ -29,7 +29,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `js/part_read.js` | Lesen und Hören: Texte, Fragen, Wikipedia-Fundstück |
 | `js/part_modern.js` | Spracherkennung, Symbole, Vibration, Teilen, Schnellzugriffe |
 | `js/part_shadow.js` | Nachsprechen: Aufnahme, Pegel, Auswertung, Wiedergabe, Aussprachehilfen, Übersicht |
-| `js/part_stats.js` | Fehlerquellen nach Thema, Übungsart, Fehlerart und hartnäckigen Sätzen (`hardSentences`: bei Wiederholungen mindestens zweimal nicht gewusst, nicht gefestigt, in 30 Tagen geübt; `hardPattern`: gemeinsames Thema), Uhrzeiten, Wortschatz |
+| `js/part_stats.js` | Fehlerquellen nach Thema, Übungsart, Fehlerart (`mistake`: Ein anderes Wort im geprüften Teil ist Grammatik, außer in Themen mit `vocab:true` wie Redewendungen, Falsche Freunde, Lesetext-Lücken; dort nur dieselbe Wortfamilie) und hartnäckigen Sätzen (`hardSentences`: bei Wiederholungen mindestens zweimal nicht gewusst, nicht gefestigt, in 30 Tagen geübt; `hardPattern`: gemeinsames Thema), Uhrzeiten, Wortschatz |
 | `js/part_long.js` | Dein Weg, Themenraster, Veränderung über 30 Tage |
 | `js/part_write.js` | Textprofil, Hinweise, Extra-Aufgaben, Textarchiv |
 | `js/part_ref.js` | Themenblatt, Nachschlagelisten, Kulturkarten, Karten |

@@ -560,6 +560,7 @@ button.row[disabled]::after{ display:none; }
 .find .kmore .link{ margin:0; font-size:14px; }
 /* Fehlerquellen */
 .errseg{ margin-bottom:12px; }
+.legend.elead{ margin:0 0 2px; }
 .errseg button{ padding:5px 9px; }
 .erows{ display:grid; gap:4px; }
 .erow{ display:grid; grid-template-columns:minmax(0, 1fr) 80px 56px; align-items:center; gap:10px; padding:7px 0; background:none; border:0; border-bottom:1px solid var(--line); color:var(--ink); text-align:left; font:inherit; width:100%; }

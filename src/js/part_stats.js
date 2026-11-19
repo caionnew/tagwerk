@@ -14,6 +14,9 @@ const lemmaOf = (lang, w) => { const g = lookupWord(lang, w); return g ? deacc((
 function sameWord(lang, a, b){
   const la = lemmaOf(lang, a), lb = lemmaOf(lang, b);
   if (la && lb) return la === lb;
+  // Nur eins bekannt: Beginnt das unbekannte Wort mit der Grundform des bekannten, ist es eine Form davon („bilar“ zu „bilen“, Grundform bil)
+  const l = la || lb;
+  if (l && l.length >= 3 && deacc(la ? b : a).startsWith(l)) return true;
   // Unbekannt im Wörterbuch: gleicher Wortstamm (mindestens vier gleiche Anfangsbuchstaben) gilt als andere Form desselben Wortes
   const x = deacc(a), y = deacc(b); let k = 0; while (k < x.length && x[k] === y[k]) k++;
   return k >= 4 || (k >= 3 && Math.min(x.length, y.length) <= 4);
@@ -42,9 +45,11 @@ function lev(a, b){
   }
   return prev[n];
 }
-// Welche Art Fehler? Vergleich mit der ähnlichsten erlaubten Lösung
-function errKind(input, answers, lang, tested){ const m = mistake(input, answers, lang, tested); return m && m.kind; }
-function mistake(input, answers, lang, tested){
+// Welche Art Fehler? Vergleich mit der ähnlichsten erlaubten Lösung.
+// tested: der geprüfte Teil (Lücke, Schlüsselwörter). Ein anderes Wort dort gilt sonst immer als Grammatik.
+// lexical (Wortschatz-Themen): Der geprüfte Teil fragt das Wort selbst ab. Dort ist nur dasselbe Wort in anderer Form Grammatik,
+// jedes andere Wort Wortschatz, auch ein Funktionswort („blir“ statt „stannar“). topic: Der Wortschatzfehler liegt im geprüften Teil.
+function mistake(input, answers, lang, tested, lexical){
   const words = x => norm(x, lang).split(' ').filter(Boolean).map(deacc);
   const A = words(input); if (!A.length) return null;
   let best = null, score = -1;
@@ -66,14 +71,15 @@ function mistake(input, answers, lang, tested){
   const test = new Set((tested || []).flatMap(t => norm(t, lang).split(' ').map(deacc)));
   const free = extra.slice(), pairs = [];
   missing.forEach(m => { if (!free.length) return; let bi = 0; free.forEach((x, i) => { if (lev(x, m) < lev(free[bi], m)) bi = i; }); pairs.push([orig(raw, free[bi]), orig(rawB, m)]); free.splice(bi, 1); });
+  const lex = w => lexical && test.has(deacc(w)), form = ([x, m]) => sameWord(lang, x, m) || formDiff(lang, x, m);
   const gram = extra.length !== missing.length
-    ? missing.concat(extra).some(w => isFunc(lang, w) || test.has(w)) || pairs.some(([x, m]) => sameWord(lang, x, m) || formDiff(lang, x, m))
-    : pairs.some(([x, m]) => test.has(deacc(m)) || isFunc(lang, m) || isFunc(lang, x) || sameWord(lang, x, m) || formDiff(lang, x, m));
+    ? missing.concat(extra).some(w => !lex(w) && (isFunc(lang, w) || (!lexical && test.has(w)))) || pairs.some(form)
+    : pairs.some(p => (lex(p[1]) ? false : (!lexical && test.has(deacc(p[1]))) || isFunc(lang, p[1]) || isFunc(lang, p[0])) || form(p));
   if (gram) return { kind:'word', pairs };
   // Wortschatz nur, wenn sonst alles stimmt, auch die Stellung: „att vi samlar alltid“ ist ein Stellungsfehler
   const swap = new Map(pairs.map(([x, m]) => [deacc(x), deacc(m)])), sub = A.map(w => swap.get(w) || w);
   if (sub.length > 1 && sub.join(' ') !== best.join(' ') && key(sub) === key(best)) return { kind:'order', pairs };
-  return { kind:'vocab', pairs };
+  return { kind:'vocab', pairs, topic:pairs.some(([, m]) => lex(m)) };
 }
 function errType(ex){
   if (ex.type === 'free') return 'free';
@@ -86,6 +92,14 @@ function errType(ex){
   if (k === 'time') return ex.data.mode === 'hear' ? 'hear' : 'time';
   return ex.data.gap ? 'gap' : 'free';
 }
+// Thema einer Aufgabe. Wortschatz-Themen (Redewendungen, Falsche Freunde, Lesetext-Lücken) prüfen das Wort selbst, nicht seine Form.
+const exTrap = ex => ex.type === 'gen' ? (ex.data.trap || (GENS[ex.gen] && GENS[ex.gen].trap)) : (itemById(ex.id) || {}).trap;
+function vocabTrap(ex){
+  const id = exTrap(ex), lang = ex.type === 'gen' ? GENS[ex.gen] && GENS[ex.gen].lang : String(ex.id || '').slice(0, 2);
+  return !!(id && TRAPS[lang] && (trapMeta(lang, id) || {}).vocab);
+}
+// Fehlerart einer Antwort. In Wortschatz-Themen: „kjolen“ statt „skjortan“ ist Wortschatz, „skjorta“ statt „skjortan“ eine Form.
+const mistakeFor = (ex, input, lang) => mistake(input, answersFor(ex), lang, testedPart(ex), vocabTrap(ex));
 // Pro Tag und Sprache: Thema (p:), Übungsart (t:) jeweils [Aufgaben, Fehler], Fehlerart (e:) als Anzahl; dazu die Stunde (h)
 function recordAnswer(lang, ex, c, good){
   DB.tlog = DB.tlog || {};
@@ -93,11 +107,16 @@ function recordAnswer(lang, ex, c, good){
   const add = (k, ok) => { const v = L[k] = L[k] || [0, 0]; v[0]++; if (!ok) v[1]++; };
   const type = errType(ex);
   const typed = ['free', 'gap', 'hear', 'trans'].includes(type) || (type === 'time' && ex.data.mode === 'write');
-  const k = !good && typed && c.input && !c.gaveUp ? (c.kind || errKind(c.input, answersFor(ex), lang, testedPart(ex))) : null;
+  let k = null, topicHit = false;
+  if (!good && typed && c.input && !c.gaveUp) {
+    if (c.kind) k = c.kind, topicHit = !!c.vocabTopic;
+    else { const m = mistakeFor(ex, c.input, lang); k = m && m.kind; topicHit = !!(m && m.topic); }
+  }
   if (k) L['e:' + k] = (L['e:' + k] || 0) + 1;
-  // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes, ebenso ein Fehler neben der richtig gesetzten Stellung
-  const trap = ex.type === 'gen' ? (ex.data.trap || (GENS[ex.gen] && GENS[ex.gen].trap)) : (itemById(ex.id) || {}).trap;
-  if (trap) add('p:' + trap, good || k === 'vocab' || k === 'spell' || !!c.posOk);
+  // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes, ebenso ein Fehler neben der richtig gesetzten Stellung.
+  // In Wortschatz-Themen ist das andere Wort im geprüften Teil dagegen genau der Fehler.
+  const trap = exTrap(ex);
+  if (trap) add('p:' + trap, good || (k === 'vocab' && !topicHit) || k === 'spell' || !!c.posOk);
   if (type) add('t:' + type, good);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
 }
@@ -150,7 +169,7 @@ function errorSourcesHtml(lang){
   if (few && !hard.length) return `${head}<div class="chart"><p class="legend" style="margin:0">${gate}</p></div>`;
   const tab = S.errTab || (few ? 's' : 'p');
   const seg = `<div class="minseg errseg" role="radiogroup">${[['p', 'Thema'], ['t', 'Übungsart'], ['e', 'Fehlerart'], ['s', 'Sätze']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
-  let rows = '', note = '';
+  let rows = '', note = '', lead = '';
   if (tab === 's') {
     rows = hard.map(i => { const st = stOf(i.id), tap = !!(i.trap && trapMeta(lang, i.trap)); return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="erow srow"><span class="el"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span>${tap ? `<span class="stp">${esc(trapLabel(lang, i.trap))}</span>` : ''}</span><span class="ev">${st.lapses}×</span></${tap ? 'button' : 'div'}>`; }).join('');
     const pat = hardPattern(lang, hard);
@@ -167,16 +186,19 @@ function errorSourcesHtml(lang){
     rows = list.map(x => `<div class="erow"><span class="el">${esc(ERR_TYPES[x.id] || x.id)}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / x.n * 100)}%"></span></span><span class="ev">${Math.round(x.bad / x.n * 100)} %</span></div>`).join('');
     note = 'Anteil falscher Antworten je Übungsart, ab 5 Aufgaben. Freies Schreiben ist schwerer als Antippen, das ist normal.';
   } else {
+    // Aufteilung der Fehler, keine Fehlerquote: Anzahlen statt Prozent, damit „94 %“ nicht wie „94 % falsch“ aussieht
     const tot = Object.values(s.e).reduce((a, x) => a + x, 0);
     if (tot < 5) rows = '', note = 'Zählt nur getippte Antworten. Noch zu wenige für eine Aufteilung.';
     else {
-      rows = Object.keys(ERR_KINDS).filter(k => s.e[k]).sort((a, b) => s.e[b] - s.e[a]).map(k => `<div class="erow"><span class="el">${ERR_KINDS[k][0]}<span class="esub">${ERR_KINDS[k][1]}</span></span><span class="ebar"><span style="width:${Math.max(4, s.e[k] / tot * 100)}%"></span></span><span class="ev">${Math.round(s.e[k] / tot * 100)} %</span></div>`).join('');
+      lead = `So verteilen sich deine ${tot} getippten Fehler:`;
+      rows = Object.keys(ERR_KINDS).filter(k => s.e[k]).sort((a, b) => s.e[b] - s.e[a]).map(k => `<div class="erow"><span class="el">${ERR_KINDS[k][0]}<span class="esub">${ERR_KINDS[k][1]}</span></span><span class="ebar"><span style="width:${Math.max(4, s.e[k] / tot * 100)}%"></span></span><span class="ev">${s.e[k]}</span></div>`).join('');
       const top = Object.keys(s.e).sort((a, b) => s.e[b] - s.e[a])[0];
       note = top === 'order' && lang === 'sv' ? 'Bei der Wortstellung helfen die Themen <button type="button" class="link inl" data-a="topic" data-t="inversion">Inversion</button> und <button type="button" class="link inl" data-a="topic" data-t="bisats">Nebensatz</button>.'
-        : top === 'spell' ? 'Meist Tippfehler. Das Wissen sitzt, es hapert an der Schreibung.' : 'Zählt nur getippte Antworten.';
+        : top === 'spell' ? 'Meist Tippfehler. Das Wissen sitzt, es hapert an der Schreibung.'
+        : 'Wie oft du je Übung falsch liegst, zeigt <button type="button" class="link inl" data-a="errtab" data-t="t">Übungsart</button>.';
     }
   }
-  return `${head}<div class="chart">${seg}<div class="erows">${rows}</div><p class="legend">${note}</p></div>`;
+  return `${head}<div class="chart">${seg}${lead ? `<p class="legend elead">${lead}</p>` : ''}<div class="erows">${rows}</div><p class="legend">${note}</p></div>`;
 }
 // Wann wird geübt? Aufgaben pro Stunde, letzte 60 Tage
 function hoursHtml(){

@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.55.1
+**Fehlerart zeigt Anzahlen statt Prozent; Wortschatzfehler in Redewendungen, Falschen Freunden und Lesetext-Lücken zählen als Wortschatz.**
+- **Anzeige:** „Form oder Funktionswort 94 %“ ließ sich als „94 % falsch“ lesen, mit demselben roten Balken wie die Fehlerquote unter „Übungsart“. Es war aber der Anteil an allen getippten Fehlern. Jetzt steht oben „So verteilen sich deine 18 getippten Fehler:“, rechts die Anzahl, und unten führt ein Verweis zur Fehlerquote unter „Übungsart“.
+- **Fehler behoben, Fehlerart:** Ein falsches Wort in einer Lücke zählte immer als „Form oder Funktionswort“, auch wenn die Lücke das Wort selbst abfragt. „kjolen“ statt „skjortan“ (kosta skjortan) oder „blir“ statt „stannar“ (bleiben) waren so Formfehler, „Wortschatz“ kam bei Lücken nie vor. Themen mit `vocab:true` (Redewendungen, Falsche Freunde, Lesetext-Lücken) prüfen jetzt das Wort: dieselbe Wortfamilie in anderer Form bleibt Grammatik („skjorta“ statt „skjortan“), ein anderes Wort ist Wortschatz und belastet weiter das Thema. Ein Ausrutscher außerhalb des geprüften Teils belastet das Thema nicht.
+- **Wortfamilie:** Kennt das Wörterbuch nur eines der beiden Wörter, gilt das andere als Form davon, wenn es mit der Grundform beginnt („bilarnas“ zu „bilen“).
+- Bereits gespeicherte Fehler behalten ihre Einordnung und fallen nach 30 Tagen aus der Ansicht. Am Speicherformat ändert sich nichts.
+
 ## 24.55.0
 **Feste Wendungen beim ersten Kontakt mit ihrem wörtlichen Bild als Hinweis; „Weiß ich nicht“ zählt bei Wiederholungen richtig; Kacheln liegen nie schon gelöst da.**
 - **Redewendungen:** „Das ist doch nicht das Ende der Welt. → Det är väl inte hela ___.“ kam als erste Begegnung mit der Wendung. Ohne sie zu kennen, war die Lücke nur zu raten, das Deutsche führt nicht zu „världen“. Jetzt zeigt die Lücke beim ersten Kontakt das wörtliche Bild („wörtlich: nicht die ganze Welt“), bei „Fortgeschritten“ hinter „Wörtlich zeigen“ wie die Grundform. So baut man die Wendung selbst aus dem Bild. Beim zweiten Versuch in derselben Runde und ab dem zweiten Kontakt gibt es das Bild nicht mehr, dann ist es Abruf. Wendungen, deren Bild schon im Deutschen steht (zwei Fliegen mit einer Klappe), bleiben ohne Hinweis. Warum nicht „erst zeigen, dann abfragen“: siehe docs/RESEARCH.md.

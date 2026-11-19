@@ -3,7 +3,7 @@ const test = require('node:test'), assert = require('node:assert/strict');
 const { loadApp } = require('../helpers/load.js');
 const app = loadApp();
 const run = code => { const v = app.run(code); return v && typeof v === 'object' ? JSON.parse(JSON.stringify(v)) : v; };
-const errKind = app.get('errKind');
+const mistake = app.get('mistake'), errKind = (input, answers, lang, tested) => { const m = mistake(input, answers, lang, tested); return m && m.kind; };
 
 // Feste Zufallsfolge, damit der Generator jedes Mal dieselben Aufgaben liefert
 function seeded(seed){ let s = seed; return () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; }; }

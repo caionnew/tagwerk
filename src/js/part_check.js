@@ -204,10 +204,12 @@ function check(){
       if (ex.type === 'free') { const item = itemById(ex.id); const g = item.gapAlts.find(x => toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
     }
     if (res === 'bad' && ex.type !== 'cloze') {
-      const m = mistake(c.input, answersFor(ex), r.lang, testedPart(ex));
+      const m = mistakeFor(ex, c.input, r.lang);
       c.kind = m ? m.kind : null;
       if (c.kind === 'vocab') {
-        c.vocab = m.pairs;
+        c.vocabTopic = !!m.topic;
+        // Einzelnes Lückenwort: Die Lösung steht schon da, der Satz „Die Grammatik passt …“ wäre dort schief
+        if (!(ex.type === 'gen' && ex.data.gap)) c.vocab = m.pairs;
         // In Grammatik-Übungen zählt die Grammatik: ein anderes Inhaltswort bei richtiger Form und Stellung ist „fast richtig“
         if (ex.type === 'gen' && !ex.data.gap && ex.data.kind !== 'time') { c.result = 'near'; c.why = { kind:'vocab' }; }
       }

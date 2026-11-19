@@ -3,7 +3,7 @@
 const test = require('node:test'), assert = require('node:assert/strict');
 const { loadApp } = require('../helpers/load.js');
 const app = loadApp();
-const errKind = app.get('errKind');
+const mistake = app.get('mistake'), errKind = (input, answers, lang, tested) => { const m = mistake(input, answers, lang, tested); return m && m.kind; };
 const cases = [
   // Wortstellung
   ['sv', 'Idag jag jobbar inte', 'Idag jobbar jag inte', 'order'], ['sv', 'Jag vet att han kommer inte', 'Jag vet att han inte kommer', 'order'],
@@ -60,4 +60,54 @@ test('Satzbank: anderes Inhaltswort bleibt falsch, belastet aber nicht das Gramm
   answer(ex, 'Igår har jag träffat en gammal vän.');
   run(`recordAnswer('sv', S.run.queue[0], S.run.cur, false)`);
   assert.deepEqual(run(`DB.tlog[today()].sv['p:' + ${JSON.stringify(item.trap)}]`), [2, 1]);
+});
+
+// Wortschatz-Themen (Redewendungen, Falsche Freunde, Lesetext-Lücken): Die Lücke prüft das Wort, nicht seine Form.
+// Ein anderes Wort ist dort Wortschatz und belastet das Thema; dasselbe Wort in falscher Form bleibt Grammatik.
+const record = (lang, ex, input) => { answer(ex, input); run(`recordAnswer(${JSON.stringify(lang)}, S.run.queue[0], S.run.cur, false)`); return run(`DB.tlog[today()].${lang}`); };
+test('Lesetext-Lücke: anderes Wort ist Wortschatz und zählt gegen das Thema, falsche Form ist Grammatik', () => {
+  const ex = { type:'gen', gen:'textgap_sv', data:{ prompt:'Hon ___ en ny cykel.', answers:['köpte'], label:'Aus „Test“', gap:true, full:'Hon köpte en ny cykel.' } };
+  run(`DB.tlog = {}`);
+  let L = record('sv', ex, 'sålde');
+  assert.equal(L['e:vocab'], 1); assert.equal(L['e:word'], undefined); assert.deepEqual(L['p:lesen'], [1, 1]);
+  assert.equal(run(`S.run.cur.vocab || null`), null, 'kein „Die Grammatik passt“ bei einem einzelnen Lückenwort');
+  L = record('sv', ex, 'köper');
+  assert.equal(L['e:word'], 1); assert.deepEqual(L['p:lesen'], [2, 2]);
+});
+test('Redewendung als Lücke (Satzbank): anderes Wort ist Wortschatz und zählt gegen das Thema', () => {
+  const BANK = app.get('BANK'), item = BANK.sv.find(i => i.trap === 'idiom' && i.gap === 'skjortan');
+  assert.ok(item);
+  run(`DB.tlog = {}; DB.st = {};`);
+  const L = record('sv', { type:'cloze', id:item.id }, 'kjolen');
+  assert.equal(L['e:vocab'], 1); assert.deepEqual(L['p:idiom'], [1, 1]);
+});
+test('Falscher Freund frei übersetzt: falsches Wort im geprüften Teil belastet das Thema, ein Ausrutscher anderswo nicht', () => {
+  const BANK = app.get('BANK'), item = BANK.sv.find(i => i.target === 'Jag stannar hemma idag.');
+  assert.ok(item && item.trap === 'falska');
+  run(`DB.tlog = {}; DB.st = {};`);
+  let L = record('sv', { type:'free', id:item.id }, 'Jag blir hemma idag.');
+  assert.equal(L['e:vocab'], 1); assert.deepEqual(L['p:falska'], [1, 1]);
+  assert.deepEqual(run(`S.run.cur.vocab`), [['blir', 'stannar']]);
+  L = record('sv', { type:'free', id:item.id }, 'Jag stannar hemma ikväll.');
+  assert.equal(L['e:vocab'], 2); assert.deepEqual(L['p:falska'], [2, 1]);
+});
+test('Grammatik-Thema: Lückenwort bleibt Grammatik, auch als Inhaltswort', () => {
+  const BANK = app.get('BANK'), item = BANK.sv.find(i => i.gap && i.trap === 'tempus' && !run(`isFunc('sv', ${JSON.stringify(i.gap.split(' ')[0])})`));
+  assert.ok(item);
+  run(`DB.tlog = {}; DB.st = {};`);
+  const L = record('sv', { type:'cloze', id:item.id }, 'cyklade');
+  assert.equal(L['e:word'], 1); assert.deepEqual(L['p:tempus'], [1, 1]);
+});
+test('Fehlerart zeigt die Aufteilung als Anzahl, nicht als Prozent', () => {
+  run(`DB.tlog = { [today()]: { sv: { 'e:word': 17, 'e:missing': 1, 't:gap': [64, 18] } } }; S.errTab = 'e';`);
+  const html = run(`errorSourcesHtml('sv')`);
+  assert.match(html, /So verteilen sich deine 18 getippten Fehler/);
+  assert.match(html, /<span class="ev">17<\/span>/); assert.match(html, /<span class="ev">1<\/span>/);
+  assert.doesNotMatch(html, /class="ev">[^<]*%/);
+  assert.match(html, /data-a="errtab" data-t="t"/);
+});
+test('Unbekannte Form eines bekannten Wortes ist dieselbe Wortfamilie, kein anderes Wort', () => {
+  assert.equal(run(`lookupWord('sv', 'bilarnas')`), null);
+  assert.equal(mistake('bilarnas', ['bilen'], 'sv', ['bilen'], true).kind, 'word');
+  assert.equal(mistake('bilden', ['bilen'], 'sv', ['bilen'], true).kind, 'vocab');
 });

@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.58.0
+**Neues Thema Spanisch: „werden“ mit ponerse, volverse, hacerse, quedarse und convertirse en (Inhaltspaket 3 von 8).**
+- **Warum:** Deutsches „werden“ hat im Spanischen kein einzelnes Gegenstück, und wer es wörtlich nimmt, greift daneben (se hizo rojo statt se puso rojo). Bisher gab es dazu einen einzigen Satz.
+- **36 Sätze** von A2 bis B2 (8, 14, 14): ponerse für kurze Gefühle und Aussehen (se puso pálida, me pongo nerviosa), volverse für bleibende Veränderungen im Wesen (se ha vuelto desconfiado), hacerse für eigenes Zutun, Beruf und Zeit (se hizo médico, se hace tarde), quedarse für Folgen und Verluste (se quedó ciego, sin trabajo, en blanco, embarazada), convertirse en + Nomen, llegar a ser, se me hace difícil, acabar enfermo. Wo zwei Verben gehen (se vuelve/se hace más prudente), sind beide richtig.
+- **Themenblatt** mit Regel und Beispielen, Kachel unter „Fortschritt“, eigene Runde unter „Thema üben“; der Nachschub von Tatoeba sucht mit eigenen Mustern (se puso, se volvió, llegó a ser …). Einen „typischen Fehler“ gibt es für dieses Thema nicht: Ein eingesetztes falsches Verb wäre oft nicht eindeutig falsch.
+
 ## 24.57.0
 **96 neue spanische Sätze auf B2, länger und mit Wörtern, die der Satzbank fehlten (Inhaltspaket 2 von 8).**
 - **Je 16 neue B2-Sätze** in Konditional & si-Sätze, Subjuntivo oder Indikativ, Indefinido vs. Imperfecto, Perfecto vs. Indefinido, por oder para, ser oder estar. Jeder mit Erklärung am Satz und Alternativen, bei Perfecto/Indefinido und im Wortschatz (plomero, mesero, enojado, refrigerador) auch die in Lateinamerika übliche Fassung. Jedes dieser Themen hat jetzt 32 bis 44 B2-Sätze statt 16 bis 28.

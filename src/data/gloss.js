@@ -2708,7 +2708,42 @@ vårdcentraler|vårdcentral|Gesundheitszentren mit Hausärzten (Plural)
 ökat|öka|zugenommen, gestiegen (Supinum)
 ökningen|ökning|der Anstieg, die Zunahme
 `,
-es: `abusiva|abusivo|missbräuchlich, unfair (Klausel)
+es: `accidente||Unfall
+afecta|afectar|betrifft (Präsens)
+agresivo||aggressiv
+blanco||weiß; quedarse en blanco = ein Blackout haben
+broma||Witz, Scherz
+callado||still, schweigsam; quedarse callado = verstummen
+callada|callado|still, schweigsam
+celoso||eifersüchtig
+cielo||Himmel
+desconfiado||misstrauisch
+destino||Reiseziel; Schicksal
+discusión||Streit; Diskussion
+embarazada||schwanger; quedarse embarazada = schwanger werden
+enseguida||sofort, gleich
+furioso||wütend
+fábrica||Fabrik
+humilde||einfach, bescheiden
+insostenible||unhaltbar
+ladrar||bellen
+madrugar||früh aufstehen
+miró|mirar|sah an (Indefinido)
+movimiento||Bewegung
+oscuro||dunkel
+prudente||vorsichtig, umsichtig
+pálido||blass
+pálida|pálido|blass
+resto||Rest
+separación||Trennung
+sueldos|sueldo|Gehälter (Plural)
+tenso||angespannt
+tensa|tenso|angespannt
+vegetariano||Vegetarier; vegetarisch
+viudo||Witwer; quedarse viudo = Witwer werden
+viuda|viudo|Witwe
+voces|voz|Stimmen (Plural)
+abusiva|abusivo|missbräuchlich, unfair (Klausel)
 aceptó|aceptar|nahm an (Indefinido)
 acogió|acoger|war Gastgeber, nahm auf (Indefinido)
 admitir||zugeben; aufnehmen

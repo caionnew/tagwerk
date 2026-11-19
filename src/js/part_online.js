@@ -28,6 +28,7 @@ const TAT_Q = {
     gustar:['"me gusta"', '"me gustan"', '"me duele"', '"le gusta"', '"me encanta"', '"me interesa"', '"me parece"'],
     condicional:['"si tuviera"', '"me gustaría"', 'deberías', 'podrías', '"me encantaría"', 'sería', 'podríamos'],
     reflexivo:['"se me"', '"me acuerdo"', '"me levanto"', '"nos vamos"', '"se llama"', '"nos vemos"'],
+    cambio:['"se puso"', '"se volvió"', '"se hizo"', '"se quedó"', '"se convirtió en"', '"me pongo"', '"me quedé dormido"'],
     preposiciones:['"pienso en"', '"depende de"', '"desde hace"', '"se casó con"', '"sueño con"', '"tarda en"', '"se olvidó de"'],
     idiom:['"no pasa nada"', '"una mano"', '"la pata"', '"el pelo"', '"pan comido"', '"hecho polvo"'],
     falsos:ffQuery('es')
@@ -58,6 +59,7 @@ const TAT_ADV = {
     gustar:['"me molesta"', '"me importa"', '"me cae"', '"me hace falta"', '"me preocupa"', '"le sorprende"'],
     condicional:['habría', '"si hubiera"', '"yo que tú"', '"sería mejor"', '"de haberlo sabido"', '"me habría gustado"'],
     reflexivo:['"se dio cuenta"', '"me quedé"', '"se puso"', '"nos llevamos"', '"se atrevió"', '"se arrepintió"'],
+    cambio:['"llegó a ser"', '"se ha vuelto"', '"se quedó sin"', '"se ha convertido en"', '"se me hace"', '"se puso tenso"'],
     preposiciones:['"consiste en"', '"se trata de"', '"cuenta con"', '"se fía de"', '"insistió en"', '"se negó a"']
   }
 };

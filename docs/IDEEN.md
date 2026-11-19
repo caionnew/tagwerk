@@ -2,13 +2,13 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 19. November 2026 (nach 24.57.0)
+Stand: 19. November 2026 (nach 24.58.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
-- **Inhalte:** 461 schwedische und 539 spanische Sätze, davon 258 bzw. 310 auf B2, in 16 bzw. 18 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
+- **Inhalte:** 461 schwedische und 575 spanische Sätze, davon 258 bzw. 324 auf B2, in 16 bzw. 19 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
 - **Übungen:** fast alles da. „Fehler finden“ ist seit 24.45 bis 24.48 eine echte Prüfaufgabe: Richtige Sätze sind dabei, Formfehler werden verbessert, es gibt sieben Fehlerarten je Sprache, und welche kommt, richtet sich nach deinen Fehlern.
 - **Prüfqualität bleibt das Wichtigste.** Jede falsche „Falsch“-Wertung kostet Zeit und Vertrauen. Generatoren (24.37) und Satzbank (24.38) sind durchgesehen; falsch bewertete Antworten meldest du direkt.
 - **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen.
@@ -26,8 +26,8 @@ Befund vom 19.11. (`tools/vielfalt.js`, Häufigkeitslisten): Die Satzbank übt G
 |---|---|---|---|
 | 1 | Schwedisch, 96 B2-Sätze: Inversion, Nebensatz, Präteritum/Perfekt, Partikelverben, sin/hans, Passiv | A | 24.56.0 |
 | 2 | Spanisch, 96 B2-Sätze: Konditional, Subjuntivo, Indefinido/Imperfecto, Perfecto, por/para, ser/estar | A | 24.57.0 |
-| 3 | Spanisch, neues Thema „werden“: ponerse, volverse, hacerse, quedarse, convertirse en (36 Sätze, A2 bis B2) | A− | als Nächstes |
-| 4 | Schwedisch, übrige Themen: Zeit & Ort, Zukunft, Modalpartikeln, Redewendungen, falsche Freunde (je 12 bis 16) | A− | |
+| 3 | Spanisch, neues Thema „werden“: ponerse, volverse, hacerse, quedarse, convertirse en (36 Sätze, A2 bis B2) | A− | 24.58.0 |
+| 4 | Schwedisch, übrige Themen: Zeit & Ort, Zukunft, Modalpartikeln, Redewendungen, falsche Freunde (je 12 bis 16) | A− | als Nächstes |
 | 5 | Spanisch, übrige Themen: Objektpronomen, gustar, Reflexiv, Präpositionen, Periphrasen, Redewendungen, falsche Freunde | A− | |
 | 6 | Vermutung mit Futur, „wohl“ (Serán las tres) | B+ | |
 | 7 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | |
@@ -36,7 +36,7 @@ Befund vom 19.11. (`tools/vielfalt.js`, Häufigkeitslisten): Die Satzbank übt G
 So entsteht ein Paket:
 - **Wortschatz steuern:** Zielwörter aus Häufigkeitslisten (wordfreq, OpenSubtitles), Rang 1500 bis 8000, die der Satzbank fehlen, quer durch Arbeit, Gesellschaft, Gesundheit, Medien, Gefühle, Argumentieren. Die Listen dienen nur der Auswahl, in die App kommt nichts davon.
 - **Anregung, keine Übernahme:** Schwedische Sätze aus Common Voice (gemeinfrei, CC0) zeigen natürliche Muster; übernommen wird nichts wörtlich, viele stammen aus alten Romanen. Tatoeba, Korp und Wikipedia sind aus der Arbeitsumgebung nicht erreichbar.
-- **Messen:** `node tools/vielfalt.js` gegen den letzten Stand, erst nach dem Eintrag ins Wörterbuch (sonst zählt jede neue Verbform als neues Wort). Ziel: mindestens 40 % neue Inhaltswörter, Hilfsverben und Kopula nicht mitgezählt (Paket 1: 44 %, Paket 2: 42 %, nachdem 24 Sätze frischere Wörter bekamen; angepeilt war die Hälfte, Grammatiksätze brauchen viele Alltagsverben), im Schnitt mindestens 9 Wörter, kein Satzanfang öfter als dreimal. Ein Test hält die B2-Sätze dauerhaft abwechslungsreich (Anfänge, erste Person).
+- **Messen:** `node tools/vielfalt.js` gegen den letzten Stand, erst nach dem Eintrag ins Wörterbuch (sonst zählt jede neue Verbform als neues Wort). Ziel: mindestens 40 % neue Inhaltswörter, Hilfsverben und Kopula nicht mitgezählt (Paket 1: 44 %, Paket 2: 42 %, nachdem 24 Sätze frischere Wörter bekamen; angepeilt war die Hälfte, Grammatiksätze brauchen viele Alltagsverben), im Schnitt mindestens 9 Wörter, kein Satzanfang öfter als dreimal. Die Ziele gelten für B2-Pakete; ein neues Thema beginnt bei A2 mit kurzen Sätzen und Grundwortschatz (Paket 3: 32 %, 8,3 Wörter). Ein Test hält die B2-Sätze dauerhaft abwechslungsreich (Anfänge, erste Person).
 
 ### Danach
 

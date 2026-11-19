@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.56.0
+**96 neue schwedische Sätze auf B2, länger und mit Wörtern, die der Satzbank fehlten (Inhaltspaket 1 von 8).**
+- **Je 16 neue B2-Sätze** in Inversion & „inte“, Wortstellung im Nebensatz, Präteritum oder Perfekt, Partikelverben, sin/hans und Passiv. Jeder mit Erklärung am Satz, deutschen Fassungen und Alternativen. Damit hat jedes dieser Themen 32 B2-Sätze statt 16; bei „Fortgeschritten“ reicht ein Thema als Schwerpunkt der Woche jetzt rund zwei Wochen statt einer.
+- **Mehr Wortschatz:** Ausgewählt nach Häufigkeitslisten unter den Wörtern, die der Satzbank fehlten, quer durch Arbeit, Gesellschaft, Gesundheit, Medien und Gefühle (vårdcentral, utsläpp, styrelse, reseräkning, sjukskriven, eftertraktad …). Die Satzbank kennt jetzt 797 statt 590 Grundformen; 44 % der Inhaltswörter im Paket sind neu. Die neuen Sätze haben im Schnitt 10 Wörter, die bisherigen B2-Sätze 7,8.
+- **Neue Fälle für Fortgeschrittene:** „inte förrän“ und „hur … än“ vorn, mehrere Satzadverbien im Nebensatz (eftersom bussen ändå inte går), „schon lange“ mit Perfekt statt Präsens, hans im Subjekt eines om-Satzes, var sitt (je ein), s-Passiv unregelmäßiger Verben (stals), „wird geduzt“ als duar man.
+- **„Fehler finden“:** Bei sin/hans aus der Satzbank wird die falsche Form jetzt auch vor Mehrzahl-Nomen richtig gebildet (sina hyror statt sin hyror); das Wörterbuch kennzeichnet dafür Plural.
+- **Werkzeug:** `node tools/vielfalt.js` misst neue Sätze gegenüber dem letzten Stand (neue Inhaltswörter, Länge, Satzanfänge). Ein Test hält die B2-Sätze abwechslungsreich: kein Zwei-Wort-Anfang öfter als achtmal, höchstens ein Fünftel beginnt mit der ersten Person. Ein Plan-Test hing an der Reihenfolge der Satzbank und verteilt seine Fälligen jetzt reihum über die Themen.
+- **Fahrplan** für die Inhalte in docs/IDEEN.md: acht Pakete, als Nächstes 96 spanische B2-Sätze.
+
 ## 24.55.2
 **„Fortschritt“ durchgesehen: Jede Zahl sagt, was sie zählt.**
 - **Fehler behoben, Überblick:** Unter 10 Stunden Lernzeit stand die Zeit in ganzen Stunden, bei 81 Minuten also „1 Stunden“. Jetzt „81 Minuten“, ab 10 Stunden mit Komma, wie bei den Lernminuten; ebenso in „Jahr für Jahr“. Bei einem einzigen Tag heißt es „1 Übungstag“, „1 Tagwerk“, „1 Aufgabe“.

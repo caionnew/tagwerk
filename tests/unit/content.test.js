@@ -93,3 +93,16 @@ test('Redewendungen: jede Lücke beim ersten Kontakt lösbar, Bild im deutschen 
   assert.equal(literalOf(BANK.sv.find(i => i.gap === 'världen')), 'nicht die ganze Welt');
   assert.equal(literalOf(BANK.sv.find(i => i.gap === 'flugor')), '');
 });
+
+// Abwechslung: B2-Sätze sollen nicht immer gleich anfangen und nicht meist vom Ich erzählen.
+// Ganze Inhaltspakete misst tools/vielfalt.js (neue Wörter, Länge, Anfänge gegenüber dem letzten Stand).
+test('B2-Sätze: kein Zwei-Wort-Anfang öfter als achtmal, höchstens ein Fünftel beginnt mit der ersten Person', () => {
+  const B = app.get('BANK');
+  for (const lang of ['sv', 'es']) {
+    const b2 = B[lang].filter(i => i.lvl === 3 && !i.tat && !i.own).map(i => i.target);
+    const op = {}; b2.forEach(s => { const k = s.split(/\s+/).slice(0, 2).join(' ').toLowerCase().replace(/[,.¿¡]/g, ''); op[k] = (op[k] || 0) + 1; });
+    assert.deepEqual(Object.entries(op).filter(([, n]) => n > 8), [], lang);
+    const first = b2.filter(s => (lang === 'sv' ? /^jag\b/i : /^(yo|me)\b/i).test(s)).length;
+    assert.ok(first <= b2.length / 5, `${lang}: ${first} von ${b2.length} beginnen mit der ersten Person`);
+  }
+});

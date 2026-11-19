@@ -98,8 +98,11 @@ test('Auswahl nach Wahrscheinlichkeit: wacklige Themen öfter, sichere seltener,
   // 0 von 20 falsch → 0,6; 10 von 20 falsch → 1,6 (geglättet mit einem Fehler auf fünf Aufgaben vorweg)
   assert.ok(Math.abs(w.serestar - 0.6) < 1e-9 && Math.abs(w.subjuntivo - 1.6) < 1e-9, JSON.stringify(w));
   assert.equal(w.porpara * 2, w.prep);
-  // Arten aus der Satzbank mit weniger als 12 Sätzen kommen anteilig seltener (sin: 11 Sätze)
-  assert.ok(app.get('spotWeight')('sv', 'sin') < 1 && app.get('spotWeight')('es', 'perfecto') === 1);
+  // Arten aus der Satzbank mit weniger als 12 Sätzen kommen anteilig seltener (Gewicht = Sätze / 12, höchstens 1)
+  for (const [lang, k] of [['sv', 'sin'], ['es', 'subjuntivo'], ['es', 'perfecto'], ['es', 'gustar']]) {
+    const n = app.run(`bankSpots('${lang}').filter(f => f.trap === '${k}').length`);
+    assert.equal(app.get('spotWeight')(lang, k), Math.min(1, n / 12), k);
+  }
   assert.ok(Object.values(w).every(x => x > 0));
   // Gedächtnis erst beim Zeigen
   app.get('spotSeen')('es', { cat:'gustar' });

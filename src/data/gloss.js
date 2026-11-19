@@ -2535,6 +2535,178 @@ skida||Ski (en-Wort)
 förhandling||Verhandlung (en-Wort)
 heta||heißen
 känna||kennen; fühlen
+abisko||Abisko (Ort in Lappland, bekannt für Polarlichter)
+allas|alla|aller (Genitiv); till allas förvåning = zu aller Überraschung
+allvarligt|allvarlig|ernst (t-Form)
+anade|ana|ahnte (Präteritum); när man minst anar det = wenn man am wenigsten damit rechnet
+ankomsten|ankomst|die Ankunft
+anställda|anställd|Angestellte (Plural)
+ansvarar|ansvara|ist verantwortlich (Präsens); ansvara för = verantwortlich sein für
+arbeta||arbeiten
+arbetslösheten|arbetslöshet|die Arbeitslosigkeit
+avslöja||aufdecken, enthüllen, verraten
+avslöjade|avslöja|deckte auf, verriet (Präteritum)
+avtalet|avtal|der Vertrag, die Vereinbarung
+behövdes|behövas|war nötig, wurde gebraucht (Präteritum)
+berlin||Berlin
+bestämt|bestämma|entschieden, beschlossen (Supinum); bestämma sig = sich entscheiden
+besviken||enttäuscht
+biljetterna|biljett|die Tickets, die Eintrittskarten
+boka||buchen
+brand||Brand, Feuer
+bristen|brist|der Mangel; brist på = Mangel an
+brukar|bruka|pflegt zu, meistens (Präsens)
+budgeten|budget|das Budget
+båda||beide
+champagne||Champagner
+dags||Zeit (für etwas); det är dags att = es ist Zeit, dass
+deltagare||Teilnehmer, Teilnehmerin
+dialekt||Dialekt
+digitalt|digital|digital (t-Form)
+diskuterades|diskutera|wurde diskutiert (Passiv, Präteritum)
+dragits|dra|gezogen worden (Passiv, Supinum); dra in körkortet = den Führerschein einziehen
+drog|dra|zog (Präteritum); dra ut på tiden = sich in die Länge ziehen
+duar|dua|duzt (Präsens); dua = duzen
+dumt|dum|dumm (t-Form)
+dyrare|dyr|teurer
+dök|dyka|tauchte (Präteritum); dyka upp = auftauchen
+eftertanke||Nachdenken; vid närmare eftertanke = bei genauerem Nachdenken
+eftertraktad||begehrt
+egna|egen|eigene (Plural, bestimmte Form)
+elbilar|elbil|Elektroautos (Plural)
+enkla|enkel|einfache
+exemplar||Exemplar, Exemplare
+femhundra||fünfhundert
+femtiotalet|femtiotal|die Fünfzigerjahre
+fest||Fest, Party
+finländare||Finne, Finnen
+firade|fira|feierte (Präteritum)
+fjol||i fjol = letztes Jahr
+forskaren|forskare|die Forscherin, der Forscher
+forskarna|forskare|die Forscher
+friskolor|friskola|freie Schulen (in freier Trägerschaft) (Plural)
+främst||vor allem, in erster Linie
+fuskat|fuska|betrogen, geschummelt (Supinum)
+födelsedag||Geburtstag
+förbättra||verbessern
+föreläsningen|föreläsning|die Vorlesung, der Vortrag
+föreningen|förening|der Verein
+förenklas|förenkla|vereinfacht werden (Passiv)
+författare||Schriftsteller, Schriftstellerin
+förståeligt|förståelig|verständlich (t-Form)
+förstördes|förstöra|wurde zerstört (Passiv, Präteritum)
+försvarade|försvara|verteidigte (Präteritum)
+försök||Versuch, Versuche
+förut||vorher, früher
+förväntningar|förväntning|Erwartungen (Plural)
+förvåning||Überraschung, Erstaunen
+gjorts|göra|gemacht, getan worden (Passiv, Supinum)
+godkänt|godkänna|genehmigt (Supinum)
+godkänts|godkänna|genehmigt worden (Passiv, Supinum)
+gården|gård|der Hof
+görs|göra|wird getan (Passiv, Präsens)
+haft|ha|gehabt (Supinum)
+hjärtat|hjärta|das Herz
+hundraårsjubileum||hundertjähriges Jubiläum
+husdjur||Haustier, Haustiere
+hyresgästerna|hyresgäst|die Mieter
+hyror|hyra|Mieten (Plural)
+hållas|hålla|abgehalten werden (Passiv, Infinitiv)
+högre|hög|höher
+höjts|höja|erhöht worden (Passiv, Supinum)
+igenom||durch; gå igenom = durchgehen
+inför||vor (Publikum, einem Ereignis)
+insåg|inse|erkannte, sah ein (Präteritum)
+johan||Johan (Name)
+journalisterna|journalist|die Journalisten
+klagade|klaga|beschwerte sich (Präteritum); klaga på = sich beschweren über
+klimatet|klimat|das Klima
+klubben|klubb|der Klub, der Verein
+konferens||Konferenz
+kostnaderna|kostnad|die Kosten
+kritiserats|kritisera|kritisiert worden (Passiv, Supinum)
+kyrkan|kyrka|die Kirche
+kö||Schlange (Warteschlange); stå i kö = anstehen
+laget|lag|die Mannschaft
+lagts|lägga|gelegt worden (Passiv, Supinum); lägga ner = einstellen
+landets|land|des Landes
+ledigt|ledig|frei (t-Form); få ledigt = freibekommen
+ledningen|ledning|die Leitung, die Führung
+lovade|lova|versprach (Präteritum)
+lyckats|lyckas|geschafft, gelungen (Supinum)
+läget|läge|die Lage
+lät|låta|ließ (Präteritum); auch: klang
+låga||niedrige (Plural und bestimmte Form von låg = niedrig)
+lånade|låna|lieh (Präteritum); låna ut = verleihen
+löner|lön|Löhne, Gehälter (Plural)
+lösning||Lösung
+lösningar|lösning|Lösungen (Plural)
+medgav|medge|gab zu (Präteritum)
+medlemmar|medlem|Mitglieder (Plural)
+meningsfullt|meningsfull|sinnvoll (t-Form)
+ministern|minister|die Ministerin, der Minister
+minnet|minne|das Gedächtnis, die Erinnerung
+mobilen|mobil|das Handy
+motorvägen|motorväg|die Autobahn
+märks|märkas|merkt man, ist spürbar (Präsens)
+månaderna|månad|die Monate
+noga||genau, sorgfältig
+nyfiken||neugierig
+operationen|operation|die Operation
+ordentligt|ordentlig|ordentlich, gründlich
+politikerna|politiker|die Politiker
+presenterade|presentera|stellte vor (Präteritum)
+påpekade|påpeka|wies darauf hin (Präteritum)
+påverkar|påverka|beeinflusst (Präsens)
+radion|radio|das Radio
+ramlade|ramla|fiel hin (Präteritum)
+rapporten|rapport|der Bericht
+reformen|reform|die Reform
+renoveringen|renovering|die Renovierung
+reseräkningar|reseräkning|Reisekostenabrechnungen (Plural)
+resultat||Ergebnis, Ergebnisse
+räcker|räcka|reicht (Präsens)
+räknade|räkna|gezählt (Plural); hans dagar är räknade = seine Tage sind gezählt
+sammanfattningen|sammanfattning|die Zusammenfassung
+senaste||letzte; de senaste åren = die letzten Jahre
+sjukskriven||krankgeschrieben
+sjuttiotalet|sjuttiotal|die Siebzigerjahre
+skickar|skicka|schickt (Präsens); skicka in = einreichen
+skickas|skicka|geschickt werden (Passiv); skickas in = eingereicht werden
+skillnad||Unterschied; till skillnad från = anders als
+skolresultaten|skolresultat|die Schulergebnisse
+skriv|skriva|schreib (Imperativ); skriv under = unterschreib
+skönt|skön|schön, angenehm (t-Form)
+slocknade|slockna|ging aus (Licht, Feuer; Präteritum)
+sparar|spara|spart (Präsens)
+spännande||spannend
+stals|stjäla|wurde gestohlen (Passiv, Präteritum)
+styrelsen|styrelse|der Vorstand
+stängt|stänga|geschlossen (Supinum)
+såld|sälja|verkauft
+sålt|sälja|verkauft (Supinum)
+sömnbrist||Schlafmangel
+sönder||kaputt; gå sönder = kaputtgehen
+tidningen|tidning|die Zeitung
+tillbringar|tillbringa|verbringt (Präsens)
+trygg||sicher, geborgen
+tonåringar|tonåring|Teenager, Jugendliche (Plural)
+träffats|träffas|sich getroffen (Supinum)
+underskrivet|underskriven|unterschrieben (t-Form)
+undrade|undra|fragte sich, wollte wissen (Präteritum)
+utredningen|utredning|die Untersuchung
+utrustning||Ausrüstung
+utsläppen|utsläpp|die Emissionen, der Ausstoß
+vaknar|vakna|wacht auf (Präsens)
+varandra||einander
+vars||dessen, deren
+vd||Geschäftsführer, Geschäftsführerin (verkställande direktör)
+visste|veta|wusste (Präteritum)
+vårdcentraler|vårdcentral|Gesundheitszentren mit Hausärzten (Plural)
+ändras|ändra|geändert werden (Passiv)
+ångrat|ångra|bereut (Supinum)
+ökat|öka|zugenommen, gestiegen (Supinum)
+ökningen|ökning|der Anstieg, die Zunahme
 `,
 es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch

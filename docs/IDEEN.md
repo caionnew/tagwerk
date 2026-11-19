@@ -2,13 +2,13 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 19. November 2026 (nach 24.55.2)
+Stand: 19. November 2026 (nach 24.56.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
-- **Inhalte:** 365 schwedische und 443 spanische Sätze, davon 162 bzw. 212 auf B2, in 16 bzw. 18 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
+- **Inhalte:** 461 schwedische und 443 spanische Sätze, davon 258 bzw. 212 auf B2, in 16 bzw. 18 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
 - **Übungen:** fast alles da. „Fehler finden“ ist seit 24.45 bis 24.48 eine echte Prüfaufgabe: Richtige Sätze sind dabei, Formfehler werden verbessert, es gibt sieben Fehlerarten je Sprache, und welche kommt, richtet sich nach deinen Fehlern.
 - **Prüfqualität bleibt das Wichtigste.** Jede falsche „Falsch“-Wertung kostet Zeit und Vertrauen. Generatoren (24.37) und Satzbank (24.38) sind durchgesehen; falsch bewertete Antworten meldest du direkt.
 - **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen.
@@ -16,13 +16,33 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 
 ## Fahrplan
 
-Prüfung, Inhalte auf B2/C1 und Lesetexte sind erledigt, „Fortschritt“ ist durchgesehen (24.55.1, 24.55.2). Bei den Funktionen ist der Stand gerade die beste Lösung: Nach fünf Tagen echter Nutzung zeigen deine Meldungen mehr als neue Bausteine. Darum:
+Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die beim Üben auffallen, Updates bündeln. Die Arbeit geht in die Inhalte.
 
-1. **Nutzen und melden, zwei Wochen lang (A):** nur Fehler beheben, die beim Üben auffallen; weniger, dafür gebündelte Updates.
-2. **Neuer B2/C1-Satzblock (A, ab Anfang Dezember):** Bei „Fortgeschritten“, „Normal“ und täglich beiden Sprachen reichen die schwedischen B2-Sätze (158 übrig am 19.11.) rund vier Wochen, die spanischen (206) rund fünf. Schwerpunkt auf den Themen, in denen du dann auf B2 Fehler machst.
-3. **Wochenbilanz zum Schwerpunkt (B−, frühestens Mitte Dezember):** Bisher fehlt ein „vorher“ (die erste Woche hat nur den 15.11.), und Übungsarten und Niveau verschieben sich. Dann mit Anzahlen statt Prozent und nur gleiche Übungsarten im Vergleich, sonst zeigt sie Scheinfortschritt.
+### Inhalte: Satzpakete (ab 24.56)
 
-Danach nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten.
+Befund vom 19.11. (`tools/vielfalt.js`, Häufigkeitslisten): Die Satzbank übt Grammatik mit schmalem Alltagswortschatz (590 Grundformen im Schwedischen, am häufigsten gå, komma, morgon). B2-Sätze hatten im Schnitt 7,8 Wörter, und je Thema reichten 12 bis 16 B2-Sätze bei „Fortgeschritten“ für gut eine Woche als Schwerpunkt. Darum je Thema neue B2-Sätze, länger und mit Wörtern, die der Satzbank fehlen.
+
+| Paket | Inhalt | Note | Stand |
+|---|---|---|---|
+| 1 | Schwedisch, 96 B2-Sätze: Inversion, Nebensatz, Präteritum/Perfekt, Partikelverben, sin/hans, Passiv | A | 24.56.0 |
+| 2 | Spanisch, rund 96 B2-Sätze: Konditional, Subjuntivo, Indefinido/Imperfecto, Perfecto, por/para, ser/estar | A | als Nächstes |
+| 3 | Spanisch, neues Thema „werden“: ponerse, volverse, hacerse, quedarse, convertirse en (36 Sätze, A2 bis B2) | A− | |
+| 4 | Schwedisch, übrige Themen: Zeit & Ort, Zukunft, Modalpartikeln, Redewendungen, falsche Freunde (je 12 bis 16) | A− | |
+| 5 | Spanisch, übrige Themen: Objektpronomen, gustar, Reflexiv, Präpositionen, Periphrasen, Redewendungen, falsche Freunde | A− | |
+| 6 | Vermutung mit Futur, „wohl“ (Serán las tres) | B+ | |
+| 7 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | |
+| 8 | Relativsätze (lo que, el que, cuyo; vars, vilket) | B+ / B | |
+
+So entsteht ein Paket:
+- **Wortschatz steuern:** Zielwörter aus Häufigkeitslisten (wordfreq, OpenSubtitles), Rang 1500 bis 8000, die der Satzbank fehlen, quer durch Arbeit, Gesellschaft, Gesundheit, Medien, Gefühle, Argumentieren. Die Listen dienen nur der Auswahl, in die App kommt nichts davon.
+- **Anregung, keine Übernahme:** Schwedische Sätze aus Common Voice (gemeinfrei, CC0) zeigen natürliche Muster; übernommen wird nichts wörtlich, viele stammen aus alten Romanen. Tatoeba, Korp und Wikipedia sind aus der Arbeitsumgebung nicht erreichbar.
+- **Messen:** `node tools/vielfalt.js` gegen den letzten Stand. Ziel: mindestens 40 % neue Inhaltswörter (Paket 1: 44 %, angepeilt war die Hälfte; Grammatiksätze brauchen viele Alltagsverben), im Schnitt mindestens 9 Wörter, kein Satzanfang öfter als dreimal. Ein Test hält die B2-Sätze dauerhaft abwechslungsreich (Anfänge, erste Person).
+
+### Danach
+
+1. **Wochenbilanz zum Schwerpunkt (B−, frühestens Mitte Dezember):** Bisher fehlt ein „vorher“ (die erste Woche hat nur den 15.11.), und Übungsarten und Niveau verschieben sich. Dann mit Anzahlen statt Prozent und nur gleiche Übungsarten im Vergleich, sonst zeigt sie Scheinfortschritt.
+
+Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
 ## Bewertet: lohnend
 

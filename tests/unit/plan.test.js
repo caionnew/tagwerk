@@ -76,15 +76,15 @@ test('Backup: das Tempo kommt mit zurück, die Schätzung bleibt gleich; alte Ba
 /* ---------- Reihenfolge und Themenmix ---------- */
 const BANK = app.get('BANK');
 // 16 fällige Sätze eines Themas (Konditional, im Schwedischen Tempus), 10 aus anderen Themen, weitere gefestigt.
-// Die Regeln gelten für beide Sprachen; die Tests laufen darum für beide.
+// Die Regeln gelten für beide Sprachen; die Tests laufen darum für beide. Die übrigen 80 Sätze reihum aus den anderen Themen,
+// damit sich die 10 Fälligen über die Themen verteilen, egal wie viele Sätze ein Thema in der Satzbank hat.
 const BIG = { es:'condicional', sv:'tempus' };
 function mixDB(condDue, lang = 'es'){
   const d = blank({ settings:{ size:'normal', lang, niveau:'fort', langMode:lang } }), big = BIG[lang];
-  let nc = 0, no = 0;
-  BANK[lang].forEach(i => {
-    if (i.trap === big && nc < 16) { nc++; d.st[i.id] = { s:3, d:5, ivl:3, last:ds(3), due:condDue, reps:2, ok:2, bad:0, alts:[] }; }
-    else if (i.trap !== big && no < 80) { no++; d.st[i.id] = { s:10, d:5, ivl:10, last:ds(10), due:no % 8 === 0 ? T : ds(-5), reps:3, ok:3, bad:0, alts:[] }; }
-  });
+  BANK[lang].filter(i => i.trap === big).slice(0, 16).forEach(i => { d.st[i.id] = { s:3, d:5, ivl:3, last:ds(3), due:condDue, reps:2, ok:2, bad:0, alts:[] }; });
+  const by = {}; BANK[lang].filter(i => i.trap !== big).forEach(i => (by[i.trap] = by[i.trap] || []).push(i));
+  const rr = []; for (let r = 0; rr.length < 80 && Object.values(by).some(l => l[r]); r++) Object.values(by).forEach(l => { if (l[r] && rr.length < 80) rr.push(l[r]); });
+  rr.forEach((i, k) => { d.st[i.id] = { s:10, d:5, ivl:10, last:ds(10), due:(k + 1) % 8 === 0 ? T : ds(-5), reps:3, ok:3, bad:0, alts:[] }; });
   return d;
 }
 const setupL = (d, lang) => { app.setDB(d); run(`buildBank(); S.lang = "${lang}"; S.run = null; S.dailyRun = null;`); };

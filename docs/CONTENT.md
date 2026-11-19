@@ -22,6 +22,12 @@ Ich bleibe zu Hause, weil … | Jag stannar hemma eftersom jag inte mår bra. | 
 
 Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TRAPS` in `src/js/part_head.js`.
 
+### Neue Satzpakete: Abwechslung
+
+Neue B2-Sätze kommen in Paketen (Fahrplan in [IDEEN.md](IDEEN.md#inhalte-satzpakete-ab-2456)). Damit nicht wieder dieselben Alltagswörter dominieren: je Paket eine Liste fehlender Wörter aus Häufigkeitslisten (Rang 1500 bis 8000), jeder Satz enthält mindestens eines; Sachgebiete mischen; eher 9 bis 16 Wörter; Subjekte abwechseln (nicht meist „jag“/„yo“). Nach dem Einfügen `node tools/build.js && node tools/vielfalt.js` (misst gegen `origin/main`: neue Inhaltswörter, Länge, Satzanfänge). `tests/unit/content.test.js` prüft dauerhaft: kein Zwei-Wort-Anfang unter den B2-Sätzen öfter als achtmal, höchstens ein Fünftel beginnt mit der ersten Person.
+
+Plural im Wörterbuch kennzeichnen (`hyror|hyra|Mieten (Plural)`): „Fehler finden“ setzt bei hans/hennes/deras im Nebensatz die falsche Form sin/sitt/sina nach Genus und Zahl des folgenden Nomens ein und erkennt die Mehrzahl an diesem Vermerk.
+
 ## Wörterbuch (`src/data/gloss.js`)
 
 Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeugt `buildGloss()` selbst; Konjugationstabellen stehen in `src/js/generators.js`. Fehlt ein Wort, nennt `tests/unit/dictionary.test.js` es beim Namen.

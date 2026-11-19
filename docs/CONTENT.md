@@ -26,6 +26,8 @@ Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TR
 
 Neue B2-Sätze kommen in Paketen (Fahrplan in [IDEEN.md](IDEEN.md#inhalte-satzpakete-ab-2456)). Damit nicht wieder dieselben Alltagswörter dominieren: je Paket eine Liste fehlender Wörter aus Häufigkeitslisten (Rang 1500 bis 8000), jeder Satz enthält mindestens eines; Sachgebiete mischen; eher 9 bis 16 Wörter; Subjekte abwechseln (nicht meist „jag“/„yo“). Nach dem Einfügen `node tools/build.js && node tools/vielfalt.js` (misst gegen `origin/main`: neue Inhaltswörter, Länge, Satzanfänge). `tests/unit/content.test.js` prüft dauerhaft: kein Zwei-Wort-Anfang unter den B2-Sätzen öfter als achtmal, höchstens ein Fünftel beginnt mit der ersten Person.
 
+„Fehler finden“ nimmt Sätze aus der Satzbank auf: im Spanischen jeden Satz im Thema Subjuntivo, dessen Lücke ein Subjuntivo Präsens ist (eingesetzt wird der Indikativ), und Indefinido mit Zeitpunkt im Thema Perfecto (eingesetzt wird das Perfecto). Darum dort nur Auslöser, nach denen der Indikativ sicher falsch ist (para que, ojalá, antes de que, dudo que, no … ningún …); nicht als Lücke: Relativsätze in Fragen (¿Conoces a alguien que …?) oder el hecho de que, die beide Modi zulassen. Indikativ-Gegenbeispiele (aunque mit Tatsache, está claro que) dürfen ins Thema; sie werden nicht zu Fehlern.
+
 Plural im Wörterbuch kennzeichnen (`hyror|hyra|Mieten (Plural)`): „Fehler finden“ setzt bei hans/hennes/deras im Nebensatz die falsche Form sin/sitt/sina nach Genus und Zahl des folgenden Nomens ein und erkennt die Mehrzahl an diesem Vermerk.
 
 ## Wörterbuch (`src/data/gloss.js`)

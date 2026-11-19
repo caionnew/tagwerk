@@ -13,7 +13,9 @@ const targets = (C, lang) => Object.values(C[lang]).flatMap(block => block.split
 const before = contentAt(execSync(`git show ${ref}:src/data/content.js`, { cwd:root, encoding:'utf8' }));
 const app = loadApp(), BANK = app.get('BANK'), tokens = app.get('tokens'), lookupWord = app.get('lookupWord'), isFunc = app.get('isFunc');
 const lemma = (lang, w) => { const e = lookupWord(lang, w); return ((e && e.l) || w).toLowerCase(); };
-const content = (lang, s) => tokens(s).map(w => w.toLowerCase()).filter(w => /[a-zà-ÿ]/.test(w) && !/^\d+$/.test(w) && !isFunc(lang, w)).map(w => lemma(lang, w));
+// Hilfsverben und Kopula sind Grammatik, kein Wortschatz, auch in Formen, die isFunc nicht kennt (habría, estaríamos, blivit)
+const AUX = { sv:new Set(['ha', 'vara', 'bli']), es:new Set(['haber', 'ser', 'estar']) };
+const content = (lang, s) => tokens(s).map(w => w.toLowerCase()).filter(w => /[a-zà-ÿ]/.test(w) && !/^\d+$/.test(w) && !isFunc(lang, w)).map(w => lemma(lang, w)).filter(l => !AUX[lang].has(l));
 for (const lang of ['sv', 'es']) {
   const old = new Set(targets(before, lang)), added = BANK[lang].filter(i => !i.tat && !i.own && !old.has(i.target)).map(i => i.target);
   if (!added.length) { console.log(`${lang}: keine neuen Sätze`); continue; }

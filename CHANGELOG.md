@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.57.0
+**96 neue spanische Sätze auf B2, länger und mit Wörtern, die der Satzbank fehlten (Inhaltspaket 2 von 8).**
+- **Je 16 neue B2-Sätze** in Konditional & si-Sätze, Subjuntivo oder Indikativ, Indefinido vs. Imperfecto, Perfecto vs. Indefinido, por oder para, ser oder estar. Jeder mit Erklärung am Satz und Alternativen, bei Perfecto/Indefinido und im Wortschatz (plomero, mesero, enojado, refrigerador) auch die in Lateinamerika übliche Fassung. Jedes dieser Themen hat jetzt 32 bis 44 B2-Sätze statt 16 bis 28.
+- **Mehr Wortschatz:** Die spanische Satzbank kennt jetzt 808 statt 613 Grundformen; 42 % der Inhaltswörter im Paket sind neu, im Schnitt hat ein neuer Satz 10,9 Wörter (bisherige B2-Sätze: 7,3). Für die Quote bekamen 24 Sätze aus dem ersten Entwurf frischere Wörter (dimitir, plantilla, sequía, cláusula abusiva, trimestre …).
+- **Neue Fälle:** Konditional für unbestätigte Meldungen (el virus habría llegado), gemischte si-Sätze (si … hubiera tenido, ahora estaríamos), de haberlo sabido, Zukunft aus Sicht der Vergangenheit; Indikativ als Gegenbeispiel (aunque mit Tatsache, está claro que); conocer und lograr mit Bedeutungswechsel im Indefinido; ser/estar mit Bedeutungswechsel (estar rico, ser listo/estar listo, estar malo, ser orgulloso), estar de camarero, estar de baja; por/para in festen Wendungen (por lo visto, para colmo, salir por).
+- **„Fehler finden“:** Neue Sätze erweitern die Aufgaben aus der Satzbank. Zwei Entwürfe hätten Fehler erzeugt, die nicht eindeutig falsch sind (Relativsatz in einer Frage, el hecho de que); sie verlangen den Subjuntivo jetzt sicher (no conozco a ningún …, no significa que). Die Regel steht in docs/CONTENT.md.
+- **Messwerkzeug:** `tools/vielfalt.js` zählt Hilfsverben und Kopula (haber, ser, estar; ha, vara, bli) nicht mehr als Wortschatz.
+
 ## 24.56.0
 **96 neue schwedische Sätze auf B2, länger und mit Wörtern, die der Satzbank fehlten (Inhaltspaket 1 von 8).**
 - **Je 16 neue B2-Sätze** in Inversion & „inte“, Wortstellung im Nebensatz, Präteritum oder Perfekt, Partikelverben, sin/hans und Passiv. Jeder mit Erklärung am Satz, deutschen Fassungen und Alternativen. Damit hat jedes dieser Themen 32 B2-Sätze statt 16; bei „Fortgeschritten“ reicht ein Thema als Schwerpunkt der Woche jetzt rund zwei Wochen statt einer.

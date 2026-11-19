@@ -2708,7 +2708,173 @@ vårdcentraler|vårdcentral|Gesundheitszentren mit Hausärzten (Plural)
 ökat|öka|zugenommen, gestiegen (Supinum)
 ökningen|ökning|der Anstieg, die Zunahme
 `,
-es: `cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
+es: `abusiva|abusivo|missbräuchlich, unfair (Klausel)
+aceptó|aceptar|nahm an (Indefinido)
+acogió|acoger|war Gastgeber, nahm auf (Indefinido)
+admitir||zugeben; aufnehmen
+advertido|advertir|gewarnt, hingewiesen (Partizip)
+agotada|agotado|ausverkauft, vergriffen; erschöpft
+alojamiento||Unterkunft
+análisis||Analyse; Laboruntersuchung
+asistimos|asistir|wir nahmen teil (Indefinido); asistir a = teilnehmen an, besuchen
+avísame|avisar|sag mir Bescheid (Imperativ)
+becaria|becario|Praktikantin, Stipendiatin
+cláusula||Klausel
+contaminación||Verschmutzung, Luftverschmutzung
+despedido|despedir|entlassen (Partizip); despedirse = sich verabschieden
+dimitido|dimitir|zurückgetreten (Partizip)
+discutido|discutir|gestritten; diskutiert (Partizip)
+disponible||verfügbar, lieferbar
+doble||doppelt; el doble = das Doppelte
+documental||Dokumentarfilm
+dueño||Besitzer, Eigentümer
+emigrarían|emigrar|würden auswandern (Konditional)
+enchufe||Steckdose, Stecker
+encuentre|encontrar|(dass) er findet (Subjuntivo)
+etiqueta||Etikett
+fabricante||Hersteller
+firmaremos|firmar|wir werden unterschreiben (Futur)
+gasolineras|gasolinera|Tankstellen
+gerente||Geschäftsführer, Geschäftsführerin
+imprimían|imprimir|druckten (Imperfecto); se imprimían = wurden gedruckt
+internet||Internet
+logré|lograr|ich schaffte (Indefinido)
+negaba|negar|verneinte (Imperfecto); se negaba a = weigerte sich
+pieza||Teil, Ersatzteil; Stück
+plantilla||Belegschaft (Spanien); Vorlage
+portero||Hausmeister, Pförtner; Torwart
+pretendía|pretender|hatte vor, beabsichtigte (Imperfecto)
+promete|prometer|verspricht (Präsens)
+prometió|prometer|versprach (Indefinido)
+reclamaciones|reclamación|Reklamationen, Beschwerden
+reuniones|reunión|Besprechungen, Sitzungen
+riquísimo|rico|sehr lecker; sehr reich
+sequía||Dürre
+socio||Geschäftspartner; Mitglied
+suegro||Schwiegervater
+suelto||locker, lose
+tesis||Abschlussarbeit, Doktorarbeit; These
+transformaron|transformar|verwandelten (Indefinido)
+traslado||Versetzung; Umzug
+trimestre||Quartal
+ganado|ganar|gewonnen (Partizip)
+jubilado|jubilar|in Rente gegangen (Partizip); jubilado = Rentner
+asistido|asistir|teilgenommen (Partizip)
+limita|limitar|begrenzt (Präsens)
+contesta|contestar|antwortet (Präsens)
+acabar||beenden, fertig werden; sigue sin acabar = ist immer noch nicht fertig
+acaso||vielleicht; por si acaso = für alle Fälle
+acompañaros|acompañar|euch begleiten
+afectaría|afectar|würde betreffen, würde treffen (Konditional)
+algún|alguno|irgendein, ein (vor männlichem Nomen)
+alumnos|alumno|Schüler (Plural)
+ambiente||Atmosphäre, Stimmung; Umwelt
+antelación||Vorlauf; con antelación = rechtzeitig, im Voraus
+apagarlo|apagar|es löschen, ausschalten
+aplazado|aplazar|verschoben (Partizip)
+aprobarían|aprobar|würden bestehen; würden genehmigen (Konditional)
+arreglado|arreglar|repariert (Partizip)
+aseguró|asegurar|versicherte (Indefinido)
+autopista||Autobahn
+avisarnos|avisar|uns Bescheid geben, uns benachrichtigen
+calefacción||Heizung
+cambió|cambiar|veränderte sich, änderte (Indefinido)
+cierre|cerrar|schließt (Subjuntivo)
+colmo||Gipfel; para colmo = zu allem Überfluss
+conflictos|conflicto|Konflikte
+consigan|conseguir|(dass) sie schaffen (Subjuntivo)
+consultar||befragen, um Rat fragen
+conteste|contestar|(dass) er antwortet (Subjuntivo)
+dejes|dejar|(dass) du lässt (Subjuntivo)
+derrumbó|derrumbar|stürzte ein (Indefinido); derrumbarse = einstürzen
+detalles|detalle|Details, Einzelheiten
+difícil||schwierig, schwer
+diminuto||winzig
+director||Direktor, Leiter
+directora|director|Direktorin, Leiterin
+documentos|documento|Unterlagen, Dokumente
+durado|durar|gedauert (Partizip)
+enero||Januar
+enfadado||verärgert, wütend (Spanien; Lateinamerika: enojado)
+entró|entrar|kam herein, trat ein (Indefinido)
+escucharan|escuchar|(wenn) sie zuhören würden (Imperfecto de subjuntivo)
+esperábamos|esperar|wir erwarteten, warteten (Imperfecto)
+estará|estar|wird sein (Futur)
+estaría|estar|wäre, würde sein (Konditional)
+estaríamos|estar|wir wären (Konditional)
+explicaba|explicar|erklärte (Imperfecto)
+extraña|extrañar|wundert; me extraña que = es wundert mich, dass
+financiado|financiar|finanziert (Partizip)
+fontanero||Klempner (Lateinamerika: plomero)
+haberlo|haber|es (getan) haben; de haberlo sabido = hätte ich es gewusst
+habéis|haber|ihr habt (Hilfsverb, Präsens)
+hubiéramos|haber|wir hätten (Imperfecto de subjuntivo)
+impuesto||Steuer
+impuestos|impuesto|Steuern
+incendio||Brand, Feuer
+informados|informado|informiert
+ingeniero||Ingenieur
+ingenieros|ingeniero|Ingenieure
+insoportable||unerträglich
+inundaciones|inundación|Überschwemmungen
+investigadores|investigador|Forscher (Plural)
+jubiló|jubilar|ging in Rente (Indefinido); jubilarse = in Rente gehen
+juicio||Prozess, Gerichtsverfahren; Urteilsvermögen
+limite|limitar|(dass) er begrenzt (Subjuntivo)
+maciza|macizo|massiv
+madera||Holz
+madrugada||früher Morgen, Morgengrauen; de madrugada = in den frühen Morgenstunden
+malentendidos|malentendido|Missverständnisse
+mandaron|mandar|schickten (Indefinido)
+martes||Dienstag
+mensajero||Kurier, Bote
+ministro||Minister
+multa||Geldstrafe, Bußgeld
+mundial||weltweit; el Mundial = die Fußballweltmeisterschaft
+nevera||Kühlschrank (Lateinamerika: refrigerador)
+ofrecieran|ofrecer|(wenn) sie anbieten würden (Imperfecto de subjuntivo)
+olvide|olvidar|vergesse (Subjuntivo); antes de que se me olvide = bevor ich es vergesse
+opinión||Meinung
+oscuras||a oscuras = im Dunkeln
+pagamos|pagar|wir zahlen, wir zahlten
+pareja||Partner, Partnerin; Paar
+parábamos|parar|wir hielten an (Imperfecto)
+pasaba|pasar|verbrachte (Imperfecto)
+pediría|pedir|würde bitten (Konditional)
+pillado|pillar|erwischt (Partizip)
+portugués||portugiesisch; Portugiese
+presentarlo|presentar|es vorlegen, vorstellen
+presupuesto||Budget, Haushaltsplan; Kostenvoranschlag
+primavera||Frühling
+probable||wahrscheinlich
+protestado|protestar|protestiert (Partizip)
+puerto||Hafen
+quedarnos|quedar|(dass wir) bleiben; quedarse = bleiben
+quedaron|quedar|blieben, waren dann (Indefinido)
+reclamar||sich beschweren, reklamieren
+resolver||lösen
+resuelva|resolver|(dass) es löst (Subjuntivo)
+retraso||Verspätung
+revisar||prüfen, durchsehen
+reviso|revisar|prüfe (Präsens)
+separado|separar|getrennt (Partizip)
+solicitud||Antrag
+subtítulos|subtítulo|Untertitel
+sudamérica||Südamerika
+taller||Werkstatt
+tardaron|tardar|brauchten (Zeit) (Indefinido); tardar en = brauchen, um
+terminó|terminar|endete (Indefinido)
+tormenta||Gewitter, Unwetter
+tráfico||Verkehr
+unión||Union, Verbindung
+vais|ir|ihr geht (Präsens); vais a = ihr werdet
+virus||Virus
+vistazo||Blick; echar un vistazo = einen Blick werfen
+viviríamos|vivir|wir würden wohnen (Konditional)
+votación||Abstimmung
+échale|echar|wirf ihm/darauf (Imperativ mit le); échale un vistazo = wirf einen Blick darauf
+últimamente||in letzter Zeit
+cántaros|cántaro|Krüge; llover a cántaros = in Strömen regnen
 obstante|obstante|no obstante = dennoch, jedoch
 partido|partido|das Spiel (Sport); auch: die Partei
 precio|precio|der Preis

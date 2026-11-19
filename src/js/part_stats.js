@@ -179,12 +179,14 @@ function errorSourcesHtml(lang){
   else if (tab === 'p') {
     const list = Object.keys(s.p).map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.bad).sort((a, b) => b.bad - a.bad).slice(0, 6);
     const max = Math.max(1, ...list.map(x => x.bad));
+    lead = 'Fehler je Thema, von allen Aufgaben im Thema:';
     rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / max * 100)}%"></span></span><span class="ev">${x.bad}/${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
-    note = 'Fehler von Aufgaben im Thema. Antippen für die Regel.';
+    note = 'Antippen für die Regel.';
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);
+    lead = 'Anteil falscher Antworten je Übungsart:';
     rows = list.map(x => `<div class="erow"><span class="el">${esc(ERR_TYPES[x.id] || x.id)}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / x.n * 100)}%"></span></span><span class="ev">${Math.round(x.bad / x.n * 100)} %</span></div>`).join('');
-    note = 'Anteil falscher Antworten je Übungsart, ab 5 Aufgaben. Freies Schreiben ist schwerer als Antippen, das ist normal.';
+    note = 'Ab 5 Aufgaben. Freies Schreiben ist schwerer als Antippen, das ist normal.';
   } else {
     // Aufteilung der Fehler, keine Fehlerquote: Anzahlen statt Prozent, damit „94 %“ nicht wie „94 % falsch“ aussieht
     const tot = Object.values(s.e).reduce((a, x) => a + x, 0);

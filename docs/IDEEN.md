@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 18. November 2026 (nach 24.50.0)
+Stand: 19. November 2026 (nach 24.55.2)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -16,11 +16,11 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 
 ## Fahrplan
 
-Prüfung, Inhalte auf B2/C1 und Lesetexte sind erledigt. Als Nächstes drei kleine Bausteine, die den Kreis schließen:
+Prüfung, Inhalte auf B2/C1 und Lesetexte sind erledigt, „Fortschritt“ ist durchgesehen (24.55.1, 24.55.2). Bei den Funktionen ist der Stand gerade die beste Lösung: Nach fünf Tagen echter Nutzung zeigen deine Meldungen mehr als neue Bausteine. Darum:
 
-1. **Wochenbilanz zum Schwerpunkt (B):** wenig Aufwand, die Daten liegen in den Fehlerquellen.
-2. **Hörunterscheidung, spanische Betonung (B+):** término, termino, terminó.
-3. **Korrekturen aus dem Schreiben ins Tagwerk (B+):** greift, sobald du regelmäßig schreibst.
+1. **Nutzen und melden, zwei Wochen lang (A):** nur Fehler beheben, die beim Üben auffallen; weniger, dafür gebündelte Updates.
+2. **Neuer B2/C1-Satzblock (A, ab Anfang Dezember):** Bei „Fortgeschritten“, „Normal“ und täglich beiden Sprachen reichen die schwedischen B2-Sätze (158 übrig am 19.11.) rund vier Wochen, die spanischen (206) rund fünf. Schwerpunkt auf den Themen, in denen du dann auf B2 Fehler machst.
+3. **Wochenbilanz zum Schwerpunkt (B−, frühestens Mitte Dezember):** Bisher fehlt ein „vorher“ (die erste Woche hat nur den 15.11.), und Übungsarten und Niveau verschieben sich. Dann mit Anzahlen statt Prozent und nur gleiche Übungsarten im Vergleich, sonst zeigt sie Scheinfortschritt.
 
 Danach nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten.
 
@@ -37,18 +37,18 @@ Danach nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen un
 
 ### Hören und Sprechen
 
-4. **Hörunterscheidung, spanische Betonung (B+), sonst Minimalpaare (B).** término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
+4. **Hörunterscheidung, spanische Betonung (B, vorher B+), sonst Minimalpaare (B).** Nett, aber kein Engpass. término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
 5. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
 6. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
 7. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
 
 ### Schreiben
 
-8. **Korrekturen aus dem Schreiben ins Tagwerk (B+, vorher A−).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
+8. **Korrekturen aus dem Schreiben ins Tagwerk (C+ solange du nicht schreibst, sonst B+).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
 
 ### Planung und Rückblick
 
-9. **Wochenbilanz zum Schwerpunkt (B).** „Wortstellung im Nebensatz: vor der Woche 38 % Fehler, in der Woche 15 %.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Wenig Aufwand. Steht in deiner Liste „Offen“.
+9. **Wochenbilanz zum Schwerpunkt (B−, vorher B).** „Wortstellung im Nebensatz: vor der Woche 12 von 40 falsch, in der Woche 5 von 38.“ Schließt den Kreis zum Schwerpunkt der Woche; die Daten liegen in den Fehlerquellen. Herabgestuft: Ohne einige Wochen Vorlauf und ohne gleiche Übungsarten im Vergleich zeigt sie Scheinfortschritt (siehe Fahrplan).
 10. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
 11. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 

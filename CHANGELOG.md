@@ -2,6 +2,16 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.55.2
+**„Fortschritt“ durchgesehen: Jede Zahl sagt, was sie zählt.**
+- **Fehler behoben, Überblick:** Unter 10 Stunden Lernzeit stand die Zeit in ganzen Stunden, bei 81 Minuten also „1 Stunden“. Jetzt „81 Minuten“, ab 10 Stunden mit Komma, wie bei den Lernminuten; ebenso in „Jahr für Jahr“. Bei einem einzigen Tag heißt es „1 Übungstag“, „1 Tagwerk“, „1 Aufgabe“.
+- **Themen:** „Inversion & „inte“ 0/36“ stand neben einem zu zwei Dritteln gefüllten Balken. Die Zahl zählte die gefestigten Sätze, der helle Balken die geübten, erklärt erst unter dem ganzen Raster. Jetzt steht beides da: „24 geübt · 0 gefestigt“, bei unberührten Themen „36 Sätze, neu“.
+- **Fehlerquellen:** Wie schon bei „Fehlerart“ sagen jetzt auch „Thema“ („Fehler je Thema, von allen Aufgaben im Thema“) und „Übungsart“ („Anteil falscher Antworten je Übungsart“) oben, was die Zahl ist, statt es erst darunter zu erklären.
+- **Sprachen:** „Behalten 98 %, heute“ las sich wie eine Quote von heute. Gemeint war, wann zuletzt geübt wurde; das steht jetzt in eigener Zeile: „heute geübt“.
+- **Behalten:** Liegt die Quote deutlich über dem Plan, riet die App zu einem längeren Tagwerk. Ist das Niveau nicht „Fortgeschritten“, verweist sie jetzt zuerst darauf, mit Link zu den Einstellungen: Leichte Sätze erklären eine hohe Quote besser als ein zu kurzes Tagwerk.
+- **Anzeige:** „Lesetext-Lücken 91 %“ bricht nicht mehr zwischen Zahl und Prozentzeichen um.
+- Nachgerechnet und richtig: Serie, Übungstage, Tagwerke je Sprache, Aufgaben, Lernminuten je Tag, Uhrzeit, Dein Weg samt Daten, Behalten, Stand der Sätze, Wiederholungen der nächsten Tage, Fehlerquellen, Tageskarten. „Abrufbar“ ist die Summe der FSRS-Wahrscheinlichkeiten; direkt nach dem Üben zählt auch ein eben falsch beantworteter Satz fast voll, das ist so gewollt und steht in der Erklärung zum Begriff.
+
 ## 24.55.1
 **Fehlerart zeigt Anzahlen statt Prozent; Wortschatzfehler in Redewendungen, Falschen Freunden und Lesetext-Lücken zählen als Wortschatz.**
 - **Anzeige:** „Form oder Funktionswort 94 %“ ließ sich als „94 % falsch“ lesen, mit demselben roten Balken wie die Fehlerquote unter „Übungsart“. Es war aber der Anteil an allen getippten Fehlern. Jetzt steht oben „So verteilen sich deine 18 getippten Fehler:“, rechts die Anzahl, und unten führt ein Verweis zur Fehlerquote unter „Übungsart“.

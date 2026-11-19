@@ -696,6 +696,12 @@ function viewTat(){
 const MONTHS = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 const WDAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
 const pct = x => Math.round(x * 100) + ' %';
+// Lernzeit als Kennzahl, Zahl groß, Einheit darunter: bis 10 Stunden in Minuten („81 Minuten“, nie „1 Stunden“),
+// dann Stunden mit einer Nachkommastelle, ab 100 Stunden ganz
+const bigTime = secs => {
+  const m = Math.round(secs / 60); if (m < 600) return [String(m), m === 1 ? 'Minute' : 'Minuten'];
+  const h = m / 60; return [h < 100 ? h.toFixed(1).replace('.', ',') : Math.round(h).toLocaleString('de-DE'), 'Stunden'];
+};
 function fmtMin(secs){
   const m = Math.round(secs / 60);
   if (secs > 0 && m < 1) return 'unter 1 Min.';
@@ -815,8 +821,7 @@ function minutesHtml(){
   const data = minSpan().map(x => Object.assign(x, { act:Object.fromEntries(MIN_LANGS.map(l => [l, actOf(x.days, l)])) }));
   if (!data.some(x => minTasks(x) > 0) && !Object.keys(DB.log).some(k => MIN_LANGS.some(l => (dayLog(k, l).secs || 0) > 0))) return '';
   const sel = minPicked(data), ch = minChart(data, sel), total = data.reduce((a, x) => a + minSecs(x), 0);
-  // Kennzahlen: Zahl groß, Einheit in der Beschriftung (wie „5 Stunden“ im Überblick). Ab 10 Stunden in Stunden mit Komma.
-  const big = secs => { const m = Math.round(secs / 60); return m >= 600 ? [(m / 60).toFixed(1).replace('.', ','), 'Stunden'] : [String(m), m === 1 ? 'Minute' : 'Minuten']; };
+  const big = bigTime;
   const practiced = data.filter(x => minTasks(x) > 0).length, withTime = data.filter(x => minSecs(x) > 0).length;
   const [tv, tu] = big(total), [av, au] = big(withTime ? total / withTime : 0);
   const kp = [[total ? tv : '–', `${tu} in 14 Tagen`], [`${practiced} von 14`, 'Tagen geübt'], [withTime ? av : '–', `${au} pro Übungstag`]];
@@ -948,18 +953,19 @@ function viewProgress(){
   const ret = rev30 >= 10 ? revOk30 / rev30 : null;
   const tabs = `<div class="ptabs" role="tablist">${[['all', 'Überblick'], ['sv', 'Schwedisch'], ['es', 'Spanisch']].map(([k, l]) => `<button type="button" role="tab" aria-selected="${tab === k}" data-a="ptab" data-t="${k}">${l}</button>`).join('')}</div>`;
   if (tab === 'all') {
+    const tw = activeLangs().reduce((a, l) => a + tagwerkCount(l), 0);
     const summary = ['sv', 'es'].map(l => {
       const n = BANK[l].filter(i => stOf(i.id)).length; if (!n) return '';
       const r30 = sumLog(l, 30, 'rev'), ok30 = sumLog(l, 30, 'revOk');
       const lastDay = Object.keys(DB.log).filter(k => (dayLog(k, l).n || 0) > 0).sort().pop();
       const ago = lastDay ? dayDiff(today(), lastDay) : null;
-      return `<button type="button" class="langsum" data-a="ptab" data-t="${l}"><span class="ls-h">${LANG[l].deName}</span><span class="ls-n">${matureCount(l)}</span><span class="ls-l">gefestigte Sätze</span><span class="ls-s">${r30 >= 10 ? `Behalten ${pct(ok30 / r30)}` : `${n} Sätze geübt`}${ago != null ? `, ${ago === 0 ? 'heute' : ago === 1 ? 'zuletzt gestern' : `zuletzt vor ${ago} Tagen`}` : ''}</span></button>`;
+      return `<button type="button" class="langsum" data-a="ptab" data-t="${l}"><span class="ls-h">${LANG[l].deName}</span><span class="ls-n">${matureCount(l)}</span><span class="ls-l">gefestigte Sätze</span><span class="ls-s">${r30 >= 10 ? `Behalten ${pct(ok30 / r30)}` : `${n} Sätze geübt`}${ago != null ? `<br>${ago === 0 ? 'heute geübt' : ago === 1 ? 'gestern geübt' : `vor ${ago} Tagen geübt`}` : ''}</span></button>`;
     }).filter(Boolean).join('');
     return `<div class="topline"><h1 class="vt">Fortschritt</h1>${gearBtn()}</div>${noticeHtml()}${tabs}
   <section class="today">
     <p class="num">${plural(sd.current, 'Tag', 'Tage')} in Folge</p>
     <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tagwerk am Tag, egal in welcher Sprache; ein Pausetag pro Woche hält die Serie.</p>
-    ${firstDate ? `<div class="kpis k4"><div><b>${tot.days.toLocaleString('de-DE')}</b><span>Übungstage</span></div><div><b>${activeLangs().reduce((a, l) => a + tagwerkCount(l), 0).toLocaleString('de-DE')}</b><span>Tagwerke</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>Aufgaben</span></div><div><b>${tot.secs >= 3600 ? Math.round(tot.secs / 3600) : Math.round(tot.secs / 60)}</b><span>${tot.secs >= 3600 ? 'Stunden' : 'Minuten'}</span></div></div>${activeLangs().length > 1 ? `<p class="kmeta"><span>Tagwerke:</span>${activeLangs().map(l => `<span class="kmi"><i class="sq rl-${l}-sq"></i>${LANG[l].deName} ${tagwerkCount(l).toLocaleString('de-DE')}</span>`).join('')}</p>` : ''}<p class="kmeta">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
+    ${firstDate ? `<div class="kpis k4"><div><b>${tot.days.toLocaleString('de-DE')}</b><span>${tot.days === 1 ? 'Übungstag' : 'Übungstage'}</span></div><div><b>${tw.toLocaleString('de-DE')}</b><span>${tw === 1 ? 'Tagwerk' : 'Tagwerke'}</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>${tot.n === 1 ? 'Aufgabe' : 'Aufgaben'}</span></div><div><b>${bigTime(tot.secs)[0]}</b><span>${bigTime(tot.secs)[1]}</span></div></div>${activeLangs().length > 1 ? `<p class="kmeta"><span>Tagwerke:</span>${activeLangs().map(l => `<span class="kmi"><i class="sq rl-${l}-sq"></i>${LANG[l].deName} ${tagwerkCount(l).toLocaleString('de-DE')}</span>`).join('')}</p>` : ''}<p class="kmeta">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
   </section>
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
@@ -989,7 +995,7 @@ function viewProgress(){
   <div class="chart"><p class="stat">${ret != null ? `<b>${pct(ret)}</b> Von ${rev30} fälligen Sätzen wusstest du ${revOk30} beim ersten Versuch noch.` : rev30 ? `Erst ${plural(rev30, 'Wiederholung', 'Wiederholungen')}. Ab 10 gibt es hier eine Quote.` : 'Noch keine Wiederholungen. Sätze kommen ab dem Tag nach dem ersten Üben wieder.'}</p>
   ${retTrend(lang)}
   ${revM30 >= 10 ? `<p class="legend">Bei gefestigten Sätzen: ${pct(revMOk30 / revM30)} (${revMOk30} von ${revM30}).</p>` : ''}
-  ${ret != null ? `<p class="legend">Die Wiederholungen sind so geplant, dass du etwa 90 % noch weißt. ${ret < 0.8 ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst im Plan.'}</p>` : ''}</div>
+  ${ret != null ? `<p class="legend">Die Wiederholungen sind so geplant, dass du etwa 90 % noch weißt. ${ret < 0.8 ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 ? ((DB.settings.niveau || 'mittel') === 'fort' ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst deutlich darüber. Wenn dir die Sätze leicht fallen: Das Niveau <button type="button" class="link inl" data-a="settings">„Fortgeschritten“</button> bringt längere und schwerere.') : 'Du liegst im Plan.'}</p>` : ''}</div>
   <h2 class="grp">Stand der Sätze</h2>
   <div class="chart"><div class="stack" aria-hidden="true">${['anchored', 'mature', 'young', 'neu'].map(k => dist[k] ? `<span class="s-${k}" style="flex:${dist[k]}"></span>` : '').join('')}</div>
   <p class="legend distline"><span><span class="sq s-anchored"></span>${dist.anchored} <button type="button" class="term" data-a="term" data-k="verankert">verankert</button></span><span><span class="sq s-mature"></span>${dist.mature} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button></span><span><span class="sq s-young"></span>${dist.young} im Aufbau</span><span><span class="sq s-neu"></span>${dist.neu} neu</span></p></div>
@@ -1000,7 +1006,7 @@ function viewProgress(){
   ${topicGridHtml(lang)}
   ${writingTrendHtml(lang)}
   ${(() => { const gl = (DB.genus && DB.genus[lang]) || {}, traps = Object.keys(gl).filter(w => gl[w].last === 0);
-    const gens = genIds(lang).map(g => { const rc = (DB.gen[g] && DB.gen[g].recent) || []; return rc.length >= 10 ? `${GENS[g].short || GENS[g].label} ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)} %` : ''; }).filter(Boolean);
+    const gens = genIds(lang).map(g => { const rc = (DB.gen[g] && DB.gen[g].recent) || []; return rc.length >= 10 ? `${GENS[g].short || GENS[g].label} ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)} %` : ''; }).filter(Boolean);
     return gens.length || traps.length ? `<p class="legend" style="margin:6px 4px 0">${gens.length ? `Erzeugte Aufgaben, zuletzt richtig: ${esc(gens.join(', '))}.` : ''}${traps.length ? ` Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button>` : ''}</p>` : ''; })()}
   ${collected.length ? `<h2 class="grp">Gesammelte Sätze (${collected.length})</h2><div class="rows">${collected.slice().reverse().slice(0, S.colAll ? 9999 : 5).map(o => `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(o.target)}</span><span class="rd">${esc(o.de)}</span></span><button type="button" class="link${S.armed === 'del:' + o.id ? ' armed' : ''}" data-a="coldel" data-id="${o.id}">${S.armed === 'del:' + o.id ? 'Wirklich entfernen?' : 'Entfernen'}</button>${S.armed === 'del:' + o.id ? '<span class="armnote">Der Lernstand geht verloren.</span>' : ''}</div>`).join('')}</div>${collected.length > 5 ? `<div class="btnrow"><button type="button" class="ghost" data-a="colall">${S.colAll ? 'Weniger anzeigen' : `Alle ${collected.length} anzeigen`}</button></div>` : ''}` : ''}
 

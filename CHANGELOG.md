@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.59.0
+**Paket 4: 68 neue schwedische Sätze für Zeit & Ort, Zukunft & Modalverben, Modalpartikeln, falsche Freunde und Redewendungen.**
+- Je 16 Sätze für Zeit & Ort und Zukunft, je 12 für die übrigen drei Themen, fast alle B2. Jeder Satz hat eine Erklärung, jedes Wort steht im Wörterbuch.
+- Neu geübt werden unter anderem i vintras, i somras, inom, från och med, vid sjutiden, var tjugonde minut, lär (soll), fick (musste), måste ha + Supinum, slippa sowie die Partikeln ändå und minsann.
+- Zwölf neue Redewendungen, darunter glida in på en räkmacka, ana ugglor i mossen, gå över ån efter vatten und ha is i magen, jede mit der wörtlichen Bedeutung.
+- Zwölf neue falsche Freunde, etwa Tal/tal, Flug/fluga, Laden/lada, Kiste/kista, Rente/ränta, Tablett/tablett.
+- Abwechslung gemessen mit `tools/vielfalt.js`: 43 % neue Inhaltswörter, im Schnitt 10,6 Wörter je Satz.
+- Themenblatt Modalpartikeln als Übersicht: ein Satz Einleitung, zehn Zeilen mit Partikel, Bedeutung und Beispiel. Ein Test prüft, dass jede Partikel, die mindestens zweimal geübt wird, dort eine Zeile hat.
+
 ## 24.58.2
 **Themenblatt Verbalperiphrasen als Übersicht.**
 - Vorher vier fette Zeilen und eine Regel über sieben Zeilen. Jetzt ein Satz Einleitung und neun Zeilen mit Form, Bedeutung und Beispiel (llevar + Zeit, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de, seguir, ir), danach ein Satz, was konjugiert wird.

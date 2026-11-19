@@ -28,6 +28,8 @@ Neue B2-Sätze kommen in Paketen (Fahrplan in [IDEEN.md](IDEEN.md#inhalte-satzpa
 
 „Fehler finden“ nimmt Sätze aus der Satzbank auf: im Spanischen jeden Satz im Thema Subjuntivo, dessen Lücke ein Subjuntivo Präsens ist (eingesetzt wird der Indikativ), und Indefinido mit Zeitpunkt im Thema Perfecto (eingesetzt wird das Perfecto). Darum dort nur Auslöser, nach denen der Indikativ sicher falsch ist (para que, ojalá, antes de que, dudo que, no … ningún …); nicht als Lücke: Relativsätze in Fragen (¿Conoces a alguien que …?) oder el hecho de que, die beide Modi zulassen. Indikativ-Gegenbeispiele (aunque mit Tatsache, está claro que) dürfen ins Thema; sie werden nicht zu Fehlern.
 
+Zwei Fallen aus Paket 4: Eine Lücke aus mehreren Wörtern (ska inte behöva) darf keine Inversion enthalten, sonst steht sie nicht zusammenhängend im Satz; das Subjekt dann nach vorn stellen. Und Formen mit zwei Bedeutungen prüfen, was das Wörterbuch anzeigt (händer erscheint als „Hände“, nicht als „geschieht“); passt es nicht, den Satz umbauen oder einen eigenen Eintrag anlegen. Falsche Freunde nur, wo die ähnliche Form wirklich in die Irre führt (Tal/tal, Laden/lada), nicht bei Wörtern, die dasselbe bedeuten (also/alltså).
+
 Plural im Wörterbuch kennzeichnen (`hyror|hyra|Mieten (Plural)`): „Fehler finden“ setzt bei hans/hennes/deras im Nebensatz die falsche Form sin/sitt/sina nach Genus und Zahl des folgenden Nomens ein und erkennt die Mehrzahl an diesem Vermerk.
 
 ## Wörterbuch (`src/data/gloss.js`)

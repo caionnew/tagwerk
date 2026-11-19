@@ -2707,6 +2707,158 @@ vårdcentraler|vårdcentral|Gesundheitszentren mit Hausärzten (Plural)
 ångrat|ångra|bereut (Supinum)
 ökat|öka|zugenommen, gestiegen (Supinum)
 ökningen|ökning|der Anstieg, die Zunahme
+akta||aufpassen; akta dig för = hüte dich vor
+arter|art|Arten (Plural)
+avgiften|avgift|die Gebühr
+bakom||hinter
+bar|bära|trug (Präteritum); bära in = hereintragen
+besked||Bescheid, Auskunft
+beställt|beställa|bestellt (Supinum)
+biblioteket|bibliotek|die Bibliothek
+bricka||Tablett (Servierbrett)
+bygge||Bau, Bauvorhaben
+bytt|byta|gewechselt (Supinum)
+dans||Tanz
+diskuterat|diskutera|diskutiert (Supinum)
+finstilta|finstilt|das Kleingedruckte (det finstilta)
+fjällen|fjäll|die Berge (das schwedische Fjäll)
+fredagar|fredag|Freitage (Plural); på fredagar = freitags
+frös|frysa|fror (Präteritum); sjön frös = der See fror zu
+färdig||fertig
+förluster|förlust|Niederlagen, Verluste (Plural)
+försäkringsbolaget|försäkringsbolag|die Versicherung (Firma)
+gardinen|gardin|der Vorhang, die Gardine
+glidit|glida|geglitten (Supinum); glida in på en räkmacka = alles ohne Mühe bekommen
+grunderna|grund|die Grundlagen
+gröna|grön|grüne
+guld||Gold
+handduken|handduk|das Handtuch
+hjulet|hjul|das Rad
+hjälper|hjälpa|hilft (Präsens); hjälpa till = mithelfen
+höjs|höja|wird erhöht (Passiv, Präsens)
+hörnet|hörn|die Ecke
+inställt|inställd|abgesagt, fällt aus (t-Form)
+kaffet|kaffe|der Kaffee
+kastade|kasta|warf (Präteritum)
+käppar|käpp|Stöcke (Plural); sätta käppar i hjulet = Steine in den Weg legen
+lappland||Lappland
+leverantör||Lieferant
+livet|liv|das Leben
+lägen|läge|Lagen, Situationen (Plural)
+lärde|lära|lernte (Präteritum); lära sig = lernen
+lådor|låda|Kisten, Schachteln (Plural)
+lördag||Samstag
+magen|mage|der Bauch, der Magen
+marknaden|marknad|der Markt
+midnatt||Mitternacht
+minsann||wirklich, bestimmt (betont)
+mossen|mosse|das Moor
+nattmössan|nattmössa|die Schlafmütze; prata i nattmössan = Unsinn reden
+nyår||Neujahr
+oavbrutet|oavbruten|ununterbrochen
+orkidéer|orkidé|Orchideen (Plural)
+packade|packa|packte (Präteritum)
+parkering||Parken; Parkplatz
+partierna|parti|die Parteien
+patienter|patient|Patienten (Plural)
+presentera||vorstellen, präsentieren
+prognosen|prognos|die Prognose
+pågått|pågå|angedauert, gelaufen (Supinum)
+rad||Reihe; i rad = in Folge
+rocken|rock|der Mantel (rock = Mantel, Jacke)
+rusningstid||Hauptverkehrszeit
+ryggmärgen|ryggmärg|das Rückenmark; det sitter i ryggmärgen = man hat es im Blut
+räkmacka||Krabbenbrot; glida in på en räkmacka = alles ohne Mühe bekommen
+räv||Fuchs; ha en räv bakom örat = es faustdick hinter den Ohren haben
+sjutiden|sjutid|vid sjutiden = gegen sieben
+skogar|skog|Wälder (Plural)
+skåne||Schonen (Landschaft in Südschweden)
+snöat|snöa|geschneit (Supinum)
+svarade|svara|antwortete (Präteritum)
+söndags||i söndags = letzten Sonntag
+taget||i första taget = beim ersten Versuch, so schnell
+taxi||Taxi
+tjockt|tjock|dick (t-Form)
+tjugonde|tjugo|zwanzigste; var tjugonde minut = alle zwanzig Minuten
+torget|torg|der Platz, der Marktplatz
+trädgården|trädgård|der Garten
+tränaren|tränare|der Trainer
+tyg||Stoff (Gewebe)
+ugglor|uggla|Eulen (Plural); ana ugglor i mossen = Verdacht schöpfen
+universitetet|universitet|die Universität
+vintras||i vintras = letzten Winter
+ån|å|der Bach, der Fluss; gå över ån efter vatten = es sich unnötig schwer machen
+öka||steigen, zunehmen
+ön|ö|die Insel
+örat|öra|das Ohr
+ösregna||in Strömen regnen
+abonnemang||Abo, Abonnement (ett-Wort)
+arena||Arena, Stadion
+bestämd||beschlossen, festgelegt
+biljettpriserna|biljettpris|die Fahrpreise, Ticketpreise
+blommor|blomma|Blumen (Plural)
+bokningssystemet|bokningssystem|das Buchungssystem
+borrmaskin||Bohrmaschine
+byn|by|das Dorf
+dal||Tal
+detaljer|detalj|Details, Einzelheiten (Plural)
+dimma||Nebel
+dygnet|dygn|der Tag (24 Stunden); dygnet runt = rund um die Uhr
+finalen|final|das Finale
+forskat|forska|geforscht (Supinum)
+frimärken|frimärke|Briefmarken (Plural)
+förklarat|förklara|erklärt (Supinum); förklara för någon = jemandem erklären
+förlorade|förlora|verlor (Präteritum)
+förrådet|förråd|der Abstellraum, das Lager
+församlingshemmet|församlingshem|das Gemeindehaus
+försenad||verspätet
+gardinerna|gardin|die Vorhänge, die Gardinen
+grannarnas|granne|der Nachbarn (Genitiv Plural)
+grillfesten|grillfest|das Grillfest
+gränsen|gräns|die Grenze
+grönsaker|grönsak|Gemüse (Plural)
+hantera||umgehen mit, handhaben
+hantverkarna|hantverkare|die Handwerker
+havsströmmar|havsström|Meeresströmungen (Plural)
+hyresvärden|hyresvärd|der Vermieter
+järnvägsstationen|järnvägsstation|der Bahnhof
+kanelbullarna|kanelbulle|die Zimtschnecken
+kollektivtrafiken|kollektivtrafik|der Nahverkehr, öffentliche Verkehrsmittel
+konkurs||Konkurs; gå i konkurs = pleitegehen
+kontraktet|kontrakt|der Vertrag
+kurragömma||Verstecken (Spiel)
+köket|kök|die Küche
+kören|kör|der Chor
+körkortet|körkort|der Führerschein
+leveransen|leverans|die Lieferung
+ljusblå||hellblau
+luleå||Luleå (Stadt in Nordschweden)
+medlemsavgiften|medlemsavgift|der Mitgliedsbeitrag
+pendla||pendeln
+reparationen|reparation|die Reparatur
+repetera||proben; wiederholen
+riktig||richtig, echt
+servitrisen|servitris|die Kellnerin
+situationen|situation|die Lage, die Situation
+skatteregler|skatteregel|Steuerregeln (Plural)
+skjuts||Mitfahrt; ha skjuts = mitgenommen werden
+slippa||nicht müssen, verschont bleiben
+sms||SMS
+soffan|soffa|das Sofa
+soporna|sopor|der Müll
+sortera||sortieren; sortera sopor = Müll trennen
+spela||spielen
+surfplattan|surfplatta|das Tablet
+sydda|sy|genäht (Plural und bestimmte Form)
+taket|tak|das Dach; die Decke
+uppkörningen|uppkörning|die Fahrprüfung
+utomlands||im Ausland; ins Ausland
+vandrarhemmet|vandrarhem|die Jugendherberge
+varken||weder; varken … eller = weder … noch
+vattenskadan|vattenskada|der Wasserschaden
+vattna||gießen, bewässern
+ärmar|ärm|Ärmel (Plural)
+plats||Stelle, Ort, Sitzplatz; på plats = eingerichtet, vor Ort
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)

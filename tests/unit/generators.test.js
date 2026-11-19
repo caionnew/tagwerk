@@ -143,7 +143,7 @@ test('Modalpartikeln: eigenes Satzthema, jede Lücke ist die Partikel, Erklärun
   assert.ok(items.length >= 24, String(items.length));
   for (const i of items) {
     assert.ok(i.note && i.gap, i.target);
-    assert.ok(/^(ju|väl|nog|jo|visst|då|nu|bara|nämligen|faktiskt|alltså|egentligen|nu en gång)$/i.test(i.gap), i.gap);
+    assert.ok(/^(ju|väl|nog|jo|visst|då|nu|bara|nämligen|faktiskt|alltså|egentligen|nu en gång|ändå|minsann)$/i.test(i.gap), i.gap);
   }
 });
 test('Redewendungen: Satzthema in beiden Sprachen, Lücke auf dem Schlüsselwort, Erklärung mit wörtlicher Bedeutung oder Entsprechung', () => {

@@ -33,3 +33,9 @@ test('Themen mit Übersicht: Einleitung höchstens ein Satz, jede Zeile vollstä
     tr.table.forEach(r => assert.ok(r.length === 3 && r.every(Boolean), tr.id));
   }
 });
+test('Übersicht Modalpartikeln: jede Partikel, die mindestens zweimal geübt wird, hat eine Zeile', () => {
+  const rows = new Set(run(`trapMeta('sv', 'modal')`).table.map(r => r[0]));
+  const n = {}; run('BANK').sv.filter(i => i.trap === 'modal').forEach(i => { const g = i.gap.toLowerCase(); n[g] = (n[g] || 0) + 1; });
+  const missing = Object.keys(n).filter(g => n[g] >= 2 && !rows.has(g));
+  assert.deepEqual(missing, []);
+});

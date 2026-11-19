@@ -20,7 +20,7 @@ Ich bleibe zu Hause, weil … | Jag stannar hemma eftersom jag inte mår bra. | 
 - **Feste Wendungen**: Weicht das Bild vom Deutschen ab (Ende der Welt → hela världen), steht es in der Erklärung als `(wörtlich: nicht die ganze Welt)`, ohne weitere Klammern darin. Beim ersten Kontakt erscheint es als Hinweis zur Lücke (bei „Fortgeschritten“ auf Tipp), danach nicht mehr; sonst ließe sich die Lücke nur raten. Steht das Bild schon im deutschen Satz (zwei Fliegen → två flugor), braucht es keins. `tests/unit/content.test.js` prüft das für alle Redewendungen über das Wörterbuch: Die Bedeutung des Lückenworts muss im deutschen Satz stehen, sonst braucht die Erklärung „wörtlich:“. Das gilt in jedem Thema, nicht nur bei den Redewendungen (nu en gång = halt, wörtlich: nun einmal).
 - Die Kennung eines Satzes ist ein Hash des Zielsatzes. **Einen Zielsatz zu ändern, setzt seinen Lernstand zurück.** Tippfehler im Deutschen sind unkritisch.
 
-Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TRAPS` in `src/js/part_head.js`.
+Themen (Schlüssel wie `bisats`, `subjuntivo`) und ihre Regeltexte stehen in `TRAPS` in `src/js/part_head.js`. `short` ist die fette Einleitung im Themenblatt und bleibt kurz (etwa ein Satz); wo mehrere Formen nebeneinanderstehen, zeigt `table` sie als kleine Übersicht (Zeilen aus Form, Gebrauch, Beispiel, bisher bei „werden“), `rule` ergänzt danach nur noch, was nicht in die Übersicht passt.
 
 ### Neue Satzpakete: Abwechslung
 

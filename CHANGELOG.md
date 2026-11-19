@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.58.1
+**Themenblatt aufgeräumt: „werden“ als kleine Übersicht, Hauptknopf immer sichtbar, Beispiele mit verschiedenen Lösungen.**
+- **„werden“:** Die fette Einleitung hatte sechs Zeilen, die Regel war eine Aufzählung mit Punkten über sieben Zeilen. Jetzt: ein Satz Einleitung, darunter die fünf Verben als Übersicht (Verb, wann, Beispiel), danach zwei Zeilen zu llegar a ser und „für kurze Gefühle nicht volverse“.
+- **Alle Themenblätter:** „10 Aufgaben üben“ und „Schließen“ bleiben unten stehen, wenn das Blatt länger ist als der Bildschirm; vorher lag der Knopf bei langen Blättern unter dem Rand.
+- **Beispiele:** Die drei Beispiele waren zufällig aus den kürzesten Sätzen gewählt, bei „werden“ zeigten sie oft dreimal quedarse. Jetzt zeigen sie möglichst verschiedene Lösungen: bei „werden“ drei verschiedene Verben (se quedó und me quedé zählen als eines), bei por/para beide, bei ser/estar beide.
+
 ## 24.58.0
 **Neues Thema Spanisch: „werden“ mit ponerse, volverse, hacerse, quedarse und convertirse en (Inhaltspaket 3 von 8).**
 - **Warum:** Deutsches „werden“ hat im Spanischen kein einzelnes Gegenstück, und wer es wörtlich nimmt, greift daneben (se hizo rojo statt se puso rojo). Bisher gab es dazu einen einzigen Satz.

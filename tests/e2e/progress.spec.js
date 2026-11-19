@@ -43,3 +43,13 @@ test('Fehlerquellen, Reiter „Sätze“: hartnäckige Sätze in beiden Sprachen
     await p.close();
   }
 });
+
+test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scrollen sichtbar', async ({ page }) => {
+  await seed(page, richDB('es'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=progress]');
+  await page.click('[data-a=ptab][data-t=es]');
+  await page.click('.tgrid [data-t=cambio]');
+  await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
+  await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
+});

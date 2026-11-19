@@ -8,15 +8,33 @@ function typicalError(lang, trap){
   for (let k = 0; k < 40; k++) { const d = gen(); if (d.trap === trap) return d; }
   return null;
 }
+// Drei kurze Beispiele aus der Satzbank, möglichst mit verschiedener Lösung (Grundform des letzten Lückenworts):
+// bei „werden“ also ponerse, hacerse, quedarse statt dreimal quedarse, bei por/para beide. Ohne Lücke (Wortstellung) zählt nur die Kürze.
+function topicExamples(lang, trap){
+  const items = BANK[lang].filter(i => i.trap === trap);
+  const seen = items.filter(i => stOf(i.id)), pool = (seen.length >= 3 ? seen : items).slice().sort((a, b) => a.target.length - b.target.length);
+  // Schlüssel für „verschiedene Lösung“: Bei einer Auswahl zwischen festen Möglichkeiten (Hinweis „(por/para)“, „(ser/estar)“)
+  // entscheidet das erste Wort der Lücke, sonst die Grundform des letzten Worts, das das Wörterbuch kennt (se ha quedado → quedar).
+  // Reflexive Grundformen zählen wie die einfachen (quedarse = quedar).
+  const lem = w => { const e = lookupWord(lang, w); return e && e.l ? e.l.toLowerCase().replace(/([aei]r)se$/, '$1') : ''; };
+  const key = i => {
+    const forms = [i.gap].concat(i.gapAlts || []).filter(Boolean).map(g => String(g).toLowerCase().split(' '));
+    if (!forms.length) return i.id;
+    if (/^\(\S+\/\S+\)$/.test(i.hint || '')) return lem(forms[0][0]) || forms[0][0];
+    for (const ws of forms) for (const w of ws.slice().reverse()) { const l = lem(w); if (l) return l; }
+    return forms[0][0];
+  };
+  // Zuerst unter den kürzesten zehn, fehlt dort eine andere Lösung, unter den nächsten zwanzig; erst dann dürfen sich Lösungen wiederholen
+  const cand = shuffle(pool.slice(0, 10)).concat(shuffle(pool.slice(10, 30))), out = [], keys = new Set();
+  cand.forEach(i => { if (out.length < 3 && !keys.has(key(i))) { out.push(i); keys.add(key(i)); } });
+  cand.slice(0, 10).forEach(i => { if (out.length < 3 && !out.includes(i)) out.push(i); });
+  return out.map(i => ({ target:i.target, de:i.de }));
+}
 function openTopic(lang, trap){
   const tr = trapMeta(lang, trap); if (!tr) return;
-  const items = BANK[lang].filter(i => i.trap === trap);
   let examples;
   if (tr.kind === 'gen' && tr.gen) examples = Array.from({ length:3 }, () => { const d = GENS[tr.gen].make(); return { target:d.full || d.answers[0], de:d.deLine || (d.gap ? '' : d.prompt) }; });
-  else {
-    const seen = items.filter(i => stOf(i.id)), pool = (seen.length >= 3 ? seen : items).slice().sort((a, b) => a.target.length - b.target.length);
-    examples = shuffle(pool.slice(0, 8)).slice(0, 3).map(i => ({ target:i.target, de:i.de }));
-  }
+  else examples = topicExamples(lang, trap);
   S.pop = { type:'topic', lang, trap, examples, err:typicalError(lang, trap) };
   renderPopup();
 }
@@ -31,6 +49,7 @@ function topicSheetHtml(P){
   return `<div class="popov" data-a="popclose"></div><div class="pop tall" role="dialog" aria-label="${esc(tr.label)}">
     <p class="find-k">Thema</p><p class="pop-h">${esc(tr.label)}</p>
     <p class="popde"><b>${termify(tr.short)}</b></p>
+    ${tr.table ? `<div class="ttab">${tr.table.map(([v, when, ex]) => `<div class="tt-r"><span class="tt-v" lang="${lang}">${esc(v)}</span><span class="tt-d">${esc(when)}<span class="tt-x" lang="${lang}">${esc(ex)}</span></span></div>`).join('')}</div>` : ''}
     ${tr.rule ? `<p class="pop-t">${termify(tr.rule)}</p>` : ''}
     ${P.examples.length ? `<p class="pop-sub">Beispiele</p><ul class="exl">${P.examples.map(x => `<li><span class="wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="exg">${esc(x.de)}</span>` : ''}</li>`).join('')}</ul>` : ''}
     ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}

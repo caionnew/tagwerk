@@ -504,6 +504,14 @@ button.row[disabled]::after{ display:none; }
 .link.inl{ font-size:inherit; padding:0; }
 /* Themenblatt und Listen */
 .pop.tall{ max-height:78vh; overflow-y:auto; }
+/* Hauptknopf bleibt beim Scrollen sichtbar, auch bei langen Themenblättern */
+.pop.tall .popfoot{ position:sticky; bottom:-12px; margin:12px -18px -12px; padding:10px 18px 12px; background:var(--surface); border-top:1px solid var(--line); }
+/* Kleine Übersicht im Themenblatt: Verb links, wann und Beispiel rechts */
+.ttab{ margin:10px 0 2px; border-top:1px solid var(--line); }
+.tt-r{ display:grid; grid-template-columns:7.2em minmax(0, 1fr); gap:10px; padding:7px 0; border-bottom:1px solid var(--line); }
+.tt-v{ font-weight:650; font-size:15.5px; }
+.tt-d{ font-size:14px; line-height:1.4; color:var(--muted); }
+.tt-x{ display:block; font-family:var(--serif); font-size:16px; color:var(--ink); }
 .pop-h{ margin:0 0 6px; font-size:20px; font-weight:700; }
 .pop-t{ margin:6px 0 0; font-size:15px; line-height:1.5; color:var(--ink); }
 .pop-sub{ margin:14px 0 4px; font-size:13px; font-weight:650; color:var(--muted); }

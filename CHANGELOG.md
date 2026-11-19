@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.55.0
+**Feste Wendungen beim ersten Kontakt mit ihrem wörtlichen Bild als Hinweis; „Weiß ich nicht“ zählt bei Wiederholungen richtig; Kacheln liegen nie schon gelöst da.**
+- **Redewendungen:** „Das ist doch nicht das Ende der Welt. → Det är väl inte hela ___.“ kam als erste Begegnung mit der Wendung. Ohne sie zu kennen, war die Lücke nur zu raten, das Deutsche führt nicht zu „världen“. Jetzt zeigt die Lücke beim ersten Kontakt das wörtliche Bild („wörtlich: nicht die ganze Welt“), bei „Fortgeschritten“ hinter „Wörtlich zeigen“ wie die Grundform. So baut man die Wendung selbst aus dem Bild. Beim zweiten Versuch in derselben Runde und ab dem zweiten Kontakt gibt es das Bild nicht mehr, dann ist es Abruf. Wendungen, deren Bild schon im Deutschen steht (zwei Fliegen mit einer Klappe), bleiben ohne Hinweis. Warum nicht „erst zeigen, dann abfragen“: siehe docs/RESEARCH.md.
+- **Inhalte:** Das wörtliche Bild fehlte bei ingen fara (keine Gefahr), ta det lugnt (nimm es ruhig), no pasa nada (es passiert nichts), estar en las nubes (in den Wolken sein), echar una mano (eine Hand werfen), dazu nu en gång (nun einmal) bei den Modalpartikeln. Ein Test prüft jetzt jede Redewendung: Entweder steht die Bedeutung des Lückenworts im deutschen Satz, oder die Erklärung nennt das Bild.
+- **„Er kommt wohl bald.“** nimmt jetzt auch „Han kommer väl snart.“ an, wie schon „Hon har väl glömt det.“ für „Sie hat es wohl vergessen.“ Die Erklärung sagt den Unterschied: väl klingt nach „doch wohl“, man erwartet Zustimmung.
+- **Fehler behoben, „Weiß ich nicht“:** Die App stellte dabei nicht fest, ob der Satz schon bekannt und fällig war. Eine aufgegebene Wiederholung zählte im Tagesprotokoll als neuer Satz statt als nicht gewusste Wiederholung, und sie zählte nicht als Rückfall. Dadurch fehlten solche Sätze bei „Hartnäckige Sätze“, und die Behaltensquote auf „Fortschritt“ war zu gut. Ab jetzt richtig; ältere Tage bleiben, wie sie sind.
+- **Fehler behoben, Kacheln:** Vermieden wurde nur, dass die Kacheln in der Reihenfolge des Zielsatzes liegen. Eine Alternative („jag jobbar inte Idag“ zu „Idag jobbar jag inte.“) oder der Zielsatz mit Ablenkwort dazwischen (Partikelverben, bei drei Wörtern in jedem sechsten Fall) lagen gelegentlich schon gelöst da. Jetzt nie; gelöst Liegendes wird ohne neuen Zufall weitergedreht. Daran scheiterte auch ab und zu ein Browser-Test.
+- **Anzeige:** Bricht ein langer Hinweis um, beginnt er links bündig statt eingerückt.
+- **Tests:** Die Regeln zum Mischen der Themen (24.54.0) gelten für beide Sprachen und werden jetzt auch für Schwedisch geprüft.
+- 10 neue Einheitstests (296), 1 neuer Browser-Test (90).
+
 ## 24.54.0
 **Zeitschätzung nach deinem Tempo, Themen im Tagwerk gemischt statt in Blöcken, Verbformen als ganze Sätze, vorgelesen wird immer der ganze Lösungssatz.**
 - **Zeitschätzung:** „etwa 15 Min.“ stand da, gebraucht waren 5. Die Schätzung nahm feste 20 bis 45 Sekunden je Aufgabe. Jetzt misst die App beim „Weiter“ die Sekunden je erstem Versuch und Übungsart (die letzten 20, ohne Pausen ab zwei Minuten) und schätzt daraus. Solange es noch keine eigenen Werte gibt, gilt das Tempo der letzten 30 Übungstage aus dem Tagesprotokoll, damit die Zahl sofort stimmt. Neues Feld `pace`, ältere Stände und Backups laden unverändert.

@@ -283,6 +283,9 @@ function stage(item){
   if (st && (st.reps || 0) >= 2) return 'free';
   return item.kind === 'order' ? 'tiles' : 'cloze';
 }
+// Wörtliches Bild einer festen Wendung aus der Erklärung („(wörtlich: nicht die ganze Welt)“). Beim ersten Kontakt ist es der
+// Hinweis zur Lücke: Eine Wendung, deren Bild im Deutschen fehlt, lässt sich sonst nur raten (Ende der Welt → hela världen).
+const literalOf = item => { const m = item && item.note && /\(wörtlich: ([^()]+)\)/.exec(item.note); return m ? m[1].trim() : ''; };
 // Sprache des Tages: beim ersten Start des Tages die Sprache, die es nötiger hat (fällige Wiederholungen im Verhältnis
 // zur Tagwerk-Länge, dazu Tage seit dem letzten Üben). Bleibt für den Tag fest; ein Wechsel von Hand gilt bis morgen.
 // Tagwerk je Sprache: DB.doneLang[datum][sprache]. Die Serie zählt weiter je Tag (DB.done), egal in welcher Sprache.
@@ -559,8 +562,13 @@ function prepCur(){
     const toks = tileTokens(item.target, item.trap === 'inversion');
     const extra = distractorFor(item, toks);
     ex.extra = !!extra;
+    // Nie schon gelöst hinlegen: auch keine Reihenfolge, die als Alternative gilt („jag jobbar inte Idag“ zu „Idag jobbar jag inte.“
+    // ist „Jag jobbar inte idag.“). Das Ablenkwort zählt dabei nicht mit, man ließe es einfach liegen.
+    const keys = new Set([item.target].concat(item.alts).map(tileKey).concat((stOf(item.id) && stOf(item.id).tileAlts) || []));
+    const solved = pool => keys.has(pool.filter(x => !x.extra).map(x => x.t.toLowerCase()).join(' '));
     ex.pool = shuffle(toks.map((t, i) => ({ t, i })).concat(extra ? [{ t:extra, i:toks.length, extra:true }] : []));
-    if (ex.pool.map(x => x.i).join() === toks.map((_, i) => i).join() && toks.length > 1) ex.pool.reverse();
+    // Liegt es gelöst da, um eine Stelle weiterdrehen, bis es nicht mehr passt (ohne neuen Zufall, darum immer endlich)
+    for (let k = 1; k < ex.pool.length && solved(ex.pool); k++) ex.pool.push(ex.pool.shift());
     ex.picked = [];
   }
   if (ex.type === 'tiles') ex.picked = [];

@@ -167,7 +167,7 @@ function check(){
     const item = itemById(ex.id);
     const built = ex.picked.map(i => ex.pool.find(p => p.i === i).t.toLowerCase()).join(' ');
     const keys = [item.target].concat(item.alts).map(tileKey).concat((stOf(item.id) && stOf(item.id).tileAlts) || []);
-    c.result = keys.includes(built) ? 'ok' : 'bad'; c.wasSeen = !!DB.st[item.id]; c.wasDue = !!(DB.st[item.id] && DB.st[item.id].due <= today());
+    c.result = keys.includes(built) ? 'ok' : 'bad'; markSeen(c, item.id);
     c.input = ex.picked.map(i => ex.pool.find(p => p.i === i).t).join(' ');
   } else if (ex.type === 'dict') {
     const box = $('#answer'); c.input = box ? box.value : c.input;
@@ -192,7 +192,7 @@ function check(){
     const j = judgeX(c.input, answersFor(ex), r.lang, judgeOpts(ex));
     if (!j) return;
     const res = j.res;
-    c.result = res; c.why = j.why; c.wasSeen = !!(ex.id && DB.st[ex.id]); c.wasDue = !!(ex.id && DB.st[ex.id] && DB.st[ex.id].due <= today());
+    c.result = res; c.why = j.why; markSeen(c, ex.id);
     if (res !== 'ok') {
       // Erzeugte Aufgaben: bei falscher Antwort die Standardlösung zeigen (passend zur Erklärung und zum Vorlesen).
       // Satzbank: die richtige Fassung, die deiner Antwort am nächsten ist, damit die Korrektur klein bleibt.
@@ -251,10 +251,13 @@ function autoSpeak(r, ex){
   const sol = solShown(r.lang, ex, r.cur || {}), item = ex.id ? itemById(ex.id) : null;
   if (item && sol === item.target) playItem(item); else speak(sol, r.lang);
 }
+// Kannte die App den Satz schon, und war er fällig? Entscheidet, ob er als neuer Satz, als Wiederholung und als Rückfall zählt.
+function markSeen(c, id){ const st = id && DB.st[id]; c.wasSeen = !!st; c.wasDue = !!(st && st.due <= today()); }
 function giveUp(){
   const r = S.run, c = r.cur; if (!c || c.state !== 'answer') return;
   const box = $('#answer'); if (box) c.input = box.value;
-  c.result = 'bad'; c.gaveUp = true; c.state = 'done';
+  // Auch „Weiß ich nicht“: Vorher fehlte das hier, ein aufgegebener fälliger Satz zählte als neuer Satz und nicht als Rückfall
+  c.result = 'bad'; c.gaveUp = true; c.state = 'done'; markSeen(c, r.queue[r.idx].id);
   if (!r.queue[r.idx].requeue) r.combo = 0;
   render(); scrollFb();
 }

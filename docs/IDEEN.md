@@ -100,6 +100,8 @@ Derzeit nichts.
 - **Kurze Dialoge zum Mitspielen (C+).** Wertvoll, aber jeder Dialog muss von Hand geschrieben und geprüft werden; Lesetexte bringen pro Aufwand mehr.
 - **Wörter zum Einbauen passend zur Schreibaufgabe (C).** Die App weiß nicht, welches Wort zu welchem Thema passt; das wäre Raten. Stattdessen gibt es seit 24.29.0 fünf Grundformen und „Andere Wörter“.
 - **Zurück auf „Heute“ in Firefox.** Die Geste verlässt dort die App, Firefox zeigt dann je nach Version eine leere Seite. Eine Web-App kann sich nicht selbst schließen, und die Geste auf „Heute“ abzufangen hieße, Nutzer in der App festzuhalten.
+- **Neue Sätze erst zeigen, dann abfragen (C).** Bei Grammatik-Sätzen führen Regel und Deutsch zur Lösung; ein Lesedurchgang vorab verdoppelt die Zeit für neue Sätze, ohne dass mehr hängen bleibt. Für feste Wendungen mit fremdem Bild gibt es seit 24.55 beim ersten Kontakt das wörtliche Bild als Hinweis.
+- **Redewendung beim ersten Kontakt als Auswahl (C+).** Wieder Raten, nur zwischen weniger Möglichkeiten, und je Wendung drei geprüfte Ablenker. Das wörtliche Bild führt zur Lösung, statt sie zur Wahl zu stellen.
 - **„Meine ist auch richtig“ ausbauen (C).** Du meldest Fälle direkt; das bleibt der schnellere Weg zu einer Korrektur, die für alle gilt. Der Knopf bleibt für unterwegs, wie er ist.
 - **Sprichwörter als eigene Übung (C+).** Ein Sprichwort, dazu das deutsche Gegenstück auswählen; je Sprache mindestens 40. Seit 24.43 gibt es Redewendungen, die im Alltag häufiger vorkommen. Mit Land & Leute überschneiden sie sich kaum (nur „Det är lugnt“ und „Ta det lugnt“, das stärkt sich gegenseitig).
 - **Weitere Land-&-Leute-Karten.** Neue Karten, wenn ein guter Gedanke auftaucht, nicht auf Vorrat. Geprüft in 24.49 und 24.50:

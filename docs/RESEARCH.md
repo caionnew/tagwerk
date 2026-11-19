@@ -21,6 +21,10 @@ Im Tagwerk selbst (eigene Festlegung, 24.54.0): kein Thema mit mehr als einem Vi
 - Die Fehlerart wird nach Wahrscheinlichkeit gewählt: mehr Übung, wo Fehler auftreten; gemischt (siehe Interleaving), aber ohne Verbot, damit keine durchschaubare Regel entsteht.
 - Wo die Verbesserung nicht aus dem Finden folgt, wird die richtige Form eingetippt (Produktion statt Wiedererkennen, vgl. Swains Output-Hypothese unten).
 
+## Neue Sätze: Raten nur mit Anhaltspunkt
+
+Ein neuer Satz kommt gleich als Lücke, nicht erst zum Lesen. Raten vor der Lösung kann das Behalten verbessern, aber vor allem, wenn die Vermutung in die Nähe der Lösung führt: Grimaldi & Karpicke (2012, *Memory & Cognition*) fanden den Vorteil beim späteren Abruf für verwandte Wortpaare, nicht für unverwandte; Potts & Shanks (2014, *Journal of Experimental Psychology: General*) fanden ihn auch bei unbekannten Wörtern, gemessen allerdings mit Auswahlaufgaben; eine Nachfolgestudie mit seltenen Wörtern fand ihn nur beim Wiedererkennen, nicht beim Abruf zum Stichwort. Bei Grammatik-Sätzen führen Regel und Deutsch zur Lösung, das Raten ist begründet. Bei einer festen Wendung mit fremdem Bild (Ende der Welt → hela världen) führt nichts dorthin. Darum bekommt sie beim ersten Kontakt ihr wörtliches Bild als Hinweis (eigene Festlegung, 24.55.0): Man baut die Wendung selbst aus dem Bild, statt sie zu raten, und ab dem zweiten Kontakt muss das Bild aus dem Gedächtnis kommen. Verworfen: jeden neuen Satz erst zeigen (verdoppelt die Zeit für Sätze, die sich herleiten lassen), Auswahl beim ersten Kontakt (wieder Raten, nur zwischen weniger Möglichkeiten).
+
 ## Gewohnheit und Serie
 
 Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Automatisierung, Spanne 18 bis 254 Tage; ein einzelner verpasster Tag beeinflusste die Gewohnheitsbildung kaum. Daher die Serienregel mit einem Pausetag pro Woche. Ob verlorene Serien die Motivation senken, ist nicht belegt.

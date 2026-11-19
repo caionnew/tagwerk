@@ -74,3 +74,22 @@ test('jeder Satz der Satzbank hat eine Erklärung, kein deutscher Satz kommt in 
     BANK[l].forEach(i => { assert.ok(!seen.has(i.de), `${l}: „${i.de}“ doppelt (${seen.get(i.de)} / ${i.target})`); seen.set(i.de, i.target); });
   }
 });
+
+// Feste Wendungen (24.55.0): Beim ersten Kontakt muss die Lücke lösbar sein, sonst ist sie Raten. Entweder steht das Bild
+// im deutschen Satz (Fliegen → flugor) oder die Erklärung nennt es mit „(wörtlich: …)“, dann erscheint es als Hinweis.
+test('Redewendungen: jede Lücke beim ersten Kontakt lösbar, Bild im deutschen Satz oder „(wörtlich: …)“ in der Erklärung', () => {
+  const BANK = app.get('BANK'), lookupWord = app.get('lookupWord'), literalOf = app.get('literalOf');
+  for (const lang of ['sv', 'es']) {
+    const idioms = BANK[lang].filter(i => i.trap === 'idiom');
+    assert.ok(idioms.length >= 20, lang);
+    const unsolvable = idioms.filter(i => !literalOf(i)).filter(i => {
+      const g = lookupWord(lang, i.gap);
+      const meanings = g ? g.de.split(';')[0].split(',').map(x => x.replace(/\([^)]*\)/g, '').replace(/^(der|die|das)\s+/i, '').trim().toLowerCase()).filter(Boolean) : [];
+      return !meanings.some(m => i.de.toLowerCase().includes(m));
+    }).map(i => `${i.de} → ${i.gap}`).join(' | ');
+    assert.equal(unsolvable, '', lang);
+  }
+  // Das Bild steht als Ganzes in Klammern, ohne weitere Klammern darin
+  assert.equal(literalOf(BANK.sv.find(i => i.gap === 'världen')), 'nicht die ganze Welt');
+  assert.equal(literalOf(BANK.sv.find(i => i.gap === 'flugor')), '');
+});

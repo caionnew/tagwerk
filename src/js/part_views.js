@@ -240,10 +240,12 @@ function progressBar(r){
   const segs = marks.map((m, i) => `<i class="seg${m ? ' s-' + m : ''}${r.queue[i].requeue ? ' re' : ''}${i === re1 ? ' re1' : ''}${i === r.idx && c && c.enter && m !== 'cur' ? ' just' : ''}"></i>`).join('');
   return `<div class="progress${n > 44 ? ' d2' : n > 30 ? ' d1' : ''}" role="img" aria-label="${aria}">${segs}</div><span class="count" aria-hidden="true">${r.idx + 1}/${n}</span>`;
 }
-// Hinweis als Chip. Bei „Fortgeschritten“ bleibt die Grundform verdeckt, bis man sie antippt; Auswahl-Hinweise (ser oder estar, Optionen) bleiben immer sichtbar.
+// Hinweis als Chip. Bei „Fortgeschritten“ bleiben Grundform und wörtliches Bild verdeckt, bis man sie antippt; Auswahl-Hinweise
+// (ser oder estar, Optionen) bleiben immer sichtbar.
 function tipChip(text, lang, c){
-  const hide = (DB.settings.niveau || 'mittel') === 'fort' && /^Grundform/.test(text) && !c.tip && c.state !== 'done';
-  return hide ? `<button type="button" class="hintw tipbtn" data-a="showtip">Grundform zeigen</button>` : `<span class="hintw" lang="${lang}">${esc(text)}</span>`;
+  const kind = /^Grundform/.test(text) ? 'Grundform' : /^wörtlich/.test(text) ? 'Wörtlich' : '';
+  const hide = (DB.settings.niveau || 'mittel') === 'fort' && kind && !c.tip && c.state !== 'done';
+  return hide ? `<button type="button" class="hintw tipbtn" data-a="showtip">${kind} zeigen</button>` : `<span class="hintw" lang="${lang}">${esc(text)}</span>`;
 }
 // Lücke nach dem Prüfen als Text statt Eingabefeld: richtig grün; fast richtig zeigt die richtige Form (zählt ja als richtig);
 // falsch zeigt deine Antwort durchgestrichen und die Lösung daneben. So steht nie dasselbe Wort doppelt da.
@@ -276,7 +278,9 @@ function viewRun(){
     const field = done ? gapDone(c, item.gap, lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}" aria-label="Lücke">`;
     const h = item.hint.replace(/[()]/g, '').trim();
     const hintTxt = !h ? '' : h.includes('/') ? h.split('/').map(x => x.trim()).join(' oder ') : `Grundform: ${h}`;
-    body = `<p class="kicker">Ergänze die Lücke${hintTxt ? tipChip(hintTxt, lang, c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
+    // Feste Wendung beim ersten Kontakt: das wörtliche Bild als Hinweis, danach nicht mehr (dann ist es Abruf)
+    const lit = !ex.requeue && !stOf(item.id) ? literalOf(item) : '';
+    body = `<p class="kicker">Ergänze die Lücke${hintTxt ? tipChip(hintTxt, lang, c) : ''}${lit ? tipChip(`wörtlich: ${lit}`, 'de', c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
       <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${esc(item.target.slice(0, pos))}${field}${esc(item.target.slice(pos + item.gap.length))}` : field}</p>
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'free') {

@@ -307,7 +307,7 @@ Die Stadt wurde im 13. Jahrhundert von deutschen Kaufleuten gegründet. | Staden
 modal: `
 Das weißt du ja. | Det vet du ju. | ju |  | Du vet ju det. | B1 | ju = ja, doch (das ist bekannt). Nach dem Verb, bei Inversion nach dem Subjekt: Det vet du ju.
 Du kommst doch morgen, oder? | Du kommer väl i morgon? | väl |  | Du kommer väl i morgon, eller?;; Du kommer väl i morgon, eller hur? | B1 | väl in einer Frage = doch, oder? Man erwartet ein Ja: Du kommer väl i morgon?
-Er kommt wohl bald. | Han kommer nog snart. | nog |  | Han kommer antagligen snart.;; Han kommer förmodligen snart. | B1 | nog = wohl, wahrscheinlich: Han kommer nog snart.
+Er kommt wohl bald. | Han kommer nog snart. | nog |  | Han kommer antagligen snart.;; Han kommer förmodligen snart.;; Han kommer väl snart. | B1 | nog = wohl, wahrscheinlich: Han kommer nog snart. Mit väl geht es auch, dann klingt es nach „doch wohl“: Man nimmt es an und erwartet Zustimmung.
 Doch, das stimmt! | Jo, det stämmer! | Jo |  | Jo, det är sant! | B1 | Doch! als Widerspruch auf eine verneinte Aussage oder Frage: jo, nicht ja.
 Ich kann heute nicht, ich habe nämlich keine Zeit. | Jag kan inte idag, jag har nämligen ingen tid. | nämligen |  | Jag kan inte idag, jag har nämligen inte tid.;; Jag kan inte idag, för jag har ingen tid. | B1 | nämligen = nämlich (Begründung), steht nach dem Verb: jag har nämligen ingen tid.
 Komm doch rein! | Kom bara in! | bara |  | Varsågod och kom in! | B1 | bara in Aufforderungen = doch, ruhig, einfach: Kom bara in!
@@ -321,7 +321,7 @@ Sie hat es wohl vergessen. | Hon har nog glömt det. | nog |  | Hon har väl gl�
 Wir können doch nicht einfach gehen! | Vi kan väl inte bara gå! | väl |  | Vi kan ju inte bara gå! | B2 | väl (oder ju) = doch, in einem Einwand: Vi kan väl inte bara gå! bara heißt hier einfach.
 Da du ja sowieso in die Stadt fährst, kannst du mich mitnehmen. | Eftersom du ju ändå ska åka in till stan kan du ta med mig. | ju |  | Eftersom du ju ändå ska in till stan kan du ta med mig.;; Du ska ju ändå åka in till stan, så du kan ta med mig. | B2 | Im Nebensatz steht ju vor dem Verb: eftersom du ju ändå ska åka. ändå heißt hier sowieso.
 Das hättest du mir doch sagen können! | Det kunde du väl ha sagt! | väl |  | Det kunde du ju ha sagt!;; Du kunde väl ha sagt det!;; Det kunde du väl ha berättat! | B2 | väl in einem Vorwurf = doch. Steht das Objekt vorn, kommt väl nach dem Subjekt: Det kunde du väl ha sagt!
-Das ist halt so. | Så är det nu en gång. | nu en gång |  | Det är nu en gång så.;; Så är det bara. | B2 | halt, eben (nicht zu ändern) = nu en gång oder bara: Så är det nu en gång.
+Das ist halt so. | Så är det nu en gång. | nu en gång |  | Det är nu en gång så.;; Så är det bara. | B2 | halt, eben (nicht zu ändern) = nu en gång (wörtlich: nun einmal) oder bara: Så är det nu en gång.
 Doch, ich habe die Rechnung bezahlt! | Jo, jag har visst betalat räkningen! | visst |  | Jo, jag har betalat räkningen! | B2 | Widerspruch: jo am Anfang, verstärkt durch visst nach dem Hilfsverb: jag har visst betalat.
 Er ist eigentlich ganz nett. | Han är egentligen ganska trevlig. | egentligen |  | Egentligen är han ganska trevlig.;; Han är egentligen rätt trevlig.;; Han är faktiskt ganska trevlig. | B2 | egentligen = eigentlich; nach dem Verb oder vorn mit Inversion: Egentligen är han ganska trevlig.
 Komm schon, wir sind spät dran! | Kom nu, vi är sena! | nu |  | Kom igen, vi är sena!;; Kom då, vi är sena!;; Kom nu, vi är försenade! | B2 | Drängen (komm schon) = kom nu, kom igen oder kom då.
@@ -331,8 +331,8 @@ Das war ja klar. | Det var ju klart. | ju |  | Det var ju självklart.;; Det var
 Na, dann viel Glück! | Lycka till då! | då |  | Ja, lycka till då! | B2 | då am Ende = dann, na dann: Lycka till då!
 `,
 idiom: `
-Immer mit der Ruhe, wir schaffen das schon. | Ta det lugnt, vi fixar det. | lugnt |  | Ta det lugnt, vi klarar det.;; Ta det lugnt, vi ska nog fixa det. | B1 | ta det lugnt = immer mit der Ruhe. fixa = hinkriegen (umgangssprachlich).
-Keine Sorge, das macht nichts. | Ingen fara, det gör ingenting. | fara |  | Ingen fara, det gör inget.;; Det är ingen fara, det gör ingenting. | B1 | ingen fara = keine Sorge, kein Problem (fara heißt eigentlich Gefahr).
+Immer mit der Ruhe, wir schaffen das schon. | Ta det lugnt, vi fixar det. | lugnt |  | Ta det lugnt, vi klarar det.;; Ta det lugnt, vi ska nog fixa det. | B1 | ta det lugnt = immer mit der Ruhe (wörtlich: nimm es ruhig). fixa = hinkriegen (umgangssprachlich).
+Keine Sorge, das macht nichts. | Ingen fara, det gör ingenting. | fara |  | Ingen fara, det gör inget.;; Det är ingen fara, det gör ingenting. | B1 | ingen fara = keine Sorge, kein Problem (wörtlich: keine Gefahr).
 Das ist doch nicht das Ende der Welt. | Det är väl inte hela världen. | världen |  | Det är ju inte hela världen.;; Det är inte hela världen. | B1 | det är inte hela världen = das ist nicht so schlimm (wörtlich: nicht die ganze Welt).
 Eine Wohnung in der Innenstadt kostet ein Vermögen. | En lägenhet i innerstaden kostar skjortan. | skjortan |  | En lägenhet i innerstan kostar skjortan.;; En lägenhet i city kostar skjortan.;; En lägenhet i innerstaden kostar en förmögenhet. | B1 | kosta skjortan = ein Vermögen kosten (wörtlich: das Hemd).
 Das ist nicht mein Bier. | Det är inte mitt bord. | bord |  | Det är inte mitt problem. | B1 | det är inte mitt bord = das ist nicht mein Bier, nicht meine Aufgabe (wörtlich: nicht mein Tisch).
@@ -804,13 +804,13 @@ Wir sind kurz davor, das Projekt abzuschließen. | Estamos a punto de terminar e
 Wie lange bist du schon arbeitslos? | ¿Cuánto tiempo llevas en paro? | llevas | (llevar) | ¿Cuánto llevas en paro?;; ¿Cuánto tiempo llevas sin trabajo?;; ¿Cuánto tiempo llevas desempleado?;; ¿Cuánto tiempo hace que estás en paro? | B2 | Wie lange schon: ¿cuánto tiempo llevas …?, auch ohne Gerundium (llevas en paro, llevas sin trabajo).
 `,
 idiom: `
-Keine Sorge, das macht nichts. | No te preocupes, no pasa nada. | pasa |  | Tranquilo, no pasa nada.;; Tranquila, no pasa nada. | B1 | no pasa nada = das macht nichts, kein Problem.
+Keine Sorge, das macht nichts. | No te preocupes, no pasa nada. | pasa |  | Tranquilo, no pasa nada.;; Tranquila, no pasa nada. | B1 | no pasa nada = das macht nichts, kein Problem (wörtlich: es passiert nichts).
 Nach der Arbeit bin ich fix und fertig. | Después del trabajo estoy hecho polvo. | polvo |  | Después del trabajo estoy hecha polvo.;; Después del trabajo estoy agotado.;; Después del trabajo estoy agotada. | B1 | estar hecho polvo = fix und fertig sein (wörtlich: zu Staub gemacht).
 Das Auto hat ein Vermögen gekostet. | El coche costó un ojo de la cara. | ojo |  | El coche me costó un ojo de la cara.;; El carro costó un ojo de la cara.;; El coche costó una fortuna. | B1 | costar un ojo de la cara = ein Vermögen kosten (wörtlich: ein Auge aus dem Gesicht).
 Die Prüfung war ein Kinderspiel. | El examen fue pan comido. | pan |  | El examen fue facilísimo. | B1 | ser pan comido = ein Kinderspiel sein (wörtlich: gegessenes Brot).
 Du nimmst mich auf den Arm! | ¡Me estás tomando el pelo! | pelo |  | ¡Me tomas el pelo! | B1 | tomar el pelo a alguien = jemanden auf den Arm nehmen (wörtlich: an den Haaren ziehen).
-Heute bist du mit den Gedanken ganz woanders. | Hoy estás en las nubes. | nubes |  | Hoy estás en la luna. | B1 | estar en las nubes (oder en la luna) = mit den Gedanken woanders sein.
-Kannst du mir kurz helfen? | ¿Me echas una mano? | mano |  | ¿Me puedes echar una mano?;; ¿Puedes echarme una mano?;; ¿Me ayudas? | B1 | echar una mano = mit anpacken, helfen.
+Heute bist du mit den Gedanken ganz woanders. | Hoy estás en las nubes. | nubes |  | Hoy estás en la luna. | B1 | estar en las nubes (oder en la luna) = mit den Gedanken woanders sein (wörtlich: in den Wolken sein).
+Kannst du mir kurz helfen? | ¿Me echas una mano? | mano |  | ¿Me puedes echar una mano?;; ¿Puedes echarme una mano?;; ¿Me ayudas? | B1 | echar una mano = mit anpacken, helfen (wörtlich: eine Hand werfen).
 Da bin ich ins Fettnäpfchen getreten. | Metí la pata. | pata |  | He metido la pata. | B1 | meter la pata = ins Fettnäpfchen treten, einen Fehler machen (wörtlich: die Pfote hineinstecken).
 Wenn du die Prüfung bestehen willst, musst du dich ranhalten. | Si quieres aprobar el examen, tienes que ponerte las pilas. | pilas |  | Si quieres aprobar, tienes que ponerte las pilas. | B1 | ponerse las pilas = sich ranhalten, Gas geben (wörtlich: die Batterien einlegen).
 Da hast du den Nagel auf den Kopf getroffen. | Has dado en el clavo. | clavo |  | Diste en el clavo. | B1 | dar en el clavo = den Nagel auf den Kopf treffen.

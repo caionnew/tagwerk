@@ -75,23 +75,26 @@ test('Backup: das Tempo kommt mit zurück, die Schätzung bleibt gleich; alte Ba
 
 /* ---------- Reihenfolge und Themenmix ---------- */
 const BANK = app.get('BANK');
-// 16 fällige Sätze zum Konditional, 10 aus anderen Themen, weitere gefestigt
-function mixDB(condDue){
-  const d = blank();
+// 16 fällige Sätze eines Themas (Konditional, im Schwedischen Tempus), 10 aus anderen Themen, weitere gefestigt.
+// Die Regeln gelten für beide Sprachen; die Tests laufen darum für beide.
+const BIG = { es:'condicional', sv:'tempus' };
+function mixDB(condDue, lang = 'es'){
+  const d = blank({ settings:{ size:'normal', lang, niveau:'fort', langMode:lang } }), big = BIG[lang];
   let nc = 0, no = 0;
-  BANK.es.forEach(i => {
-    if (i.trap === 'condicional' && nc < 16) { nc++; d.st[i.id] = { s:3, d:5, ivl:3, last:ds(3), due:condDue, reps:2, ok:2, bad:0, alts:[] }; }
-    else if (i.trap !== 'condicional' && no < 80) { no++; d.st[i.id] = { s:10, d:5, ivl:10, last:ds(10), due:no % 8 === 0 ? T : ds(-5), reps:3, ok:3, bad:0, alts:[] }; }
+  BANK[lang].forEach(i => {
+    if (i.trap === big && nc < 16) { nc++; d.st[i.id] = { s:3, d:5, ivl:3, last:ds(3), due:condDue, reps:2, ok:2, bad:0, alts:[] }; }
+    else if (i.trap !== big && no < 80) { no++; d.st[i.id] = { s:10, d:5, ivl:10, last:ds(10), due:no % 8 === 0 ? T : ds(-5), reps:3, ok:3, bad:0, alts:[] }; }
   });
   return d;
 }
-const plan = () => run(`(() => { const p = dailyPlan('es'); return { due:p.due, fresh:p.fresh, q:p.queue.map(ex => ({ k:taskTopic(ex), rev:!!(ex.id && stOf(ex.id)), id:ex.id || null, gen:ex.gen || null })) }; })()`);
-test('Tagwerk: höchstens 5 Wiederholungen und 2 neue Sätze je Thema, Einstieg mit einer Wiederholung', () => {
-  setup(mixDB(T));
+const setupL = (d, lang) => { app.setDB(d); run(`buildBank(); S.lang = "${lang}"; S.run = null; S.dailyRun = null;`); };
+const plan = (lang = 'es') => run(`(() => { const p = dailyPlan('${lang}'); return { due:p.due, fresh:p.fresh, q:p.queue.map(ex => ({ k:taskTopic(ex), rev:!!(ex.id && stOf(ex.id)), id:ex.id || null, gen:ex.gen || null })) }; })()`);
+for (const lang of ['es', 'sv']) test(`Tagwerk (${lang}): höchstens 5 Wiederholungen und 2 neue Sätze je Thema, Einstieg mit einer Wiederholung`, () => {
+  setupL(mixDB(T, lang), lang);
   for (let k = 0; k < 150; k++) {
-    const p = plan(), n = {}, nNew = {};
+    const p = plan(lang), n = {}, nNew = {};
     p.q.forEach(x => { if (x.rev) n[x.k] = (n[x.k] || 0) + 1; else if (x.id) nNew[x.k] = (nNew[x.k] || 0) + 1; });
-    assert.equal(n.condicional, 5, JSON.stringify(n));
+    assert.equal(n[BIG[lang]], 5, JSON.stringify(n));
     assert.ok(Object.values(n).every(v => v <= 5));
     assert.ok(Object.values(nNew).every(v => v <= 2), 'höchstens zwei neue Sätze je Thema: ' + JSON.stringify(nNew));
     assert.ok(p.q[0].rev, 'zuerst eine Wiederholung');
@@ -112,10 +115,10 @@ test('Reihenfolge: dasselbe Thema direkt danach nur mit halbem Gewicht, aber nie
   assert.deepEqual(order(0.34), [cond[0], other, cond[1]]);
   assert.equal(app.get('REPEAT_DAMP'), 0.5);
 });
-test('Reihenfolge über viele Tagwerke: deutlich weniger direkte Wiederholungen als reiner Zufall, aber nicht keine', () => {
-  setup(mixDB(T));
+for (const lang of ['es', 'sv']) test(`Reihenfolge über viele Tagwerke (${lang}): deutlich weniger direkte Wiederholungen als reiner Zufall, aber nicht keine`, () => {
+  setupL(mixDB(T, lang), lang);
   const res = withRandom(LCG, `(() => { let adj = 0, exp = 0; const N = 400; for (let k = 0; k < N; k++) {
-    const keys = dailyPlan('es').queue.map(taskTopic), c = {};
+    const keys = dailyPlan('${lang}').queue.map(taskTopic), c = {};
     keys.forEach((x, i) => { c[x] = (c[x] || 0) + 1; if (i && x === keys[i - 1]) adj++; });
     exp += Object.values(c).reduce((a, n) => a + n * (n - 1), 0) / keys.length;
   } return { adj:adj / N, exp:exp / N }; })()`);

@@ -122,6 +122,9 @@ label.row{ cursor:pointer; }
 .count.grow{ flex:1; }
 .topic{ font-size:14px; color:var(--muted); margin:6px 0 20px; }
 .kicker{ font-size:15px; color:var(--muted); margin:0 0 6px; }
+/* Mit Hinweis-Chip: Bricht ein langer Hinweis (wörtliches Bild) um, beginnt er bündig links statt um den Abstand eingerückt */
+.kicker:has(> .hintw){ display:flex; flex-wrap:wrap; align-items:baseline; column-gap:8px; row-gap:4px; }
+.kicker:has(> .hintw) > .hintw{ margin-left:0; }
 .hintw{ display:inline-block; font-size:13.5px; color:var(--accent-ink); background:var(--accent-soft); border-radius:6px; padding:0 7px; margin-left:8px; }
 .de{ font-family:var(--serif); font-size:23px; line-height:1.38; margin:0 0 16px; }
 .vocab{ font-size:15px; color:var(--muted); margin:-8px 0 14px; }

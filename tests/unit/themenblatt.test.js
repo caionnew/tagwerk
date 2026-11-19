@@ -27,3 +27,9 @@ test('Übersicht „werden“: fünf Zeilen mit Verb, Gebrauch und Beispiel, das
   tr.table.forEach(r => { assert.equal(r.length, 3); assert.ok(r.every(x => typeof x === 'string' && x.length)); });
   assert.ok(tr.short.length <= 100, 'Einleitung kurz halten: ' + tr.short.length);
 });
+test('Themen mit Übersicht: Einleitung höchstens ein Satz, jede Zeile vollständig', () => {
+  for (const lang of ['sv', 'es']) for (const tr of run(`TRAPS.${lang}`).filter(t => t.table)) {
+    assert.ok(tr.short.length <= 110, `${tr.id}: Einleitung ${tr.short.length} Zeichen`);
+    tr.table.forEach(r => assert.ok(r.length === 3 && r.every(Boolean), tr.id));
+  }
+});

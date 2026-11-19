@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.58.2
+**Themenblatt Verbalperiphrasen als Übersicht.**
+- Vorher vier fette Zeilen und eine Regel über sieben Zeilen. Jetzt ein Satz Einleitung und neun Zeilen mit Form, Bedeutung und Beispiel (llevar + Zeit, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de, seguir, ir), danach ein Satz, was konjugiert wird.
+- Ein Test hält alle Themenblätter mit Übersicht knapp: höchstens ein Satz Einleitung, jede Zeile vollständig.
+
 ## 24.58.1
 **Themenblatt aufgeräumt: „werden“ als kleine Übersicht, Hauptknopf immer sichtbar, Beispiele mit verschiedenen Lösungen.**
 - **„werden“:** Die fette Einleitung hatte sechs Zeilen, die Regel war eine Aufzählung mit Punkten über sieben Zeilen. Jetzt: ein Satz Einleitung, darunter die fünf Verben als Übersicht (Verb, wann, Beispiel), danach zwei Zeilen zu llegar a ser und „für kurze Gefühle nicht volverse“.

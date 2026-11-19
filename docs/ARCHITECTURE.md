@@ -49,6 +49,12 @@ Das Rundenende (`viewRunDone`) arbeitet mit `S.run.res`, einem Eintrag je erster
 
 Die Lernminuten auf „Fortschritt“ (`minutesHtml`) zeigen die letzten 14 Tage als gestapelte Säulen je Sprache. `actOf` summiert für eine Reihe von Tagen je Sprache das Tagesprotokoll `DB.log` (Minuten, Aufgaben, neue Sätze), die Tagwerke und die Fehlerquellen `DB.tlog` (erste Versuche und Fehler je Übungsart und Thema). `dayCard` zeigt das für den angetippten Tag als kleine Tabelle; der Kalender nutzt dieselbe Karte. Wie im Kalender ist nichts vorgewählt, ein zweiter Tipp schließt die Karte. Die Auswahl liegt nur in `S.minDay`.
 
+Das Tagwerk (`dailyPlan`) besteht aus fälligen Wiederholungen (`pickDue`), neuen Sätzen (`pickNew`) und Grammatik-Aufgaben. Wiederholungen: je Thema höchstens ein Viertel der Plätze (bei „Normal“ 5 von 20); was darüber hinausgeht, bleibt fällig und kommt am nächsten Tag zuerst, Sätze ab zwei Tagen überfällig füllen freie Plätze auch über die Grenze. Neue Sätze: der Schwerpunkt der Woche mit einem Drittel, sonst höchstens zwei je Thema. `spreadTopics` ordnet alles als Zufallsreihe; nach einer Aufgabe kommt dasselbe Thema (`taskTopic`: Thema des Satzes oder des Generators; eigene und Tatoeba-Sätze je für sich) nur mit halbem Gewicht (`REPEAT_DAMP`). Zuerst kommt eine Wiederholung. Dieselbe Dämpfung und dieselbe gewichtete Auswahl (`pickWeighted` in `generators.js`) nutzt „Fehler finden“ für die Fehlerart der nächsten Aufgabe: mischen, ohne zu verbieten, damit sich aus der letzten Aufgabe nichts sicher ablesen lässt.
+
+Die Zeitschätzung (`minutes`, `paceFn`) nutzt das eigene Tempo: `DB.pace[sprache][übungsart]` hält die Sekunden der letzten 20 ersten Versuche (gemessen beim „Weiter“, ohne Werte ab zwei Minuten). Ab 5 Werten zählt die Übungsart selbst (Mittel ohne die langsamsten 10 %), ab 8 Werten insgesamt werden die Richtwerte `SECS` im selben Verhältnis angepasst, sonst gilt der Median von Sekunden je Aufgabe der letzten 30 Übungstage aus `DB.log` (ab drei Tagen mit mindestens 10 Aufgaben), sonst `SECS`. Dazu 10 % für zweite Versuche.
+
+Vorgelesen wird, was als Lösung im Rückmeldefeld steht: `solShown` liefert diesen Text für die Anzeige, den Knopf daneben und `autoSpeak`. Bei erzeugten Lückenaufgaben ist das immer der ganze Satz (`full`), bei Uhrzeiten und Preisen der ganze Satz mit dem Gesuchten fett, bei Satzbank-Sätzen die richtige Fassung, die der Antwort am nächsten liegt (die Hauptfassung mit Tatoeba-Aufnahme, wenn es eine gibt).
+
 Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `runMarks` liefert den Stand: Ergebnis aus `got` an der Aufgabe (ältere Runden ohne `got`: der Reihe nach aus `res`), die aktuelle Aufgabe nach dem Prüfen schon mit ihrem Ergebnis. Farben wie die Ergebnisleiste am Rundenende; zweite Versuche stehen als eigene Gruppe am Ende.
 
 ## Datenspeicher
@@ -67,6 +73,7 @@ Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `run
 | `gen`, `genus` | Ergebnisse der erzeugten Aufgaben und der Genus-Wörter |
 | `own`, `tat` | eigene Sätze, Sätze von Tatoeba |
 | `texts` | Textarchiv mit Messwerten (höchstens 500) |
+| `pace[sprache][übungsart]` | Sekunden der letzten 20 ersten Versuche für die Zeitschätzung (fehlt in älteren Ständen; Zurücksetzen einer Sprache löscht ihren Teil) |
 | `used` | Hinweise, Wiederholungsgedächtnis der Generatoren und Runden, Schreibaufgaben, gelesene Texte (`texts`, Schlüssel `sv:vasa`), beim Lesen nachgeschlagene Wörter (`looked['sv:vasa'][wort] = datum`, höchstens 300 je Sprache; fehlt in älteren Ständen) |
 
 Ältere Speicherstände werden beim Laden ergänzt; Felder werden nie umbenannt, damit Backups aus allen Versionen lesbar bleiben.

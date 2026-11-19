@@ -104,11 +104,11 @@ function viewHome(){
   let card;
   if (running) {
     const left = od.queue.length - od.idx;
-    card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx))} Minuten. Du machst dort weiter, wo du aufgehört hast.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
+    card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx), od.lang)} Minuten. Du machst dort weiter, wo du aufgehört hast.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
   } else if (doneToday) {
     // Die andere Sprache erst hier, als Angebot: vorher wählt die App die Sprache des Tages nach Bedarf, und oben lässt sie sich wechseln
     const other = activeLangs().find(l => l !== lang), op = other && !doneIn(today(), other) ? dailyPlan(other) : null;
-    const otherRow = op && op.queue.length ? `<button type="button" class="row" data-a="otherdaily" data-l="${other}"><span class="txt"><span class="rt">${LANG[other].deName}-Tagwerk zusätzlich</span><span class="rd">Etwa ${minutes(op.queue)} Minuten${[op.due ? plural(op.due, 'Wiederholung', 'Wiederholungen') : '', op.fresh ? plural(op.fresh, 'neuer Satz', 'neue Sätze') : '', op.genN ? plural(op.genN, 'Grammatik-Aufgabe', 'Grammatik-Aufgaben') : ''].filter(Boolean).map((x, i) => (i ? ', ' : ': ') + x).join('')}.</span></span></button>` : '';
+    const otherRow = op && op.queue.length ? `<button type="button" class="row" data-a="otherdaily" data-l="${other}"><span class="txt"><span class="rt">${LANG[other].deName}-Tagwerk zusätzlich</span><span class="rd">Etwa ${minutes(op.queue, other)} Minuten${[op.due ? plural(op.due, 'Wiederholung', 'Wiederholungen') : '', op.fresh ? plural(op.fresh, 'neuer Satz', 'neue Sätze') : '', op.genN ? plural(op.genN, 'Grammatik-Aufgabe', 'Grammatik-Aufgaben') : ''].filter(Boolean).map((x, i) => (i ? ', ' : ': ') + x).join('')}.</span></span></button>` : '';
     card = `<p class="eyebrow">Heute</p><p class="num">Tagwerk erledigt</p>${todayHtml(lang)}<p class="breakdown">Wenn du noch Zeit hast:</p>
       <div class="choices">
         ${otherRow}
@@ -122,7 +122,7 @@ function viewHome(){
     if (p.due) parts.push(`<li><b>${p.due}</b> ${p.due === 1 ? 'Wiederholung' : 'Wiederholungen'}<span>Sätze, die heute wieder dran sind</span></li>`);
     if (p.fresh) parts.push(`<li><b>${p.fresh}</b> ${p.fresh === 1 ? 'neuer Satz' : 'neue Sätze'}<span>gezielt zu typischen Fehlern</span></li>`);
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
-    card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue)} Min.</span></p>${doneOther ? `<p class="hint" style="margin-top:2px">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
+    card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue, lang)} Min.</span></p>${doneOther ? `<p class="hint" style="margin-top:2px">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
       <ul class="plan2">${parts.join('')}</ul>
       ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b>${esc(trapMeta(lang, ft).label)}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">${LANG[lang].deName}-Tagwerk starten</button>
@@ -350,6 +350,17 @@ function viewRun(){
   body = body.replace('<div class="ex-a">', '<div class="ex-sp" aria-hidden="true"></div><div class="ex-a">');
   return runBar(r) + `<section class="ex">${body}<div id="fb" class="${done ? 'fb-' + c.result + (c.gaveUp ? ' fb-gave' : '') + (c.enter ? ' enter' : '') : ''}" aria-live="polite">${done ? feedbackHtml(r, ex, c) : ''}</div></section><div class="actionbar"><div class="in">${actions}</div></div>`;
 }
+// Die Lösung, die im Rückmeldefeld steht. Genau sie wird vorgelesen, automatisch und über den Knopf daneben.
+// Erzeugte Aufgaben: der ganze Satz (bei Lücken nie nur das Wort). Satzbank: deine nächstliegende richtige Fassung.
+function solShown(lang, ex, c){
+  if (ex.type === 'gen' && ['spot', 'genus', 'time'].includes(ex.data.kind)) return ex.data.full;
+  const item = ex.id ? itemById(ex.id) : null;
+  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : item.target;
+  const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
+  return showDiff && c.best ? c.best : solution;
+}
+// Lösungssatz mit dem gesuchten Teil fett, wenn er darin vorkommt (Uhrzeit oder Preis in Worten)
+const boldIn = (full, part) => { const i = part ? full.toLowerCase().indexOf(part.toLowerCase()) : -1; return i < 0 ? esc(full) : `${esc(full.slice(0, i))}<b>${esc(full.slice(i, i + part.length))}</b>${esc(full.slice(i + part.length))}`; };
 const ivlText = n => (n <= 1 ? 'morgen wieder' : n === 2 ? 'übermorgen wieder' : n < 14 ? `in etwa ${n} Tagen wieder` : n < 60 ? `in etwa ${Math.round(n / 7)} Wochen wieder` : n < 540 ? `in etwa ${Math.round(n / 30)} Monaten wieder` : `in etwa ${Math.round(n / 365)} Jahr${Math.round(n / 365) > 1 ? 'en' : ''} wieder`);
 function feedbackHtml(r, ex, c){
   const lang = r.lang;
@@ -381,8 +392,8 @@ function feedbackHtml(r, ex, c){
   }
   if (ex.type === 'gen' && ex.data.kind === 'time') {
     const d = ex.data;
-    const solved = d.mode === 'write' ? d.answers[0] : (d.clock || String(d.num));
-    out += `<div class="solrow"><p class="sol" lang="${lang}">${esc(d.mode === 'write' ? `${d.clock || d.num} = ${solved}` : `${d.say.replace(/\.$/, '')} = ${solved}`)}</p>${speakBtn(d.say, lang)}</div>`;
+    // Schreiben: Zahl und ganzer Satz, das Gesuchte fett (vorher nur das Wort, der Knopf daneben las nichts vor)
+    out += `<div class="solrow"><p class="sol" lang="${lang}">${d.mode === 'write' ? `${esc(d.clock || `${d.num} ${lang === 'sv' ? 'kr' : '€'}`)} = ${boldIn(d.full, d.answers[0])}` : esc(`${d.full.replace(/\.$/, '')} = ${d.clock || d.num}`)}</p>${speakBtn(d.full, lang)}</div>`;
     const also = d.mode === 'write' && d.clock ? d.answers.slice(1).filter(a => !/^(son|es) /.test(a) && a !== d.answers[0]) : [];
     if (also.length) out += `<p class="legend">Auch richtig: ${esc(also.join(', '))}</p>`;
     if (d.note) out += `<p class="expl">${termify(d.note)}</p>`;
@@ -397,7 +408,7 @@ function feedbackHtml(r, ex, c){
   const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : item.target;
   if (c.mine && c.result !== 'ok' && !c.gaveUp) out += `<p class="yours" lang="${lang}"><span class="lbl-s">Du:</span> ${c.mine}</p>`;
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
-  const sol = showDiff && c.best ? c.best : solution;
+  const sol = solShown(lang, ex, c);
   const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(sol, lang);
   out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';

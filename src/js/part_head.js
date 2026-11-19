@@ -352,15 +352,18 @@ function pickNew(lang, n, onlyTrap){
   let unseen = levelOrder(lang, BANK[lang].filter(i => !stOf(i.id) && (!onlyTrap || i.trap === onlyTrap)), !onlyTrap);
   // Schwerpunkt der Woche: bis zu einem Drittel der neuen Sätze aus diesem Thema, vorn eingereiht
   const ft = !onlyTrap && focusTrap(lang);
+  let fx = [];
   if (ft) {
     // Ist der Schwerpunkt bei „Fortgeschritten“ ein schwaches Thema, erst die Grundlagen festigen
-    let fx = unseen.filter(i => i.trap === ft);
+    fx = unseen.filter(i => i.trap === ft);
     if ((DB.settings.niveau || 'mittel') === 'fort' && weakTraps(lang).has(ft)) fx = fx.slice().sort((a, b) => (a.lvl || 1) - (b.lvl || 1));
     fx = fx.slice(0, Math.ceil(n / 3)); unseen = fx.concat(unseen.filter(i => !fx.includes(i)));
   }
-  const out = unseen.filter(i => i.own || (i.tat && !i.tat.auto) || (ft && i.trap === ft)).slice(0, Math.max(1, Math.ceil(n / 2)));
-  const count = {};
+  // Fest dabei: eigene Sätze, von Hand geholte Tatoeba-Sätze und der Schwerpunkt (nur das Drittel, vorher bis zur Hälfte)
+  const out = unseen.filter(i => i.own || (i.tat && !i.tat.auto) || fx.includes(i)).slice(0, Math.max(1, Math.ceil(n / 2)));
+  const count = {}, now = {};
   BANK[lang].forEach(i => { if (stOf(i.id)) count[i.trap] = (count[i.trap] || 0) + 1; });
+  out.forEach(i => { now[i.trap] = (now[i.trap] || 0) + 1; });
   while (out.length < n) {
     const rest = unseen.filter(i => !out.includes(i));
     if (!rest.length) break;
@@ -368,12 +371,13 @@ function pickNew(lang, n, onlyTrap){
     const fort = (DB.settings.niveau || 'mittel') === 'fort' && !onlyTrap;
     const ok = fort ? rest.filter(i => (i.own || i.tat || (i.lvl || 1) >= 2) || weakTraps(lang).has(i.trap)) : rest;
     const pool = ok.length ? ok : rest;
-    const tps = [...new Set(pool.map(i => i.trap))].sort((a, b) => (count[a] || 0) - (count[b] || 0) || Math.random() - 0.5);
+    // Das Thema mit den wenigsten geübten Sätzen, aber höchstens zwei neue Sätze je Thema, solange andere da sind
+    const tps = [...new Set(pool.map(i => i.trap))].sort((a, b) => ((now[a] || 0) >= 2) - ((now[b] || 0) >= 2) || (count[a] || 0) - (count[b] || 0) || Math.random() - 0.5);
     const tr = tps[0];
     // Schwaches Thema: erst die Grundlagen festigen, sonst die schwersten zuerst
     const cands = pool.filter(i => i.trap === tr);
     const item = fort && weakTraps(lang).has(tr) ? cands.reduce((a, b) => ((b.lvl || 1) < (a.lvl || 1) ? b : a)) : cands[0];
-    out.push(item); count[tr] = (count[tr] || 0) + 1;
+    out.push(item); count[tr] = (count[tr] || 0) + 1; now[tr] = (now[tr] || 0) + 1;
   }
   return out;
 }
@@ -387,13 +391,42 @@ function dayGen(lang){
   return g[Math.floor(Date.now() / 86400000) % g.length];
 }
 const exFor = item => ({ type:stage(item), id:item.id });
-function shuffleInPlace(a){ for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+// Grammatikthema einer Aufgabe. Eigene und Tatoeba-Sätze haben keins und zählen je für sich.
+function taskTopic(ex){
+  if (ex.id) { const it = itemById(ex.id); return it && it.trap && it.trap !== 'eigene' ? it.trap : 'eigene:' + ex.id; }
+  return (GENS[ex.gen] && GENS[ex.gen].trap) || ex.gen;
+}
+// Wiederholungen fürs Tagwerk: je Thema höchstens ein Viertel der Plätze, damit nicht ein Thema das Tagwerk füllt und man
+// vorher weiß, was kommt. Was darüber hinausgeht, bleibt fällig und kommt am nächsten Tag zuerst. Ist danach noch Platz,
+// kommen Sätze, die schon zwei Tage überfällig sind, auch über die Grenze hinaus dran.
+function pickDue(lang, max){
+  const t = today(), cap = Math.max(3, Math.ceil(max / 4)), n = {}, out = [], over = [];
+  dueItems(lang).forEach(i => {
+    const k = taskTopic({ id:i.id });
+    if (k.startsWith('eigene:') || (n[k] || 0) < cap) { if (out.length < max) { out.push(i); n[k] = (n[k] || 0) + 1; } }
+    else over.push(i);
+  });
+  over.filter(i => dayDiff(t, stOf(i.id).due) >= 2).forEach(i => { if (out.length < max) out.push(i); });
+  return out;
+}
+// Reihenfolge im Tagwerk: eine Zufallsreihe, in der das Thema der letzten Aufgabe nur mit halbem Gewicht weiterkommt
+// (REPEAT_DAMP, dieselbe Regel wie bei den Fehlerarten von „Fehler finden“). Blöcke werden selten, verboten ist nichts:
+// Nach Thema X kann X wieder kommen, man kann es also nicht ausschließen. Zuerst eine Wiederholung zum Einstieg.
+function spreadTopics(tasks){
+  const rest = tasks.slice(), out = [], topic = new Map(tasks.map(ex => [ex, taskTopic(ex)]));
+  let last = null;
+  const take = ex => { rest.splice(rest.indexOf(ex), 1); out.push(ex); last = topic.get(ex); };
+  const opener = rest.filter(ex => ex.id && stOf(ex.id)), sent = rest.filter(ex => ex.id);
+  if (opener.length || sent.length) take(pick(opener.length ? opener : sent));
+  while (rest.length) take(pickWeighted(rest, ex => (topic.get(ex) === last ? REPEAT_DAMP : 1)));
+  return out;
+}
 function dailyPlan(lang){
   const sz = size();
-  const due = dueItems(lang).slice(0, sz.maxRev);
+  const due = pickDue(lang, sz.maxRev);
   const fresh = pickNew(lang, sz.newPer);
   const g = dayGen(lang);
-  const base = shuffle(due).map(exFor).concat(fresh.map(exFor));
+  const base = due.map(exFor).concat(fresh.map(exFor));
   // Die Hälfte der Grammatik-Aufgaben aus dem Generator des Tages, der Rest aus den anderen Übungsformen, täglich wechselnd
   const fx = formIds(lang).filter(f => GENS[f].daily), day = Math.floor(Date.now() / 86400000);
   const nForm = fx.length ? Math.floor(sz.gen / 2) : 0;
@@ -402,18 +435,41 @@ function dailyPlan(lang){
   const sure = (DB.settings.niveau || 'mittel') === 'fort' && rec.length >= 15 && rec.reduce((x, y) => x + y, 0) / rec.length >= 0.85;
   const drills = g ? Array.from({ length:sure ? Math.min(2, sz.gen - nForm) : sz.gen - nForm }, () => ({ type:'gen', gen:g })) : [];
   for (let i = 0; i < nForm; i++) drills.push({ type:'gen', gen:fx[(day + i) % fx.length] });
-  shuffleInPlace(drills);
-  // gemischt statt Block: Formübungen gleichmäßig zwischen die Sätze verteilen
-  // Erst ein Satz, dann abwechselnd; die Formübungen verteilen sich gleichmäßig
-  const queue = [];
-  const step = drills.length ? Math.max(1, base.length / drills.length) : Infinity;
-  let next = step, di = 0;
-  base.forEach((ex, i) => { queue.push(ex); while (di < drills.length && i + 1 >= next) { queue.push(drills[di++]); next += step; } });
-  while (di < drills.length) queue.push(drills[di++]);
+  // Sätze (Wiederholungen und neue) und Grammatik-Aufgaben in einer Reihe, nach Thema gemischt
+  const queue = spreadTopics(base.concat(drills));
   const genLabels = [...new Set(drills.slice().sort((a, b) => (GENS[a.gen].form ? 1 : 0) - (GENS[b.gen].form ? 1 : 0)).map(x => GENS[x.gen].short || GENS[x.gen].label))];
   return { queue, due:due.length, fresh:fresh.length, gen:g, genN:drills.length, genLabels };
 }
-const minutes = queue => Math.max(1, Math.round(queue.reduce((s, ex) => s + (SECS[ex.type] || 25), 0) * 1.15 / 60));
+// Zeitschätzung aus dem eigenen Tempo. DB.pace[sprache][übungsart]: Sekunden der letzten 20 ersten Versuche (ohne Pausen
+// über zwei Minuten). Ab 5 Werten einer Übungsart zählen sie selbst; ab 8 Werten insgesamt werden die Richtwerte (SECS)
+// im selben Verhältnis angepasst; sonst gilt das Tempo der letzten 30 Übungstage (Sekunden je Aufgabe, Median).
+// Ohne alles die Richtwerte. Aufschlag 10 % für zweite Versuche.
+const PACE_KEEP = 20;
+function notePace(lang, type, secs){
+  if (!SECS[type] || !(secs >= 1 && secs < 120)) return;
+  DB.pace = DB.pace && typeof DB.pace === 'object' ? DB.pace : {};
+  const p = DB.pace[lang] = DB.pace[lang] && typeof DB.pace[lang] === 'object' ? DB.pace[lang] : {};
+  const a = p[type] = Array.isArray(p[type]) ? p[type] : [];
+  a.push(secs); if (a.length > PACE_KEEP) a.splice(0, a.length - PACE_KEEP);
+}
+// Mittelwert ohne die langsamsten 10 % (ein abgelenkter Moment soll die Schätzung nicht verschieben)
+const trimMean = a => { const s = a.slice().sort((x, y) => x - y), k = s.slice(0, s.length - Math.floor(s.length / 10)); return k.reduce((x, y) => x + y, 0) / k.length; };
+function histPace(lang){
+  const from = addDays(today(), -30), v = [];
+  Object.keys(DB.log || {}).filter(d => d >= from && d < today()).forEach(d => { const x = dayLog(d, lang); if ((x.n || 0) >= 10 && x.secs > 0) v.push(x.secs / x.n); });
+  if (v.length < 3) return null;
+  v.sort((a, b) => a - b);
+  return Math.min(90, Math.max(4, v[Math.floor(v.length / 2)]));
+}
+function paceFn(lang){
+  const raw = (DB.pace && DB.pace[lang]) || {}, by = {}, ratios = [];
+  Object.keys(SECS).forEach(t => { by[t] = (Array.isArray(raw[t]) ? raw[t] : []).filter(x => typeof x === 'number' && x >= 1 && x < 120); by[t].forEach(x => ratios.push(x / SECS[t])); });
+  const own = t => (by[t] && by[t].length >= 5 ? trimMean(by[t]) : null);
+  if (ratios.length >= 8) { const f = Math.min(2, Math.max(0.2, trimMean(ratios))); return t => own(t) || (SECS[t] || 25) * f; }
+  const h = histPace(lang);
+  return h ? t => own(t) || h : t => own(t) || SECS[t] || 25;
+}
+const minutes = (queue, lang) => { const f = paceFn(lang || S.lang); return Math.max(1, Math.round(queue.reduce((s, ex) => s + f(ex.type), 0) * 1.1 / 60)); };
 
 function startRun(kind, opts){
   const lang = S.lang;

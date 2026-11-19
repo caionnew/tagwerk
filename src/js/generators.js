@@ -1,5 +1,16 @@
 /* ---------- Generatoren: regelbasiert, immer korrekt ---------- */
 const pick = a => a[Math.floor(Math.random() * a.length)];
+// Zufallsauswahl nach Gewicht (Gewicht 0 = nie). Für Fehlerarten, Satzrahmen und die Reihenfolge im Tagwerk.
+function pickWeighted(list, weightOf){
+  const w = list.map(weightOf);
+  let r = Math.random() * w.reduce((a, x) => a + x, 0);
+  for (let i = 0; i < list.length; i++) { if (w[i] > 0 && (r -= w[i]) < 0) return list[i]; }
+  for (let i = list.length - 1; i >= 0; i--) if (w[i] > 0) return list[i];
+  return list[list.length - 1];
+}
+// Mischen ohne Verbot: Was gerade dran war (Fehlerart, Thema), kommt als Nächstes nur mit halbem Gewicht. Es bleibt möglich,
+// damit sich keine Regel ablesen lässt („gerade war X, also kommt X sicher nicht“).
+const REPEAT_DAMP = 0.5;
 const capFirst = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 /* Schwedisch: Adjektiv + Substantiv (en/ett, bestimmte Form, Doppelbestimmung) */
@@ -206,11 +217,24 @@ const IRR_ES = {
   jugar:['spielen', { pres:'juego juegas juega jugamos juegan', indef:'jugué jugaste jugó jugamos jugaron', subj:'juegue juegues juegue juguemos jueguen' }]
 };
 const TENSES_ES = [
-  { id:'pres', w:2, de:'Präsens', frame:p => `normalmente ${p} ___` },
-  { id:'indef', w:3, de:'Indefinido', frame:p => `ayer ${p} ___` },
-  { id:'imp', w:2, de:'Imperfecto', frame:p => `antes ${p} siempre ___` },
-  { id:'subj', w:3, de:'Subjuntivo', frame:p => `es importante que ${p} ___` }
+  { id:'pres', w:2, de:'Präsens', frame:p => `Normalmente ${p} ___` },
+  { id:'indef', w:3, de:'Indefinido', frame:p => `Ayer ${p} ___` },
+  { id:'imp', w:2, de:'Imperfecto', frame:p => `Antes ${p} siempre ___` },
+  { id:'subj', w:3, de:'Subjuntivo', frame:p => `Es importante que ${p} ___` }
 ];
+// Ergänzung je Verb, damit ein ganzer Satz entsteht (vorher „ayer ellas estuvieron“). Jede passt zu allen vier Zeitformen
+// (normalmente, ayer, antes siempre, es importante que) und allen Personen: ohne mi/su und ohne Reflexivpronomen.
+// Eine Funktion bekommt Personenindex und Zeitform (ser: Einzahl/Mehrzahl, bailar: einmalig/gewohnheitsmäßig).
+const CONJ_COMP = {
+  ser:p => (p >= 3 ? 'puntuales' : 'puntual'), estar:'en casa', ir:'a clase', tener:'paciencia', hacer:'la compra', poder:'venir', querer:'ayudar',
+  decir:'la verdad', venir:'en tren', saber:'la respuesta', poner:'la mesa', salir:'temprano', ver:'las noticias', dar:'las gracias', pensar:'en el futuro',
+  volver:'a casa', dormir:'ocho horas', pedir:'ayuda', conocer:'a mucha gente', traer:'el pan', empezar:'a las ocho', leer:'el periódico', jugar:'al fútbol',
+  hablar:'por teléfono', llegar:'a tiempo', trabajar:'desde casa', comprar:'fruta', escuchar:'la radio', viajar:'en tren', cocinar:'para todos',
+  bailar:(p, t) => (t === 'pres' || t === 'imp' ? 'en las fiestas' : 'en la fiesta'), estudiar:'mucho', llamar:'a los abuelos', tomar:'el autobús', cenar:'en casa',
+  ayudar:'en casa', comer:'verdura', beber:'agua', aprender:'algo nuevo', vender:'en el mercado', correr:'diez kilómetros', comprender:'todo', vivir:'cerca del centro',
+  escribir:'a la abuela', abrir:'la ventana', recibir:'a los clientes', subir:'las escaleras', decidir:'rápido'
+};
+const conjComp = (inf, p, t) => { const c = CONJ_COMP[inf]; return typeof c === 'function' ? c(p, t) : c; };
 function conjugate(inf, tense, idx){
   const irr = IRR_ES[inf];
   if (irr && irr[1][tense]) return irr[1][tense].split(' ')[idx];
@@ -226,12 +250,13 @@ function genConj(){
   let inf, gloss;
   if (useIrr) { inf = pick(Object.keys(IRR_ES)); gloss = IRR_ES[inf][0]; }
   else { const r = pick(REG_ES); inf = r[0]; gloss = r[1]; }
-  const bag = []; TENSES_ES.forEach(t => { for (let i = 0; i < t.w; i++) bag.push(t); });
+  // „Ayer vivieron cerca del centro“ ergibt keinen Sinn: vivir ohne Indefinido
+  const bag = []; TENSES_ES.filter(t => !(inf === 'vivir' && t.id === 'indef')).forEach(t => { for (let i = 0; i < t.w; i++) bag.push(t); });
   const t = pick(bag);
   const p = pick(PERS);
   const form = conjugate(inf, t.id, p[1]);
-  const fr = t.frame(p[0]);
-  return { prompt:fr, hint:`${inf} (${gloss}), ${t.de}`, answers:[form, `${p[0]} ${form}`], label:'Setz die passende Verbform ein', note:`${inf}, ${t.de}, ${p[0]}: ${form}`, gap:fr.includes('___'), full:fr.replace('___', form) };
+  const fr = `${t.frame(p[0])} ${conjComp(inf, p[1], t.id)}.`;
+  return { prompt:fr, hint:`${inf} (${gloss}), ${t.de}`, answers:[form, `${p[0]} ${form}`], label:'Setz die passende Verbform ein', note:`${inf}, ${t.de}, ${p[0]}: ${form}`, gap:true, full:fr.replace('___', form) };
 }
 
 
@@ -276,10 +301,9 @@ function genSerEstar(){
     [1.3, () => { const t = pick(SE_RESULT), adj = pick(t[4]); const f = t[2] === 'f' ? adj.replace(/o$/, 'a') : adj; return [`${t[0]} ___ ${t[3] ? plEs(f) : f}.`, `${t[1]} ${t[3] ? 'sind' : 'ist'} ${SE_RES_DE[adj]}.`, t[3] ? 'están' : 'está', 'Zustand als Ergebnis (offen, geschlossen, schmutzig): estar.']; }],
     [1, () => pick(SE_SHIFT)]
   ];
-  let r = Math.random() * frames.reduce((a, f) => a + f[0], 0), fr = frames[0][1];
-  for (const f of frames) { if ((r -= f[0]) < 0) { fr = f[1]; break; } }
-  const [es, de, ans, note] = fr();
-  return { prompt:es, deLine:de, answers:[ans], label:'Setz ser oder estar ein', note, gap:true, full:es.replace('___', ans) };
+  const [es, de, ans, note] = pickWeighted(frames, f => f[0])[1]();
+  // Lücke am Satzanfang („___ las tres.“): Der fertige Satz beginnt groß
+  return { prompt:es, deLine:de, answers:[ans], label:'Setz ser oder estar ein', note, gap:true, full:es.startsWith('___') ? capFirst(ans) + es.slice(3) : es.replace('___', ans) };
 }
 
 /* ---------- por oder para ---------- */

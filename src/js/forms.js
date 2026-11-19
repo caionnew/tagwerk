@@ -199,21 +199,20 @@ function spotWeight(lang, k){
 }
 // Welche Fehlerart kommt: nur Wahrscheinlichkeiten, keine festen Regeln, die man mit der Zeit durchschaut. Jede Art kann jederzeit kommen,
 // auch zweimal hintereinander. Gewicht = Grundgewicht (Satzbank-Arten mit wenigen Sätzen seltener) × eigene Fehlerquote im Thema
-// in den letzten 30 Tagen (sichere Arten halb so oft, wacklige bis doppelt so oft) × ½ für die Art der letzten Aufgabe (mischt, ohne zu verbieten).
+// in den letzten 30 Tagen (sichere Arten halb so oft, wacklige bis doppelt so oft) × REPEAT_DAMP für die Art der letzten Aufgabe
+// (mischt, ohne zu verbieten; dieselbe Regel ordnet die Themen im Tagwerk, siehe spreadTopics).
 // Richtig oder fehlerhaft entscheidet jedes Mal unabhängig der Zufall (40 %): Aus den vorigen Sätzen lässt sich nichts ablesen.
 function spotWeights(lang){
   const p = errStats(lang, 30).p, last = ((DB.used || {}).spotLast || {})[lang];
   const w = {};
   Object.keys(SPOT_CATS[lang]).forEach(k => {
     const [n, bad] = p[k] || [0, 0], rate = (bad + 1) / (n + 5);
-    w[k] = spotWeight(lang, k) * Math.min(2, Math.max(0.5, 0.5 + 2.5 * rate)) * (k === last ? 0.5 : 1);
+    w[k] = spotWeight(lang, k) * Math.min(2, Math.max(0.5, 0.5 + 2.5 * rate)) * (k === last ? REPEAT_DAMP : 1);
   });
   return w;
 }
 function genSpot(lang){
-  const w = spotWeights(lang), keys = Object.keys(w).filter(k => w[k] > 0), total = keys.reduce((a, k) => a + w[k], 0);
-  let r = Math.random() * total, cat = keys[keys.length - 1];
-  for (const k of keys) { r -= w[k]; if (r < 0) { cat = k; break; } }
+  const w = spotWeights(lang), cat = pickWeighted(Object.keys(w), k => w[k]);
   return Object.assign(spotVariant(SPOT_CATS[lang][cat]()), { cat });
 }
 // Gedächtnis für das halbe Gewicht: schreibt makeFresh über seen(), erst wenn die Aufgabe wirklich gezeigt wird

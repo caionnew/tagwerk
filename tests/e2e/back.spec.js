@@ -16,15 +16,21 @@ test('Zurück führt Schritt für Schritt durch die App: Text, Liste, Üben, Heu
   await expect(page.locator('.bottomnav [data-v=home]')).toHaveAttribute('aria-current', 'page');
   expect(page.url()).toBe(APP);
 });
+// Im Lesetext statt im Fundstück auf „Heute“: Das Fundstück wechselt täglich, „Falscher Freund“ hat keine Wörter zum Antippen
 test('Zurück schließt ein offenes Fenster, die Ansicht bleibt', async ({ page }) => {
   await seed(page, richDB('sv'));
   await page.goto(APP);
-  await page.click('.find [data-a=lookup] >> nth=0');
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=texts]');
+  await page.click('[data-a=textopen][data-id=vasa]');
+  await page.click('[data-a=lookup] >> nth=0');
   await expect(page.locator('.pop')).toBeVisible();
   await back(page);
   await expect(page.locator('.pop')).toHaveCount(0);
-  await expect(page.locator('.today')).toBeVisible();
-  expect(page.url()).toBe(APP);
+  await expect(page.locator('.rtitle')).toHaveText('Regalskeppet Vasa');
+  // Das nächste Zurück geht wie gewohnt einen Schritt weiter
+  await back(page);
+  await expect(page.locator('[data-a=textopen][data-id=vasa]')).toBeVisible();
 });
 test('Zurück im Tagwerk pausiert es; danach geht es auf „Heute“ weiter, wo man war', async ({ page }) => {
   await seed(page, richDB('sv'));

@@ -63,6 +63,8 @@ function fullDB(){
   db.used = Object.assign(db.used, { wikiSeen:{ sv:['Vasaskeppet'] }, recentPick:{ shadow_sv:['sv:own1'] },
     texts:{ 'sv:vasa':{ best:3, n:1, last:days[0], heard:false } }, looked:{ 'sv:vasa':{ krigsskeppet:days[0] }, 'es:campoamor':{ diputada:days[1] } } });
   db.focus = { [days[3]]:{ sv:'bisats' } };
+  // Eigenes Tempo für die Zeitschätzung (24.54.0)
+  db.pace = { sv:{ free:[14, 16, 12, 15, 13, 18], gen:[7, 6, 9, 8, 5] }, es:{ cloze:[9, 11, 10, 8, 12] } };
   db.settings = Object.assign(db.settings, { shHints:false, niveau:'fort', textMode:'listen', langMode:'last', haptics:false, size:'lang' });
   return db;
 }
@@ -102,9 +104,10 @@ test('Backup: der ganze Stand kommt zurück, auch alles, was in späteren Versio
   expect(errors).toEqual([]);
   await ctx.close();
 });
-test('Rückgängig nach dem Einspielen bringt auch die nachgeschlagenen Wörter zurück; Zurücksetzen löscht sie nur für die eine Sprache', async ({ page }) => {
+test('Rückgängig nach dem Einspielen bringt auch nachgeschlagene Wörter und Tempo zurück; Zurücksetzen löscht beides nur für die eine Sprache', async ({ page }) => {
   const db = richDB('sv');
   db.used = Object.assign(db.used, { looked:{ 'sv:vasa':{ krigsskeppet:'2026-01-01' }, 'es:campoamor':{ diputada:'2026-01-02' } } });
+  db.pace = { sv:{ gen:[7, 8, 6, 9, 7] }, es:{ gen:[5, 6, 7, 5, 6] } };
   await seed(page, db);
   await page.goto(APP);
   await page.click('[data-a=settings] >> nth=0');
@@ -115,9 +118,11 @@ test('Rückgängig nach dem Einspielen bringt auch die nachgeschlagenen Wörter 
   await expect.poll(async () => (await stored(page)).used.looked).toBeUndefined();
   await page.click('.notice [data-a=undoimport]');
   await expect.poll(async () => (await stored(page)).used.looked).toEqual(db.used.looked);
+  expect((await stored(page)).pace).toEqual(db.pace);
   await page.click('[data-a=reset][data-l=sv]'); await page.click('[data-a=reset][data-l=sv]');
   await expect(page.locator('.notice')).toContainText('zurückgesetzt');
   await expect.poll(async () => (await stored(page)).used.looked).toEqual({ 'es:campoamor':{ diputada:'2026-01-02' } });
+  expect((await stored(page)).pace).toEqual({ es:db.pace.es });
 });
 test('Backup aus einer alten Version: wird übernommen und umgerechnet', async ({ page }) => {
   await page.goto(APP);

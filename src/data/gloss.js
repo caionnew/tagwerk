@@ -3221,6 +3221,9 @@ dinero||Geld
 bici||Fahrrad
 libro||Buch
 fruta||Obst
+verdura||Gemüse
+respuesta||Antwort
+futuro||Zukunft; auch: zukünftig
 gafas||Brille
 mercado||Markt
 huelga||Streik

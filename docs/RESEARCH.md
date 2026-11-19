@@ -12,6 +12,8 @@ Tagwerk stützt sich, wo möglich, auf Studien. Wo es keine belastbaren Ergebnis
 
 Brunmair & Richter (2019), *Psychological Bulletin*: Metaanalyse über 59 Studien und 238 Effektstärken, Hedges' g = 0,42, stärker bei ähnlichen Kategorien. Einschränkung der Autoren: bei Wörtern und Fachtexten schwächer. Tagwerk mischt darum gezielt verwechselbare Paare (Präteritum/Perfekt, ser/estar, por/para).
 
+Im Tagwerk selbst (eigene Festlegung, 24.54.0): kein Thema mit mehr als einem Viertel der Wiederholungen, und das Thema der letzten Aufgabe kommt als Nächstes nur mit halbem Gewicht, wie die Fehlerart bei „Fehler finden“. Ein Verbot wäre selbst eine Regel, die man mit der Zeit durchschaut („gerade war X, also sicher nicht X“). Simuliert über 20.000 Tagwerke: reiner Zufall 2,3 direkte Wiederholungen je Tagwerk und in 17 % der Tagwerke ein Dreierblock; mit halbem Gewicht 1,3 und 6 %; nach Thema X folgt X in 9 % statt 15 % der Fälle, also selten, aber nicht ausgeschlossen. Vorher kamen bei vielen fälligen Sätzen eines Themas oft vier, fünf davon hintereinander, und die Lösung war absehbar, bevor man den Satz gelesen hatte.
+
 ## Fehler finden: Prüfen statt Suchen
 
 - Fehler zu erkennen (Grammatikalitätsurteil) übt nur dann das Urteil, wenn der Satz auch richtig sein kann. Steckt sicher ein Fehler im Satz und gibt es nur einen Kandidaten, wird daraus Suchen. Darum ist rund jeder dritte bis zweite Satz richtig.

@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.54.0
+**Zeitschätzung nach deinem Tempo, Themen im Tagwerk gemischt statt in Blöcken, Verbformen als ganze Sätze, vorgelesen wird immer der ganze Lösungssatz.**
+- **Zeitschätzung:** „etwa 15 Min.“ stand da, gebraucht waren 5. Die Schätzung nahm feste 20 bis 45 Sekunden je Aufgabe. Jetzt misst die App beim „Weiter“ die Sekunden je erstem Versuch und Übungsart (die letzten 20, ohne Pausen ab zwei Minuten) und schätzt daraus. Solange es noch keine eigenen Werte gibt, gilt das Tempo der letzten 30 Übungstage aus dem Tagesprotokoll, damit die Zahl sofort stimmt. Neues Feld `pace`, ältere Stände und Backups laden unverändert.
+- **Themen im Tagwerk:** Bei vielen fälligen Sätzen eines Themas kamen bis zu 17 von 32 Aufgaben aus demselben Thema, oft vier, fünf hintereinander, und die Lösung war absehbar. Jetzt je Thema höchstens 5 Wiederholungen (ein Viertel der Plätze); der Rest bleibt fällig und kommt morgen zuerst, nach zwei Tagen Verzug auch über die Grenze. Neue Sätze höchstens zwei je Thema, der Schwerpunkt der Woche wie gedacht ein Drittel (vorher bis zur Hälfte). Die Reihenfolge ist eine Zufallsreihe, in der das Thema der letzten Aufgabe nur mit halbem Gewicht wiederkommt, nach derselben Regel wie die Fehlerarten bei „Fehler finden“: Blöcke werden selten (Dreierblock in 6 statt 17 % der Tagwerke), aber nichts ist verboten, aus der letzten Aufgabe lässt sich also nicht ablesen, was sicher nicht kommt. Neue Sätze stehen nicht mehr gesammelt am Ende. Zuerst kommt eine Wiederholung.
+- **Aufgeräumt:** Die gewichtete Zufallsauswahl stand dreimal einzeln im Code (Fehlerarten, Satzrahmen bei ser oder estar, Reihenfolge); jetzt eine Funktion `pickWeighted`, dazu `REPEAT_DAMP` als gemeinsamer Wert für „zuletzt dran, halbes Gewicht“.
+- **Vorlesen:** Bei „fast richtig“ in Lückenaufgaben (etwa ein fehlender Akzent) las die App nur das eingesetzte Wort oder „ellas estuvieron“ ohne Satzanfang. Jetzt wird immer genau der Lösungssatz vorgelesen, der dasteht, automatisch und über den Knopf. Gilt auch für Satzbank-Sätze, wenn deine nächstliegende richtige Fassung angezeigt wird.
+- **Uhrzeit und Preis in Worten:** Der Vorlese-Knopf in der Rückmeldung las nichts vor. Die Lösung steht jetzt als ganzer Satz mit dem Gesuchten fett („75 kr = Det kostar **sjuttiofem** kronor.“), Knopf und Automatik lesen ihn.
+- **Verbformen (Spanisch):** Statt Bruchstücken wie „ayer ellas estuvieron“ ganze Sätze mit Ergänzung: „Ayer ellas estuvieron en casa.“, „Es importante que él pida ayuda.“ Jede Ergänzung passt zu allen vier Signalen und allen Personen; vivir kommt nicht mit „ayer“.
+- **ser oder estar:** Lücke am Satzanfang ergab „son las tres.“ mit kleinem Anfang, jetzt „Son las tres.“
+- **Wörterbuch:** verdura, respuesta, futuro.
+- **Test repariert:** „Zurück schließt ein offenes Fenster“ hing vom Fundstück des Tages ab und scheiterte an jedem Tag mit „Falscher Freund“ oder „Erinnerst du dich?“. Er nutzt jetzt einen Lesetext.
+- 15 neue Einheitstests (286), 2 neue und 2 erweiterte Browser-Tests (89), darunter Backup, Einspielen auf leerem Gerät, Rückgängig und Zurücksetzen mit dem neuen Feld. Tests zur Reihenfolge legen den Zufall fest, statt von ihm abzuhängen.
+
 ## 24.53.0
 **Jedes Wort der Lesetexte steht im Wörterbuch; Lücken aus Lesetexten kommen jetzt aus fast jedem Satz.**
 - **Wörterbuch:** 2.800 neue Einträge für die 48 Lesetexte, mit der im Text gemeinten Bedeutung zuerst (vindby = Windböe, diputada = Abgeordnete, så fort = sobald). Antippen im Text zeigt die deutsche Bedeutung jetzt auch offline; vorher fehlten 1.098 schwedische und 1.004 spanische Wörter. Gebeugte Formen verweisen auf ihre Grundform, die selbst einen Eintrag hat.

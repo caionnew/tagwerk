@@ -247,9 +247,9 @@ function finishAnswer(r, ex, c){
 }
 function autoSpeak(r, ex){
   if (!DB.settings.autoplay || ex.type === 'dict') return;
-  // Vorlesen, was angezeigt wird
-  if (ex.type === 'gen') { const c = r.cur; speak((c && c.result === 'near' && c.best) || ex.data.full || ex.data.answers[0], r.lang); return; }
-  playItem(itemById(ex.id));
+  // Vorlesen, was als Lösung dasteht: immer der ganze Satz, nie nur die Lücke (vorher bei „fast richtig“ in Lückenaufgaben)
+  const sol = solShown(r.lang, ex, r.cur || {}), item = ex.id ? itemById(ex.id) : null;
+  if (item && sol === item.target) playItem(item); else speak(sol, r.lang);
 }
 function giveUp(){
   const r = S.run, c = r.cur; if (!c || c.state !== 'answer') return;
@@ -292,6 +292,8 @@ function next(){
     if (counts) { if (good) r.ok++; else r.bad++; }
     const f = { n:1, a:1, ok:good ? 1 : 0, secs:Math.min(120, Math.max(0, Math.round((Date.now() - (r.shownAt || Date.now())) / 1000))) };
     r.secs = (r.secs || 0) + f.secs;
+    // Eigenes Tempo je Übungsart für die Zeitschätzung (nur erste Versuche, wie sie im Plan stehen)
+    if (counts) notePace(r.lang, ex.type, f.secs);
     if (ex.id && ex.type !== 'dict' && counts) {
       if (!c.wasSeen) f.fresh = 1;
       else if (c.wasDue) { f.rev = 1; f.revOk = good ? 1 : 0; }

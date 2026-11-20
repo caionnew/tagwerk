@@ -81,6 +81,12 @@ label.row{ cursor:pointer; }
 .row.armed{ background:var(--bad-soft); }
 .bars .bar{ flex:none; width:28%; height:7px; border-radius:4px; background:var(--line); overflow:hidden; }
 .bars .bar span{ display:block; height:100%; background:var(--accent); border-radius:4px; }
+/* „Meiste Fehler“ auf Heute: Aufgaben grau, Fehler rot, wie in den Fehlerquellen */
+.bars .bar.wbar{ position:relative; background:none; }
+.bars .bar.wbar span{ position:absolute; left:0; top:0; bottom:0; }
+.bars .bar .w-all{ background:color-mix(in srgb, var(--muted) 45%, transparent); }
+.bars .bar .w-bad{ background:var(--bad); opacity:.85; }
+.lead-s.grp-lead{ margin:-4px 4px 10px; font-size:14px; }
 .seg2, .seg3{ display:flex; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:4px; margin:0 0 12px; }
 .seg2 button, .seg3 button{ flex:1; border:0; background:none; border-radius:10px; padding:9px 6px; font-weight:650; font-size:15px; color:var(--muted); }
 .seg3 button span{ display:block; font-weight:400; font-size:12.5px; }

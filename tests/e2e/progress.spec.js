@@ -1,4 +1,4 @@
-// Fortschritt mit sechs Wochen Daten: Kalender, Etappen, Kennzahlen, Themenraster, Fehlerquellen.
+// Fortschritt mit sechs Wochen Daten: Kalender, Etappen, Kennzahlen, Themenraster, Fehlerquellen; dazu „Meiste Fehler“ auf Heute und „Thema üben“.
 const { test, expect, APP, seed, richDB } = require('./helpers');
 test('Überblick: Kalender beginnt bei heute, Tageszeit und Etappen', async ({ page }) => {
   await seed(page, richDB('sv'));
@@ -52,4 +52,26 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await page.click('.tgrid [data-t=cambio]');
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
+});
+test('Heute „Meiste Fehler“ mit Aufgaben und Fehlern; „Thema üben“ mit Balken nur bei Satz-Themen', async ({ page }) => {
+  const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] } };
+  await seed(page, db);
+  await page.goto(APP);
+  await expect(page.locator('h2.grp', { hasText:'Meiste Fehler, letzte 30 Tage' })).toHaveCount(1);
+  const weak = page.locator('.row.bars:has(.wbar)');
+  expect(await weak.count()).toBeGreaterThanOrEqual(1);
+  expect(await weak.count()).toBeLessThanOrEqual(3);
+  await expect(weak.first().locator('.rd')).toHaveText(/^\d+ Fehler bei \d+ Aufgaben$/);
+  // Rot liegt im Grau: Fehler nie länger als die Aufgaben
+  const w = await weak.first().evaluate(r => ({ all:r.querySelector('.w-all').getBoundingClientRect().width, bad:r.querySelector('.w-bad').getBoundingClientRect().width }));
+  expect(w.bad).toBeGreaterThan(0);
+  expect(w.bad).toBeLessThanOrEqual(w.all);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=pickTopic]');
+  const gen = page.locator('.row.bars[data-t=species]');
+  await expect(gen.locator('.rd')).toHaveText('3 Aufgaben, 2 richtig');
+  await expect(gen.locator('.bar')).toHaveCount(0);
+  await expect(page.locator('.row.bars[data-t=inversion] .bar')).toHaveCount(1);
+  await page.click('.grp-lead [data-a=term]');
+  await expect(page.locator('.pop .pop-h')).toBeVisible();
 });

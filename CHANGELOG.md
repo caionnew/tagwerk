@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.61.1
+**Thema üben und Heute: Balken und Zahlen zeigen, was sie messen.**
+- **Fehler behoben, „Thema üben“:** Gleich aussehende Balken maßen zwei verschiedene Dinge. Bei Satz-Themen den gefestigten Anteil, bei erzeugten Themen (Verben mit Präposition, Verbformen und andere) die Trefferquote. So war „Begleiter & Adjektive“ nach 3 von 3 richtigen Aufgaben voll und „Konditional“ mit 27 geübten, noch nicht gefestigten Sätzen leer. Der Satz oben („wie viel davon gefestigt ist“) stimmte für die erzeugten Themen nicht.
+- **Jetzt:** zwei Gruppen. „Sätze“ mit Balken für den gefestigten Anteil, die Erklärung steht direkt darüber. „Immer neu erzeugt“ ohne Balken, nur Text: unter 10 Aufgaben als Anzahl („3 Aufgaben, 2 richtig“), danach Prozent über die letzten bis zu 50 Aufgaben. Dasselbe im Grammatik-Training, das bisher schon nach 3 Versuchen „67 % richtig“ zeigte.
+- **Fehler behoben, Heute:** „Schwächste Themen“ sortierte nach derselben gemischten Zahl. Solange noch kein Satz gefestigt sein kann (die ersten drei Wochen), standen dort einfach die ersten drei Satz-Themen der Liste, unabhängig von den Fehlern.
+- **Jetzt:** „Meiste Fehler, letzte 30 Tage“ mit denselben Zahlen und derselben Reihenfolge wie „Fehlerquellen nach Thema“, Balken grau für Aufgaben und rot für Fehler. Erst ab 8 Fehlern in 30 Tagen (wie dort) und nur Themen mit mindestens 2 Fehlern. Genus, Uhrzeiten und Zahlen fehlen, weil sie eigene Übungen haben.
+
 ## 24.61.0
 **Neu gezählt, noch ohne Anzeige: wie oft du einen neuen Satz beim ersten Mal richtig hast, je Thema und Monat.**
 - **Warum:** „Gefestigt“ zählt Sätze, die du dir gemerkt hast, und wächst vor allem mit der Zeit. Ob die Grammatik sitzt, zeigt sich bei Sätzen, die du noch nie gesehen hast. Daraus wird ab Januar eine Anzeige wie „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30“; sie ersetzt die geplante Wochenbilanz zum Schwerpunkt.

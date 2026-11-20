@@ -146,26 +146,49 @@ function todayHtml(lang){
   const tiles = kp.slice(0, 3);
   return `<div class="kpis today-kpis" style="grid-template-columns:repeat(${tiles.length}, 1fr)" aria-label="Heute">${tiles.map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>${x.mat ? `<p class="hint today-mat">${plural(x.mat, 'Satz', 'Sätze')} heute <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button>.</p>` : ''}`;
 }
+// Themen einer Sprache: alle aus TRAPS, dazu „Eigene Sätze“, sobald es welche gibt
+const topicIds = lang => TRAPS[lang].map(t => t.id).concat(BANK[lang].some(i => i.trap === 'eigene') ? ['eigene'] : []);
+// Stand eines erzeugten Bereichs in Worten, gleich für „Thema üben“ und „Grammatik-Training“. Unter 10 Aufgaben als Anzahl
+// („3 Aufgaben, 2 richtig“), denn eine Quote aus drei Versuchen wäre Scheingenauigkeit; danach die letzten bis zu 50 als Prozent.
+function genStatText(g){
+  const st = DB.gen[g] || { ok:0, bad:0 }, n = st.ok + st.bad, rc = st.recent || [];
+  if (rc.length >= 10) return `Zuletzt ${pct(rc.reduce((a, x) => a + x, 0) / rc.length)} richtig (letzte ${rc.length})`;
+  if (n >= 10) return `Bisher ${pct(st.ok / n)} richtig`;
+  return n ? `${plural(n, 'Aufgabe', 'Aufgaben')}, ${st.ok} richtig` : 'Noch nicht geübt';
+}
+// Zeilen für „Thema üben“. Satz-Themen haben einen festen Bestand, ihr Balken zeigt den gefestigten Anteil daran.
+// Erzeugte Themen haben keinen Bestand und bekommen nur Text: Eine Trefferquote als Balken neben Fortschrittsbalken
+// sähe nach demselben Maß aus (3 von 3 richtig wäre voll, 27 geübte, noch nicht gefestigte Sätze leer).
 function topicRows(lang){
-  const traps = TRAPS[lang].map(t => t.id).concat(BANK[lang].some(i => i.trap === 'eigene') ? ['eigene'] : []);
-  return traps.map(id => {
+  return topicIds(lang).map(id => {
     const tr = trapMeta(lang, id);
     if (tr.kind === 'gen') {
       const g = DB.gen[tr.gen] || { ok:0, bad:0 };
-      const n = g.ok + g.bad;
-      return { id, label:tr.label, pct:n ? Math.round(g.ok / n * 100) : 0, text:n ? `${Math.round(g.ok / n * 100)} % richtig` : 'noch nicht geübt', touched:n > 0 };
+      return { id, label:tr.label, gen:true, text:genStatText(tr.gen), touched:g.ok + g.bad > 0 };
     }
     const items = BANK[lang].filter(i => i.trap === id);
     const seen = items.filter(i => stOf(i.id)).length;
     const mature = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
-    return { id, label:tr.label, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`, short:`${mature}/${items.length}`, touched:seen > 0 };
+    return { id, label:tr.label, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`, touched:seen > 0 };
   });
 }
-const barRow = r => `<span class="txt"><span class="rt">${esc(r.label)}</span><span class="rd">${esc(r.text)}</span></span><span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`;
+const rowText = r => `<span class="txt"><span class="rt">${esc(r.label)}</span><span class="rd">${esc(r.text)}</span></span>`;
+const barRow = r => rowText(r) + (r.gen ? '' : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
+// Themen mit den meisten Fehlern der letzten 30 Tage, dieselben Zahlen und dieselbe Reihenfolge wie „Fehlerquellen nach Thema“:
+// nach Anzahl der Fehler, bei Gleichstand mehr Aufgaben zuerst. Erst ab 8 Fehlern in der Sprache (wie dort) und je Thema
+// mindestens 2; vorher sagt die Liste nichts. Nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
+function weakTopics(lang){
+  const s = errStats(lang, 30); if (s.bad < 8) return [];
+  const ids = new Set(topicIds(lang));
+  return Object.keys(s.p).filter(id => ids.has(id) && s.p[id][1] >= 2).map(id => ({ id, label:trapMeta(lang, id).label, n:s.p[id][0], bad:s.p[id][1] }))
+    .sort((a, b) => b.bad - a.bad || b.n - a.n).slice(0, 3);
+}
+// Balken wie in den Fehlerquellen: Aufgaben (grau) und Fehler (rot) auf einer gemeinsamen Skala
 function weakHtml(lang){
-  const rows = topicRows(lang).filter(r => r.touched).sort((a, b) => a.pct - b.pct).slice(0, 3);
-  if (!rows.length) return '';
-  return `<h2 class="grp">Schwächste Themen</h2><div class="rows">${rows.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
+  const list = weakTopics(lang);
+  if (!list.length) return '';
+  const max = Math.max(...list.map(x => x.n)), w = v => +(v / max * 100).toFixed(1);
+  return `<h2 class="grp">Meiste Fehler, letzte 30 Tage</h2><div class="rows">${list.map(x => `<button type="button" class="row bars" data-a="trapgo" data-t="${x.id}">${rowText({ label:x.label, text:`${x.bad} Fehler bei ${x.n} Aufgaben` })}<span class="bar wbar" aria-hidden="true"><span class="w-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="w-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span></button>`).join('')}</div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
@@ -196,11 +219,15 @@ function viewExtra(){
 }
 function viewPickTopic(){
   const lang = S.lang;
-  return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema. Der Balken zeigt, wie viel davon gefestigt ist.</p><div class="rows">${topicRows(lang).map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
+  const rows = topicRows(lang), list = rs => `<div class="rows">${rs.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
+  const gens = rows.filter(r => r.gen);
+  return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema.</p>
+    <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button> sind.</p>${list(rows.filter(r => !r.gen))}
+    ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2><p class="lead-s grp-lead">Ohne festen Satzbestand, darum ohne Balken.</p>${list(gens)}` : ''}`;
 }
 function viewPickGen(){
   const lang = S.lang;
-  return backBar('Grammatik-Training') + `<p class="lead-s">Die Aufgaben werden nach festen Regeln immer neu erzeugt. Du kannst jederzeit aufhören.</p><div class="rows">${genIds(lang).map(g => { const st = DB.gen[g] || { ok:0, bad:0 }; const n = st.ok + st.bad, rc = st.recent || []; const recent = rc.length >= 10 ? `Zuletzt ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)} % richtig${rc.length >= 50 ? ' (letzte 50)' : ` (letzte ${rc.length})`}` : ''; return row('gengo', GENS[g].label, recent || (n ? `Bisher ${Math.round(st.ok / n * 100)} % richtig` : 'Noch nicht geübt'), ` data-g="${g}"`); }).join('')}</div>`;
+  return backBar('Grammatik-Training') + `<p class="lead-s">Die Aufgaben werden nach festen Regeln immer neu erzeugt. Du kannst jederzeit aufhören.</p><div class="rows">${genIds(lang).map(g => row('gengo', GENS[g].label, genStatText(g), ` data-g="${g}"`)).join('')}</div>`;
 }
 function runBar(r){
   const ex = r.queue[r.idx];

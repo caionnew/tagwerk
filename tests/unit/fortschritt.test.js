@@ -72,3 +72,57 @@ test('Fehlerquellen nach Thema: Aufgaben und Fehler auf einer Skala, kein voller
   const idiom = rows[3]; assert.equal(idiom.all, 6.9); assert.equal(idiom.bad, 3.4);
   rows.forEach(r => { const [b, n] = r.n.split('/').map(Number); assert.ok(Math.abs(r.bad / r.all - b / n) < 0.02, r.label); });
 });
+
+test('Thema üben: Balken nur bei Satz-Themen (gefestigter Anteil), erzeugte Themen ohne Balken und unter 10 Aufgaben als Anzahl', () => {
+  run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
+    DB.gen = { prep_es: { ok: 2, bad: 1, recent: [1, 0, 1] }, det_es: { ok: 3, bad: 0, recent: [1, 1, 1] } };
+    BANK.es.filter(i => i.trap === 'condicional').slice(0, 2).forEach(i => { DB.st[i.id] = { ok: 2, bad: 0, alts: [], s: 30, d: 5, ivl: 6, last: t, due: addDays(t, 6), reps: 2 }; });
+    S.lang = 'es'; })()`);
+  const html = run('viewPickTopic()');
+  const [sents, gens] = html.split('Immer neu erzeugt');
+  assert.ok(gens, 'zweite Gruppe fehlt');
+  const sentRows = run(`topicRows('es').filter(r => !r.gen).length`), genRows = run(`topicRows('es').filter(r => r.gen).length`);
+  assert.equal((sents.match(/class="bar"/g) || []).length, sentRows);
+  assert.equal((gens.match(/class="bar/g) || []).length, 0);
+  assert.equal((gens.match(/data-a="trapgo"/g) || []).length, genRows);
+  assert.match(text(sents), /Der Balken zeigt, wie viele Sätze im Thema gefestigt sind/);
+  assert.match(text(gens.split('data-t="prep"')[1].split('</button>')[0]), /3 Aufgaben, 2 richtig/);
+  assert.match(text(gens.split('data-t="concord"')[1].split('</button>')[0]), /3 Aufgaben, 3 richtig/);
+  assert.doesNotMatch(text(gens), /%/);
+  assert.match(text(sents.split('data-t="condicional"')[1].split('</button>')[0]), /2 von \d+ Sätzen geübt, 0 gefestigt/);
+});
+
+test('Erzeugte Bereiche: ab 10 Aufgaben Prozent, gleicher Text in „Thema üben“ und „Grammatik-Training“', () => {
+  run(`DB = freshDB(); DB.gen = { prep_es: { ok: 9, bad: 3, recent: [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] }, det_es: { ok: 8, bad: 2, recent: [1, 1] } }; S.lang = 'es';`);
+  assert.equal(run(`genStatText('prep_es')`), 'Zuletzt 75 % richtig (letzte 12)');
+  assert.equal(run(`genStatText('det_es')`), 'Bisher 80 % richtig');
+  assert.equal(run(`genStatText('conj')`), 'Noch nicht geübt');
+  run(`DB.gen.conj = { ok: 1, bad: 0, recent: [1] }`);
+  assert.equal(run(`genStatText('conj')`), '1 Aufgabe, 1 richtig');
+  const topic = text(run('viewPickTopic()').split('data-t="prep"')[1].split('</button>')[0]);
+  const drill = text(run('viewPickGen()').split('data-g="prep_es"')[1].split('</button>')[0]);
+  assert.match(topic, /Zuletzt 75 % richtig \(letzte 12\)/);
+  assert.match(drill, /Zuletzt 75 % richtig \(letzte 12\)/);
+});
+
+test('Heute, „Meiste Fehler“: wie die Fehlerquellen nach Anzahl, erst ab 8 Fehlern, je Thema mindestens 2, nur übbare Themen', () => {
+  run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
+    BANK.es.filter(i => i.trap === 'serestar').slice(0, 5).forEach(i => { DB.st[i.id] = { ok: 1, bad: 0, alts: [], s: 2, d: 5, ivl: 2, last: t, due: addDays(t, 2), reps: 1 }; }); })()`);
+  // Geübt, aber keine Fehler: kein Block mehr (früher standen hier Themen mit 0 gefestigt)
+  assert.equal(run(`weakHtml('es')`), '');
+  run(`DB.tlog = {
+    [today()]: { es: { 'p:condicional': [30, 5], 'p:prep': [7, 2], 'p:perfecto': [8, 2], 'p:porpara': [14, 1], 'p:genus': [20, 6], 't:gap': [59, 10] } },
+    [addDays(today(), -30)]: { es: { 'p:idiom': [9, 9], 't:gap': [9, 9] } } };`);
+  assert.deepEqual(run(`weakTopics('es').map(x => x.id)`), ['condicional', 'perfecto', 'prep']);
+  // Gleiche Reihenfolge wie im Reiter „Thema“ der Fehlerquellen, dort ohne die nicht übbaren Bereiche
+  const src = text(run(`(S.errTab = 'p', errorSourcesHtml('es'))`));
+  assert.ok(src.indexOf('Konditional') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Verben mit Präposition'));
+  const html = run(`weakHtml('es')`);
+  assert.match(text(html), /^Meiste Fehler, letzte 30 Tage /);
+  assert.match(text(html.split('data-t="condicional"')[1].split('</button>')[0]), /5 Fehler bei 30 Aufgaben/);
+  assert.equal((html.match(/class="w-bad"/g) || []).length, 3);
+  // Unter 8 Fehlern in der Sprache sagt die Liste noch nichts
+  run(`DB.tlog[today()].es['t:gap'] = [59, 7]`);
+  assert.deepEqual(run(`weakTopics('es')`), []);
+  assert.equal(run(`weakHtml('es')`), '');
+});

@@ -115,10 +115,22 @@ function recordAnswer(lang, ex, c, good){
   if (k) L['e:' + k] = (L['e:' + k] || 0) + 1;
   // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes, ebenso ein Fehler neben der richtig gesetzten Stellung.
   // In Wortschatz-Themen ist das andere Wort im geprüften Teil dagegen genau der Fehler.
-  const trap = exTrap(ex);
-  if (trap) add('p:' + trap, good || (k === 'vocab' && !topicHit) || k === 'spell' || !!c.posOk);
+  const trap = exTrap(ex), topicOk = good || (k === 'vocab' && !topicHit) || k === 'spell' || !!c.posOk;
+  if (trap) add('p:' + trap, topicOk);
   if (type) add('t:' + type, good);
+  if (trap && c.wasSeen === false && (ex.type === 'cloze' || ex.type === 'tiles')) noteFirst(lang, ex.id, trap, topicOk);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
+}
+// Erster Kontakt mit einem neuen Satz: je Monat, Thema und Stufe [Aufgaben, Fehler], gewertet wie in den Fehlerquellen.
+// Zeigt, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für
+// bekannte Sätze. Immer dieselbe Übungsform (Lücke oder Kacheln, je nach Satz), darum über Monate vergleichbar.
+// Stufe 1 bis 3 = A2 bis B2, t = Tatoeba: getrennt, weil „Fortgeschritten“ in schwachen Themen leichtere Sätze einstreut
+// und Tatoeba-Sätze ohne geprüfte Alternativen öfter streng gewertet werden. Wenige Zahlen je Monat, darum ohne Löschfrist.
+function noteFirst(lang, id, trap, ok){
+  const it = itemById(id); if (!it || it.own || !trapMeta(lang, trap)) return;
+  const F = DB.first = DB.first && typeof DB.first === 'object' ? DB.first : {}, L = F[lang] = F[lang] || {};
+  const M = L[today().slice(0, 7)] = L[today().slice(0, 7)] || {}, k = `${trap}:${it.tat ? 't' : it.lvl || 0}`;
+  const v = M[k] = M[k] || [0, 0]; v[0]++; if (!ok) v[1]++;
 }
 // Tagesstände älter als 120 Tage: nur Sonntage und Monatsenden behalten. Reicht für Verlauf und Etappen und hält den Speicher klein.
 function compactSnaps(){

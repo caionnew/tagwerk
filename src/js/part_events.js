@@ -334,6 +334,7 @@ document.addEventListener('click', e => {
         if (DB.snap) Object.values(DB.snap).forEach(d => { delete d[lang]; });
         if (DB.genus) delete DB.genus[lang];
         if (DB.pace) delete DB.pace[lang];
+        if (DB.first) delete DB.first[lang];
         // Beim Lesen nachgeschlagene Wörter dieser Sprache (für Lesetext-Lücken)
         if (DB.used && DB.used.looked) Object.keys(DB.used.looked).forEach(k => { if (k.startsWith(lang + ':')) delete DB.used.looked[k]; });
         if (DB.run && DB.run.lang === lang) DB.run = null;

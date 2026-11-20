@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.61.0
+**Neu gezählt, noch ohne Anzeige: wie oft du einen neuen Satz beim ersten Mal richtig hast, je Thema und Monat.**
+- **Warum:** „Gefestigt“ zählt Sätze, die du dir gemerkt hast, und wächst vor allem mit der Zeit. Ob die Grammatik sitzt, zeigt sich bei Sätzen, die du noch nie gesehen hast. Daraus wird ab Januar eine Anzeige wie „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30“; sie ersetzt die geplante Wochenbilanz zum Schwerpunkt.
+- **Was zählt:** nur der erste Versuch an einem neuen Satz, in der Form, in der neue Sätze immer kommen (Lücke oder Kacheln), gewertet wie in den Fehlerquellen. Getrennt nach Stufe (A2, B1, B2) und Tatoeba, damit leichtere Sätze in schwachen Themen den Vergleich nicht schönen. Eigene Sätze und Grammatik-Generatoren zählen nicht mit.
+- **Speicher:** neues Feld `first`, je Monat ein paar Zahlen, ohne Löschfrist. Ältere Stände und Backups laden unverändert; „Sprache zurücksetzen“ löscht auch diesen Teil.
+- Fahrplan und Ideenliste nachgetragen: die Ideen zur Zahl „gefestigt“ mit Noten, dazu Schwerpunkt erst ab 10 Aufgaben (B) und „verankert“ ausblenden (B−).
+
 ## 24.60.1
 **Fehlerquellen nach Thema: Der Balken zeigt jetzt dasselbe wie die Zahl daneben.**
 - **Fehler behoben:** Der Balken maß die Fehler im Verhältnis zum Thema mit den meisten Fehlern, die Zahl daneben aber Fehler von Aufgaben. So war „12/58“ (ein Fünftel falsch) ganz voll und „2/4“ (die Hälfte) ein Sechstel davon; das Schwerpunktthema stand fast immer mit vollem Balken oben, weil es die meisten Aufgaben bekommt.

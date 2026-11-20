@@ -87,3 +87,39 @@ test('Kacheln liegen nie in einer gültigen Reihenfolge, auch nicht in der einer
   assert.ok(orders.n >= 60, String(orders.n));
   assert.deepEqual(orders.bad, []);
 });
+
+// Erster Kontakt je Thema und Monat (24.61.0): Grundlage für „neue Sätze beim ersten Mal richtig“, über Monate vergleichbar
+test('Erstkontakt: nur der erste Versuch an einem neuen Satz zählt, je Monat, Thema und Stufe', () => {
+  // Ein Lückenthema mit mindestens drei B2-Sätzen
+  const gapB2 = t => BANK.sv.filter(i => i.trap === t && i.kind === 'form' && i.gap && i.lvl === 3);
+  const trap = [...new Set(BANK.sv.map(i => i.trap))].find(t => gapB2(t).length >= 3);
+  const [a, b, seen] = gapB2(trap), two = [a, b];
+  app.setDB(blank('fort'));
+  app.run(`buildBank(); DB.st[${JSON.stringify(seen.id)}] = { s:2, d:5, ivl:2, last:addDays(today(), -2), due:today(), reps:1, ok:1, bad:0, alts:[] };
+    S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:${JSON.stringify([two[0], two[1], seen].map(i => ({ type:'cloze', id:i.id })))}, idx:0, ok:0, bad:0, res:[], missed:[], secs:0, strongBefore:0 };
+    S.run.cur = { state:'answer', input:${JSON.stringify(two[0].gap)} }; check(); next();
+    S.run.cur = { input:'', state:'answer' }; giveUp(); next();
+    S.run.cur = { state:'answer', input:'zzz' }; check(); next();
+    S.run.cur = { state:'answer', input:${JSON.stringify(b.gap)} }; check(); next();`);
+  assert.equal(J('S.run.queue[3].requeue && S.run.queue[3].id'), b.id, 'vierte Aufgabe: zweiter Versuch am aufgegebenen Satz');
+  const month = J('today().slice(0, 7)'), first = J('DB.first');
+  // Richtig und „Weiß ich nicht“ bei zwei neuen Sätzen; der bekannte Satz und der zweite Versuch in derselben Runde zählen nicht
+  assert.deepEqual(first, { sv:{ [month]:{ [`${trap}:3`]:[2, 1] } } });
+  // Die Fehlerquellen zählen weiter alle ersten Versuche, auch die Wiederholung
+  assert.deepEqual(J(`DB.tlog[today()].sv['p:${trap}']`), [3, 2]);
+});
+test('Erstkontakt: Tatoeba-Sätze getrennt, eigene Sätze und Grammatik-Generatoren nicht', () => {
+  app.setDB(blank('fort'));
+  app.run(`DB.tat.sv.push({ id:'sv:tat1', de:'Ich weiß, dass er heute nicht kommt.', target:'Jag vet att han inte kommer idag.', trap:'bisats', auto:true });
+    DB.own.sv.push({ id:'sv:own1', de:'Mein Satz.', target:'Min mening.' }); buildBank();
+    recordAnswer('sv', { type:'tiles', id:'sv:tat1' }, { wasSeen:false, input:'' }, true);
+    recordAnswer('sv', { type:'tiles', id:'sv:own1' }, { wasSeen:false, input:'' }, false);
+    recordAnswer('sv', { type:'free', id:'sv:tat1' }, { wasSeen:false, input:'x' }, false);`);
+  assert.deepEqual(J('DB.first.sv[today().slice(0, 7)]'), { 'bisats:t':[1, 0] });
+});
+test('Erstkontakt: alter Stand ohne Zähler lädt, Backup behält ihn', () => {
+  app.run(`adoptDB(${JSON.stringify(blank('fort'))})`);
+  assert.equal(J('DB.first === undefined'), true);
+  app.run(`DB.first = { es:{ '2026-11':{ 'condicional:3':[20, 6] } } }; adoptDB(JSON.parse(backupText()))`);
+  assert.deepEqual(J('DB.first'), { es:{ '2026-11':{ 'condicional:3':[20, 6] } } });
+});

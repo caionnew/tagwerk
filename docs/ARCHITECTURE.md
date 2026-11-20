@@ -29,7 +29,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `js/part_read.js` | Lesen und Hören: Texte, Fragen, Wikipedia-Fundstück |
 | `js/part_modern.js` | Spracherkennung, Symbole, Vibration, Teilen, Schnellzugriffe |
 | `js/part_shadow.js` | Nachsprechen: Aufnahme, Pegel, Auswertung, Wiedergabe, Aussprachehilfen, Übersicht |
-| `js/part_stats.js` | Fehlerquellen nach Thema, Übungsart, Fehlerart (`mistake`: Ein anderes Wort im geprüften Teil ist Grammatik, außer in Themen mit `vocab:true` wie Redewendungen, Falsche Freunde, Lesetext-Lücken; dort nur dieselbe Wortfamilie) und hartnäckigen Sätzen (`hardSentences`: bei Wiederholungen mindestens zweimal nicht gewusst, nicht gefestigt, in 30 Tagen geübt; `hardPattern`: gemeinsames Thema), Uhrzeiten, Wortschatz |
+| `js/part_stats.js` | Fehlerquellen nach Thema, Übungsart, Fehlerart (`mistake`: Ein anderes Wort im geprüften Teil ist Grammatik, außer in Themen mit `vocab:true` wie Redewendungen, Falsche Freunde, Lesetext-Lücken; dort nur dieselbe Wortfamilie) Erstkontakt neuer Sätze je Monat (`noteFirst`, noch ohne Anzeige) und hartnäckigen Sätzen (`hardSentences`: bei Wiederholungen mindestens zweimal nicht gewusst, nicht gefestigt, in 30 Tagen geübt; `hardPattern`: gemeinsames Thema), Uhrzeiten, Wortschatz |
 | `js/part_long.js` | Dein Weg, Themenraster, Veränderung über 30 Tage |
 | `js/part_write.js` | Textprofil, Hinweise, Extra-Aufgaben, Textarchiv |
 | `js/part_ref.js` | Themenblatt, Nachschlagelisten, Kulturkarten, Karten |
@@ -72,6 +72,7 @@ Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `run
 | `run` | offenes Tagwerk von heute (Pause): Aufgaben `queue` (zweite Versuche mit `requeue`, nach der Antwort Ergebnis `got`: ok, near, bad), Stand `idx`, Rundenergebnis `res`, verpasste Sätze `missed` |
 | `snap[datum][sprache]` | Tagesstand (älter als 120 Tage nur sonntags und am Monatsende, `compactSnaps`): geübt `n`, gefestigt `m`, abrufbar `k`, Wortschatz `w`, gefestigt je Thema `t` |
 | `tlog[datum]` | Fehlerquellen je Thema (`p:`), Übungsart (`t:`), Fehlerart (`e:`), Stunden `h`; nach 120 Tagen gelöscht |
+| `first[sprache][monat]` | Erster Kontakt mit neuen Sätzen (`noteFirst`) je Thema und Stufe, Schlüssel `thema:3` (1 bis 3 = A2 bis B2, `t` = Tatoeba): `[Aufgaben, Fehler]`, gewertet wie die Fehlerquellen; nur Lücke und Kacheln, also die Form, in der neue Sätze kommen. Ohne Löschfrist (wenige Zahlen je Monat); fehlt in Ständen vor 24.61; Zurücksetzen einer Sprache löscht ihren Teil |
 | `gen`, `genus` | Ergebnisse der erzeugten Aufgaben und der Genus-Wörter |
 | `own`, `tat` | eigene Sätze, Sätze von Tatoeba |
 | `texts` | Textarchiv mit Messwerten (höchstens 500) |

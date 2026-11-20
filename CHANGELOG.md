@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.60.1
+**Fehlerquellen nach Thema: Der Balken zeigt jetzt dasselbe wie die Zahl daneben.**
+- **Fehler behoben:** Der Balken maß die Fehler im Verhältnis zum Thema mit den meisten Fehlern, die Zahl daneben aber Fehler von Aufgaben. So war „12/58“ (ein Fünftel falsch) ganz voll und „2/4“ (die Hälfte) ein Sechstel davon; das Schwerpunktthema stand fast immer mit vollem Balken oben, weil es die meisten Aufgaben bekommt.
+- **Jetzt:** grau alle Aufgaben im Thema, rot die falschen, beide auf einer Skala. Die Länge zeigt die Menge, der rote Teil im Grau den Anteil. Themen mit wenigen Aufgaben sehen klein aus statt wie eine sichere Quote. Die Erklärung oben nennt beide Farben.
+- **Reihenfolge:** wie bisher nach Anzahl der Fehler; bei Gleichstand zuerst das Thema mit mehr Aufgaben, dort ist die Aussage belastbarer. Vorher entschied bei Gleichstand der Zufall der Speicherreihenfolge.
+
 ## 24.60.0
 **Paket 5: 84 neue spanische B2-Sätze für Objektpronomen, gustar & Co., Reflexivverben, Präpositionen, Verbalperiphrasen, Redewendungen und falsche Freunde.**
 - Je 12 Sätze pro Thema, jeder mit Erklärung, jedes Wort im Wörterbuch.

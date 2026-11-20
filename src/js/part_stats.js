@@ -177,10 +177,15 @@ function errorSourcesHtml(lang){
       : `${pat ? `<b>${esc(trapLabel(lang, pat.trap))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Antippen für die Regel.`;
   } else if (few) note = gate;
   else if (tab === 'p') {
-    const list = Object.keys(s.p).map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.bad).sort((a, b) => b.bad - a.bad).slice(0, 6);
-    const max = Math.max(1, ...list.map(x => x.bad));
-    lead = 'Fehler je Thema, von allen Aufgaben im Thema:';
-    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / max * 100)}%"></span></span><span class="ev">${x.bad}/${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
+    // Reihenfolge nach Anzahl der Fehler (woher sie kommen), bei Gleichstand das Thema mit mehr Aufgaben zuerst:
+    // Dort ist die Aussage belastbarer, und Mini-Stichproben (1 von 2) fallen als Erste aus den sechs Zeilen.
+    // Balken: Aufgaben (grau) und Fehler (rot) auf einer gemeinsamen Skala. Länge = Menge, rot im Grau = Anteil;
+    // wenige Aufgaben sehen klein aus statt wie eine sichere Quote, und keine Zeile ist voll, nur weil sie vorn liegt.
+    const list = Object.keys(s.p).map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.bad && x.n)
+      .sort((a, b) => b.bad - a.bad || b.n - a.n).slice(0, 6);
+    const max = Math.max(1, ...list.map(x => x.n)), w = v => +(v / max * 100).toFixed(1);
+    lead = '<span class="sq e-bad-sq"></span>falsch von <span class="sq e-all-sq"></span>allen Aufgaben im Thema:';
+    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar eboth" aria-hidden="true"><span class="e-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="e-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span><span class="ev">${x.bad}/${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
     note = 'Antippen für die Regel.';
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);

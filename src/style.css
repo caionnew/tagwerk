@@ -571,13 +571,20 @@ button.row[disabled]::after{ display:none; }
 .legend.elead{ margin:0 0 2px; }
 .errseg button{ padding:5px 9px; }
 .erows{ display:grid; gap:4px; }
-.erow{ display:grid; grid-template-columns:minmax(0, 1fr) 80px 56px; align-items:center; gap:10px; padding:7px 0; background:none; border:0; border-bottom:1px solid var(--line); color:var(--ink); text-align:left; font:inherit; width:100%; }
+.erow{ display:grid; grid-template-columns:minmax(0, 1fr) 88px 48px; align-items:center; gap:10px; padding:7px 0; background:none; border:0; border-bottom:1px solid var(--line); color:var(--ink); text-align:left; font:inherit; width:100%; }
 .erow:last-child{ border-bottom:0; }
 button.erow:active{ background:var(--accent-soft); }
 .el{ font-size:14.5px; font-weight:600; display:flex; flex-direction:column; }
 .esub{ font-size:12.5px; font-weight:400; color:var(--muted); }
 .ebar{ height:7px; border-radius:4px; background:var(--line); overflow:hidden; }
 .ebar span{ display:block; height:100%; border-radius:4px; background:var(--bad); opacity:.75; }
+/* Thema: Aufgaben grau, davon falsch rot, gemeinsame Skala; ohne Spur, damit die Länge die Menge zeigt */
+.ebar.eboth{ position:relative; background:none; }
+.ebar.eboth span{ position:absolute; left:0; top:0; bottom:0; }
+.ebar .e-all, .sq.e-all-sq{ background:color-mix(in srgb, var(--muted) 45%, transparent); opacity:1; }
+.ebar .e-bad, .sq.e-bad-sq{ background:var(--bad); opacity:.85; }
+.elead .sq{ margin:0 4px 0 0; }
+.elead .sq:not(:first-child){ margin-left:6px; }
 /* Zahl rechts in den Fehlerquellen (nicht .ev allein: das sind auch die Belegstellen im Lesetext) */
 .erow .ev{ font-size:13px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
 .srow{ grid-template-columns:minmax(0, 1fr) auto; align-items:start; padding:9px 0; }

@@ -40,7 +40,7 @@ test('Fehlerquellen: Thema und Übungsart sagen oben, was die Zahl ist', () => {
   run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:inversion': [48, 6], 'p:bisats': [25, 5], 't:free': [12, 6], 't:gap': [64, 8], 'e:word': 10 } } };`);
   run(`S.errTab = 'p'`);
   let html = run(`errorSourcesHtml('sv')`);
-  assert.match(html, /Fehler je Thema, von allen Aufgaben im Thema:/); assert.match(html, /6\/48/);
+  assert.match(text(html), /falsch von allen Aufgaben im Thema:/); assert.match(html, /6\/48/);
   run(`S.errTab = 't'`);
   html = run(`errorSourcesHtml('sv')`);
   assert.match(html, /Anteil falscher Antworten je Übungsart:/); assert.match(html, /50 %|50 %/);
@@ -56,4 +56,19 @@ test('Behalten deutlich über Plan: unter „Fortgeschritten“ längeres Tagwer
   run(`DB.settings.niveau = 'fort'`);
   html = run('viewProgress()');
   assert.match(html, /Ein längeres Tagwerk würde dich nicht überfordern/);
+});
+
+test('Fehlerquellen nach Thema: Aufgaben und Fehler auf einer Skala, kein voller Balken nur für den Spitzenreiter', () => {
+  // Zahlen aus einem echten Stand: 12/58 war voll, 2/4 (halb falsch) ein Sechstel davon
+  run(`DB = freshDB(); DB.tlog = { [today()]: { es: { 'p:condicional': [58, 12], 'p:perfecto': [8, 2], 'p:idiom': [4, 2], 'p:prep': [7, 2], 'p:serestar': [21, 1], 't:gap': [98, 19] } } }; S.errTab = 'p';`);
+  const html = run(`errorSourcesHtml('es')`);
+  const rows = [...html.matchAll(/<span class="el">([^<]+)<\/span><span class="ebar eboth"[^>]*><span class="e-all" style="width:max\(6px, ([\d.]+)%\)"><\/span><span class="e-bad" style="width:max\(3px, ([\d.]+)%\)"><\/span><\/span><span class="ev">(\d+)\/(\d+)</g)]
+    .map(m => ({ label:m[1], all:+m[2], bad:+m[3], n:`${m[4]}/${m[5]}` }));
+  assert.equal(rows.length, 5);
+  // Reihenfolge: meiste Fehler zuerst, bei Gleichstand mehr Aufgaben zuerst (belastbarer; 2/8 vor 2/7 vor 2/4)
+  assert.deepEqual(rows.map(r => r.n), ['12/58', '2/8', '2/7', '2/4', '1/21']);
+  // Gemeinsame Skala: das Thema mit den meisten Aufgaben ist die volle Länge, rot ist davon der falsche Teil
+  assert.equal(rows[0].all, 100); assert.equal(rows[0].bad, 20.7);
+  const idiom = rows[3]; assert.equal(idiom.all, 6.9); assert.equal(idiom.bad, 3.4);
+  rows.forEach(r => { const [b, n] = r.n.split('/').map(Number); assert.ok(Math.abs(r.bad / r.all - b / n) < 0.02, r.label); });
 });

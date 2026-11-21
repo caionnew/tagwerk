@@ -201,7 +201,6 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .lenlink{ margin:10px 4px 0; }
 .mbar{ height:8px; border-radius:4px; background:var(--line); overflow:hidden; }
 .mbar span{ display:block; height:100%; background:var(--accent); border-radius:4px; }
-.milestone{ display:inline-block; background:var(--accent-soft); color:var(--accent-ink); border-radius:10px; padding:8px 12px; font-weight:650; margin:8px 0 0; }
 .chart{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:14px 16px; }
 .cal{ display:block; width:100%; height:auto; }
 .cal text{ font-size:9px; fill:var(--muted); font-family:var(--sans); }
@@ -466,6 +465,50 @@ button.row[disabled]::after{ display:none; }
 .stamp.draw path{ stroke-dasharray:40; stroke-dashoffset:40; animation:drawIt .3s .38s ease-out forwards; }
 @keyframes drawIt{ to{ stroke-dashoffset:0; } }
 @media (prefers-reduced-motion: reduce){ .stamp.draw circle, .stamp.draw path{ stroke-dashoffset:0; } }
+/* Etappe (seit 24.63): Siegelrand um den Stempel in der Sprachfarbe, zeichnet sich nach dem Haken; außerhalb des Tagwerks ein Punkt */
+.stamp.seal{ width:76px; height:76px; margin:-6px 0 4px -10px; }
+.stamp.seal .sl{ stroke:var(--accent); stroke-width:2.2; }
+.stamp.seal.nd circle{ stroke:var(--accent); }
+.stamp.seal .dot{ fill:var(--accent); stroke:none; }
+.stamp.seal.draw .sl{ stroke-dasharray:100; stroke-dashoffset:100; animation:drawIt .6s .72s ease-out forwards; }
+.stamp.seal.nd.draw .sl{ animation-delay:.3s; }
+@media (prefers-reduced-motion: reduce){ .stamp.seal.draw .sl{ stroke-dashoffset:0; animation:none; } }
+.mile, .month{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:12px 14px 10px; margin:12px 0 14px; }
+.month{ margin-top:16px; }
+.mile-eb{ font-size:12px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 4px; }
+.mile .mile-eb + .msents, .mile .mr-x + .mile-eb, .mrail + .mile-eb{ margin-top:10px; }
+.mrail{ list-style:none; margin:2px 0 4px; padding:0; }
+.mr{ display:grid; grid-template-columns:20px 1fr auto; column-gap:10px; align-items:center; min-height:34px; position:relative; }
+.mr::before{ content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:var(--faint); opacity:.6; }
+.mr:first-child::before{ top:50%; } .mr:last-child::before{ bottom:50%; } .mr:only-child::before{ display:none; }
+.rl-sv .mr::before{ background:var(--sv); opacity:.45; } .rl-es .mr::before{ background:var(--es); opacity:.5; }
+.mr i{ width:12px; height:12px; border-radius:50%; margin-left:3px; position:relative; z-index:1; box-sizing:border-box; background:var(--muted); }
+.rl-sv .mr i{ background:var(--sv); } .rl-es .mr i{ background:var(--es); }
+.mr.next i{ background:var(--surface); border:2px solid var(--muted); }
+.rl-sv .mr.next i{ border-color:var(--sv); } .rl-es .mr.next i{ border-color:var(--es); }
+.mr.now i{ width:16px; height:16px; margin-left:1px; box-shadow:0 0 0 4px color-mix(in srgb, var(--muted) 22%, transparent); }
+.rl-sv .mr.now i{ box-shadow:0 0 0 4px var(--sv-soft); } .rl-es .mr.now i{ box-shadow:0 0 0 4px var(--es-soft); }
+.mr-t{ font-size:15px; padding:6px 0; }
+.mr.now .mr-t{ font-weight:700; font-size:16.5px; }
+.mr.done .mr-t, .mr.next .mr-t{ color:var(--muted); }
+.mr-d{ font-size:12.5px; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.mr.now .mr-d{ color:var(--accent-ink); font-weight:650; }
+.mr-x, .mr-also{ font-size:14px; color:var(--muted); margin:6px 0 0; line-height:1.45; }
+.mr-also{ border-top:1px solid var(--line); padding-top:8px; margin-top:10px; }
+.msents .ms{ display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-top:1px solid var(--line); }
+.msents .ms:first-child{ border-top:0; padding-top:2px; }
+.msents .txt{ flex:1; display:flex; flex-direction:column; gap:2px; }
+.msents .rt{ font-family:var(--serif); font-size:16px; }
+.msents .rd{ font-size:13px; color:var(--muted); }
+.ms-tag{ font-size:12.5px; color:var(--ok); font-weight:650; }
+.mr-more{ font-size:14px; margin:2px 0 0; }
+.mr-way{ display:block; font-size:14px; margin:8px 0 2px; }
+.kpis.month-kpis{ margin-top:6px; padding-top:0; border-top:0; }
+.cal.mcal{ display:block; width:auto; max-width:100%; margin:14px 0 6px; }
+.mcal rect{ cursor:default; }
+.dc-m{ list-style:none; margin:10px 0 0; padding:0; font-size:14px; }
+.dc-m li{ display:flex; align-items:center; gap:8px; margin:3px 0; }
+.dc-m .sq{ width:10px; height:10px; border-radius:50%; flex:none; margin:0; }
 
 /* Fehler finden */
 .spot{ font-family:var(--serif); font-size:22px; line-height:1.9; margin:10px 0 0; }

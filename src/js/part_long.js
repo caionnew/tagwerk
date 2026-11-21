@@ -14,47 +14,64 @@ function snapAgo(lang, days){
   for (let b = 0; b <= 15; b++) for (const d of [days + b, days - b]) { const x = DB.snap && DB.snap[addDays(today(), -d)]; if (x && x[lang] && d >= 25) return x[lang]; }
   return null;
 }
-// Etappen aus den gespeicherten Tagesdaten rekonstruieren
+// Etappen aus den gespeicherten Tagesdaten rekonstruieren. Gefestigt, Serie und verankert nutzen die Listen aus part_head.js,
+// dieselben wie Rundenende und Fortschritt.
 const WAY_TASKS = [100, 500, 1000, 2500, 5000, 10000, 25000, 50000];
 const WAY_HOURS = [1, 5, 10, 25, 50, 100, 250, 500];
-const WAY_MATURE = [10, 25, 50, 100, 250, 500, 1000, 1500, 2000];
-const WAY_STREAK = [7, 30, 100, 200, 365, 730];
 const WAY_WORDS = [100, 250, 500, 1000, 1500, 2000];
 const WAY_DAYS = [10, 50, 100, 250, 500, 1000];
 // Schwellen gehen nie aus: Nach dem Ende der Liste geht es in gleichmäßigen Schritten weiter, auch nach Jahren
 function ladder(list, step, upTo){ const out = list.slice(); while (out[out.length - 1] <= upTo) out.push(step(out[out.length - 1])); return out; }
-const streakStep = x => (x === 730 ? 1000 : x === 1000 ? 1095 : x + 365);
 const streakLabel = n => (n >= 365 && n % 365 === 0 ? `${n / 365} ${n === 365 ? 'Jahr' : 'Jahre'} in Folge` : `${n.toLocaleString('de-DE')} Tage in Folge`);
+const fmtN = n => n.toLocaleString('de-DE');
+const anchoredLabel = n => (n === 1 ? 'Erster Satz verankert' : `${fmtN(n)} verankerte Sätze`);
+// Themen-Etappen (siehe checkTopics in part_stats.js): Stufe 1 Fehler halbiert, Stufe 2 Thema sitzt
+const topicMileText = e => { const tr = trapMeta(e.l, e.k); const lb = tr ? tr.label : e.k; return e.s === 2 ? `„${lb}“ sitzt` : `„${lb}“: Fehler halbiert`; };
+// Gefestigt je Sprache und Tag: der Bestand am Tagesende (Protokoll mc, seit 24.63), für ältere Tage die Zahl der erstmals gefestigten Sätze
+function matureByDay(days, l){
+  const out = {}; let cum = 0, last = null;
+  days.forEach(d => { const x = dayLog(d, l); cum += x.mat || 0; if (x.mc != null) last = x.mc; out[d] = last != null ? last : cum; });
+  return out;
+}
+// Höchster Stand an gefestigten Sätzen: Eine Etappe bleibt erreicht, auch wenn später ein Satz wieder herausfällt
+function matureHigh(l){
+  const days = Object.keys(DB.log || {}).sort(), by = matureByDay(days, l);
+  return Math.max(matureCount(l), ...Object.values(by), 0);
+}
 function wayEvents(){
   const ev = [], days = Object.keys(DB.log || {}).filter(d => ['sv', 'es'].some(l => (dayLog(d, l).n || 0) > 0)).sort();
   if (!days.length) return { done:[], next:[] };
-  ev.push({ d:days[0], ico:'start', t:'Erster Übungstag' });
+  ev.push({ d:days[0], ico:'start', k:'first', t:'Erster Übungstag' });
   // Gesamtwerte vorab, damit die Schwellenlisten lang genug sind
   const sumAll = k => days.reduce((a, d) => a + (dayLog(d, 'sv')[k] || 0) + (dayLog(d, 'es')[k] || 0), 0);
   const allN = sumAll('n'), allSecs = sumAll('secs');
   const TASKS = ladder(WAY_TASKS, x => x + 25000, allN), HOURS = ladder(WAY_HOURS, x => x + 250, allSecs / 3600);
-  const MAT = ladder(WAY_MATURE, x => x + 500, Math.max(matureCount('sv'), matureCount('es'), ...['sv', 'es'].map(l => days.reduce((a, d) => a + (dayLog(d, l).mat || 0), 0))));
+  const matBy = { sv:matureByDay(days, 'sv'), es:matureByDay(days, 'es') };
+  const MAT = milestoneList(Math.max(matureCount('sv'), matureCount('es'), ...Object.values(matBy.sv), ...Object.values(matBy.es)));
+  const ANC = anchoredList(Math.max(anchoredCount('sv'), anchoredCount('es')));
   const DAYS = ladder(WAY_DAYS, x => x + 500, days.length);
-  days.forEach((d, i) => { const k = DAYS.indexOf(i + 1); if (k >= 0) ev.push({ d, ico:'start', t:`${(i + 1).toLocaleString('de-DE')} Übungstage` }); });
+  days.forEach((d, i) => { const k = DAYS.indexOf(i + 1); if (k >= 0) ev.push({ d, ico:'start', k:'days', v:i + 1, t:`${fmtN(i + 1)} Übungstage` }); });
   // Jahrestage seit dem ersten Übungstag
-  for (let y = 1; ; y++) { const [Y, M, D] = days[0].split('-'); const ad = `${Number(Y) + y}-${M}-${D}`; if (ad > today()) break; ev.push({ d:ad, ico:'start', t:`${y} ${y === 1 ? 'Jahr' : 'Jahre'} mit Tagwerk` }); }
-  let n = 0, secs = 0; const mat = { sv:0, es:0 }, ti = { i:0 }, hi = { i:0 }, mi = { sv:0, es:0 };
+  for (let y = 1; ; y++) { const [Y, M, D] = days[0].split('-'); const ad = `${Number(Y) + y}-${M}-${D}`; if (ad > today()) break; ev.push({ d:ad, ico:'start', k:'years', v:y, t:`${y} ${y === 1 ? 'Jahr' : 'Jahre'} mit Tagwerk` }); }
+  let n = 0, secs = 0; const ti = { i:0 }, hi = { i:0 }, mi = { sv:0, es:0 }, ai = { sv:0, es:0 }, anc = { sv:0, es:0 };
   days.forEach(d => {
     ['sv', 'es'].forEach(l => {
-      const x = dayLog(d, l); n += x.n || 0; secs += x.secs || 0; mat[l] += x.mat || 0;
-      while (mi[l] < MAT.length && mat[l] >= MAT[mi[l]]) { ev.push({ d, ico:'mature', l, t:`${MAT[mi[l]].toLocaleString('de-DE')} gefestigte Sätze` }); mi[l]++; }
+      const x = dayLog(d, l); n += x.n || 0; secs += x.secs || 0;
+      while (mi[l] < MAT.length && matBy[l][d] >= MAT[mi[l]]) { ev.push({ d, ico:'mature', k:'mature', l, v:MAT[mi[l]], t:`${fmtN(MAT[mi[l]])} gefestigte Sätze` }); mi[l]++; }
+      if (x.mc != null) anc[l] = x.ac || 0;
+      while (ai[l] < ANC.length && anc[l] >= ANC[ai[l]]) { ev.push({ d, ico:'anchored', k:'anchored', l, v:ANC[ai[l]], t:anchoredLabel(ANC[ai[l]]) }); ai[l]++; }
     });
-    while (ti.i < TASKS.length && n >= TASKS[ti.i]) { ev.push({ d, ico:'tasks', t:`${TASKS[ti.i].toLocaleString('de-DE')} Aufgaben` }); ti.i++; }
-    while (hi.i < HOURS.length && secs >= HOURS[hi.i] * 3600) { ev.push({ d, ico:'time', t:`${HOURS[hi.i].toLocaleString('de-DE')} ${HOURS[hi.i] === 1 ? 'Stunde' : 'Stunden'} geübt` }); hi.i++; }
+    while (ti.i < TASKS.length && n >= TASKS[ti.i]) { ev.push({ d, ico:'tasks', k:'tasks', v:TASKS[ti.i], t:`${fmtN(TASKS[ti.i])} Aufgaben` }); ti.i++; }
+    while (hi.i < HOURS.length && secs >= HOURS[hi.i] * 3600) { ev.push({ d, ico:'time', k:'hours', v:HOURS[hi.i], t:`${fmtN(HOURS[hi.i])} ${HOURS[hi.i] === 1 ? 'Stunde' : 'Stunden'} geübt` }); hi.i++; }
   });
   // Serien nach derselben Regel wie die Serienanzeige: ein Pausetag pro Woche unterbricht nicht
   const doneDays = Object.keys(DB.done || {}).filter(d => DB.done[d]).sort();
   if (doneDays.length) {
-    const STREAK = ladder(WAY_STREAK, streakStep, doneDays.length + 7);
+    const STREAK = streakList(doneDays.length + 7);
     let streak = 0, misses = [], si = 0, d = doneDays[0];
     const end = today();
     while (d <= end) {
-      if (DB.done[d]) { streak++; while (streak >= STREAK[si]) { ev.push({ d, ico:'streak', t:streakLabel(STREAK[si]) }); si++; } }
+      if (DB.done[d]) { streak++; while (streak >= STREAK[si]) { ev.push({ d, ico:'streak', k:'streak', v:STREAK[si], t:streakLabel(STREAK[si]) }); si++; } }
       else if (d !== end) {
         misses = misses.filter(m => dayDiff(d, m) < 7);
         if (misses.length) { streak = 0; misses = []; } else misses.push(d);
@@ -64,32 +81,52 @@ function wayEvents(){
   }
   ['sv', 'es'].forEach(l => {
     const firstOwn = (DB.own[l] || []).filter(o => o.created).map(o => o.created).sort()[0];
-    if (firstOwn) ev.push({ d:firstOwn, ico:'own', l, t:'Erster eigener Satz' });
-    // Wortschatz und Themen erst seit den erweiterten Tagesständen
-    // Nur Schwellen, die zwischen zwei Erfassungen überschritten wurden. Was schon beim ersten Erfassen erreicht war, hat kein bekanntes Datum.
+    if (firstOwn) ev.push({ d:firstOwn, ico:'own', k:'own', l, t:'Erster eigener Satz' });
+    // Wortschatz erst seit den erweiterten Tagesständen. Nur Schwellen, die zwischen zwei Erfassungen überschritten wurden;
+    // was schon beim ersten Erfassen erreicht war, hat kein bekanntes Datum.
     let prev = null;
     Object.keys(DB.snap || {}).sort().forEach(d => {
       const x = DB.snap[d][l]; if (!x || x.w == null) return;
-      if (prev) {
-        ladder(WAY_WORDS, y => y + 500, x.w).forEach(th => { if (prev.w < th && x.w >= th) ev.push({ d, ico:'words', l, t:`${th} verschiedene Wörter` }); });
-        Object.keys(x.t || {}).forEach(tr => {
-          const total = BANK[l].filter(i => i.trap === tr).length, meta = trapMeta(l, tr);
-          if (meta && total >= 6 && (prev.t[tr] || 0) / total < 0.5 && x.t[tr] / total >= 0.5) ev.push({ d, ico:'topic', l, t:`„${meta.label}“ zur Hälfte gefestigt` });
-        });
-      }
-      prev = { w:x.w, t:x.t || {} };
+      if (prev != null) ladder(WAY_WORDS, y => y + 500, x.w).forEach(th => { if (prev < th && x.w >= th) ev.push({ d, ico:'words', k:'words', l, v:th, t:`${fmtN(th)} verschiedene Wörter` }); });
+      prev = x.w;
     });
     const texts = (DB.texts || []).filter(x => x.lang === l).map(x => x.date).sort();
-    if (texts.length) ev.push({ d:texts[0], ico:'write', l, t:'Erster eigener Text' });
-    if (texts.length >= 10) ev.push({ d:texts[9], ico:'write', l, t:'10 eigene Texte' });
+    if (texts.length) ev.push({ d:texts[0], ico:'write', k:'text', l, v:1, t:'Erster eigener Text' });
+    if (texts.length >= 10) ev.push({ d:texts[9], ico:'write', k:'text', l, v:10, t:'10 eigene Texte' });
   });
+  // Themen: Fehlerquote deutlich gesunken (gespeichert, weil das Fehlerprotokoll nach 120 Tagen verfällt)
+  (DB.etap || []).forEach(e => { if (e && e.d && e.l && e.k) ev.push({ d:e.d, ico:'topic', k:'topic', l:e.l, v:e.s, trap:e.k, b:e.b, c:e.c, t:topicMileText(e) }); });
   ev.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
-  // Nächste Etappen
+  // Nächste Etappen: nach dem höchsten erreichten Stand, damit ein wieder herausgefallener Satz keine Etappe zweimal bringt
   const next = [];
-  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const m = matureCount(l), nx = ladder(WAY_MATURE, x => x + 500, m).find(x => x > m); if (nx) next.push({ ico:'mature', l, t:`${nx} gefestigte Sätze`, rest:`noch ${nx - m}` }); });
-  const nh = ladder(WAY_HOURS, x => x + 250, secs / 3600).find(x => x * 3600 > secs); if (nh) next.push({ ico:'time', t:`${nh} Stunden geübt`, rest:`noch ${fmtMin(nh * 3600 - secs).replace(/\.$/, '')}` });
-  const nd = DAYS.find(x => x > days.length); if (nd && nd - days.length <= 60) next.push({ ico:'start', t:`${nd.toLocaleString('de-DE')} Übungstage`, rest:`noch ${nd - days.length}` });
+  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const nx = MAT[mi[l]], m = matureCount(l); if (nx) next.push({ ico:'mature', k:'mature', l, t:`${fmtN(nx)} gefestigte Sätze`, rest:`noch ${Math.max(1, nx - m)}` }); });
+  const nh = HOURS.find(x => x * 3600 > secs); if (nh) next.push({ ico:'time', k:'hours', t:`${fmtN(nh)} Stunden geübt`, rest:`noch ${fmtMin(nh * 3600 - secs).replace(/\.$/, '')}` });
+  const nd = DAYS.find(x => x > days.length); if (nd && nd - days.length <= 60) next.push({ ico:'start', k:'days', t:`${fmtN(nd)} Übungstage`, rest:`noch ${nd - days.length}` });
   return { done:ev, next };
+}
+// Kennung einer Etappe: Rundenende vergleicht die Etappen vor und nach der Runde (A2, seit 24.63)
+const wayKey = e => `${e.k}|${e.l || ''}|${e.t}`;
+const wayKeys = () => wayEvents().done.map(wayKey);
+// Rangfolge, wenn mehrere Etappen zusammenfallen: was über das Können spricht vor dem, was über Fleiß spricht
+const WAY_PRIO = ['anchored', 'mature', 'topic', 'years', 'streak', 'words', 'text', 'own', 'hours', 'days', 'tasks', 'first'];
+const wayPrio = e => { const i = WAY_PRIO.indexOf(e.k); return i < 0 ? 99 : i; };
+// Die nächste Etappe derselben Art, mit Abstand („noch 15“); null, wo es keine nächste gibt
+function wayNext(e){
+  const l = e.l, sum = k => Object.keys(DB.log || {}).reduce((a, d) => a + (dayLog(d, 'sv')[k] || 0) + (dayLog(d, 'es')[k] || 0), 0);
+  const left = (nx, c, one, many) => `noch ${fmtN(nx - c)}${one ? ' ' + (nx - c === 1 ? one : many) : ''}`;
+  switch (e.k) {
+    case 'mature': { const c = matureCount(l), nx = milestoneList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:`${fmtN(nx)} gefestigte Sätze`, rest:`noch ${fmtN(Math.max(1, nx - c))}` } : null; }
+    case 'anchored': { const c = anchoredCount(l), nx = anchoredList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:anchoredLabel(nx), rest:`noch ${fmtN(Math.max(1, nx - c))}` } : null; }
+    case 'streak': { const c = streak(), nx = streakList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:streakLabel(nx), rest:left(nx, Math.min(c, nx - 1), 'Tag', 'Tage') } : null; }
+    case 'words': { const c = vocabCount(l).all, nx = ladder(WAY_WORDS, y => y + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} verschiedene Wörter`, rest:left(nx, Math.min(c, nx - 1)) }; }
+    case 'tasks': { const c = sum('n'), nx = ladder(WAY_TASKS, x => x + 25000, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Aufgaben`, rest:left(nx, Math.min(c, nx - 1)) }; }
+    case 'hours': { const c = sum('secs'), nx = ladder(WAY_HOURS, x => x + 250, Math.max(c / 3600, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Stunden geübt`, rest:`noch ${fmtMin(Math.max(60, nx * 3600 - c)).replace(/\.$/, '')}` }; }
+    case 'days': { const c = Object.keys(DB.log || {}).filter(d => ['sv', 'es'].some(x => (dayLog(d, x).n || 0) > 0)).length, nx = ladder(WAY_DAYS, x => x + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Übungstage`, rest:left(nx, Math.min(c, nx - 1)) }; }
+    case 'topic': return e.v === 1 ? { t:topicMileText({ l, k:e.trap, s:2 }), rest:'nächste Stufe' } : null;
+    case 'text': { if (e.v >= 10) return null; const c = (DB.texts || []).filter(x => x.lang === l).length; return { t:'10 eigene Texte', rest:left(10, Math.min(c, 9)) }; }
+    case 'years': return { t:`${e.v + 1} Jahre mit Tagwerk`, rest:'in einem Jahr' };
+    default: return null;
+  }
 }
 // Dein Weg als Gleisplan: links Schwedisch, Mitte Gemeinsames (Serien, Aufgaben, Stunden), rechts Spanisch.
 // Gleiche Zeitachse für alle drei Spuren, so sieht man parallelen und unterschiedlichen Fortschritt. Oben die nächsten Ziele als offene Punkte.
@@ -110,7 +147,7 @@ function wayHtml(){
     prevY = y;
     return sep + `<li class="wl">${rail(x.l || 'x', x.d)}<span class="tl-t">${esc(x.t)}${x.l ? ` <span class="wl-lang">${LANG[x.l].deName}</span>` : ''}</span><span class="tl-d">${fmtD(x.d)}</span></li>`;
   }).join('');
-  return `<h2 class="grp">Dein Weg</h2><div class="chart way">
+  return `<h2 class="grp" id="way">Dein Weg</h2><div class="chart way">
     <p class="legend wleg">${lanes.map(k => `<span><i class="sq rl-${k}-sq"></i>${label(k)}</span>`).join('')}</p>
     <ol class="wrail">${nextRows}${rows}</ol>
     ${w.done.length > 6 ? `<button type="button" class="link" data-a="wayall">${all ? 'Weniger zeigen' : `Ganzen Weg zeigen (${w.done.length} Etappen)`}</button>` : ''}

@@ -160,6 +160,49 @@ function errStats(lang, days){
   });
   return out;
 }
+// Themen-Etappen (seit 24.63): Die Fehlerquote eines Themas ist deutlich und belastbar gesunken. Gezählt wie in den
+// Fehlerquellen (p: im Fehlerprotokoll, nur erste Versuche, Wortschatz- und Tippfehler belasten das Thema nicht).
+// Anfang: die ersten 40 Aufgaben des Themas, ganze Tage. Einmal festgehalten (DB.tbase), weil das Protokoll nach 120 Tagen verfällt.
+// Zuletzt: die letzten 60 Aufgaben, ganze Tage, mindestens 40, nur Tage nach dem Anfang. Tagesschwankungen (mal 1 von 3, mal
+// 2 von 3 falsch) gehen in 60 Aufgaben unter. Weil später mehr frei übersetzt wird als am Anfang, wo Lücken überwiegen,
+// misst der Vergleich eher zu streng als zu großzügig.
+// Stufe 1 „Fehler halbiert“: zuletzt höchstens halb so viele Fehler je Aufgabe, mindestens 10 Prozentpunkte weniger, und der
+//   Unterschied ist kein Zufall (Test zweier Anteile, z ≥ 2, einseitig etwa 2 %).
+// Stufe 2 „Thema sitzt“: am Anfang mindestens 20 % falsch, zuletzt mit 95 % Sicherheit unter 15 % (obere Wilson-Grenze);
+//   praktisch höchstens 3 Fehler in 60 Aufgaben. Ersetzt Stufe 1, wenn beide zugleich erreicht werden.
+// Jede Stufe kommt je Thema einmal und bleibt mit Datum stehen, auch wenn die Quote später wieder steigt.
+const TOPIC_BASE = 40, TOPIC_NOW = 60, TOPIC_MIN = 40;
+function zDrop(b, bn, c, cn){ const p = (b + c) / (bn + cn), se = Math.sqrt(p * (1 - p) * (1 / bn + 1 / cn)); return se ? (b / bn - c / cn) / se : 0; }
+function wilsonHi(k, n){ const z = 1.96, p = k / n, d = 1 + z * z / n; return (p + z * z / (2 * n) + z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d; }
+// Anfang und letztes Fenster eines Themas: { b:[Aufgaben, Fehler], c:[Aufgaben, Fehler] }; c fehlt, solange es zu wenige sind
+function topicWindows(lang, trap){
+  const key = 'p:' + trap, days = Object.keys(DB.tlog || {}).filter(d => { const L = DB.tlog[d][lang]; return L && Array.isArray(L[key]) && L[key][0] > 0; }).sort();
+  const TB = DB.tbase = DB.tbase || {}, TL = TB[lang] = TB[lang] || {};
+  let base = TL[trap];
+  if (!base) {
+    let n = 0, bad = 0, to = null;
+    for (const d of days) { const v = DB.tlog[d][lang][key]; n += v[0]; bad += v[1]; to = d; if (n >= TOPIC_BASE) break; }
+    if (n < TOPIC_BASE) return { b:[n, bad] };
+    base = TL[trap] = { n, bad, to };
+  }
+  let n = 0, bad = 0;
+  for (const d of days.filter(x => x > base.to).reverse()) { const v = DB.tlog[d][lang][key]; n += v[0]; bad += v[1]; if (n >= TOPIC_NOW) break; }
+  return { b:[base.n, base.bad], c:n >= TOPIC_MIN ? [n, bad] : null };
+}
+// Am Rundenende: neue Stufen festhalten (DB.etap). Rückgabe: die neuen Einträge.
+function checkTopics(lang){
+  const out = [], have = DB.etap = Array.isArray(DB.etap) ? DB.etap : [], ids = new Set(topicIds(lang).filter(id => id !== 'eigene'));
+  ids.forEach(trap => {
+    const w = topicWindows(lang, trap); if (!w.c) return;
+    const [bn, bb] = w.b, [cn, cb] = w.c, rb = bb / bn, rc = cb / cn;
+    const got = have.filter(e => e.l === lang && e.k === trap).reduce((m, e) => Math.max(m, e.s), 0);
+    const halved = rc <= rb / 2 && rb - rc >= 0.10 && zDrop(bb, bn, cb, cn) >= 2;
+    const solid = rb >= 0.20 && wilsonHi(cb, cn) <= 0.15;
+    const s = solid ? 2 : halved ? 1 : 0;
+    if (s > got) { const e = { d:today(), l:lang, k:trap, s, b:[bn, bb], c:[cn, cb] }; have.push(e); out.push(e); }
+  });
+  return out;
+}
 const trapLabel = (lang, id) => { const tr = trapMeta(lang, id); if (tr) return tr.label; return { genus:lang === 'sv' ? 'en oder ett' : 'el oder la', zeit:'Uhrzeiten', zahl:'Zahlen', eigene:'Eigene Sätze' }[id] || id; };
 // Hartnäckige Sätze: bei späteren Wiederholungen mindestens zweimal nicht gewusst (lapses; der erste Kontakt zählt nicht),
 // noch nicht gefestigt und in den letzten 30 Tagen geübt. Wer einen Satz inzwischen kann, sieht ihn hier nicht mehr.

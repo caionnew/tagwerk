@@ -37,7 +37,8 @@ const numSame = (a, b, lang) => a === b || Object.values(NUM_WORDS[lang]).some(w
 /* ---------- Vibration als leise Rückmeldung (Android) ---------- */
 function buzz(kind){
   if (DB.settings.haptics === false || !navigator.vibrate) return;
-  try { navigator.vibrate(kind === 'bad' ? [16, 70, 16] : 10); } catch (e) {}
+  // Etappe: kurz, kurz, lang (seit 24.63); falsch: zweimal kurz; richtig: ein Tick
+  try { navigator.vibrate(kind === 'mile' ? [14, 70, 14, 70, 60] : kind === 'bad' ? [16, 70, 16] : 10); } catch (e) {}
 }
 
 /* ---------- Begrüßung in der Zielsprache ---------- */

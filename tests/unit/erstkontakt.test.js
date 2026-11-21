@@ -46,7 +46,7 @@ test('„Weiß ich nicht“ bei einer fälligen Wiederholung: zählt als Wiederh
   const id = BANK.sv.find(i => i.kind === 'form' && i.gap).id;
   app.setDB(blank('fort'));
   app.run(`buildBank(); DB.st[${JSON.stringify(id)}] = { s:20, d:5, ivl:25, last:addDays(today(), -25), due:today(), reps:3, ok:3, bad:0, lapses:0, alts:[] };
-    S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:[{ type:'cloze', id:${JSON.stringify(id)} }], idx:0, ok:0, bad:0, res:[], missed:[], secs:0, strongBefore:0 };
+    S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:[{ type:'cloze', id:${JSON.stringify(id)} }], idx:0, ok:0, bad:0, res:[], missed:[], secs:0 };
     S.run.cur = { input:'', state:'answer' }; giveUp(); next();`);
   const log = J(`dayLog(today(), 'sv')`), st = J(`DB.st[${JSON.stringify(id)}]`);
   assert.equal(log.fresh || 0, 0, 'kein neuer Satz');
@@ -57,7 +57,7 @@ test('„Weiß ich nicht“ bei einer fälligen Wiederholung: zählt als Wiederh
 test('„Weiß ich nicht“ bei einem neuen Satz: neuer Satz, kein Rückfall', () => {
   const id = BANK.sv.find(i => i.kind === 'form' && i.gap).id;
   app.setDB(blank('fort'));
-  app.run(`buildBank(); S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:[{ type:'cloze', id:${JSON.stringify(id)} }], idx:0, ok:0, bad:0, res:[], missed:[], secs:0, strongBefore:0 };
+  app.run(`buildBank(); S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:[{ type:'cloze', id:${JSON.stringify(id)} }], idx:0, ok:0, bad:0, res:[], missed:[], secs:0 };
     S.run.cur = { input:'', state:'answer' }; giveUp(); next();`);
   assert.equal(J(`dayLog(today(), 'sv')`).fresh, 1);
   assert.equal(J(`DB.st[${JSON.stringify(id)}]`).lapses || 0, 0);
@@ -96,7 +96,7 @@ test('Erstkontakt: nur der erste Versuch an einem neuen Satz zählt, je Monat, T
   const [a, b, seen] = gapB2(trap), two = [a, b];
   app.setDB(blank('fort'));
   app.run(`buildBank(); DB.st[${JSON.stringify(seen.id)}] = { s:2, d:5, ivl:2, last:addDays(today(), -2), due:today(), reps:1, ok:1, bad:0, alts:[] };
-    S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:${JSON.stringify([two[0], two[1], seen].map(i => ({ type:'cloze', id:i.id })))}, idx:0, ok:0, bad:0, res:[], missed:[], secs:0, strongBefore:0 };
+    S.lang = 'sv'; S.view = 'run'; S.run = { kind:'daily', lang:'sv', queue:${JSON.stringify([two[0], two[1], seen].map(i => ({ type:'cloze', id:i.id })))}, idx:0, ok:0, bad:0, res:[], missed:[], secs:0 };
     S.run.cur = { state:'answer', input:${JSON.stringify(two[0].gap)} }; check(); next();
     S.run.cur = { input:'', state:'answer' }; giveUp(); next();
     S.run.cur = { state:'answer', input:'zzz' }; check(); next();

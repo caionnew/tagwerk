@@ -341,7 +341,7 @@ function next(){
       const prev = DB.st[ex.id] || { ok:0, bad:0, alts:[] };
       if (counts) {
         const g = !good ? 1 : (c.result === 'near' ? 2 : 3);
-        const wasMature = (prev.ivl || 0) >= MATURE;
+        const wasMature = (prev.ivl || 0) >= MATURE, oldIvl = prev.ivl || 0;
         const st = Object.assign(prev, FSRS.review(prev, g, today()));
         st.reps = (st.reps || 0) + (good ? 1 : 0);
         if (!good && c.wasSeen) st.lapses = (st.lapses || 0) + 1;
@@ -349,7 +349,7 @@ function next(){
         if (!st.matured && st.ivl >= MATURE) { st.matured = true; logDay(r.lang, { mat:1 }); }
         if (c.wasDue && wasMature) logDay(r.lang, { revM:1, revMOk:good ? 1 : 0 });
         DB.st[ex.id] = st;
-        if (r.res && r.res.length) r.res[r.res.length - 1].ivl = st.ivl;
+        if (r.res && r.res.length) Object.assign(r.res[r.res.length - 1], { ivl:st.ivl, pivl:oldIvl });
         const item = itemById(ex.id);
         if (!good) r.queue.push({ type:item.kind === 'order' ? 'tiles' : 'cloze', id:ex.id, requeue:true });
         if (!good && !(r.missed || []).some(x => x.id === ex.id)) (r.missed = r.missed || []).push({ id:ex.id, target:item.target, de:item.de });
@@ -379,6 +379,42 @@ function finishRun(){
   r.finished = true;
   if (r.kind === 'daily') { DB.done[today()] = true; DB.doneLang = DB.doneLang || {}; DB.doneLang[today()] = Object.assign({}, DB.doneLang[today()], { [r.lang]:true }); S.justDone = today(); S.dailyRun = null; DB.run = null; setTimeout(() => refill(r.lang), 500); }
   snapshot();
+  // Etappen dieser Runde: was nach der Runde in „Dein Weg“ steht und vorher nicht (A2), dazu Themen-Etappen und die Sätze,
+  // die in dieser Runde gefestigt oder verankert wurden. Einmal berechnet, damit die Ansicht beim Neuzeichnen gleich bleibt.
+  checkTopics(r.lang);
+  r.miles = r.wayBefore ? (() => { const before = new Set(r.wayBefore); return wayEvents().done.filter(e => !before.has(wayKey(e))); })() : [];
+  r.crossed = { mature:crossedIn(r, MATURE), anchored:crossedIn(r, ANCHORED) };
+  if (r.kind === 'daily') r.month = monthCard();
+  if (r.miles.length) buzz('mile');
   save(); S.view = 'runDone'; render(); window.scrollTo(0, 0);
+}
+// Sätze, deren Abstand in dieser Runde die Schwelle überschritten hat; der mit den meisten Fehlern zuerst
+function crossedIn(r, th){
+  const seen = new Set();
+  return (r.res || []).filter(x => x.id && x.ivl != null && (x.pivl || 0) < th && x.ivl >= th && !seen.has(x.id) && seen.add(x.id))
+    .map(x => ({ id:x.id, ivl:x.ivl, bad:(DB.st[x.id] && DB.st[x.id].bad) || 0, lapses:(DB.st[x.id] && DB.st[x.id].lapses) || 0 }))
+    .sort((a, b) => b.bad - a.bad || b.lapses - a.lapses);
+}
+// Monatsbilanz beim ersten Tagwerk eines Monats (seit 24.63): der Vormonat in drei Zahlen und als Kalender. Einmal je Monat;
+// danach verschwindet auch die Monatszeile auf „Heute“. Im Januar dazu das Vorjahr in einer Zeile.
+function monthCard(){
+  const t = today(), ym = t.slice(0, 7);
+  DB.used = DB.used || {};
+  if ((DB.used.monthShown || '') >= ym) return null;
+  if (Object.keys(DB.done || {}).some(d => DB.done[d] && d.slice(0, 7) === ym && d < t)) return null;
+  const [Y, M] = ym.split('-').map(Number), pm = M === 1 ? `${Y - 1}-12` : `${Y}-${String(M - 1).padStart(2, '0')}`;
+  const all = Object.keys(DB.log || {}).sort(), days = all.filter(d => d.slice(0, 7) === pm && ['sv', 'es'].some(l => (dayLog(d, l).n || 0) > 0));
+  if (!days.length) return null;
+  DB.used.monthShown = ym;
+  const tw = Object.keys(DB.done || {}).filter(d => DB.done[d] && d.slice(0, 7) === pm).length;
+  // Neu gefestigt: Bestand am Monatsende minus Bestand davor, je Sprache, mindestens 0
+  const gain = l => { const by = matureByDay(all, l), inM = all.filter(d => d.slice(0, 7) === pm), before = all.filter(d => d.slice(0, 7) < pm); return Math.max(0, (inM.length ? by[inM[inM.length - 1]] : 0) - (before.length ? by[before[before.length - 1]] : 0)); };
+  const out = { ym:pm, tw, days:days.length, gain:{ sv:gain('sv'), es:gain('es') }, et:wayEvents().done.filter(e => e.d.slice(0, 7) === pm).length };
+  if (M === 1) {
+    const yd = all.filter(d => d.slice(0, 4) === String(Y - 1) && ['sv', 'es'].some(l => (dayLog(d, l).n || 0) > 0));
+    const sumY = k => yd.reduce((a, d) => a + (dayLog(d, 'sv')[k] || 0) + (dayLog(d, 'es')[k] || 0), 0);
+    if (yd.length) out.year = { y:Y - 1, days:yd.length, n:sumY('n'), secs:sumY('secs') };
+  }
+  return out;
 }
 

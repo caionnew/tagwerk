@@ -258,6 +258,9 @@ document.addEventListener('click', e => {
     case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.kultCat = null; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     case 'wayall': S.wayAll = !S.wayAll; render(); break;
+    case 'mileall': S.mileAll = !S.mileAll; render(); break;
+    // Vom Rundenende zu „Dein Weg“ im Überblick
+    case 'toway': { if (r && r.finished) S.run = null; S.ptab = 'all'; S.calDay = null; S.minDay = null; goView('progress'); const el = document.getElementById('way'); if (el) el.scrollIntoView({ block:'start' }); break; }
     case 'textgap': if (b.dataset.id === 'wiki') { const w = S.text && S.text.wiki; if (w) startRun('textgap', { body:w.body, title:w.title }); } else startRun('textgap', { text:b.dataset.id }); break;
     case 'otherdaily': { const l = b.dataset.l; S.lang = l; DB.settings.lang = l; DB.dayLang = { d:today(), l, manual:true }; save(); const d = openDaily(); if (d && d.lang === l) { resumeDaily(); render(); window.scrollTo(0, 0); } else startRun('daily'); break; }
     case 'showtip': if (S.run && S.run.cur) { S.run.cur.tip = true; render(); const a = document.getElementById('answer'); if (a) a.focus(); } break;
@@ -335,6 +338,10 @@ document.addEventListener('click', e => {
         if (DB.genus) delete DB.genus[lang];
         if (DB.pace) delete DB.pace[lang];
         if (DB.first) delete DB.first[lang];
+        // Fehlerprotokoll und Themen-Etappen dieser Sprache (bis 24.62 blieb das Fehlerprotokoll beim Zurücksetzen stehen)
+        if (DB.tlog) Object.values(DB.tlog).forEach(d => { delete d[lang]; });
+        if (DB.tbase) delete DB.tbase[lang];
+        if (Array.isArray(DB.etap)) DB.etap = DB.etap.filter(e => e.l !== lang);
         // Beim Lesen nachgeschlagene Wörter dieser Sprache (für Lesetext-Lücken)
         if (DB.used && DB.used.looked) Object.keys(DB.used.looked).forEach(k => { if (k.startsWith(lang + ':')) delete DB.used.looked[k]; });
         if (DB.run && DB.run.lang === lang) DB.run = null;

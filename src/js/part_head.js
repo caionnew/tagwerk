@@ -219,9 +219,13 @@ function flushSave(){ clearTimeout(saveTimer); try { localStorage.setItem(KEY, J
 function snapshot(){
   const t = today(), snap = {};
   ['sv', 'es'].forEach(l => {
-    let n = 0, m = 0, k = 0;
-    BANK[l].forEach(i => { const st = stOf(i.id); if (!st) return; n++; if ((st.ivl || 0) >= MATURE) m++; k += FSRS.retrievability(st, t); });
+    let n = 0, m = 0, k = 0, a = 0;
+    BANK[l].forEach(i => { const st = stOf(i.id); if (!st) return; n++; if ((st.ivl || 0) >= MATURE) m++; if ((st.ivl || 0) >= ANCHORED) a++; k += FSRS.retrievability(st, t); });
     if (n) snap[l] = { n, m, k:Math.round(k) };
+    // Bestand am Tagesende auch im Tagesprotokoll: daraus entstehen die Etappen „gefestigt“ und „verankert“ (seit 24.63).
+    // Das Protokoll bleibt 400 Tage, Tagesstände werden nach 120 Tagen ausgedünnt; so behalten Etappen ihr genaues Datum.
+    const x = DB.log[t] && DB.log[t][l];
+    if (n && x && typeof x === 'object') { x.mc = m; if (a) x.ac = a; else delete x.ac; }
   });
   snapshotExtra(snap);
   DB.snap = DB.snap || {};
@@ -229,7 +233,7 @@ function snapshot(){
 }
 function persistRun(){
   const r = S.run;
-  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, strongBefore:r.strongBefore, res:r.res, missed:r.missed, secs:r.secs, combo:r.combo, best:r.best };
+  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, res:r.res, missed:r.missed, secs:r.secs, combo:r.combo, best:r.best };
   save();
 }
 function dayLog(d, lang){ const x = DB.log[d] && DB.log[d][lang]; return typeof x === 'number' ? { n:x } : (x || {}); }
@@ -264,8 +268,9 @@ function sumLog(lang, days, key){ let n = 0; for (let k = 0; k < days; k++) n +=
 function mondayOf(ds){ const [y, m, d] = ds.split('-').map(Number); const dt = new Date(y, m - 1, d); const wd = (dt.getDay() + 6) % 7; return addDays(ds, -wd); }
 const MATURE = 21, ANCHORED = 365;
 const matureCount = lang => BANK[lang].filter(i => { const s = stOf(i.id); return s && (s.ivl || 0) >= MATURE; }).length;
-const strongCount = matureCount;
-// Meilensteine ohne Ende: feiner am Anfang, später in größeren Schritten
+const anchoredCount = lang => BANK[lang].filter(i => { const s = stOf(i.id); return s && (s.ivl || 0) >= ANCHORED; }).length;
+// Etappen: eine Schwellenliste je Art, dieselbe für Rundenende, Fortschritt und „Dein Weg“ (bis 24.62 hatten Rundenende und
+// „Dein Weg“ verschiedene). Am Anfang dicht, später in größeren Schritten, ohne Ende.
 function milestoneList(upTo){
   const out = [10, 25, 50, 100, 150, 200, 300, 400, 500, 750, 1000];
   for (let m = 1500; m <= Math.max(upTo, 1500) + 500; m += 500) out.push(m);
@@ -273,13 +278,19 @@ function milestoneList(upTo){
 }
 const nextMilestone = n => milestoneList(n).find(m => m > n);
 const prevMilestone = n => [0].concat(milestoneList(n)).filter(m => m <= n).pop();
-const knownEstimate = lang => BANK[lang].reduce((a, i) => a + FSRS.retrievability(stOf(i.id), today()), 0);
-function streakMilestone(n){
-  if ([7, 14, 30, 50, 100, 150, 200, 250, 300].includes(n)) return `${n} Tage in Folge.`;
-  if (n % 365 === 0) return n === 365 ? 'Ein Jahr in Folge.' : `${n / 365} Jahre in Folge.`;
-  if (n > 365 && n % 100 === 0) return `${n} Tage in Folge.`;
-  return '';
+// Tage in Folge: bis ein Jahr fest, danach alle 100 Tage und jedes volle Jahr
+function streakList(upTo){
+  const out = [7, 14, 30, 50, 100, 150, 200, 250, 300, 365];
+  for (let n = 366; n <= upTo + 400; n++) if (n % 100 === 0 || n % 365 === 0) out.push(n);
+  return out;
 }
+// Verankerte Sätze (Abstand ab einem Jahr): der erste zählt schon
+function anchoredList(upTo){
+  const out = [1, 10, 25, 50, 100, 250, 500, 1000];
+  for (let m = 1500; m <= Math.max(upTo, 1500) + 500; m += 500) out.push(m);
+  return out;
+}
+const knownEstimate = lang => BANK[lang].reduce((a, i) => a + FSRS.retrievability(stOf(i.id), today()), 0);
 
 /* ---------- Zustand ---------- */
 const S = { lang:'sv', view:'home', run:null, dailyRun:null, notice:null, armed:null, shadow:null, write:null, own:null, tat:null };
@@ -534,7 +545,7 @@ function startRun(kind, opts){
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;
   S.notice = null;
-  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, strongBefore:strongCount(lang), res:[], missed:[], secs:0, combo:0, best:0 };
+  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, wayBefore:wayKeys(), res:[], missed:[], secs:0, combo:0, best:0 };
   S.view = 'run'; prepCur(); persistRun(); render(); window.scrollTo(0, 0);
 }
 // Zufallsauswahl ohne Wiederholung der letzten Runden: zuletzt Gewähltes kommt nach hinten, solange es genug anderes gibt
@@ -607,7 +618,7 @@ function restoreRun(){
   const d = DB.run;
   if (!d || d.date !== today() || !Array.isArray(d.queue) || d.idx >= d.queue.length) { DB.run = null; return; }
   if (d.queue.some(ex => ex.id && !itemById(ex.id))) { DB.run = null; return; }
-  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, strongBefore:d.strongBefore != null ? d.strongBefore : strongCount(d.lang), res:d.res || [], missed:d.missed || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
+  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, wayBefore:d.wayBefore || null, res:d.res || [], missed:d.missed || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
 }
 function resumeDaily(){
   const d = openDaily(); if (!d) return false;

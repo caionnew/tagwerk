@@ -27,7 +27,14 @@ Ein neuer Satz kommt gleich als Lücke, nicht erst zum Lesen. Raten vor der Lös
 
 ## Gewohnheit und Serie
 
-Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Automatisierung, Spanne 18 bis 254 Tage; ein einzelner verpasster Tag beeinflusste die Gewohnheitsbildung kaum. Daher die Serienregel mit einem Pausetag pro Woche. Ob verlorene Serien die Motivation senken, ist nicht belegt.
+Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Automatisierung, Spanne 18 bis 254 Tage; ein einzelner verpasster Tag beeinflusste die Gewohnheitsbildung kaum. Daher die Serienregel mit einem Pausetag pro Woche. Silverman und Barasch (2023) fanden, dass nach einer gerissenen Serie weniger weitergemacht wird; ein Grund mehr für den Pausetag.
+
+## Etappen (seit 24.63)
+
+- Rückmeldung, die über Können informiert, stärkt die Motivation; erwartete Belohnungen schwächen sie (Deci, Koestner und Ryan 1999, Metaanalyse). Darum zeigt die Etappe, was sie bedeutet (die gefestigten Sätze selbst, die Fehlerquote eines Themas), und kommt ohne Punkte oder Abzeichen aus.
+- Das Ende einer Erfahrung prägt die Erinnerung an sie (Kahneman et al. 1993, peak-end). Darum steht die Etappe am Rundenende, direkt unter dem Titel.
+- Sichtbarer Fortschritt trägt den Tag (Amabile und Kramer 2011), Nähe zum Ziel spornt an (Kivetz, Urminsky und Zheng 2006): darum die nächste Etappe mit Abstand.
+- Neuanfänge wie ein Monatsbeginn erhöhen die Bereitschaft, ein Ziel anzugehen (Dai, Milkman und Riis 2014): darum die Monatsbilanz beim ersten Tagwerk im Monat.
 
 ## Schreiben: Komplexität statt Note
 
@@ -46,4 +53,4 @@ Lally et al. (2010), 96 Teilnehmende über 12 Wochen: Median 66 Tage bis zur Aut
 
 ## Eigene Festlegungen ohne Studienbeleg
 
-„Gefestigt“ ab 21 Tagen Intervall (wie Ankis „mature“), „verankert“ ab 365 Tagen, die Meilenstein-Schwellen, die Stufen der Satzlänge beim Nachschub, die Wiederholungssperre von 12 Aufgaben, die Auswahlregeln des Fundstücks und bei „Fehler finden“ der Anteil richtiger Sätze (40 %) sowie die Gewichte der Fehlerarten (0,5 bis 2 nach eigener Fehlerquote, ½ für die Art der letzten Aufgabe).
+„Gefestigt“ ab 21 Tagen Intervall (wie Ankis „mature“), „verankert“ ab 365 Tagen, die Meilenstein-Schwellen, die Schwellen der Themen-Etappen (erste 40 Aufgaben gegen die letzten 40 bis 60; „halbiert“ mit mindestens 10 Prozentpunkten Abstand und z ≥ 2, „sitzt“ ab 20 % am Anfang und Wilson-Obergrenze ≤ 15 %, also höchstens 3 von 60 falsch), die Stufen der Satzlänge beim Nachschub, die Wiederholungssperre von 12 Aufgaben, die Auswahlregeln des Fundstücks und bei „Fehler finden“ der Anteil richtiger Sätze (40 %) sowie die Gewichte der Fehlerarten (0,5 bis 2 nach eigener Fehlerquote, ½ für die Art der letzten Aufgabe).

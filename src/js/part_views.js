@@ -4,7 +4,8 @@ const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ
 const MONTHS_FULL = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 function monthRecap(){
   const t = today(), day = Number(t.slice(8, 10));
-  if (day > 7) return '';
+  // Nach dem ersten Tagwerk des Monats steht die Bilanz am Rundenende (monthCard); hier dann nicht noch einmal
+  if (day > 7 || (DB.used && (DB.used.monthShown || '') >= t.slice(0, 7))) return '';
   const y = Number(t.slice(0, 4)), m = Number(t.slice(5, 7));
   const pm = m === 1 ? 12 : m - 1, py = m === 1 ? y - 1 : y, prefix = `${py}-${String(pm).padStart(2, '0')}-`;
   let days = 0, n = 0, secs = 0, mat = 0;
@@ -623,6 +624,65 @@ function bonusHtml(r){
     <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck">Prüfen</button></div>
   </section>`;
 }
+// Etappe am Rundenende (seit 24.63): Ausschnitt aus „Dein Weg“ mit der vorigen, der heutigen und der nächsten Etappe derselben Art.
+// Bei mehreren Etappen eine Hauptetappe, die übrigen in einer Zeile. Bei gefestigten oder verankerten Sätzen die Sätze selbst.
+const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}`; };
+function mileHtml(r){
+  const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b)), m = miles[0];
+  if (!m) return '';
+  const lane = m.l || 'x', w = wayEvents().done;
+  const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (e.v == null || m.v == null || e.v < m.v)).pop();
+  const nx = wayNext(m);
+  const lab = (t, l) => `${esc(t)}${l ? ` <span class="wl-lang">${LANG[l].deName}</span>` : ''}`;
+  const row = (cls, t, right) => `<li class="mr ${cls}"><i></i><span class="mr-t">${t}</span><span class="mr-d">${right}</span></li>`;
+  const rail = `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), 'heute')}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
+  const detail = m.k === 'topic' && m.b && m.c ? `<p class="mr-x">Fehler im Thema: am Anfang ${m.b[1]} von ${m.b[0]} Aufgaben, zuletzt ${m.c[1]} von ${m.c[0]}.${m.trap ? ` <button type="button" class="link inl" data-a="topic" data-l="${m.l}" data-t="${m.trap}">Themenblatt</button>` : ''}</p>` : '';
+  const list = m.k === 'mature' ? (r.crossed && r.crossed.mature) || [] : m.k === 'anchored' ? (r.crossed && r.crossed.anchored) || [] : [];
+  const times = n => (['', 'einmal', 'zweimal', 'dreimal', 'viermal', 'fünfmal', 'sechsmal', 'siebenmal', 'achtmal', 'neunmal', 'zehnmal', 'elfmal', 'zwölfmal'][n] || `${n}-mal`);
+  const show = S.mileAll ? list : list.slice(0, 3);
+  const sents = list.length ? `<p class="mile-eb">${m.k === 'anchored' ? 'Heute verankert' : 'Heute gefestigt'}</p><div class="msents">${show.map(x => {
+    const it = itemById(x.id); if (!it) return '';
+    const tag = x.bad ? `<span class="ms-tag">${times(x.bad)} falsch, jetzt ${x.ivl} Tage Abstand</span>` : '';
+    return `<div class="ms"><span class="txt"><span class="rt wordrow" lang="${r.lang}">${linkWords(it.target, r.lang)}</span><span class="rd">${esc(it.de)}</span>${tag}</span>${speakBtn(it.target, r.lang)}</div>`;
+  }).join('')}</div>${list.length > 3 ? `<button type="button" class="link mr-more" data-a="mileall">${S.mileAll ? 'Weniger zeigen' : `und ${list.length - 3} weitere`}</button>` : ''}` : '';
+  const also = miles.length > 1 ? `<p class="mr-also">Außerdem: ${miles.slice(1).map(e => esc(e.t) + (e.l && e.l !== r.lang ? ` (${LANG[e.l].deName})` : '')).join(', ')}.</p>` : '';
+  return `<section class="mile" aria-label="Etappe"><p class="mile-eb">${miles.length > 1 ? 'Etappen' : 'Etappe'}</p>${rail}${detail}${sents}${also}<button type="button" class="link mr-way" data-a="toway">Dein Weg</button></section>`;
+}
+// Monatsbilanz beim ersten Tagwerk eines Monats: drei Zahlen und der Vormonat als Kalender in derselben Kodierung wie „Übungstage“
+function monthHtml(mo){
+  if (!mo) return '';
+  const [Y, M] = mo.ym.split('-').map(Number), first = `${mo.ym}-01`, nDays = new Date(Y, M, 0).getDate(), lead = (dateOf(first).getDay() + 6) % 7;
+  const cell = 20, gap = 4, step = cell + gap, top = 16, free = streakData().free;
+  let out = ['M', 'D', 'M', 'D', 'F', 'S', 'S'].map((w, i) => `<text x="${i * step + cell / 2}" y="10" text-anchor="middle">${w}</text>`).join('') + '<defs><linearGradient id="calpb" x1="0" y1="0" x2="1" y2="1"><stop offset=".5" style="stop-color:var(--sv)"/><stop offset=".5" style="stop-color:var(--es)"/></linearGradient></defs>';
+  for (let i = 0; i < nDays; i++) {
+    const ds = addDays(first, i), pos = lead + i, x = (pos % 7) * step, y = top + Math.floor(pos / 7) * step;
+    const sv = dayLog(ds, 'sv').n || 0, es = dayLog(ds, 'es').n || 0, n = sv + es, ts = doneIn(ds, 'sv'), te = doneIn(ds, 'es'), kind = DB.done[ds] ? 'd' : n ? 'p' : '';
+    const lang = kind === 'd' ? (ts && te ? 'b' : ts ? 's' : te ? 'e' : sv && es ? 'b' : sv ? 's' : 'e') : sv && es ? 'b' : sv ? 's' : es ? 'e' : '';
+    if (kind === 'd' && lang === 'b') out += `<g><rect class="ds" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="4"/><path class="de" d="M${x + cell} ${y + 2}V${y + cell - 4}Q${x + cell} ${y + cell} ${x + cell - 4} ${y + cell}H${x + 2}Z"/></g>`;
+    else out += `<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="4" class="${kind ? kind + lang : 'c0'}${free.has(ds) && !n ? ' fr' : ''}"/>`;
+  }
+  const rows = Math.ceil((lead + nDays) / 7), W = 7 * step - gap, H = top + rows * step - gap;
+  const g = mo.gain.sv + mo.gain.es, both = mo.gain.sv && mo.gain.es;
+  const kp = [[mo.tw, mo.tw === 1 ? 'Tagwerk' : 'Tagwerke'], [g ? `+${g}` : 0, both ? 'gefestigt, beide Sprachen' : 'neu gefestigt'], [mo.et, mo.et === 1 ? 'Etappe' : 'Etappen']];
+  return `<section class="month" aria-label="Rückblick ${MONTHS_FULL[M - 1]}"><p class="mile-eb">Dein ${MONTHS_FULL[M - 1]}</p>
+    <div class="kpis month-kpis">${kp.map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>
+    <svg class="cal mcal" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${mo.days} Übungstage im ${MONTHS_FULL[M - 1]}">${out}</svg>
+    <p class="legend">${mo.days} von ${nDays} Tagen geübt. Gefüllt: Tagwerk, Rand: nur etwas geübt.</p>
+    ${mo.year ? `<p class="recap"><b>Dein Jahr ${mo.year.y}:</b> an ${plural(mo.year.days, 'Tag', 'Tagen')} geübt, ${mo.year.n.toLocaleString('de-DE')} Aufgaben${mo.year.secs ? `, ${fmtMin(mo.year.secs)}` : ''}.</p>` : ''}</section>`;
+}
+// Stempel: an Etappentagen mit Siegelrand in der Sprachfarbe (B2); außerhalb des Tagwerks statt des Hakens der Punkt aus „Dein Weg“
+const SEAL_PATH = (() => {
+  const N = 24, c = 28, r1 = 31, r2 = 36, p = (r, a) => `${(c + r * Math.cos(a)).toFixed(2)} ${(c + r * Math.sin(a)).toFixed(2)}`;
+  let d = '';
+  for (let i = 0; i < N; i++) { const a0 = 2 * Math.PI * i / N - Math.PI / 2, a1 = 2 * Math.PI * (i + 1) / N - Math.PI / 2; if (!i) d = `M${p(r1, a0)}`; d += `Q${p(r2, (a0 + a1) / 2)} ${p(r1, a1)}`; }
+  return d + 'Z';
+})();
+function stampSvg(r, daily, sealed){
+  if (!daily && !sealed) return '';
+  const draw = r.stamped ? '' : ' draw';
+  if (!sealed) return `<svg class="stamp${draw}" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/></svg>`;
+  return `<svg class="stamp seal${daily ? '' : ' nd'}${draw}" viewBox="-10 -10 76 76" aria-hidden="true"><path class="sl" pathLength="100" d="${SEAL_PATH}"/><circle cx="28" cy="28" r="25"/>${daily ? '<path d="M17 29.5l7.5 7.5L40 21"/>' : '<circle class="dot" cx="28" cy="28" r="7"/>'}</svg>`;
+}
 function viewRunDone(){
   const r = S.run, lang = r.lang;
   const daily = r.kind === 'daily';
@@ -651,8 +711,7 @@ function viewRunDone(){
     const when = dWhen(lo) === dWhen(hi) ? dWhen(lo) : lo === 2 ? `übermorgen bis ${dWhen(hi)}` : ul === uh ? `in ${nl} bis ${nh} ${ul}` : `${dWhen(lo)} bis ${dWhen(hi).replace(/^in /, '')}`;
     return `<p class="sits"><b>Nächste Wiederholung:</b> ${sits.length === 1 ? '1 Satz kommt' : `${sits.length} Sätze kommen`} ${when} wieder.</p>`;
   })() : '';
-  const ms = (() => { const now = matureCount(lang); const hit = milestoneList(now).filter(m => m > (r.strongBefore || 0) && m <= now).pop(); return hit ? `<p class="milestone">${hit} gefestigte Sätze auf ${LANG[lang].deName}</p>` : ''; })();
-  const sk = daily ? (() => { const n = streak(), m = streakMilestone(n); return n >= 2 ? (m ? `<p class="milestone">${m}</p>` : `<p class="hint">Tag ${n} in Folge.</p>`) : ''; })() : '';
+  const sk = daily && !(r.miles || []).some(e => e.k === 'streak') ? (() => { const n = streak(); return n >= 2 ? `<p class="hint">Tag ${n} in Folge.</p>` : ''; })() : '';
   const tomorrow = daily ? (() => { const n = forecast(lang)[1].n; return n ? `<p class="hint">Morgen ${n === 1 ? 'kommt 1 Satz' : `kommen ${n} Sätze`} zur Wiederholung.</p>` : ''; })() : '';
   const missedHtml = missed.length ? `<h2 class="grp">Noch nicht sicher</h2>
     <div class="rows">${missed.slice(0, 6).map(x => `<div class="row static"><span class="txt"><span class="rt wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="rd">${esc(x.de)}</span>` : ''}</span>${speakBtn(x.target, lang)}</div>`).join('')}</div>
@@ -663,12 +722,14 @@ function viewRunDone(){
     : '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   return `<div class="donebox">
-    ${daily ? `<svg class="stamp${r.stamped ? '' : ' draw'}" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/></svg>` : ''}
+    ${stampSvg(r, daily, !!(r.miles && r.miles.length))}
     <h1 class="done-h">${title}</h1>
+    ${mileHtml(r)}
     <p class="lead">${lead}</p>
     ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint" style="margin-top:0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}
     ${strip}${kpis}${span}
-    ${ms}${sk}${tomorrow}
+    ${sk}${tomorrow}
+    ${monthHtml(r.month)}
     ${topicsHtml(r)}
     ${nextTopicHtml(r)}
     ${missedHtml}
@@ -841,8 +902,8 @@ function errLine(rows){
   const top = all.sort((x, y) => y.bad - x.bad || y.n - x.n).slice(0, 2).map(x => { const tr = trapMeta(x.l, x.id); return !tr ? '' : tr.id === 'eigene' ? esc(tr.label) : `<button type="button" class="term" data-a="topic" data-l="${x.l}" data-t="${tr.id}">${esc(tr.label)}</button>`; }).filter(Boolean);
   return top.length ? `<p class="dc-x">Fehler bei ${top.join(' und ')}.</p>` : '';
 }
-function detailCard(title, sub, rows, empty){
-  return `<div class="dcard" aria-live="polite"><p class="dc-h">${title}</p>${sub ? `<p class="dc-s">${sub}</p>` : ''}${rows.length ? actTable(rows) + errLine(rows) : `<p class="dc-n">${empty}</p>`}</div>`;
+function detailCard(title, sub, rows, empty, extra){
+  return `<div class="dcard" aria-live="polite"><p class="dc-h">${title}</p>${sub ? `<p class="dc-s">${sub}</p>` : ''}${rows.length ? actTable(rows) + errLine(rows) : `<p class="dc-n">${empty}</p>`}${extra || ''}</div>`;
 }
 function dayCard(ds){
   const rows = MIN_LANGS.map(l => ({ l, a:actOf([ds], l) })).filter(r => r.a.n).map(r => Object.assign(r, { tw:r.a.tw > 0 }));
@@ -850,7 +911,10 @@ function dayCard(ds){
   const title = rel ? rel[0].toUpperCase() + rel.slice(1) : fmtDayLong(ds);
   const sub = [rel ? fmtDayLong(ds) : '', hours].filter(Boolean).join(' · ');
   const empty = ds === today() ? 'Noch nicht geübt.' : streakData().free.has(ds) ? 'Pausetag, die Serie lief weiter.' : 'Nicht geübt.';
-  return detailCard(title, sub, rows, empty);
+  // Etappen dieses Tages, wie in „Dein Weg“ (seit 24.63)
+  const ms = wayEvents().done.filter(e => e.d === ds);
+  const extra = ms.length ? `<ul class="dc-m">${ms.map(e => `<li><i class="sq rl-${e.l || 'x'}-sq" aria-hidden="true"></i>${esc(e.t)}${e.l ? ` <span class="wl-lang">${LANG[e.l].deName}</span>` : ''}</li>`).join('')}</ul>` : '';
+  return detailCard(title, sub, rows, empty, extra);
 }
 function minutesHtml(){
   const data = minSpan().map(x => Object.assign(x, { act:Object.fromEntries(MIN_LANGS.map(l => [l, actOf(x.days, l)])) }));
@@ -976,7 +1040,7 @@ function viewProgress(){
   const cal = calendarSvg();
   const items = BANK[lang];
   const practiced = items.filter(i => stOf(i.id)).length;
-  const mature = matureCount(lang), nextM = nextMilestone(mature), prevM = prevMilestone(mature);
+  const mature = matureCount(lang), hiM = matureHigh(lang), nextM = nextMilestone(hiM), prevM = prevMilestone(hiM);
   const known = Math.round(knownEstimate(lang));
   const secs7 = sumLog(lang, 7, 'secs');
   const rev30 = sumLog(lang, 30, 'rev'), revOk30 = sumLog(lang, 30, 'revOk'), revM30 = sumLog(lang, 30, 'revM'), revMOk30 = sumLog(lang, 30, 'revMOk');
@@ -1016,7 +1080,7 @@ function viewProgress(){
   <section class="today">
     <p class="eyebrow">${L.deName}</p>
     <p class="num">${mature} <button type="button" class="term" data-a="term" data-k="gefestigt">${mature === 1 ? 'gefestigter Satz' : 'gefestigte Sätze'}</button></p>
-    <div class="mbar" aria-hidden="true"><span style="width:${Math.round((mature - prevM) / Math.max(1, nextM - prevM) * 100)}%"></span></div>
+    <div class="mbar" aria-hidden="true"><span style="width:${Math.max(0, Math.round((mature - prevM) / Math.max(1, nextM - prevM) * 100))}%"></span></div>
     <p class="hint" style="margin-top:6px">Nächstes Ziel: ${nextM}${mature ? `, noch ${nextM - mature}` : ''}.</p>
     ${practiced ? (() => { const v = vocabCount(lang), ago = snapAgo(lang, 30), dv = ago && ago.w != null ? v.all - ago.w : null;
       return `<div class="kpis">

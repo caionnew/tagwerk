@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 21. November 2026 (nach 24.62.1)
+Stand: 21. November 2026 (nach 24.63.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -68,12 +68,16 @@ Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unt
 
 ### Planung und Rückblick
 
-9. **Bedeutung von „gefestigt“ hinschreiben (B+).** In Zeile und Erklärtext: „Sätze, die du auch nach drei Wochen ohne Üben noch weißt“. Stimmt genau: Der geplante Abstand ist bei FSRS die Zeit, bis die Erinnerung auf 90 % fällt, und die Wiederholung, die einen Satz festigt, ist im Tagwerk frei aus dem Deutschen geschrieben. Klein, ändert keine Zahl.
+9. **Bedeutung von „gefestigt“ hinschreiben (B+).** In Zeile und Erklärtext, und bei der Etappe am Rundenende (im Etappen-Vergleich vom 21.11. „Ein Satz, was die Zahl heißt“, A−): „Sätze, die du auch nach drei Wochen ohne Üben noch weißt“. Stimmt genau: Der geplante Abstand ist bei FSRS die Zeit, bis die Erinnerung auf 90 % fällt, und die Wiederholung, die einen Satz festigt, ist im Tagwerk frei aus dem Deutschen geschrieben. Klein, ändert keine Zahl.
 10. **Schwerpunkt der Woche erst ab 10 Aufgaben je Thema (B).** Bisher reichen 4; am 20.11. hätte das die Wahl auf Redewendungen (2 von 4) und Modalpartikeln (2 von 5) gelegt, beides auf zwei Fehlern.
 11. **Zuwachs in der Sprachen-Kachel (B, ab Mitte Dezember).** „+18 in 7 Tagen“ statt „heute geübt“ (das zeigt der Kalender darüber). Zeigt das Tempo je Sprache; misst aber wie „gefestigt“ vor allem Regelmäßigkeit. Daten liegen im Tagesstand.
 12. **„Verankert“ ausblenden, bis der erste Satz es ist (B−).** Frühestens im Mai 2027 möglich; bis dahin steht in „Stand der Sätze“ eine feste Null.
 13. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
-14. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
+14. **Etappen, geprüft am 21.11., nicht gewählt (je B).**
+    - **Persönliche Bestwerte:** längste fehlerfreie Folge, meiste Aufgaben an einem Tag. Belohnt eher Menge als Können und kann zu Druck werden.
+    - **Damals und heute:** ein Satz aus den ersten Tagen, den du damals falsch hattest und heute gefestigt hast. Braucht Monate an Daten, ab dem Frühjahr 2027 sinnvoll.
+    - **Balken bis zur nächsten Etappe am Rundenende:** Den Abstand nennt schon der Ausschnitt aus „Dein Weg“ („noch 15“); Fortschritt hat den Balken.
+15. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
 
 ## Lesetexte: Themen für später
@@ -149,6 +153,14 @@ Derzeit nichts.
 - **Fehler finden: Indefinido/Imperfecto als Fehlerart (C+).** Der Aspekt lässt oft beides zu (llovía/llovió), ein eingesetzter Fehler wäre selten eindeutig.
 - **Fehler finden: deutschen Satz ausblenden (C).** Bei por/para und Konnektoren wären dann oft zwei Lösungen richtig.
 - **Fehler finden: Begründung auswählen (C).** Macht die Übung langsamer; die Erklärung steht ohnehin nach jeder Antwort da.
+- **Etappen, weitere Varianten (geprüft am 21.11.).**
+  - **„Kurz davor“ auf Heute (C+):** Nähe zum Ziel spornt an, lenkt aber vor dem Üben auf Zahlen statt auf die Sätze.
+  - **Ein Satz von dir zur Etappe (C+):** ein Tagebuch-Schritt nach jeder Etappe; wird schnell lästig.
+  - **Jahresrückblick als Geschichte (C+):** Die Monatsbilanz im Januar hat eine Zeile zum Vorjahr; mehr erst nach einem ganzen Jahr.
+  - **Nächste Etappe im Kopf von Heute (C):** Heute ist schon voll, und „Dein Weg“ zeigt sie.
+  - **Eigener Bildschirm vor der Zusammenfassung (C):** ein Tippen mehr, unterbricht.
+  - **Abzeichen-Sammlung (C):** „Dein Weg“ ist schon die Sammlung, mit Datum.
+  - **Teilen-Karte als Bild (C), Klang (C):** kein Bedarf; Ton am Handy oft aus.
 - **Endbildschirm nach fehlerfreier Runde überspringen (C).** Dann fehlen Abschluss, „Als Nächstes“ und „Noch eine Runde“.
 
 ## Bewusst nicht

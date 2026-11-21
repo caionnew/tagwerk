@@ -30,7 +30,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `js/part_modern.js` | Spracherkennung, Symbole, Vibration, Teilen, Schnellzugriffe |
 | `js/part_shadow.js` | Nachsprechen: Aufnahme, Pegel, Auswertung, Wiedergabe, Aussprachehilfen, Übersicht |
 | `js/part_stats.js` | Fehlerquellen nach Thema, Übungsart, Fehlerart (`mistake`: Ein anderes Wort im geprüften Teil ist Grammatik, außer in Themen mit `vocab:true` wie Redewendungen, Falsche Freunde, Lesetext-Lücken; dort nur dieselbe Wortfamilie) Erstkontakt neuer Sätze je Monat (`noteFirst`, noch ohne Anzeige) und hartnäckigen Sätzen (`hardSentences`: bei Wiederholungen mindestens zweimal nicht gewusst, nicht gefestigt, in 30 Tagen geübt; `hardPattern`: gemeinsames Thema), Uhrzeiten, Wortschatz |
-| `js/part_long.js` | Dein Weg, Themenraster, Veränderung über 30 Tage |
+| `js/part_long.js` | Dein Weg (`wayEvents`, `wayNext`, Rangfolge `WAY_PRIO`), Themenraster, Veränderung über 30 Tage |
 | `js/part_write.js` | Textprofil, Hinweise, Extra-Aufgaben, Textarchiv |
 | `js/part_ref.js` | Themenblatt, Nachschlagelisten, Kulturkarten, Karten |
 | `js/part_views.js` | Alle Ansichten als HTML-Vorlagen, `render()` |
@@ -69,19 +69,27 @@ Die Fortschrittsleiste einer Runde (`progressBar`) hat ein Feld je Aufgabe. `run
 |---|---|
 | `settings` | Rundenlänge, Sprache, Nachschub, Vorlesen, Extra-Aufgaben beim Schreiben, Aussprachehilfen (`shHints`, fehlt = an) |
 | `st[id]` | Lernstand je Satz: FSRS-Stabilität `s`, Schwierigkeit `d`, Intervall `ivl`, `due`, `last`, Zähler, eigene richtige Fassungen |
-| `log[datum][sprache]` | Aufgaben, neue Sätze, Wiederholungen, gefestigt, Sekunden |
+| `log[datum][sprache]` | Aufgaben, neue Sätze, Wiederholungen, gefestigt, Sekunden; seit 24.63 der Bestand am Tagesende: gefestigt `mc`, verankert `ac` (fehlt bei 0) |
 | `done[datum]` | Tagwerk erledigt |
-| `run` | offenes Tagwerk von heute (Pause): Aufgaben `queue` (zweite Versuche mit `requeue`, nach der Antwort Ergebnis `got`: ok, near, bad), Stand `idx`, Rundenergebnis `res`, verpasste Sätze `missed` |
+| `run` | offenes Tagwerk von heute (Pause): Aufgaben `queue` (zweite Versuche mit `requeue`, nach der Antwort Ergebnis `got`: ok, near, bad), Stand `idx`, Rundenergebnis `res` (mit Abstand vorher `pivl` und nachher `ivl`), verpasste Sätze `missed`, Etappen beim Start `wayBefore` |
 | `snap[datum][sprache]` | Tagesstand (älter als 120 Tage nur sonntags und am Monatsende, `compactSnaps`): geübt `n`, gefestigt `m`, abrufbar `k`, Wortschatz `w`, gefestigt je Thema `t` |
 | `tlog[datum]` | Fehlerquellen je Thema (`p:`), Übungsart (`t:`), Fehlerart (`e:`), Stunden `h`; nach 120 Tagen gelöscht |
+| `tbase[sprache][thema]` | Ausgangswert der Themen-Etappen: erste 40 Aufgaben `n`, Fehler `bad`, bis Tag `to`; bleibt, wenn `tlog` verfällt |
+| `etap` | erreichte Themen-Etappen `{ d, l, k, s, b, c }`: Datum, Sprache, Thema, Stufe (1 halbiert, 2 sitzt), Ausgangs- und letzter Wert als `[Aufgaben, Fehler]` |
 | `first[sprache][monat]` | Erster Kontakt mit neuen Sätzen (`noteFirst`) je Thema und Stufe, Schlüssel `thema:3` (1 bis 3 = A2 bis B2, `t` = Tatoeba): `[Aufgaben, Fehler]`, gewertet wie die Fehlerquellen; nur Lücke und Kacheln, also die Form, in der neue Sätze kommen. Ohne Löschfrist (wenige Zahlen je Monat); fehlt in Ständen vor 24.61; Zurücksetzen einer Sprache löscht ihren Teil |
 | `gen`, `genus` | Ergebnisse der erzeugten Aufgaben und der Genus-Wörter |
 | `own`, `tat` | eigene Sätze, Sätze von Tatoeba |
 | `texts` | Textarchiv mit Messwerten (höchstens 500) |
 | `pace[sprache][übungsart]` | Sekunden der letzten 20 ersten Versuche für die Zeitschätzung (fehlt in älteren Ständen; Zurücksetzen einer Sprache löscht ihren Teil) |
-| `used` | Hinweise, Wiederholungsgedächtnis der Generatoren und Runden, Schreibaufgaben, gelesene Texte (`texts`, Schlüssel `sv:vasa`), beim Lesen nachgeschlagene Wörter (`looked['sv:vasa'][wort] = datum`, höchstens 300 je Sprache; fehlt in älteren Ständen) |
+| `used` | Hinweise, Wiederholungsgedächtnis der Generatoren und Runden, Schreibaufgaben, gelesene Texte (`texts`, Schlüssel `sv:vasa`), beim Lesen nachgeschlagene Wörter (`looked['sv:vasa'][wort] = datum`, höchstens 300 je Sprache; fehlt in älteren Ständen), zuletzt gezeigte Monatsbilanz `monthShown` |
 
-Ältere Speicherstände werden beim Laden ergänzt; Felder werden nie umbenannt, damit Backups aus allen Versionen lesbar bleiben.
+Ältere Speicherstände werden beim Laden ergänzt. Das Format darf sich ändern, wenn der Lernstand dabei erhalten bleibt: Was umbenannt oder zusammengelegt wird, wandelt das Laden um, damit der gespeicherte Stand und Backups aus allen Versionen lesbar bleiben.
+
+## Etappen
+
+`wayEvents` leitet alle Etappen aus gespeicherten Daten ab (Protokoll, Tagesstände, Tagwerke, `etap`), mit einer Schwellenliste je Art (`milestoneList`, `streakList`, `anchoredList`, `ladder`). Gefestigt und verankert zählen nach dem Bestand am Tagesende (`mc`, `ac`), für ältere Tage nach der Summe der neu gefestigten Sätze. Beim Start einer Runde hält `wayKeys` die Kennungen fest (`run.wayBefore`); `finishRun` vergleicht danach und legt die neuen Etappen in `run.miles`, dazu die Sätze, die in der Runde die Schwelle überschritten haben (`crossedIn`), und beim ersten Tagwerk im Monat die Monatsbilanz (`monthCard`). Die Ansicht zeigt eine Hauptetappe nach `WAY_PRIO` als Ausschnitt mit voriger und nächster Etappe derselben Art (`mileHtml`), den Stempel mit Siegelrand (`stampSvg`) und vibriert kurz, kurz, lang.
+
+Themen-Etappen (`checkTopics`, `part_stats.js`): Ausgangswert sind die ersten 40 Aufgaben eines Themas, aktueller Wert die letzten 60 danach (ausgewertet ab 40). „Fehler halbiert“: Quote höchstens halb so hoch, mindestens 10 Prozentpunkte weniger, z ≥ 2 im Vergleich zweier Anteile. „Sitzt“: am Anfang mindestens 20 % falsch, jetzt Wilson-Obergrenze (95 %) höchstens 15 %, also höchstens 3 von 60. Jede Stufe einmal je Thema; Tagesschwankungen bleiben in den großen Fenstern unter der Schwelle.
 
 Firefox erlaubt pro Adresse etwa 5 MB localStorage, und alle Seiten unter `caionnew.github.io` teilen sich diese Grenze. `STORE` (`part_head.js`) misst beim Start den eigenen Stand und alles andere unter der Adresse, `save()` aktualisiert die eigene Größe. Die Einstellungen zeigen die Belegung als Balken; ab 3 MB (`STORE_WARN`) warnt auch „Heute“. Beim Start bittet die App mit `navigator.storage.persist()` darum, dass der Browser die Daten nicht bei Platzmangel löscht; das gilt für allen Speicher der Adresse. Lehnt der Browser ab, bieten die Einstellungen „Dauerhaft speichern“ an, denn auf eine Handlung hin stimmen Browser eher zu.
 
@@ -91,7 +99,7 @@ Firefox erlaubt pro Adresse etwa 5 MB localStorage, und alle Seiten unter `caion
 
 ## Bewegung
 
-Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), ein Feld der Fortschrittsleiste färbt sich beim Prüfen, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich. `prefers-reduced-motion: reduce` schaltet alles ab.
+Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), ein Feld der Fortschrittsleiste färbt sich beim Prüfen, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich, an Etappentagen danach sein Siegelrand. `prefers-reduced-motion: reduce` schaltet alles ab.
 
 ## Online und offline
 

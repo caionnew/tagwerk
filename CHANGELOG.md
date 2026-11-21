@@ -2,6 +2,21 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.63.0
+**Etappen zeigen sich in dem Moment, in dem du sie erreichst: am Rundenende direkt unter dem Titel, mit Siegel am Stempel. Dazu neue Etappen für Themen, deren Fehlerquote deutlich gesunken ist, für verankerte Sätze und eine Monatsbilanz.**
+- **Jede Etappe im Moment:** Bisher kamen nur gefestigte Sätze und Serien als kleiner Hinweis am Rundenende; 100 Aufgaben, Wortschatz, Übungszeit standen still in „Dein Weg“. Jetzt erscheint jede Etappe, die in der Runde erreicht wurde. Erkannt wird sie, indem die App „Dein Weg“ vor und nach der Runde vergleicht; so gibt es keine Etappe doppelt, auch wenn ein Satz aus „gefestigt“ herausfällt und wiederkommt.
+- **Eine Liste je Art:** Serien und gefestigte Sätze hatten zwei verschiedene Schwellenlisten (Rundenende und „Dein Weg“). Jetzt gilt je Art eine: Serie 7, 14, 30, 50, 100, 150, 200, 250, 300, 365 Tage, danach jede 100 und jedes Jahr; gefestigt wie bisher in „Dein Weg“. „Zur Hälfte gefestigt“ fällt weg.
+- **Ausschnitt aus „Dein Weg“ unter dem Titel:** die vorige Etappe derselben Art mit Datum, die heutige, die nächste mit Abstand („noch 15“). Fallen mehrere zusammen, steht eine vorn (was über Können spricht vor dem, was über Fleiß spricht), die übrigen in einer Zeile. „Dein Weg“ führt zur ganzen Liste.
+- **Die Sätze selbst:** Bei „gefestigt“ und „verankert“ stehen die Sätze, die in dieser Runde die Schwelle überschritten haben, zum Anhören; die mit den meisten Fehlern zuerst („dreimal falsch, jetzt 22 Tage Abstand“), ab vier Sätzen „und N weitere“.
+- **Siegel:** An Etappentagen bekommt der grüne Haken einen gezackten Rand in der Sprachfarbe, der sich nach dem Haken zeichnet (bei „Bewegung reduzieren“ steht er gleich da). Außerhalb des Tagwerks steht an Etappentagen ein Siegel mit Punkt statt Haken; sonst bleibt es ohne Stempel.
+- **Themen-Etappen:** „„Konditional & si-Sätze“: Fehler halbiert“ und später „… sitzt“. Verglichen werden die ersten 40 Aufgaben eines Themas mit den letzten 40 bis 60. „Halbiert“ heißt: Fehlerquote höchstens halb so hoch, mindestens 10 Prozentpunkte niedriger und statistisch klar (z ≥ 2). „Sitzt“ heißt: am Anfang mindestens 20 % falsch, jetzt höchstens 3 von 60. Jede Stufe einmal je Thema. Ob du an einem Tag 1 von 3 oder 2 von 3 falsch hast, ändert daran nichts. Unter dem Ausschnitt stehen die Zahlen und der Weg zum Themenblatt.
+- **Verankert:** „Erster Satz verankert“, dann 10, 25, 50 … verankerte Sätze (Abstand ab einem Jahr), frühestens im Frühjahr 2027.
+- **Monatsbilanz:** Beim ersten Tagwerk eines Monats steht am Ende der Vormonat: Tagwerke, neu gefestigte Sätze, Etappen und ein Monatskalender in der Kodierung von „Übungstage“; im Januar dazu das Vorjahr in einer Zeile. Danach verschwindet die Monatszeile auf „Heute“.
+- **Kalender:** Die Tageskarte nennt die Etappen dieses Tages.
+- **Vibration:** Etappen kurz, kurz, lang; abschaltbar wie bisher.
+- **Fehler behoben:** „Sprache zurücksetzen“ ließ die Fehlerquellen dieser Sprache stehen. Jetzt werden sie mit gelöscht, ebenso die Themen-Etappen.
+- Speicherstand: neue Felder `log.mc`, `log.ac`, `tbase`, `etap`, `used.monthShown`, `run.wayBefore`; `run.strongBefore` entfällt. Ältere Stände laden unverändert, Etappen aus der Zeit davor bleiben mit ihrem Datum.
+
 ## 24.62.1
 **Satzbank durchgesehen: Zeitangaben an anderer Stelle zählen jetzt, in beiden Sprachen. Dazu drei Stellen, an denen Falsches als richtig galt.**
 - **Zeitangaben:** Alle 216 Sätze mit Zeitangaben durchgesehen (hoy, mañana, ayer, anoche, siempre, esta semana, en 2015 …; idag, i morgon, igår, nu, i somras, klockan sju, nästa år …). In 110 davon fehlte eine übliche Stellung, 181 Fassungen sind neu, zum Beispiel No dormí bien ayer, Le buscas siempre tres pies al gato, Quedamos delante del cine a las ocho, I morgon ringer jag, Nu måste jag gå, Sedan i söndags har det snöat oavbrutet.

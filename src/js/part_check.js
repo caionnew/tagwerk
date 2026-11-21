@@ -118,6 +118,8 @@ function judgeX(input, answers, lang, opt){
     if (lang === 'es' && esProDrop(n, o.de).some(v => answers.some(a => E(norm(a, lang)) === E(v)))) return { res:'ok' };
   }
   if (answers.some(a => deacc(E(norm(a, lang))) === deacc(ne))) return { res:'near', why:{ kind:'accent' } };
+  // „Tu eres …“: das Pronomen tú ohne Akzent. Fast richtig wie jeder fehlende Akzent (norm lässt „tu“ stehen, es ist sonst das Possessiv).
+  if (lang === 'es' && /^tu /.test(n) && answers.some(a => E(norm(a, lang)) === E(norm(String(input).replace(/(^|[¿¡\s])tu(?=\s)/i, '$1tú'), lang)))) return { res:'near', why:{ kind:'accent' } };
   if (o.typo) {
     const protect = new Set(o.protect.flatMap(p => deacc(norm(p, lang)).split(' ')));
     const A = deacc(ne).split(' ');
@@ -195,7 +197,8 @@ function check(){
   } else if (ex.type === 'dict') {
     const box = $('#answer'); c.input = box ? box.value : c.input;
     const item = itemById(ex.id);
-    const j = judgeX(c.input, [item.target].concat(item.alts || []), r.lang);
+    // Diktat: Es zählt, was zu hören war. Alternativen (andere Wortstellung, Synonyme) sind hier falsch gehört.
+    const j = judgeX(c.input, [item.target], r.lang);
     if (!j) return;
     c.result = j.res; c.why = j.why; c.diff = diffHtml(item.target, c.input, r.lang);
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {

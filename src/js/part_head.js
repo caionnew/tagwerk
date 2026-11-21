@@ -74,7 +74,9 @@ const deacc = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 function norm(s, lang){
   let t = String(s || '').toLowerCase().replace(/[’`´]/g, "'").replace(/[.!?¡¿,;"„“”«»()…]/g, ' ').replace(/[–—]/g, ' ').replace(/\s+/g, ' ').trim();
   if (lang === 'sv') t = t.replace(/\bi (dag|morgon|går|kväll|morse|natt)\b/g, 'i$1');
-  else if (lang === 'es') t = t.replace(/^(yo|tú|tu|él|ella|nosotros|nosotras|ellos|ellas|usted|ustedes) (?=\S+ \S)/, '');
+  // Spanisch: betontes Subjektpronomen am Anfang zählt nicht (Yo tengo = Tengo). Nicht „tu“ ohne Akzent: das ist das Possessiv
+  // (Tu prima …); und nicht in „yo que tú“, wo das Pronomen zur Wendung gehört.
+  else if (lang === 'es') t = t.replace(/^(yo|tú|él|ella|nosotros|nosotras|ellos|ellas|usted|ustedes) (?!que )(?=\S+ \S)/, '');
   return t;
 }
 // Niveau eines Satzes, grob geschätzt: Länge, Nebensätze, anspruchsvolle Formen (Plusquamperfekt, Konditional, Subjuntivo, Passiv).

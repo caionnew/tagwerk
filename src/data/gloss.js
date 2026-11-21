@@ -2859,6 +2859,15 @@ vattenskadan|vattenskada|der Wasserschaden
 vattna||gießen, bewässern
 ärmar|ärm|Ärmel (Plural)
 plats||Stelle, Ort, Sitzplatz; på plats = eingerichtet, vor Ort
+fattar|fatta|verstehen, kapieren (umgangssprachlich)
+kompis||der Kumpel, Freund (umgangssprachlich)
+ned||hinunter, herunter (wie ner)
+sade|säga|sagte (Präteritum, auch sa)
+skära||schneiden; skära ner på = kürzen, einsparen
+måndagen|måndag|der Montag (bestimmt); förra måndagen = letzten Montag
+iväg||los, weg; åka iväg = losfahren
+framme||angekommen, da; vara framme = ankommen
+uppehåll||die Pause; utan uppehåll = ununterbrochen
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -5666,6 +5675,19 @@ fuga||Leck; Flucht
 conseguido|conseguir|bekommen, geschafft (Partizip)
 festival||Festival
 jazz||Jazz
+publicarán|publicar|werden veröffentlichen; se publicarán = werden veröffentlicht
+publican|publicar|veröffentlichen; se publican = werden veröffentlicht
+bus||der Bus (wie autobús)
+aumentado|aumentar|gestiegen, erhöht (Partizip)
+renta||die Miete (Lateinamerika); auch das Einkommen
+respondiste|responder|du hast geantwortet (Indefinido)
+copa||der Pokal, das Glas; la Copa del Mundo = die Weltmeisterschaft
+próximo||nächster; el próximo año = nächstes Jahr
+firmamos|firmar|wir unterschreiben, wir unterschrieben
+muestro|mostrar|ich zeige
+comentado|comentar|erwähnt (Partizip)
+encontramos|encontrarse|nos encontramos = wir treffen uns (ohne nos: wir finden)
+acordarme|acordarse|mich erinnern; acordarse de = sich erinnern an
 `
 };
 

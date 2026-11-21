@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.62.1
+**Satzbank durchgesehen: Zeitangaben an anderer Stelle zählen jetzt, in beiden Sprachen. Dazu drei Stellen, an denen Falsches als richtig galt.**
+- **Zeitangaben:** Alle 216 Sätze mit Zeitangaben durchgesehen (hoy, mañana, ayer, anoche, siempre, esta semana, en 2015 …; idag, i morgon, igår, nu, i somras, klockan sju, nästa år …). In 110 davon fehlte eine übliche Stellung, 181 Fassungen sind neu, zum Beispiel No dormí bien ayer, Le buscas siempre tres pies al gato, Quedamos delante del cine a las ocho, I morgon ringer jag, Nu måste jag gå, Sedan i söndags har det snöat oavbrutet.
+  - Aufgenommen nur, was natürlich klingt. Nicht aufgenommen: gezwungene Stellungen (¿La semana pasada dónde fue la fiesta?) und Umstellungen, die den Bezug ändern (hoy nur im ersten von zwei Sätzen).
+  - Schwedisch: vorn nur mit dem Verb an zweiter Stelle. „Nu jag måste gå“ und „Igår jag träffade …“ bleiben falsch, ein Test hält das fest.
+  - Die Lückenfüllungen ändern sich dadurch nicht (geprüft für alle Sätze).
+- **Fehler behoben, Hördiktat:** Es zählten auch die Alternativen eines Satzes. „Visité a mi abuela ayer“ galt als richtig gehört, obwohl „Ayer visité a mi abuela“ zu hören war, ebenso Synonyme. Jetzt zählt nur der Satz, der vorgelesen wird.
+- **Fehler behoben, Spanisch:** Beim Vergleich fiel ein „tu“ am Satzanfang weg, gedacht für „tú“ ohne Akzent. Es ist aber das Possessiv: „Prima me cayó genial …“ galt als richtig für „Tu prima me cayó genial …“. Jetzt bleibt „tu“ stehen; „Tu eres …“ für „Eres …“ ist „fast richtig“ mit Hinweis auf den Akzent, wie jeder fehlende Akzent.
+- **Fehler behoben, Spanisch:** Ebenso fiel „yo“ in „Yo que tú, no lo haría“ weg, „Que tú, no lo haría“ galt als richtig. In dieser Wendung gehört yo dazu.
+- Wörterbuch: 22 Wörter aus den Alternativen ergänzt (fattar, kompis, uppehåll, framme, respondiste, muestro, acordarme …), damit sie sich nachschlagen lassen, wenn eine Alternative als Lösung erscheint.
+
 ## 24.62.0
 **Verbalperiphrasen bei „Fortgeschritten“ ohne verratenes Muster, und genauere Rückmeldung bei vier gemeldeten Aufgaben.**
 - **Periphrasen:** Das Muster neben der Aufgabe („acabar de + Infinitiv“) nannte das gesuchte Verb; übrig blieb nur die Endung. Bei „Fortgeschritten“ steht jetzt „Muster zeigen“, wie schon bei der Grundform. Was gesucht ist, ergibt sich aus dem deutschen Satz (gerade, wieder, seit).

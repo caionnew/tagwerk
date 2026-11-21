@@ -630,13 +630,19 @@ const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.g
 function mileHtml(r){
   const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b)), m = miles[0];
   if (!m) return '';
-  const lane = m.l || 'x', w = wayEvents().done;
-  const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (m.k === 'topic' ? e.trap === m.trap : e.v == null || m.v == null || e.v < m.v)).pop();
+  const lane = m.l || 'x', w = wayEvents().done, topic = m.k === 'topic';
+  const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (topic ? e.trap === m.trap : e.v == null || m.v == null || e.v < m.v)).pop();
   const nx = wayNext(m);
   const lab = (t, l) => `${esc(t)}${l ? ` <span class="wl-lang">${LANG[l].deName}</span>` : ''}`;
   const row = (cls, t, right) => `<li class="mr ${cls}"><i></i><span class="mr-t">${t}</span><span class="mr-d">${right}</span></li>`;
-  const rail = `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), 'heute')}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
-  const detail = m.k === 'topic' && m.b && m.c ? `<p class="mr-x">Fehler im Thema: vorher ${fmtPct(m.b[1] / m.b[0])} (${m.b[1]} von ${m.b[0]} Aufgaben), zuletzt ${fmtPct(m.c[1] / m.c[0])} (${m.c[1]} von ${m.c[0]}).${m.trap ? ` <button type="button" class="link inl" data-a="topic" data-l="${m.l}" data-t="${m.trap}">Themenblatt</button>` : ''}</p>` : '';
+  // Themen-Etappen: das Thema einmal als Überschrift, in der Leiste nur die Stufe mit der Fehlerquote vorher und nachher
+  const rate = x => fmtPct(x[1] / x[0]);
+  const step = e => `${esc(e.st)}${e.b && e.c ? `<span class="mr-s">von ${rate(e.b)} auf ${rate(e.c)}</span>` : ''}`;
+  const head = topic ? `<p class="mr-h">${lab(trapLabel(m.l, m.trap), m.l)}</p>` : '';
+  const rail = topic
+    ? `<ol class="mrail rl-${lane}">${prev ? row('done', step(prev), fmtDM(prev.d)) : ''}${row('now', step(m), 'heute')}${nx ? row('next', 'Nächste Halbierung', esc(nx.rest)) : ''}</ol>`
+    : `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), 'heute')}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
+  const counts = topic && m.b && m.c ? `<p class="mr-x">${m.b[0] === m.c[0] ? `Je ${fmtN(m.b[0])} Aufgaben: vorher ${m.b[1]} falsch, zuletzt ${m.c[1]}.` : `Vorher ${m.b[1]} von ${m.b[0]} Aufgaben falsch, zuletzt ${m.c[1]} von ${m.c[0]}.`}</p>` : '';
   const list = m.k === 'mature' ? (r.crossed && r.crossed.mature) || [] : m.k === 'anchored' ? (r.crossed && r.crossed.anchored) || [] : [];
   const times = n => (['', 'einmal', 'zweimal', 'dreimal', 'viermal', 'fünfmal', 'sechsmal', 'siebenmal', 'achtmal', 'neunmal', 'zehnmal', 'elfmal', 'zwölfmal'][n] || `${n}-mal`);
   const show = S.mileAll ? list : list.slice(0, 3);
@@ -646,7 +652,8 @@ function mileHtml(r){
     return `<div class="ms"><span class="txt"><span class="rt wordrow" lang="${r.lang}">${linkWords(it.target, r.lang)}</span><span class="rd">${esc(it.de)}</span>${tag}</span>${speakBtn(it.target, r.lang)}</div>`;
   }).join('')}</div>${list.length > 3 ? `<button type="button" class="link mr-more" data-a="mileall">${S.mileAll ? 'Weniger zeigen' : `und ${list.length - 3} weitere`}</button>` : ''}` : '';
   const also = miles.length > 1 ? `<p class="mr-also">Außerdem: ${miles.slice(1).map(e => esc(e.t) + (e.l && e.l !== r.lang ? ` (${LANG[e.l].deName})` : '')).join(', ')}.</p>` : '';
-  return `<section class="mile" aria-label="Etappe"><p class="mile-eb">${miles.length > 1 ? 'Etappen' : 'Etappe'}</p>${rail}${detail}${sents}${also}<button type="button" class="link mr-way" data-a="toway">Dein Weg</button></section>`;
+  const links = `<p class="mr-links">${topic && m.trap ? `<button type="button" class="link" data-a="topic" data-l="${m.l}" data-t="${m.trap}">Themenblatt</button>` : ''}<button type="button" class="link" data-a="toway">Dein Weg</button></p>`;
+  return `<section class="mile" aria-label="Etappe"><p class="mile-eb">${miles.length > 1 ? 'Etappen' : 'Etappe'}</p>${head}${rail}${counts}${sents}${also}${links}</section>`;
 }
 // Monatsbilanz beim ersten Tagwerk eines Monats: drei Zahlen und der Vormonat als Kalender in derselben Kodierung wie „Übungstage“
 function monthHtml(mo){

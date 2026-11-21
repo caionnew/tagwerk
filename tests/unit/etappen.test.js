@@ -141,10 +141,12 @@ test('Themen: Halbierung kurz- und langfristig, wiederholt; die nächste braucht
   assert.equal(new Set(J('wayKeys()')).size, J('wayKeys()').length, 'Kennungen eindeutig');
   // Am Rundenende: die vorige Halbierung desselben Themas als vorige Etappe
   const last = J("wayEvents().done.filter(e => e.trap === 'bisats').pop()");
-  assert.match(app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(last)}], crossed:{} })`), /class="mr done"><i><\/i><span class="mr-t">„[^“]+“: Fehler halbiert/);
+  const lh = app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(last)}], crossed:{} })`);
+  assert.match(lh, /class="mr done"><i><\/i><span class="mr-t">Fehler halbiert<span class="mr-s">von 17 % auf 5 %<\/span>/);
+  assert.match(text(lh), /^Etappe Wortstellung im Nebensatz Schwedisch Fehler halbiert von 17 % auf 5 % \d+\. \S+ Fehler wieder halbiert von 5 % auf 0,8 % heute Nächste Halbierung auf unter 0,4 % Je 480 Aufgaben: vorher 24 falsch, zuletzt 4\. Themenblatt Dein Weg$/);
   // Als Nächstes: wieder halbiert, mit dem Ziel
   const nx = J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats').pop())`);
-  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'unter 0,4 %');
+  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'auf unter 0,4 %');
 });
 test('Themen: „sitzt“ einmal, wenn es früher sicher über 15 % lag und jetzt sicher darunter', () => {
   const { app, J } = setup();
@@ -155,7 +157,7 @@ test('Themen: „sitzt“ einmal, wenn es früher sicher über 15 % lag und jetz
   const m = J("wayEvents().done.find(e => e.k === 'topic' && e.v === 2)");
   assert.match(m.t, /^„.+“ sitzt$/);
   const h = text(app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(m)}], crossed:{ mature:[], anchored:[] } })`));
-  assert.match(h, /Fehler im Thema: vorher 33 % \(40 von 120 Aufgaben\), zuletzt 4,2 % \(5 von 120\)\./);
+  assert.match(h, /Thema sitzt von 33 % auf 4,2 % heute .*Je 120 Aufgaben: vorher 40 falsch, zuletzt 5\./);
   assert.equal(feed(app, J, 'bisats', [1, 2, 2, 1]).filter(e => e.s === 2).length, 1);
   // Gleichbleibend um 12 % (7 von 60): nie „sitzt“
   assert.deepEqual(feed(app, J, 'tempus', Array(40).fill(7)), []);

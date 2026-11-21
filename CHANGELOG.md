@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.63.2
+**Themen-Etappe am Rundenende aufgeräumt: das Thema einmal als Überschrift, darunter die Stufen mit der Fehlerquote vorher und nachher.**
+- Bisher stand der Themenname dreimal im Kasten („„Konditional & si-Sätze“: Fehler halbiert“, „… wieder halbiert“, „… wieder halbiert“), und die Sprache rutschte ans Zeilenende. Jetzt: „Konditional & si-Sätze · Spanisch“ als Überschrift, in der Leiste „Fehler halbiert, von 24 % auf 10 %“, „Fehler wieder halbiert, von 10 % auf 4,4 %“, „Nächste Halbierung: auf unter 2,2 %“.
+- Die Zählung darunter in einem kurzen Satz: „Je 480 Aufgaben: vorher 48 falsch, zuletzt 21.“
+- „Themenblatt“ und „Dein Weg“ stehen gemeinsam am Ende des Kastens.
+- Veröffentlichen: Findet GitHub das eben hochgeladene Paket beim ersten Versuch nicht (so bei 24.63.1), versucht es der Lauf nach einer halben Minute ein zweites Mal.
+
 ## 24.63.1
 **Themen-Etappen messen Verbesserung gegenüber jeder früheren Zeit, nicht nur gegenüber den ersten 40 Aufgaben. Jede Halbierung zählt, auch eine langsame über Jahre, etwa von 10 % auf 5 %.**
 - **Blöcke statt Anfangswert:** Die Antworten eines Themas liegen in Blöcken zu 60 Aufgaben. Ist ein Block voll, vergleicht die App gleich große Abschnitte: 60, 120, 240, 480, 960 … Aufgaben. Kurze Abschnitte erkennen schnelles Lernen, lange den langsamen Rückgang; ab 480 Aufgaben reicht der Vergleich bis zur letzten Etappe des Themas zurück.

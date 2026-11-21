@@ -102,7 +102,7 @@ function wayEvents(){
     if (!e || !e.d || !e.l || !e.k) return;
     const key = e.l + ':' + e.k, again = e.s === 1 && halves[key] > 0;
     if (e.s === 1) halves[key] = (halves[key] || 0) + 1;
-    ev.push({ d:e.d, ico:'topic', k:'topic', l:e.l, v:e.s, trap:e.k, b:e.b, c:e.c, t:topicMileText(e, again) });
+    ev.push({ d:e.d, ico:'topic', k:'topic', l:e.l, v:e.s, trap:e.k, b:e.b, c:e.c, t:topicMileText(e, again), st:e.s === 2 ? 'Thema sitzt' : again ? 'Fehler wieder halbiert' : 'Fehler halbiert' });
   });
   ev.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
   // Nächste Etappen: nach dem höchsten erreichten Stand, damit ein wieder herausgefallener Satz keine Etappe zweimal bringt
@@ -130,7 +130,7 @@ function wayNext(e){
     case 'tasks': { const c = sum('n'), nx = ladder(WAY_TASKS, x => x + 25000, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Aufgaben`, rest:left(nx, Math.min(c, nx - 1)) }; }
     case 'hours': { const c = sum('secs'), nx = ladder(WAY_HOURS, x => x + 250, Math.max(c / 3600, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Stunden geübt`, rest:`noch ${fmtMin(Math.max(60, nx * 3600 - c)).replace(/\.$/, '')}` }; }
     case 'days': { const c = Object.keys(DB.log || {}).filter(d => ['sv', 'es'].some(x => (dayLog(d, x).n || 0) > 0)).length, nx = ladder(WAY_DAYS, x => x + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Übungstage`, rest:left(nx, Math.min(c, nx - 1)) }; }
-    case 'topic': { const r = e.c && e.c[0] ? e.c[1] / e.c[0] / 2 : 0; return r > 0 ? { t:topicMileText({ l, k:e.trap, s:1 }, true), rest:`unter ${fmtPct(r)}` } : null; }
+    case 'topic': { const r = e.c && e.c[0] ? e.c[1] / e.c[0] / 2 : 0; return r > 0 ? { t:topicMileText({ l, k:e.trap, s:1 }, true), rest:`auf unter ${fmtPct(r)}` } : null; }
     case 'text': { if (e.v >= 10) return null; const c = (DB.texts || []).filter(x => x.lang === l).length; return { t:'10 eigene Texte', rest:left(10, Math.min(c, 9)) }; }
     case 'years': return { t:`${e.v + 1} Jahre mit Tagwerk`, rest:'in einem Jahr' };
     default: return null;

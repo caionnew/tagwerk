@@ -631,12 +631,12 @@ function mileHtml(r){
   const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b)), m = miles[0];
   if (!m) return '';
   const lane = m.l || 'x', w = wayEvents().done;
-  const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (e.v == null || m.v == null || e.v < m.v)).pop();
+  const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (m.k === 'topic' ? e.trap === m.trap : e.v == null || m.v == null || e.v < m.v)).pop();
   const nx = wayNext(m);
   const lab = (t, l) => `${esc(t)}${l ? ` <span class="wl-lang">${LANG[l].deName}</span>` : ''}`;
   const row = (cls, t, right) => `<li class="mr ${cls}"><i></i><span class="mr-t">${t}</span><span class="mr-d">${right}</span></li>`;
   const rail = `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), 'heute')}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
-  const detail = m.k === 'topic' && m.b && m.c ? `<p class="mr-x">Fehler im Thema: am Anfang ${m.b[1]} von ${m.b[0]} Aufgaben, zuletzt ${m.c[1]} von ${m.c[0]}.${m.trap ? ` <button type="button" class="link inl" data-a="topic" data-l="${m.l}" data-t="${m.trap}">Themenblatt</button>` : ''}</p>` : '';
+  const detail = m.k === 'topic' && m.b && m.c ? `<p class="mr-x">Fehler im Thema: vorher ${fmtPct(m.b[1] / m.b[0])} (${m.b[1]} von ${m.b[0]} Aufgaben), zuletzt ${fmtPct(m.c[1] / m.c[0])} (${m.c[1]} von ${m.c[0]}).${m.trap ? ` <button type="button" class="link inl" data-a="topic" data-l="${m.l}" data-t="${m.trap}">Themenblatt</button>` : ''}</p>` : '';
   const list = m.k === 'mature' ? (r.crossed && r.crossed.mature) || [] : m.k === 'anchored' ? (r.crossed && r.crossed.anchored) || [] : [];
   const times = n => (['', 'einmal', 'zweimal', 'dreimal', 'viermal', 'fünfmal', 'sechsmal', 'siebenmal', 'achtmal', 'neunmal', 'zehnmal', 'elfmal', 'zwölfmal'][n] || `${n}-mal`);
   const show = S.mileAll ? list : list.slice(0, 3);

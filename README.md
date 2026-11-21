@@ -33,7 +33,7 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, ESLint, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (344 Tests)
+npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (347 Tests)
 npx playwright install chromium
 npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (95 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
@@ -42,7 +42,7 @@ npm run sicht -- --vs origin/main   # Bildschirmfotos aller Ansichten, vorher/na
 
 Eigenes Chromium statt Download: `CHROMIUM_PATH=/pfad/zu/chrome npm run test:e2e`. Zusätzlich in Firefox: `npx playwright install firefox`, dann `PW_FIREFOX=1 npx playwright test --project=firefox` (Nachsprechen mit vorgetäuschtem Mikrofon nur in Chromium). Die CI prüft Chromium und Firefox in zwei Jobs; beide müssen grün sein.
 
-Weitere Befehle: `npm run icons -- <name>` erzeugt die App-Symbole aus einem Entwurf in `design/icons/`, `npm run geo` erzeugt die Kartendaten neu, `npm run screenshots` die Bilder oben, `npm run lint` die ESLint-Prüfung allein, `node tools/vielfalt.js` die Abwechslung neuer Sätze gegenüber `origin/main`, `python3 tools/fsrs_reference.py` die FSRS-Referenz (braucht `pip install fsrs==6.3.3`).
+Weitere Befehle: `npm run icons -- <name>` erzeugt die App-Symbole aus einem Entwurf in `design/icons/`, `npm run geo` erzeugt die Kartendaten neu, `npm run screenshots` die Bilder oben, `npm run lint` die ESLint-Prüfung allein, `node tools/vielfalt.js` die Abwechslung neuer Sätze gegenüber `origin/main`, `node tools/themen-etappen.js` simuliert die Themen-Etappen, `python3 tools/fsrs_reference.py` die FSRS-Referenz (braucht `pip install fsrs==6.3.3`).
 
 ## Aufbau
 

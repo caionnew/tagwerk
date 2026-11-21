@@ -340,7 +340,7 @@ document.addEventListener('click', e => {
         if (DB.first) delete DB.first[lang];
         // Fehlerprotokoll und Themen-Etappen dieser Sprache (bis 24.62 blieb das Fehlerprotokoll beim Zurücksetzen stehen)
         if (DB.tlog) Object.values(DB.tlog).forEach(d => { delete d[lang]; });
-        if (DB.tbase) delete DB.tbase[lang];
+        if (DB.tblk) delete DB.tblk[lang];
         if (Array.isArray(DB.etap)) DB.etap = DB.etap.filter(e => e.l !== lang);
         // Beim Lesen nachgeschlagene Wörter dieser Sprache (für Lesetext-Lücken)
         if (DB.used && DB.used.looked) Object.keys(DB.used.looked).forEach(k => { if (k.startsWith(lang + ':')) delete DB.used.looked[k]; });

@@ -116,7 +116,7 @@ function recordAnswer(lang, ex, c, good){
   // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes, ebenso ein Fehler neben der richtig gesetzten Stellung.
   // In Wortschatz-Themen ist das andere Wort im geprüften Teil dagegen genau der Fehler.
   const trap = exTrap(ex), topicOk = good || (k === 'vocab' && !topicHit) || k === 'spell' || !!c.posOk;
-  if (trap) add('p:' + trap, topicOk);
+  if (trap) { add('p:' + trap, topicOk); blockAdd(lang, trap, topicOk); }
   if (type) add('t:' + type, good);
   if (trap && c.wasSeen === false && (ex.type === 'cloze' || ex.type === 'tiles')) noteFirst(lang, ex.id, trap, topicOk);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
@@ -160,46 +160,86 @@ function errStats(lang, days){
   });
   return out;
 }
-// Themen-Etappen (seit 24.63): Die Fehlerquote eines Themas ist deutlich und belastbar gesunken. Gezählt wie in den
-// Fehlerquellen (p: im Fehlerprotokoll, nur erste Versuche, Wortschatz- und Tippfehler belasten das Thema nicht).
-// Anfang: die ersten 40 Aufgaben des Themas, ganze Tage. Einmal festgehalten (DB.tbase), weil das Protokoll nach 120 Tagen verfällt.
-// Zuletzt: die letzten 60 Aufgaben, ganze Tage, mindestens 40, nur Tage nach dem Anfang. Tagesschwankungen (mal 1 von 3, mal
-// 2 von 3 falsch) gehen in 60 Aufgaben unter. Weil später mehr frei übersetzt wird als am Anfang, wo Lücken überwiegen,
-// misst der Vergleich eher zu streng als zu großzügig.
-// Stufe 1 „Fehler halbiert“: zuletzt höchstens halb so viele Fehler je Aufgabe, mindestens 10 Prozentpunkte weniger, und der
-//   Unterschied ist kein Zufall (Test zweier Anteile, z ≥ 2, einseitig etwa 2 %).
-// Stufe 2 „Thema sitzt“: am Anfang mindestens 20 % falsch, zuletzt mit 95 % Sicherheit unter 15 % (obere Wilson-Grenze);
-//   praktisch höchstens 3 Fehler in 60 Aufgaben. Ersetzt Stufe 1, wenn beide zugleich erreicht werden.
-// Jede Stufe kommt je Thema einmal und bleibt mit Datum stehen, auch wenn die Quote später wieder steigt.
-const TOPIC_BASE = 40, TOPIC_NOW = 60, TOPIC_MIN = 40;
+// Themen-Etappen (seit 24.63, neu gefasst in 24.63.1): Die Fehlerquote eines Themas ist deutlich und belastbar gesunken,
+// gegenüber jeder früheren Zeit, nicht nur gegenüber dem Anfang. Gezählt wie in den Fehlerquellen (nur erste Versuche;
+// Wortschatz- und Tippfehler belasten das Grammatikthema nicht).
+// Je Thema liegen die Antworten in Blöcken zu 60 Aufgaben (DB.tblk, je Block die Zahl der Fehler). Ein voller Block ändert
+// sich nie mehr; geprüft wird nur, wenn einer voll wird. So gibt es keine immer neuen Würfe mit verschobenen Fenstern.
+// Verglichen werden gleich große Abschnitte aus 1, 2, 4, 8, 16 … Blöcken (60, 120, 240, 480, 960 … Aufgaben), gezählt ab der
+// letzten Etappe des Themas: der gerade volle Abschnitt gegen frühere. Kurze Abschnitte erkennen schnelles Lernen und
+// schauen bis zu drei Abschnitte zurück; ab 480 Aufgaben geht der Vergleich bis zur letzten Etappe zurück, so zählt auch
+// ein langsamer Rückgang über Jahre, etwa von 10 % auf 5 %.
+// „Fehler halbiert“: höchstens halb so viele Fehler wie im früheren Abschnitt, und der Unterschied ist kein Zufall
+//   (Test zweier Anteile, z ≥ 3,5 bis 240 Aufgaben, z ≥ 3 ab 480, weil es dort weniger Vergleiche gibt).
+// „Thema sitzt“ (einmal je Thema): irgendwann früher sicher über 15 % falsch (untere Wilson-Grenze, 95 %), jetzt sicher
+//   darunter (obere Grenze, 99 %), in Abschnitten von 120 oder 240 Aufgaben; praktisch von über 20 % auf unter 8 %.
+// Nach jeder Halbierung zählt der neue Stand als Bezug: Die nächste braucht eine weitere Halbierung.
+// tools/themen-etappen.js simuliert die Regel (5 Jahre, 1,5 bis 6 Aufgaben je Thema und Tag): Bei gleichbleibender Quote
+// von 5 bis 45 % kommt etwa eine falsche Halbierung je 60 Themenjahre und kein falsches „sitzt“; Tagesschwankungen wie
+// mal 1 von 3, mal 2 von 3 falsch lösen nichts aus.
+const TOPIC_BLOCK = 60, TOPIC_Z = 3.5, TOPIC_Z_FAR = 3, TOPIC_FAR = 8, TOPIC_BACK = 3;
 function zDrop(b, bn, c, cn){ const p = (b + c) / (bn + cn), se = Math.sqrt(p * (1 - p) * (1 / bn + 1 / cn)); return se ? (b / bn - c / cn) / se : 0; }
-function wilsonHi(k, n){ const z = 1.96, p = k / n, d = 1 + z * z / n; return (p + z * z / (2 * n) + z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d; }
-// Anfang und letztes Fenster eines Themas: { b:[Aufgaben, Fehler], c:[Aufgaben, Fehler] }; c fehlt, solange es zu wenige sind
-function topicWindows(lang, trap){
-  const key = 'p:' + trap, days = Object.keys(DB.tlog || {}).filter(d => { const L = DB.tlog[d][lang]; return L && Array.isArray(L[key]) && L[key][0] > 0; }).sort();
-  const TB = DB.tbase = DB.tbase || {}, TL = TB[lang] = TB[lang] || {};
-  let base = TL[trap];
-  if (!base) {
-    let n = 0, bad = 0, to = null;
-    for (const d of days) { const v = DB.tlog[d][lang][key]; n += v[0]; bad += v[1]; to = d; if (n >= TOPIC_BASE) break; }
-    if (n < TOPIC_BASE) return { b:[n, bad] };
-    base = TL[trap] = { n, bad, to };
-  }
-  let n = 0, bad = 0;
-  for (const d of days.filter(x => x > base.to).reverse()) { const v = DB.tlog[d][lang][key]; n += v[0]; bad += v[1]; if (n >= TOPIC_NOW) break; }
-  return { b:[base.n, base.bad], c:n >= TOPIC_MIN ? [n, bad] : null };
+// Wilson-Grenze für k von n: z > 0 obere, z < 0 untere
+function wilson(k, n, z){ const p = k / n, d = 1 + z * z / n; return (p + z * z / (2 * n) + z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d; }
+// Antwort in den Block des Themas schreiben
+function blockAdd(lang, trap, ok){
+  const T = DB.tblk = DB.tblk || {}, L = T[lang] = T[lang] || {}, x = L[trap] = L[trap] || { b:[], cn:0, cb:0 };
+  x.cn++; if (!ok) x.cb++;
+  if (x.cn >= TOPIC_BLOCK) { x.b.push(x.cb); x.cn = 0; x.cb = 0; }
 }
-// Am Rundenende: neue Stufen festhalten (DB.etap). Rückgabe: die neuen Einträge.
+// Stände ohne Blöcke (bis 24.63.0): aus dem Fehlerprotokoll aufbauen. Das kennt nur Tagessummen; die Fehler eines Tages
+// werden gleichmäßig über seine Aufgaben verteilt, falls ein Block mitten im Tag voll wird.
+function blocksFromTlog(tlog){
+  const out = {};
+  Object.keys(tlog || {}).sort().forEach(d => ['sv', 'es'].forEach(l => {
+    const L = tlog[d] && tlog[d][l]; if (!L) return;
+    Object.keys(L).forEach(key => {
+      if (!key.startsWith('p:') || !Array.isArray(L[key])) return;
+      const [n, bad] = L[key], O = out[l] = out[l] || {}, x = O[key.slice(2)] = O[key.slice(2)] || { b:[], cn:0, cb:0 };
+      let placed = 0;
+      for (let i = 0; i < n; i++) {
+        const isBad = Math.round((i + 1) * bad / n) > placed; if (isBad) placed++;
+        x.cn++; if (isBad) x.cb++;
+        if (x.cn >= TOPIC_BLOCK) { x.b.push(x.cb); x.cn = 0; x.cb = 0; }
+      }
+    });
+  }));
+  return out;
+}
+// Urteil über die vollen Blöcke eines Themas ab Block „from“: null oder { s, b:[Aufgaben, Fehler], c:[…], i:Startblock }
+function topicJudge(blocks, from, solidDone){
+  const m = blocks.length - from, sum = (a, b) => { let x = 0; for (let i = a; i < b; i++) x += blocks[i]; return x; };
+  let best = null, solid = null;
+  for (let k = 1; 2 * k <= m; k *= 2) {
+    if (m % k) continue; // nur Abschnitte, die mit dem letzten Block gerade voll wurden
+    const N = k * TOPIC_BLOCK, cS = blocks.length - k, cb = sum(cS, blocks.length), far = k >= TOPIC_FAR;
+    for (let j = 1; far || j <= TOPIC_BACK; j++) {
+      const eS = cS - j * k; if (eS < from) break;
+      const eb = sum(eS, eS + k), z = zDrop(eb, N, cb, N);
+      if (2 * cb <= eb && z >= (far ? TOPIC_Z_FAR : TOPIC_Z) && (!best || z > best.z)) best = { z, s:1, b:[N, eb], c:[N, cb], i:cS };
+    }
+  }
+  // „Sitzt“ unabhängig vom Bezug der Halbierungen: gegen jeden früheren Abschnitt seit dem ersten Block
+  const n = blocks.length;
+  if (!solidDone) for (const k of [2, 4]) {
+    if (n % k || n < 2 * k) continue;
+    const N = k * TOPIC_BLOCK, cS = n - k, cb = sum(cS, n);
+    if (wilson(cb, N, 2.576) > 0.15) continue;
+    for (let eS = cS - k; eS >= 0 && !solid; eS -= k) { const eb = sum(eS, eS + k); if (wilson(eb, N, -1.96) >= 0.15) solid = { s:2, b:[N, eb], c:[N, cb], i:cS }; }
+    if (solid) break;
+  }
+  if (solid) return solid;
+  if (best) delete best.z;
+  return best;
+}
+// Am Rundenende: neue Etappen festhalten (DB.etap). Rückgabe: die neuen Einträge.
 function checkTopics(lang){
-  const out = [], have = DB.etap = Array.isArray(DB.etap) ? DB.etap : [], ids = new Set(topicIds(lang).filter(id => id !== 'eigene'));
-  ids.forEach(trap => {
-    const w = topicWindows(lang, trap); if (!w.c) return;
-    const [bn, bb] = w.b, [cn, cb] = w.c, rb = bb / bn, rc = cb / cn;
-    const got = have.filter(e => e.l === lang && e.k === trap).reduce((m, e) => Math.max(m, e.s), 0);
-    const halved = rc <= rb / 2 && rb - rc >= 0.10 && zDrop(bb, bn, cb, cn) >= 2;
-    const solid = rb >= 0.20 && wilsonHi(cb, cn) <= 0.15;
-    const s = solid ? 2 : halved ? 1 : 0;
-    if (s > got) { const e = { d:today(), l:lang, k:trap, s, b:[bn, bb], c:[cn, cb] }; have.push(e); out.push(e); }
+  const out = [], have = DB.etap = Array.isArray(DB.etap) ? DB.etap : [], L = (DB.tblk || {})[lang] || {};
+  Object.keys(L).forEach(trap => {
+    if (trap === 'eigene') return;
+    const mine = have.filter(e => e.l === lang && e.k === trap);
+    const r = topicJudge(L[trap].b, mine.reduce((m, e) => Math.max(m, e.i || 0), 0), mine.some(e => e.s === 2));
+    if (r) { const e = Object.assign({ d:today(), l:lang, k:trap }, r); have.push(e); out.push(e); }
   });
   return out;
 }

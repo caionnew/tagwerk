@@ -159,6 +159,15 @@ function adoptDB(d){
   DB.own = Object.assign({ sv:[], es:[] }, d.own || {});
   DB.tat = Object.assign({ sv:[], es:[] }, d.tat || {});
   migrateStates();
+  migrateTopics();
+}
+// Themen-Etappen bis 24.63.0: Anfangswert (tbase) entfällt, die Blöcke entstehen aus dem Fehlerprotokoll. Ältere Etappen
+// bleiben; der Vergleich beginnt für ihr Thema beim letzten vollen Block, damit dieselbe Verbesserung nicht zweimal kommt.
+function migrateTopics(){
+  delete DB.tbase;
+  if (DB.tblk) return;
+  DB.tblk = blocksFromTlog(DB.tlog);
+  (Array.isArray(DB.etap) ? DB.etap : []).forEach(e => { if (e.i == null) { const x = DB.tblk[e.l] && DB.tblk[e.l][e.k]; e.i = x ? Math.max(0, x.b.length - 1) : 0; } });
 }
 function migrateStates(){
   const old = [0, 1, 2, 4, 8, 16, 32, 64];

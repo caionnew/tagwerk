@@ -96,48 +96,80 @@ test('Verankert: Bestand am Tagesende aus dem Protokoll, Etappe am Tag des Über
   assert.equal(x.mc, 2); assert.equal(x.ac, 1);
 });
 
-// Themen: Ausgangswert aus den ersten 40 Aufgaben, aktueller Wert aus den letzten 60 (mindestens 40) danach
-function topicDB(ds, trap, base, later){
-  const tlog = {}; let k = 40;
-  const put = ([n, bad]) => { tlog[ds(k--)] = { sv:{ ['p:' + trap]:[n, bad] } }; };
-  base.forEach(put); later.forEach(put);
-  return tlog;
+// Themen: Blöcke zu 60 Aufgaben; Abschnitte aus 1, 2, 4, 8 … Blöcken gegen frühere, ab der letzten Etappe des Themas
+// Blöcke einzeln anhängen und nach jedem prüfen, wie am Rundenende; Rückgabe: alle Etappen des Themas
+function feed(app, J, trap, bads){
+  app.run(`DB.tblk = DB.tblk || {}; DB.tblk.sv = DB.tblk.sv || {}; DB.tblk.sv['${trap}'] = DB.tblk.sv['${trap}'] || { b:[], cn:0, cb:0 };`);
+  bads.forEach(b => { app.run(`DB.tblk.sv['${trap}'].b.push(${b}); checkTopics('sv');`); });
+  return J(`(DB.etap || []).filter(e => e.k === '${trap}')`);
 }
-test('Themen: Schwankungen von Tag zu Tag ergeben keine Etappe', () => {
-  const { app, J, ds } = setup();
-  const trap = J("topicIds('sv').find(id => id !== 'eigene')");
-  // Ausgangswert 13 von 40 falsch; danach im Wechsel 1 von 3 und 2 von 3 falsch, 25 Tage lang
-  const later = Array.from({ length:25 }, (_, i) => [3, i % 2 ? 2 : 1]);
-  app.run(`DB.tlog = ${JSON.stringify(topicDB(ds, trap, [[10, 3], [10, 4], [10, 3], [10, 3]], later))};`);
-  assert.deepEqual(J("checkTopics('sv')"), []);
-  // Auch ein einzelner guter Tag am Ende reicht nicht
-  app.run(`DB.tlog[today()] = { sv:{ 'p:${trap}':[6, 0] } };`);
-  assert.deepEqual(J("checkTopics('sv')"), []);
+test('Themen: Antworten landen in Blöcken zu 60 Aufgaben', () => {
+  const { app, J } = setup();
+  app.run("for (let i = 0; i < 125; i++) blockAdd('sv', 'tempus', i % 4 !== 0);");
+  assert.deepEqual(J("DB.tblk.sv.tempus"), { b:[15, 15], cn:5, cb:2 });
 });
-test('Themen: halbiert erst mit genug Aufgaben und klarem Abstand, „sitzt“ erst bei höchstens 3 von 60', () => {
-  const { app, J, ds } = setup();
-  const trap = J("topicIds('sv').find(id => id !== 'eigene')");
-  // Zu wenige Aufgaben nach dem Ausgangswert: noch keine Aussage
-  app.run(`DB.tlog = ${JSON.stringify(topicDB(ds, trap, [[20, 8], [20, 8]], [[10, 0], [10, 0], [10, 1]]))};`);
+test('Themen: Schwankungen von Tag zu Tag ergeben keine Etappe, auch über Jahre nicht', () => {
+  const { app, J } = setup();
+  // Jeder Block um 30 von 60 falsch (Tage mit 1 von 3 und 2 von 3 falsch im Wechsel), dazu Ausreißer nach oben und unten
+  const bads = Array.from({ length:64 }, (_, i) => [30, 26, 33, 29, 22, 31, 36, 28][i % 8]);
+  assert.deepEqual(feed(app, J, 'tempus', bads), []);
+  // Ein einzelner sehr guter Block nach einem schlechten reicht bei 60 Aufgaben nicht, wenn der Abstand knapp ist
+  assert.deepEqual(feed(app, J, 'inversion', [22, 24, 23, 9]), []);
+});
+test('Themen: Halbierung kurz- und langfristig, wiederholt; die nächste braucht eine weitere Halbierung', () => {
+  const { app, J } = setup();
+  // Kurzfristig: 25 von 60 falsch, dann 6 von 60
+  let ev = feed(app, J, 'tempus', [24, 22, 25, 6]);
+  assert.equal(ev.length, 1);
+  assert.deepEqual([ev[0].s, ev[0].b, ev[0].c, ev[0].i], [1, [60, 25], [60, 6], 3]);
+  ev = feed(app, J, 'tempus', [7, 5, 6]);
+  assert.equal(ev.length, 1, 'derselbe Stand bringt keine zweite Etappe');
+  // Langfristig: lange um 10 % (6 von 60), dann lange um 5 % (3 von 60). Erst Abschnitte von 960 Aufgaben zeigen das sicher.
+  ev = feed(app, J, 'inversion', Array(16).fill(6).concat(Array(16).fill(3)));
+  assert.equal(ev.length, 1);
+  assert.deepEqual([ev[0].s, ev[0].b, ev[0].c], [1, [960, 96], [960, 48]]);
+  // Wiederholt: von 17 % auf 5 %, später von 5 % auf unter 1 %; dazwischen bringt der gleiche Stand nichts
+  ev = feed(app, J, 'bisats', [10, 10, 10, 10, 3, 3, 3, 3]);
+  assert.deepEqual(ev.map(e => [e.b, e.c]), [[[240, 40], [240, 12]]]);
+  assert.equal(feed(app, J, 'bisats', [3, 3, 3, 3]).length, 1);
+  ev = feed(app, J, 'bisats', [1, 0, 1, 0, 1, 0, 1, 0]);
+  assert.deepEqual(ev.map(e => e.s), [1, 1]);
+  assert.deepEqual([ev[1].b, ev[1].c], [[480, 24], [480, 4]]);
+  app.run(`DB.log = { [today()]:{ sv:{ n:10 } } };`);
+  const w = J('wayEvents().done').filter(e => e.trap === 'bisats').map(e => e.t);
+  assert.match(w[0], /: Fehler halbiert$/); assert.match(w[1], /: Fehler wieder halbiert$/);
+  assert.equal(new Set(J('wayKeys()')).size, J('wayKeys()').length, 'Kennungen eindeutig');
+  // Am Rundenende: die vorige Halbierung desselben Themas als vorige Etappe
+  const last = J("wayEvents().done.filter(e => e.trap === 'bisats').pop()");
+  assert.match(app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(last)}], crossed:{} })`), /class="mr done"><i><\/i><span class="mr-t">„[^“]+“: Fehler halbiert/);
+  // Als Nächstes: wieder halbiert, mit dem Ziel
+  const nx = J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats').pop())`);
+  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'unter 0,4 %');
+});
+test('Themen: „sitzt“ einmal, wenn es früher sicher über 15 % lag und jetzt sicher darunter', () => {
+  const { app, J } = setup();
+  const ev = feed(app, J, 'bisats', [20, 22, 21, 19, 3, 2]);
+  assert.deepEqual(ev.map(e => e.s), [1, 2]);
+  assert.deepEqual(ev[1].c, [120, 5]);
+  app.run(`DB.log = { [today()]:{ sv:{ n:10 } } }; S.mileAll = false;`);
+  const m = J("wayEvents().done.find(e => e.k === 'topic' && e.v === 2)");
+  assert.match(m.t, /^„.+“ sitzt$/);
+  const h = text(app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(m)}], crossed:{ mature:[], anchored:[] } })`));
+  assert.match(h, /Fehler im Thema: vorher 33 % \(40 von 120 Aufgaben\), zuletzt 4,2 % \(5 von 120\)\./);
+  assert.equal(feed(app, J, 'bisats', [1, 2, 2, 1]).filter(e => e.s === 2).length, 1);
+  // Gleichbleibend um 12 % (7 von 60): nie „sitzt“
+  assert.deepEqual(feed(app, J, 'tempus', Array(40).fill(7)), []);
+});
+test('Themen: Stand bis 24.63.0 wird umgewandelt, ältere Etappen kommen nicht doppelt', () => {
+  const { app, J } = setup();
+  const tlog = {}; for (let k = 30; k >= 1; k--) tlog[J(`addDays(today(), ${-k})`)] = { sv:{ 'p:tempus':[5, k > 15 ? 2 : 0], 't:free':[5, 1] } };
+  const old = Object.assign(fresh(), { tlog, tbase:{ sv:{ tempus:{ n:40, bad:16, to:'2026-01-01' } } }, etap:[{ d:'2026-11-20', l:'sv', k:'tempus', s:1, b:[40, 16], c:[60, 0] }] });
+  app.run(`adoptDB(${JSON.stringify(old)});`);
+  assert.equal(J('DB.tbase'), undefined);
+  const x = J('DB.tblk.sv.tempus');
+  assert.deepEqual([x.b, x.cn], [[24, 6], 30]); // 150 Aufgaben: 75 mit 30 Fehlern, dann 75 ohne
+  assert.equal(J('DB.etap[0].i'), 1);
   assert.deepEqual(J("checkTopics('sv')"), []);
-  // 16 von 40 am Anfang, zuletzt 6 von 60: halbiert
-  app.run(`DB.tlog = ${JSON.stringify(topicDB(ds, trap, [[20, 8], [20, 8]], [[20, 2], [20, 2], [20, 2]]))}; DB.tbase = {};`);
-  const e1 = J("checkTopics('sv')");
-  assert.equal(e1.length, 1); assert.equal(e1[0].s, 1); assert.deepEqual([e1[0].b, e1[0].c], [[40, 16], [60, 6]]);
-  assert.deepEqual(J("checkTopics('sv')"), [], 'jede Stufe nur einmal');
-  // Ausgangswert bleibt gespeichert, auch wenn die ersten Tage aus dem Protokoll fallen
-  app.run(`delete DB.tlog['${ds(40)}']; delete DB.tlog['${ds(39)}'];`);
-  app.run(`DB.tlog['${ds(3)}'] = { sv:{ 'p:${trap}':[20, 1] } }; DB.tlog['${ds(2)}'] = { sv:{ 'p:${trap}':[20, 0] } }; DB.tlog['${ds(1)}'] = { sv:{ 'p:${trap}':[20, 1] } };`);
-  const e2 = J("checkTopics('sv')");
-  assert.equal(e2.length, 1); assert.equal(e2[0].s, 2); assert.deepEqual(e2[0].c, [60, 2]);
-  app.run(`DB.log = { '${ds(1)}':{ sv:{ n:20 } } };`);
-  const w = J('wayEvents().done').filter(e => e.k === 'topic');
-  assert.equal(w.length, 2);
-  assert.match(w[0].t, /Fehler halbiert$/); assert.match(w[1].t, /sitzt$/);
-  // 4 von 60 ist (noch) nicht „sitzt“
-  const { app:a2, J:J2, ds:d2 } = setup();
-  a2.run(`DB.tlog = ${JSON.stringify(topicDB(d2, trap, [[20, 8], [20, 8]], [[20, 2], [20, 1], [20, 1]]))};`);
-  assert.deepEqual(J2("checkTopics('sv')").map(e => e.s), [1]);
 });
 
 test('Monatsbilanz: beim ersten Tagwerk des Monats, einmal; danach keine Monatszeile mehr auf „Heute“', () => {

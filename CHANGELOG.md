@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.63.1
+**Themen-Etappen messen Verbesserung gegenüber jeder früheren Zeit, nicht nur gegenüber den ersten 40 Aufgaben. Jede Halbierung zählt, auch eine langsame über Jahre, etwa von 10 % auf 5 %.**
+- **Blöcke statt Anfangswert:** Die Antworten eines Themas liegen in Blöcken zu 60 Aufgaben. Ist ein Block voll, vergleicht die App gleich große Abschnitte: 60, 120, 240, 480, 960 … Aufgaben. Kurze Abschnitte erkennen schnelles Lernen, lange den langsamen Rückgang; ab 480 Aufgaben reicht der Vergleich bis zur letzten Etappe des Themas zurück.
+- **„Fehler halbiert“, beliebig oft:** höchstens halb so viele Fehler wie in einem früheren Abschnitt, und statistisch klar. Danach ist der neue Stand der Bezug; jede weitere Halbierung kommt als „Fehler wieder halbiert“. „Dein Weg“ zeigt als Nächstes die nächste Halbierung mit Ziel („unter 4 %“).
+- **„Sitzt“ (einmal je Thema):** irgendwann sicher über 15 % falsch, jetzt sicher darunter; praktisch von über 20 % auf unter 8 %.
+- **Kein Rauschen:** Ein voller Block ändert sich nicht mehr, geprüft wird nur beim Vollwerden. So gibt es nicht bei jeder Runde einen neuen Wurf. Die Schwellen sind per Simulation gewählt (`tools/themen-etappen.js`): Bei gleichbleibender Quote kommt etwa eine falsche Halbierung je 60 Themenjahre; ein Wechsel aus 1 von 3 und 2 von 3 falsch löst nie etwas aus. Der Preis: Eine Halbierung von 10 % auf 5 % braucht Abschnitte von 480 bis 960 Aufgaben, also Monate.
+- Speicherstand: neues Feld `tblk` (Fehler je Block, etwa 2 Zeichen je 60 Aufgaben), `tbase` entfällt. Beim Laden entstehen die Blöcke aus dem Fehlerprotokoll; bisherige Themen-Etappen bleiben und kommen nicht doppelt.
+
 ## 24.63.0
 **Etappen zeigen sich in dem Moment, in dem du sie erreichst: am Rundenende direkt unter dem Titel, mit Siegel am Stempel. Dazu neue Etappen für Themen, deren Fehlerquote deutlich gesunken ist, für verankerte Sätze und eine Monatsbilanz.**
 - **Jede Etappe im Moment:** Bisher kamen nur gefestigte Sätze und Serien als kleiner Hinweis am Rundenende; 100 Aufgaben, Wortschatz, Übungszeit standen still in „Dein Weg“. Jetzt erscheint jede Etappe, die in der Runde erreicht wurde. Erkannt wird sie, indem die App „Dein Weg“ vor und nach der Runde vergleicht; so gibt es keine Etappe doppelt, auch wenn ein Satz aus „gefestigt“ herausfällt und wiederkommt.

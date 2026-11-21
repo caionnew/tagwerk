@@ -26,7 +26,9 @@ const streakLabel = n => (n >= 365 && n % 365 === 0 ? `${n / 365} ${n === 365 ? 
 const fmtN = n => n.toLocaleString('de-DE');
 const anchoredLabel = n => (n === 1 ? 'Erster Satz verankert' : `${fmtN(n)} verankerte Sätze`);
 // Themen-Etappen (siehe checkTopics in part_stats.js): Stufe 1 Fehler halbiert, Stufe 2 Thema sitzt
-const topicMileText = e => { const tr = trapMeta(e.l, e.k); const lb = tr ? tr.label : e.k; return e.s === 2 ? `„${lb}“ sitzt` : `„${lb}“: Fehler halbiert`; };
+const topicMileText = (e, again) => { const lb = trapLabel(e.l, e.k); return e.s === 2 ? `„${lb}“ sitzt` : `„${lb}“: Fehler ${again ? 'wieder ' : ''}halbiert`; };
+// Fehlerquote als Prozent, unter 10 % mit einer Nachkommastelle
+const fmtPct = r => (r < 0.1 && r > 0 ? (Math.round(r * 1000) / 10).toLocaleString('de-DE') : String(Math.round(r * 100))) + ' %';
 // Gefestigt je Sprache und Tag: der Bestand am Tagesende (Protokoll mc, seit 24.63), für ältere Tage die Zahl der erstmals gefestigten Sätze
 function matureByDay(days, l){
   const out = {}; let cum = 0, last = null;
@@ -95,7 +97,13 @@ function wayEvents(){
     if (texts.length >= 10) ev.push({ d:texts[9], ico:'write', k:'text', l, v:10, t:'10 eigene Texte' });
   });
   // Themen: Fehlerquote deutlich gesunken (gespeichert, weil das Fehlerprotokoll nach 120 Tagen verfällt)
-  (DB.etap || []).forEach(e => { if (e && e.d && e.l && e.k) ev.push({ d:e.d, ico:'topic', k:'topic', l:e.l, v:e.s, trap:e.k, b:e.b, c:e.c, t:topicMileText(e) }); });
+  const halves = {};
+  (DB.etap || []).forEach(e => {
+    if (!e || !e.d || !e.l || !e.k) return;
+    const key = e.l + ':' + e.k, again = e.s === 1 && halves[key] > 0;
+    if (e.s === 1) halves[key] = (halves[key] || 0) + 1;
+    ev.push({ d:e.d, ico:'topic', k:'topic', l:e.l, v:e.s, trap:e.k, b:e.b, c:e.c, t:topicMileText(e, again) });
+  });
   ev.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
   // Nächste Etappen: nach dem höchsten erreichten Stand, damit ein wieder herausgefallener Satz keine Etappe zweimal bringt
   const next = [];
@@ -105,7 +113,7 @@ function wayEvents(){
   return { done:ev, next };
 }
 // Kennung einer Etappe: Rundenende vergleicht die Etappen vor und nach der Runde (A2, seit 24.63)
-const wayKey = e => `${e.k}|${e.l || ''}|${e.t}`;
+const wayKey = e => `${e.k}|${e.l || ''}|${e.t}${e.k === 'topic' ? '|' + e.d : ''}`;
 const wayKeys = () => wayEvents().done.map(wayKey);
 // Rangfolge, wenn mehrere Etappen zusammenfallen: was über das Können spricht vor dem, was über Fleiß spricht
 const WAY_PRIO = ['anchored', 'mature', 'topic', 'years', 'streak', 'words', 'text', 'own', 'hours', 'days', 'tasks', 'first'];
@@ -122,7 +130,7 @@ function wayNext(e){
     case 'tasks': { const c = sum('n'), nx = ladder(WAY_TASKS, x => x + 25000, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Aufgaben`, rest:left(nx, Math.min(c, nx - 1)) }; }
     case 'hours': { const c = sum('secs'), nx = ladder(WAY_HOURS, x => x + 250, Math.max(c / 3600, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Stunden geübt`, rest:`noch ${fmtMin(Math.max(60, nx * 3600 - c)).replace(/\.$/, '')}` }; }
     case 'days': { const c = Object.keys(DB.log || {}).filter(d => ['sv', 'es'].some(x => (dayLog(d, x).n || 0) > 0)).length, nx = ladder(WAY_DAYS, x => x + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:`${fmtN(nx)} Übungstage`, rest:left(nx, Math.min(c, nx - 1)) }; }
-    case 'topic': return e.v === 1 ? { t:topicMileText({ l, k:e.trap, s:2 }), rest:'nächste Stufe' } : null;
+    case 'topic': { const r = e.c && e.c[0] ? e.c[1] / e.c[0] / 2 : 0; return r > 0 ? { t:topicMileText({ l, k:e.trap, s:1 }, true), rest:`unter ${fmtPct(r)}` } : null; }
     case 'text': { if (e.v >= 10) return null; const c = (DB.texts || []).filter(x => x.lang === l).length; return { t:'10 eigene Texte', rest:left(10, Math.min(c, 9)) }; }
     case 'years': return { t:`${e.v + 1} Jahre mit Tagwerk`, rest:'in einem Jahr' };
     default: return null;

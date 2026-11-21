@@ -148,23 +148,28 @@ function todayHtml(lang){
 }
 // Themen einer Sprache: alle aus TRAPS, dazu „Eigene Sätze“, sobald es welche gibt
 const topicIds = lang => TRAPS[lang].map(t => t.id).concat(BANK[lang].some(i => i.trap === 'eigene') ? ['eigene'] : []);
-// Stand eines erzeugten Bereichs in Worten, gleich für „Thema üben“ und „Grammatik-Training“. Unter 10 Aufgaben als Anzahl
-// („3 Aufgaben, 2 richtig“), denn eine Quote aus drei Versuchen wäre Scheingenauigkeit; danach die letzten bis zu 50 als Prozent.
-function genStatText(g){
+// Anteil richtig eines erzeugten Bereichs (0 bis 1): die letzten bis zu 50 Aufgaben, ohne diese Liste alle bisherigen.
+// Erst ab 10 Aufgaben, sonst null: Eine Quote aus drei Versuchen wäre Scheingenauigkeit.
+function genRate(g){
   const st = DB.gen[g] || { ok:0, bad:0 }, n = st.ok + st.bad, rc = st.recent || [];
-  if (rc.length >= 10) return `Zuletzt ${pct(rc.reduce((a, x) => a + x, 0) / rc.length)} richtig (letzte ${rc.length})`;
-  if (n >= 10) return `Bisher ${pct(st.ok / n)} richtig`;
+  if (rc.length >= 10) return rc.reduce((a, x) => a + x, 0) / rc.length;
+  return n >= 10 ? st.ok / n : null;
+}
+// Stand eines erzeugten Bereichs in Worten, gleich für „Thema üben“ und „Grammatik-Training“: ab 10 Aufgaben derselbe Anteil
+// wie der Balken in Prozent, darunter als Anzahl („3 Aufgaben, 2 richtig“).
+function genStatText(g){
+  const st = DB.gen[g] || { ok:0, bad:0 }, n = st.ok + st.bad, rc = st.recent || [], r = genRate(g);
+  if (r != null) return rc.length >= 10 ? `Zuletzt ${pct(r)} richtig (letzte ${rc.length})` : `Bisher ${pct(r)} richtig`;
   return n ? `${plural(n, 'Aufgabe', 'Aufgaben')}, ${st.ok} richtig` : 'Noch nicht geübt';
 }
 // Zeilen für „Thema üben“. Satz-Themen haben einen festen Bestand, ihr Balken zeigt den gefestigten Anteil daran.
-// Erzeugte Themen haben keinen Bestand und bekommen nur Text: Eine Trefferquote als Balken neben Fortschrittsbalken
-// sähe nach demselben Maß aus (3 von 3 richtig wäre voll, 27 geübte, noch nicht gefestigte Sätze leer).
+// Erzeugte Themen haben keinen Bestand; ihr Balken zeigt den Anteil richtig, in eigener Gruppe und Farbe, erst ab 10 Aufgaben.
 function topicRows(lang){
   return topicIds(lang).map(id => {
     const tr = trapMeta(lang, id);
     if (tr.kind === 'gen') {
       const g = DB.gen[tr.gen] || { ok:0, bad:0 };
-      return { id, label:tr.label, gen:true, text:genStatText(tr.gen), touched:g.ok + g.bad > 0 };
+      return { id, label:tr.label, gen:true, rate:genRate(tr.gen), text:genStatText(tr.gen), touched:g.ok + g.bad > 0 };
     }
     const items = BANK[lang].filter(i => i.trap === id);
     const seen = items.filter(i => stOf(i.id)).length;
@@ -173,7 +178,8 @@ function topicRows(lang){
   });
 }
 const rowText = r => `<span class="txt"><span class="rt">${esc(r.label)}</span><span class="rd">${esc(r.text)}</span></span>`;
-const barRow = r => rowText(r) + (r.gen ? '' : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
+const barRow = r => rowText(r) + (r.gen ? (r.rate == null ? '' : `<span class="bar qbar" aria-hidden="true"><span style="width:${Math.max(3, Math.round(r.rate * 100))}%"></span></span>`)
+  : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
 // Themen mit den meisten Fehlern der letzten 30 Tage, dieselben Zahlen und dieselbe Reihenfolge wie „Fehlerquellen nach Thema“:
 // nach Anzahl der Fehler, bei Gleichstand mehr Aufgaben zuerst. Erst ab 8 Fehlern in der Sprache (wie dort) und je Thema
 // mindestens 2; vorher sagt die Liste nichts. Nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
@@ -223,7 +229,7 @@ function viewPickTopic(){
   const gens = rows.filter(r => r.gen);
   return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema.</p>
     <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button> sind.</p>${list(rows.filter(r => !r.gen))}
-    ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2><p class="lead-s grp-lead">Ohne festen Satzbestand, darum ohne Balken.</p>${list(gens)}` : ''}`;
+    ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2><p class="lead-s grp-lead">Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben.</p>${list(gens)}` : ''}`;
 }
 function viewPickGen(){
   const lang = S.lang;

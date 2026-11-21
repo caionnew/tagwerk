@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.61.2
+**Thema üben: Die erzeugten Themen haben wieder einen Balken, jetzt grün und erst ab 10 Aufgaben.**
+- Ein Balken ist schneller verglichen als „45 von 67“ gegen „34 von 45“. Er zeigt den Anteil richtiger Antworten der letzten bis zu 50 Aufgaben, dieselbe Zahl wie der Text daneben.
+- Grün statt in der Sprachfarbe, damit er nicht wie der Fortschrittsbalken der Satz-Themen aussieht. Die Erklärung steht über der Gruppe.
+- Unter 10 Aufgaben bleibt es beim Text („3 Aufgaben, 2 richtig“): Ein voller Balken nach drei Versuchen wäre Scheingenauigkeit.
+
 ## 24.61.1
 **Thema üben und Heute: Balken und Zahlen zeigen, was sie messen.**
 - **Fehler behoben, „Thema üben“:** Gleich aussehende Balken maßen zwei verschiedene Dinge. Bei Satz-Themen den gefestigten Anteil, bei erzeugten Themen (Verben mit Präposition, Verbformen und andere) die Trefferquote. So war „Begleiter & Adjektive“ nach 3 von 3 richtigen Aufgaben voll und „Konditional“ mit 27 geübten, noch nicht gefestigten Sätzen leer. Der Satz oben („wie viel davon gefestigt ist“) stimmte für die erzeugten Themen nicht.

@@ -53,8 +53,8 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
 });
-test('Heute „Meiste Fehler“ mit Aufgaben und Fehlern; „Thema üben“ mit Balken nur bei Satz-Themen', async ({ page }) => {
-  const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] } };
+test('Heute „Meiste Fehler“ mit Aufgaben und Fehlern; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
+  const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] }, textgap_sv:{ ok:9, bad:3, recent:[1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] } };
   await seed(page, db);
   await page.goto(APP);
   await expect(page.locator('h2.grp', { hasText:'Meiste Fehler, letzte 30 Tage' })).toHaveCount(1);
@@ -72,6 +72,12 @@ test('Heute „Meiste Fehler“ mit Aufgaben und Fehlern; „Thema üben“ mit 
   await expect(gen.locator('.rd')).toHaveText('3 Aufgaben, 2 richtig');
   await expect(gen.locator('.bar')).toHaveCount(0);
   await expect(page.locator('.row.bars[data-t=inversion] .bar')).toHaveCount(1);
+  // Ab 10 Aufgaben: Balken mit dem Anteil richtig, in anderer Farbe als der Fortschritt der Satz-Themen
+  await expect(page.locator('.row.bars[data-t=lesen] .rd')).toHaveText('Zuletzt 75\u00a0% richtig (letzte 12)');
+  const q = await page.$eval('.row.bars[data-t=lesen] .qbar', b => { const f = b.firstElementChild; return { w:f.getBoundingClientRect().width / b.getBoundingClientRect().width, c:getComputedStyle(f).backgroundColor }; });
+  const fill = await page.$eval('.row.bars[data-t=inversion] .bar > span', f => getComputedStyle(f).backgroundColor);
+  expect(Math.abs(q.w - 0.75)).toBeLessThan(0.02);
+  expect(q.c).not.toBe(fill);
   await page.click('.grp-lead [data-a=term]');
   await expect(page.locator('.pop .pop-h')).toBeVisible();
 });

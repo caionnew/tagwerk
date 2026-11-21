@@ -86,6 +86,8 @@ label.row{ cursor:pointer; }
 .bars .bar.wbar span{ position:absolute; left:0; top:0; bottom:0; }
 .bars .bar .w-all{ background:color-mix(in srgb, var(--muted) 45%, transparent); }
 .bars .bar .w-bad{ background:var(--bad); opacity:.85; }
+/* Erzeugte Themen in „Thema üben“: Anteil richtig, grün statt Sprachfarbe, damit er nicht wie Fortschritt aussieht */
+.bars .bar.qbar span{ background:var(--ok); }
 .lead-s.grp-lead{ margin:-4px 4px 10px; font-size:14px; }
 .seg2, .seg3{ display:flex; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:4px; margin:0 0 12px; }
 .seg2 button, .seg3 button{ flex:1; border:0; background:none; border-radius:10px; padding:9px 6px; font-weight:650; font-size:15px; color:var(--muted); }

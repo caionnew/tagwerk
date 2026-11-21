@@ -73,7 +73,7 @@ test('Fehlerquellen nach Thema: Aufgaben und Fehler auf einer Skala, kein voller
   rows.forEach(r => { const [b, n] = r.n.split('/').map(Number); assert.ok(Math.abs(r.bad / r.all - b / n) < 0.02, r.label); });
 });
 
-test('Thema üben: Balken nur bei Satz-Themen (gefestigter Anteil), erzeugte Themen ohne Balken und unter 10 Aufgaben als Anzahl', () => {
+test('Thema üben: Satz-Themen mit Balken für den gefestigten Anteil, erzeugte Themen unter 10 Aufgaben ohne Balken, als Anzahl', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     DB.gen = { prep_es: { ok: 2, bad: 1, recent: [1, 0, 1] }, det_es: { ok: 3, bad: 0, recent: [1, 1, 1] } };
     BANK.es.filter(i => i.trap === 'condicional').slice(0, 2).forEach(i => { DB.st[i.id] = { ok: 2, bad: 0, alts: [], s: 30, d: 5, ivl: 6, last: t, due: addDays(t, 6), reps: 2 }; });
@@ -92,7 +92,7 @@ test('Thema üben: Balken nur bei Satz-Themen (gefestigter Anteil), erzeugte The
   assert.match(text(sents.split('data-t="condicional"')[1].split('</button>')[0]), /2 von \d+ Sätzen geübt, 0 gefestigt/);
 });
 
-test('Erzeugte Bereiche: ab 10 Aufgaben Prozent, gleicher Text in „Thema üben“ und „Grammatik-Training“', () => {
+test('Erzeugte Bereiche: ab 10 Aufgaben grüner Balken und Prozent, derselbe Anteil in Balken, „Thema üben“ und „Grammatik-Training“', () => {
   run(`DB = freshDB(); DB.gen = { prep_es: { ok: 9, bad: 3, recent: [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] }, det_es: { ok: 8, bad: 2, recent: [1, 1] } }; S.lang = 'es';`);
   assert.equal(run(`genStatText('prep_es')`), 'Zuletzt 75 % richtig (letzte 12)');
   assert.equal(run(`genStatText('det_es')`), 'Bisher 80 % richtig');
@@ -103,6 +103,11 @@ test('Erzeugte Bereiche: ab 10 Aufgaben Prozent, gleicher Text in „Thema üben
   const drill = text(run('viewPickGen()').split('data-g="prep_es"')[1].split('</button>')[0]);
   assert.match(topic, /Zuletzt 75 % richtig \(letzte 12\)/);
   assert.match(drill, /Zuletzt 75 % richtig \(letzte 12\)/);
+  const html = run('viewPickTopic()'), rowOf = t => html.split(`data-t="${t}"`)[1].split('</button>')[0];
+  assert.match(rowOf('prep'), /class="bar qbar"[^>]*><span style="width:75%"/);
+  assert.match(rowOf('concord'), /class="bar qbar"[^>]*><span style="width:80%"/);
+  assert.doesNotMatch(rowOf('konjugation'), /class="bar/);
+  assert.match(text(html.split('Immer neu erzeugt')[1]), /^Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben/);
 });
 
 test('Heute, „Meiste Fehler“: wie die Fehlerquellen nach Anzahl, erst ab 8 Fehlern, je Thema mindestens 2, nur übbare Themen', () => {

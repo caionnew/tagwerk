@@ -242,7 +242,7 @@ function snapshot(){
 }
 function persistRun(){
   const r = S.run;
-  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, res:r.res, missed:r.missed, secs:r.secs, combo:r.combo, best:r.best };
+  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, wayV:WAY_V, res:r.res, missed:r.missed, secs:r.secs, combo:r.combo, best:r.best };
   save();
 }
 function dayLog(d, lang){ const x = DB.log[d] && DB.log[d][lang]; return typeof x === 'number' ? { n:x } : (x || {}); }
@@ -252,25 +252,52 @@ function logDay(lang, f){
   const x = dayLog(d, lang);
   Object.keys(f).forEach(k => { x[k] = (x[k] || 0) + f[k]; });
   DB.log[d][lang] = x;
+  pruneLog();
+}
+// Das Protokoll behält 400 Tage. Was herausfällt, bleibt als Monatssumme erhalten (DB.logArch.m, je Sprache Aufgaben,
+// Sekunden, neue und gefestigte Sätze, dazu die Übungstage), die Etappen bis dahin stehen vorher in DB.way. So behalten
+// „Dein Weg“, die Gesamtzahlen und „Jahr für Jahr“ nach mehr als einem Jahr ihren Anfang.
+const ARCH_KEYS = ['n', 'secs', 'fresh', 'mat'];
+function pruneLog(){
   const keys = Object.keys(DB.log).sort();
-  while (keys.length > 400) delete DB.log[keys.shift()];
+  if (keys.length <= 400) return;
+  persistWay();
+  const A = DB.logArch = DB.logArch || { m:{} };
+  while (keys.length > 400) {
+    const k = keys.shift(), M = A.m[k.slice(0, 7)] = A.m[k.slice(0, 7)] || { days:0 };
+    if (['sv', 'es'].some(l => (dayLog(k, l).n || 0) > 0)) { M.days++; if (!A.first || k < A.first) A.first = k; }
+    ['sv', 'es'].forEach(l => { const x = dayLog(k, l); if (!x.n && !x.secs) return; const a = M[l] = M[l] || {}; ARCH_KEYS.forEach(f => { if (x[f]) a[f] = (a[f] || 0) + x[f]; }); });
+    delete DB.log[k];
+  }
+}
+// Summe eines Feldes über die herausgefallenen Monate (l: Sprache oder beide), optional nur ein Jahr
+function archSum(f, l, year){
+  const m = (DB.logArch && DB.logArch.m) || {};
+  return Object.keys(m).filter(k => !year || k.startsWith(year)).reduce((a, k) => a + (f === 'days' ? m[k].days || 0 : (l ? [l] : ['sv', 'es']).reduce((b, x) => b + ((m[k][x] && m[k][x][f]) || 0), 0)), 0);
 }
 const logAct = (lang, n) => logDay(lang, { n:n || 1 });
 const dayDiff = (a, b) => Math.round((new Date(a.slice(0, 4), a.slice(5, 7) - 1, a.slice(8, 10)) - new Date(b.slice(0, 4), b.slice(5, 7) - 1, b.slice(8, 10))) / 86400000);
 // Serie: Ein Tag zählt, wenn ein Tagwerk erledigt wurde. Ein ausgelassener Tag pro 7 Tage unterbricht sie nicht.
-function streakData(){
-  const days = Object.keys(DB.done).filter(x => DB.done[x]).sort();
-  const t = today(), free = new Set();
-  let cur = 0, best = 0, lastFree = null;
-  if (!days.length) return { current:0, longest:0, free };
-  for (let x = days[0]; x <= t; x = addDays(x, 1)) {
-    if (DB.done[x]) { cur++; best = Math.max(best, cur); continue; }
+// Ein ausgelassener Tag ist ein Pausetag, wenn die Serie läuft, am Tag danach ein Tagwerk folgt (oder er gestern war) und der
+// letzte Pausetag mindestens 7 Tage zurückliegt; sonst endet die Serie. Dieselbe Regel für Anzeige, „Dein Weg“ und Jahresbilanz.
+// onDone(tag, serie) für jeden Tag mit Tagwerk, onFree(tag) für jeden Pausetag. Rückgabe: Serie am Ende.
+function streakWalk(from, to, onDone, onFree){
+  const t = today(); let cur = 0, lastFree = null;
+  for (let x = from; x <= to; x = addDays(x, 1)) {
+    if (DB.done[x]) { cur++; if (onDone) onDone(x, cur); continue; }
     if (x === t) break;
     const nx = addDays(x, 1);
-    if (cur > 0 && (DB.done[nx] || nx === t) && (!lastFree || dayDiff(x, lastFree) >= 7)) { free.add(x); lastFree = x; }
+    if (cur > 0 && (DB.done[nx] || nx === t) && (!lastFree || dayDiff(x, lastFree) >= 7)) { lastFree = x; if (onFree) onFree(x); }
     else { cur = 0; lastFree = null; }
   }
-  return { current:cur, longest:best, free };
+  return cur;
+}
+function streakData(){
+  const days = Object.keys(DB.done).filter(x => DB.done[x]).sort(), free = new Set();
+  if (!days.length) return { current:0, longest:0, free };
+  let best = 0;
+  const current = streakWalk(days[0], today(), (x, c) => { best = Math.max(best, c); }, x => free.add(x));
+  return { current, longest:best, free };
 }
 const streak = () => streakData().current;
 function sumLog(lang, days, key){ let n = 0; for (let k = 0; k < days; k++) n += dayLog(addDays(today(), -k), lang)[key] || 0; return n; }
@@ -627,7 +654,7 @@ function restoreRun(){
   const d = DB.run;
   if (!d || d.date !== today() || !Array.isArray(d.queue) || d.idx >= d.queue.length) { DB.run = null; return; }
   if (d.queue.some(ex => ex.id && !itemById(ex.id))) { DB.run = null; return; }
-  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, wayBefore:d.wayBefore || null, res:d.res || [], missed:d.missed || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
+  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, wayBefore:d.wayV === WAY_V ? d.wayBefore : null, res:d.res || [], missed:d.missed || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
 }
 function resumeDaily(){
   const d = openDaily(); if (!d) return false;

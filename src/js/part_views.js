@@ -626,13 +626,13 @@ function bonusHtml(r){
 }
 // Etappe am Rundenende (seit 24.63): Ausschnitt aus „Dein Weg“ mit der vorigen, der heutigen und der nächsten Etappe derselben Art.
 // Bei mehreren Etappen eine Hauptetappe, die übrigen in einer Zeile. Bei gefestigten oder verankerten Sätzen die Sätze selbst.
-const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}`; };
+const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}${ds.slice(0, 4) !== today().slice(0, 4) ? ' ' + ds.slice(0, 4) : ''}`; };
 function mileHtml(r){
   const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b)), m = miles[0];
   if (!m) return '';
   const lane = m.l || 'x', w = wayEvents().done, topic = m.k === 'topic';
   const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (topic ? e.trap === m.trap : e.v == null || m.v == null || e.v < m.v)).pop();
-  const nx = wayNext(m);
+  const nx = wayNext(m), when = e => (e.d === today() ? 'heute' : fmtDM(e.d));
   const lab = (t, l) => `${esc(t)}${l ? ` <span class="wl-lang">${LANG[l].deName}</span>` : ''}`;
   const row = (cls, t, right) => `<li class="mr ${cls}"><i></i><span class="mr-t">${t}</span><span class="mr-d">${right}</span></li>`;
   // Themen-Etappen: das Thema einmal als Überschrift, in der Leiste nur die Stufe mit der Fehlerquote vorher und nachher
@@ -640,8 +640,8 @@ function mileHtml(r){
   const step = e => `${esc(e.st)}${e.b && e.c ? `<span class="mr-s">von ${rate(e.b)} auf ${rate(e.c)}</span>` : ''}`;
   const head = topic ? `<p class="mr-h">${lab(trapLabel(m.l, m.trap), m.l)}</p>` : '';
   const rail = topic
-    ? `<ol class="mrail rl-${lane}">${prev ? row('done', step(prev), fmtDM(prev.d)) : ''}${row('now', step(m), 'heute')}${nx ? row('next', 'Nächste Halbierung', esc(nx.rest)) : ''}</ol>`
-    : `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), 'heute')}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
+    ? `<ol class="mrail rl-${lane}">${prev ? row('done', step(prev), fmtDM(prev.d)) : ''}${row('now', step(m), when(m))}${nx ? row('next', 'Nächste Halbierung', esc(nx.rest)) : ''}</ol>`
+    : `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), when(m))}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
   const counts = topic && m.b && m.c ? `<p class="mr-x">${m.b[0] === m.c[0] ? `Je ${fmtN(m.b[0])} Aufgaben: vorher ${m.b[1]} falsch, zuletzt ${m.c[1]}.` : `Vorher ${m.b[1]} von ${m.b[0]} Aufgaben falsch, zuletzt ${m.c[1]} von ${m.c[0]}.`}</p>` : '';
   const list = m.k === 'mature' ? (r.crossed && r.crossed.mature) || [] : m.k === 'anchored' ? (r.crossed && r.crossed.anchored) || [] : [];
   const times = n => (['', 'einmal', 'zweimal', 'dreimal', 'viermal', 'fünfmal', 'sechsmal', 'siebenmal', 'achtmal', 'neunmal', 'zehnmal', 'elfmal', 'zwölfmal'][n] || `${n}-mal`);
@@ -1037,8 +1037,11 @@ function totals(){
     ['sv', 'es'].forEach(l => { const x = dayLog(k, l); n += x.n || 0; secs += x.secs || 0; years[y].n += x.n || 0; years[y].secs += x.secs || 0; years[y].mat += x.mat || 0; if (x.n) any = true; });
     if (any) { days++; years[y].days++; }
   });
-  const first = keys.find(k => ['sv', 'es'].some(l => dayLog(k, l).n));
-  return { n, secs, first, days, years };
+  // Herausgefallene Tage (älter als 400 Übungstage) aus der Monatssumme
+  const A = DB.logArch || {}, logFirst = keys.find(k => ['sv', 'es'].some(l => dayLog(k, l).n));
+  Object.keys(A.m || {}).forEach(ym => { const y = ym.slice(0, 4), M = A.m[ym]; years[y] = years[y] || { days:0, n:0, secs:0, mat:0 }; years[y].days += M.days || 0; ['sv', 'es'].forEach(l => { const x = M[l] || {}; years[y].n += x.n || 0; years[y].secs += x.secs || 0; years[y].mat += x.mat || 0; }); });
+  const first = A.first && (!logFirst || A.first < logFirst) ? A.first : logFirst;
+  return { n:n + archSum('n'), secs:secs + archSum('secs'), first, days:days + archSum('days'), years };
 }
 function viewProgress(){
   const tab = S.ptab || 'all';

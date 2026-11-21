@@ -342,6 +342,8 @@ document.addEventListener('click', e => {
         if (DB.tlog) Object.values(DB.tlog).forEach(d => { delete d[lang]; });
         if (DB.tblk) delete DB.tblk[lang];
         if (Array.isArray(DB.etap)) DB.etap = DB.etap.filter(e => e.l !== lang);
+        if (Array.isArray(DB.way)) DB.way = DB.way.filter(e => e.l !== lang);
+        if (DB.logArch && DB.logArch.m) Object.values(DB.logArch.m).forEach(m => { delete m[lang]; });
         // Beim Lesen nachgeschlagene Wörter dieser Sprache (für Lesetext-Lücken)
         if (DB.used && DB.used.looked) Object.keys(DB.used.looked).forEach(k => { if (k.startsWith(lang + ':')) delete DB.used.looked[k]; });
         if (DB.run && DB.run.lang === lang) DB.run = null;
@@ -446,6 +448,8 @@ buildBank();
 // Sprache des Tages erst nach dem Aufbau der Satzbank, sonst zählen die fälligen Wiederholungen nicht
 S.lang = dayLang(); DB.settings.lang = S.lang; save();
 buildGloss();
+// Erreichte Etappen festhalten, bevor Tagesstände und Fehlerprotokoll ausgedünnt werden (Daten bleiben so stabil)
+persistWay();
 pruneTlog();
 compactSnaps();
 snapshot();

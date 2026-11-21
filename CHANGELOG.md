@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.63.3
+**Etappen durchgesehen: Nach mehr als einem Jahr hätte „Dein Weg“ seinen Anfang verloren, Serien zählten dort in Einzelfällen anders als die Serienanzeige, dazu kleinere Unstimmigkeiten.**
+- **Fehler behoben, nach 400 Übungstagen:** Das Tagesprotokoll behält 400 Tage. Was herausfiel, fehlte bisher überall, wo daraus gezählt wird: Der „Erste Übungstag“ wanderte mit, „2 Jahre mit Tagwerk“ und „500 Übungstage“ wären nie gekommen, Übungstage, Aufgaben und Zeit im Überblick und in „Jahr für Jahr“ wären gesunken, und eine Etappe wie „25.000 Aufgaben“ hätte beim erneuten Überschreiten ein zweites Mal kommen können. Jetzt:
+  - Erreichte Etappen werden mit Datum gespeichert und bleiben, auch wenn die Zahl dahinter wieder sinkt. Ein zweites Mal kommen sie nicht.
+  - Herausfallende Tage bleiben als Monatssumme erhalten (Übungstage, Aufgaben, Zeit, neue und gefestigte Sätze je Sprache) und zählen überall mit.
+  - Nebenbei bleiben so auch die Daten der Wortschatz-Etappen stabil; die Tagesstände werden nach 120 Tagen ausgedünnt, wodurch das Datum sonst später auf den nächsten erhaltenen Tag gerutscht wäre.
+- **Fehler behoben, Serien:** „Dein Weg“ und „Jahr für Jahr“ (längste Serie) zählten Serien mit einer eigenen, leicht anderen Regel. Nach einer gerissenen Serie konnte ein späterer Pausetag dort die neue Serie beenden, obwohl die Serienanzeige sie weiterzählte; dann kam etwa „7 Tage in Folge“ nicht. Jetzt gilt überall dieselbe Regel.
+- **„Dein Weg“, als Nächstes:** auch die nächste Serie („14 Tage in Folge, noch 7 Tage“) und die nächste Aufgaben-Etappe, wie am Rundenende. Die nächsten Ziele richten sich nach dem höchsten erreichten Wert. „1 Stunden geübt“ heißt jetzt „1 Stunde geübt“.
+- **Themen:** „Thema „Zahlen“ sitzt“ statt „„Zahlen“ sitzt“, das passt auch bei Themennamen in der Mehrzahl. Eine nächste Halbierung steht nur noch da, solange die Fehlerquote über 2 % liegt; darunter bräuchte der Nachweis Tausende Aufgaben je Thema.
+- **Rundenende:** Eine Etappe aus einem anderen Jahr trägt die Jahreszahl („18. Nov 2026“). Steht eine Etappe nicht von heute im Kasten (Runde über Mitternacht), steht ihr Datum statt „heute“. „Und N weitere“ ist bei jeder Runde wieder zugeklappt.
+- **Jahrestag** bei einem ersten Übungstag am 29. Februar: in Jahren ohne diesen Tag am 1. März.
+- Ein Tagwerk, das vor dem Update angefangen und danach beendet wird, zeigt keine Etappen-Liste, statt alle Etappen als neu (die Kennungen haben sich geändert).
+- Speicherstand: neue Felder `way` (erreichte Etappen) und `logArch` (Monatssummen herausgefallener Tage). Beim ersten Start werden die bisherigen Etappen gespeichert; „Sprache zurücksetzen“ entfernt die Etappen dieser Sprache und ihren Teil der Monatssummen.
+
 ## 24.63.2
 **Themen-Etappe am Rundenende aufgeräumt: das Thema einmal als Überschrift, darunter die Stufen mit der Fehlerquote vorher und nachher.**
 - Bisher stand der Themenname dreimal im Kasten („„Konditional & si-Sätze“: Fehler halbiert“, „… wieder halbiert“, „… wieder halbiert“), und die Sprache rutschte ans Zeilenende. Jetzt: „Konditional & si-Sätze · Spanisch“ als Überschrift, in der Leiste „Fehler halbiert, von 24 % auf 10 %“, „Fehler wieder halbiert, von 10 % auf 4,4 %“, „Nächste Halbierung: auf unter 2,2 %“.

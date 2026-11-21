@@ -384,6 +384,7 @@ function finishRun(){
   checkTopics(r.lang);
   r.miles = r.wayBefore ? (() => { const before = new Set(r.wayBefore); return wayEvents().done.filter(e => !before.has(wayKey(e))); })() : [];
   r.crossed = { mature:crossedIn(r, MATURE), anchored:crossedIn(r, ANCHORED) };
+  persistWay(); S.mileAll = false;
   if (r.kind === 'daily') r.month = monthCard();
   if (r.miles.length) buzz('mile');
   save(); S.view = 'runDone'; render(); window.scrollTo(0, 0);

@@ -143,10 +143,11 @@ test('Themen: Halbierung kurz- und langfristig, wiederholt; die nächste braucht
   const last = J("wayEvents().done.filter(e => e.trap === 'bisats').pop()");
   const lh = app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(last)}], crossed:{} })`);
   assert.match(lh, /class="mr done"><i><\/i><span class="mr-t">Fehler halbiert<span class="mr-s">von 17 % auf 5 %<\/span>/);
-  assert.match(text(lh), /^Etappe Wortstellung im Nebensatz Schwedisch Fehler halbiert von 17 % auf 5 % \d+\. \S+ Fehler wieder halbiert von 5 % auf 0,8 % heute Nächste Halbierung auf unter 0,4 % Je 480 Aufgaben: vorher 24 falsch, zuletzt 4\. Themenblatt Dein Weg$/);
-  // Als Nächstes: wieder halbiert, mit dem Ziel
-  const nx = J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats').pop())`);
-  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'auf unter 0,4 %');
+  assert.match(text(lh), /^Etappe Wortstellung im Nebensatz Schwedisch Fehler halbiert von 17 % auf 5 % \d+\. \S+ Fehler wieder halbiert von 5 % auf 0,8 % heute Je 480 Aufgaben: vorher 24 falsch, zuletzt 4\. Themenblatt Dein Weg$/);
+  // Als Nächstes: wieder halbiert, mit dem Ziel; unter 2 % Fehler keine nächste Halbierung mehr (bräuchte Tausende Aufgaben)
+  const nx = J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats')[0])`);
+  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'auf unter 2,5 %');
+  assert.equal(J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats').pop())`), null);
 });
 test('Themen: „sitzt“ einmal, wenn es früher sicher über 15 % lag und jetzt sicher darunter', () => {
   const { app, J } = setup();
@@ -155,7 +156,7 @@ test('Themen: „sitzt“ einmal, wenn es früher sicher über 15 % lag und jetz
   assert.deepEqual(ev[1].c, [120, 5]);
   app.run(`DB.log = { [today()]:{ sv:{ n:10 } } }; S.mileAll = false;`);
   const m = J("wayEvents().done.find(e => e.k === 'topic' && e.v === 2)");
-  assert.match(m.t, /^„.+“ sitzt$/);
+  assert.match(m.t, /^Thema „.+“ sitzt$/);
   const h = text(app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(m)}], crossed:{ mature:[], anchored:[] } })`));
   assert.match(h, /Thema sitzt von 33 % auf 4,2 % heute .*Je 120 Aufgaben: vorher 40 falsch, zuletzt 5\./);
   assert.equal(feed(app, J, 'bisats', [1, 2, 2, 1]).filter(e => e.s === 2).length, 1);
@@ -226,4 +227,68 @@ test('Vibration: Etappe kurz, kurz, lang; ausgeschaltet keine', () => {
   assert.deepEqual(J('__vib'), [14, 70, 14, 70, 60]);
   app.run('globalThis.__vib = null; DB.settings.haptics = false; buzz("mile");');
   assert.equal(J('__vib'), null);
+});
+
+test('Serien in „Dein Weg“ nach derselben Regel wie die Serienanzeige', () => {
+  const { app, J, ds } = setup();
+  // Tagwerk vor 20 Tagen, drei Tage aus, vier Tagwerke, ein Pausetag, drei Tagwerke: nach der Serienregel 7 in Folge
+  const done = { [ds(20)]:true }; [16, 15, 14, 13, 11, 10, 9].forEach(k => { done[ds(k)] = true; });
+  app.run(`DB.done = ${JSON.stringify(done)}; DB.log = ${JSON.stringify(Object.fromEntries(Object.keys(done).map(d => [d, { sv:{ n:10 } }])))};`);
+  assert.equal(J('streakData().longest'), 7);
+  assert.deepEqual(J("wayEvents().done.filter(e => e.k === 'streak')").map(e => [e.d, e.t]), [[ds(9), '7 Tage in Folge']]);
+  assert.equal(J(`longestRun('${ds(30)}', today())`), 7);
+});
+
+test('Nach mehr als 400 Übungstagen: Anfang, Daten und Zählung bleiben', () => {
+  const { app, J, ds } = setup();
+  const log = {}; for (let k = 404; k >= 0; k--) log[ds(k)] = { sv:{ n:10, secs:300 } };
+  app.run(`DB.log = ${JSON.stringify(log)};`);
+  const before = J('wayEvents().done').map(e => [e.d, e.t]);
+  app.run('pruneLog();');
+  assert.equal(J('Object.keys(DB.log).length'), 400);
+  assert.equal(J('DB.logArch.first'), ds(404));
+  assert.deepEqual([J("archSum('days')"), J("archSum('n', 'sv')"), J("archSum('secs')"), J("archSum('n', 'es')")], [5, 50, 1500, 0]);
+  // Gesamtzahlen und „Jahr für Jahr“ zählen die herausgefallenen Tage mit
+  const tot = J('totals()');
+  assert.deepEqual([tot.days, tot.n, tot.first], [405, 4050, ds(404)]);
+  assert.equal(J('yearStats()').reduce((a, Y) => a + Y.days, 0), 405);
+  const after = J('wayEvents().done').map(e => [e.d, e.t]);
+  assert.deepEqual(after, before, 'gleiche Etappen mit gleichem Datum');
+  assert.deepEqual(after.slice(0, 3), [[ds(404), 'Erster Übungstag'], [ds(395), '10 Übungstage'], [ds(395), '100 Aufgaben']]);
+  const T = J('lifeTotals()');
+  assert.deepEqual([T.dayCount, T.n, T.first], [405, 4050, ds(404)]);
+  assert.deepEqual(J("wayNext({ k:'days', v:250 })"), { t:'500 Übungstage', rest:'noch 95' });
+  // Ein Jahr nach dem ersten Übungstag, nicht nach dem ältesten Tag im Protokoll
+  assert.deepEqual(after.filter(e => / mit Tagwerk$/.test(e[1])), [[J(`addDays('${ds(404)}', 365)`), '1 Jahr mit Tagwerk']]);
+});
+
+test('Erreichte Etappen bleiben, auch wenn die Zahl wieder sinkt; keine zweite Etappe beim erneuten Erreichen', () => {
+  const { app, J, ds } = setup();
+  app.run(`DB.log = { '${ds(3)}':{ sv:{ n:60 }, es:{ n:50 } } }; persistWay();`);
+  assert.ok(J('DB.way').some(e => e.k === 'tasks' && e.v === 100));
+  // Spanisch zurückgesetzt: weniger als 100 Aufgaben im Protokoll, die Etappe bleibt mit Datum
+  app.run(`delete DB.log['${ds(3)}'].es; DB.way = DB.way.filter(e => e.l !== 'es');`);
+  assert.deepEqual(J("wayEvents().done.filter(e => e.k === 'tasks')").map(e => [e.d, e.t]), [[ds(3), '100 Aufgaben']]);
+  app.run(`S.run = { kind:'extra', lang:'sv', res:[], ok:0, bad:0, wayBefore:wayKeys() }; DB.log[today()] = { sv:{ n:60 } }; finishRun();`);
+  assert.ok(!J('S.run.miles').some(e => e.k === 'tasks' && e.v === 100));
+});
+
+test('Offenes Tagwerk aus einer älteren Fassung: Kennungen werden nicht verglichen', () => {
+  const { app, J } = setup();
+  const ids = J('BANK.sv.slice(0, 2).map(i => i.id)');
+  const run = v => app.run(`DB.run = { date:today(), lang:'sv', queue:${JSON.stringify(ids.map(id => ({ type:'free', id })))}, idx:0, wayBefore:['tasks||Alt'], ${v} }; S.dailyRun = null; restoreRun();`);
+  run(''); assert.equal(J('S.dailyRun.wayBefore'), null);
+  run('wayV:WAY_V'); assert.deepEqual(J('S.dailyRun.wayBefore'), ['tasks||Alt']);
+});
+
+test('Jahrestag nach einem 29. Februar am 1. März; Datum am Rundenende mit Jahr, wenn es nicht dieses ist', () => {
+  const { app, J } = setup();
+  fixClock(app, 2027, 6, 1);
+  app.run(`DB.log = { '2024-02-29':{ sv:{ n:5 } }, '2027-05-01':{ sv:{ n:5 } } };`);
+  assert.deepEqual(J("wayEvents().done.filter(e => e.k === 'years')").map(e => e.d), ['2025-03-01', '2026-03-01', '2027-03-01']);
+  assert.match(J("fmtDM('2026-11-18')"), / 2026$/);
+  assert.doesNotMatch(J("fmtDM('2027-05-01')"), /2027/);
+  // Etappe, die nicht heute erreicht wurde: Datum statt „heute“
+  const h = text(app.run(`mileHtml({ lang:'sv', miles:[{ d:'2027-05-31', k:'tasks', v:100, t:'100 Aufgaben' }], crossed:{} })`));
+  assert.match(h, /100 Aufgaben 31\. \S+ /);
 });

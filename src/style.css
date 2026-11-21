@@ -525,6 +525,7 @@ button.row[disabled]::after{ display:none; }
 .fixlbl{ display:block; margin:14px 0 6px; font-size:15px; color:var(--muted); }
 .fixlbl span{ color:var(--ink); }
 .expl.spotline{ margin-top:0; }
+.expl.orig{ font-size:15px; color:var(--muted); } .expl.orig .lbl-o{ color:var(--ink); font-weight:600; }
 .sol .w-fix{ color:var(--ok); font-weight:700; }
 /* Genus */
 .genus{ text-align:center; margin:18px 0 6px; }
@@ -863,9 +864,29 @@ section.ex #fb:empty{ display:none; }
 .wl-next .tl-t{ color:var(--muted); }
 .wl-lang{ font-size:12.5px; color:var(--muted); }
 .wrail .tl-t{ font-size:14.5px; padding:8px 0; }
+/* Dein Weg: Zeit zwischen Etappen (Höhe nach Zeit), Pausen gestrichelt, Jahreswechsel, „heute“, gefaltete Jahre */
+.wl{ position:relative; }
+.wgap{ min-height:0; }
+.wg-svg{ grid-column:1; display:block; align-self:stretch; overflow:visible; }
+.wg-l{ stroke-width:2; } .wg-sv{ stroke:var(--sv); opacity:.45; } .wg-es{ stroke:var(--es); opacity:.5; } .wg-x{ stroke:var(--faint); opacity:.6; }
+.wg-dash{ stroke-dasharray:2.5 3.5; opacity:.8; }
+.wg-t{ position:absolute; right:0; font-size:12px; line-height:16px; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.wg-yr{ position:absolute; left:0; right:0; height:0; border-top:1px solid var(--line); }
+.wg-yr b{ position:absolute; top:-10px; line-height:20px; padding:0 8px; background:var(--surface); font-size:13px; font-weight:750; }
+.wtoday{ min-height:24px; }
+.wtoday::after{ content:""; position:absolute; left:0; right:0; top:50%; border-top:1px solid var(--line); }
+.wtoday .wt-t{ grid-column:2; justify-self:start; position:relative; z-index:1; padding:0 6px 0 8px; background:var(--surface); font-size:12px; font-weight:650; color:var(--muted); }
+.wfold{ min-height:0; }
+.wf-b{ grid-column:2 / 4; display:flex; align-items:center; gap:10px; height:42px; padding:0 10px 0 12px; border:1px solid var(--line); border-radius:14px; background:var(--bg); color:var(--ink); font:inherit; font-size:14.5px; text-align:left; cursor:pointer; }
+.wf-t{ flex:1; font-weight:600; }
+.wf-n{ font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.wf-ch{ width:18px; height:18px; fill:none; stroke:var(--muted); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform .18s ease; }
+.wfold.open .wf-ch{ transform:rotate(180deg); }
+.wf-dot{ stroke:var(--surface); stroke-width:1; } .wf-sv{ fill:var(--sv); } .wf-es{ fill:var(--es); } .wf-x{ fill:var(--muted); }
+.wl-in{ animation:wayIn .18s ease-out both; }
+@keyframes wayIn{ from{ opacity:0; transform:translateY(-4px); } }
 
-/* Dein Weg: Jahrestrenner; Jahr für Jahr */
-.wy .wy-t{ font-weight:750; font-size:15px; padding:10px 0 4px; }
+/* Jahr für Jahr */
 .ygrid{ display:grid; gap:10px; }
 .ycard{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:14px 16px; }
 .y-h{ font-weight:750; font-size:18px; margin:0; }

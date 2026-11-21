@@ -342,6 +342,10 @@ function stage(item){
 // Wörtliches Bild einer festen Wendung aus der Erklärung („(wörtlich: nicht die ganze Welt)“). Beim ersten Kontakt ist es der
 // Hinweis zur Lücke: Eine Wendung, deren Bild im Deutschen fehlt, lässt sich sonst nur raten (Ende der Welt → hela världen).
 const literalOf = item => { const m = item && item.note && /\(wörtlich: ([^()]+)\)/.exec(item.note); return m ? m[1].trim() : ''; };
+// Herkunft einer Wendung („(Herkunft: …)“ am Ende der Erklärung), nur wo sie belegt ist. Sie steht als eigene Zeile unter der
+// Lösung: beim ersten Kontakt auch bei richtiger Antwort, danach bei falscher. noteOf ist die Erklärung ohne diesen Teil.
+const originOf = item => { const m = item && item.note && /\(Herkunft: ([^()]+)\)/.exec(item.note); return m ? m[1].trim() : ''; };
+const noteOf = item => (item && item.note ? item.note.replace(/\s*\(Herkunft: [^()]+\)/, '').trim() : '');
 // Sprache des Tages: beim ersten Start des Tages die Sprache, die es nötiger hat (fällige Wiederholungen im Verhältnis
 // zur Tagwerk-Länge, dazu Tage seit dem letzten Üben). Bleibt für den Tag fest; ein Wechsel von Hand gilt bis morgen.
 // Tagwerk je Sprache: DB.doneLang[datum][sprache]. Die Serie zählt weiter je Tag (DB.done), egal in welcher Sprache.

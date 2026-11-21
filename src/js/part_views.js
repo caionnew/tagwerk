@@ -444,6 +444,8 @@ function feedbackHtml(r, ex, c){
   const item = ex.id ? itemById(ex.id) : null;
   const tr = item ? trapMeta(lang, item.trap) : null;
   const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : item.target;
+  const origin = item ? originOf(item) : '', originLine = origin ? `<p class="expl orig"><span class="lbl-o">Herkunft:</span> ${termify(origin)}</p>` : '';
+  let originShown = !(c.result === 'bad' || c.wasSeen === false);
   if (c.mine && c.result !== 'ok' && !c.gaveUp) out += `<p class="yours" lang="${lang}"><span class="lbl-s">Du:</span> ${c.mine}</p>`;
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   const sol = solShown(lang, ex, c);
@@ -461,7 +463,8 @@ function feedbackHtml(r, ex, c){
     // Die Diagnose sieht nur, ob „har …“ fehlt; bei einem Satz zur Wortstellung führte sie in die Irre.
     else if (!(ex.type === 'gen' && (ex.data.kind || ex.data.note)) && !(item && item.note) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
     else if (ex.type === 'gen') out += `<p class="expl">${termify(ex.data.note)}</p>`;
-    else if (tr && (item.note || tr.short)) out += `<p class="expl">${termify(item.note || tr.short)}</p>${tr.id !== 'eigene' ? `<button type="button" class="link more-l" data-a="topic" data-t="${tr.id}">Regel und Beispiele</button>` : ''}`;
+    else if (tr && (item.note || tr.short)) { out += `<p class="expl">${termify(noteOf(item) || tr.short)}</p>${originLine}${tr.id !== 'eigene' ? `<button type="button" class="link more-l" data-a="topic" data-t="${tr.id}">Regel und Beispiele</button>` : ''}`; originShown = true; }
+    if (!originShown) { out += originLine; originShown = true; }
     if (ex.type === 'free' && !c.gaveUp && c.input) {
       if (c.lt === undefined) out += `<p class="hint">Unsicher, ob deine Fassung auch stimmt? <button type="button" class="link" data-a="ltfree">Mit LanguageTool prüfen (online)</button></p>`;
       else if (c.lt === 'loading') out += `<p class="hint"><span class="dots">Prüfe</span></p>`;
@@ -469,6 +472,8 @@ function feedbackHtml(r, ex, c){
       else out += ltHtml(c.input, c.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.</p>`;
     }
   }
+  // Beim ersten Kontakt auch bei richtiger Antwort: Die Geschichte hinter dem Bild hilft beim Merken
+  if (!originShown) out += originLine;
   if (c.result === 'bad' && ex.type === 'free' && !c.gaveUp && c.input && !(DB.used && DB.used.accept)) out += `<p class="hint">Gibt es mehrere richtige Übersetzungen und deine ist eine davon, tipp auf „Meine ist auch richtig“. Die App merkt sich deine Fassung.</p>`;
   if (!(r.kind === 'trap' || r.kind === 'gen' || r.kind === 'form')) { const own = ex.type === 'gen' && ex.data.trap ? trapMeta(lang, ex.data.trap) : null; const tl = own ? own.label : ex.type === 'gen' ? GENS[ex.gen].label : (tr && tr.id !== 'eigene' ? tr.label : ''); if (tl) out += `<p class="src">Thema: ${esc(tl)}</p>`; }
   if (!(DB.used && DB.used.lookup)) out += `<p class="src">Tipp auf ein Wort der Lösung, um es nachzuschlagen.</p>`;

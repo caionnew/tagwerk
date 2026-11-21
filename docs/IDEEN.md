@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 21. November 2026 (nach 24.63.0)
+Stand: 21. November 2026 (nach 24.64.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -161,6 +161,13 @@ Derzeit nichts.
   - **Eigener Bildschirm vor der Zusammenfassung (C):** ein Tippen mehr, unterbricht.
   - **Abzeichen-Sammlung (C):** „Dein Weg“ ist schon die Sammlung, mit Datum.
   - **Teilen-Karte als Bild (C), Klang (C):** kein Bedarf; Ton am Handy oft aus.
+- **„Dein Weg“, Varianten mit Zeit (geprüft am 21.11., gewählt: Abstand nach Zeit, gestaucht, mit Jahresfaltung, 24.64.0).**
+  - **Lückenzeilen ohne Maßstab (B):** Dauer als schmale Zeile, aber nicht proportional.
+  - **Zeitleiste quer über der Liste (B):** maßstabsgetreu bei fester Höhe, aber Punkte ohne Beschriftung, die ersten Wochen verklumpen, und das Band wiederholt den Kalender.
+  - **Senkrechte Zeitachse, maßstabsgetreu (B−):** ausweichende Beschriftungen mit Linien, unruhig an Tagen mit nur einer Sprache, am meisten Fehlerrisiko.
+  - **Querstriche je Woche auf den Spuren (C+):** wirkt wie eine Leiter; die Dauer als Text reicht.
+  - **Aufklappen als eine Zeile „37 frühere Etappen“ (B), „10 weitere“ (B−), eigene Seite (C+):** nach Jahren eine riesige Liste, willkürliche Häppchen, eine Ebene mehr.
+- **Herkunft für weitere Redewendungen (C).** Alle 72 geprüft; die übrigen haben keine belegte oder nur eine legendenhafte Erklärung. Neue Wendungen mit belegter Herkunft bekommen sie gleich mit.
 - **Endbildschirm nach fehlerfreier Runde überspringen (C).** Dann fehlen Abschluss, „Als Nächstes“ und „Noch eine Runde“.
 
 ## Bewusst nicht

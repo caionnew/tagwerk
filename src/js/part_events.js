@@ -257,7 +257,8 @@ document.addEventListener('click', e => {
     case 'term': S.pop = { type:'term', k:b.dataset.k, lang:(S.view === 'run' && S.run && S.run.lang) || S.lang }; renderPopup(); break;
     case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
     case 'ref': S.ref = b.dataset.r; S.kultCat = null; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
-    case 'wayall': S.wayAll = !S.wayAll; render(); break;
+    // Dein Weg: ein Jahr auf- oder zuklappen; die Jahreszeile bleibt im Blick
+    case 'wayfold': { const y = b.dataset.y; S.wayOpen = Object.assign({}, S.wayOpen, { [y]:!(S.wayOpen && S.wayOpen[y]) }); S.wayAnim = S.wayOpen[y] ? y : null; render(); const el = document.querySelector(`[data-a=wayfold][data-y="${y}"]`); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest' }); break; }
     case 'mileall': S.mileAll = !S.mileAll; render(); break;
     // Vom Rundenende zu „Dein Weg“ im Überblick
     case 'toway': { if (r && r.finished) S.run = null; S.ptab = 'all'; S.calDay = null; S.minDay = null; goView('progress'); const el = document.getElementById('way'); if (el) el.scrollIntoView({ block:'start' }); break; }

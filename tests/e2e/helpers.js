@@ -82,4 +82,4 @@ const test = base.test.extend({
     base.expect(errors, 'JavaScript-Fehler auf der Seite').toEqual([]);
   }
 });
-module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, answerWrong, stored, bankIds, fakeVoice, speechWav, fakeMicArgs };
+module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, answerWrong, stored, bankIds, hash, fakeVoice, speechWav, fakeMicArgs };

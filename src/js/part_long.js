@@ -132,17 +132,17 @@ function wayEvents(){
   done.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
   // Nächste Etappen: nach dem höchsten erreichten Stand, damit ein wieder herausgefallener Satz keine Etappe zweimal bringt
   const next = [];
-  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const nx = MAT.find(x => x > hiM[l]), m = matureCount(l); if (nx) next.push({ ico:'mature', k:'mature', l, t:wayLabel({ k:'mature', v:nx }).t, rest:`noch ${fmtN(Math.max(1, nx - m))}` }); });
+  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const nx = MAT.find(x => x > hiM[l]), m = matureCount(l); if (nx) next.push({ ico:'mature', k:'mature', l, t:wayLabel({ k:'mature', v:nx }).t, rest:`noch ${fmtN(Math.max(1, nx - m))}`, need:Math.max(1, nx - m), per:'mature' }); });
   // Serie und Aufgaben wie am Rundenende: die nächste Schwelle über dem bisher erreichten Stand
-  if (doneDays.length) { const c = streak(), nx = STREAK[si]; if (nx) next.push({ ico:'streak', k:'streak', t:streakLabel(nx), rest:`noch ${fmtN(Math.max(1, nx - c))} ${nx - c === 1 ? 'Tag' : 'Tage'}` }); }
+  if (doneDays.length) { const c = streak(), nx = STREAK[si]; if (nx) next.push({ ico:'streak', k:'streak', t:streakLabel(nx), rest:`noch ${fmtN(Math.max(1, nx - c))} ${nx - c === 1 ? 'Tag' : 'Tage'}`, need:Math.max(1, nx - c), per:'day' }); }
   // Über dem höchsten erreichten Wert, auch wenn die Summe nach dem Zurücksetzen einer Sprache kleiner ist
   const reached = k => done.filter(e => e.k === k).reduce((m, e) => Math.max(m, e.v || 0), 0);
   const nt = ladder(WAY_TASKS, x => x + 25000, Math.max(T.n, reached('tasks'))).find(x => x > Math.max(T.n, reached('tasks')));
-  next.push({ ico:'tasks', k:'tasks', t:wayLabel({ k:'tasks', v:nt }).t, rest:`noch ${fmtN(nt - T.n)}` });
+  next.push({ ico:'tasks', k:'tasks', t:wayLabel({ k:'tasks', v:nt }).t, rest:`noch ${fmtN(nt - T.n)}`, need:nt - T.n, per:'n' });
   const hh = Math.max(T.secs / 3600, reached('hours')), nh = ladder(WAY_HOURS, x => x + 250, hh).find(x => x > hh);
-  next.push({ ico:'time', k:'hours', t:wayLabel({ k:'hours', v:nh }).t, rest:`noch ${fmtMin(nh * 3600 - T.secs).replace(/\.$/, '')}` });
+  next.push({ ico:'time', k:'hours', t:wayLabel({ k:'hours', v:nh }).t, rest:`noch ${fmtMin(nh * 3600 - T.secs).replace(/\.$/, '')}`, need:nh * 3600 - T.secs, per:'secs' });
   const dd = Math.max(T.dayCount, reached('days')), nd = ladder(WAY_DAYS, x => x + 500, dd).find(x => x > dd);
-  if (nd - T.dayCount <= 60) next.push({ ico:'start', k:'days', t:wayLabel({ k:'days', v:nd }).t, rest:`noch ${nd - T.dayCount}` });
+  if (nd - T.dayCount <= 60) next.push({ ico:'start', k:'days', t:wayLabel({ k:'days', v:nd }).t, rest:`noch ${nd - T.dayCount}`, need:nd - T.dayCount, per:'active' });
   return { done, next };
 }
 // Neu erreichte Etappen in DB.way festhalten (am Rundenende, beim Start und bevor Protokolltage herausfallen)
@@ -179,28 +179,125 @@ function wayNext(e){
   }
 }
 // Dein Weg als Gleisplan: links Schwedisch, Mitte Gemeinsames (Serien, Aufgaben, Stunden), rechts Spanisch.
-// Gleiche Zeitachse für alle drei Spuren, so sieht man parallelen und unterschiedlichen Fortschritt. Oben die nächsten Ziele als offene Punkte.
-const WAY_LANES = ['sv', 'x', 'es'];
+// Oben die nächsten Ziele als offene Punkte, das nächste direkt über „heute“. Darunter die letzten fünf Etappen einzeln, mit
+// Abständen nach Zeit; ältere je Jahr zusammengefaltet; ganz unten immer der erste Übungstag als Anfang des Wegs.
+const WAY_LANES = ['sv', 'x', 'es'], WAY_DETAIL = 5;
+// Abstand zwischen zwei Etappen: wächst mit der Wurzel der Zeit, gedeckelt. 1 Tag 7 px, 1 Woche 19, 1 Monat 38, 3 Monate 66, ab etwa 5 Monaten 84.
+// So bleibt ein Tag von einem Monat und ein Monat von einem halben Jahr unterscheidbar, ohne dass die Liste lang wird.
+const wayGapPx = n => Math.min(84, Math.round(7 * Math.sqrt(n)));
+const wayDays = n => `${fmtN(n)} ${n === 1 ? 'Tag' : 'Tage'}`;
+// Dauer in Worten, gerundet: unter 2 Wochen in Tagen, dann in Wochen, ab 9 Wochen in Monaten, ab 2 Jahren in Jahren
+function wayDur(n){
+  if (n < 14) return wayDays(n);
+  if (n < 61) return `${Math.round(n / 7)} Wochen`;
+  if (n < 730) { const m = Math.round(n / 30.44); return `${m} ${m === 1 ? 'Monat' : 'Monate'}`; }
+  return `${String(Math.round(n / 36.5) / 10).replace('.', ',')} Jahre`;
+}
+// Text unter einem Abstand: Dauer ab 2 Wochen, Pausen ab 3 Tagen ohne Üben; sonst nichts (die Höhe zeigt die Zeit)
+function wayGapText(n, pause){
+  if (pause && (pause >= n - 2 || (pause >= 21 ? wayDur(pause) : wayDays(pause)) === wayDur(n))) return `${wayDur(n)} Pause`;
+  if (pause) return `${wayDur(n)}, davon ${pause >= 21 ? wayDur(pause) : wayDays(pause)} Pause`;
+  return n >= 14 ? wayDur(n) : '';
+}
+const wayAct = { sv:d => (dayLog(d, 'sv').n || 0) > 0, es:d => (dayLog(d, 'es').n || 0) > 0, x:d => wayAct.sv(d) || wayAct.es(d) };
+// Tage ohne Übung, mindestens 3 in Folge, zwischen older und newer (beide ausgeschlossen). Tage vor dem Protokoll (seit 24.63
+// als Monatssumme archiviert) sind unbekannt und zählen nicht als Pause.
+function wayRuns(older, newer, act, from){
+  const out = []; let run = null;
+  for (let x = addDays(older, 1); x < newer; x = addDays(x, 1)) {
+    if (x >= from && !act(x)) { if (!run) run = { a:x, b:x, n:0 }; run.b = x; run.n++; }
+    else { if (run && run.n >= 3) out.push(run); run = null; }
+  }
+  if (run && run.n >= 3) out.push(run);
+  return out;
+}
+// Datum einer Etappe, im laufenden Jahr ohne Jahreszahl
+const wayDate = d => { const x = dateOf(d); return `${x.getDate()}. ${MONTHS[x.getMonth()]}${d.slice(0, 4) === today().slice(0, 4) ? '' : ' ' + x.getFullYear()}`; };
+// Voraussichtliche Tage bis zur nächsten Etappe, nur für die Reihenfolge (angezeigt wird weiter „noch 13“).
+// Aufgaben, Zeit und Übungstage nach dem Tempo der letzten 14 Tage (in den ersten Tagen seit dem Anfang); Serien nach Kalender;
+// gefestigte Sätze nach den Fälligkeiten der Sätze, die beim nächsten Richtigen die 21 Tage erreichen, mit 90 % Behalten.
+function wayEta(x){
+  if (x.per === 'day') return x.need;
+  if (x.per === 'mature') {
+    const due = [];
+    BANK[x.l].forEach(i => { const st = stOf(i.id); if (!st || !st.due || (st.ivl || 0) >= MATURE) return; const d = st.due < today() ? today() : st.due; if (FSRS.review(st, 3, d, true).ivl >= MATURE) due.push(d); });
+    due.sort(); const k = Math.ceil(x.need / 0.9) - 1;
+    return k < due.length ? Math.max(0, dayDiff(due[k], today())) : Infinity;
+  }
+  const first = Object.keys(DB.log || {}).filter(d => wayAct.x(d)).sort()[0];
+  const win = first ? Math.max(1, Math.min(14, dayDiff(today(), first) + 1)) : 14;
+  let sum = 0;
+  for (let k = 0; k < win; k++) { const d = addDays(today(), -k); sum += x.per === 'active' ? (wayAct.x(d) ? 1 : 0) : ['sv', 'es'].reduce((a, l) => a + (dayLog(d, l)[x.per] || 0), 0); }
+  return sum > 0 ? x.need / (sum / win) : Infinity;
+}
 function wayHtml(){
   const w = wayEvents(); if (!w.done.length) return '';
   const firstOf = l => { const d = Object.keys(DB.log || {}).filter(x => (dayLog(x, l).n || 0) > 0).sort()[0], e = (w.done.find(x => x.l === l) || {}).d; return [d, e].filter(Boolean).sort()[0] || null; };
   const start = { sv:firstOf('sv'), es:firstOf('es'), x:w.done[0].d };
-  const lanes = WAY_LANES.filter(k => start[k]);
-  const all = !!S.wayAll, list = all ? w.done.slice().reverse() : w.done.slice(-6).reverse();
-  const fmtD = d => { const x = dateOf(d); return `${x.getDate()}. ${MONTHS[x.getMonth()]} ${x.getFullYear()}`; };
+  const lanes = WAY_LANES.filter(k => start[k]), RW = lanes.length * 16, LX = k => 8 + lanes.indexOf(k) * 16;
+  const logFrom = Object.keys(DB.log || {}).sort()[0] || today();
+  const langTag = l => (l ? ` <span class="wl-lang">${LANG[l].deName}</span>` : '');
   const rail = (lane, d, open) => `<span class="rail" style="grid-template-columns:repeat(${lanes.length}, 16px)" aria-hidden="true">${lanes.map(k => `<span class="rl rl-${k}${d == null || d >= start[k] ? ' on' : ''}">${k === lane ? `<i class="${open ? 'open' : ''}"></i>` : ''}</span>`).join('')}</span>`;
-  const label = k => (k === 'x' ? 'gemeinsam' : LANG[k].deName);
-  const nextRows = w.next.filter(x => lanes.includes(x.l || 'x')).map(x => `<li class="wl wl-next">${rail(x.l || 'x', null, true)}<span class="tl-t">${esc(x.t)}${x.l ? ` <span class="wl-lang">${LANG[x.l].deName}</span>` : ''}</span><span class="tl-d">${esc(x.rest)}</span></li>`).join('');
-  let prevY = null;
-  const rows = list.map(x => {
-    const y = x.d.slice(0, 4), sep = y !== prevY && (prevY !== null || y !== today().slice(0, 4)) ? `<li class="wl wy">${rail(null, x.d)}<span class="wy-t">${y}</span><span></span></li>` : '';
-    prevY = y;
-    return sep + `<li class="wl">${rail(x.l || 'x', x.d)}<span class="tl-t">${esc(x.t)}${x.l ? ` <span class="wl-lang">${LANG[x.l].deName}</span>` : ''}</span><span class="tl-d">${fmtD(x.d)}</span></li>`;
-  }).join('');
+  const seg = (k, y0, y1, dash) => (y1 - y0 < 0.5 ? '' : `<line x1="${LX(k)}" x2="${LX(k)}" y1="${y0.toFixed(1)}" y2="${y1.toFixed(1)}" class="wg-l wg-${k}${dash ? ' wg-dash' : ''}"/>`);
+  const anim = S.wayAnim; S.wayAnim = null;
+  const row = (e, cls) => `<li class="wl${cls || ''}">${rail(e.l || 'x', e.d)}<span class="tl-t">${esc(e.t)}${langTag(e.l)}</span><span class="tl-d">${wayDate(e.d)}</span></li>`;
+  // Zeit zwischen zwei Etappen: Höhe nach Zeit, innen tagesgenau. Spuren gestrichelt, wo eine Sprache (Mitte: beide) mindestens
+  // 3 Tage ruhte; ein Jahreswechsel als Trennlinie über die ganze Breite wie „heute“, darunter das ältere Jahr.
+  const gap = (newer, older, cls) => {
+    const n = dayDiff(newer, older); if (n <= 0) return '';
+    const runs = {}; lanes.forEach(k => { runs[k] = wayRuns(older, newer, wayAct[k], logFrom); });
+    const pause = (runs.x || wayRuns(older, newer, wayAct.x, logFrom)).reduce((a, r) => a + r.n, 0);
+    const txt = wayGapText(n, pause), jan = Number(newer.slice(0, 4)) > Number(older.slice(0, 4)) ? newer.slice(0, 4) + '-01-01' : null;
+    let h = wayGapPx(n); if (txt) h = Math.max(h, 22); if (jan) h = Math.max(h, 46);
+    const edge = d => (dayDiff(newer, d) + 0.5) * h / n;
+    let svg = '';
+    lanes.forEach(k => {
+      if (start[k] > newer) return;
+      const end = start[k] > older ? edge(start[k]) : h; let y = 0;
+      runs[k].forEach(r => { const y0 = edge(r.b) - h / n, y1 = Math.min(end, edge(r.a)); svg += seg(k, y, y0) + seg(k, y0, y1, true); y = y1; });
+      svg += seg(k, y, end);
+    });
+    let yr = '', ty = h / 2;
+    if (jan) {
+      const y = Math.max(16, Math.min(h - 16, edge(jan)));
+      yr = `<span class="wg-yr" style="top:${y.toFixed(1)}px"><b style="left:${RW + 10}px">${Number(jan.slice(0, 4)) - 1}</b></span>`;
+      ty = y > h - y ? y / 2 : (y + h) / 2;
+    }
+    return `<li class="wl wgap${cls || ''}" style="height:${h}px"><svg class="wg-svg" width="${RW}" height="${h}" aria-hidden="true">${svg}</svg>${yr}${txt ? `<span class="wg-t" style="top:${(ty - 8).toFixed(1)}px">${txt}</span>` : ''}</li>`;
+  };
+  // Nächste Ziele: das voraussichtlich nächste unten, direkt über „heute“
+  const next = w.next.filter(x => lanes.includes(x.l || 'x')).map(x => Object.assign({ eta:wayEta(x) }, x)).sort((a, b) => (a.eta === b.eta ? 0 : a.eta < b.eta ? 1 : -1));
+  let html = next.map(x => `<li class="wl wl-next">${rail(x.l || 'x', null, true)}<span class="tl-t">${esc(x.t)}${langTag(x.l)}</span><span class="tl-d">${esc(x.rest)}</span></li>`).join('');
+  html += `<li class="wl wtoday">${rail(null, today())}<span class="wt-t">heute</span></li>`;
+  // Erreichte Etappen: die letzten fünf einzeln. Etappen eines Tages bleiben zusammen, auch wenn es dann sechs oder sieben sind.
+  // Ältere je Jahr gefaltet; sind es insgesamt oder in einem Jahr höchstens zwei, stehen sie gleich da.
+  const anchor = w.done[0].k === 'first' ? w.done[0] : null, body = anchor ? w.done.slice(1) : w.done.slice();
+  let cut = Math.max(0, body.length - WAY_DETAIL);
+  while (cut > 0 && body[cut - 1].d === body[cut].d) cut--;
+  if (cut <= 2) cut = 0;
+  let prev = today();
+  const run = (items, cls) => items.slice().reverse().forEach(e => { if (prev) html += gap(prev, e.d, cls); html += row(e, cls); prev = e.d; });
+  run(body.slice(cut));
+  const folded = body.slice(0, cut), open = S.wayOpen || {};
+  [...new Set(folded.map(e => e.d.slice(0, 4)))].sort().reverse().forEach(y => {
+    const items = folded.filter(e => e.d.startsWith(y)), isOpen = !!open[y];
+    // Ein Jahr mit höchstens zwei Etappen braucht keine Faltung
+    if (items.length <= 2) { run(items); return; }
+    const ms = items.map(e => dateOf(e.d).getMonth()), m0 = Math.min(...ms), m1 = Math.max(...ms);
+    const label = m0 === 0 && m1 === 11 ? y : m0 === m1 ? `${MONTHS_FULL[m0]} ${y}` : `${MONTHS[m0]} – ${MONTHS[m1]} ${y}`;
+    // Punkte auf den Spuren zeigen, wo etwas gefaltet ist: einer für 1 bis 2 Etappen, zwei bis 5, drei darüber
+    const cnt = {}; items.forEach(e => { const k = e.l || 'x'; cnt[k] = (cnt[k] || 0) + 1; });
+    const H = 54, newest = items[items.length - 1].d;
+    let svg = lanes.map(k => (start[k] <= newest ? seg(k, 0, H) : '')).join('');
+    if (!isOpen) lanes.forEach(k => { const c = cnt[k] >= 6 ? 3 : cnt[k] >= 3 ? 2 : cnt[k] ? 1 : 0; for (let j = 0; j < c; j++) svg += `<circle cx="${LX(k)}" cy="${(H / 2 + (j - (c - 1) / 2) * 7).toFixed(1)}" r="2.6" class="wf-dot wf-${k}"/>`; });
+    html += `<li class="wl wfold${isOpen ? ' open' : ''}" style="height:${H}px"><svg class="wg-svg" width="${RW}" height="${H}" aria-hidden="true">${svg}</svg><button type="button" class="wf-b" data-a="wayfold" data-y="${y}" aria-expanded="${isOpen}"><span class="wf-t">${label}</span><span class="wf-n">${items.length} Etappen</span><svg class="wf-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></li>`;
+    prev = null;
+    if (isOpen) run(items, anim === y ? ' wl-in' : '');
+  });
+  if (anchor) { if (prev) html += gap(prev, anchor.d); html += row(anchor); }
   return `<h2 class="grp" id="way">Dein Weg</h2><div class="chart way">
-    <p class="legend wleg">${lanes.map(k => `<span><i class="sq rl-${k}-sq"></i>${label(k)}</span>`).join('')}</p>
-    <ol class="wrail">${nextRows}${rows}</ol>
-    ${w.done.length > 6 ? `<button type="button" class="link" data-a="wayall">${all ? 'Weniger zeigen' : `Ganzen Weg zeigen (${w.done.length} Etappen)`}</button>` : ''}
+    <p class="legend wleg">${lanes.map(k => `<span><i class="sq rl-${k}-sq"></i>${k === 'x' ? 'gemeinsam' : LANG[k].deName}</span>`).join('')}</p>
+    <ol class="wrail">${html}</ol>
   </div>`;
 }
 // Jahr für Jahr: Übungstage, Zeit, Aufgaben, längste Serie, stärkster Monat, je Sprache neue und gefestigte Sätze

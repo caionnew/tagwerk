@@ -83,6 +83,29 @@ function esProDrop(n, de){
   const w = n.split(' ');
   return w.map((t, i) => (i > 0 && i < w.length - 1 && ES_SUBJ_DE[t] && new RegExp(`(^|[^a-zäöüß])${ES_SUBJ_DE[t]}([^a-zäöüß]|$)`, 'i').test(de) ? w.slice(0, i).concat(w.slice(i + 1)).join(' ') : null)).filter(Boolean);
 }
+// Spanisch: Reflexivpronomen vergessen (quedamos statt nos quedamos). Reflexiv ist das Verb, wenn das Wörterbuch die Form unter
+// einer Grundform auf -se führt; bei nos, os und te muss zudem die Person passen (nos llamó = er rief uns an, nicht reflexiv).
+// Bei diesen Verben heißt die Form ohne Pronomen etwas anderes: [mit Pronomen, ohne Pronomen]. Sonst die Bedeutung aus dem Wörterbuch.
+const ES_REFL = { quedar:['bleiben', 'sich verabreden oder übrig sein'], acordar:['sich erinnern', 'vereinbaren'], parecer:['ähneln', 'scheinen'],
+  llamar:['heißen', 'rufen, anrufen'], dormir:['einschlafen', 'schlafen'], despedir:['sich verabschieden', 'entlassen'], negar:['sich weigern', 'leugnen'],
+  levantar:['aufstehen', 'hochheben'], acostar:['schlafen gehen', 'ins Bett bringen'], poner:['sich anziehen, werden', 'legen, stellen'],
+  volver:['werden, sich umdrehen', 'zurückkommen'], encontrar:['sich befinden, sich fühlen', 'finden'], llevar:['mitnehmen, sich verstehen', 'tragen, bringen'],
+  fijar:['bemerken, achten auf', 'befestigen, festlegen'], casar:['heiraten', 'trauen'], ir:['weggehen', 'gehen, fahren'], marchar:['weggehen', 'marschieren'],
+  preguntar:['sich fragen', 'fragen'], conocer:['sich (gegenseitig) kennenlernen', 'jemanden kennen oder kennenlernen'] };
+function esReflexWhy(input, solution){
+  const s = norm(solution, 'es').split(' '), t = norm(input, 'es').split(' ');
+  for (let i = 0; i < s.length - 1; i++) {
+    const p = s[i], v = s[i + 1];
+    if (!/^(me|te|se|nos|os)$/.test(p) || t.includes(p) || !t.includes(v)) continue;
+    if ((p === 'nos' && !/mos$/.test(v)) || (p === 'os' && !/is$/.test(v)) || (p === 'te' && !/(s|ste)$/.test(v))) continue;
+    const l = (lookupWord('es', v) || {}).l || '';
+    if (!/[aeií]rse$/.test(l)) continue;
+    const base = l.slice(0, -2), pair = ES_REFL[deacc(base)];
+    const mean = pair ? pair[0] : ((lookupWord('es', l) || {}).de || '').split(/[;(]/)[0].trim();
+    return `„${p}“ fehlt: ${l}${mean ? ` = ${mean}` : ''}; ${pair ? `${base} allein heißt meist ${pair[1]}` : 'hier gehört das Pronomen dazu'}.`;
+  }
+  return '';
+}
 function judgeX(input, answers, lang, opt){
   const o = Object.assign({ equiv:true, typo:true, protect:[] }, opt || {});
   const n = norm(input, lang);
@@ -202,6 +225,8 @@ function check(){
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
       if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) { c.keyOk = ex.data.posLabel; c.posOk = true; }
       if (ex.type === 'free') { const item = itemById(ex.id); const g = item.gapAlts.find(x => toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
+      // Ganzer Satz getippt: fehlt nur ein Reflexivpronomen, sagt der Hinweis, was das Verb ohne es bedeutet
+      if (res === 'bad' && r.lang === 'es' && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.refl = esReflexWhy(c.input, best);
     }
     if (res === 'bad' && ex.type !== 'cloze') {
       const m = mistakeFor(ex, c.input, r.lang);

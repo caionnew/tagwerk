@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.62.0
+**Verbalperiphrasen bei „Fortgeschritten“ ohne verratenes Muster, und genauere Rückmeldung bei vier gemeldeten Aufgaben.**
+- **Periphrasen:** Das Muster neben der Aufgabe („acabar de + Infinitiv“) nannte das gesuchte Verb; übrig blieb nur die Endung. Bei „Fortgeschritten“ steht jetzt „Muster zeigen“, wie schon bei der Grundform. Was gesucht ist, ergibt sich aus dem deutschen Satz (gerade, wieder, seit).
+- **Ohne Muster zählt jede richtige Füllung,** nicht nur die mit dem Muster. Neu als richtig: no ha parado / ha dejado de llover desde ayer, a pesar del ruido seguía durmiendo, rompió a llover, rompió a llorar, rompieron a reír, comienzo a trabajar, he estado toda la mañana intentando llamarte, he estado dos horas esperando, llevo / estoy diciéndolo desde hace meses. Die gezeigte Lösung bleibt die Periphrase. Gleiche Formen ohne Periphrase, die etwas anderes sagen, bleiben falsch (están treinta años casados, empieza a llover für „Es regnet wieder“).
+- **Fehlendes Reflexivpronomen wird erklärt:** „Si llueve mañana quedamos en casa“ ist zu Recht falsch, die Rückmeldung sagte aber nur „Der Unterschied liegt woanders“. Jetzt: „„nos“ fehlt: quedarse = bleiben; quedar allein heißt meist sich verabreden oder übrig sein.“ Gilt für alle spanischen Sätze, wenn das Wörterbuch die Form als reflexiv führt; bei nos, os und te muss die Person passen (nos llamó bleibt außen vor).
+- **Satzbank, Wortstellung:** „Si mañana llueve, nos quedamos en casa“ galt als falsch, ebenso „Suelo ir al trabajo a pie“. Beide Stellungen zählen jetzt.
+- **Erklärungen passend zum Fehler:**
+  - Se convirtió en …: Die Erklärung sagt jetzt, warum se volvió hier nicht geht (volverse steht ohne en und meint eher den Charakter).
+  - Suelo ir andando …: Statt „auch normalmente + Präsens“, das nach der falschen Antwort „normalmente“ wie ein Widerspruch klang: normalmente voy, nicht normalmente ir.
+- Wörterbuch: quedamos = wir bleiben, wir blieben (vorher nur „wir blieben“), ohne nos meist „wir verabreden uns“.
+
 ## 24.61.2
 **Thema üben: Die erzeugten Themen haben wieder einen Balken, jetzt grün und erst ab 10 Aufgaben.**
 - Ein Balken ist schneller verglichen als „45 von 67“ gegen „34 von 45“. Er zeigt den Anteil richtiger Antworten der letzten bis zu 50 Aufgaben, dieselbe Zahl wie der Text daneben.

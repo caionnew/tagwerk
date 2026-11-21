@@ -77,3 +77,18 @@ test('„seit“-Aufgabe: bei falscher Antwort die genaue Erklärung (Deutsch Pr
   }
   expect(seen).toBe(true);
 });
+test('Fortgeschritten: Periphrasen-Muster verdeckt, Tipp zeigt es, Eingabe bleibt', async ({ page }) => {
+  const db = freshDB('es'); db.settings.niveau = 'fort';
+  await seed(page, db);
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  if (await page.$('[data-a=form][data-g=perifrasis]')) await page.click('[data-a=form][data-g=perifrasis]');
+  else { await page.click('[data-a=forms]'); await page.click('[data-a=gengo][data-g=perifrasis]'); }
+  const tip = page.locator('.kicker [data-a=showtip]');
+  await expect(tip).toHaveText('Muster zeigen');
+  await expect(page.locator('.kicker')).not.toContainText('Infinitiv');
+  await page.fill('#answer', 'abc');
+  await tip.click();
+  await expect(page.locator('.kicker .hintw')).toContainText('+');
+  await expect(page.locator('#answer')).toHaveValue('abc');
+});

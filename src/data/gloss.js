@@ -3619,7 +3619,7 @@ puerta||Tür
 puntuales|puntual|pünktlich
 que||dass; der, die, das (Relativpronomen)
 queda|quedar|steht (Kleidung); bleibt übrig
-quedamos|quedarse|nos quedamos = wir blieben
+quedamos|quedarse|nos quedamos = wir bleiben, wir blieben (ohne nos meist: wir verabreden uns)
 quedaremos|quedarse|wir werden bleiben
 queremos|querer|wir wollen
 quería|querer|ich wollte; ich hätte gern

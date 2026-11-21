@@ -273,10 +273,10 @@ function progressBar(r){
   const segs = marks.map((m, i) => `<i class="seg${m ? ' s-' + m : ''}${r.queue[i].requeue ? ' re' : ''}${i === re1 ? ' re1' : ''}${i === r.idx && c && c.enter && m !== 'cur' ? ' just' : ''}"></i>`).join('');
   return `<div class="progress${n > 44 ? ' d2' : n > 30 ? ' d1' : ''}" role="img" aria-label="${aria}">${segs}</div><span class="count" aria-hidden="true">${r.idx + 1}/${n}</span>`;
 }
-// Hinweis als Chip. Bei „Fortgeschritten“ bleiben Grundform und wörtliches Bild verdeckt, bis man sie antippt; Auswahl-Hinweise
-// (ser oder estar, Optionen) bleiben immer sichtbar.
-function tipChip(text, lang, c){
-  const kind = /^Grundform/.test(text) ? 'Grundform' : /^wörtlich/.test(text) ? 'Wörtlich' : '';
+// Hinweis als Chip. Bei „Fortgeschritten“ bleiben Grundform, wörtliches Bild und das Muster einer Periphrase (acabar de + Infinitiv)
+// verdeckt, bis man sie antippt: Sie verraten, welches Wort gesucht ist. Auswahl-Hinweise (ser oder estar, Optionen) bleiben sichtbar.
+function tipChip(text, lang, c, kind0){
+  const kind = kind0 || (/^Grundform/.test(text) ? 'Grundform' : /^wörtlich/.test(text) ? 'Wörtlich' : '');
   const hide = (DB.settings.niveau || 'mittel') === 'fort' && kind && !c.tip && c.state !== 'done';
   return hide ? `<button type="button" class="hintw tipbtn" data-a="showtip">${kind} zeigen</button>` : `<span class="hintw" lang="${lang}">${esc(text)}</span>`;
 }
@@ -359,7 +359,7 @@ function viewRun(){
       const pos = d.prompt.indexOf('___');
       const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
       const field = done ? gapDone(c, d.full.slice(pos, d.full.length - (d.prompt.length - pos - 3)), lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${d.ph ? ` placeholder="${esc(d.ph)}"` : ''}${done ? ' readonly' : ''} aria-label="Lücke${d.ph ? `, beginnt mit ${esc(d.ph.replace('…', ''))}` : ''}">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
-      body = `<p class="kicker">${esc(d.label)}${d.hint ? tipChip(d.hint, lang, c) : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
+      body = `<p class="kicker">${esc(d.label)}${d.hint ? tipChip(d.hint, lang, c, d.tip) : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
         <div class="ex-a"><p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
         ${done ? '' : charbar(lang)}</div>`;
     } else {
@@ -453,7 +453,9 @@ function feedbackHtml(r, ex, c){
   else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {
-    if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. Der Unterschied liegt woanders.</p>`;
+    // Fehlt ein Reflexivpronomen (quedamos statt nos quedamos), steht das zuerst: Es ist der konkrete Fehler, die Erklärung des Satzes kommt danach.
+    if (c.refl && !c.keyOk) out += `<p class="expl">${termify(c.refl)}</p>`;
+    if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. ${c.refl ? `Aber ${termify(c.refl)}` : 'Der Unterschied liegt woanders.'}</p>`;
     // Eigene Erklärung (Satzbank oder erzeugte Aufgabe) passt genau zum Satz und geht vor der allgemeinen Diagnose.
     // Die Diagnose sieht nur, ob „har …“ fehlt; bei einem Satz zur Wortstellung führte sie in die Irre.
     else if (!(ex.type === 'gen' && (ex.data.kind || ex.data.note)) && !(item && item.note) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;

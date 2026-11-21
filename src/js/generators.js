@@ -844,11 +844,13 @@ function genPluralSv(){
 
 /* ---------- Verbalperiphrasen: llevar + Gerundium, acabar de, volver a, soler, ponerse a, dejar de, estar a punto de, seguir … ---------- */
 // [Satz mit ___, richtige Formen, Muster, Deutsch, Erklärung]
+// Bei „Fortgeschritten“ ist das Muster verdeckt (erst auf Tipp). Darum zählt jede richtige Füllung, die zum deutschen Satz passt,
+// auch ohne das Muster (he estado, ha parado, seguía); die erste Form ergibt die gezeigte Lösung.
 const PERI_ES = [
-  ['___ dos horas esperando.', ['Llevo'], 'llevar + Gerundium', 'Ich warte schon seit zwei Stunden.', 'llevar + Zeitraum + Gerundium = seit … etwas tun: llevo dos horas esperando.'],
+  ['___ dos horas esperando.', ['Llevo', 'He estado'], 'llevar + Gerundium', 'Ich warte schon seit zwei Stunden.', 'llevar + Zeitraum + Gerundium = seit … etwas tun: llevo dos horas esperando.'],
   ['¿Cuánto tiempo ___ estudiando español?', ['llevas'], 'llevar + Gerundium', 'Wie lange lernst du schon Spanisch?', 'Wie lange schon: ¿cuánto tiempo llevas + Gerundium?'],
   ['___ un año viviendo allí cuando nació nuestra hija.', ['Llevábamos'], 'llevar + Gerundium', 'Wir wohnten schon ein Jahr dort, als unsere Tochter geboren wurde.', 'Dauer bis zu einem Punkt in der Vergangenheit: llevar im Imperfecto (llevábamos).'],
-  ['___ toda la mañana intentando llamarte.', ['Llevo'], 'llevar + Gerundium', 'Ich versuche schon den ganzen Vormittag, dich anzurufen.', 'llevar + Zeitraum + Gerundium: llevo toda la mañana intentando.'],
+  ['___ toda la mañana intentando llamarte.', ['Llevo', 'He estado'], 'llevar + Gerundium', 'Ich versuche schon den ganzen Vormittag, dich anzurufen.', 'llevar + Zeitraum + Gerundium: llevo toda la mañana intentando.'],
   ['___ treinta años casados.', ['Llevan'], 'llevar + Partizip', 'Sie sind seit dreißig Jahren verheiratet.', 'llevar + Zeitraum + Partizip oder Adjektiv: llevan treinta años casados.'],
   ['___ de hablar con ella.', ['Acabo'], 'acabar de + Infinitiv', 'Ich habe gerade mit ihr gesprochen.', 'acabar de + Infinitiv = gerade etwas getan haben: acabo de hablar.'],
   ['___ de llegar.', ['Acabamos'], 'acabar de + Infinitiv', 'Wir sind gerade angekommen.', 'acabar de + Infinitiv = gerade etwas getan haben: acabamos de llegar.'],
@@ -865,14 +867,14 @@ const PERI_ES = [
   ['En invierno ___ oscurecer muy pronto.', ['suele'], 'soler + Infinitiv', 'Im Winter wird es meist sehr früh dunkel.', 'soler + Infinitiv = gewöhnlich: suele oscurecer.'],
   ['___ llegar tarde, pero hoy ha llegado pronto.', ['Suele'], 'soler + Infinitiv', 'Meistens kommt er zu spät, aber heute war er früh da.', 'soler + Infinitiv = gewöhnlich, meistens: suele llegar tarde.'],
   ['___ ir a la playa todos los fines de semana.', ['Solíamos'], 'soler + Infinitiv', 'Früher sind wir jedes Wochenende an den Strand gefahren.', 'Gewohnheit in der Vergangenheit: solíamos + Infinitiv.'],
-  ['De repente ___ a llover.', ['se puso', 'empezó', 'comenzó'], 'ponerse a + Infinitiv', 'Plötzlich fing es an zu regnen.', 'ponerse a + Infinitiv = (plötzlich) anfangen zu; auch empezar a.'],
-  ['Cuando le conté la noticia, ___ a llorar.', ['se puso', 'se echó', 'empezó', 'comenzó'], 'ponerse a + Infinitiv', 'Als ich ihr die Nachricht erzählte, fing sie an zu weinen.', 'ponerse a oder echarse a llorar = anfangen zu weinen.'],
-  ['___ a trabajar en cuanto llego a la oficina.', ['Me pongo', 'Empiezo'], 'ponerse a + Infinitiv', 'Ich mache mich an die Arbeit, sobald ich ins Büro komme.', 'ponerse a + Infinitiv = sich an etwas machen, anfangen zu.'],
+  ['De repente ___ a llover.', ['se puso', 'empezó', 'comenzó', 'rompió'], 'ponerse a + Infinitiv', 'Plötzlich fing es an zu regnen.', 'ponerse a + Infinitiv = (plötzlich) anfangen zu; auch empezar a.'],
+  ['Cuando le conté la noticia, ___ a llorar.', ['se puso', 'se echó', 'rompió', 'empezó', 'comenzó'], 'ponerse a + Infinitiv', 'Als ich ihr die Nachricht erzählte, fing sie an zu weinen.', 'ponerse a oder echarse a llorar = anfangen zu weinen.'],
+  ['___ a trabajar en cuanto llego a la oficina.', ['Me pongo', 'Empiezo', 'Comienzo'], 'ponerse a + Infinitiv', 'Ich mache mich an die Arbeit, sobald ich ins Büro komme.', 'ponerse a + Infinitiv = sich an etwas machen, anfangen zu.'],
   ['___ a estudiar a las ocho y no paré hasta medianoche.', ['Me puse', 'Empecé', 'Comencé'], 'ponerse a + Infinitiv', 'Ich habe um acht angefangen zu lernen und bis Mitternacht nicht aufgehört.', 'ponerse a + Infinitiv = anfangen zu, hier im Indefinido: me puse a estudiar.'],
-  ['Al ver la escena, todos ___ a reír.', ['se echaron', 'se pusieron', 'empezaron', 'comenzaron'], 'echarse a + Infinitiv', 'Als sie die Szene sahen, fingen alle an zu lachen.', 'echarse a reír, llorar, correr = plötzlich anfangen zu …'],
+  ['Al ver la escena, todos ___ a reír.', ['se echaron', 'se pusieron', 'rompieron', 'empezaron', 'comenzaron'], 'echarse a + Infinitiv', 'Als sie die Szene sahen, fingen alle an zu lachen.', 'echarse a reír, llorar, correr = plötzlich anfangen zu …'],
   ['___ de fumar hace cinco años.', ['Dejé'], 'dejar de + Infinitiv', 'Ich habe vor fünf Jahren aufgehört zu rauchen.', 'dejar de + Infinitiv = aufhören zu: dejé de fumar.'],
   ['¿Por qué ___ de venir a clase?', ['has dejado', 'dejaste'], 'dejar de + Infinitiv', 'Warum kommst du nicht mehr zum Unterricht?', 'dejar de + Infinitiv = nicht mehr tun; in Spanien has dejado, in Lateinamerika dejaste.'],
-  ['No ___ de llover desde ayer.', ['deja', 'para'], 'dejar de + Infinitiv', 'Es hört seit gestern nicht auf zu regnen.', 'no dejar de (oder no parar de) + Infinitiv = nicht aufhören zu.'],
+  ['No ___ de llover desde ayer.', ['deja', 'para', 'ha dejado', 'ha parado'], 'dejar de + Infinitiv', 'Es hört seit gestern nicht auf zu regnen.', 'no dejar de (oder no parar de) + Infinitiv = nicht aufhören zu; mit desde ayer auch im Perfecto: no ha parado de llover.'],
   ['___ de vernos cuando ella se mudó.', ['Dejamos'], 'dejar de + Infinitiv', 'Wir hörten auf, uns zu treffen, als sie umzog.', 'dejar de + Infinitiv = aufhören zu: dejamos de vernos.'],
   ['___ a punto de llamarte.', ['Estaba'], 'estar a punto de + Infinitiv', 'Ich wollte dich gerade anrufen.', 'estar a punto de + Infinitiv = gleich etwas tun, kurz davor sein; hier im Imperfecto.'],
   ['El tren ___ a punto de salir.', ['está'], 'estar a punto de + Infinitiv', 'Der Zug fährt gleich ab.', 'estar a punto de + Infinitiv = gleich, kurz davor.'],
@@ -881,16 +883,16 @@ const PERI_ES = [
   ['___ a punto de irnos cuando llegaste.', ['Estábamos'], 'estar a punto de + Infinitiv', 'Wir wollten gerade gehen, als du kamst.', 'Kurz davor in der Vergangenheit: estábamos a punto de; das Ereignis im Indefinido (llegaste).'],
   ['___ lloviendo.', ['Sigue', 'Continúa'], 'seguir + Gerundium', 'Es regnet immer noch.', 'seguir + Gerundium = immer noch, weiterhin: sigue lloviendo.'],
   ['¿___ trabajando en la misma empresa?', ['Sigues', 'Continúas'], 'seguir + Gerundium', 'Arbeitest du immer noch bei derselben Firma?', 'seguir + Gerundium = immer noch: ¿sigues trabajando …?'],
-  ['A pesar del ruido, ___ durmiendo.', ['siguió', 'continuó'], 'seguir + Gerundium', 'Trotz des Lärms schlief er weiter.', 'seguir + Gerundium = weiter etwas tun: siguió durmiendo.'],
+  ['A pesar del ruido, ___ durmiendo.', ['siguió', 'continuó', 'seguía', 'continuaba'], 'seguir + Gerundium', 'Trotz des Lärms schlief er weiter.', 'seguir + Gerundium = weiter etwas tun: siguió durmiendo.'],
   ['¿___ viviendo tu hermano en Berlín?', ['Sigue', 'Continúa'], 'seguir + Gerundium', 'Wohnt dein Bruder immer noch in Berlin?', 'seguir + Gerundium = immer noch: ¿sigue viviendo …?'],
   ['___ mejorando poco a poco.', ['Va', 'Está'], 'ir + Gerundium', 'Es wird nach und nach besser.', 'ir + Gerundium = allmählich, nach und nach: va mejorando.'],
-  ['___ diciéndolo desde hace meses.', ['Vengo'], 'venir + Gerundium', 'Das sage ich schon seit Monaten.', 'venir + Gerundium = schon seit einiger Zeit (bis jetzt) etwas tun: vengo diciéndolo.'],
+  ['___ diciéndolo desde hace meses.', ['Vengo', 'Llevo', 'Estoy', 'He estado'], 'venir + Gerundium', 'Das sage ich schon seit Monaten.', 'venir + Gerundium = schon seit einiger Zeit (bis jetzt) etwas tun: vengo diciéndolo.'],
   ['___ aceptando su propuesta.', ['Acabé', 'Terminé'], 'acabar + Gerundium', 'Am Ende habe ich seinen Vorschlag angenommen.', 'acabar oder terminar + Gerundium = am Ende doch etwas tun: acabé aceptando.'],
   ['___ de ser las nueve.', ['Deben'], 'deber de + Infinitiv', 'Es wird wohl neun Uhr sein.', 'deber de + Infinitiv = Vermutung (dürfte, wird wohl). deber ohne de heißt eigentlich müssen.']
 ];
 function genPerifrasis(){
   const [p, ans, pat, de, note] = pick(PERI_ES);
-  return { prompt:p, deLine:de, answers:ans.map(a => a.toLowerCase()), label:'Setz die passende Form ein', hint:`(${pat})`, note, gap:true, full:p.replace('___', ans[0]) };
+  return { prompt:p, deLine:de, answers:ans.map(a => a.toLowerCase()), label:'Setz die passende Form ein', hint:`(${pat})`, tip:'Muster', note, gap:true, full:p.replace('___', ans[0]) };
 }
 
 const GENS = {

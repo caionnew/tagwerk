@@ -67,6 +67,9 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen öffnet die Regel mit �
   const rows = page.locator('.trow');
   expect(await rows.count()).toBeGreaterThanOrEqual(2);
   expect(await page.locator('.tdots i.d-bad').count()).toBeGreaterThanOrEqual(2);
+  // Alles falsch: Jedes Thema hat einen Fehler und steht deshalb da, auch mehr als fünf; nichts ist eingeklappt
+  await expect(page.locator('[data-a=topicsall]')).toHaveCount(0);
+  expect(await page.locator('.tdots i.d-bad').count()).toBe(await page.locator('.rstrip .rs-bad').count());
   // Punkte bündig rechts, auch in Zeilen ohne Regel (ohne Pfeil)
   const rights = await page.$$eval('.trow .tdots', els => els.map(e => Math.round(e.getBoundingClientRect().right)));
   expect(new Set(rights).size).toBe(1);

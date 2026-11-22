@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 21. November 2026 (nach 24.64.0)
+Stand: 22. November 2026 (nach 24.64.1)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -126,6 +126,7 @@ Derzeit nichts.
   - **Geübte Sätze oder Wörter (C+), abrufbar (C):** zählen Angefangenes; „abrufbar“ ist kurz nach dem Üben fast gleich „geübt“.
 
 - **Schriftgröße einstellbar (C+, vorher B).** Bisher kein Bedarf; die Übungen sind auf feste Höhen ausgelegt, jede Stufe bräuchte eigene Layout-Tests.
+- **Rundenende: Themen und „Noch nicht sicher“ zusammenlegen (B−, geprüft am 22.11.).** Jeder falsche Satz unter seinem Thema; liegt jeder Fehler in einem anderen Thema, doppeln sich die beiden Listen fast. Aber Umbau zweier Abschnitte, und das Muster großer Themen („1 von 7 falsch“) ginge verloren. Wieder ansehen, wenn die Doppelung nach längerer Nutzung stört.
 - **Üben-Seite straffen (C+).** 20 Einträge in sechs Gruppen; lang, aber gegliedert. Erst angehen, wenn etwas Neues dazukommt.
 - **Eigene FSRS-Parameter aus deinen Wiederholungen (C).** Bräuchte ein Protokoll jeder Wiederholung (Speicher) und Monate an Daten; die Standardparameter treffen im Benchmark bereits gut.
 - **Größeres Offline-Wörterbuch (C).** Frei lizenzierte Deutsch-Schwedisch-Daten sind dünn, dict.cc ist nicht frei; Wiktionary gibt es online schon.

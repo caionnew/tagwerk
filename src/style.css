@@ -939,6 +939,8 @@ section.ex #fb:empty{ display:none; }
 .trow{ min-height:46px; padding-top:10px; padding-bottom:10px; }
 .trow .rt{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .row.static.trow::after{ display:block; content:''; flex:none; width:8px; height:8px; margin-left:4px; visibility:hidden; }
+.t-more{ font-size:14px; margin:2px 0 0; }
+.t-more .link{ padding:8px 0; }
 .tdots{ flex:none; display:flex; flex-wrap:wrap; justify-content:flex-end; gap:4px; max-width:45%; align-items:center; }
 .tdots i{ width:9px; height:9px; border-radius:50%; background:var(--line); }
 .tdots .d-ok{ background:var(--ok); }

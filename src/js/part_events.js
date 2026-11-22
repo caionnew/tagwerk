@@ -260,6 +260,7 @@ document.addEventListener('click', e => {
     // Dein Weg: ein Jahr auf- oder zuklappen; die Jahreszeile bleibt im Blick
     case 'wayfold': { const y = b.dataset.y; S.wayOpen = Object.assign({}, S.wayOpen, { [y]:!(S.wayOpen && S.wayOpen[y]) }); S.wayAnim = S.wayOpen[y] ? y : null; render(); const el = document.querySelector(`[data-a=wayfold][data-y="${y}"]`); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest' }); break; }
     case 'mileall': S.mileAll = !S.mileAll; render(); break;
+    case 'topicsall': S.topicsAll = !S.topicsAll; render(); break;
     // Vom Rundenende zu „Dein Weg“ im Überblick
     case 'toway': { if (r && r.finished) S.run = null; S.ptab = 'all'; S.calDay = null; S.minDay = null; goView('progress'); const el = document.getElementById('way'); if (el) el.scrollIntoView({ block:'start' }); break; }
     case 'textgap': if (b.dataset.id === 'wiki') { const w = S.text && S.text.wiki; if (w) startRun('textgap', { body:w.body, title:w.title }); } else startRun('textgap', { text:b.dataset.id }); break;

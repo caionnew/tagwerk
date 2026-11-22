@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.64.1
+**Rundenende: Jedes Thema mit Fehler steht in „Themen dieser Runde“, die fehlerfreien lassen sich aufklappen.**
+- **Fehler behoben:** Die Liste zeigte höchstens fünf Themen. Hakte es in mehr Themen, verschwanden die übrigen mit ihren Fehlern hinter „und 4 weitere Themen“. Jetzt steht jedes Thema mit Fehler da; sind es weniger als fünf, wird wie bisher mit fehlerfreien Themen auf fünf Zeilen aufgefüllt, die meisten Aufgaben zuerst.
+- **„und 8 weitere Themen ohne Fehler“** sagt jetzt, was die Zahl zählt, und klappt auf, wie die Liste bei den Etappen; „Weniger zeigen“ klappt wieder zu. Nach jeder Runde ist sie wieder zugeklappt.
+- Speicherstand unverändert.
+
 ## 24.64.0
 **„Dein Weg“ zeigt die Zeit: Der Abstand zwischen zwei Etappen wächst mit der Zeit dazwischen, Pausen sind gestrichelt, ältere Etappen klappen je Jahr auf. Dazu bei fünf Redewendungen die belegte Herkunft.**
 - **Abstände nach Zeit:** Die Höhe zwischen zwei Etappen wächst mit der Wurzel der Zeit, gedeckelt: 1 Tag 7 px, 1 Woche 19, 1 Monat 38, 3 Monate 66, ab etwa 5 Monaten 84. Etappen eines Tages stehen ohne Abstand. So bleibt ein Tag von einem Monat und ein Monat von einem halben Jahr unterscheidbar, und die Liste wird nach einem Jahr nur gut ein Viertel länger.

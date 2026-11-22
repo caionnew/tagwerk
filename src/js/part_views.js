@@ -559,13 +559,16 @@ function topicsHtml(r){
   const go = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
   const bundle = worst && go(worst) ? `<p class="hint bundle">${worst.bad === nBad ? (nBad === 2 ? 'Beide Fehler' : `Alle ${nBad} Fehler`) : `${worst.bad} von ${nBad} Fehlern`}: <b>${esc(worst.label)}</b>. <button type="button" class="link inl" ${go(worst)}>Thema üben</button></p>` : '';
   const dot = d => `<i class="d-${d}"></i>`;
-  const rows = tps.slice(0, 5).map(t => {
+  // Jedes Thema mit Fehler steht da, aufgefüllt bis fünf Zeilen; der Rest ist fehlerfrei und klappt auf
+  const nShow = Math.max(5, tps.filter(t => t.bad).length), rest = tps.length - nShow;
+  const rows = (S.topicsAll ? tps : tps.slice(0, nShow)).map(t => {
     const sheet = t.trap && t.trap !== 'eigene';
     const ok = t.dots.length - t.bad, aria = `${ok} richtig${t.bad ? `, ${t.bad} falsch` : ''}`;
     const inner = `<span class="txt"><span class="rt">${esc(t.label)}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span>`;
     return sheet ? `<button type="button" class="row trow" data-a="topic" data-t="${t.trap}">${inner}</button>` : `<div class="row static trow">${inner}</div>`;
   }).join('');
-  return `<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${tps.length > 5 ? `<p class="legend">und ${plural(tps.length - 5, 'weiteres Thema', 'weitere Themen')}</p>` : ''}`;
+  const more = rest > 0 ? `<p class="t-more"><button type="button" class="link" data-a="topicsall" aria-expanded="${S.topicsAll ? 'true' : 'false'}">${S.topicsAll ? 'Weniger zeigen' : `und ${plural(rest, 'weiteres Thema', 'weitere Themen')} ohne Fehler`}</button></p>` : '';
+  return `<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}`;
 }
 // Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
 // (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).

@@ -5,11 +5,12 @@ const APP = 'http://127.0.0.1:4173/'; // tools/serve.js, gestartet von playwrigh
 const KEY = 'tagwerk-offline-v1';
 // Gleiche Kennung wie in der App: Sprache + djb2-Hash des Zielsatzes
 const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h.toString(36); };
-function bankIds(lang, n){
+function bankItems(lang, n){
   const src = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'data', 'content.js'), 'utf8');
   const part = lang === 'sv' ? src.slice(0, src.indexOf('es: {')) : src.slice(src.indexOf('es: {'));
-  return part.split('\n').map(l => l.split('|').map(x => x.trim())).filter(p => p.length >= 5 && !p[0].startsWith('/*')).map(p => `${lang}:${hash(p[1])}`).slice(0, n);
+  return part.split('\n').map(l => l.split('|').map(x => x.trim())).filter(p => p.length >= 5 && !p[0].startsWith('/*')).map(p => ({ id:`${lang}:${hash(p[1])}`, target:p[1] })).slice(0, n);
 }
+const bankIds = (lang, n) => bankItems(lang, n).map(x => x.id);
 const freshDB = lang => ({ v:3, settings:{ size:'normal', lang, refill:false }, st:{}, own:{ sv:[], es:[] }, tat:{ sv:[], es:[] }, log:{}, done:{}, gen:{}, run:null, used:{ intro:true, lookup:true } });
 // Sechs Wochen Nutzung: Übungstage, Lernzeit, Fehlerquellen, Uhrzeiten, 90 geübte Sätze
 function richDB(lang){
@@ -82,4 +83,4 @@ const test = base.test.extend({
     base.expect(errors, 'JavaScript-Fehler auf der Seite').toEqual([]);
   }
 });
-module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, answerWrong, stored, bankIds, hash, fakeVoice, speechWav, fakeMicArgs };
+module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };

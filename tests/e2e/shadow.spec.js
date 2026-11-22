@@ -1,6 +1,13 @@
 // Nachsprechen mit vorgetäuschtem Mikrofon (Testsignal: Stimme, Pause, Stimme, Stille) und einer Test-Stimme ohne Ton
 const os = require('os'), path = require('path');
-const { test, expect, APP, seed, richDB, stored, fakeVoice, speechWav, fakeMicArgs } = require('./helpers.js');
+const { test, expect, APP, seed, richDB, bankItems, stored, fakeVoice, speechWav, fakeMicArgs } = require('./helpers.js');
+// Welcher Satz kommt, ist Zufall. Hat er ein Komma in der Mitte, gilt die Pause der Testaufnahme als Pause am Satzzeichen
+// statt als Stockung. Darum nur Sätze ohne Satzzeichen im Satz geübt.
+function plainDB(){
+  const db = richDB('sv');
+  bankItems('sv', 90).filter(x => /[,;:–—]/.test(x.target.replace(/[.!?…]+\s*$/, ''))).forEach(x => { delete db.st[x.id]; });
+  return db;
+}
 const WAV = speechWav(path.join(os.tmpdir(), `tagwerk-shadow-${process.pid}.wav`), [['s', 0.5], ['v', 0.8], ['s', 0.6], ['v', 0.7], ['s', 5]]);
 test.skip(({ browserName }) => browserName !== 'chromium', 'Vorgetäuschtes Mikrofon gibt es nur in Chromium');
 test.use({ launchOptions:{ ...(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {}), args:fakeMicArgs(WAV) } });
@@ -15,7 +22,7 @@ const liveTracks = page => page.evaluate(() => (window.__mic || []).flatMap(s =>
 async function open(page){
   await page.addInitScript(fakeVoice);
   await page.addInitScript(trackMic);
-  await seed(page, richDB('sv'));
+  await seed(page, plainDB());
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=shadow]');

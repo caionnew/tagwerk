@@ -16,19 +16,36 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 
 ## Fahrplan
 
-Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die beim Üben auffallen, Updates bündeln. Die Arbeit geht in die Inhalte.
+Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die beim Üben auffallen, Updates bündeln. Die Arbeit geht in die Inhalte. Daneben räumt die App in drei Schritten auf, was beim Wachsen nicht mehr zusammenpasst.
 
-### Inhalte: Satzpakete (ab 24.56)
+### Aufräumen nach der Durchsicht vom 22.11.
+
+Befund: kein Neubau nötig. Kein toter JS-Code (ESLint), 0,6 % doppelte Stellen im Scan, Doku und Code stimmen überein, Tests dicht. Gewachsen ist die App an den Rändern: kein festes Gestaltungssystem, mehrfach berechnete Kennzahlen, ein paar sichtbare Widersprüche.
+
+**Schritt 1, Fehler und Einheitlichkeit (A, als Nächstes):**
+- Etappen-Kasten am Rundenende widerspricht sich, wenn eine Runde zwei Schwellen derselben Art überschreitet („25 gefestigte Sätze, noch 1“ und darunter „Außerdem: 25 gefestigte Sätze“).
+- Fragekarte beim Lesen blendet bei jedem Antippen einer Antwort neu ein; Einblenden nur bei einer neuen Frage.
+- Zeitangaben: eine Regel für Minuten und Stunden, „Min.“ immer mit Punkt; in einer Karte nicht „426 Minuten“ oben und „5 Std. 7 Min.“ darunter.
+- Verhältnisse überall „20 von 22“ statt „20/22“.
+- Ein Name je Sache: „Fehlerquellen“ auf Heute und Fortschritt; „Tipp auf …“ als Hinweis; „Ins Tagwerk“ überall gleich; „Schließen“ in Blättern links.
+- Üben: eigene Symbole für Fundstück, Grammatik kurz erklärt und Hörrunde (bisher doppelt).
+- Achsenbeschriftung in „Wann du übst“ und „Verlauf“ lesbar (bisher 8,5 bis 9,5 px); „Etappen“ ohne Großbuchstaben wie alle anderen Überschriften.
+
+**Schritt 2, Gestaltungssystem und Code (B+):**
+- Feste Stufen als CSS-Variablen: Schriftgrößen (bisher 32), Schriftstärken (bisher 7), Radien (18 und 14 px, bisher dazu 10 bis 13), Bewegung (zwei Dauern, eine Kurve; bisher 80 bis 600 ms und drei fast gleiche Kurven). Feste Abstände aus den Vorlagen (etwa 20 `style="margin…"`) in Klassen.
+- Totes CSS entfernen (etwa 24 Regeln) und ein Test, der ungenutzte Klassen findet.
+- Je eine Stelle für: Gesamtsummen (`totals` und `lifeTotals`, dazu eine ungelesene Jahresaufteilung), nächste Etappe (Dein Weg, Rundenende, Sprach-Tab), Abgleich nach längster gemeinsamer Folge (viermal), Datumsformate und Monatsnamen, Prozent (mit geschütztem Leerzeichen), „Bewegung reduzieren“.
+- `part_modern.js` nach Inhalt aufteilen (Spracherkennung, Begrüßung, Symbole); Versionsangaben aus Kommentaren ins Changelog.
+- Prüfen mit Vorher/Nachher aller Ansichten: Es darf sich nur ändern, was geändert werden soll.
+
+**Schritt 3, Fortschritt neu ordnen (B):** Sieben Abschnitte im Überblick, sieben je Sprache. Kopfkarte und „Jahr für Jahr“ zeigen im ersten Jahr dieselben Zahlen, die Tagwerke je Sprache stehen doppelt. Mit Varianten wie bei den Lernminuten, erst nach Schritt 2.
+
+### Inhalte: Satzpakete (ab 24.56; Pakete 1 bis 5 erledigt, 24.56 bis 24.60)
 
 Befund vom 19.11. (`tools/vielfalt.js`, Häufigkeitslisten): Die Satzbank übt Grammatik mit schmalem Alltagswortschatz (590 Grundformen im Schwedischen, am häufigsten gå, komma, morgon). B2-Sätze hatten im Schnitt 7,8 Wörter, und je Thema reichten 12 bis 16 B2-Sätze bei „Fortgeschritten“ für gut eine Woche als Schwerpunkt. Darum je Thema neue B2-Sätze, länger und mit Wörtern, die der Satzbank fehlen.
 
 | Paket | Inhalt | Note | Stand |
 |---|---|---|---|
-| 1 | Schwedisch, 96 B2-Sätze: Inversion, Nebensatz, Präteritum/Perfekt, Partikelverben, sin/hans, Passiv | A | 24.56.0 |
-| 2 | Spanisch, 96 B2-Sätze: Konditional, Subjuntivo, Indefinido/Imperfecto, Perfecto, por/para, ser/estar | A | 24.57.0 |
-| 3 | Spanisch, neues Thema „werden“: ponerse, volverse, hacerse, quedarse, convertirse en (36 Sätze, A2 bis B2) | A− | 24.58.0 |
-| 4 | Schwedisch, übrige Themen: Zeit & Ort, Zukunft, Modalpartikeln, Redewendungen, falsche Freunde (68 Sätze) | A− | 24.59.0 |
-| 5 | Spanisch, übrige Themen: Objektpronomen, gustar, Reflexiv, Präpositionen, Periphrasen, Redewendungen, falsche Freunde | A− | 24.60.0 |
 | 6 | Vermutung mit Futur, „wohl“ (Serán las tres) | B+ | als Nächstes |
 | 7 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | |
 | 8 | Relativsätze (lo que, el que, cuyo; vars, vilket) | B+ / B | |
@@ -184,5 +201,8 @@ Derzeit nichts.
 - **Anki-Anbindung (D, entfernt in 24.39).** Du nutzt Anki nicht. „An Anki“ im Wörterbuch und der Import aus Anki-Exporten sind weg; die Wiederholung plant die App selbst mit FSRS.
 - **Abgleich zwischen Geräten (D).** Bräuchte Server und Konto. Das Backup leistet das von Hand.
 - **Prüfungsvorbereitung (Swedex, DELE) (D).** Andere Ziele, andere Inhalte.
+- **Neubau oder Framework (D, geprüft am 22.11.).** Für eine Person offline trägt der Aufbau aus Vorlagen und einer Datei; die Tests sichern ihn. Aufräumen statt umbauen.
+- **Üben umbauen (C, geprüft am 22.11.).** 16 Einträge in 5 Gruppen sind lang, aber klar gegliedert.
+- **`part_views.js` aufteilen (C+, geprüft am 22.11.).** Wäre billig, weil der Build die Dateien aneinanderhängt, bringt aber nichts Sichtbares.
 - **Säulen wachsen beim Öffnen von „Fortschritt“ (D).** Bewegung ohne Handlung; bei täglicher Nutzung nur Wartezeit.
 - Ranglisten, Herzen, Belohnungen, Konfetti, Wortschatz-Schätzungen als Spielerei; KI, Konto, Tracker. Sie widersprechen den Grundsätzen der App oder bringen beim Lernen wenig.

@@ -1,5 +1,5 @@
 // Fortschritt: Übungstage nach Sprache und Einsatz, „Dein Weg“ als Gleisplan mit Spuren je Sprache, Abständen nach Zeit und
-// aufklappbaren Jahren (seit 24.64). Dazu die Herkunft fester Wendungen in der Übung.
+// aufklappbaren Jahren (seit 24.64), Startpunkt und Schätzung (seit 24.66). Dazu die Herkunft fester Wendungen in der Übung.
 const { test, expect, APP, seed, richDB, freshDB, hash } = require('./helpers');
 test('Kalender kodiert Sprache und Einsatz, Dein Weg zeigt Spuren und nächste Ziele', async ({ page }) => {
   const db = richDB('sv'); const pad = n => String(n).padStart(2, '0'), t = new Date();
@@ -17,8 +17,12 @@ test('Kalender kodiert Sprache und Einsatz, Dein Weg zeigt Spuren und nächste Z
   await expect(page.locator('.wleg')).toContainText('Spanisch');
   expect(await page.locator('.wrail .wl').count()).toBeGreaterThanOrEqual(3);
   await expect(page.locator('.wrail .wl-next i.open').first()).toBeVisible();
-  // Gemeinsame Etappen in der mittleren Spur, sprachbezogene in ihrer Spur
-  await expect(page.locator('.wrail .wl', { hasText:'Erster Übungstag' }).locator('.rl-x i')).toHaveCount(1);
+  // Der Anfang als Startpunkt mit Ring; nächste Ziele mit grober Schätzung darunter
+  const start = page.locator('.wrail .wstart');
+  await expect(start).toContainText('Erster Übungstag');
+  await expect(start.locator('.ws-dot')).toHaveCount(1);
+  await expect(start.locator('.tl-s')).toHaveText(/^vor \d+ Wochen$/);
+  await expect(page.locator('.wrail .wl-next .tl-s').first()).toHaveText(/^(beim nächsten Üben|in etwa \d+ (Tagen|Wochen|Monaten))$/);
 });
 
 test('Dein Weg: Abstände nach Zeit, ältere Etappen je Jahr auf- und zuklappbar, erster Übungstag bleibt sichtbar', async ({ page }) => {

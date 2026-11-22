@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 22. November 2026 (nach 24.65.0)
+Stand: 22. November 2026 (nach 24.66.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -171,6 +171,10 @@ Derzeit nichts.
   - **Senkrechte Zeitachse, maßstabsgetreu (B−):** ausweichende Beschriftungen mit Linien, unruhig an Tagen mit nur einer Sprache, am meisten Fehlerrisiko.
   - **Querstriche je Woche auf den Spuren (C+):** wirkt wie eine Leiter; die Dauer als Text reicht.
   - **Aufklappen als eine Zeile „37 frühere Etappen“ (B), „10 weitere“ (B−), eigene Seite (C+):** nach Jahren eine riesige Liste, willkürliche Häppchen, eine Ebene mehr.
+- **„Dein Weg“: Zeit auf einen Blick, Anfang, Schätzung (geprüft am 22.11., gewählt: stärkere Skala, Faltung nach Zeitspanne, Startpunkt, Abzweig, Schätzung als Text, 24.66.0).**
+  - **Nächste Ziele mit Abständen nach der Schätzung (C+):** gleiche Skala wie die Vergangenheit, aber ein Ziel in sechs Monaten schiebt alles nach unten; die unsichere Zukunft bekäme mehr Platz als der Weg. Die Schätzung als Text sagt dasselbe.
+  - **Schätzung rechts unter „noch …“ (C):** zu gedrängt; unter dem Ziel liest sie sich wie „vor 7 Tagen“ beim Anfang.
+  - **Prellbock am Anfang (C+):** Querbalken unter den Spuren; liest sich als zwei Striche neben dem Punkt. Zusammenlaufende Spuren zeigen den Anfang klarer.
 - **Herkunft für weitere Redewendungen (C).** Alle 72 geprüft; die übrigen haben keine belegte oder nur eine legendenhafte Erklärung. Neue Wendungen mit belegter Herkunft bekommen sie gleich mit.
 - **Endbildschirm nach fehlerfreier Runde überspringen (C).** Dann fehlen Abschluss, „Als Nächstes“ und „Noch eine Runde“.
 

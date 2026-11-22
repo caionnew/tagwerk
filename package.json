@@ -1,6 +1,6 @@
 {
   "name": "tagwerk",
-  "version": "24.65.0",
+  "version": "24.66.0",
   "private": true,
   "description": "Offline-Lern-App für Schwedisch und Spanisch: Sätze mit FSRS-Wiederholung, Grammatik-Generatoren, Schreiben mit Textprofil. Ohne Konto, ohne KI.",
   "scripts": {

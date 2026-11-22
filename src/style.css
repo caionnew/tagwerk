@@ -892,6 +892,19 @@ section.ex #fb:empty{ display:none; }
 .wfold.open .wf-ch{ transform:rotate(180deg); }
 .wf-dot{ stroke:var(--surface); stroke-width:1; } .wf-sv{ fill:var(--sv); } .wf-es{ fill:var(--es); } .wf-x{ fill:var(--muted); }
 .wl-in{ animation:wayIn .18s ease-out both; }
+/* Zeilen knapper, damit die Abstände nach Zeit neben ihnen sichtbar werden */
+.wrail .wl{ min-height:34px; }
+.wrail .wl.wgap, .wrail .wl.wfold, .wrail .wl.wtoday{ min-height:0; }
+.wrail .tl-t{ padding:6px 0; }
+/* Zweite Zeile unter einer Etappe: wann voraussichtlich, beim Anfang wie lange her */
+.tl-s{ display:block; font-size:12.5px; line-height:16px; color:var(--muted); }
+.wg-br{ stroke-linecap:round; }
+/* Der Anfang: Spuren laufen im Startpunkt zusammen, ein Ring darum */
+.wstart{ min-height:0; }
+.ws-dot{ fill:var(--muted); }
+.ws-ring{ fill:var(--surface); stroke:var(--muted); stroke-width:1.5; }
+.ws-t{ display:block; font-weight:650; }
+
 @keyframes wayIn{ from{ opacity:0; transform:translateY(-4px); } }
 
 /* Jahr für Jahr */

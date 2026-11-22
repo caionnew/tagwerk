@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.66.0
+**Dein Weg: Zeit auf einen Blick, der Anfang als Startpunkt, Schätzung für die nächsten Ziele.**
+- **Abstände nach Zeit deutlich stärker:** Am selben Tag liegen Etappen dicht, ein Tag sind 16 px, eine Woche 48, ein Monat 79, ab etwa einem halben Jahr 120 (bisher 7, 19, 38, höchstens 84). Die Zeilen sind etwas knapper (34 px). Neben ihnen lagen ein Tag und ein Monat bisher kaum sichtbar auseinander.
+- **Gefaltete Jahre** sind so hoch wie ihre Zeitspanne (54 bis 96 px) und haben davor und danach Abstände nach Zeit, samt Jahreswechsel. Die Spuren laufen durch die gefaltete Zeit, Pausen darin gestrichelt.
+- **Der Anfang:** Die Spuren, die am ersten Übungstag beginnen, laufen in einem Startpunkt mit Ring zusammen. Darunter steht, wie lange es her ist („vor 7 Tagen“), das Datum immer mit Jahr.
+- **Später begonnene Sprache:** Sie zweigt wie ein Gleis an einer Weiche von der gemeinsamen Spur ab.
+- **Nächste Ziele:** Unter jedem Ziel steht grob, wann es voraussichtlich so weit ist: „beim nächsten Üben“, „in etwa 3 Tagen“, „in etwa 2 Wochen“. Grundlage ist dieselbe Schätzung, die schon die Reihenfolge bestimmt: das Tempo der letzten 14 Tage, bei gefestigten Sätzen die Fälligkeiten. Serien stehen mit „noch 6 Tage“ schon genau da und bekommen keine Schätzung, Ziele ohne Tempo auch nicht.
+- Speicherstand unverändert.
+
 ## 24.65.0
 **Lernminuten überarbeitet: Schnitt über alle Tage statt nur über Übungstage, Zahlen, die zusammenpassen, Sprachen mit Fuge übereinander, jeder Zustand eines Tages klar zu sehen, Antippen mit kleiner Bewegung.**
 - **Fehler behoben, Schnitt:** „Minuten pro Übungstag“ ließ Tage ohne Übung weg. Wer täglich 10 Minuten übt und einen Tag aussetzt, lag damit vor jemandem, der täglich 10 Minuten übt und einmal nur 9. Jetzt „Minuten pro Tag“: Summe geteilt durch alle Tage seit deinem ersten Übungstag (höchstens 14), Pausetage eingeschlossen. Heute zählt erst, wenn du geübt hast, weil der Tag noch läuft; morgens steht also „7 von 7“, nicht „7 von 8“. Der Kalender zählt jetzt genauso. Die gestrichelte Linie heißt „Schnitt pro Tag“ und zeigt dieselbe Zahl.

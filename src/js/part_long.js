@@ -140,7 +140,7 @@ function wayEvents(){
   const nt = ladder(WAY_TASKS, x => x + 25000, Math.max(T.n, reached('tasks'))).find(x => x > Math.max(T.n, reached('tasks')));
   next.push({ ico:'tasks', k:'tasks', t:wayLabel({ k:'tasks', v:nt }).t, rest:`noch ${fmtN(nt - T.n)}`, need:nt - T.n, per:'n' });
   const hh = Math.max(T.secs / 3600, reached('hours')), nh = ladder(WAY_HOURS, x => x + 250, hh).find(x => x > hh);
-  next.push({ ico:'time', k:'hours', t:wayLabel({ k:'hours', v:nh }).t, rest:`noch ${fmtMin(nh * 3600 - T.secs).replace(/\.$/, '')}`, need:nh * 3600 - T.secs, per:'secs' });
+  next.push({ ico:'time', k:'hours', t:wayLabel({ k:'hours', v:nh }).t, rest:`noch ${fmtMin(nh * 3600 - T.secs)}`, need:nh * 3600 - T.secs, per:'secs' });
   const dd = Math.max(T.dayCount, reached('days')), nd = ladder(WAY_DAYS, x => x + 500, dd).find(x => x > dd);
   if (nd - T.dayCount <= 60) next.push({ ico:'start', k:'days', t:wayLabel({ k:'days', v:nd }).t, rest:`noch ${nd - T.dayCount}`, need:nd - T.dayCount, per:'active' });
   return { done, next };
@@ -169,7 +169,7 @@ function wayNext(e){
     case 'streak': { const c = streak(), nx = streakList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:streakLabel(nx), rest:left(nx, Math.min(c, nx - 1), 'Tag', 'Tage') } : null; }
     case 'words': { const c = vocabCount(l).all, nx = ladder(WAY_WORDS, y => y + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'words', v:nx }).t, rest:left(nx, Math.min(c, nx - 1)) }; }
     case 'tasks': { const c = T.n, nx = ladder(WAY_TASKS, x => x + 25000, Math.max(c, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'tasks', v:nx }).t, rest:left(nx, Math.min(c, nx - 1)) }; }
-    case 'hours': { const c = T.secs, nx = ladder(WAY_HOURS, x => x + 250, Math.max(c / 3600, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'hours', v:nx }).t, rest:`noch ${fmtMin(Math.max(60, nx * 3600 - c)).replace(/\.$/, '')}` }; }
+    case 'hours': { const c = T.secs, nx = ladder(WAY_HOURS, x => x + 250, Math.max(c / 3600, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'hours', v:nx }).t, rest:`noch ${fmtMin(Math.max(60, nx * 3600 - c))}` }; }
     case 'days': { const c = T.dayCount, nx = ladder(WAY_DAYS, x => x + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'days', v:nx }).t, rest:left(nx, Math.min(c, nx - 1)) }; }
     // Nächste Halbierung nur bis 2 % Fehler: darunter bräuchte der Nachweis Tausende Aufgaben je Thema
     case 'topic': { const r = e.c && e.c[0] ? e.c[1] / e.c[0] / 2 : 0; return r >= 0.01 ? { t:topicMileText({ l, k:e.trap, s:1 }, true), rest:`auf unter ${fmtPct(r)}` } : null; }
@@ -376,8 +376,7 @@ function yearsHtml(){
     const langs = ['sv', 'es'].filter(l => Y[l].n);
     return `<div class="ycard"><p class="y-h">${Y.y}${Y.current ? ' <span class="dim">bisher</span>' : ''}</p>
       <div class="kpis yk"><div><b>${Y.days}</b><span>Übungstage${Y.done ? `, ${Y.done} mit Tagwerk` : ''}</span></div><div><b>${bigTime(Y.secs)[0]}</b><span>${bigTime(Y.secs)[1]} gelernt</span></div><div><b>${Y.run}</b><span>Tage längste Serie</span></div></div>
-      ${langs.map(l => `<p class="y-l"><span class="sq rl-${l}-sq"></span><b>${LANG[l].deName}</b> ${tagwerkCount(l, Y.y + '-01-01', Y.y + '-12-31').toLocaleString('de-DE')} Tagwerke, ${Y[l].fresh.toLocaleString('de-DE')} neue Sätze, ${Y[l].mat.toLocaleString('de-DE')} gefestigt, ${Y[l].n.toLocaleString('de-DE')} Aufgaben, ${fmtMin(Y[l].secs)}</p>`).join('')}
-      ${Y.topMonth != null && Y.days >= 20 ? `<p class="legend" style="margin-top:6px">Stärkster Monat: ${MONTHS_FULL[Y.topMonth]} mit ${fmtMin(Y.topSecs)}</p>` : ''}</div>`;
+      ${(inMin => langs.map(l => `<p class="y-l"><span class="sq rl-${l}-sq"></span><b>${LANG[l].deName}</b> ${tagwerkCount(l, Y.y + '-01-01', Y.y + '-12-31').toLocaleString('de-DE')} Tagwerke, ${Y[l].fresh.toLocaleString('de-DE')} neue Sätze, ${Y[l].mat.toLocaleString('de-DE')} gefestigt, ${Y[l].n.toLocaleString('de-DE')} Aufgaben, ${fmtMin(Y[l].secs, inMin)}</p>`).join('') + (Y.topMonth != null && Y.days >= 20 ? `<p class="legend" style="margin-top:6px">Stärkster Monat: ${MONTHS_FULL[Y.topMonth]} mit ${fmtMin(Y.topSecs, inMin)}</p>` : ''))(bigTime(Y.secs)[1] !== 'Stunden')}</div>`;
   };
   return `<h2 class="grp">Jahr für Jahr</h2><div class="ygrid">${ys.map(card).join('')}</div>`;
 }
@@ -390,5 +389,5 @@ function topicGridHtml(lang){
     const d = ago && ago.t ? mat - (ago.t[tr.id] || 0) : null;
     return `<button type="button" class="tg${seen ? '' : ' tg-new'}" data-a="topic" data-t="${tr.id}"><span class="tg-l">${esc(tr.label)}</span><span class="tg-b" aria-hidden="true"><span style="width:${Math.round(seen / items.length * 100)}%" class="tg-seen"></span><span style="width:${Math.round(mat / items.length * 100)}%" class="tg-mat"></span></span><span class="tg-n">${seen ? `${seen} geübt · ${mat} gefestigt` : `${items.length} Sätze, neu`}${d ? ` <span class="tg-d">+${d}</span>` : ''}</span></button>`;
   }).join('');
-  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend" style="margin:8px 4px 0"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Antippen für Regel und Beispiele.</p>`;
+  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend" style="margin:8px 4px 0"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Tipp auf ein Thema für Regel und Beispiele.</p>`;
 }

@@ -28,7 +28,7 @@ function readPlay(){
   if (T.si >= list.length) {
     // Text zu Ende gehört: beim reinen Hören kommen jetzt die Fragen
     T.playing = false; T.si = Math.max(0, list.length - 1); T.listened = true;
-    if (T.hidden && T.id && !T.quiz) { T.quiz = true; if (S.view === 'text') { render(); followSentence('.tq'); } return; }
+    if (T.hidden && T.id && !T.quiz) { T.quiz = true; T.enter = true; if (S.view === 'text') { render(); followSentence('.tq'); } return; }
     if (S.view === 'text') render(); return;
   }
   T.playing = true; T.startedAt = Date.now();
@@ -60,8 +60,8 @@ function readCmd(a, b){
     else { T.tapped = i; stopReading(); T.si = i; readPlay(); return; }
   }
   else if (a === 'tsay') { S.pop = null; renderPopup(); stopReading(); T.si = Number(b.dataset.i); readPlay(); return; }
-  else if (a === 'tquiz') { T.quiz = true; render(); followSentence('.tq'); return; }
-  else if (a === 'tqnext') { T.qi = Math.min(T.qi + 1, t ? t.q.length : 0); }
+  else if (a === 'tquiz') { T.quiz = true; T.enter = true; render(); followSentence('.tq'); return; }
+  else if (a === 'tqnext') { T.qi = Math.min(T.qi + 1, t ? t.q.length : 0); T.enter = true; }
   else if (a === 'tpick') {
     const k = Number(b.dataset.k); if (!t || T.picks[k] != null) return;
     T.picks[k] = Number(b.dataset.i);
@@ -108,7 +108,7 @@ function viewTexts(){
     <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verdeckt, bis die drei Fragen beantwortet sind.' : 'Lesen, auf Wunsch mit Vorlesen, danach drei Fragen.'}</p>
     <div class="tgrid2">${cards}</div>
     <h2 class="grp">Frischer Lesestoff</h2>
-    <div class="rows">${row('wiki', 'Wikipedia-Fundstück', navigator.onLine === false ? 'Braucht eine Internetverbindung' : 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land', '', 'book')}</div>`;
+    <div class="rows">${row('wiki', 'Wikipedia-Fundstück', navigator.onLine === false ? 'Braucht eine Internetverbindung' : 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land', '')}</div>`;
 }
 const PICO = {
   play:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
@@ -161,18 +161,20 @@ function viewText(){
   const score = Object.values(T.picks).filter(i => i === 0).length;
   const qi = Math.min(T.qi, t.q.length - 1), [q, opts, src] = t.q[qi], picked = T.picks[qi];
   const srcSent = picked != null ? flatSents(T)[srcIndex(T, src)] : '';
-  const quiz = !T.quiz || finished ? '' : `<section class="tq${picked == null ? '' : ' answered'}" aria-live="polite">
+  // Einblenden nur bei einer neuen Frage oder dem Ergebnis, nicht bei jedem Antippen einer Antwort
+  const enter = T.enter ? ' enter' : ''; T.enter = false;
+  const quiz = !T.quiz || finished ? '' : `<section class="tq${picked == null ? '' : ' answered'}${enter}" aria-live="polite">
       <div class="tq-head"><span>Frage ${qi + 1} von ${t.q.length}</span><span class="sdots">${t.q.map((_, i) => `<i class="${T.picks[i] == null ? (i === qi ? 'on' : '') : T.picks[i] === 0 ? 'ok' : 'bad'}"></i>`).join('')}</span></div>
       <p class="tq-q">${esc(q)}</p>
       <div class="tq-o">${optionOrder(t.id, qi, opts.length).map(i => `<button type="button" class="tq-b${picked != null ? (i === 0 ? ' right' : i === picked ? ' wrong' : ' dim') : ''}" data-a="tpick" data-k="${qi}" data-i="${i}"${picked != null ? ' disabled' : ''}>${esc(opts[i])}</button>`).join('')}</div>
       ${picked != null ? `<p class="tq-src"><span class="lbl-s">Im Text</span> <span lang="${lang}">${esc(srcSent)}</span></p>` : ''}
     </section>`;
   const own = new Set((DB.own[lang] || []).map(o => o.id));
-  const after = finished ? `<section class="tdone">
+  const after = finished ? `<section class="tdone${enter}">
       <p class="tdone-h">${score === t.q.length ? 'Alles verstanden.' : `${score} von ${t.q.length} richtig.`}</p>
       <p class="hint" style="margin-top:2px">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
       <p class="keep-h">„Ins Tagwerk“ nimmt den Satz in deine nächsten Tagwerke auf.</p>
-      <div class="rows" style="margin-top:8px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span><button type="button" class="link" data-a="tkeep" data-k="${i}"${has ? ' disabled' : ''}>${has ? 'Im Tagwerk' : 'Ins Tagwerk'}</button></div>`; }).join('')}</div>
+      <div class="rows" style="margin-top:8px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span>${has ? '<span class="kadd on">✓ Im Tagwerk</span>' : `<button type="button" class="kadd" data-a="tkeep" data-k="${i}" aria-label="Satz ins Tagwerk übernehmen">Ins Tagwerk</button>`}</div>`; }).join('')}</div>
       <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
     </section>` : '';
   return backBar('Lesen und Hören', T.back || 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;

@@ -1,4 +1,4 @@
-// Fortschritt mit sechs Wochen Daten: Kalender, Etappen, Kennzahlen, Themenraster, Fehlerquellen; dazu „Meiste Fehler“ auf Heute und „Thema üben“.
+// Fortschritt mit sechs Wochen Daten: Kalender, Etappen, Kennzahlen, Themenraster, Fehlerquellen; dazu „Fehlerquellen“ auf Heute und „Thema üben“.
 const { test, expect, APP, seed, richDB } = require('./helpers');
 test('Überblick: Kalender beginnt bei heute, Tageszeit und Etappen', async ({ page }) => {
   await seed(page, richDB('sv'));
@@ -53,11 +53,11 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
 });
-test('Heute „Meiste Fehler“ mit Aufgaben und Fehlern; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
+test('Heute „Fehlerquellen“ mit Aufgaben und Fehlern; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
   const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] }, textgap_sv:{ ok:9, bad:3, recent:[1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] } };
   await seed(page, db);
   await page.goto(APP);
-  await expect(page.locator('h2.grp', { hasText:'Meiste Fehler, letzte 30 Tage' })).toHaveCount(1);
+  await expect(page.locator('h2.grp', { hasText:'Fehlerquellen, letzte 30 Tage' })).toHaveCount(1);
   const weak = page.locator('.row.bars:has(.wbar)');
   expect(await weak.count()).toBeGreaterThanOrEqual(1);
   expect(await weak.count()).toBeLessThanOrEqual(3);

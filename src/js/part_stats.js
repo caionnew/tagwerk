@@ -269,7 +269,7 @@ function errorSourcesHtml(lang){
     rows = hard.map(i => { const st = stOf(i.id), tap = !!(i.trap && trapMeta(lang, i.trap)); return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="erow srow"><span class="el"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span>${tap ? `<span class="stp">${esc(trapLabel(lang, i.trap))}</span>` : ''}</span><span class="ev">${st.lapses}×</span></${tap ? 'button' : 'div'}>`; }).join('');
     const pat = hardPattern(lang, hard);
     note = !hard.length ? 'Gerade kein Satz, den du bei Wiederholungen mehrmals nicht wusstest.'
-      : `${pat ? `<b>${esc(trapLabel(lang, pat.trap))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Antippen für die Regel.`;
+      : `${pat ? `<b>${esc(trapLabel(lang, pat.trap))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Tipp auf einen Satz für die Regel dazu.`;
   } else if (few) note = gate;
   else if (tab === 'p') {
     // Reihenfolge nach Anzahl der Fehler (woher sie kommen), bei Gleichstand das Thema mit mehr Aufgaben zuerst:
@@ -280,8 +280,8 @@ function errorSourcesHtml(lang){
       .sort((a, b) => b.bad - a.bad || b.n - a.n).slice(0, 6);
     const max = Math.max(1, ...list.map(x => x.n)), w = v => +(v / max * 100).toFixed(1);
     lead = '<span class="sq e-bad-sq"></span>falsch von <span class="sq e-all-sq"></span>allen Aufgaben im Thema:';
-    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar eboth" aria-hidden="true"><span class="e-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="e-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span><span class="ev">${x.bad}/${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
-    note = 'Antippen für die Regel.';
+    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar eboth" aria-hidden="true"><span class="e-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="e-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span><span class="ev">${x.bad} von ${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
+    note = 'Tipp auf ein Thema für die Regel.';
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);
     lead = 'Anteil falscher Antworten je Übungsart:';

@@ -2,6 +2,22 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.66.1
+**Aufräumen, Schritt 1: zwei Fehler behoben, gleiche Dinge sehen gleich aus und heißen gleich.**
+- **Fehler behoben, Etappen am Rundenende:** Überschritt eine Runde zwei Schwellen derselben Art, stand „25 gefestigte Sätze, noch 1“ und darunter „Außerdem: 25 gefestigte Sätze“. Jetzt steht die höchste als erreicht, die niedrigere darunter mit „heute“, die nächste mit dem richtigen Rest; „Außerdem“ nennt nur andere Etappen.
+- **Fehler behoben, Fragen beim Lesen:** Jedes Antippen einer Antwort blendete die ganze Fragekarte neu ein. Sie blendet jetzt nur bei einer neuen Frage und beim Ergebnis ein.
+- **Zeit:** In einer Karte eine Einheit. „Jahr für Jahr“ zeigt die Summe in Minuten, darunter die Sprachen und den stärksten Monat jetzt auch in Minuten (bisher „426 Minuten“ über „5 Std. 7 Min.“). „Min.“ steht überall mit Punkt, auch in Dein Weg („noch 3 Std. 10 Min.“). Im Sprach-Tab „45 Minuten, letzte 7 Tage“ wie die übrigen Kennzahlen statt „45 Min“.
+- **Verhältnisse überall als „20 von 22“:** Heute bei den Wiederholungen, in den Fehlerquellen nach Thema (bisher „20/22“, „20/75“).
+- **Ein Name je Sache:**
+  - Heute heißt die Liste wie auf Fortschritt: „Fehlerquellen, letzte 30 Tage“ (bisher „Meiste Fehler“).
+  - Hinweise sagen „Tipp auf …“ (bisher auch „Antippen für …“, „Tippe … an“).
+  - „Ins Tagwerk“ ist im Lesen derselbe Knopf wie bei Land & Leute, danach „✓ Im Tagwerk“ (bisher ein Link).
+  - „Schließen“ steht im Wortblatt links wie im Themenblatt, der Verweis zum Wörterbuch rechts.
+- **Üben:** Eigene Symbole für Wikipedia-Fundstück (Artikel), Grammatik kurz erklärt (Glühbirne) und Hörrunde (Radio). Bisher teilten sich drei Einträge das Buch und zwei die Kopfhörer.
+- **Lesbarkeit:** Achsen in „Wann du übst“, „Verlauf“ und „Behalten“ 11 px statt 9 bis 9,5, Monate und Wochentage im Kalender 10,5 statt 9. „Etappen“ ohne Großbuchstaben, wie alle übrigen Kopfzeilen.
+- Tests: neue Datei `einheitlich.test.js` hält diese Regeln fest (keine Schrägstrich-Verhältnisse, eine Zeitregel, „Schließen“ links, ein Symbol je Eintrag in Üben, Etappen ohne Widerspruch).
+- Speicherstand unverändert.
+
 ## 24.66.0
 **Dein Weg: Zeit auf einen Blick, der Anfang als Startpunkt, Schätzung für die nächsten Ziele.**
 - **Abstände nach Zeit deutlich stärker:** Am selben Tag liegen Etappen dicht, ein Tag sind 16 px, eine Woche 48, ein Monat 79, ab etwa einem halben Jahr 120 (bisher 7, 19, 38, höchstens 84). Die Zeilen sind etwas knapper (34 px). Neben ihnen lagen ein Tag und ein Monat bisher kaum sichtbar auseinander.

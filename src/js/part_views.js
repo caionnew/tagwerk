@@ -142,7 +142,7 @@ function todayHtml(lang){
   const kp = [], mins = Math.round((x.secs || 0) / 60);
   if (mins >= 1) kp.push([mins, mins === 1 ? 'Minute' : 'Minuten']);
   if (x.fresh) kp.push([x.fresh, x.fresh === 1 ? 'neuer Satz' : 'neue Sätze']);
-  if (x.rev) kp.push([`${x.revOk || 0}/${x.rev}`, x.rev === 1 ? 'Wiederholung gewusst' : 'Wiederholungen gewusst']);
+  if (x.rev) kp.push([`${x.revOk || 0} von ${x.rev}`, x.rev === 1 ? 'Wiederholung gewusst' : 'Wiederholungen gewusst']);
   if (kp.length < 3) kp.unshift([x.n, x.n === 1 ? 'Aufgabe' : 'Aufgaben']);
   const tiles = kp.slice(0, 3);
   return `<div class="kpis today-kpis" style="grid-template-columns:repeat(${tiles.length}, 1fr)" aria-label="Heute">${tiles.map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>${x.mat ? `<p class="hint today-mat">${plural(x.mat, 'Satz', 'Sätze')} heute <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button>.</p>` : ''}`;
@@ -195,7 +195,7 @@ function weakHtml(lang){
   const list = weakTopics(lang);
   if (!list.length) return '';
   const max = Math.max(...list.map(x => x.n)), w = v => +(v / max * 100).toFixed(1);
-  return `<h2 class="grp">Meiste Fehler, letzte 30 Tage</h2><div class="rows">${list.map(x => `<button type="button" class="row bars" data-a="trapgo" data-t="${x.id}">${rowText({ label:x.label, text:`${x.bad} Fehler bei ${x.n} Aufgaben` })}<span class="bar wbar" aria-hidden="true"><span class="w-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="w-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span></button>`).join('')}</div>`;
+  return `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2><div class="rows">${list.map(x => `<button type="button" class="row bars" data-a="trapgo" data-t="${x.id}">${rowText({ label:x.label, text:`${x.bad} Fehler bei ${x.n} Aufgaben` })}<span class="bar wbar" aria-hidden="true"><span class="w-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="w-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span></button>`).join('')}</div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
@@ -216,13 +216,13 @@ function viewExtra(){
   <h2 class="grp">Grammatik</h2>
   <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', `Endlos neue Aufgaben, ${genIds(lang).length} Bereiche`)}${g('spot', 'Fehler finden', 'Richtig oder falsch? Fehler finden und verbessern', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
   <h2 class="grp">Lesen und Hören</h2>
-  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', net('Ein ausgezeichneter Artikel, gern mit Bezug zum Land'), '', 'book')}</div>
+  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', net('Ein ausgezeichneter Artikel, gern mit Bezug zum Land'), '')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
-  <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canRecord() ? 'Hören, mitsprechen, aufnehmen und vergleichen' : canListen() ? 'Mitsprechen und von der Spracherkennung prüfen lassen' : 'Hören und mitsprechen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '', 'dict')}</div>
+  <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canRecord() ? 'Hören, mitsprechen, aufnehmen und vergleichen' : canListen() ? 'Mitsprechen und von der Spracherkennung prüfen lassen' : 'Hören und mitsprechen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>
   <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Auswertung')}${row('tat', 'Beispielsätze suchen', net('Echte Sätze aus Tatoeba'))}${row('own', 'Eigenen Satz eintragen', 'Aus Podcast, Gespräch oder Korrektur')}</div>
   <h2 class="grp">Nachschlagen</h2>
-  <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'book')}${row('ref', 'Grammatik-Begriffe', `${termsFor(lang).length} Fachwörter wie ${lang === 'sv' ? 'Supinum und Inversion' : 'Subjuntivo und Gerundium'}, in Alltagssprache`, ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Sprache, Alltag und Gesellschaft`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste, nach Datum sortiert`, ' data-r="feasts"', 'feast')}</div>`;
+  <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'rules')}${row('ref', 'Grammatik-Begriffe', `${termsFor(lang).length} Fachwörter wie ${lang === 'sv' ? 'Supinum und Inversion' : 'Subjuntivo und Gerundium'}, in Alltagssprache`, ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Sprache, Alltag und Gesellschaft`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste, nach Datum sortiert`, ' data-r="feasts"', 'feast')}</div>`;
 }
 function viewPickTopic(){
   const lang = S.lang;
@@ -299,7 +299,7 @@ function viewRun(){
     const rows = tileRows(ex.pool.filter(p => !p.extra).map(p => p.t));
     const ans = picked.length
       ? picked.map((p, k) => `<button type="button" class="tile${done ? (marks ? ' ' + marks[k] : ' ok') : ''}" data-a="unpick" data-i="${p.i}" lang="${lang}"${done ? ' disabled' : ''}>${esc(p.t)}</button>`).join('')
-      : '<span class="ph">Tippe die Wörter unten der Reihe nach an</span>';
+      : '<span class="ph">Tipp die Wörter unten der Reihe nach an</span>';
     // Die Kästchen behalten ihren Platz: Gewählte bleiben als leerer Umriss stehen, damit nichts verrutscht
     const pool = ex.pool.map(p => ex.picked.includes(p.i) ? `<button type="button" class="tile ghost" disabled tabindex="-1" aria-hidden="true" lang="${lang}">${esc(p.t)}</button>` : `<button type="button" class="tile" data-a="pickt" data-i="${p.i}" lang="${lang}">${esc(p.t)}</button>`).join('');
     body = `<p class="kicker">Bring die Wörter in die richtige Reihenfolge${ex.extra ? '<span class="hintw">Ein Wort bleibt übrig</span>' : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
@@ -636,8 +636,12 @@ function bonusHtml(r){
 // Bei mehreren Etappen eine Hauptetappe, die übrigen in einer Zeile. Bei gefestigten oder verankerten Sätzen die Sätze selbst.
 const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}${ds.slice(0, 4) !== today().slice(0, 4) ? ' ' + ds.slice(0, 4) : ''}`; };
 function mileHtml(r){
-  const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b)), m = miles[0];
-  if (!m) return '';
+  const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b));
+  if (!miles[0]) return '';
+  // Mehrere Schwellen derselben Art in einer Runde (10 und 25 gefestigte Sätze): die höchste steht als „jetzt“, die niedrigere
+  // darunter als erreicht; „Außerdem“ nennt nur andere Etappen. Sonst stünde „25, noch 1“ neben „Außerdem: 25“.
+  const first = miles[0], kin = e => e.k === first.k && (e.l || '') === (first.l || '') && e.k !== 'topic' && e.v != null;
+  const group = first.k === 'topic' || first.v == null ? [first] : miles.filter(kin).sort((a, b) => a.v - b.v), m = group[group.length - 1];
   const lane = m.l || 'x', w = wayEvents().done, topic = m.k === 'topic';
   const prev = w.filter(e => e.k === m.k && (e.l || '') === (m.l || '') && wayKey(e) !== wayKey(m) && e.d <= m.d && (topic ? e.trap === m.trap : e.v == null || m.v == null || e.v < m.v)).pop();
   const nx = wayNext(m), when = e => (e.d === today() ? 'heute' : fmtDM(e.d));
@@ -649,7 +653,7 @@ function mileHtml(r){
   const head = topic ? `<p class="mr-h">${lab(trapLabel(m.l, m.trap), m.l)}</p>` : '';
   const rail = topic
     ? `<ol class="mrail rl-${lane}">${prev ? row('done', step(prev), fmtDM(prev.d)) : ''}${row('now', step(m), when(m))}${nx ? row('next', 'Nächste Halbierung', esc(nx.rest)) : ''}</ol>`
-    : `<ol class="mrail rl-${lane}">${prev ? row('done', lab(prev.t, prev.l), fmtDM(prev.d)) : ''}${row('now', lab(m.t, m.l), when(m))}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
+    : `<ol class="mrail rl-${lane}">${prev ? row('done', esc(prev.t), when(prev)) : ''}${row('now', lab(m.t, m.l), when(m))}${nx ? row('next', esc(nx.t), esc(nx.rest)) : ''}</ol>`;
   const counts = topic && m.b && m.c ? `<p class="mr-x">${m.b[0] === m.c[0] ? `Je ${fmtN(m.b[0])} Aufgaben: vorher ${m.b[1]} falsch, zuletzt ${m.c[1]}.` : `Vorher ${m.b[1]} von ${m.b[0]} Aufgaben falsch, zuletzt ${m.c[1]} von ${m.c[0]}.`}</p>` : '';
   const list = m.k === 'mature' ? (r.crossed && r.crossed.mature) || [] : m.k === 'anchored' ? (r.crossed && r.crossed.anchored) || [] : [];
   const times = n => (['', 'einmal', 'zweimal', 'dreimal', 'viermal', 'fünfmal', 'sechsmal', 'siebenmal', 'achtmal', 'neunmal', 'zehnmal', 'elfmal', 'zwölfmal'][n] || `${n}-mal`);
@@ -659,7 +663,8 @@ function mileHtml(r){
     const tag = x.bad ? `<span class="ms-tag">${times(x.bad)} falsch, jetzt ${x.ivl} Tage Abstand</span>` : '';
     return `<div class="ms"><span class="txt"><span class="rt wordrow" lang="${r.lang}">${linkWords(it.target, r.lang)}</span><span class="rd">${esc(it.de)}</span>${tag}</span>${speakBtn(it.target, r.lang)}</div>`;
   }).join('')}</div>${list.length > 3 ? `<button type="button" class="link mr-more" data-a="mileall">${S.mileAll ? 'Weniger zeigen' : `und ${list.length - 3} weitere`}</button>` : ''}` : '';
-  const also = miles.length > 1 ? `<p class="mr-also">Außerdem: ${miles.slice(1).map(e => esc(e.t) + (e.l && e.l !== r.lang ? ` (${LANG[e.l].deName})` : '')).join(', ')}.</p>` : '';
+  const others = miles.filter(e => !group.includes(e));
+  const also = others.length ? `<p class="mr-also">Außerdem: ${others.map(e => esc(e.t) + (e.l && e.l !== r.lang ? ` (${LANG[e.l].deName})` : '')).join(', ')}.</p>` : '';
   const links = `<p class="mr-links">${topic && m.trap ? `<button type="button" class="link" data-a="topic" data-l="${m.l}" data-t="${m.trap}">Themenblatt</button>` : ''}<button type="button" class="link" data-a="toway">Dein Weg</button></p>`;
   return `<section class="mile" aria-label="Etappe"><p class="mile-eb">${miles.length > 1 ? 'Etappen' : 'Etappe'}</p>${head}${rail}${counts}${sents}${also}${links}</section>`;
 }
@@ -792,7 +797,7 @@ function viewTat(){
   else if (t.status === 'error') res = `<p class="notice warn">${esc(t.err)}</p>`;
   else if (t.status === 'done') {
     res = t.results.length
-      ? `<p class="hint">Tippe an, was du übernehmen möchtest.</p><div class="rows picklist">${t.results.map((x, i) => `<div class="row pickrow${t.picked[i] ? ' on' : ''}"><button type="button" class="pickbtn" data-a="tatpick" data-i="${i}" aria-pressed="${!!t.picked[i]}"><span class="check" aria-hidden="true"></span><span class="txt"><span class="rt" lang="${lang}">${esc(x.target)}</span><span class="rd">${esc(x.de)}</span></span></button>${x.audio ? `<button type="button" class="speak native" data-a="tatplay" data-i="${i}" aria-label="Aufnahme abspielen">${ICON}</button>` : ''}</div>`).join('')}</div>
+      ? `<p class="hint">Tipp an, was du übernehmen möchtest.</p><div class="rows picklist">${t.results.map((x, i) => `<div class="row pickrow${t.picked[i] ? ' on' : ''}"><button type="button" class="pickbtn" data-a="tatpick" data-i="${i}" aria-pressed="${!!t.picked[i]}"><span class="check" aria-hidden="true"></span><span class="txt"><span class="rt" lang="${lang}">${esc(x.target)}</span><span class="rd">${esc(x.de)}</span></span></button>${x.audio ? `<button type="button" class="speak native" data-a="tatplay" data-i="${i}" aria-label="Aufnahme abspielen">${ICON}</button>` : ''}</div>`).join('')}</div>
         <p class="src">Aus <a href="https://tatoeba.org" target="_blank" rel="noopener">Tatoeba</a>, nur Sätze von Muttersprachlern (CC BY 2.0 FR). Der farbige Lautsprecher spielt eine echte Aufnahme.</p>`
       : '<p class="hint">Nichts Neues gefunden. Probier ein anderes Thema oder eine andere Wortform.</p>';
   }
@@ -813,10 +818,12 @@ const bigTime = secs => {
   const m = Math.round(secs / 60); if (m < 600) return [String(m), m === 1 ? 'Minute' : 'Minuten'];
   const h = m / 60; return [h < 100 ? h.toFixed(1).replace('.', ',') : Math.round(h).toLocaleString('de-DE'), 'Stunden'];
 };
-function fmtMin(secs){
+// Dauer im Fließtext: unter einer Stunde „12 Min.“, sonst „5 Std. 7 Min.“. Mit minsOnly bleibt es bei Minuten, damit in einer
+// Karte, deren Summe bigTime in Minuten zeigt, die Teile dieselbe Einheit haben.
+function fmtMin(secs, minsOnly){
   const m = Math.round(secs / 60);
   if (secs > 0 && m < 1) return 'unter 1 Min.';
-  if (m < 60) return m + ' Min.';
+  if (m < 60 || minsOnly) return m.toLocaleString('de-DE') + ' Min.';
   return Math.floor(m / 60) + ' Std.' + (m % 60 ? ' ' + (m % 60) + ' Min.' : '');
 }
 const dateOf = ds => { const [y, m, d] = ds.split('-').map(Number); return new Date(y, m - 1, d); };
@@ -1120,7 +1127,7 @@ function viewProgress(){
       return `<div class="kpis">
         <div><b>${known}</b><span>von ${practiced} <button type="button" class="term" data-a="term" data-k="abrufbar">abrufbar</button></span></div>
         <div><b>${v.all.toLocaleString('de-DE')}</b><span>Wörter${dv ? ` <span class="up">+${dv}</span>` : ''}</span></div>
-        <div><b>${secs7 ? fmtMin(secs7).replace(/\.$/, '') : '–'}</b><span>letzte 7 Tage</span></div>
+        <div><b>${secs7 ? bigTime(secs7)[0] : '–'}</b><span>${secs7 ? bigTime(secs7)[1] : 'Minuten'}, letzte 7 Tage</span></div>
       </div>`; })() : ''}
   </section>
   ${progressChart(lang)}
@@ -1162,7 +1169,7 @@ function popupHtml(){
     <div class="pophead"><span class="popw" lang="${P.lang}">${esc(P.w)}</span>${speakBtn(P.w, P.lang)}</div>
     ${body}
     ${P.si != null && S.view === 'text' ? `<button type="button" class="ghost icon popsay" data-a="tsay" data-i="${P.si}">${ICON} Ganzen Satz anhören</button>` : ''}
-    <div class="popfoot"><span class="poplinks"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'}</button></span><button type="button" class="ghost" data-a="popclose">Schließen</button></div>
+    <div class="popfoot"><button type="button" class="ghost" data-a="popclose">Schließen</button><span class="poplinks"><button type="button" class="link" data-a="popext">Bei ${P.lang === 'es' ? 'LEO' : 'dict.cc'}</button></span></div>
   </div>`;
 }
 function renderPopup(){ const el = document.getElementById('pop'); if (el) el.innerHTML = popupHtml(); document.body.classList.toggle('has-pop', !!S.pop); armBack(); }

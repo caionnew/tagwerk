@@ -40,7 +40,7 @@ test('Fehlerquellen: Thema und Übungsart sagen oben, was die Zahl ist', () => {
   run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:inversion': [48, 6], 'p:bisats': [25, 5], 't:free': [12, 6], 't:gap': [64, 8], 'e:word': 10 } } };`);
   run(`S.errTab = 'p'`);
   let html = run(`errorSourcesHtml('sv')`);
-  assert.match(text(html), /falsch von allen Aufgaben im Thema:/); assert.match(html, /6\/48/);
+  assert.match(text(html), /falsch von allen Aufgaben im Thema:/); assert.match(html, /6 von 48/);
   run(`S.errTab = 't'`);
   html = run(`errorSourcesHtml('sv')`);
   assert.match(html, /Anteil falscher Antworten je Übungsart:/); assert.match(html, /50 %|50 %/);
@@ -62,7 +62,7 @@ test('Fehlerquellen nach Thema: Aufgaben und Fehler auf einer Skala, kein voller
   // Zahlen aus einem echten Stand: 12/58 war voll, 2/4 (halb falsch) ein Sechstel davon
   run(`DB = freshDB(); DB.tlog = { [today()]: { es: { 'p:condicional': [58, 12], 'p:perfecto': [8, 2], 'p:idiom': [4, 2], 'p:prep': [7, 2], 'p:serestar': [21, 1], 't:gap': [98, 19] } } }; S.errTab = 'p';`);
   const html = run(`errorSourcesHtml('es')`);
-  const rows = [...html.matchAll(/<span class="el">([^<]+)<\/span><span class="ebar eboth"[^>]*><span class="e-all" style="width:max\(6px, ([\d.]+)%\)"><\/span><span class="e-bad" style="width:max\(3px, ([\d.]+)%\)"><\/span><\/span><span class="ev">(\d+)\/(\d+)</g)]
+  const rows = [...html.matchAll(/<span class="el">([^<]+)<\/span><span class="ebar eboth"[^>]*><span class="e-all" style="width:max\(6px, ([\d.]+)%\)"><\/span><span class="e-bad" style="width:max\(3px, ([\d.]+)%\)"><\/span><\/span><span class="ev">(\d+) von (\d+)</g)]
     .map(m => ({ label:m[1], all:+m[2], bad:+m[3], n:`${m[4]}/${m[5]}` }));
   assert.equal(rows.length, 5);
   // Reihenfolge: meiste Fehler zuerst, bei Gleichstand mehr Aufgaben zuerst (belastbarer; 2/8 vor 2/7 vor 2/4)
@@ -110,7 +110,7 @@ test('Erzeugte Bereiche: ab 10 Aufgaben grüner Balken und Prozent, derselbe Ant
   assert.match(text(html.split('Immer neu erzeugt')[1]), /^Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben/);
 });
 
-test('Heute, „Meiste Fehler“: wie die Fehlerquellen nach Anzahl, erst ab 8 Fehlern, je Thema mindestens 2, nur übbare Themen', () => {
+test('Heute, „Fehlerquellen“: wie auf Fortschritt nach Anzahl, erst ab 8 Fehlern, je Thema mindestens 2, nur übbare Themen', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     BANK.es.filter(i => i.trap === 'serestar').slice(0, 5).forEach(i => { DB.st[i.id] = { ok: 1, bad: 0, alts: [], s: 2, d: 5, ivl: 2, last: t, due: addDays(t, 2), reps: 1 }; }); })()`);
   // Geübt, aber keine Fehler: kein Block mehr (früher standen hier Themen mit 0 gefestigt)
@@ -123,7 +123,7 @@ test('Heute, „Meiste Fehler“: wie die Fehlerquellen nach Anzahl, erst ab 8 F
   const src = text(run(`(S.errTab = 'p', errorSourcesHtml('es'))`));
   assert.ok(src.indexOf('Konditional') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Verben mit Präposition'));
   const html = run(`weakHtml('es')`);
-  assert.match(text(html), /^Meiste Fehler, letzte 30 Tage /);
+  assert.match(text(html), /^Fehlerquellen, letzte 30 Tage /, 'derselbe Name wie auf Fortschritt');
   assert.match(text(html.split('data-t="condicional"')[1].split('</button>')[0]), /5 Fehler bei 30 Aufgaben/);
   assert.equal((html.match(/class="w-bad"/g) || []).length, 3);
   // Unter 8 Fehlern in der Sprache sagt die Liste noch nichts

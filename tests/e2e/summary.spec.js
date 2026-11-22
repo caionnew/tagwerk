@@ -42,7 +42,7 @@ test('Heute nach dem Tagwerk: Zeit, neue Sätze, Wiederholungen und Gefestigtes 
   await expect(tiles).toHaveCount(3);
   await expect(tiles.nth(0)).toContainText('12Minuten');
   await expect(tiles.nth(1)).toContainText('5neue Sätze');
-  await expect(tiles.nth(2)).toContainText('20/22Wiederholungen gewusst');
+  await expect(tiles.nth(2)).toContainText('20 von 22Wiederholungen gewusst');
   await expect(page.locator('.today-mat')).toHaveText('2 Sätze heute gefestigt.');
 });
 test('Heute: wenig geübt zeigt die Zahl der Aufgaben, ohne Übung keine Bilanz', async ({ page }) => {

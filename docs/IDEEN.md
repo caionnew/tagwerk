@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 22. November 2026 (nach 24.66.0)
+Stand: 22. November 2026 (nach 24.66.1)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -22,16 +22,9 @@ Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die b
 
 Befund: kein Neubau nötig. Kein toter JS-Code (ESLint), 0,6 % doppelte Stellen im Scan, Doku und Code stimmen überein, Tests dicht. Gewachsen ist die App an den Rändern: kein festes Gestaltungssystem, mehrfach berechnete Kennzahlen, ein paar sichtbare Widersprüche.
 
-**Schritt 1, Fehler und Einheitlichkeit (A, als Nächstes):**
-- Etappen-Kasten am Rundenende widerspricht sich, wenn eine Runde zwei Schwellen derselben Art überschreitet („25 gefestigte Sätze, noch 1“ und darunter „Außerdem: 25 gefestigte Sätze“).
-- Fragekarte beim Lesen blendet bei jedem Antippen einer Antwort neu ein; Einblenden nur bei einer neuen Frage.
-- Zeitangaben: eine Regel für Minuten und Stunden, „Min.“ immer mit Punkt; in einer Karte nicht „426 Minuten“ oben und „5 Std. 7 Min.“ darunter.
-- Verhältnisse überall „20 von 22“ statt „20/22“.
-- Ein Name je Sache: „Fehlerquellen“ auf Heute und Fortschritt; „Tipp auf …“ als Hinweis; „Ins Tagwerk“ überall gleich; „Schließen“ in Blättern links.
-- Üben: eigene Symbole für Fundstück, Grammatik kurz erklärt und Hörrunde (bisher doppelt).
-- Achsenbeschriftung in „Wann du übst“ und „Verlauf“ lesbar (bisher 8,5 bis 9,5 px); „Etappen“ ohne Großbuchstaben wie alle anderen Überschriften.
+Schritt 1 (Fehler und Einheitlichkeit) ist erledigt, 24.66.1.
 
-**Schritt 2, Gestaltungssystem und Code (B+):**
+**Schritt 2, Gestaltungssystem und Code (B+, als Nächstes):**
 - Feste Stufen als CSS-Variablen: Schriftgrößen (bisher 32), Schriftstärken (bisher 7), Radien (18 und 14 px, bisher dazu 10 bis 13), Bewegung (zwei Dauern, eine Kurve; bisher 80 bis 600 ms und drei fast gleiche Kurven). Feste Abstände aus den Vorlagen (etwa 20 `style="margin…"`) in Klassen.
 - Totes CSS entfernen (etwa 24 Regeln) und ein Test, der ungenutzte Klassen findet.
 - Je eine Stelle für: Gesamtsummen (`totals` und `lifeTotals`, dazu eine ungelesene Jahresaufteilung), nächste Etappe (Dein Weg, Rundenende, Sprach-Tab), Abgleich nach längster gemeinsamer Folge (viermal), Datumsformate und Monatsnamen, Prozent (mit geschütztem Leerzeichen), „Bewegung reduzieren“.

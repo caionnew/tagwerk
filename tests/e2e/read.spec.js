@@ -27,9 +27,13 @@ test('Lesen: Fragen erst nach dem Text, einzeln mit Textstelle, Wörter in „Na
   await expect(page.locator('.wtray .wchip')).toHaveCount(1);
   await page.click('[data-a=tquiz]');
   await expect(page.locator('.tq-head')).toContainText('Frage 1 von 3');
+  // Die Fragekarte blendet bei einer neuen Frage ein, nicht beim Antippen einer Antwort
+  await expect(page.locator('.tq.enter')).toHaveCount(1);
   await page.click('[data-a=tpick][data-k="0"][data-i="0"]');
   await expect(page.locator('.tq-src')).toContainText('Skeppet var helt enkelt för smalt och för högt.');
+  await expect(page.locator('.tq')).not.toHaveClass(/\benter\b/);
   await page.click('[data-a=tqnext]');
+  await expect(page.locator('.tq.enter')).toHaveCount(1);
   await page.click('[data-a=tpick][data-k="1"][data-i="0"]');
   await page.click('[data-a=tqnext]');
   await page.click('[data-a=tpick][data-k="2"][data-i="1"]');
@@ -40,7 +44,9 @@ test('Lesen: Fragen erst nach dem Text, einzeln mit Textstelle, Wörter in „Na
   let db = await stored(page);
   expect(db.used.texts['sv:vasa'].best).toBe(2);
   await page.click('[data-a=tkeep][data-k="0"]');
-  await expect(page.locator('[data-a=tkeep][data-k="0"]')).toHaveText('Im Tagwerk');
+  // „Ins Tagwerk“ wie bei Land & Leute: Knopf, danach „✓ Im Tagwerk“
+  await expect(page.locator('.tdone .kadd.on').first()).toHaveText('✓ Im Tagwerk');
+  await expect(page.locator('[data-a=tkeep][data-k="0"]')).toHaveCount(0);
   await page.waitForTimeout(300);
   db = await stored(page);
   expect(db.own.sv.some(o => o.target === 'Skeppet var helt enkelt för smalt och för högt.')).toBe(true);

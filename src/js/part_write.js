@@ -225,7 +225,7 @@ function profileHtml(lang, a, extraK){
 // Langfristig: Wie verändern sich deine Texte? Vergleich der ersten mit den letzten Texten
 function writingTrendHtml(lang){
   const list = (DB.texts || []).filter(x => x.lang === lang && x.m && x.m.words >= 20);
-  if (list.length < 2) return list.length ? `<h2 class="grp">Schreiben</h2><div class="chart"><p class="legend" style="margin:0">1 Text bisher. Ab dem zweiten zeigt sich hier, wie sich deine Texte verändern.</p></div>` : '';
+  if (list.length < 2) return list.length ? `<h2 class="grp">Schreiben</h2><div class="chart"><p class="legend m0">1 Text bisher. Ab dem zweiten zeigt sich hier, wie sich deine Texte verändern.</p></div>` : '';
   const k = Math.min(3, Math.floor(list.length / 2)), first = list.slice(0, k), last = list.slice(-k);
   const avg = (arr, f) => arr.reduce((s, x) => s + f(x), 0) / arr.length;
   const rows = [['Wörter pro Satz', x => x.m.avg, 1], ['Zeitformen pro Text', x => x.m.tenses.length, 1], ['Nebensätze pro Text', x => x.m.subs, 1], ['LIX', x => x.m.lix, 0]]

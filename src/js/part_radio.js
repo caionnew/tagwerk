@@ -76,12 +76,12 @@ function viewRadio(){
   const sw = (a, on, t, d) => `<button type="button" class="row toggle" role="switch" aria-checked="${on}" data-a="${a}"><span class="txt"><span class="rt">${t}</span>${d ? `<span class="rd">${d}</span>` : ''}</span><span class="sw" aria-hidden="true"></span></button>`;
   const steps = RADIO_STEPS.map((s, k) => (k === 1 && !R.de ? '' : `<span class="rstep${k === R.step ? ' on' : k < R.step ? ' done' : ''}">${s}</span>`)).join('');
   return backBar('Hörrunde') + `
-    <p class="hint" style="margin-top:0">Satz ${R.idx + 1} von ${R.ids.length}${R.heard ? `, ${R.heard} gehört` : ''}. Läuft von allein weiter, der Bildschirm bleibt dabei an.</p>
+    <p class="hint mt0">Satz ${R.idx + 1} von ${R.ids.length}${R.heard ? `, ${R.heard} gehört` : ''}. Läuft von allein weiter, der Bildschirm bleibt dabei an.</p>
     <section class="radio-card" aria-live="polite">
       <div class="rsteps">${steps}</div>
       ${R.show ? `<p class="radio-t" lang="${lang}">${esc(item.target)}</p><p class="radio-de">${esc(item.de || '')}</p>` : '<p class="radio-t radio-hidden">Nur hören</p>'}
     </section>
-    <div class="rows" style="margin-top:18px">${sw('rde', R.de, 'Deutsch dazwischen', 'Erst der Satz, dann die Bedeutung')}${sw('rshow', R.show, 'Text zeigen', 'Aus: reines Hörverstehen')}${sw('rslow', R.slow, 'Erstes Mal langsamer')}</div>
+    <div class="rows mt-16">${sw('rde', R.de, 'Deutsch dazwischen', 'Erst der Satz, dann die Bedeutung')}${sw('rshow', R.show, 'Text zeigen', 'Aus: reines Hörverstehen')}${sw('rslow', R.slow, 'Erstes Mal langsamer')}</div>
     <div class="actionbar reader-bar"><div class="in">
       <button type="button" class="pbtn" data-a="rprev" aria-label="Vorheriger Satz">${PICO.prev}</button>
       <button type="button" class="pbtn play wide" data-a="rplay">${R.playing ? PICO.pause + '<span>Pause</span>' : PICO.play + '<span>Weiter</span>'}</button>

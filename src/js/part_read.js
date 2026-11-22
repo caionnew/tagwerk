@@ -156,7 +156,7 @@ function viewText(){
   }
   // Fragen erst nach dem Text: beim Lesen auf Knopfdruck, beim Hören von selbst nach dem letzten Satz
   const gate = !T.quiz ? `<div class="tgate">${T.hidden
-      ? `<p class="hint" style="margin:0 0 10px">Die Fragen kommen, sobald der Text zu Ende ist.</p><button type="button" class="ghost" data-a="tquiz">Fragen jetzt</button>`
+      ? `<p class="hint m0 mb-12">Die Fragen kommen, sobald der Text zu Ende ist.</p><button type="button" class="ghost" data-a="tquiz">Fragen jetzt</button>`
       : `<button type="button" class="primary" data-a="tquiz">Gelesen, zu den Fragen</button>`}</div>` : '';
   const score = Object.values(T.picks).filter(i => i === 0).length;
   const qi = Math.min(T.qi, t.q.length - 1), [q, opts, src] = t.q[qi], picked = T.picks[qi];
@@ -172,9 +172,9 @@ function viewText(){
   const own = new Set((DB.own[lang] || []).map(o => o.id));
   const after = finished ? `<section class="tdone${enter}">
       <p class="tdone-h">${score === t.q.length ? 'Alles verstanden.' : `${score} von ${t.q.length} richtig.`}</p>
-      <p class="hint" style="margin-top:2px">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
+      <p class="hint mt-4">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
       <p class="keep-h">„Ins Tagwerk“ nimmt den Satz in deine nächsten Tagwerke auf.</p>
-      <div class="rows" style="margin-top:8px">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span>${has ? '<span class="kadd on">✓ Im Tagwerk</span>' : `<button type="button" class="kadd" data-a="tkeep" data-k="${i}" aria-label="Satz ins Tagwerk übernehmen">Ins Tagwerk</button>`}</div>`; }).join('')}</div>
+      <div class="rows mt-8">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span>${has ? '<span class="kadd on">✓ Im Tagwerk</span>' : `<button type="button" class="kadd" data-a="tkeep" data-k="${i}" aria-label="Satz ins Tagwerk übernehmen">Ins Tagwerk</button>`}</div>`; }).join('')}</div>
       <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
     </section>` : '';
   return backBar('Lesen und Hören', T.back || 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;

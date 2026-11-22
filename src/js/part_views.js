@@ -78,7 +78,7 @@ function findHtml(lang){
     const ago = f.ago < 14 ? `vor ${f.ago} Tagen` : f.ago < 60 ? `vor ${Math.round(f.ago / 7)} Wochen` : `vor ${Math.round(f.ago / 30)} Monaten`;
     return `<section class="find"><p class="find-k">Erinnerst du dich? · zuletzt ${ago} geübt</p>
       <p class="find-h find-de" lang="de">${esc(f.item.de)}</p>
-      ${open ? `<div class="find-p reveal"><span class="wordrow" lang="${lang}">${linkWords(f.item.target, lang)}</span>${speakBtn(f.item.target, lang)}</div><p class="find-g" style="margin:6px 0 0">Zählt nicht für den Wiederholungsplan.</p>` : `<button type="button" class="link" data-a="findopen" data-id="${f.item.id}">Auflösen</button>`}</section>`;
+      ${open ? `<div class="find-p reveal"><span class="wordrow" lang="${lang}">${linkWords(f.item.target, lang)}</span>${speakBtn(f.item.target, lang)}</div><p class="find-g m0 mt-8">Zählt nicht für den Wiederholungsplan.</p>` : `<button type="button" class="link" data-a="findopen" data-id="${f.item.id}">Auflösen</button>`}</section>`;
   }
   if (f.kind === 'kultur') return `<section class="find"><p class="find-k">Land & Leute · ${KULTUR_CATS[f.e.cat]}</p>${kulturBody(f.e, lang, true)}<button type="button" class="link find-more" data-a="ref" data-r="kultur">Alle ${KULTUR[lang].length} ansehen</button></section>`;
   const ff = f.ff;
@@ -122,7 +122,7 @@ function viewHome(){
     if (p.due) parts.push(`<li><b>${p.due}</b> ${p.due === 1 ? 'Wiederholung' : 'Wiederholungen'}<span>Sätze, die heute wieder dran sind</span></li>`);
     if (p.fresh) parts.push(`<li><b>${p.fresh}</b> ${p.fresh === 1 ? 'neuer Satz' : 'neue Sätze'}<span>gezielt zu typischen Fehlern</span></li>`);
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
-    card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue, lang)} Min.</span></p>${doneOther ? `<p class="hint" style="margin-top:2px">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
+    card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue, lang)} Min.</span></p>${doneOther ? `<p class="hint mt-4">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
       <ul class="plan2">${parts.join('')}</ul>
       ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b>${esc(trapMeta(lang, ft).label)}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">${LANG[lang].deName}-Tagwerk starten</button>
@@ -342,11 +342,11 @@ function viewRun(){
   } else if (ex.type === 'gen' && ex.data.kind === 'time') {
     const d = ex.data;
     const shown = d.mode === 'write' ? `<p class="clockbig">${d.clock ? esc(d.clock) : `${d.num} ${lang === 'sv' ? 'kr' : '€'}`}</p>`
-      : d.mode === 'hear' ? `<div class="btnrow tight" style="margin:4px 0 14px"><button type="button" class="ghost icon" data-a="tplay" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="tplay" data-rate="0.65">${PICO.slow} Langsam</button></div>${done ? `<p class="de" lang="${lang}">${esc(d.say)}</p>` : ''}`
+      : d.mode === 'hear' ? `<div class="btnrow tight mb-16"><button type="button" class="ghost icon" data-a="tplay" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="tplay" data-rate="0.65">${PICO.slow} Langsam</button></div>${done ? `<p class="de" lang="${lang}">${esc(d.say)}</p>` : ''}`
       : `<p class="de" lang="${lang}">${esc(d.say)}</p>`;
     body = `<p class="kicker">${esc(d.label)}</p>${d.mode === 'hear' ? '' : shown}
       <div class="ex-a">${d.mode === 'hear' ? shown : ''}${d.mode !== 'write' && !d.clock ? `<div class="unitwrap">` : ''}<input type="text" id="answer" class="tw${d.mode !== 'write' ? ' numin' : ''}" lang="${d.mode === 'write' ? lang : 'de'}" inputmode="${d.mode === 'write' ? 'text' : (d.clock ? 'decimal' : 'numeric')}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${d.mode === 'write' ? esc(L.ph) : d.clock ? 'z. B. 7.45' : 'z. B. 47'}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">${d.mode !== 'write' && !d.clock ? `<span class="unit" aria-hidden="true">${lang === 'sv' ? 'kr' : '€'}</span></div>` : ''}
-      ${d.mode !== 'write' && d.clock && !done ? '<p class="vocab" style="margin-top:10px">Punkt, Komma oder Leerzeichen statt Doppelpunkt geht auch.</p>' : ''}
+      ${d.mode !== 'write' && d.clock && !done ? '<p class="vocab mt-12">Punkt, Komma oder Leerzeichen statt Doppelpunkt geht auch.</p>' : ''}
       ${done || d.mode !== 'write' ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'trans') {
     const d = ex.data;
@@ -370,7 +370,7 @@ function viewRun(){
   } else if (ex.type === 'dict') {
     const item = itemById(ex.id);
     body = `<p class="kicker">Hör zu und schreib den Satz auf${item.tat && item.tat.audio ? '<span class="hintw">echte Aufnahme</span>' : ''}</p>
-      <div class="ex-a"><div class="btnrow tight" style="margin:0 0 14px"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="play" data-rate="0.65">${PICO.slow} Langsam</button></div>
+      <div class="ex-a"><div class="btnrow m0 mb-16"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="play" data-rate="0.65">${PICO.slow} Langsam</button></div>
       <textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Was du hörst">${esc(c.input)}</textarea>
       ${done ? '' : charbar(lang)}</div>`;
   }
@@ -488,10 +488,11 @@ function orderMarks(order, target){
   a.forEach((w, k) => { if (keep[k]) left[w]--; });
   return a.map((w, k) => { if (keep[k]) return 'ok'; if (left[w] > 0) { left[w]--; return 'moved'; } return 'extra'; });
 }
+// Zeilen der Wortkästchen schätzen: 20 px Serifenschrift, etwa 11,4 px je Zeichen, dazu Innenabstand, Rand und Lücke
 function tileRows(tokens){
   const W = Math.min(window.innerWidth || 380, 600) - 58;
   let rows = 1, x = 0;
-  tokens.forEach(t => { const w = t.length * 10.8 + 34; if (x && x + w > W) { rows++; x = w; } else x += w; });
+  tokens.forEach(t => { const w = t.length * 11.4 + 34; if (x && x + w > W) { rows++; x = w; } else x += w; });
   return rows;
 }
 // Erkennt typische Fehler in der Antwort selbst, damit die Erklärung zum gemachten Fehler passt
@@ -742,7 +743,7 @@ function viewRunDone(){
     <h1 class="done-h">${title}</h1>
     ${mileHtml(r)}
     <p class="lead">${lead}</p>
-    ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint" style="margin-top:0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}
+    ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint mt0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}
     ${strip}${kpis}${span}
     ${sk}${tomorrow}
     ${monthHtml(r.month)}
@@ -1010,7 +1011,7 @@ function progressChart(lang){
   if (!days.length) return '';
   const t = today(), first = days[0], long = dayDiff(t, first) > 400, all = long && S.pcAll;
   const start = long && !all ? addDays(t, -365) : first, span = dayDiff(t, start);
-  if (span < 13) return `<h2 class="grp">Verlauf</h2><p class="legend" style="margin:0 4px 8px">Erscheint, sobald du zwei Wochen dabei bist.</p>`;
+  if (span < 13) return `<h2 class="grp">Verlauf</h2><p class="legend above">Erscheint, sobald du zwei Wochen dabei bist.</p>`;
   const step = span > 180 ? 7 : span > 70 ? 3 : 1;
   const pts = []; let cum = start > first ? days.filter(d => d < start).reduce((a, d) => a + (dayLog(d, lang).fresh || 0), 0) : 0, snapFrom = null;
   for (let k = 0; k <= span; k++) {
@@ -1099,7 +1100,7 @@ function viewProgress(){
     <p class="eyebrow">${L.deName}</p>
     <p class="num">${mature} <button type="button" class="term" data-a="term" data-k="gefestigt">${mature === 1 ? 'gefestigter Satz' : 'gefestigte Sätze'}</button></p>
     <div class="mbar" aria-hidden="true"><span style="width:${Math.max(0, Math.round((mature - prevM) / Math.max(1, nextM - prevM) * 100))}%"></span></div>
-    <p class="hint" style="margin-top:6px">Nächstes Ziel: ${nextM}${mature ? `, ${nm ? nm.rest : `noch ${nextM - mature}`}` : ''}.</p>
+    <p class="hint mt-8">Nächstes Ziel: ${nextM}${mature ? `, ${nm ? nm.rest : `noch ${nextM - mature}`}` : ''}.</p>
     ${practiced ? (() => { const v = vocabCount(lang), ago = snapAgo(lang, 30), dv = ago && ago.w != null ? v.all - ago.w : null;
       return `<div class="kpis">
         <div><b>${known}</b><span>von ${practiced} <button type="button" class="term" data-a="term" data-k="abrufbar">abrufbar</button></span></div>
@@ -1117,14 +1118,14 @@ function viewProgress(){
   <div class="chart"><div class="stack" aria-hidden="true">${['anchored', 'mature', 'young', 'neu'].map(k => dist[k] ? `<span class="s-${k}" style="flex:${dist[k]}"></span>` : '').join('')}</div>
   <p class="legend distline"><span><span class="sq s-anchored"></span>${dist.anchored} <button type="button" class="term" data-a="term" data-k="verankert">verankert</button></span><span><span class="sq s-mature"></span>${dist.mature} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button></span><span><span class="sq s-young"></span>${dist.young} im Aufbau</span><span><span class="sq s-neu"></span>${dist.neu} neu</span></p></div>
   <h2 class="grp">Wiederholungen der nächsten Tage</h2>
-  <div class="chart">${fc.every(f => !f.n) ? '<p class="stat" style="margin:0">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
+  <div class="chart">${fc.every(f => !f.n) ? '<p class="stat">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
   ${fc.some(f => f.n > cap) ? `<p class="legend">Höchstens ${cap} je Tagwerk, der Rest kommt am Tag darauf.</p>` : ''}</div>
   ${errorSourcesHtml(lang)}
   ${topicGridHtml(lang)}
   ${writingTrendHtml(lang)}
   ${(() => { const gl = (DB.genus && DB.genus[lang]) || {}, traps = Object.keys(gl).filter(w => gl[w].last === 0);
     const gens = genIds(lang).map(g => { const rc = (DB.gen[g] && DB.gen[g].recent) || []; return rc.length >= 10 ? `${GENS[g].short || GENS[g].label} ${pct(rc.reduce((a, x) => a + x, 0) / rc.length)}` : ''; }).filter(Boolean);
-    return gens.length || traps.length ? `<p class="legend" style="margin:6px 4px 0">${gens.length ? `Erzeugte Aufgaben, zuletzt richtig: ${esc(gens.join(', '))}.` : ''}${traps.length ? ` Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button>` : ''}</p>` : ''; })()}
+    return gens.length || traps.length ? `<p class="legend below">${gens.length ? `Erzeugte Aufgaben, zuletzt richtig: ${esc(gens.join(', '))}.` : ''}${traps.length ? ` Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button>` : ''}</p>` : ''; })()}
   ${collected.length ? `<h2 class="grp">Gesammelte Sätze (${collected.length})</h2><div class="rows">${collected.slice().reverse().slice(0, S.colAll ? 9999 : 5).map(o => `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(o.target)}</span><span class="rd">${esc(o.de)}</span></span><button type="button" class="link${S.armed === 'del:' + o.id ? ' armed' : ''}" data-a="coldel" data-id="${o.id}">${S.armed === 'del:' + o.id ? 'Wirklich entfernen?' : 'Entfernen'}</button>${S.armed === 'del:' + o.id ? '<span class="armnote">Der Lernstand geht verloren.</span>' : ''}</div>`).join('')}</div>${collected.length > 5 ? `<div class="btnrow"><button type="button" class="ghost" data-a="colall">${S.colAll ? 'Weniger anzeigen' : `Alle ${collected.length} anzeigen`}</button></div>` : ''}` : ''}
 
 `;
@@ -1196,7 +1197,7 @@ function viewSettings(){
     ${['sv', 'es'].map(l => `<button type="button" class="row danger${S.armed === 'reset:' + l ? ' armed' : ''}" data-a="reset" data-l="${l}"><span class="txt"><span class="rt">${S.armed === 'reset:' + l ? 'Wirklich zurücksetzen?' : `${LANG[l].deName} zurücksetzen`}</span><span class="rd">${S.armed === 'reset:' + l ? 'Löscht Fortschritt, Statistik und gesammelte Sätze dieser Sprache. Nicht rückgängig zu machen.' : 'Löscht Fortschritt und gesammelte Sätze dieser Sprache'}</span></span></button>`).join('')}
   </div>
   <h2 class="grp">Über Tagwerk</h2>
-  <p class="src" style="margin-top:0">Die Wiederholungen plant FSRS-6, dasselbe Verfahren wie in Anki. Lernminuten werden pro Aufgabe gemessen, Pausen über zwei Minuten zählen nicht. Internet brauchen nur die Beispielsätze von Tatoeba, die Textprüfung mit LanguageTool und das Wörterbuch.</p>
+  <p class="src mt0">Die Wiederholungen plant FSRS-6, dasselbe Verfahren wie in Anki. Lernminuten werden pro Aufgabe gemessen, Pausen über zwei Minuten zählen nicht. Internet brauchen nur die Beispielsätze von Tatoeba, die Textprüfung mit LanguageTool und das Wörterbuch.</p>
   <p class="src">Version ${esc(APP_VERSION)}</p>`;
 }
 function render(){

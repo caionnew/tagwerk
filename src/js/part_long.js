@@ -373,7 +373,7 @@ function yearsHtml(){
     const langs = ['sv', 'es'].filter(l => Y[l].n);
     return `<div class="ycard"><p class="y-h">${Y.y}${Y.current ? ' <span class="dim">bisher</span>' : ''}</p>
       <div class="kpis yk"><div><b>${Y.days}</b><span>Übungstage${Y.done ? `, ${Y.done} mit Tagwerk` : ''}</span></div><div><b>${bigTime(Y.secs)[0]}</b><span>${bigTime(Y.secs)[1]} gelernt</span></div><div><b>${Y.run}</b><span>Tage längste Serie</span></div></div>
-      ${(inMin => langs.map(l => `<p class="y-l"><span class="sq rl-${l}-sq"></span><b>${LANG[l].deName}</b> ${tagwerkCount(l, Y.y + '-01-01', Y.y + '-12-31').toLocaleString('de-DE')} Tagwerke, ${Y[l].fresh.toLocaleString('de-DE')} neue Sätze, ${Y[l].mat.toLocaleString('de-DE')} gefestigt, ${Y[l].n.toLocaleString('de-DE')} Aufgaben, ${fmtMin(Y[l].secs, inMin)}</p>`).join('') + (Y.topMonth != null && Y.days >= 20 ? `<p class="legend" style="margin-top:6px">Stärkster Monat: ${MONTHS_FULL[Y.topMonth]} mit ${fmtMin(Y.topSecs, inMin)}</p>` : ''))(bigTime(Y.secs)[1] !== 'Stunden')}</div>`;
+      ${(inMin => langs.map(l => `<p class="y-l"><span class="sq rl-${l}-sq"></span><b>${LANG[l].deName}</b> ${tagwerkCount(l, Y.y + '-01-01', Y.y + '-12-31').toLocaleString('de-DE')} Tagwerke, ${Y[l].fresh.toLocaleString('de-DE')} neue Sätze, ${Y[l].mat.toLocaleString('de-DE')} gefestigt, ${Y[l].n.toLocaleString('de-DE')} Aufgaben, ${fmtMin(Y[l].secs, inMin)}</p>`).join('') + (Y.topMonth != null && Y.days >= 20 ? `<p class="legend mt-8">Stärkster Monat: ${MONTHS_FULL[Y.topMonth]} mit ${fmtMin(Y.topSecs, inMin)}</p>` : ''))(bigTime(Y.secs)[1] !== 'Stunden')}</div>`;
   };
   return `<h2 class="grp">Jahr für Jahr</h2><div class="ygrid">${ys.map(card).join('')}</div>`;
 }
@@ -386,5 +386,5 @@ function topicGridHtml(lang){
     const d = ago && ago.t ? mat - (ago.t[tr.id] || 0) : null;
     return `<button type="button" class="tg${seen ? '' : ' tg-new'}" data-a="topic" data-t="${tr.id}"><span class="tg-l">${esc(tr.label)}</span><span class="tg-b" aria-hidden="true"><span style="width:${Math.round(seen / items.length * 100)}%" class="tg-seen"></span><span style="width:${Math.round(mat / items.length * 100)}%" class="tg-mat"></span></span><span class="tg-n">${seen ? `${seen} geübt · ${mat} gefestigt` : `${items.length} Sätze, neu`}${d ? ` <span class="tg-d">+${d}</span>` : ''}</span></button>`;
   }).join('');
-  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend" style="margin:8px 4px 0"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Tipp auf ein Thema für Regel und Beispiele.</p>`;
+  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend below"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Tipp auf ein Thema für Regel und Beispiele.</p>`;
 }

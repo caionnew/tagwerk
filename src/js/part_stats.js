@@ -261,7 +261,7 @@ function errorSourcesHtml(lang){
   const s = errStats(lang, 30), hard = hardSentences(lang), few = s.bad < 8;
   const head = `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2>`;
   const gate = `${s.n ? `${plural(s.bad, 'Fehler', 'Fehler')} bei ${s.n} Aufgaben. ` : ''}Die Auswertung erscheint ab 8 Fehlern in 30 Tagen.`;
-  if (few && !hard.length) return `${head}<div class="chart"><p class="legend" style="margin:0">${gate}</p></div>`;
+  if (few && !hard.length) return `${head}<div class="chart"><p class="legend m0">${gate}</p></div>`;
   const tab = S.errTab || (few ? 's' : 'p');
   const seg = `<div class="minseg errseg" role="radiogroup">${[['p', 'Thema'], ['t', 'Übungsart'], ['e', 'Fehlerart'], ['s', 'Sätze']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
   let rows = '', note = '', lead = '';

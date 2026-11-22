@@ -98,13 +98,24 @@ Themen-Etappen (`checkTopics`, `topicJudge`, `part_stats.js`): Jede gewertete An
 
 Firefox erlaubt pro Adresse etwa 5 MB localStorage, und alle Seiten unter `caionnew.github.io` teilen sich diese Grenze. `STORE` (`part_head.js`) misst beim Start den eigenen Stand und alles andere unter der Adresse, `save()` aktualisiert die eigene Größe. Die Einstellungen zeigen die Belegung als Balken; ab 3 MB (`STORE_WARN`) warnt auch „Heute“. Beim Start bittet die App mit `navigator.storage.persist()` darum, dass der Browser die Daten nicht bei Platzmangel löscht; das gilt für allen Speicher der Adresse. Lehnt der Browser ab, bieten die Einstellungen „Dauerhaft speichern“ an, denn auf eine Handlung hin stimmen Browser eher zu.
 
+## Gestaltungssystem
+
+Feste Stufen stehen als Variablen in `:root` (`src/style.css`), neue Regeln nehmen nur diese:
+- Schrift `--fs-1` bis `--fs-13`: 11 Diagramme, 12 kleine Marken, 13 Marken und Daten, 14 Nebentext, 15 Bedienelemente, 16 Zeilentitel und Eingabefelder (iOS vergrößert Felder unter 16 px), 17 Fließtext, 18 Einleitungen, 20 bis 28 Übungssätze und Titel, 40 große Zahl. Ausnahme: Beschriftung der Karten bei Land & Leute.
+- Stärke `--fw-regular`, `--fw-medium`, `--fw-semibold` (Bedienelemente, Marken), `--fw-bold` (Titel, Kennzahlen).
+- Radius `--r-l` 18 (Flächen), `--r-m` 14 (Bedienelemente), `--r-s` 10 (darin und klein), `--r-xs` 6 (Markierungen im Text), `--r-mark` 4 (Balken, Legenden), `--r-pill`, dazu 50 % für Kreise.
+- Bewegung `--dur-1` (.12 s, Druck und Farbe) und `--dur-2` (.2 s, Erscheinen) mit einer Kurve `--ease`; im Skript dieselben Werte in `MOTION`. Länger nur der Stempel am Tagesende, Füllstände und das Abblenden beim Vorlesen.
+- Abstände in den Vorlagen über Klassen auf 4er-Raster (`m0`, `mt0`, `mt-4` bis `mt-16`, `mb-12`, `mb-16`, `legend below`, `legend above`), nie `style="margin…"`.
+
+`tests/unit/gestaltung.test.js` hält das fest und findet tote Klassen (auch zusammengesetzte wie `m-${l}` zählen als benutzt).
+
 ## App-Symbol
 
 `design/icons/*.svg` sind Entwürfe auf 512 × 512 mit dem Motiv im inneren Kreis (80 %, sichere Zone für Masken). `tools/icons.js` rendert den in `design/icons/AKTIV` genannten Entwurf zu `public/icon-192.png` und `icon-512.png` (rund, Ecken durchsichtig, `purpose: any`) und `icon-maskable-512.png` (randlos, `purpose: maskable`). Farben aus der App: Blau `#1D5689`, Safran `#E3A21A`, Papier `#F3F5F4`.
 
 ## Bewegung
 
-Nur als Antwort auf eine Handlung und kurz: Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), ein Feld der Fortschrittsleiste färbt sich beim Prüfen, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich, an Etappentagen danach sein Siegelrand. `prefers-reduced-motion: reduce` schaltet alles ab.
+Nur als Antwort auf eine Handlung und kurz (Dauern und Kurve siehe Gestaltungssystem): Rückmeldung und Fenster blenden ein, Wortkästchen gleiten (FLIP mit der Web Animations API, `flyFrom`), ein Feld der Fortschrittsleiste färbt sich beim Prüfen, das Rundenende baut seine Ergebnisleiste einmal auf, der Tagesstempel zeichnet sich, an Etappentagen danach sein Siegelrand. `prefers-reduced-motion: reduce` schaltet alles ab.
 
 ## Online und offline
 

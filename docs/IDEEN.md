@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 22. November 2026 (nach 24.66.2)
+Stand: 22. November 2026 (nach 24.67.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -22,14 +22,9 @@ Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die b
 
 Befund: kein Neubau nötig. Kein toter JS-Code (ESLint), 0,6 % doppelte Stellen im Scan, Doku und Code stimmen überein, Tests dicht. Gewachsen ist die App an den Rändern: kein festes Gestaltungssystem, mehrfach berechnete Kennzahlen, ein paar sichtbare Widersprüche.
 
-Schritt 1 (Fehler und Einheitlichkeit) ist erledigt, 24.66.1. Von Schritt 2 ist der Code erledigt (je eine Stelle, `part_modern.js` aufgeteilt), 24.66.2.
+Schritt 1 (Fehler und Einheitlichkeit) ist erledigt, 24.66.1. Schritt 2 (je eine Stelle im Code, Gestaltungssystem) ist erledigt, 24.66.2 und 24.67.0.
 
-**Schritt 2, Gestaltungssystem und Code (B+, als Nächstes):**
-- Feste Stufen als CSS-Variablen: Schriftgrößen (bisher 32), Schriftstärken (bisher 7), Radien (18 und 14 px, bisher dazu 10 bis 13), Bewegung (zwei Dauern, eine Kurve; bisher 80 bis 600 ms und drei fast gleiche Kurven). Feste Abstände aus den Vorlagen (etwa 20 `style="margin…"`) in Klassen.
-- Totes CSS entfernen (etwa 24 Regeln) und ein Test, der ungenutzte Klassen findet.
-- Prüfen mit Vorher/Nachher aller Ansichten: Es darf sich nur ändern, was geändert werden soll.
-
-**Schritt 3, Fortschritt neu ordnen (B):** Sieben Abschnitte im Überblick, sieben je Sprache. Kopfkarte und „Jahr für Jahr“ zeigen im ersten Jahr dieselben Zahlen, die Tagwerke je Sprache stehen doppelt. Mit Varianten wie bei den Lernminuten, erst nach Schritt 2.
+**Schritt 3, Fortschritt neu ordnen (B, als Nächstes):** Sieben Abschnitte im Überblick, sieben je Sprache. Kopfkarte und „Jahr für Jahr“ zeigen im ersten Jahr dieselben Zahlen, die Tagwerke je Sprache stehen doppelt. Mit Varianten wie bei den Lernminuten.
 
 ### Inhalte: Satzpakete (ab 24.56; Pakete 1 bis 5 erledigt, 24.56 bis 24.60)
 

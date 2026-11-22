@@ -66,6 +66,8 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&am
 const nobr = html => `<span class="nobr">${html}</span>`;
 // Bewegung nur, wenn das System sie nicht abgeschaltet hat (Bewegung reduzieren)
 const calmMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+// Dieselben Stufen wie --dur-1, --dur-2 und --ease in style.css, für Bewegung aus dem Skript
+const MOTION = { fast:120, base:200, ease:'cubic-bezier(.2,.7,.3,1)' };
 // Längste gemeinsame Teilfolge zweier Listen: die Paare [i, j] gleicher Glieder, von vorn nach hinten. Bei Gleichstand rückt a
 // weiter. Die eine Stelle für Antwortabgleich, getippte Zusatzwörter, Wortstellung und Finde den Fehler.
 function lcsPairs(a, b, eq = (x, y) => x === y){

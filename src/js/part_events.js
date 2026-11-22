@@ -22,10 +22,9 @@ function cardIntoView(open, where){
 function dayAnim(open, where, switched){
   if (!open || calmMotion()) return;
   const host = dayHost(where), card = host && host.querySelector(':scope > .dcard'); if (!card || !card.animate) return;
-  const ease = 'cubic-bezier(.2, .7, .3, 1)';
-  card.animate(switched ? [{ opacity:.3 }, { opacity:1 }] : [{ opacity:0, transform:'translateY(6px)' }, { opacity:1, transform:'none' }], { duration:switched ? 140 : 200, easing:ease });
+  card.animate(switched ? [{ opacity:.3 }, { opacity:1 }] : [{ opacity:0, transform:'translateY(6px)' }, { opacity:1, transform:'none' }], { duration:switched ? MOTION.fast : MOTION.base, easing:MOTION.ease });
   const pill = where === 'mins' && host.querySelector('.mc.sel');
-  if (pill) pill.animate([{ backgroundColor:'transparent' }, { backgroundColor:getComputedStyle(pill).backgroundColor }], { duration:160, easing:ease });
+  if (pill) pill.animate([{ backgroundColor:'transparent' }, { backgroundColor:getComputedStyle(pill).backgroundColor }], { duration:MOTION.base, easing:MOTION.ease });
 }
 function saveDraft(){ if (!S.write) return; DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text, id:S.write.id, extra:S.write.extra }; save(); }
 // Neue Schreibaufgabe: eigene Kennung fürs Archiv, Extra-Aufgabe (falls gewünscht) und Wörter zum Einbauen (Grundform, gebeugt zählt auch)
@@ -40,7 +39,7 @@ function flyFrom(from, sel){
   if (calmMotion()) return;
   const to = el.getBoundingClientRect(), dx = from.left - to.left, dy = from.top - to.top;
   if (Math.abs(dx) + Math.abs(dy) < 2) return;
-  el.animate([{ transform:`translate(${dx}px, ${dy}px)` }, { transform:'none' }], { duration:200, easing:'cubic-bezier(.2,.8,.2,1)' });
+  el.animate([{ transform:`translate(${dx}px, ${dy}px)` }, { transform:'none' }], { duration:MOTION.base, easing:MOTION.ease });
 }
 function goView(v){ S.view = v; render(); window.scrollTo(0, 0); }
 document.addEventListener('pointerdown', e => { if (e.target.closest('[data-c]')) e.preventDefault(); });

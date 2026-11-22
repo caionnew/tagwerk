@@ -53,7 +53,7 @@ function topicSheetHtml(P){
     ${tr.rule ? `<p class="pop-t">${termify(tr.rule)}</p>` : ''}
     ${P.examples.length ? `<p class="pop-sub">Beispiele</p><ul class="exl">${P.examples.map(x => `<li><span class="wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="exg">${esc(x.de)}</span>` : ''}</li>`).join('')}</ul>` : ''}
     ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}
-    ${stats || genStat ? `<p class="legend" style="margin-top:12px">${stats}${genStat}</p>` : ''}
+    ${stats || genStat ? `<p class="legend mt-12">${stats}${genStat}</p>` : ''}
     <div class="popfoot"><button type="button" class="ghost" data-a="popclose">Schließen</button>${S.view === 'run' ? '' : `<button type="button" class="primary" data-a="trapgo" data-l="${lang}" data-t="${P.trap}">10 Aufgaben üben</button>`}</div>
   </div>`;
 }

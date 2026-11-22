@@ -2,6 +2,18 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.67.0
+**Aufräumen, Schritt 2b: ein Gestaltungssystem mit festen Stufen. Die App sieht fast gleich aus, nur ruhiger.**
+- **Schrift:** 13 Größen statt 32. Halbe Pixel entfallen: Nebentext 13,5 und 14,5 werden 14, Marken und Daten 12,5 werden 13, Bedienelemente 15,5 werden 15, Diagrammbeschriftungen 10 bis 11,5 werden 11 (der Kalender 10,5 auch). Größer: der deutsche Satz in der Aufgabe (23 auf 24), Wortkästchen (19 auf 20), Satz in Hörrunde und Nachsprechen (27 auf 28). Kleiner: Titel eines Lesetexts (31 auf 28), große Kennzahl im Sprach-Tab (30 auf 28). Die Angaben unter Kurz, Normal und Lang bleiben bei 12, damit „Wiederholungen“ in die Spalte passt.
+- **Schriftstärke:** vier statt sieben. Knöpfe, Reiter und Marken 600 statt 650, große Zahlen und Titel 700 statt 750. Auf Handys mit fester Systemschrift ändert sich nichts Sichtbares; bisher konnten große Zahlen dort ganz schwarz (900) erscheinen.
+- **Radien:** sechs Stufen statt 22 Werten. Flächen 18, Bedienelemente 14, darin liegende 10, Markierungen im Text 6, Balken und Legenden 4, Pillen ganz rund (auch der Schalter, die Fortschrittsleiste und der Stapelbalken).
+- **Bewegung:** zwei Dauern (0,12 s für Druck und Farbe, 0,2 s fürs Erscheinen) und eine Kurve, in CSS und im Skript gleich. Bisher 0,08 bis 0,25 s mit drei Kurven. Länger bleiben nur der Stempel am Tagesende, Füllstände und das Abblenden beim Vorlesen.
+- **Abstände:** 21 feste Abstände aus den Vorlagen (`style="margin…"`) sind Klassen auf einem 4er-Raster. Einige Abstände ändern sich dabei um 2 px (etwa unter dem Hinweis beim Lesen 12 statt 10).
+- **Totes CSS entfernt:** 31 Regeln für Klassen, die keine Vorlage mehr benutzt (alte Kalenderstufen, alte Balken und Verläufe, eine frühere Zeilenform).
+- Code: Die Stufen stehen als Variablen in `:root`; `MOTION` im Skript nimmt dieselben Werte. Die Schätzung, wie viele Zeilen die Wortkästchen brauchen, rechnet mit der neuen Größe.
+- Tests: neue Datei `gestaltung.test.js` (nur Stufen bei Schrift, Stärke, Radius und Bewegung; keine toten Klassen; keine festen Abstände in den Vorlagen).
+- Speicherstand unverändert.
+
 ## 24.66.2
 **Aufräumen, Schritt 2a: je eine Stelle für dieselbe Rechnung. Fast nichts sieht anders aus.**
 - **Nächste Etappe:** Rundenende, Dein Weg und der Sprach-Tab rechnen das nächste Ziel an einer Stelle aus, immer über dem höchsten bisher erreichten Stand. Bisher rechnete das Rundenende Serie, Aufgaben, Stunden und Übungstage selbst; nach dem Zurücksetzen einer Sprache konnten die drei Stellen verschiedene Ziele nennen. Der Rest steht überall gleich da, ab 1.000 mit Tausenderpunkt.

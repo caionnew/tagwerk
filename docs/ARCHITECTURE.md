@@ -21,13 +21,14 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | `data/kultur.js`, `data/geo.js` | Land & Leute, Kartendaten |
 | `data/texte.js` | Lesetexte mit Fragen und übernehmbaren Sätzen |
 | `js/part_head.js` | Konstanten, Themen (`TRAPS`), Speicher, Satzbank-Aufbau, Tagesplan, Runden, Wiederholungssperre, Serie, Tagesstand |
+| `js/part_icons.js` | Symbole (Linien, 24er Raster) |
 | `js/part_fsrs.js` | FSRS-6 (Wiederholungsplanung) |
-| `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Meine ist auch richtig“. Das Diktat prüft nur gegen den Zielsatz, ohne Alternativen. Beim Übersetzen (nicht im Diktat, nicht bei Lücken; erkennbar an `de` aus `judgeOpts`) zusätzlich: fehlendes „har“/„hade“ im schwedischen Nebensatz (`svHaDrop`), betontes spanisches Subjektpronomen passend zum deutschen Satz (`esProDrop`). Bei falscher Antwort im Spanischen: fehlt nur ein Reflexivpronomen (quedamos statt nos quedamos), nennt `esReflexWhy` die Bedeutung mit und ohne Pronomen (reflexiv laut Wörterbuch-Grundform auf -se, bei nos/os/te passend zur Person; Gegenbedeutungen in `ES_REFL`) |
+| `js/part_check.js` | Antworten prüfen (Gleichwertiges, Tippfehler, geprüfter Teil), Rundenablauf, „Meine ist auch richtig“. Das Diktat prüft nur gegen den Zielsatz, ohne Alternativen. Beim Übersetzen (nicht im Diktat, nicht bei Lücken; erkennbar an `de` aus `judgeOpts`) zusätzlich: fehlendes „har“/„hade“ im schwedischen Nebensatz (`svHaDrop`), betontes spanisches Subjektpronomen passend zum deutschen Satz (`esProDrop`). Bei falscher Antwort im Spanischen: fehlt nur ein Reflexivpronomen (quedamos statt nos quedamos), nennt `esReflexWhy` die Bedeutung mit und ohne Pronomen (reflexiv laut Wörterbuch-Grundform auf -se, bei nos/os/te passend zur Person; Gegenbedeutungen in `ES_REFL`). Vibration als leise Rückmeldung (`buzz`) |
 | `js/part_online.js` | Tatoeba (Nachschub, Suche, Aufnahmen), LanguageTool |
-| `js/part_speech.js` | Vorlesen (auf Wunsch mit Meldungen zu Beginn, Wortgrenzen und Ende) |
+| `js/part_speech.js` | Vorlesen (auf Wunsch mit Meldungen zu Beginn, Wortgrenzen und Ende), Aufnahme, Spracherkennung (Chrome, online) |
 | `js/part_radio.js` | Hörrunde: Sätze nebenbei hören |
 | `js/part_read.js` | Lesen und Hören: Texte, Fragen, Wikipedia-Fundstück |
-| `js/part_modern.js` | Spracherkennung, Symbole, Vibration, Teilen, Schnellzugriffe |
+| `js/part_start.js` | Begrüßung in der Zielsprache, Start über Teilen und App-Verknüpfungen |
 | `js/part_shadow.js` | Nachsprechen: Aufnahme, Pegel, Auswertung, Wiedergabe, Aussprachehilfen, Übersicht |
 | `js/part_stats.js` | Fehlerquellen nach Thema, Übungsart, Fehlerart (`mistake`: Ein anderes Wort im geprüften Teil ist Grammatik, außer in Themen mit `vocab:true` wie Redewendungen, Falsche Freunde, Lesetext-Lücken; dort nur dieselbe Wortfamilie) Erstkontakt neuer Sätze je Monat (`noteFirst`, noch ohne Anzeige) und hartnäckigen Sätzen (`hardSentences`: bei Wiederholungen mindestens zweimal nicht gewusst, nicht gefestigt, in 30 Tagen geübt; `hardPattern`: gemeinsames Thema), Uhrzeiten, Wortschatz |
 | `js/part_long.js` | Dein Weg (`wayEvents`, `wayNext`, Rangfolge `WAY_PRIO`, Gleisplan `wayHtml`), Themenraster, Veränderung über 30 Tage |

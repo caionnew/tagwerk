@@ -83,3 +83,30 @@ test('Etappen-Kasten: zwei Schwellen derselben Art in einer Runde ohne Widerspru
   assert.doesNotMatch(x, /Außerdem:[^.]*gefestigt/, 'gleichartige Etappen stehen in der Leiste, nicht unter „Außerdem“');
   assert.doesNotMatch(x, /noch 1\b/);
 });
+
+// Aufräumen Schritt 2: je eine Stelle für die nächste Etappe, den Abgleich nach längster gemeinsamer Folge, Prozent und Datum
+test('Nächste Etappe: Rundenende, Dein Weg und Sprach-Tab nennen dasselbe Ziel mit demselben Rest', () => {
+  const d = base(), ids = run(`BANK.sv.slice(0, 30).map(i => i.id)`);
+  ids.forEach(id => { d.st[id] = { s:40, d:5, ivl:30, last:ds(3), due:ds(-27), reps:4, ok:4, bad:0 }; });
+  for (let k = 12; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:40, secs:900 } }; d.done[ds(k)] = true; }
+  d.way = [{ d:ds(2), k:'mature', l:'sv', v:25 }];
+  setDB(d);
+  const next = run(`wayEvents().next`), nm = next.find(x => x.k === 'mature' && x.l === 'sv');
+  assert.ok(nm && nm.v > 25);
+  assert.deepEqual(run(`wayNext({ k:'mature', l:'sv', v:25 })`), { t:nm.t, rest:nm.rest });
+  ['tasks', 'hours', 'streak'].forEach(k => { const x = next.find(n => n.k === k); assert.deepEqual(run(`wayNext({ k:'${k}', v:1 })`), { t:x.t, rest:x.rest }, k); });
+  assert.match(text(run(`(S.ptab = 'sv', viewProgress())`)), new RegExp(`Nächstes Ziel: ${nm.v}, ${nm.rest}\\.`));
+  assert.match(text(run(`wayHtml()`)), new RegExp(nm.rest));
+});
+
+test('Eine Stelle je Regel im Quelltext: Abgleich, Bewegung reduzieren, Monatsnamen, Prozent mit geschütztem Leerzeichen', () => {
+  const fs = require('node:fs'), path = require('node:path'), dir = path.join(__dirname, '../../src/js');
+  const src = fs.readdirSync(dir).filter(f => f.endsWith('.js')).map(f => fs.readFileSync(path.join(dir, f), 'utf8')).join('\n');
+  const count = re => (src.match(re) || []).length;
+  assert.equal(count(/Math\.max\(dp\[i \+ 1\]\[j\], dp\[i\]\[j \+ 1\]\)/g), 1, 'längste gemeinsame Folge nur in lcsPairs');
+  assert.equal(count(/prefers-reduced-motion/g), 1, '„Bewegung reduzieren“ nur in calmMotion');
+  assert.equal(count(/'Januar'|'Jan'/g), 2, 'Monatsnamen nur in MONTHS und MONTHS_FULL');
+  assert.equal(count(/function totals\(|const totals =/g), 0, 'Gesamtsummen nur in lifeTotals');
+  assert.equal(count(/\} %|' %'|" %"/g), 0, 'Prozent nur über pct, mit geschütztem Leerzeichen');
+  assert.equal(run('pct(0.94)'), '94 %'); assert.equal(run('pct(0.045, true)'), '4,5 %');
+});

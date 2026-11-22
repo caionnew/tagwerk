@@ -14,11 +14,8 @@ const spotOk = d => Object.assign({}, d, { words:d.full.split(' '), wrong:[], fi
 const SPOT_OK = 0.4;
 // Welche Wörter der Lösung neu sind: alles außerhalb der längsten gemeinsamen Wortfolge (ohne Satzzeichen, Groß/klein egal)
 function spotChanged(words, fixed){
-  const k = w => w.replace(/[.,!?¿¡]/g, '').toLowerCase(), a = words.map(k), b = fixed.map(k), m = a.length, n = b.length;
-  const dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));
-  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-  const keep = new Set(); let i = 0, j = 0;
-  while (i < m && j < n) { if (a[i] === b[j]) { keep.add(j); i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+  const k = w => w.replace(/[.,!?¿¡]/g, '').toLowerCase(), b = fixed.map(k);
+  const keep = new Set(lcsPairs(words.map(k), b).map(p => p[1]));
   return new Set(b.map((_, x) => x).filter(x => !keep.has(x)));
 }
 const spotVariant = (d, roll = Math.random()) => (roll < SPOT_OK ? spotOk(d) : d);

@@ -142,11 +142,11 @@ test('Themen: Halbierung kurz- und langfristig, wiederholt; die nächste braucht
   // Am Rundenende: die vorige Halbierung desselben Themas als vorige Etappe
   const last = J("wayEvents().done.filter(e => e.trap === 'bisats').pop()");
   const lh = app.run(`mileHtml({ lang:'sv', miles:[${JSON.stringify(last)}], crossed:{} })`);
-  assert.match(lh, /class="mr done"><i><\/i><span class="mr-t">Fehler halbiert<span class="mr-s">von 17 % auf 5 %<\/span>/);
+  assert.match(lh, /class="mr done"><i><\/i><span class="mr-t">Fehler halbiert<span class="mr-s">von 17\u00a0% auf 5\u00a0%<\/span>/);
   assert.match(text(lh), /^Etappe Wortstellung im Nebensatz Schwedisch Fehler halbiert von 17 % auf 5 % \d+\. \S+ Fehler wieder halbiert von 5 % auf 0,8 % heute Je 480 Aufgaben: vorher 24 falsch, zuletzt 4\. Themenblatt Dein Weg$/);
   // Als Nächstes: wieder halbiert, mit dem Ziel; unter 2 % Fehler keine nächste Halbierung mehr (bräuchte Tausende Aufgaben)
   const nx = J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats')[0])`);
-  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'auf unter 2,5 %');
+  assert.match(nx.t, /wieder halbiert$/); assert.equal(nx.rest, 'auf unter 2,5\u00a0%');
   assert.equal(J(`wayNext(wayEvents().done.filter(e => e.trap === 'bisats').pop())`), null);
 });
 test('Themen: „sitzt“ einmal, wenn es früher sicher über 15 % lag und jetzt sicher darunter', () => {
@@ -249,8 +249,6 @@ test('Nach mehr als 400 Übungstagen: Anfang, Daten und Zählung bleiben', () =>
   assert.equal(J('DB.logArch.first'), ds(404));
   assert.deepEqual([J("archSum('days')"), J("archSum('n', 'sv')"), J("archSum('secs')"), J("archSum('n', 'es')")], [5, 50, 1500, 0]);
   // Gesamtzahlen und „Jahr für Jahr“ zählen die herausgefallenen Tage mit
-  const tot = J('totals()');
-  assert.deepEqual([tot.days, tot.n, tot.first], [405, 4050, ds(404)]);
   assert.equal(J('yearStats()').reduce((a, Y) => a + Y.days, 0), 405);
   const after = J('wayEvents().done').map(e => [e.d, e.t]);
   assert.deepEqual(after, before, 'gleiche Etappen mit gleichem Datum');

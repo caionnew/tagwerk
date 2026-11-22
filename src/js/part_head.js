@@ -64,10 +64,33 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 // Knopf und folgendes Satzzeichen zusammenhalten: Nach einem Knopf (inline-block) darf die Zeile sonst vor dem Punkt umbrechen
 const nobr = html => `<span class="nobr">${html}</span>`;
+// Bewegung nur, wenn das System sie nicht abgeschaltet hat (Bewegung reduzieren)
+const calmMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+// Längste gemeinsame Teilfolge zweier Listen: die Paare [i, j] gleicher Glieder, von vorn nach hinten. Bei Gleichstand rückt a
+// weiter. Die eine Stelle für Antwortabgleich, getippte Zusatzwörter, Wortstellung und Finde den Fehler.
+function lcsPairs(a, b, eq = (x, y) => x === y){
+  const m = a.length, n = b.length, dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) dp[i][j] = eq(a[i], b[j]) ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const pairs = []; let i = 0, j = 0;
+  while (i < m && j < n) { if (eq(a[i], b[j])) { pairs.push([i, j]); i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+  return pairs;
+}
 const pad = n => String(n).padStart(2, '0');
 const fmt = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
 const today = () => fmt(new Date());
 const addDays = (ds, n) => { const [y, m, d] = ds.split('-').map(Number); return fmt(new Date(y, m - 1, d + n)); };
+/* ---------- Datum und Prozent im Text: die eine Stelle dafür ---------- */
+const dateOf = ds => { const [y, m, d] = ds.split('-').map(Number); return new Date(y, m - 1, d); };
+const MONTHS = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+const MONTHS_FULL = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+const WDAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+const WDAYS_FULL = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+// „19. Nov“, aus einem anderen Jahr „19. Nov 2025“ (Etappen, Tageskarten, Dein Weg)
+const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}${ds.slice(0, 4) !== today().slice(0, 4) ? ' ' + ds.slice(0, 4) : ''}`; };
+const fmtDayLong = ds => { const d = dateOf(ds); return `${WDAYS_FULL[d.getDay()]}, ${d.getDate()}. ${MONTHS_FULL[d.getMonth()]}`; };
+const fmtDayShort = ds => { const d = dateOf(ds); return `${d.getDate()}. ${MONTHS_FULL[d.getMonth()]}`; };
+// Prozent mit geschütztem Leerzeichen („94 %“ bricht nicht um); fine: unter 10 % mit einer Nachkommastelle („4,5 %“)
+const pct = (r, fine) => (fine && r > 0 && r < 0.1 ? (Math.round(r * 1000) / 10).toLocaleString('de-DE') : String(Math.round(r * 100))) + '\u00a0%';
 const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h.toString(36); };

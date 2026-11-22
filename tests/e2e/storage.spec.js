@@ -15,7 +15,7 @@ test('Einstellungen zeigen die Belegung, fremde Daten und ob der Browser die Dat
   await page.click('[data-a=settings] >> nth=0');
   const row = page.locator('.row.store');
   await expect(row.locator('.rt')).toHaveText(/^Gespeichert: 2\d\d KB von etwa 5\sMB$/);
-  await expect(row.locator('.mbar')).toHaveAttribute('aria-label', /^[45] % belegt$/);
+  await expect(row.locator('.mbar')).toHaveAttribute('aria-label', /^[45]\u00a0% belegt$/);
   await expect(row.locator('.rd')).toContainText('Davon 200 KB von anderen Seiten unter 127.0.0.1:4173.');
   await expect(row.locator('.rd')).toContainText('Der Browser darf die Daten bei Platzmangel löschen.');
   await row.locator('[data-a=persist]').click();
@@ -28,7 +28,7 @@ test('Ab 3 MB warnt „Heute“ und führt zu den Einstellungen', async ({ page 
   await seed(page, richDB('sv'));
   await page.goto(APP);
   const warn = page.locator('.notice.warn');
-  await expect(warn).toContainText(/Der Speicher ist zu 6\d % voll\. Exportier bitte ein Backup\./);
+  await expect(warn).toContainText(/Der Speicher ist zu 6\d\u00a0% voll\. Exportier bitte ein Backup\./);
   await warn.locator('[data-a=toSettings]').click();
   await expect(page.locator('.row.store.warn .rd')).toContainText('Der Speicher wird knapp.');
 });

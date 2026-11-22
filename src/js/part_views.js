@@ -1,7 +1,6 @@
 /* ---------- Ansichten ---------- */
 const FOCUS_VIEWS = ['run', 'runDone', 'radio', 'texts', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
 const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>` : esc(w)).join(' ');
-const MONTHS_FULL = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 function monthRecap(){
   const t = today(), day = Number(t.slice(8, 10));
   // Nach dem ersten Tagwerk des Monats steht die Bilanz am Rundenende (monthCard); hier dann nicht noch einmal
@@ -89,12 +88,12 @@ function findHtml(lang){
     <button type="button" class="link find-more" data-a="ref" data-r="friends">Alle ${FALSE_FRIENDS[lang].length} falschen Freunde</button></section>`;
 }
 function backupHint(){
-  const tot = totals(), t = today();
-  if (tot.days < 30) return '';
-  const since = DB.lastBackup ? dayDiff(t, DB.lastBackup) : tot.days;
+  const tot = lifeTotals(), t = today();
+  if (tot.dayCount < 30) return '';
+  const since = DB.lastBackup ? dayDiff(t, DB.lastBackup) : tot.dayCount;
   const nag = DB.used && DB.used.backupNag;
   if (since < 90 || (nag && dayDiff(t, nag) < 30)) return '';
-  return `<div class="notice ok"><span>${DB.lastBackup ? `Dein letztes Backup ist ${Math.round(since / 30)} Monate her.` : `Du übst seit ${tot.days} Tagen und hast noch kein Backup.`} Der Fortschritt liegt nur auf diesem Gerät.</span><button type="button" class="link" data-a="export">Sichern</button><button type="button" class="link dim" data-a="nagoff">Später</button></div>`;
+  return `<div class="notice ok"><span>${DB.lastBackup ? `Dein letztes Backup ist ${Math.round(since / 30)} Monate her.` : `Du übst seit ${tot.dayCount} Tagen und hast noch kein Backup.`} Der Fortschritt liegt nur auf diesem Gerät.</span><button type="button" class="link" data-a="export">Sichern</button><button type="button" class="link dim" data-a="nagoff">Später</button></div>`;
 }
 function viewHome(){
   const lang = S.lang;
@@ -483,10 +482,8 @@ function feedbackHtml(r, ex, c){
 // Wortstellung: richtig stehende, verschobene und überzählige Wörter unterscheiden
 function orderMarks(order, target){
   const a = order.map(x => x.toLowerCase()), b = tileTokens(target).map(x => x.toLowerCase());
-  const m = a.length, n = b.length, dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));
-  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-  const keep = new Array(m).fill(false); let i = 0, j = 0;
-  while (i < m && j < n) { if (a[i] === b[j]) { keep[i] = true; i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+  const keep = new Array(a.length).fill(false);
+  lcsPairs(a, b).forEach(([i]) => { keep[i] = true; });
   const left = {}; b.forEach(w => { left[w] = (left[w] || 0) + 1; });
   a.forEach((w, k) => { if (keep[k]) left[w]--; });
   return a.map((w, k) => { if (keep[k]) return 'ok'; if (left[w] > 0) { left[w]--; return 'moved'; } return 'extra'; });
@@ -632,9 +629,8 @@ function bonusHtml(r){
     <div class="btnrow">${cands.length > 1 ? '<button type="button" class="ghost" data-a="bonusnext">Anderer Ausdruck</button>' : ''}<button type="button" class="ghost" data-a="bonuscheck">Prüfen</button></div>
   </section>`;
 }
-// Etappe am Rundenende (seit 24.63): Ausschnitt aus „Dein Weg“ mit der vorigen, der heutigen und der nächsten Etappe derselben Art.
+// Etappe am Rundenende: Ausschnitt aus „Dein Weg“ mit der vorigen, der heutigen und der nächsten Etappe derselben Art.
 // Bei mehreren Etappen eine Hauptetappe, die übrigen in einer Zeile. Bei gefestigten oder verankerten Sätzen die Sätze selbst.
-const fmtDM = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}${ds.slice(0, 4) !== today().slice(0, 4) ? ' ' + ds.slice(0, 4) : ''}`; };
 function mileHtml(r){
   const miles = (r.miles || []).slice().sort((a, b) => wayPrio(a) - wayPrio(b));
   if (!miles[0]) return '';
@@ -648,7 +644,7 @@ function mileHtml(r){
   const lab = (t, l) => `${esc(t)}${l ? ` <span class="wl-lang">${LANG[l].deName}</span>` : ''}`;
   const row = (cls, t, right) => `<li class="mr ${cls}"><i></i><span class="mr-t">${t}</span><span class="mr-d">${right}</span></li>`;
   // Themen-Etappen: das Thema einmal als Überschrift, in der Leiste nur die Stufe mit der Fehlerquote vorher und nachher
-  const rate = x => fmtPct(x[1] / x[0]);
+  const rate = x => pct(x[1] / x[0], true);
   const step = e => `${esc(e.st)}${e.b && e.c ? `<span class="mr-s">von ${rate(e.b)} auf ${rate(e.c)}</span>` : ''}`;
   const head = topic ? `<p class="mr-h">${lab(trapLabel(m.l, m.trap), m.l)}</p>` : '';
   const rail = topic
@@ -809,9 +805,6 @@ function viewTat(){
     ${t.mode === 'topic' ? `<select id="tatTrap" aria-label="Thema">${trapOpts}</select>` : `<input type="text" id="tatWord" class="tw" lang="${lang}" value="${esc(t.word)}" placeholder="z. B. ${lang === 'sv' ? 'orkar' : 'aprovechar'}" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Wort"><p class="hint">Gesucht wird genau die eingegebene Form, also zum Beispiel „orkar“ statt „orka“.</p>`}
   </section>${res}<div class="actionbar"><div class="in">${bar}</div></div>`;
 }
-const MONTHS = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-const WDAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-const pct = x => Math.round(x * 100) + ' %';
 // Lernzeit als Kennzahl, Zahl groß, Einheit darunter: bis 10 Stunden in Minuten („81 Minuten“, nie „1 Stunden“),
 // dann Stunden mit einer Nachkommastelle, ab 100 Stunden ganz
 const bigTime = secs => {
@@ -826,9 +819,8 @@ function fmtMin(secs, minsOnly){
   if (m < 60 || minsOnly) return m.toLocaleString('de-DE') + ' Min.';
   return Math.floor(m / 60) + ' Std.' + (m % 60 ? ' ' + (m % 60) + ' Min.' : '');
 }
-const dateOf = ds => { const [y, m, d] = ds.split('-').map(Number); return new Date(y, m - 1, d); };
 function calendarSvg(){
-  const t = today(), first = totals().first;
+  const t = today(), first = lifeTotals().first;
   const since = first ? Math.floor(dayDiff(mondayOf(t), mondayOf(first)) / 7) + 1 : 1;
   const weeks = Math.min(156, Math.max(17, since));
   const cell = 13, gap = 3, top = 14, step = cell + gap;
@@ -888,8 +880,6 @@ const minShown = x => MIN_LANGS.reduce((a, l) => a + minRound(x.act[l].secs), 0)
 const minTasks = x => MIN_LANGS.reduce((a, l) => a + x.act[l].n, 0);
 // Wie im Kalender: nichts vorgewählt; ein Tipp öffnet die Karte, ein zweiter auf dieselbe Säule schließt sie
 function minPicked(data){ return S.minDay && data.some(x => x.key === S.minDay) ? S.minDay : null; }
-const fmtDayLong = ds => { const d = dateOf(ds); return `${WDAYS_FULL[d.getDay()]}, ${d.getDate()}. ${MONTHS_FULL[d.getMonth()]}`; };
-const fmtDayShort = ds => { const d = dateOf(ds); return `${d.getDate()}. ${MONTHS_FULL[d.getMonth()]}`; };
 function relDay(ds){ const k = dayDiff(today(), ds); return k === 0 ? 'heute' : k === 1 ? 'gestern' : k === 2 ? 'vorgestern' : ''; }
 // Stunden (Anzahl Aufgaben je Stunde) als Zeitspannen: 7, 8, 21 → „7–9 und 21–22 Uhr“
 function hourSpans(h){
@@ -943,13 +933,13 @@ function dayCard(ds){
   const title = rel ? rel[0].toUpperCase() + rel.slice(1) : fmtDayLong(ds);
   const sub = [rel ? fmtDayLong(ds) : '', hours].filter(Boolean).join(' · ');
   const empty = ds === today() ? 'Noch nicht geübt.' : streakData().free.has(ds) ? 'Pausetag, die Serie lief weiter.' : 'Nicht geübt.';
-  // Etappen dieses Tages, wie in „Dein Weg“ (seit 24.63)
+  // Etappen dieses Tages, wie in „Dein Weg“
   const ms = wayEvents().done.filter(e => e.d === ds);
   const extra = ms.length ? `<ul class="dc-m">${ms.map(e => `<li><i class="sq rl-${e.l || 'x'}-sq" aria-hidden="true"></i>${esc(e.t)}${e.l ? ` <span class="wl-lang">${LANG[e.l].deName}</span>` : ''}</li>`).join('')}</ul>` : '';
   return detailCard(title, sub, rows, empty, extra);
 }
 function minutesHtml(){
-  const first = totals().first;
+  const first = lifeTotals().first;
   const data = minSpan().map(x => Object.assign(x, { pre:!!first && x.key < first, act:Object.fromEntries(MIN_LANGS.map(l => [l, actOf(x.days, l)])) }));
   if (!data.some(x => minTasks(x) > 0) && !Object.keys(DB.log).some(k => MIN_LANGS.some(l => (dayLog(k, l).secs || 0) > 0))) return '';
   const sel = minPicked(data), t = today();
@@ -1060,28 +1050,15 @@ function progressChart(lang){
     ${late ? `<p class="legend">Abrufbar und gefestigt werden seit dem ${fmt(snapFrom)} erfasst.</p>` : !snapFrom ? '<p class="legend">Abrufbar und gefestigt werden ab heute erfasst.</p>' : ''}
   </div>`;
 }
-function totals(){
-  const keys = Object.keys(DB.log).sort();
-  let n = 0, secs = 0, days = 0; const years = {};
-  keys.forEach(k => {
-    let any = false; const y = k.slice(0, 4); years[y] = years[y] || { days:0, n:0, secs:0, mat:0 };
-    ['sv', 'es'].forEach(l => { const x = dayLog(k, l); n += x.n || 0; secs += x.secs || 0; years[y].n += x.n || 0; years[y].secs += x.secs || 0; years[y].mat += x.mat || 0; if (x.n) any = true; });
-    if (any) { days++; years[y].days++; }
-  });
-  // Herausgefallene Tage (älter als 400 Übungstage) aus der Monatssumme
-  const A = DB.logArch || {}, logFirst = keys.find(k => ['sv', 'es'].some(l => dayLog(k, l).n));
-  Object.keys(A.m || {}).forEach(ym => { const y = ym.slice(0, 4), M = A.m[ym]; years[y] = years[y] || { days:0, n:0, secs:0, mat:0 }; years[y].days += M.days || 0; ['sv', 'es'].forEach(l => { const x = M[l] || {}; years[y].n += x.n || 0; years[y].secs += x.secs || 0; years[y].mat += x.mat || 0; }); });
-  const first = A.first && (!logFirst || A.first < logFirst) ? A.first : logFirst;
-  return { n:n + archSum('n'), secs:secs + archSum('secs'), first, days:days + archSum('days'), years };
-}
 function viewProgress(){
   const tab = S.ptab || 'all';
   const lang = tab === 'all' ? S.lang : tab, L = LANG[lang];
-  const sd = streakData(), tot = totals();
+  const sd = streakData(), tot = lifeTotals();
   const cal = calendarSvg();
   const items = BANK[lang];
   const practiced = items.filter(i => stOf(i.id)).length;
-  const mature = matureCount(lang), hiM = matureHigh(lang), nextM = nextMilestone(hiM), prevM = prevMilestone(hiM);
+  // Nächstes Ziel wie in Dein Weg und am Rundenende (wayEvents): über dem höchsten erreichten Stand
+  const mature = matureCount(lang), hiM = matureHigh(lang), nm = wayEvents().next.find(n => n.k === 'mature' && n.l === lang), nextM = nm ? nm.v : nextMilestone(hiM), prevM = prevMilestone(hiM);
   const known = Math.round(knownEstimate(lang));
   const secs7 = sumLog(lang, 7, 'secs');
   const rev30 = sumLog(lang, 30, 'rev'), revOk30 = sumLog(lang, 30, 'revOk'), revM30 = sumLog(lang, 30, 'revM'), revMOk30 = sumLog(lang, 30, 'revMOk');
@@ -1105,7 +1082,7 @@ function viewProgress(){
   <section class="today">
     <p class="num">${plural(sd.current, 'Tag', 'Tage')} in Folge</p>
     <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tagwerk am Tag, egal in welcher Sprache; ein Pausetag pro Woche hält die Serie.</p>
-    ${firstDate ? `<div class="kpis k4"><div><b>${tot.days.toLocaleString('de-DE')}</b><span>${tot.days === 1 ? 'Übungstag' : 'Übungstage'}</span></div><div><b>${tw.toLocaleString('de-DE')}</b><span>${tw === 1 ? 'Tagwerk' : 'Tagwerke'}</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>${tot.n === 1 ? 'Aufgabe' : 'Aufgaben'}</span></div><div><b>${bigTime(tot.secs)[0]}</b><span>${bigTime(tot.secs)[1]}</span></div></div>${activeLangs().length > 1 ? `<p class="kmeta"><span>Tagwerke:</span>${activeLangs().map(l => `<span class="kmi"><i class="sq rl-${l}-sq"></i>${LANG[l].deName} ${tagwerkCount(l).toLocaleString('de-DE')}</span>`).join('')}</p>` : ''}<p class="kmeta">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
+    ${firstDate ? `<div class="kpis k4"><div><b>${tot.dayCount.toLocaleString('de-DE')}</b><span>${tot.dayCount === 1 ? 'Übungstag' : 'Übungstage'}</span></div><div><b>${tw.toLocaleString('de-DE')}</b><span>${tw === 1 ? 'Tagwerk' : 'Tagwerke'}</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>${tot.n === 1 ? 'Aufgabe' : 'Aufgaben'}</span></div><div><b>${bigTime(tot.secs)[0]}</b><span>${bigTime(tot.secs)[1]}</span></div></div>${activeLangs().length > 1 ? `<p class="kmeta"><span>Tagwerke:</span>${activeLangs().map(l => `<span class="kmi"><i class="sq rl-${l}-sq"></i>${LANG[l].deName} ${tagwerkCount(l).toLocaleString('de-DE')}</span>`).join('')}</p>` : ''}<p class="kmeta">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
   </section>
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
@@ -1122,7 +1099,7 @@ function viewProgress(){
     <p class="eyebrow">${L.deName}</p>
     <p class="num">${mature} <button type="button" class="term" data-a="term" data-k="gefestigt">${mature === 1 ? 'gefestigter Satz' : 'gefestigte Sätze'}</button></p>
     <div class="mbar" aria-hidden="true"><span style="width:${Math.max(0, Math.round((mature - prevM) / Math.max(1, nextM - prevM) * 100))}%"></span></div>
-    <p class="hint" style="margin-top:6px">Nächstes Ziel: ${nextM}${mature ? `, noch ${nextM - mature}` : ''}.</p>
+    <p class="hint" style="margin-top:6px">Nächstes Ziel: ${nextM}${mature ? `, ${nm ? nm.rest : `noch ${nextM - mature}`}` : ''}.</p>
     ${practiced ? (() => { const v = vocabCount(lang), ago = snapAgo(lang, 30), dv = ago && ago.w != null ? v.all - ago.w : null;
       return `<div class="kpis">
         <div><b>${known}</b><span>von ${practiced} <button type="button" class="term" data-a="term" data-k="abrufbar">abrufbar</button></span></div>
@@ -1146,7 +1123,7 @@ function viewProgress(){
   ${topicGridHtml(lang)}
   ${writingTrendHtml(lang)}
   ${(() => { const gl = (DB.genus && DB.genus[lang]) || {}, traps = Object.keys(gl).filter(w => gl[w].last === 0);
-    const gens = genIds(lang).map(g => { const rc = (DB.gen[g] && DB.gen[g].recent) || []; return rc.length >= 10 ? `${GENS[g].short || GENS[g].label} ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)} %` : ''; }).filter(Boolean);
+    const gens = genIds(lang).map(g => { const rc = (DB.gen[g] && DB.gen[g].recent) || []; return rc.length >= 10 ? `${GENS[g].short || GENS[g].label} ${pct(rc.reduce((a, x) => a + x, 0) / rc.length)}` : ''; }).filter(Boolean);
     return gens.length || traps.length ? `<p class="legend" style="margin:6px 4px 0">${gens.length ? `Erzeugte Aufgaben, zuletzt richtig: ${esc(gens.join(', '))}.` : ''}${traps.length ? ` Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button>` : ''}</p>` : ''; })()}
   ${collected.length ? `<h2 class="grp">Gesammelte Sätze (${collected.length})</h2><div class="rows">${collected.slice().reverse().slice(0, S.colAll ? 9999 : 5).map(o => `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(o.target)}</span><span class="rd">${esc(o.de)}</span></span><button type="button" class="link${S.armed === 'del:' + o.id ? ' armed' : ''}" data-a="coldel" data-id="${o.id}">${S.armed === 'del:' + o.id ? 'Wirklich entfernen?' : 'Entfernen'}</button>${S.armed === 'del:' + o.id ? '<span class="armnote">Der Lernstand geht verloren.</span>' : ''}</div>`).join('')}</div>${collected.length > 5 ? `<div class="btnrow"><button type="button" class="ghost" data-a="colall">${S.colAll ? 'Weniger anzeigen' : `Alle ${collected.length} anzeigen`}</button></div>` : ''}` : ''}
 
@@ -1182,9 +1159,9 @@ function storeRow(){
   const other = STORE.other >= 10240 ? ` Davon ${fmtMB(STORE.other)} von anderen Seiten unter ${esc(location.host || 'dieser Adresse')}.` : '';
   const pers = STORE.persisted === true ? ' Der Browser behält die Daten dauerhaft.' : STORE.persisted === false ? ' Der Browser darf die Daten bei Platzmangel löschen.' : '';
   const text = ((warn ? 'Der Speicher wird knapp. Exportier bitte ein Backup.' : '') + other + pers).trim();
-  return `<div class="row static store${warn ? ' warn' : ''}"><span class="txt"><span class="rt">Gespeichert: ${fmtMB(storeUsed())} von etwa 5\u00a0MB</span><span class="mbar" role="img" aria-label="${storePct()} % belegt"><span style="width:${Math.max(2, storePct())}%"></span></span>${text ? `<span class="rd">${text}</span>` : ''}${STORE.persisted === false ? '<button type="button" class="link" data-a="persist">Dauerhaft speichern</button>' : ''}</span></div>`;
+  return `<div class="row static store${warn ? ' warn' : ''}"><span class="txt"><span class="rt">Gespeichert: ${fmtMB(storeUsed())} von etwa 5\u00a0MB</span><span class="mbar" role="img" aria-label="${storePct()} % belegt"><span style="width:${Math.max(2, storePct())}%"></span></span>${text ? `<span class="rd">${text}</span>` : ''}${STORE.persisted === false ? '<button type="button" class="link" data-a="persist">Dauerhaft speichern</button>' : ''}</span></div>`;
 }
-const storeHint = () => (storeUsed() >= STORE_WARN ? `<div class="notice warn"><span>Der Speicher ist zu ${storePct()} % voll. Exportier bitte ein Backup.</span><button type="button" class="link" data-a="toSettings">Ansehen</button></div>` : '');
+const storeHint = () => (storeUsed() >= STORE_WARN ? `<div class="notice warn"><span>Der Speicher ist zu ${storePct()} % voll. Exportier bitte ein Backup.</span><button type="button" class="link" data-a="toSettings">Ansehen</button></div>` : '');
 function viewSettings(){
   const L = LANG[S.lang];
   const autoN = DB.tat[S.lang].filter(o => o.auto).length;

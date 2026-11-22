@@ -4,15 +4,10 @@ function closest(input, answers, lang){
   let best = answers[0], score = -1;
   answers.forEach(ans => {
     const b = norm(ans, lang).split(' ');
-    const sc = lcs(a, b) / Math.max(a.length, b.length);
+    const sc = lcsPairs(a, b).length / Math.max(a.length, b.length);
     if (sc > score) { score = sc; best = ans; }
   });
   return best;
-}
-function lcs(a, b){
-  const dp = Array.from({ length:a.length + 1 }, () => new Array(b.length + 1).fill(0));
-  for (let i = a.length - 1; i >= 0; i--) for (let j = b.length - 1; j >= 0; j--) dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-  return dp[0][0];
 }
 // Gleichwertige Schreibweisen: Zahlen als Ziffern oder Wort, „arbeta“ und „jobba“, „mej“ und „mig“, „sen“ für „sedan“.
 // Nicht bei Aufgaben, in denen genau das geübt wird (Uhrzeit ausschreiben, Lückenwort).
@@ -145,15 +140,9 @@ function diffHtml(target, typed, lang){
   norm(typed, lang).split(' ').filter(Boolean).forEach(y => { const k = tb.findIndex((w, i) => w && tb[i + 1] && w + tb[i + 1] === deacc(y)); if (k >= 0) Y.push(te[k], te[k + 1]); else Y.push(y); });
   const yb = Y.map(deacc);
   const idx = tb.map((w, i) => (w ? i : -1)).filter(i => i >= 0);
-  const m = idx.length, n = yb.length;
-  const dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));
-  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) dp[i][j] = tb[idx[i]] === yb[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-  const st = T.map((_, k) => (tb[k] ? 'miss' : 'ok'));
-  let i = 0, j = 0, hit = 0;
-  while (i < m && j < n) {
-    if (tb[idx[i]] === yb[j]) { st[idx[i]] = te[idx[i]] === Y[j] ? 'ok' : 'near'; if (st[idx[i]] === 'ok') hit++; i++; j++; }
-    else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++;
-  }
+  const m = idx.length, st = T.map((_, k) => (tb[k] ? 'miss' : 'ok'));
+  let hit = 0;
+  lcsPairs(idx.map(i => tb[i]), yb).forEach(([i, j]) => { st[idx[i]] = te[idx[i]] === Y[j] ? 'ok' : 'near'; if (st[idx[i]] === 'ok') hit++; });
   return { html:T.map((w, k) => `<span class="w-${st[k]}" data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>`).join(' '), score:m ? hit / m : 0 };
 }
 // Kommt die Wortfolge pat (mit * als beliebigem Wort) zusammenhängend in den Wörtern t vor?
@@ -306,11 +295,8 @@ function selfAccept(){
 function mineHtml(typed, target, lang){
   const Y = String(typed).split(/\s+/).filter(Boolean), yb = Y.map(w => deacc(norm(w, lang)));
   const tb = norm(target, lang).split(' ').filter(Boolean).map(deacc);
-  const m = Y.length, n = tb.length;
-  const dp = Array.from({ length:m + 1 }, () => new Array(n + 1).fill(0));
-  for (let i = m - 1; i >= 0; i--) for (let j = n - 1; j >= 0; j--) dp[i][j] = yb[i] && yb[i] === tb[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-  const keep = new Array(m).fill(false); let i = 0, j = 0;
-  while (i < m && j < n) { if (yb[i] && yb[i] === tb[j]) { keep[i] = true; i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+  const keep = new Array(Y.length).fill(false);
+  lcsPairs(yb, tb, (x, y) => !!x && x === y).forEach(([i]) => { keep[i] = true; });
   if (keep.every((k, x) => k || !yb[x])) return '';
   return Y.map((w, x) => (keep[x] || !yb[x] ? esc(w) : `<span class="w-extra">${esc(w)}</span>`)).join(' ');
 }
@@ -396,7 +382,7 @@ function crossedIn(r, th){
     .map(x => ({ id:x.id, ivl:x.ivl, bad:(DB.st[x.id] && DB.st[x.id].bad) || 0, lapses:(DB.st[x.id] && DB.st[x.id].lapses) || 0 }))
     .sort((a, b) => b.bad - a.bad || b.lapses - a.lapses);
 }
-// Monatsbilanz beim ersten Tagwerk eines Monats (seit 24.63): der Vormonat in drei Zahlen und als Kalender. Einmal je Monat;
+// Monatsbilanz beim ersten Tagwerk eines Monats: der Vormonat in drei Zahlen und als Kalender. Einmal je Monat;
 // danach verschwindet auch die Monatszeile auf „Heute“. Im Januar dazu das Vorjahr in einer Zeile.
 function monthCard(){
   const t = today(), ym = t.slice(0, 7);
@@ -418,4 +404,9 @@ function monthCard(){
   }
   return out;
 }
-
+/* ---------- Vibration als leise Rückmeldung (Android) ---------- */
+function buzz(kind){
+  if (DB.settings.haptics === false || !navigator.vibrate) return;
+  // Etappe: kurz, kurz, lang; falsch: zweimal kurz; richtig: ein Tick
+  try { navigator.vibrate(kind === 'mile' ? [14, 70, 14, 70, 60] : kind === 'bad' ? [16, 70, 16] : 10); } catch (e) {}
+}

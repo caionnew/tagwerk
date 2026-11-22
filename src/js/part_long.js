@@ -27,8 +27,6 @@ const fmtN = n => n.toLocaleString('de-DE');
 const anchoredLabel = n => (n === 1 ? 'Erster Satz verankert' : `${fmtN(n)} verankerte Sätze`);
 // Themen-Etappen (siehe checkTopics in part_stats.js): Stufe 1 Fehler halbiert, Stufe 2 Thema sitzt
 const topicMileText = (e, again) => { const lb = trapLabel(e.l, e.k); return e.s === 2 ? `Thema „${lb}“ sitzt` : `„${lb}“: Fehler ${again ? 'wieder ' : ''}halbiert`; };
-// Fehlerquote als Prozent, unter 10 % mit einer Nachkommastelle
-const fmtPct = r => (r < 0.1 && r > 0 ? (Math.round(r * 1000) / 10).toLocaleString('de-DE') : String(Math.round(r * 100))) + ' %';
 // Gefestigt je Sprache und Tag: der Bestand am Tagesende (Protokoll mc, seit 24.63), für ältere Tage die Zahl der erstmals
 // gefestigten Sätze (ab der Summe der Tage, die schon aus dem Protokoll gefallen sind)
 function matureByDay(days, l){
@@ -42,7 +40,8 @@ function matureHigh(l){
   const kept = (DB.way || []).filter(e => e.k === 'mature' && e.l === l).reduce((m, e) => Math.max(m, e.v), 0);
   return Math.max(matureCount(l), kept, ...Object.values(by), 0);
 }
-// Summen über die ganze Zeit: Protokoll plus die Tage, die schon herausgefallen sind
+// Gesamtsummen über alles Geübte, mit den herausgefallenen Tagen aus logArch: Übungstage (days als Liste, dayCount mit Archiv),
+// Aufgaben, Sekunden, erster Übungstag. Die einzige Stelle dafür (Fortschritt, Lernminuten, Kalender, Dein Weg).
 function lifeTotals(){
   const A = DB.logArch || {}, days = Object.keys(DB.log || {}).filter(d => ['sv', 'es'].some(l => (dayLog(d, l).n || 0) > 0)).sort();
   const sum = k => archSum(k) + days.reduce((a, d) => a + (dayLog(d, 'sv')[k] || 0) + (dayLog(d, 'es')[k] || 0), 0);
@@ -132,17 +131,18 @@ function wayEvents(){
   done.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
   // Nächste Etappen: nach dem höchsten erreichten Stand, damit ein wieder herausgefallener Satz keine Etappe zweimal bringt
   const next = [];
-  ['sv', 'es'].forEach(l => { if (!BANK[l].some(i => stOf(i.id))) return; const nx = MAT.find(x => x > hiM[l]), m = matureCount(l); if (nx) next.push({ ico:'mature', k:'mature', l, t:wayLabel({ k:'mature', v:nx }).t, rest:`noch ${fmtN(Math.max(1, nx - m))}`, need:Math.max(1, nx - m), per:'mature' }); });
+  ['sv', 'es'].forEach(l => { if (!hiM[l] && !BANK[l].some(i => stOf(i.id))) return; const nx = MAT.find(x => x > hiM[l]), m = matureCount(l); if (nx) next.push({ ico:'mature', k:'mature', l, v:nx, t:wayLabel({ k:'mature', v:nx }).t, rest:`noch ${fmtN(Math.max(1, nx - m))}`, need:Math.max(1, nx - m), per:'mature' }); });
   // Serie und Aufgaben wie am Rundenende: die nächste Schwelle über dem bisher erreichten Stand
-  if (doneDays.length) { const c = streak(), nx = STREAK[si]; if (nx) next.push({ ico:'streak', k:'streak', t:streakLabel(nx), rest:`noch ${fmtN(Math.max(1, nx - c))} ${nx - c === 1 ? 'Tag' : 'Tage'}`, need:Math.max(1, nx - c), per:'day' }); }
+  if (doneDays.length) { const c = streak(), nx = STREAK[si], need = Math.max(1, nx - c); if (nx) next.push({ ico:'streak', k:'streak', v:nx, t:streakLabel(nx), rest:`noch ${fmtN(need)} ${need === 1 ? 'Tag' : 'Tage'}`, need, per:'day' }); }
   // Über dem höchsten erreichten Wert, auch wenn die Summe nach dem Zurücksetzen einer Sprache kleiner ist
   const reached = k => done.filter(e => e.k === k).reduce((m, e) => Math.max(m, e.v || 0), 0);
   const nt = ladder(WAY_TASKS, x => x + 25000, Math.max(T.n, reached('tasks'))).find(x => x > Math.max(T.n, reached('tasks')));
-  next.push({ ico:'tasks', k:'tasks', t:wayLabel({ k:'tasks', v:nt }).t, rest:`noch ${fmtN(nt - T.n)}`, need:nt - T.n, per:'n' });
+  next.push({ ico:'tasks', k:'tasks', v:nt, t:wayLabel({ k:'tasks', v:nt }).t, rest:`noch ${fmtN(nt - T.n)}`, need:nt - T.n, per:'n' });
   const hh = Math.max(T.secs / 3600, reached('hours')), nh = ladder(WAY_HOURS, x => x + 250, hh).find(x => x > hh);
-  next.push({ ico:'time', k:'hours', t:wayLabel({ k:'hours', v:nh }).t, rest:`noch ${fmtMin(nh * 3600 - T.secs)}`, need:nh * 3600 - T.secs, per:'secs' });
+  next.push({ ico:'time', k:'hours', v:nh, t:wayLabel({ k:'hours', v:nh }).t, rest:`noch ${fmtMin(Math.max(60, nh * 3600 - T.secs))}`, need:nh * 3600 - T.secs, per:'secs' });
   const dd = Math.max(T.dayCount, reached('days')), nd = ladder(WAY_DAYS, x => x + 500, dd).find(x => x > dd);
-  if (nd - T.dayCount <= 60) next.push({ ico:'start', k:'days', t:wayLabel({ k:'days', v:nd }).t, rest:`noch ${nd - T.dayCount}`, need:nd - T.dayCount, per:'active' });
+  // Übungstage: in Dein Weg erst, wenn höchstens 60 fehlen (far); am Rundenende immer
+  next.push({ ico:'start', k:'days', v:nd, t:wayLabel({ k:'days', v:nd }).t, rest:`noch ${fmtN(nd - T.dayCount)}`, need:nd - T.dayCount, per:'active', far:nd - T.dayCount > 60 });
   return { done, next };
 }
 // Neu erreichte Etappen in DB.way festhalten (am Rundenende, beim Start und bevor Protokolltage herausfallen)
@@ -152,27 +152,25 @@ function persistWay(){
   if (add.length) DB.way = (DB.way || []).concat(add);
 }
 // Kennung einer Etappe: Art, Sprache, Wert (bei Themen dazu Thema und Datum). Das Rundenende vergleicht die Kennungen vor und
-// nach der Runde (seit 24.63). WAY_V steht in offenen Runden, damit Kennungen einer älteren Fassung nicht verglichen werden.
+// nach der Runde. WAY_V steht in offenen Runden, damit Kennungen einer älteren Fassung nicht verglichen werden.
 const WAY_V = 2;
 const wayKey = e => `${e.k}|${e.l || ''}|${e.v == null ? '' : e.v}${e.k === 'topic' ? `|${e.trap}|${e.i != null ? e.i : e.d}` : ''}`;
 const wayKeys = () => wayEvents().done.map(wayKey);
 // Rangfolge, wenn mehrere Etappen zusammenfallen: was über das Können spricht vor dem, was über Fleiß spricht
 const WAY_PRIO = ['anchored', 'mature', 'topic', 'years', 'streak', 'words', 'text', 'own', 'hours', 'days', 'tasks', 'first'];
 const wayPrio = e => { const i = WAY_PRIO.indexOf(e.k); return i < 0 ? 99 : i; };
-// Die nächste Etappe derselben Art, mit Abstand („noch 15“); null, wo es keine nächste gibt
+// Die nächste Etappe derselben Art, mit Abstand („noch 15“); null, wo es keine nächste gibt. Gefestigt, Serie, Aufgaben, Stunden und
+// Übungstage kommen aus wayEvents (über dem höchsten erreichten Stand): Am Rundenende steht dasselbe wie in Dein Weg und im Sprach-Tab.
+const WAY_LADDER = ['mature', 'streak', 'tasks', 'hours', 'days'];
 function wayNext(e){
-  const l = e.l, T = lifeTotals();
+  const l = e.l;
+  if (WAY_LADDER.includes(e.k)) { const x = wayEvents().next.find(n => n.k === e.k && (n.l || '') === (l || '')); return x ? { t:x.t, rest:x.rest } : null; }
   const left = (nx, c, one, many) => `noch ${fmtN(nx - c)}${one ? ' ' + (nx - c === 1 ? one : many) : ''}`;
   switch (e.k) {
-    case 'mature': { const c = matureCount(l), nx = milestoneList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:wayLabel({ k:'mature', v:nx }).t, rest:`noch ${fmtN(Math.max(1, nx - c))}` } : null; }
     case 'anchored': { const c = anchoredCount(l), nx = anchoredList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:anchoredLabel(nx), rest:`noch ${fmtN(Math.max(1, nx - c))}` } : null; }
-    case 'streak': { const c = streak(), nx = streakList(Math.max(c, e.v)).find(x => x > e.v); return nx ? { t:streakLabel(nx), rest:left(nx, Math.min(c, nx - 1), 'Tag', 'Tage') } : null; }
     case 'words': { const c = vocabCount(l).all, nx = ladder(WAY_WORDS, y => y + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'words', v:nx }).t, rest:left(nx, Math.min(c, nx - 1)) }; }
-    case 'tasks': { const c = T.n, nx = ladder(WAY_TASKS, x => x + 25000, Math.max(c, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'tasks', v:nx }).t, rest:left(nx, Math.min(c, nx - 1)) }; }
-    case 'hours': { const c = T.secs, nx = ladder(WAY_HOURS, x => x + 250, Math.max(c / 3600, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'hours', v:nx }).t, rest:`noch ${fmtMin(Math.max(60, nx * 3600 - c))}` }; }
-    case 'days': { const c = T.dayCount, nx = ladder(WAY_DAYS, x => x + 500, Math.max(c, e.v)).find(x => x > e.v); return { t:wayLabel({ k:'days', v:nx }).t, rest:left(nx, Math.min(c, nx - 1)) }; }
     // Nächste Halbierung nur bis 2 % Fehler: darunter bräuchte der Nachweis Tausende Aufgaben je Thema
-    case 'topic': { const r = e.c && e.c[0] ? e.c[1] / e.c[0] / 2 : 0; return r >= 0.01 ? { t:topicMileText({ l, k:e.trap, s:1 }, true), rest:`auf unter ${fmtPct(r)}` } : null; }
+    case 'topic': { const r = e.c && e.c[0] ? e.c[1] / e.c[0] / 2 : 0; return r >= 0.01 ? { t:topicMileText({ l, k:e.trap, s:1 }, true), rest:`auf unter ${pct(r, true)}` } : null; }
     case 'text': { if (e.v >= 10) return null; const c = (DB.texts || []).filter(x => x.lang === l).length; return { t:wayLabel({ k:'text', v:10 }).t, rest:left(10, Math.min(c, 9)) }; }
     case 'years': return { t:wayLabel({ k:'years', v:e.v + 1 }).t, rest:'in einem Jahr' };
     default: return null;
@@ -233,7 +231,6 @@ function wayRuns(older, newer, act, from){
   return out;
 }
 // Datum einer Etappe, im laufenden Jahr ohne Jahreszahl
-const wayDate = d => { const x = dateOf(d); return `${x.getDate()}. ${MONTHS[x.getMonth()]}${d.slice(0, 4) === today().slice(0, 4) ? '' : ' ' + x.getFullYear()}`; };
 // Voraussichtliche Tage bis zur nächsten Etappe, nur für die Reihenfolge (angezeigt wird weiter „noch 13“).
 // Aufgaben, Zeit und Übungstage nach dem Tempo der letzten 14 Tage (in den ersten Tagen seit dem Anfang); Serien nach Kalender;
 // gefestigte Sätze nach den Fälligkeiten der Sätze, die beim nächsten Richtigen die 21 Tage erreichen, mit 90 % Behalten.
@@ -261,7 +258,7 @@ function wayHtml(){
   const rail = (lane, d, open) => `<span class="rail" style="grid-template-columns:repeat(${lanes.length}, 16px)" aria-hidden="true">${lanes.map(k => `<span class="rl rl-${k}${d == null || d >= start[k] ? ' on' : ''}">${k === lane ? `<i class="${open ? 'open' : ''}"></i>` : ''}</span>`).join('')}</span>`;
   const seg = (k, y0, y1, dash) => (y1 - y0 < 0.5 ? '' : `<line x1="${LX(k)}" x2="${LX(k)}" y1="${y0.toFixed(1)}" y2="${y1.toFixed(1)}" class="wg-l wg-${k}${dash ? ' wg-dash' : ''}"/>`);
   const anim = S.wayAnim; S.wayAnim = null;
-  const row = (e, cls) => `<li class="wl${cls || ''}">${rail(e.l || 'x', e.d)}<span class="tl-t">${esc(e.t)}${langTag(e.l)}</span><span class="tl-d">${wayDate(e.d)}</span></li>`;
+  const row = (e, cls) => `<li class="wl${cls || ''}">${rail(e.l || 'x', e.d)}<span class="tl-t">${esc(e.t)}${langTag(e.l)}</span><span class="tl-d">${fmtDM(e.d)}</span></li>`;
   // Zeit zwischen zwei Etappen: Höhe nach Zeit, innen tagesgenau. Spuren gestrichelt, wo eine Sprache (Mitte: beide) mindestens
   // 3 Tage ruhte; ein Jahreswechsel als Trennlinie über die ganze Breite wie „heute“, darunter das ältere Jahr.
   // Spuren zwischen newer und older auf h Pixeln: gestrichelt in Pausen, eine später begonnene Sprache zweigt ab
@@ -297,7 +294,7 @@ function wayHtml(){
     return `<li class="wl wgap${cls || ''}" style="height:${h}px"><svg class="wg-svg" width="${RW}" height="${h}" aria-hidden="true">${svg}</svg>${yr}${txt ? `<span class="wg-t" style="top:${(ty - 8).toFixed(1)}px">${txt}</span>` : ''}</li>`;
   };
   // Nächste Ziele: das voraussichtlich nächste unten, direkt über „heute“
-  const next = w.next.filter(x => lanes.includes(x.l || 'x')).map(x => Object.assign({ eta:wayEta(x) }, x)).sort((a, b) => (a.eta === b.eta ? 0 : a.eta < b.eta ? 1 : -1));
+  const next = w.next.filter(x => !x.far && lanes.includes(x.l || 'x')).map(x => Object.assign({ eta:wayEta(x) }, x)).sort((a, b) => (a.eta === b.eta ? 0 : a.eta < b.eta ? 1 : -1));
   // Unter dem Ziel grob, wann es so weit ist (geschätzt; Serien stehen mit „noch 6 Tage“ schon genau da)
   let html = next.map(x => { const et = wayEtaText(x); return `<li class="wl wl-next">${rail(x.l || 'x', null, true)}<span class="tl-t">${esc(x.t)}${langTag(x.l)}${et ? `<span class="tl-s">${et}</span>` : ''}</span><span class="tl-d">${esc(x.rest)}</span></li>`; }).join('');
   html += `<li class="wl wtoday">${rail(null, today())}<span class="wt-t">heute</span></li>`;

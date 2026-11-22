@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.66.2
+**Aufräumen, Schritt 2a: je eine Stelle für dieselbe Rechnung. Fast nichts sieht anders aus.**
+- **Nächste Etappe:** Rundenende, Dein Weg und der Sprach-Tab rechnen das nächste Ziel an einer Stelle aus, immer über dem höchsten bisher erreichten Stand. Bisher rechnete das Rundenende Serie, Aufgaben, Stunden und Übungstage selbst; nach dem Zurücksetzen einer Sprache konnten die drei Stellen verschiedene Ziele nennen. Der Rest steht überall gleich da, ab 1.000 mit Tausenderpunkt.
+- **Prozent** stehen überall mit geschütztem Leerzeichen („94 %“ bricht nicht mehr zwischen Zahl und Zeichen um).
+- Code: Gesamtsummen nur noch in `lifeTotals` (`totals` mit seiner nie gelesenen Jahresaufteilung entfällt). Der Abgleich nach längster gemeinsamer Folge (Antwort prüfen, getippte Zusatzwörter, Wortstellung, Finde den Fehler) steht einmal in `lcsPairs` statt fünfmal. Monats- und Wochentagsnamen, Datumsformate und Prozent stehen zusammen in `part_head.js`, „Bewegung reduzieren“ fragt nur `calmMotion` ab. `part_modern.js` ist nach Inhalt aufgeteilt: Spracherkennung zu Vorlesen und Aufnahme (`part_speech.js`), Symbole in `part_icons.js`, Begrüßung und Start über Teilen in `part_start.js`, Vibration zum Prüfen. Versionsangaben in Kommentaren zu Funktionen stehen nur noch hier im Verlauf; die zu alten Speicherständen bleiben im Code.
+- `npm run sicht`: Fundstück wartet vor dem Scrollen auf Schriften und Bilder, Nachsprechen auf das Ende des Vorlesens. Beide Bilder wichen bisher bei jedem Lauf ab.
+- Tests: zwei neue in `einheitlich.test.js` (dasselbe nächste Ziel an allen drei Stellen; je eine Stelle im Quelltext für Abgleich, Bewegung, Monatsnamen, Gesamtsummen, Prozent).
+- Speicherstand unverändert.
+
 ## 24.66.1
 **Aufräumen, Schritt 1: zwei Fehler behoben, gleiche Dinge sehen gleich aus und heißen gleich.**
 - **Fehler behoben, Etappen am Rundenende:** Überschritt eine Runde zwei Schwellen derselben Art, stand „25 gefestigte Sätze, noch 1“ und darunter „Außerdem: 25 gefestigte Sätze“. Jetzt steht die höchste als erreicht, die niedrigere darunter mit „heute“, die nächste mit dem richtigen Rest; „Außerdem“ nennt nur andere Etappen.

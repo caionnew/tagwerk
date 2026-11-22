@@ -322,7 +322,7 @@ function shHead(track, ta, tb, secs, delay){
 function shHeadStop(){
   const els = SH.head; SH.head = null;
   if (!els) return;
-  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const calm = calmMotion();
   els.forEach(e => { if (calm || !e.animate) { e.remove(); return; } const a = e.animate([{ opacity:1 }, { opacity:0 }], { duration:200, fill:'forwards' }); a.onfinish = () => e.remove(); });
 }
 // Abspielposition für das Original: Balken der Computerstimme (gemessene Länge) oder Wellenbild der Tatoeba-Aufnahme

@@ -10,7 +10,6 @@ function nextPrompt(){
 // Die Karte ganz ins Bild holen, falls sie unter der Leiste verschwindet; die Säulen bleiben dabei möglichst sichtbar.
 function dayTapped(){ DB.used = DB.used || {}; if (!DB.used.dayTap) { DB.used.dayTap = true; save(); } }
 const dayHost = where => (where === 'cal' ? (document.querySelector('.calwrap') || {}).parentElement : document.querySelector('.chart.mins'));
-const calmMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 function cardIntoView(open, where){
   if (!open) return;
   const host = dayHost(where), el = host && host.querySelector(':scope > .dcard'); if (!el) return;
@@ -38,7 +37,7 @@ function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer = setTimeout(save
 // Ein Kästchen gleitet von seiner alten an die neue Stelle; bei „Bewegung reduzieren“ springt es wie bisher
 function flyFrom(from, sel){
   const el = document.querySelector(sel); if (!el || !el.animate) return;
-  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (calmMotion()) return;
   const to = el.getBoundingClientRect(), dx = from.left - to.left, dy = from.top - to.top;
   if (Math.abs(dx) + Math.abs(dy) < 2) return;
   el.animate([{ transform:`translate(${dx}px, ${dy}px)` }, { transform:'none' }], { duration:200, easing:'cubic-bezier(.2,.8,.2,1)' });

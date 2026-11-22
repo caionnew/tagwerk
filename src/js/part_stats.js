@@ -160,7 +160,7 @@ function errStats(lang, days){
   });
   return out;
 }
-// Themen-Etappen (seit 24.63, neu gefasst in 24.63.1): Die Fehlerquote eines Themas ist deutlich und belastbar gesunken,
+// Themen-Etappen: Die Fehlerquote eines Themas ist deutlich und belastbar gesunken,
 // gegenüber jeder früheren Zeit, nicht nur gegenüber dem Anfang. Gezählt wie in den Fehlerquellen (nur erste Versuche;
 // Wortschatz- und Tippfehler belasten das Grammatikthema nicht).
 // Je Thema liegen die Antworten in Blöcken zu 60 Aufgaben (DB.tblk, je Block die Zahl der Fehler). Ein voller Block ändert
@@ -285,7 +285,7 @@ function errorSourcesHtml(lang){
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);
     lead = 'Anteil falscher Antworten je Übungsart:';
-    rows = list.map(x => `<div class="erow"><span class="el">${esc(ERR_TYPES[x.id] || x.id)}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / x.n * 100)}%"></span></span><span class="ev">${Math.round(x.bad / x.n * 100)} %</span></div>`).join('');
+    rows = list.map(x => `<div class="erow"><span class="el">${esc(ERR_TYPES[x.id] || x.id)}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / x.n * 100)}%"></span></span><span class="ev">${pct(x.bad / x.n)}</span></div>`).join('');
     note = 'Ab 5 Aufgaben. Freies Schreiben ist schwerer als Antippen, das ist normal.';
   } else {
     // Aufteilung der Fehler, keine Fehlerquote: Anzahlen statt Prozent, damit „94 %“ nicht wie „94 % falsch“ aussieht

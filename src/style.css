@@ -471,7 +471,7 @@ button.row[disabled]::after{ display:none; }
 .stamp.draw path{ stroke-dasharray:40; stroke-dashoffset:40; animation:drawIt .3s .38s ease-out forwards; }
 @keyframes drawIt{ to{ stroke-dashoffset:0; } }
 @media (prefers-reduced-motion: reduce){ .stamp.draw circle, .stamp.draw path{ stroke-dashoffset:0; } }
-/* Etappe (seit 24.63): Siegelrand um den Stempel in der Sprachfarbe, zeichnet sich nach dem Haken; außerhalb des Tagwerks ein Punkt */
+/* Etappe: Siegelrand um den Stempel in der Sprachfarbe, zeichnet sich nach dem Haken; außerhalb des Tagwerks ein Punkt */
 .stamp.seal{ width:76px; height:76px; margin:-6px 0 4px -10px; }
 .stamp.seal .sl{ stroke:var(--accent); stroke-width:2.2; }
 .stamp.seal.nd circle{ stroke:var(--accent); }

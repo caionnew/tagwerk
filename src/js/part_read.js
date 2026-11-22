@@ -20,7 +20,7 @@ function flatSents(T){ return T.sents.flat(); }
 function followSentence(sel){
   const el = document.querySelector(sel || '.rs-s.on'); if (!el) return;
   const r = el.getBoundingClientRect(), bar = document.querySelector('.reader-bar'), bottom = (bar ? bar.getBoundingClientRect().top : innerHeight) - 16;
-  if (r.top < 70 || r.bottom > bottom) { const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; el.scrollIntoView({ block:sel ? 'start' : 'center', behavior:calm ? 'auto' : 'smooth' }); }
+  if (r.top < 70 || r.bottom > bottom) { const calm = calmMotion(); el.scrollIntoView({ block:sel ? 'start' : 'center', behavior:calm ? 'auto' : 'smooth' }); }
 }
 function readPlay(){
   const T = S.text; if (!T) return;
@@ -94,7 +94,7 @@ function keepAboveBar(sel){
   const bar = document.querySelector('.reader-bar'), limit = (bar ? bar.getBoundingClientRect().top : innerHeight) - 12;
   const over = el.getBoundingClientRect().bottom - limit; if (over <= 0) return;
   const room = card ? card.getBoundingClientRect().top - 8 : over;
-  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const calm = calmMotion();
   window.scrollBy({ top:Math.min(over, Math.max(0, room)) || over, behavior:calm ? 'auto' : 'smooth' });
 }
 function viewTexts(){

@@ -23,7 +23,12 @@ const doneDB = () => { const db = rich(); db.done[TODAY] = true; db.doneLang = {
 // Vorgetäuschtes Mikrofon (Testsignal mit einer Pause) und eine Test-Stimme, damit Nachsprechen überall gleich aussieht
 const LAUNCH = { ...(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {}), args:fakeMicArgs(speechWav(path.join(os.tmpdir(), 'tagwerk-sicht-mikro.wav'), [['s', 0.5], ['v', 0.8], ['s', 0.6], ['v', 0.7], ['s', 5]])) };
 const click = sel => p => p.click(sel);
-const bottom = p => p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+// Erst wenn Schriften und Bilder stehen, sonst wächst die Seite nach dem Scrollen noch (Bild mal ganz unten, mal nicht)
+const bottom = async p => {
+  await p.evaluate(async () => { if (document.fonts) await document.fonts.ready; await Promise.all([...document.images].filter(i => !i.complete).map(i => new Promise(r => { i.onload = i.onerror = r; }))); });
+  await p.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+  await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+};
 // Wikipedia-Fundstück ohne Netz: feste Antwort statt echter Abfrage
 const WIKI_BODY = 'Allmänna skyddsrum i Stockholm byggdes under det kalla kriget för att skydda befolkningen. De flesta skyddsrummen ligger djupt under jorden och används i dag som garage eller förråd. Kommunen kontrollerar regelbundet att dörrarna fungerar och att ventilationen är intakt. Under en kris ska skyddsrummen kunna öppnas inom fyrtioåtta timmar. Många stockholmare vet inte var det närmaste skyddsrummet finns, trots att skyltarna sitter på husväggarna.';
 const mockWiki = p => p.route('https://sv.wikipedia.org/w/api.php**', r => r.fulfill({ headers:{ 'Access-Control-Allow-Origin':'*' }, json:{ query:{ pages:[{ title:'Allmänna skyddsrum i Stockholm', extract:WIKI_BODY, fullurl:'https://sv.wikipedia.org/wiki/Skyddsrum' }] } } }));
@@ -44,7 +49,8 @@ const SCENES = [
   ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],
   ['einstellungen-unten', rich, [click('[data-a=settings] >> nth=0'), bottom]],
   ['fundstueck', rich, [mockWiki, click('[data-a=tab][data-v=extra]'), click('[data-a=wiki] >> nth=0'), bottom]],
-  ['nachsprechen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]')]],
+  // Erst nach dem Vorlesen: sonst steht die Wortmarke mal hier, mal da
+  ['nachsprechen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]'), p => p.waitForFunction(() => !speechSynthesis.cur, null, { timeout:15000 })]],
   ['nachsprechen-ergebnis', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=shadow]'), click('.shstep[data-a=shrec]'), p => p.waitForSelector('.shtiles', { timeout:15000 })]],
   ['erster-start', () => freshDB('sv'), []],
   ['schreiben', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=write]')]],

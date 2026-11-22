@@ -2,6 +2,21 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.65.0
+**Lernminuten überarbeitet: Schnitt über alle Tage statt nur über Übungstage, Zahlen, die zusammenpassen, Sprachen mit Fuge übereinander, jeder Zustand eines Tages klar zu sehen, Antippen mit kleiner Bewegung.**
+- **Fehler behoben, Schnitt:** „Minuten pro Übungstag“ ließ Tage ohne Übung weg. Wer täglich 10 Minuten übt und einen Tag aussetzt, lag damit vor jemandem, der täglich 10 Minuten übt und einmal nur 9. Jetzt „Minuten pro Tag“: Summe geteilt durch alle Tage seit deinem ersten Übungstag (höchstens 14), Pausetage eingeschlossen. Heute zählt erst, wenn du geübt hast, weil der Tag noch läuft; morgens steht also „7 von 7“, nicht „7 von 8“. Der Kalender zählt jetzt genauso. Die gestrichelte Linie heißt „Schnitt pro Tag“ und zeigt dieselbe Zahl.
+- **Zahlen passen zusammen:** Die Zahlen über den Säulen ergeben die Summe oben, die Minuten in der Tageskarte die Zahl über ihrer Säule. Bisher wurde jede Zahl für sich aus den Sekunden gerundet (etwa 112 über den Säulen, 111 oben). Gerundet wird jetzt je Tag und Sprache, alles andere ist die Summe davon (unter 30 Sekunden „<1“, zählt nicht mit), auch bei „Die 14 Tage davor“.
+- **Säulen:**
+  - Die Sprachen stehen mit einer schmalen Fuge übereinander statt nahtlos; die obere hat runde Ecken.
+  - Kleine Anteile sind mindestens 3 px hoch, statt als Haarstrich auf der Säule zu kleben.
+  - Die Skala reicht mindestens bis 15 Minuten: Sechs Minuten am ersten Tag füllen nicht mehr die ganze Höhe.
+- **Leere Tage:** Jeder Tag behält seine Bahn: leer ohne Übung, gestrichelt am Pausetag (wie im Kalender), blass vor deinem ersten Übungstag (zählt nicht mit, nicht antippbar, kein Wochenstrich). Vierzehn Tage ohne Übung zeigen 0 statt „–“, keine Legende und „In den letzten 14 Tagen nicht geübt.“
+- **Kennzahlen in einer Zeile:** „Minuten“, „Tagen geübt“, „Minuten pro Tag“. „In 14 Tagen“ steht schon in der Überschrift.
+- **Antippen:** Die Karte blendet mit einer kleinen Bewegung nach oben ein (0,2 s), beim Wechsel zu einem anderen Tag blendet nur ihr Inhalt kurz auf; die Markierung der Säule blendet mit ein. Schließen ohne Bewegung, bei „Bewegung reduzieren“ gar keine. Liegt die Karte unter der Leiste unten, rollt die Ansicht so weit, dass sie ganz zu sehen ist.
+- **„Tipp auf einen Tag für Details“** steht nur noch, bis du zum ersten Mal einen Tag angetippt hast, in den Lernminuten und im Kalender.
+- **Tageskarte (auch im Kalender):** Bei weniger als 10 Aufgaben „3 von 3“ statt „100 %“. Fehler behoben: Der Punkt nach dem letzten Thema rutschte allein in eine neue Zeile; ebenso bei den Verweisen unter den Fehlerquellen.
+- Speicherstand: neuer Merker `used.dayTap`; ältere Stände laden unverändert.
+
 ## 24.64.1
 **Rundenende: Jedes Thema mit Fehler steht in „Themen dieser Runde“, die fehlerfreien lassen sich aufklappen.**
 - **Fehler behoben:** Die Liste zeigte höchstens fünf Themen. Hakte es in mehr Themen, verschwanden die übrigen mit ihren Fehlern hinter „und 4 weitere Themen“. Jetzt steht jedes Thema mit Fehler da; sind es weniger als fünf, wird wie bisher mit fehlerfreien Themen auf fünf Zeilen aufgefüllt, die meisten Aufgaben zuerst.

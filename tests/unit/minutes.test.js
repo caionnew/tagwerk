@@ -30,8 +30,8 @@ test('Tage: Kennzahlen, Vergleich mit den 14 Tagen davor, 14 Säulen, nichts vor
   const h = run('minutesHtml()');
   assert.equal((h.match(/class="mc[ "]/g) || []).length, 14);
   // 13 Übungstage: 13 × 10 Min. Schwedisch, Spanisch an den Tagen 0, 6, 9, 12 je 6 Min.
-  assert.match(text(h), new RegExp(`${13 * 10 + 4 * 6} Minuten in 14 Tagen`));
-  assert.match(text(h), /13 von 14 Tagen geübt/);
+  // Schnitt über alle 14 Tage, auch den Pausetag: 154 / 14 = 11
+  assert.match(text(h), new RegExp(`^Lernminuten, letzte 14 Tage ${13 * 10 + 4 * 6} Minuten 13 von 14 Tagen geübt 11 Minuten pro Tag`));
   assert.match(text(h), /Die 14 Tage davor: \d+ Minuten\./);
   assert.doesNotMatch(h, /aria-pressed="true"/);
   assert.match(text(h), /Tipp auf einen Tag für Details\./);
@@ -50,10 +50,11 @@ test('Tageskarte: Titel, Datum und Uhrzeit, Tabelle je Sprache, Quadrat wie im K
   assert.match(t, /^Heute [^,]+, \d+\. \S+ · 7–9 und 21–22 Uhr/);
   assert.match(t, /Min\. Aufgaben richtig neu/);
   assert.match(t, /Schwedisch, Tagwerk erledigt 10 20 80 % 3/);
-  assert.match(t, /Spanisch 6 9 83 % 2/);
+  assert.match(t, /Spanisch 6 9 5 von 6 2/, 'unter 10 ersten Versuchen als Anzahl, nicht in Prozent');
   assert.match(c, /class="sq ds"/, 'Tagwerk Schwedisch: gefüllt');
   assert.match(c, /class="sq pe"/, 'Spanisch ohne Tagwerk: Rand');
   assert.match(t, /Fehler bei Subjuntivo oder Indikativ und Inversion & „inte“\./);
+  assert.match(c, /<span class="nobr"><button[^>]*data-t="inversion">[^<]+<\/button>\.<\/span><\/p>/, 'der Punkt bricht nicht allein um');
   assert.match(c, /class="term" data-a="topic" data-l="es" data-t="subjuntivo"/);
   assert.match(c, /class="term" data-a="topic" data-l="sv" data-t="inversion"/);
   assert.match(text(run(`dayCard(${JSON.stringify(ds(3))})`)), /Pausetag, die Serie lief weiter\./);
@@ -74,4 +75,86 @@ test('Kein Wochenumschalter; ohne Lernzeit kein Abschnitt', () => {
   app.setDB({ v:3, settings:{ size:'normal', lang:'sv' }, st:{}, own:{ sv:[], es:[] }, tat:{ sv:[], es:[] }, log:{}, done:{}, gen:{}, run:null });
   run('buildBank()');
   assert.equal(run('minutesHtml()'), '');
+});
+
+test('Summen: Zahlen über den Säulen ergeben die Summe oben, die Tageskarte die Zahl über ihrer Säule', () => {
+  // Krumme Sekunden: einzeln gerundet 9 + 24 = 33, die Summe der Sekunden ergäbe gerundet 32
+  const d = db(); d.log = {}; d.tlog = {};
+  d.log[ds(1)] = { sv:{ n:10, secs:490 }, es:{ n:2, secs:20 } };   // 8 + „<1“ → 8
+  d.log[ds(0)] = { sv:{ n:10, secs:560 }, es:{ n:10, secs:870 } }; // 9 + 15 → 24
+  d.log[ds(2)] = { sv:{ n:1, secs:40 } };                            // 1
+  d.log[ds(3)] = { es:{ n:1, secs:20 } };                            // nur „<1“
+  app.setDB(d); run('buildBank(); S.minDay = null');
+  const h = run('minutesHtml()');
+  const vals = [...h.matchAll(/<span class="mcv">(.*?)<\/span>/g)].map(m => m[1]).filter(Boolean);
+  assert.deepEqual(vals, ['<1', '1', '8', '24']);
+  assert.match(text(h), /33 Minuten 4 von 4 Tagen geübt 8 Minuten pro Tag/, '33 / 4');
+  assert.match(h, new RegExp(`data-k="${ds(1)}" aria-pressed="false" aria-label="[^"]*: 8 Min\\."`));
+  assert.match(h, new RegExp(`data-k="${ds(3)}" aria-pressed="false" aria-label="[^"]*: unter 1 Min\\."`));
+  assert.match(text(run(`dayCard(${JSON.stringify(ds(0))})`)), /Schwedisch(, Tagwerk erledigt)? 9 10 – 0 Spanisch 15 10/);
+});
+test('Vor dem ersten Übungstag: blasse Bahn, nichts zum Antippen, zählt nicht, Schnittlinie ab dem ersten Tag', () => {
+  const d = db(); d.log = {}; d.tlog = {};
+  [0, 1, 2, 3, 4].forEach(k => { d.log[ds(k)] = { sv:{ n:10, secs:600 } }; });
+  app.setDB(d); run('buildBank(); S.minDay = null');
+  const h = run('minutesHtml()');
+  assert.equal((h.match(/class="mc pre[ "]/g) || []).length, 9);
+  assert.equal((h.match(/data-a="mpick"/g) || []).length, 5);
+  assert.match(h, /<span class="mc pre[^"]*" aria-hidden="true">/);
+  assert.match(text(h), /5 von 5 Tagen geübt/);
+  assert.match(h, /class="mavg" style="left:calc\(9 \* \(100% \+ 3px\) \/ 14\);top:/);
+  assert.match(text(h), /Schnitt pro Tag/);
+});
+test('Hinweis „Tipp auf einen Tag“ nur bis zum ersten Antippen, in Lernminuten und Kalender', () => {
+  setup();
+  assert.match(text(run('minutesHtml()')), /Tipp auf einen Tag für Details\./);
+  run('DB.used = { dayTap:true }');
+  const h = text(run('minutesHtml()'));
+  assert.doesNotMatch(h, /Tipp auf einen Tag/);
+  assert.match(h, /Schnitt pro Tag$/);
+  run(`S.ptab = 'all'; S.view = 'progress'`);
+  const p = text(run('viewProgress()'));
+  assert.match(p, /\d+ von \d+ Tagen geübt\.( Wischen für frühere Wochen\.)?/);
+  assert.doesNotMatch(p, /Tipp auf einen Tag/);
+});
+
+test('Schnitt pro Tag: Ein Tag ohne Übung zählt mit (10 Min. täglich und ein Tag frei ergibt weniger als 10 Min. täglich und einmal 9)', () => {
+  const avgOf = mins => {
+    const d = db(); d.log = {}; d.tlog = {};
+    mins.forEach((m, k) => { if (m) d.log[ds(k)] = { sv:{ n:10, secs:m * 60 } }; });
+    d.log[ds(30)] = { sv:{ n:1, secs:60 } }; // früher Start: alle 14 Tage zählen
+    app.setDB(d); run('buildBank(); S.minDay = null');
+    return Number(text(run('minutesHtml()')).match(/(\d+) Minuten pro Tag/)[1]);
+  };
+  const frei = avgOf([10, 10, 10, 10, 10, 0, 10, 10, 10, 10, 10, 10, 10, 10]), neun = avgOf([10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 10, 10, 10]);
+  assert.equal(frei, 9, '130 / 14');
+  assert.equal(neun, 10, '139 / 14');
+  assert.ok(frei < neun);
+});
+test('Heute zählt erst, wenn geübt wurde, in Lernminuten und Kalender', () => {
+  const d = db(); delete d.log[T]; delete d.tlog[T]; delete d.done[T]; delete d.doneLang[T];
+  app.setDB(d); run('buildBank(); S.minDay = null');
+  assert.match(text(run('minutesHtml()')), /12 von 13 Tagen geübt/);
+  assert.match(run(`minutesHtml()`), new RegExp(`data-k="${T}"[^>]*aria-label="[^"]*: noch nicht geübt"`));
+  const c = run('calendarSvg()');
+  assert.equal(c.total - c.active, 1, 'nur der Pausetag fehlt, heute nicht');
+});
+test('14 Tage ohne Übung: Nullen statt Striche, Bahnen bleiben, Hinweis statt Legende', () => {
+  const d = db(); d.log = {}; d.tlog = {};
+  for (let k = 40; k >= 15; k--) d.log[ds(k)] = { sv:{ n:10, secs:600 }, es:{ n:5, secs:300 } };
+  app.setDB(d); run('buildBank(); S.minDay = null');
+  const h = run('minutesHtml()'), t = text(h);
+  assert.match(t, /^Lernminuten, letzte 14 Tage 0 Minuten 0 von 13 Tagen geübt 0 Minuten pro Tag/);
+  assert.equal((h.match(/data-a="mpick"/g) || []).length, 14);
+  assert.doesNotMatch(h, /class="mavg"/);
+  assert.doesNotMatch(h, /keyrow/);
+  assert.match(t, /In den letzten 14 Tagen nicht geübt\.$/);
+});
+test('Skala mindestens eine Viertelstunde, kleine Anteile mindestens 3 px', () => {
+  const d = db(); d.log = {}; d.tlog = {};
+  d.log[T] = { sv:{ n:10, secs:360 }, es:{ n:1, secs:10 } };
+  app.setDB(d); run('buildBank(); S.minDay = null');
+  const h = run('minutesHtml()');
+  assert.match(h, /<i class="m-sv" style="height:38\.4px"><\/i>/, '6 von 15 Minuten: 40 % von 96 px');
+  assert.match(h, /<i class="m-es" style="height:3\.0px"><\/i>/);
 });

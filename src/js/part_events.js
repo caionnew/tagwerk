@@ -6,6 +6,28 @@ function nextPrompt(){
   const p = pick(pool); used.push(p); DB.used.write = used; save();
   return p;
 }
+// Tag antippen (Lernminuten, Kalender): Das erste Mal merken, danach fällt der Hinweis „Tipp auf einen Tag“ weg.
+// Die Karte ganz ins Bild holen, falls sie unter der Leiste verschwindet; die Säulen bleiben dabei möglichst sichtbar.
+function dayTapped(){ DB.used = DB.used || {}; if (!DB.used.dayTap) { DB.used.dayTap = true; save(); } }
+const dayHost = where => (where === 'cal' ? (document.querySelector('.calwrap') || {}).parentElement : document.querySelector('.chart.mins'));
+const calmMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+function cardIntoView(open, where){
+  if (!open) return;
+  const host = dayHost(where), el = host && host.querySelector(':scope > .dcard'); if (!el) return;
+  const r = el.getBoundingClientRect(), nav = document.getElementById('tabs');
+  const bottom = (nav && !nav.hidden ? nav.getBoundingClientRect().top : innerHeight) - 12, dy = Math.min(r.bottom - bottom, r.top - 70);
+  if (dy > 0) window.scrollBy({ top:dy, behavior:calmMotion() ? 'auto' : 'smooth' });
+}
+// Nur als Antwort aufs Antippen: Die Karte blendet mit einer kleinen Bewegung nach oben ein, beim Wechsel zu einem
+// anderen Tag nur kurz der Inhalt; die Markierung der Säule blendet ein. Schließen ohne Bewegung.
+function dayAnim(open, where, switched){
+  if (!open || calmMotion()) return;
+  const host = dayHost(where), card = host && host.querySelector(':scope > .dcard'); if (!card || !card.animate) return;
+  const ease = 'cubic-bezier(.2, .7, .3, 1)';
+  card.animate(switched ? [{ opacity:.3 }, { opacity:1 }] : [{ opacity:0, transform:'translateY(6px)' }, { opacity:1, transform:'none' }], { duration:switched ? 140 : 200, easing:ease });
+  const pill = where === 'mins' && host.querySelector('.mc.sel');
+  if (pill) pill.animate([{ backgroundColor:'transparent' }, { backgroundColor:getComputedStyle(pill).backgroundColor }], { duration:160, easing:ease });
+}
 function saveDraft(){ if (!S.write) return; DB.draft = DB.draft || {}; DB.draft[S.write.lang] = { prompt:S.write.prompt, text:S.write.text, id:S.write.id, extra:S.write.extra }; save(); }
 // Neue Schreibaufgabe: eigene Kennung fürs Archiv, Extra-Aufgabe (falls gewünscht) und Wörter zum Einbauen (Grundform, gebeugt zählt auch)
 function newWrite(lang, prompt, text, keep){
@@ -303,8 +325,8 @@ document.addEventListener('click', e => {
       break;
     }
     case 'autoplay': DB.settings.autoplay = !DB.settings.autoplay; save(); render(); break;
-    case 'calday': S.calDay = S.calDay === b.dataset.d ? null : b.dataset.d; render(); break;
-    case 'mpick': S.minDay = S.minDay === b.dataset.k ? null : b.dataset.k; render(); break;
+    case 'calday': { const was = S.calDay; S.calDay = was === b.dataset.d ? null : b.dataset.d; dayTapped(); render(); dayAnim(S.calDay, 'cal', !!was); cardIntoView(S.calDay, 'cal'); break; }
+    case 'mpick': { const was = S.minDay; S.minDay = was === b.dataset.k ? null : b.dataset.k; dayTapped(); render(); dayAnim(S.minDay, 'mins', !!was); cardIntoView(S.minDay, 'mins'); break; }
     case 'toSettings': case 'settings': S.notice = null; S.settingsFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'home'; goView('settings'); break;
     case 'colall': S.colAll = !S.colAll; render(); break;
     case 'findopen': S.findOpen = b.dataset.id; render(); break;

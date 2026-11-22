@@ -241,12 +241,18 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .mc{ position:relative; flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; background:none; border:0; border-radius:10px; padding:0 0 4px; color:inherit; }
 .mc.sel{ background:color-mix(in srgb, var(--ink) 9%, transparent); }
 .mcv{ font-size:11px; line-height:14px; color:var(--muted); height:14px; font-variant-numeric:tabular-nums; white-space:nowrap; }
-.mcb{ width:calc(100% - 6px); height:96px; display:flex; flex-direction:column-reverse; background:var(--bg); border-radius:5px; overflow:hidden; }
+.mcb{ width:calc(100% - 6px); height:96px; display:flex; flex-direction:column; justify-content:flex-end; gap:2px; background:var(--bg); border-radius:5px; overflow:hidden; }
+.mcb > i{ display:block; flex:none; }
+.mcb > i:first-child{ border-radius:3px 3px 0 0; }
 .mcl{ font-size:11.5px; line-height:16px; height:16px; color:var(--muted); white-space:nowrap; }
 .mc.now .mcl{ color:var(--ink); font-weight:700; }
 .mc.sel .mcv, .mc.sel .mcl{ color:var(--ink); font-weight:700; }
 .mc.fr .mcb{ background:transparent; border:1.5px dashed var(--faint); }
+/* Vor dem ersten Übungstag: blasse Bahn, kein Wochenstrich */
+.mc.pre .mcb{ opacity:.45; }
+.mc.pre .mcl{ color:var(--faint); }
 .mc.mon::before{ content:''; position:absolute; left:-2px; top:17px; height:96px; border-left:1px solid var(--line); }
+.mc.pre.mon::before{ display:none; }
 .mavg{ position:absolute; left:0; right:0; height:0; border-top:1.5px dashed color-mix(in srgb, var(--ink) 55%, transparent); pointer-events:none; z-index:1; }
 .mavgk{ display:inline-block; width:16px; height:0; border-top:1.5px dashed color-mix(in srgb, var(--ink) 55%, transparent); }
 .mkey{ margin-top:8px; }
@@ -789,6 +795,8 @@ button.erow:active{ background:var(--accent-soft); }
 .pbtn{ flex:none; width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--ink); display:inline-flex; align-items:center; justify-content:center; padding:0; }
 .pbtn.play{ width:52px; height:52px; border:0; background:var(--accent); color:var(--on-accent); }
 .pspace{ flex:1; }
+.nobr{ white-space:nowrap; }
+.nobr .term, .nobr .link{ white-space:normal; }
 .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
 .pchip{ flex:none; display:inline-flex; align-items:center; gap:6px; height:38px; padding:0 12px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:13.5px; font-weight:650; font-variant-numeric:tabular-nums; }
 .pchip[aria-pressed="true"]{ background:var(--accent-soft); border-color:transparent; color:var(--accent-ink); }

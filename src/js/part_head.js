@@ -62,6 +62,8 @@ const NAMES = ['anna','peter','lisa','jonas','juan','ana','pablo','madrid','göt
 /* ---------- Hilfsfunktionen ---------- */
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+// Knopf und folgendes Satzzeichen zusammenhalten: Nach einem Knopf (inline-block) darf die Zeile sonst vor dem Punkt umbrechen
+const nobr = html => `<span class="nobr">${html}</span>`;
 const pad = n => String(n).padStart(2, '0');
 const fmt = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
 const today = () => fmt(new Date());

@@ -1,5 +1,5 @@
 // Lernminuten: Tag antippen zeigt die Karte, nochmal schließt sie, Thema aus der Karte öffnet in der richtigen Sprache, Kalender nutzt dieselbe Karte.
-const { test, expect, APP, seed, freshDB, bankIds } = require('./helpers');
+const { test, expect, APP, seed, freshDB, bankIds, stored } = require('./helpers');
 const pad = n => String(n).padStart(2, '0'), now = new Date();
 const ds = k => { const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
 function db(){
@@ -33,6 +33,9 @@ test('Lernminuten: Tag antippen öffnet, nochmal schließt (wie im Kalender), Th
   await bar.click();
   await expect(card).toHaveCount(0);
   await expect(bar).toHaveAttribute('aria-pressed', 'false');
+  // Nach dem ersten Antippen ist der Hinweis überflüssig, auch nach einem Neustart
+  await expect(mins).not.toContainText('Tipp auf einen Tag');
+  await expect.poll(async () => ((await stored(page)).used || {}).dayTap).toBe(true);
   await expect(page.locator('[data-a=mrange]')).toHaveCount(0);
   // Kalender: Tag antippen zeigt dieselbe Karte, nochmal antippen schließt sie
   const calChart = page.locator('.calwrap').locator('xpath=..');
@@ -47,4 +50,30 @@ test('Lernminuten: Tag antippen öffnet, nochmal schließt (wie im Kalender), Th
   await page.click('.pop [data-a=trapgo]');
   await expect(page.locator('.runbar')).toBeVisible();
   await expect(page.locator('body')).toHaveAttribute('data-lang', 'es');
+});
+test('Lernminuten: Die Karte kommt ganz ins Bild, auch wenn die Säulen unten am Rand stehen; Karte und Markierung blenden ein', async ({ page }) => {
+  await seed(page, db());
+  // Bewegungen zählen: Element.animate mitschreiben
+  await page.addInitScript(() => { window.__anims = []; const o = Element.prototype.animate; Element.prototype.animate = function (k, t){ window.__anims.push(this.className); return o.call(this, k, t); }; });
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=progress]');
+  // Säulen knapp über der Leiste unten
+  await page.evaluate(() => { const c = document.querySelector('.mchart').getBoundingClientRect(), nav = document.getElementById('tabs').getBoundingClientRect(); window.scrollBy(0, c.bottom - nav.top + 10); });
+  await page.evaluate(() => { window.__anims.length = 0; });
+  await page.click(`.mchart .mc[data-k="${ds(3)}"]`);
+  const card = page.locator('.chart.mins .dcard');
+  await expect(card).toBeVisible();
+  await expect.poll(() => page.evaluate(() => Math.round(document.querySelector('.chart.mins .dcard').getBoundingClientRect().bottom - document.getElementById('tabs').getBoundingClientRect().top))).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.querySelector('.mchart').getBoundingClientRect().top)).toBeGreaterThan(0);
+  expect(await page.evaluate(() => window.__anims)).toEqual(['dcard', 'mc sel']);
+  // Schließen: ohne Bewegung
+  await page.evaluate(() => { window.__anims.length = 0; });
+  await page.click(`.mchart .mc[data-k="${ds(3)}"]`);
+  await expect(card).toHaveCount(0);
+  expect(await page.evaluate(() => window.__anims)).toEqual([]);
+  // Bewegung reduzieren: keine Animation
+  await page.emulateMedia({ reducedMotion:'reduce' });
+  await page.click(`.mchart .mc[data-k="${ds(4)}"]`);
+  await expect(card).toBeVisible();
+  expect(await page.evaluate(() => window.__anims)).toEqual([]);
 });

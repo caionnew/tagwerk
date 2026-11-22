@@ -295,9 +295,9 @@ function errorSourcesHtml(lang){
       lead = `So verteilen sich deine ${tot} getippten Fehler:`;
       rows = Object.keys(ERR_KINDS).filter(k => s.e[k]).sort((a, b) => s.e[b] - s.e[a]).map(k => `<div class="erow"><span class="el">${ERR_KINDS[k][0]}<span class="esub">${ERR_KINDS[k][1]}</span></span><span class="ebar"><span style="width:${Math.max(4, s.e[k] / tot * 100)}%"></span></span><span class="ev">${s.e[k]}</span></div>`).join('');
       const top = Object.keys(s.e).sort((a, b) => s.e[b] - s.e[a])[0];
-      note = top === 'order' && lang === 'sv' ? 'Bei der Wortstellung helfen die Themen <button type="button" class="link inl" data-a="topic" data-t="inversion">Inversion</button> und <button type="button" class="link inl" data-a="topic" data-t="bisats">Nebensatz</button>.'
+      note = top === 'order' && lang === 'sv' ? 'Bei der Wortstellung helfen die Themen <button type="button" class="link inl" data-a="topic" data-t="inversion">Inversion</button> und ' + nobr('<button type="button" class="link inl" data-a="topic" data-t="bisats">Nebensatz</button>.')
         : top === 'spell' ? 'Meist Tippfehler. Das Wissen sitzt, es hapert an der Schreibung.'
-        : 'Wie oft du je Übung falsch liegst, zeigt <button type="button" class="link inl" data-a="errtab" data-t="t">Übungsart</button>.';
+        : 'Wie oft du je Übung falsch liegst, zeigt ' + nobr('<button type="button" class="link inl" data-a="errtab" data-t="t">Übungsart</button>.');
     }
   }
   return `${head}<div class="chart">${seg}${lead ? `<p class="legend elead">${lead}</p>` : ''}<div class="erows">${rows}</div><p class="legend">${note}</p></div>`;

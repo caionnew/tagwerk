@@ -29,14 +29,18 @@ test('Fehler bündeln: nur wenn ein Thema mit mindestens zwei Fehlern klar vorn 
   h = app.run('topicsHtml(S.run)');
   assert.doesNotMatch(h, /class="hint bundle"/, 'Gleichstand: kein Hinweis');
   assert.match(h, /Themen dieser Runde/);
+  // Ein einziges Thema: mit Fehlern eine Zeile zum Aufklappen, ohne Bündel-Hinweis; fehlerfrei nichts (die Leiste sagt alles)
   run([{ id:a1.id, good:false }, { id:a2.id, good:false }]);
-  assert.equal(app.run('topicsHtml(S.run)'), '', 'ein einziges Thema: keine Liste');
+  h = app.run('topicsHtml(S.run)');
+  assert.match(h, /Thema dieser Runde/); assert.doesNotMatch(h, /class="hint bundle"/);
+  run([{ id:a1.id, good:true }, { id:a2.id, good:true }]);
+  assert.equal(app.run('topicsHtml(S.run)'), '', 'ein Thema, alles richtig: keine Liste');
 });
 test('Themenliste: jedes Thema mit Fehler sichtbar, bis fünf Zeilen aufgefüllt, der fehlerfreie Rest klappt auf', () => {
   const all = [...new Set(bank.map(i => i.trap))].filter(t => byTrap(t).length >= 2 && app.run(`!!trapMeta('sv', ${JSON.stringify(t)})`)).slice(0, 8);
   assert.equal(all.length, 8);
   const nRows = h => (h.match(/\btrow\b/g) || []).length;
-  const shows = (h, t) => h.includes(`data-t="${t}"`);
+  const shows = (h, t) => h.includes(`data-k="${t}"`);
   app.run('S.topicsAll = false');
   // Sechs Themen mit je einem Fehler, zwei ohne: alle sechs stehen da, nicht nur fünf
   run([...all.slice(0, 6).map(t => ({ id:byTrap(t)[0].id, good:false })), { id:byTrap(all[6])[0].id, good:true }, { id:byTrap(all[6])[1].id, good:true }, { id:byTrap(all[7])[0].id, good:true }]);
@@ -54,7 +58,7 @@ test('Themenliste: jedes Thema mit Fehler sichtbar, bis fünf Zeilen aufgefüllt
   run([{ id:byTrap(all[0])[0].id, good:false }, { id:byTrap(all[1])[0].id, good:false }, { id:byTrap(all[2])[0].id, good:true }, { id:byTrap(all[3])[0].id, good:true }, { id:byTrap(all[3])[1].id, good:true }, { id:byTrap(all[4])[0].id, good:true }, { id:byTrap(all[5])[0].id, good:true }]);
   h = app.run('topicsHtml(S.run)');
   assert.equal(nRows(h), 5);
-  assert.ok(h.indexOf(`data-t="${all[3]}"`) < h.indexOf(`data-t="${all[2]}"`), 'mehr Aufgaben zuerst');
+  assert.ok(h.indexOf(`data-k="${all[3]}"`) < h.indexOf(`data-k="${all[2]}"`), 'mehr Aufgaben zuerst');
   assert.match(h, />und 1 weiteres Thema ohne Fehler</);
   // Genau fünf Themen: nichts aufzuklappen
   run(all.slice(0, 5).map(t => ({ id:byTrap(t)[0].id, good:true })));

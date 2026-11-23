@@ -44,6 +44,8 @@ const SCENES = [
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
   ['rundenende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll]],
   ['tagwerk-ende', rich, [click('[data-a=daily]'), answerAll, p => p.evaluate(() => { const g = document.querySelector('.grprow') || document.querySelector('.donebox h2'); if (g) g.scrollIntoView(); })]],
+  // Tagwerk-Ende mit aufgeklapptem Thema: deine Antworten und die Lösungen
+  ['tagwerk-thema', rich, [click('[data-a=daily]'), answerAll, click('.trow >> nth=0'), p => p.waitForTimeout(400)]],
   ['rundenende-unten', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, bottom]],
   ['bonus', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, click('[data-a=bonus]'), p => p.fill('#bonusText', 'Jag tycker att det är skönt att jobba hemma.'), click('[data-a=bonuscheck]'), p => p.evaluate(() => document.querySelector('.bonus').scrollIntoView({ block:'end' }))]],
   ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],

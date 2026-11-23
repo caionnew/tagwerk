@@ -12,9 +12,15 @@ function dayTapped(){ DB.used = DB.used || {}; if (!DB.used.dayTap) { DB.used.da
 const dayHost = where => (where === 'cal' ? (document.querySelector('.calwrap') || {}).parentElement : document.querySelector('.chart.mins'));
 function cardIntoView(open, where){
   if (!open) return;
-  const host = dayHost(where), el = host && host.querySelector(':scope > .dcard'); if (!el) return;
-  const r = el.getBoundingClientRect(), nav = document.getElementById('tabs');
-  const bottom = (nav && !nav.hidden ? nav.getBoundingClientRect().top : innerHeight) - 12, dy = Math.min(r.bottom - bottom, r.top - 70);
+  const host = dayHost(where); intoView(host && host.querySelector(':scope > .dcard'));
+}
+// Etwas Aufgeklapptes ganz ins Bild holen, ohne seinen Kopf (head, sonst es selbst) oben hinauszuschieben.
+// Unten begrenzen die Knöpfe der Ansicht oder die Leiste.
+function intoView(el, head){
+  if (!el) return;
+  const r = el.getBoundingClientRect(), bar = document.querySelector('#app .actionbar'), nav = document.getElementById('tabs');
+  const edge = (bar ? bar.getBoundingClientRect().top : nav && !nav.hidden ? nav.getBoundingClientRect().top : innerHeight) - 12;
+  const dy = Math.min(r.bottom - edge, (head || el).getBoundingClientRect().top - 70);
   if (dy > 0) window.scrollBy({ top:dy, behavior:calmMotion() ? 'auto' : 'smooth' });
 }
 // Nur als Antwort aufs Antippen: Die Karte blendet mit einer kleinen Bewegung nach oben ein, beim Wechsel zu einem
@@ -281,6 +287,12 @@ document.addEventListener('click', e => {
     case 'wayfold': { const y = b.dataset.y; S.wayOpen = Object.assign({}, S.wayOpen, { [y]:!(S.wayOpen && S.wayOpen[y]) }); S.wayAnim = S.wayOpen[y] ? y : null; render(); const el = document.querySelector(`[data-a=wayfold][data-y="${y}"]`); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest' }); break; }
     case 'mileall': S.mileAll = !S.mileAll; render(); break;
     case 'topicsall': S.topicsAll = !S.topicsAll; render(); break;
+    // Rundenende: Aufgaben eines Themas auf- und zuklappen, eins auf einmal
+    case 'topicopen': {
+      S.topicOpen = S.topicOpen === b.dataset.k ? null : b.dataset.k; S.topicEnter = !!S.topicOpen; render();
+      const head = S.topicOpen && document.querySelector('.trow.open'); if (head) intoView(head.nextElementSibling, head);
+      break;
+    }
     // Vom Rundenende zu „Dein Weg“ im Überblick
     case 'toway': { if (r && r.finished) S.run = null; S.ptab = 'all'; S.calDay = null; S.minDay = null; goView('progress'); const el = document.getElementById('way'); if (el) el.scrollIntoView({ block:'start' }); break; }
     case 'textgap': if (b.dataset.id === 'wiki') { const w = S.text && S.text.wiki; if (w) startRun('textgap', { body:w.body, title:w.title }); } else startRun('textgap', { text:b.dataset.id }); break;

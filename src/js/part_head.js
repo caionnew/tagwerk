@@ -269,7 +269,7 @@ function snapshot(){
 }
 function persistRun(){
   const r = S.run;
-  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, wayV:WAY_V, res:r.res, missed:r.missed, secs:r.secs, combo:r.combo, best:r.best };
+  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, wayV:WAY_V, res:r.res, secs:r.secs, combo:r.combo, best:r.best };
   save();
 }
 function dayLog(d, lang){ const x = DB.log[d] && DB.log[d][lang]; return typeof x === 'number' ? { n:x } : (x || {}); }
@@ -612,7 +612,7 @@ function startRun(kind, opts){
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;
   S.notice = null;
-  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, wayBefore:wayKeys(), res:[], missed:[], secs:0, combo:0, best:0 };
+  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, wayBefore:wayKeys(), res:[], secs:0, combo:0, best:0 };
   S.view = 'run'; prepCur(); persistRun(); render(); window.scrollTo(0, 0);
 }
 // Zufallsauswahl ohne Wiederholung der letzten Runden: zuletzt Gewähltes kommt nach hinten, solange es genug anderes gibt
@@ -685,7 +685,7 @@ function restoreRun(){
   const d = DB.run;
   if (!d || d.date !== today() || !Array.isArray(d.queue) || d.idx >= d.queue.length) { DB.run = null; return; }
   if (d.queue.some(ex => ex.id && !itemById(ex.id))) { DB.run = null; return; }
-  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, wayBefore:d.wayV === WAY_V ? d.wayBefore : null, res:d.res || [], missed:d.missed || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
+  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, wayBefore:d.wayV === WAY_V ? d.wayBefore : null, res:d.res || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
 }
 function resumeDaily(){
   const d = openDaily(); if (!d) return false;

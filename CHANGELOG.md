@@ -2,6 +2,18 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.68.0
+**Rundenende: Fehler beim Thema zum Aufklappen. Rückmeldung: die Lösung in deinen Wörtern, Formfehler beim Namen.**
+- **Themen dieser Runde aufklappen:** Ein Tipp auf ein Thema zeigt seine Aufgaben aus dieser Runde: was gefragt war, deine Antwort mit gestrichenen Wörtern, die richtige Fassung mit markierten Stellen (zum Anhören) und den Grund. Falsche und fast richtige stehen zuerst, die richtigen kurz mit Haken darunter; bei Sätzen, die in der Runde wiederkamen, „Beim zweiten Mal richtig“. Darunter „Regel und Beispiele“ und „Thema üben“. Es ist immer nur ein Thema offen; es rückt über die Knöpfe ins Bild. Bisher öffnete der Tipp gleich die Regel.
+- **„Noch nicht sicher“ entfällt:** Die Fehler stehen bei ihrem Thema, auch wenn eine Runde nur ein Thema hatte (dann „Thema dieser Runde“ mit einer Zeile). Fehler ohne Thema stehen unter „Weitere Fehler“.
+- **Punkte wie in den Fehlerquellen:** War der geprüfte Teil richtig und der Fehler woanders (etwa „inte“ richtig gestellt, aber „arbeta“ statt „arbetar“), steht ein Ring statt eines roten Punkts. Er zählt nicht als Fehler des Themas, auch nicht im Hinweis „2 von 3 Fehlern: … Thema üben“. Bisher empfahl das Rundenende dann ein Thema, das saß.
+- **Lösung in deinen Wörtern:** Gelten zwei Wörter gleich („arbeta“ und „jobba“, „mej“ und „mig“, „mail“ und „mejl“), nimmt die gezeigte Lösung deins. Bei „jag vet att vi inte arbeta på fredag“ steht jetzt „… inte arbetar på fredag“, nicht „jobbar“; markiert ist nur die Endung, die wirklich fehlte.
+- **Formfehler beim Namen:** Statt „Der Unterschied liegt woanders“ steht, was falsch war, mit der Bedeutung aus dem Wörterbuch: „Die Stellung von „inte“ stimmt. Aber „arbeta“ ist die Grundform (arbeiten), hier braucht es „arbetar“ (arbeitet).“ Ebenso ohne Stellungsübung vor der Regel des Satzes und bei Lücken mit einem Wort, etwa: „stor“ ist die Grundform (groß), hier braucht es „stort“ (groß, bei ett-Wörtern). Nur bei zwei Formen desselben Wortes; bei verschiedenen Wörtern bleibt es bei der Regel.
+- **Deine Antwort steht einmal:** Nach dem Prüfen steht sie an ihrem Platz, überzählige oder falsche Wörter gestrichen. Die Zeile „Du: …“ in der Rückmeldung darunter entfällt; sie wiederholte das Feld direkt darüber.
+- Speicherstand: Das Ergebnis eines offenen Tagwerks hat je Aufgabe neue Felder (Aufgabe, Antwort, Lösung, Grund), die Liste `missed` wird nicht mehr geschrieben. Ältere Stände laden weiter; ihre Aufgaben zeigen beim Aufklappen Satz und Lösung ohne deine Antwort.
+- `npm run sicht`: neue Ansicht „tagwerk-thema“ (Tagwerk-Ende mit aufgeklapptem Thema).
+- Tests: neue Datei `themen-runde.test.js` (der Fall aus dem Screenshot, eigene Wörter, Formfehler, Ring, Aufklappen, zweiter Versuch und Aufgeben); Rundenende-Tests im Browser klappen auf und zu.
+
 ## 24.67.0
 **Aufräumen, Schritt 2b: ein Gestaltungssystem mit festen Stufen. Die App sieht fast gleich aus, nur ruhiger.**
 - **Schrift:** 13 Größen statt 32. Halbe Pixel entfallen: Nebentext 13,5 und 14,5 werden 14, Marken und Daten 12,5 werden 13, Bedienelemente 15,5 werden 15, Diagrammbeschriftungen 10 bis 11,5 werden 11 (der Kalender 10,5 auch). Größer: der deutsche Satz in der Aufgabe (23 auf 24), Wortkästchen (19 auf 20), Satz in Hörrunde und Nachsprechen (27 auf 28). Kleiner: Titel eines Lesetexts (31 auf 28), große Kennzahl im Sprach-Tab (30 auf 28). Die Angaben unter Kurz, Normal und Lang bleiben bei 12, damit „Wiederholungen“ in die Spalte passt.

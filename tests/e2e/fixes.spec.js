@@ -70,7 +70,8 @@ test('„seit“-Aufgabe: bei falscher Antwort die genaue Erklärung (Deutsch Pr
     const de = await page.locator('.de').first().textContent();
     if (/seit/.test(de)) {
       await page.fill('#answer', 'jag vänta här'); await page.click('[data-a=check]');
-      await expect(page.locator('#fb .expl').first()).toContainText('Im Deutschen steht hier Präsens');
+      // Die Regel zum Satz; davor steht je nach Verb die falsche Form beim Namen („vänta“ ist die Grundform …)
+      await expect(page.locator('#fb')).toContainText('Im Deutschen steht hier Präsens');
       seen = true;
     } else { await page.fill('#answer', 'x'); await page.click('[data-a=check]'); }
     await page.click('[data-a=next]');

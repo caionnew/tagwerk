@@ -120,6 +120,7 @@ function recordAnswer(lang, ex, c, good){
   if (type) add('t:' + type, good);
   if (trap && c.wasSeen === false && (ex.type === 'cloze' || ex.type === 'tiles')) noteFirst(lang, ex.id, trap, topicOk);
   const h = new Date().getHours(); day.h = day.h || {}; day.h[h] = (day.h[h] || 0) + 1;
+  return { topicOk, kind:k };
 }
 // Erster Kontakt mit einem neuen Satz: je Monat, Thema und Stufe [Aufgaben, Fehler], gewertet wie in den Fehlerquellen.
 // Zeigt, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für

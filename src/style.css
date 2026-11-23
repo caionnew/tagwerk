@@ -151,6 +151,8 @@ input.tw{ font-family:var(--serif); font-size:var(--fs-9); }
 textarea{ display:block; width:100%; min-height:92px; resize:vertical; background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-m); padding:12px 13px; font-family:var(--serif); font-size:var(--fs-9); line-height:1.4; }
 input:focus, textarea:focus, select:focus{ border-color:var(--accent); outline:none; }
 input.tw[readonly], textarea[readonly]{ background:transparent; border-style:dashed; }
+/* Deine Antwort nach dem Prüfen, an der Stelle des Felds; gestrichen, was überzählig oder falsch ist */
+.tw-done{ margin:0; border:1.5px dashed var(--line); border-radius:var(--r-m); padding:11px 13px; font-family:var(--serif); font-size:var(--fs-9); line-height:1.4; overflow-wrap:anywhere; }
 .tiles-ans{ min-height:60px; border:1.5px dashed var(--line); border-radius:var(--r-m); padding:8px; display:flex; flex-wrap:wrap; gap:7px; align-items:center; align-content:flex-start; }
 .tiles-ans .ph{ color:var(--faint); font-size:var(--fs-5); margin:0 6px; }
 .tiles-pool{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
@@ -163,8 +165,6 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .v-ok{ background:var(--ok-soft); color:var(--ok); }
 .v-mid{ background:var(--warn-soft); color:var(--warn); }
 .v-bad{ background:var(--bad-soft); color:var(--bad); }
-.yours{ font-family:var(--serif); font-size:var(--fs-8); color:var(--muted); margin:0 0 8px; }
-.yours s{ text-decoration-color:var(--bad); }
 .solrow{ display:flex; align-items:flex-start; gap:10px; }
 .sol{ font-family:var(--serif); font-size:var(--fs-9); line-height:1.38; margin:0; flex:1; }
 .expl{ font-size:var(--fs-6); margin:10px 0 0; }
@@ -1078,3 +1078,24 @@ button.row:not([disabled]):active, label.row:active, .langsum:active, .tq-b:not(
 .mt-16{ margin-top:16px; }
 .mb-12{ margin-bottom:12px; }
 .mb-16{ margin-bottom:16px; }
+/* Rundenende: Aufgaben eines Themas, aufgeklappt unter seiner Zeile */
+.trow[aria-expanded]::after{ transition:transform var(--dur-2) var(--ease); }
+.trow.open::after{ transform:translateY(-2px) rotate(135deg); }
+.tdet{ padding:2px 16px 12px; border-top:1px solid var(--line); background:color-mix(in srgb, var(--bg) 55%, var(--surface)); }
+.tdet.enter{ animation:fadeIn var(--dur-2) var(--ease); }
+.rks{ list-style:none; margin:0; padding:0; }
+.rk{ display:flex; flex-direction:column; gap:2px; padding:10px 0; border-bottom:1px solid var(--line); }
+.rks .rk:last-child{ border-bottom:0; }
+.rk-q{ font-size:var(--fs-4); color:var(--muted); }
+.rk-you{ font-family:var(--serif); font-size:var(--fs-6); color:var(--muted); overflow-wrap:anywhere; }
+.rk-you .lbl-s{ font-size:var(--fs-3); }
+.rk-row{ display:flex; align-items:center; gap:10px; }
+.rk-row .rk-s{ flex:1; min-width:0; }
+.rk-s{ font-family:var(--serif); font-size:var(--fs-7); line-height:1.4; overflow-wrap:anywhere; }
+.rk.ok .rk-s{ font-size:var(--fs-6); }
+.rk.ok .rk-s::before{ content:'✓ '; color:var(--ok); font-family:var(--sans); font-weight:var(--fw-bold); }
+.rk-why{ font-size:var(--fs-4); color:var(--muted); }
+.rk-links{ display:flex; flex-wrap:wrap; gap:4px 18px; margin:6px 0 0; font-size:var(--fs-4); }
+.rk-links .link{ padding:6px 0; }
+.rkbox{ padding:2px 16px; }
+.tdots .d-off{ background:transparent; box-shadow:inset 0 0 0 2px var(--bad); }

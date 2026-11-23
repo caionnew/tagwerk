@@ -320,7 +320,7 @@ function viewRun(){
     const item = itemById(ex.id);
     const micTip = !done && !canListen() && (DB.used && DB.used.mic || 0) < 3 ? '<p class="src">Tipp: Mit dem Mikrofon deiner Tastatur kannst du die Antwort auch sprechen. Das übt nebenbei das Sprechen.</p>' : '';
     body = `<p class="kicker">Übersetze ${L.deAcc}</p><p class="de" lang="de">${esc(item.de)}</p>${micTip}
-      <div class="ex-a"><textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}"${done ? ' readonly' : ''}>${esc(c.input)}</textarea>
+      <div class="ex-a">${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}">${esc(c.input)}</textarea>`}
       ${done ? '' : `<div class="inrow">${charbar(lang)}${canListen() ? `<button type="button" class="micbtn${S.listening ? ' on' : ''}" data-a="dictate" aria-label="Antwort sprechen">${ICONS.mic}</button>` : ''}</div>`}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
     const d = ex.data, fixing = !done && c.fixing, locked = done || fixing;
@@ -351,7 +351,7 @@ function viewRun(){
   } else if (ex.type === 'gen' && ex.data.kind === 'trans') {
     const d = ex.data;
     body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${esc(d.src)}</p><p class="vocab">Beginne mit „${esc(d.start.trim())} …“${d.aim ? `. ${esc(d.aim)}` : ''}</p>
-      <div class="ex-a"><textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Umgebauter Satz">${esc(c.input)}</textarea>
+      <div class="ex-a">${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" aria-label="Umgebauter Satz">${esc(c.input)}</textarea>`}
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen') {
     const d = ex.data;
@@ -364,14 +364,14 @@ function viewRun(){
         ${done ? '' : charbar(lang)}</div>`;
     } else {
       body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${d.sub ? lang : 'de'}">${esc(d.prompt)}</p>${d.sub ? `<p class="vocab">${esc(d.sub)}</p>` : ''}
-        <div class="ex-a"><input type="text" id="answer" class="tw" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}" value="${esc(c.input)}"${done ? ' readonly' : ''} aria-label="Antwort">
+        <div class="ex-a">${done ? doneAnswer(c, lang) : `<input type="text" id="answer" class="tw" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}" value="${esc(c.input)}" aria-label="Antwort">`}
         ${done ? '' : charbar(lang)}</div>`;
     }
   } else if (ex.type === 'dict') {
     const item = itemById(ex.id);
     body = `<p class="kicker">Hör zu und schreib den Satz auf${item.tat && item.tat.audio ? '<span class="hintw">echte Aufnahme</span>' : ''}</p>
       <div class="ex-a"><div class="btnrow m0 mb-16"><button type="button" class="ghost icon" data-a="play" data-rate="0.9">${ICON} Abspielen</button><button type="button" class="ghost icon" data-a="play" data-rate="0.65">${PICO.slow} Langsam</button></div>
-      <textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done"${done ? ' readonly' : ''} aria-label="Was du hörst">${esc(c.input)}</textarea>
+      ${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" aria-label="Was du hörst">${esc(c.input)}</textarea>`}
       ${done ? '' : charbar(lang)}</div>`;
   }
   let actions;
@@ -389,6 +389,9 @@ function viewRun(){
 }
 // Die Lösung, die im Rückmeldefeld steht. Genau sie wird vorgelesen, automatisch und über den Knopf daneben.
 // Erzeugte Aufgaben: der ganze Satz (bei Lücken nie nur das Wort). Satzbank: deine nächstliegende richtige Fassung.
+// Nach dem Prüfen steht deine Antwort an ihrem Platz, überzählige oder falsche Wörter gestrichen (vorher stand sie dazu noch einmal
+// als „Du: …“ in der Rückmeldung). Aufgegeben ohne Antwort: kein leeres Feld.
+const doneAnswer = (c, lang) => (String(c.input || '').trim() ? `<p class="tw-done" lang="${lang}">${c.mine && c.result !== 'ok' && !c.gaveUp ? c.mine : esc(c.input)}</p>` : '');
 function solShown(lang, ex, c){
   if (ex.type === 'gen' && ['spot', 'genus', 'time'].includes(ex.data.kind)) return ex.data.full;
   const item = ex.id ? itemById(ex.id) : null;
@@ -445,7 +448,6 @@ function feedbackHtml(r, ex, c){
   const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : item.target;
   const origin = item ? originOf(item) : '', originLine = origin ? `<p class="expl orig"><span class="lbl-o">Herkunft:</span> ${termify(origin)}</p>` : '';
   let originShown = !(c.result === 'bad' || c.wasSeen === false);
-  if (c.mine && c.result !== 'ok' && !c.gaveUp) out += `<p class="yours" lang="${lang}"><span class="lbl-s">Du:</span> ${c.mine}</p>`;
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   const sol = solShown(lang, ex, c);
   const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(sol, lang);
@@ -457,7 +459,10 @@ function feedbackHtml(r, ex, c){
   if (c.result === 'bad') {
     // Fehlt ein Reflexivpronomen (quedamos statt nos quedamos), steht das zuerst: Es ist der konkrete Fehler, die Erklärung des Satzes kommt danach.
     if (c.refl && !c.keyOk) out += `<p class="expl">${termify(c.refl)}</p>`;
-    if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. ${c.refl ? `Aber ${termify(c.refl)}` : 'Der Unterschied liegt woanders.'}</p>`;
+    // Falsche Form desselben Wortes: zuerst beim Namen genannt („arbeta“ ist die Grundform …), die Regel des Satzes folgt
+    if (c.form && !c.keyOk && !c.refl) out += `<p class="expl">${esc(c.form[0].toUpperCase() + c.form.slice(1))}.</p>`;
+    // Stimmt der geprüfte Teil, sagt die Erklärung, was stattdessen falsch ist, sonst nur „woanders“
+    if (c.keyOk) out += `<p class="expl">${termify(c.keyOk)}. ${c.refl ? `Aber ${termify(c.refl)}` : c.form ? `Aber ${esc(c.form)}.` : 'Der Unterschied liegt woanders.'}</p>`;
     // Eigene Erklärung (Satzbank oder erzeugte Aufgabe) passt genau zum Satz und geht vor der allgemeinen Diagnose.
     // Die Diagnose sieht nur, ob „har …“ fehlt; bei einem Satz zur Wortstellung führte sie in die Irre.
     else if (!(ex.type === 'gen' && (ex.data.kind || ex.data.note)) && !(item && item.note) && diag(lang, c.input, solution)) out += `<p class="expl">${termify(diag(lang, c.input, solution))}</p>`;
@@ -522,6 +527,7 @@ const READING = {
 };
 const readLink = ([name, url]) => `<a href="${url}" target="_blank" rel="noopener">${name.replace(/ /g, '\u00a0')}</a>`;
 // Themen der Runde: je Thema ein Punkt pro Aufgabe (erster Versuch). Sätze nach ihrem Thema, erzeugte Aufgaben nach Generator.
+// Ein Fehler neben richtig gesetztem Thema (off) zählt wie in den Fehlerquellen nicht als Fehler des Themas: Ring statt Punkt.
 function roundTopics(r){
   const lang = r.lang, map = new Map();
   (r.res || []).forEach(x => {
@@ -530,11 +536,13 @@ function roundTopics(r){
     else if (x.gen && x.trap && trapMeta(lang, x.trap)) { const tr = trapMeta(lang, x.trap); key = tr.id; label = tr.label; trap = tr.id; }
     else if (x.gen && GENS[x.gen]) { const tr = TRAPS[lang].find(t => t.gen === x.gen); key = tr ? tr.id : x.gen; label = tr ? tr.label : GENS[x.gen].label; trap = tr ? tr.id : null; }
     else return;
-    const t = map.get(key) || { key, label, trap, gen:x.gen || null, dots:[], bad:0 };
-    t.dots.push(x.good ? (x.near ? 'near' : 'ok') : 'bad'); if (!x.good) t.bad++;
+    const t = map.get(key) || { key, label, trap, gen:x.gen || null, dots:[], bad:0, off:0, list:[] };
+    t.dots.push(x.good ? (x.near ? 'near' : 'ok') : x.off ? 'off' : 'bad');
+    if (!x.good) { if (x.off) t.off++; else t.bad++; }
+    t.list.push(x);
     map.set(key, t);
   });
-  return [...map.values()].sort((a, b) => b.bad - a.bad || b.dots.length - a.dots.length);
+  return [...map.values()].sort((a, b) => b.bad - a.bad || b.off - a.off || b.dots.length - a.dots.length);
 }
 // Nach einer fehlerfreien Übungsrunde: das Thema, das in den letzten 30 Tagen am häufigsten hakte (ab 5 Aufgaben, mindestens jede fünfte falsch).
 // Noch eine Runde vom selben bringt dann am wenigsten.
@@ -548,25 +556,48 @@ function nextTopicHtml(r){
   const x = list[0];
   return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(trapLabel(lang, x.id))}</b>: in den letzten 30 Tagen ${x.bad} von ${x.n} falsch. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
 }
+// Eine Aufgabe der Runde: was gefragt war, deine Antwort (überzählige Wörter gestrichen), die richtige Fassung, die ihr am nächsten
+// ist (abweichende Stellen markiert), und der Grund. Runden aus älteren Fassungen ohne Antwort zeigen Aufgabe und Lösung.
+function roundTaskHtml(x, lang){
+  const want = x.best || x.target, q = x.q ? `<span class="rk-q">${esc(x.q)}</span>` : '';
+  if (x.good && !x.near) return `<li class="rk ok">${q}<span class="rk-s" lang="${lang}">${esc(x.target)}</span></li>`;
+  const typed = ['free', 'tiles', 'dict', 'trans'].includes(x.ty), gap = x.ty === 'cloze';
+  const you = x.gu ? '<span class="rk-you">Weiß ich nicht</span>'
+    : x.ans ? `<span class="rk-you" lang="${lang}"><span class="lbl-s">Du:</span> ${typed ? (mineHtml(x.ans, want, lang) || esc(x.ans)) : `„${esc(x.ans)}“`}</span>` : '';
+  const sol = typed && x.ans ? diffHtml(want, x.ans, lang).html : gap && x.best ? boldIn(x.target, x.best) : esc(want);
+  const why = [x.why ? esc(x.why).replace(/([^.!?])$/, '$1.') : '', x.again == null ? '' : x.again ? 'Beim zweiten Mal richtig.' : 'Auch beim zweiten Mal falsch.'].filter(Boolean).join(' ');
+  return `<li class="rk ${x.near ? 'near' : x.off ? 'off' : 'bad'}">${q}${you}<span class="rk-row"><span class="rk-s" lang="${lang}">${sol}</span>${speakBtn(want, lang)}</span>${why ? `<span class="rk-why">${why}</span>` : ''}</li>`;
+}
+// Falsche und fast richtige zuerst, darunter die richtigen kurz
+function roundTasksHtml(list, lang){
+  const rank = x => (!x.good ? 0 : x.near ? 1 : 2);
+  return `<ul class="rks">${list.slice().sort((a, b) => rank(a) - rank(b)).map(x => roundTaskHtml(x, lang)).join('')}</ul>`;
+}
 function topicsHtml(r){
-  const tps = roundTopics(r);
-  if (tps.length < 2) return '';
+  const tps = roundTopics(r), lang = r.lang;
+  // Ein einziges Thema ohne Fehler: Die Ergebnisleiste sagt schon alles
+  if (!tps.length || (tps.length < 2 && tps[0].dots.every(d => d === 'ok'))) return '';
   // Fehler bündeln: Hakt es mindestens zweimal im selben Thema, ist das der nächste Schritt (andere Sätze, gleiche Regel)
   // Nur wenn ein Thema klar vorn liegt: mindestens zwei Fehler und mehr als jedes andere Thema
-  const nBad = tps.reduce((a, t) => a + t.bad, 0), worst = tps[0].bad >= 2 && tps[0].bad > tps[1].bad ? tps[0] : null;
+  const nBad = tps.reduce((a, t) => a + t.bad, 0), worst = tps.length > 1 && tps[0].bad >= 2 && tps[0].bad > tps[1].bad ? tps[0] : null;
   const go = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
   const bundle = worst && go(worst) ? `<p class="hint bundle">${worst.bad === nBad ? (nBad === 2 ? 'Beide Fehler' : `Alle ${nBad} Fehler`) : `${worst.bad} von ${nBad} Fehlern`}: <b>${esc(worst.label)}</b>. <button type="button" class="link inl" ${go(worst)}>Thema üben</button></p>` : '';
   const dot = d => `<i class="d-${d}"></i>`;
   // Jedes Thema mit Fehler steht da, aufgefüllt bis fünf Zeilen; der Rest ist fehlerfrei und klappt auf
-  const nShow = Math.max(5, tps.filter(t => t.bad).length), rest = tps.length - nShow;
-  const rows = (S.topicsAll ? tps : tps.slice(0, nShow)).map(t => {
-    const sheet = t.trap && t.trap !== 'eigene';
-    const ok = t.dots.length - t.bad, aria = `${ok} richtig${t.bad ? `, ${t.bad} falsch` : ''}`;
-    const inner = `<span class="txt"><span class="rt">${esc(t.label)}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span>`;
-    return sheet ? `<button type="button" class="row trow" data-a="topic" data-t="${t.trap}">${inner}</button>` : `<div class="row static trow">${inner}</div>`;
+  const nShow = Math.max(5, tps.filter(t => t.bad || t.off).length), rest = tps.length - nShow;
+  // Antippen klappt die Aufgaben des Themas auf (eins auf einmal); darin Regel und Üben
+  const rows = (S.topicsAll ? tps : tps.slice(0, nShow)).map((t, i) => {
+    const ok = t.dots.length - t.bad - t.off, aria = `${ok} richtig${t.bad ? `, ${t.bad} falsch` : ''}${t.off ? `, ${t.off} mit Fehler außerhalb des Themas` : ''}`;
+    const open = S.topicOpen === t.key, sheet = t.trap && t.trap !== 'eigene';
+    const head = `<button type="button" class="row trow${open ? ' open' : ''}" data-a="topicopen" data-k="${esc(t.key)}" aria-expanded="${open}" aria-controls="tdet-${i}"><span class="txt"><span class="rt">${esc(t.label)}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span></button>`;
+    if (!open) return head;
+    const links = (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '') + (go(t) ? `<button type="button" class="link" ${go(t)}>Thema üben</button>` : '');
+    return head + `<div class="tdet${S.topicEnter ? ' enter' : ''}" id="tdet-${i}">${roundTasksHtml(t.list, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>`;
   }).join('');
+  S.topicEnter = false;
   const more = rest > 0 ? `<p class="t-more"><button type="button" class="link" data-a="topicsall" aria-expanded="${S.topicsAll ? 'true' : 'false'}">${S.topicsAll ? 'Weniger zeigen' : `und ${plural(rest, 'weiteres Thema', 'weitere Themen')} ohne Fehler`}</button></p>` : '';
-  return `<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}`;
+  const back = (r.res || []).some(x => x.id && !x.good) ? '<p class="legend">Falsche Sätze kommen morgen wieder.</p>' : '';
+  return `<h2 class="grp">${tps.length === 1 ? 'Thema dieser Runde' : 'Themen dieser Runde'}</h2>${bundle}<div class="rows">${rows}</div>${more}${back}`;
 }
 // Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
 // (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).
@@ -703,7 +734,7 @@ function stampSvg(r, daily, sealed){
 function viewRunDone(){
   const r = S.run, lang = r.lang;
   const daily = r.kind === 'daily';
-  const total = r.ok + r.bad, res = r.res || [], missed = r.missed || [];
+  const total = r.ok + r.bad, res = r.res || [];
   const perfect = total > 0 && !r.bad;
   const title = daily ? 'Tagwerk erledigt' : perfect && total >= 3 ? 'Fehlerfrei' : 'Runde beendet';
   const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok} von ${total} auf Anhieb richtig.`;
@@ -730,9 +761,10 @@ function viewRunDone(){
   })() : '';
   const sk = daily && !(r.miles || []).some(e => e.k === 'streak') ? (() => { const n = streak(); return n >= 2 ? `<p class="hint">Tag ${n} in Folge.</p>` : ''; })() : '';
   const tomorrow = daily ? (() => { const n = forecast(lang)[1].n; return n ? `<p class="hint">Morgen ${n === 1 ? 'kommt 1 Satz' : `kommen ${n} Sätze`} zur Wiederholung.</p>` : ''; })() : '';
-  const missedHtml = missed.length ? `<h2 class="grp">Noch nicht sicher</h2>
-    <div class="rows">${missed.slice(0, 6).map(x => `<div class="row static"><span class="txt"><span class="rt wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="rd">${esc(x.de)}</span>` : ''}</span>${speakBtn(x.target, lang)}</div>`).join('')}</div>
-    ${missed.length > 6 ? `<p class="legend">und ${missed.length - 6} weitere</p>` : ''}${missed.some(x => x.id) ? '<p class="legend">Sie kommen morgen wieder.</p>' : ''}` : '';
+  // Fehler stehen bei ihrem Thema; was keins hat, hier, so wie aufgeklappt
+  const inTopics = new Set(roundTopics(r).flatMap(t => t.list)), wrong = res.filter(x => !x.good && !inTopics.has(x));
+  const missedHtml = wrong.length ? `<h2 class="grp">${inTopics.size ? 'Weitere Fehler' : 'Noch nicht sicher'}</h2><div class="rows rkbox">${roundTasksHtml(wrong.slice(0, 8), lang)}</div>
+    ${wrong.length > 8 ? `<p class="legend">und ${wrong.length - 8} weitere</p>` : ''}` : '';
   const nudge = !daily && !DB.done[today()] && !S.dailyRun ? `<div class="notice ok"><span>Das Tagwerk für heute steht noch aus.</span><button type="button" class="link" data-a="daily">Starten</button></div>` : !daily && S.dailyRun && S.dailyRun.lang === lang ? `<div class="notice ok"><span>Dein Tagwerk ist noch offen.</span><button type="button" class="link" data-a="daily">Fortsetzen</button></div>` : '';
   const buttons = daily
     ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button><button type="button" class="primary" data-a="tab" data-v="home">Fertig</button>'

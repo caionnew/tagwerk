@@ -80,7 +80,8 @@ Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unt
     - **Persönliche Bestwerte:** längste fehlerfreie Folge, meiste Aufgaben an einem Tag. Belohnt eher Menge als Können und kann zu Druck werden.
     - **Damals und heute:** ein Satz aus den ersten Tagen, den du damals falsch hattest und heute gefestigt hast. Braucht Monate an Daten, ab dem Frühjahr 2027 sinnvoll.
     - **Balken bis zur nächsten Etappe am Rundenende:** Den Abstand nennt schon der Ausschnitt aus „Dein Weg“ („noch 15“); Fortschritt hat den Balken.
-15. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
+15. **Deine letzten Fehler im Themenblatt, auch auf Fortschritt (C+).** Am Rundenende stehen sie seit 24.68 beim Thema. Überall bräuchte es ein dauerhaftes Protokoll falscher Antworten je Thema; erst, wenn sich das Aufklappen am Rundenende bewährt.
+16. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
 
 ## Lesetexte: Themen für später

@@ -23,6 +23,37 @@ function equiv(t, lang){
   }
   return x;
 }
+// Gleichwertige Wörter in der Lösung so, wie du sie geschrieben hast: Mit „arbeta“ steht „arbetar“ da, nicht „jobbar“. Die Korrektur
+// zeigt dann nur, was wirklich falsch war (hier die Endung), und nicht ein Wort, das genauso richtig ist.
+// [in der Lösung, in deiner Antwort, Ersatz]; die Endungen wie in equiv
+const OWN_WORDS = { sv:[
+  ['\\bjobb(?=(?:a|ar|ade|at)\\b)', '\\barbet(?:a|ar|ade|at)\\b', 'arbet'], ['\\barbet(?=(?:a|ar|ade|at)\\b)', '\\bjobb(?:a|ar|ade|at)\\b', 'jobb'],
+  ['\\bmig\\b', '\\bmej\\b', 'mej'], ['\\bdig\\b', '\\bdej\\b', 'dej'], ['\\bsig\\b', '\\bsej\\b', 'sej'],
+  ['\\bmejl(?=(?:et|en|a|ar|ade|at)?\\b)', '\\bmail', 'mail']
+] };
+function ownWords(lang, input, text){
+  let out = String(text);
+  (OWN_WORDS[lang] || []).forEach(([want, typed, rep]) => {
+    const has = new RegExp(typed, 'i');
+    if (!has.test(input || '') || has.test(out)) return;
+    out = out.replace(new RegExp(want, 'gi'), m => (m[0] !== m[0].toLowerCase() ? rep[0].toUpperCase() + rep.slice(1) : rep));
+  });
+  return out;
+}
+// Formfehler beim Namen nennen, mit der Bedeutung aus dem Wörterbuch: „arbeta“ ist die Grundform (arbeiten), hier braucht es
+// „arbetar“ (arbeitet). Paare [getippt, gesucht]; nur zwei Formen desselben Wortes (bei verschiedenen Wörtern sagt „Grundform“
+// nichts: „normalmente“ ist kein Verb), und nur, was im Wörterbuch steht; sonst ''.
+function formWhy(lang, pairs){
+  const g = w => { const x = GLOSS[lang][String(w).toLowerCase()]; return x && !x.multi && x.de ? x : null; };
+  // „arbeitet (arbeiten)“ → „arbeitet“, „groß (bei ett-Wörtern)“ → „groß, bei ett-Wörtern“; nach einem Semikolon nur Zusätze
+  const mean = (w, base) => { const de = g(w).de.split(';')[0].trim(), m = de.match(/^(.*?) \(([^()]*)\)$/); return !m ? de : base && m[2] === base ? m[1] : `${m[1]}, ${m[2]}`; };
+  const parts = (pairs || []).filter(([x, m]) => x && m && deacc(x.toLowerCase()) !== deacc(m.toLowerCase()) && g(m) && sameWord(lang, x, m)).map(([x, m]) => {
+    const gx = g(x), gm = g(m), lemma = gm.l && g(gm.l) ? g(gm.l).de : gx && !gx.l ? gx.de : '';
+    if (gx && !gx.l && gm.l) return `„${x}“ ist die Grundform (${mean(x)}), hier braucht es „${m}“ (${mean(m, lemma)})`;
+    return `„${m}“ (${mean(m, lemma)}) statt „${x}“`;
+  });
+  return parts.slice(0, 2).join('; ');
+}
 // Tippfehler auf einer Tastatur: zwei Buchstaben vertauscht, ein Nachbarbuchstabe getroffen, ein Buchstabe doppelt oder zu wenig doppelt.
 // Nur in einem Wort, nicht am Wortanfang oder in den letzten zwei Buchstaben (Endungen sind Grammatik), nicht im geprüften Wort.
 const KB_ROWS = ['qwertyuiopå', 'asdfghjklöä', 'zxcvbnm'];
@@ -211,7 +242,7 @@ function check(){
     if (res !== 'ok') {
       // Erzeugte Aufgaben: bei falscher Antwort die Standardlösung zeigen (passend zur Erklärung und zum Vorlesen).
       // Satzbank: die richtige Fassung, die deiner Antwort am nächsten ist, damit die Korrektur klein bleibt.
-      const best = res === 'bad' && ex.type === 'gen' ? answersFor(ex)[0] : closest(c.input, answersFor(ex), r.lang); c.best = best; c.diff = diffHtml(best, c.input, r.lang);
+      const best = ownWords(r.lang, c.input, res === 'bad' && ex.type === 'gen' ? answersFor(ex)[0] : closest(c.input, answersFor(ex), r.lang)); c.best = best; c.diff = diffHtml(best, c.input, r.lang);
       if (ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.mine = mineHtml(c.input, best, r.lang);
       const toks = ' ' + norm(c.input, r.lang) + ' ';
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
@@ -220,9 +251,12 @@ function check(){
       // Ganzer Satz getippt: fehlt nur ein Reflexivpronomen, sagt der Hinweis, was das Verb ohne es bedeutet
       if (res === 'bad' && r.lang === 'es' && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.refl = esReflexWhy(c.input, best);
     }
+    // Lücke mit einem Wort: dieselbe Form-Erklärung („stor“ ist die Grundform, hier braucht es „stort“)
+    if (res === 'bad' && (ex.type === 'cloze' || (ex.type === 'gen' && ex.data.gap)) && c.best && !/\s/.test(c.input.trim()) && !/\s/.test(c.best.trim())) c.form = formWhy(r.lang, [[c.input.trim(), c.best.trim()]]);
     if (res === 'bad' && ex.type !== 'cloze') {
       const m = mistakeFor(ex, c.input, r.lang);
       c.kind = m ? m.kind : null;
+      if (c.kind === 'word') c.form = formWhy(r.lang, (m.pairs || []).map(([x, w]) => [x, ownWords(r.lang, c.input, w)]));
       if (c.kind === 'vocab') {
         c.vocabTopic = !!m.topic;
         // Einzelnes Lückenwort: Die Lösung steht schon da, der Satz „Die Grammatik passt …“ wäre dort schief
@@ -300,6 +334,36 @@ function mineHtml(typed, target, lang){
   if (keep.every((k, x) => k || !yb[x])) return '';
   return Y.map((w, x) => (keep[x] || !yb[x] ? esc(w) : `<span class="w-extra">${esc(w)}</span>`)).join(' ');
 }
+// Für die Themen am Rundenende (Felder neu in 24.68, ältere Runden haben sie nicht): q die Aufgabe (meist der deutsche Satz),
+// ans deine Antwort, gu aufgegeben, best die richtige Fassung, die deiner Antwort am nächsten ist, why der Grund,
+// off falsch, aber der geprüfte Teil des Themas stimmt (zählt wie in den Fehlerquellen nicht gegen das Thema), again der zweite Versuch
+function resDetail(x, ex, c, ra, lang){
+  const d = ex.type === 'gen' ? ex.data : null, item = ex.id ? itemById(ex.id) : null;
+  x.ty = d ? (d.kind || (d.gap ? 'cloze' : 'free')) : ex.type;
+  // Lesetext-Lücke: das gesuchte Wort mit Bedeutung, nicht die Bedeutung allein (sähe aus wie eine Übersetzung)
+  const q = item ? item.de : d.kind === 'trans' ? d.src : d.mean ? `${d.answers[0]} = ${d.mean}` : d.deLine || (d.gap ? '' : d.prompt);
+  if (q) x.q = String(q).slice(0, 240);
+  if (c.gaveUp) x.gu = 1; else if (c.input) x.ans = String(c.input).slice(0, 240);
+  if (x.good && !x.near) return x;
+  if (c.best && c.best !== x.target) x.best = c.best;
+  if (!x.good && ra.topicOk) x.off = 1;
+  const why = roundWhy(c, ra.kind, lang);
+  if (why) x.why = why.slice(0, 240);
+  return x;
+}
+// Der Grund in einem Satz, wie in der Rückmeldung
+function roundWhy(c, kind, lang){
+  const cap = s => s[0].toUpperCase() + s.slice(1);
+  const other = p => `Anderes Wort: „${p[0]}“ statt „${p[1]}“`;
+  if (c.result === 'near') return c.why && c.why.kind === 'typo' ? `Tippfehler: „${c.why.typed}“ statt „${c.why.want}“` : c.vocab && c.vocab[0] ? other(c.vocab[0]) : lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
+  if (c.gaveUp) return '';
+  if (c.keyOk) return `${c.keyOk}. ${c.refl ? `Aber ${c.refl}` : c.form ? `Aber ${c.form}.` : 'Der Unterschied liegt woanders.'}`;
+  if (c.refl) return c.refl;
+  if (c.form) return cap(c.form) + '.';
+  if (c.vocab && c.vocab[0]) return other(c.vocab[0]);
+  // Sonst nur die Fehlerarten, die sicher erkannt sind („Form oder Funktionswort“ stünde auch bei Kauderwelsch)
+  return ['order', 'missing', 'spell'].includes(kind) ? ERR_KINDS[kind][1] : '';
+}
 function next(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur;
   if (c && c.state === 'done') {
@@ -319,9 +383,13 @@ function next(){
     }
     logDay(r.lang, f);
     if (counts) {
-      recordAnswer(r.lang, ex, c, good);
+      const ra = recordAnswer(r.lang, ex, c, good);
       const item = ex.id ? itemById(ex.id) : null;
-      (r.res = r.res || []).push({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, trap:ex.type === 'gen' && ex.data ? ex.data.trap : undefined, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' });
+      (r.res = r.res || []).push(resDetail({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, trap:ex.type === 'gen' && ex.data ? ex.data.trap : undefined, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' }, ex, c, ra, r.lang));
+    } else if (ex.id) {
+      // Zweiter Versuch eines falschen Satzes: am Rundenende „beim zweiten Mal richtig“
+      const first = (r.res || []).slice().reverse().find(x => x.id === ex.id && !x.good && x.again == null);
+      if (first) first.again = good ? 1 : 0;
     }
     if (ex.id && ex.type !== 'dict') {
       const prev = DB.st[ex.id] || { ok:0, bad:0, alts:[] };
@@ -338,11 +406,8 @@ function next(){
         if (r.res && r.res.length) Object.assign(r.res[r.res.length - 1], { ivl:st.ivl, pivl:oldIvl });
         const item = itemById(ex.id);
         if (!good) r.queue.push({ type:item.kind === 'order' ? 'tiles' : 'cloze', id:ex.id, requeue:true });
-        if (!good && !(r.missed || []).some(x => x.id === ex.id)) (r.missed = r.missed || []).push({ id:ex.id, target:item.target, de:item.de });
       }
     }
-    // Lesetext-Lücke: unter dem Satz das gesuchte Wort mit Bedeutung, nicht die Bedeutung allein (sähe aus wie eine Übersetzung)
-    if (ex.type === 'gen' && !good && counts) (r.missed = r.missed || []).push({ target:ex.data.full || ex.data.answers[0], de:ex.data.mean ? `${ex.data.answers[0]} = ${ex.data.mean}` : ex.data.deLine || (ex.data.gap ? '' : ex.data.prompt), gen:ex.gen, data:ex.data });
     if (ex.type === 'gen' && good && ex.data.looked) lookedDone(ex.data.looked);
     if (ex.type === 'gen'  && counts) {
       const g = DB.gen[ex.gen] || (DB.gen[ex.gen] = { ok:0, bad:0 });
@@ -370,7 +435,7 @@ function finishRun(){
   checkTopics(r.lang);
   r.miles = r.wayBefore ? (() => { const before = new Set(r.wayBefore); return wayEvents().done.filter(e => !before.has(wayKey(e))); })() : [];
   r.crossed = { mature:crossedIn(r, MATURE), anchored:crossedIn(r, ANCHORED) };
-  persistWay(); S.mileAll = false; S.topicsAll = false;
+  persistWay(); S.mileAll = false; S.topicsAll = false; S.topicOpen = null;
   if (r.kind === 'daily') r.month = monthCard();
   if (r.miles.length) buzz('mile');
   save(); S.view = 'runDone'; render(); window.scrollTo(0, 0);

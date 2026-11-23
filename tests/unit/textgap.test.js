@@ -6,7 +6,7 @@ const run = code => { const v = app.run(code); return v && typeof v === 'object'
 function seeded(seed){ let s = seed; return () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; }; }
 function withSeed(seed, fn){ const orig = Math.random; Math.random = seeded(seed); try { return fn(); } finally { Math.random = orig; } }
 // Antwort prüfen und weiter (erst „Weiter“ verbucht das Ergebnis)
-const answer = (d, input) => run(`(() => { S.run = { kind:'gen', lang:'es', queue:[{ type:'gen', gen:'textgap_es', data:${JSON.stringify(d)} }], idx:0, ok:0, bad:0, res:[], endless:true, gen:'textgap_es', cur:{ state:'answer', input:${JSON.stringify(input)} } }; check(); const res = S.run.cur.result; next(); return { res, missed:S.run.missed || [] }; })()`);
+const answer = (d, input) => run(`(() => { S.run = { kind:'gen', lang:'es', queue:[{ type:'gen', gen:'textgap_es', data:${JSON.stringify(d)} }], idx:0, ok:0, bad:0, res:[], endless:true, gen:'textgap_es', cur:{ state:'answer', input:${JSON.stringify(input)} } }; check(); const res = S.run.cur.result; next(); return { res, list:S.run.res || [] }; })()`);
 const fresh = (lang, extra) => { app.run(`DB = freshDB(); DB.settings.lang = '${lang}'; S.lang = '${lang}'; S.run = null; S.text = null; DB.used.genRecent = {};`); if (extra) app.run(extra); };
 const read = (lang, ...ids) => `DB.used.texts = Object.assign(DB.used.texts || {}, ${JSON.stringify(Object.fromEntries(ids.map(id => [lang + ':' + id, { best:3, n:1, last:'2026-01-01' }])))});`;
 
@@ -127,6 +127,7 @@ test('Runde direkt nach dem Lesen: eben nachgeschlagene Wörter zuerst, acht Lü
 test('Rundenende: bei verpasster Lücke das Wort mit Bedeutung, nicht die Bedeutung als Übersetzung', () => {
   fresh('es', read('es', 'campoamor'));
   const d = withSeed(11, () => run('GENS.textgap_es.make()'));
-  const { missed } = answer(d, 'zzz');
-  assert.equal(missed[0].de, `${d.answers[0]} = ${d.mean}`);
+  const { list } = answer(d, 'zzz');
+  assert.equal(list[0].q, `${d.answers[0]} = ${d.mean}`);
+  assert.equal(list[0].ans, 'zzz');
 });

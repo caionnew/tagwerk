@@ -368,7 +368,8 @@ function yearStats(){
   });
 }
 function yearsHtml(){
-  const ys = yearStats(); if (!ys.length || (ys.length === 1 && ys[0].days < 30)) return '';
+  // Erst ab dem zweiten Jahr: Im ersten stünden dieselben Zahlen wie in der Kopfkarte (Übungstage, Minuten, Serie, Tagwerke je Sprache)
+  const ys = yearStats(); if (ys.length < 2) return '';
   const card = Y => {
     const langs = ['sv', 'es'].filter(l => Y[l].n);
     return `<div class="ycard"><p class="y-h">${Y.y}${Y.current ? ' <span class="dim">bisher</span>' : ''}</p>

@@ -28,6 +28,8 @@ test('Zeit: Fließtext „5 Std. 7 Min.“, in einer Karte mit Summe in Minuten 
   // Jahr für Jahr: 426 Minuten oben, die Sprachen und der stärkste Monat darunter in Minuten
   const d = base();
   for (let k = 40; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:450 }, es:k % 4 ? undefined : { n:10, secs:300 } }; if (!d.log[ds(k)].es) delete d.log[ds(k)].es; d.done[ds(k)] = true; }
+  // „Jahr für Jahr“ erst ab dem zweiten Jahr: ein Tag im Vorjahr
+  d.log[ds(400)] = { sv:{ n:5, secs:120 } };
   setDB(d);
   const y = text(run('yearsHtml()'));
   const sum = y.match(/(\d+) Minuten gelernt/);
@@ -109,4 +111,18 @@ test('Eine Stelle je Regel im Quelltext: Abgleich, Bewegung reduzieren, Monatsna
   assert.equal(count(/function totals\(|const totals =/g), 0, 'Gesamtsummen nur in lifeTotals');
   assert.equal(count(/\} %|' %'|" %"/g), 0, 'Prozent nur über pct, mit geschütztem Leerzeichen');
   assert.equal(run('pct(0.94)'), '94 %'); assert.equal(run('pct(0.045, true)'), '4,5 %');
+});
+
+// Aufräumen Schritt 3: Fortschritt ohne Wiederholungen im ersten Jahr, Tageszeit als Satz in den Lernminuten
+test('Fortschritt: „Jahr für Jahr“ erst ab dem zweiten Jahr, die Tageszeit steht in den Lernminuten', () => {
+  const d = base();
+  for (let k = 40; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:450 } }; d.done[ds(k)] = true; d.tlog[ds(k)] = { h:{ 7:5, 21:1 } }; }
+  setDB(d);
+  assert.equal(run('yearsHtml()'), '', 'ein Jahr: dieselben Zahlen stehen in der Kopfkarte');
+  d.log[ds(400)] = { sv:{ n:5, secs:120 } }; setDB(d);
+  assert.match(text(run('yearsHtml()')), /^Jahr für Jahr \d{4} bisher/);
+  run(`S.ptab = 'all'; S.view = 'progress'`);
+  const p = run('viewProgress()');
+  assert.doesNotMatch(p, /Wann du übst|class="hours"/);
+  assert.match(p, /<div class="chart mins">[\s\S]*<p class="legend mhours">Am häufigsten geübt zwischen 7 und 9 Uhr, letzte 60 Tage\.<\/p>/);
 });

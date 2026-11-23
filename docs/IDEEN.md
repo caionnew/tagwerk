@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 22. November 2026 (nach 24.67.0)
+Stand: 23. November 2026 (nach 24.69.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -22,9 +22,9 @@ Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die b
 
 Befund: kein Neubau nötig. Kein toter JS-Code (ESLint), 0,6 % doppelte Stellen im Scan, Doku und Code stimmen überein, Tests dicht. Gewachsen ist die App an den Rändern: kein festes Gestaltungssystem, mehrfach berechnete Kennzahlen, ein paar sichtbare Widersprüche.
 
-Schritt 1 (Fehler und Einheitlichkeit) ist erledigt, 24.66.1. Schritt 2 (je eine Stelle im Code, Gestaltungssystem) ist erledigt, 24.66.2 und 24.67.0.
+Alle drei Schritte sind erledigt: Fehler und Einheitlichkeit 24.66.1, je eine Stelle im Code und Gestaltungssystem 24.66.2 und 24.67.0, Fortschritt 24.69.0.
 
-**Schritt 3, Fortschritt neu ordnen (B, als Nächstes):** Sieben Abschnitte im Überblick, sieben je Sprache. Kopfkarte und „Jahr für Jahr“ zeigen im ersten Jahr dieselben Zahlen, die Tagwerke je Sprache stehen doppelt. Mit Varianten wie bei den Lernminuten.
+Schritt 3 fiel kleiner aus als gedacht. Mit zwei Sprachen verglichen (23.11.): Im Überblick wiederholte „Jahr für Jahr“ im ersten Jahr die Kopfkarte samt Tagwerken je Sprache, und „Wann du übst“ war eine eigene Karte für einen Satz. Beides weg, der Überblick ist von 3,4 auf 2,8 Bildschirme kürzer. Der Sprach-Tab bleibt, wie er ist: „Stand der Sätze“ in die Kopfkarte zu ziehen sparte nur ein Zehntel Bildschirm und nähme den Balken zum nächsten Ziel (siehe „Geprüft und zurückgestellt“).
 
 ### Inhalte: Satzpakete (ab 24.56; Pakete 1 bis 5 erledigt, 24.56 bis 24.60)
 
@@ -119,6 +119,8 @@ Derzeit nichts.
 
 ## Geprüft und zurückgestellt
 
+- **„Stand der Sätze“ in der Kopfkarte des Sprach-Tabs (B−, geprüft am 23.11.).** Der Balken verankert, gefestigt, im Aufbau, neu statt des Balkens zum nächsten Ziel, der eigene Abschnitt entfiele. Spart kaum Platz (2,8 auf 2,7 Bildschirme), die Kopfkarte wird dichter, und der Fortschritt zum nächsten Ziel stünde nur noch als Text da.
+- **Fehlerquellen nach Thema im Themenraster (C+).** Zwei Themenlisten im Sprach-Tab; zusammengelegt fehlte aber die Liste nach Fehlern, die auch „Heute“ zeigt.
 - **Wochenbilanz zum Schwerpunkt (C+, vorher B−).** Ersetzt durch „neue Sätze beim ersten Mal richtig“ (Fahrplan): gleiche Übungsform und Stufe statt wechselnder Übungsarten.
 - **Andere Hauptzahl statt „gefestigt“ (geprüft am 20.11.).** „Gefestigt“ bleibt: ehrlicher Bestand dessen, was dauerhaft sitzt, auch wenn die Zahl allein wenig erklärt und in den ersten drei Wochen bauartbedingt 0 ist.
   - **Bezugsgröße „97 von 529“ (B−):** zeigt der Balken „Stand der Sätze“ schon.

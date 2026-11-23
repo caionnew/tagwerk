@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.69.0
+**Aufräumen, Schritt 3: Fortschritt ohne Wiederholungen. Der Überblick ist ein Fünftel kürzer, der Sprach-Tab bleibt.**
+- **„Jahr für Jahr“ erst ab dem zweiten Jahr.** Im ersten Jahr standen dort dieselben Zahlen wie in der Kopfkarte darüber: Übungstage, Minuten, längste Serie, Aufgaben und die Tagwerke je Sprache. Ab Januar steht das Vorjahr neben dem laufenden.
+- **„Wann du übst“ ist ein Satz in den Lernminuten:** „Am häufigsten geübt zwischen 7 und 9 Uhr, letzte 60 Tage.“ Die eigene Karte mit dem Stundendiagramm entfällt; gesagt hat sie dasselbe. Bei Gleichstand beginnt das Zeitfenster mit einer Stunde, in der du geübt hast (vorher „zwischen 6 und 8 Uhr“, wenn du nur um 7 geübt hast).
+- Überblick mit zwei Sprachen jetzt etwa 2,8 statt 3,4 Bildschirme. Geprüft und gelassen: „Stand der Sätze“ in die Kopfkarte des Sprach-Tabs zu ziehen (spart kaum Platz und nähme den Balken zum nächsten Ziel), Fehlerquellen ins Themenraster (dann fehlte die Liste nach Fehlern wie auf „Heute“).
+- Code: totes CSS des Stundendiagramms und eine doppelte Regel entfernt.
+- Tests: Der Browser-Test zum Aufklappen am Rundenende (24.68.0) schlug in etwa jedem vierten Lauf fehl, wenn eine Lücke statt eines getippten Satzes vorn stand. Er prüft jetzt beide Fälle. Neu: „Jahr für Jahr“ und die Tageszeit in `einheitlich.test.js`.
+- Speicherstand unverändert.
+
 ## 24.68.0
 **Rundenende: Fehler beim Thema zum Aufklappen. Rückmeldung: die Lösung in deinen Wörtern, Formfehler beim Namen.**
 - **Themen dieser Runde aufklappen:** Ein Tipp auf ein Thema zeigt seine Aufgaben aus dieser Runde: was gefragt war, deine Antwort mit gestrichenen Wörtern, die richtige Fassung mit markierten Stellen (zum Anhören) und den Grund. Falsche und fast richtige stehen zuerst, die richtigen kurz mit Haken darunter; bei Sätzen, die in der Runde wiederkamen, „Beim zweiten Mal richtig“. Darunter „Regel und Beispiele“ und „Thema üben“. Es ist immer nur ein Thema offen; es rückt über die Knöpfe ins Bild. Bisher öffnete der Tipp gleich die Regel.

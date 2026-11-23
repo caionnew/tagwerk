@@ -999,7 +999,7 @@ function minutesHtml(){
   return `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart mins">
     <div class="kpis mk">${kp.map(([v, lab]) => `<div><b>${v}</b><span>${lab}</span></div>`).join('')}</div>
     ${prevTxt ? `<p class="legend mprev">${prevTxt}</p>` : ''}
-    ${ch}${key}${unm}
+    ${ch}${key}${unm}${hoursLine()}
     ${sel ? dayCard(sel) : none ? '<p class="legend mhint">In den letzten 14 Tagen nicht geübt.</p>' : DB.used && DB.used.dayTap ? '' : '<p class="legend mhint">Tipp auf einen Tag für Details.</p>'}
   </div>`;
 }
@@ -1122,7 +1122,6 @@ function viewProgress(){
     <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>Pausetag, Serie hält</span></p>
     ${S.calDay ? dayCard(S.calDay) : `<p class="legend chint">${cal.first ? `${cal.active} von ${cal.total} Tagen geübt.${DB.used && DB.used.dayTap ? (cal.scrollable ? ' Wischen für frühere Wochen.' : '') : ` Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.`}` : 'Noch keine Übungstage.'}</p>`}</div>
   ${minutesHtml()}
-  ${hoursHtml()}
 
   ${summary ? `<h2 class="grp">Sprachen</h2><div class="langsums">${summary}</div>` : ''}
   ${wayHtml()}${yearsHtml()}`;

@@ -81,8 +81,9 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen klappt deine Antworten 
   await expect(first).toHaveAttribute('aria-expanded', 'true');
   const det = page.locator('.tdet');
   await expect(det).toHaveCount(1);
-  await expect(det.locator('.rk-you').first()).toContainText('Du: zzz qqq');
-  await expect(det.locator('.rk-you .w-extra').first()).toHaveText('zzz');
+  // Getippte Sätze gestrichen, Lücken und Auswahl in Anführungszeichen (welche Aufgabe vorn steht, ist zufällig)
+  await expect(det.locator('.rk-you').first()).toHaveText(/^Du: (zzz qqq|„zzz qqq“)$/);
+  for (const el of await det.locator('.rk-you').all()) if (/^Du: zzz qqq$/.test(await el.textContent())) await expect(el.locator('.w-extra').first()).toHaveText('zzz');
   await expect(det.locator('.rk-s').first()).not.toBeEmpty();
   // Ganz im Bild über den Knöpfen, oder (wenn länger als der Bildschirm) oben am Bildrand
   await expect.poll(() => page.evaluate(() => { const d = document.querySelector('.tdet').getBoundingClientRect(), bar = document.querySelector('.actionbar').getBoundingClientRect(); return d.top >= 0 && (d.bottom <= bar.top || d.top <= 130); })).toBe(true);

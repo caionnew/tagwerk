@@ -214,7 +214,6 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .cal .now{ stroke:var(--ink); stroke-width:1.5; }
 .sq{ display:inline-block; width:11px; height:11px; border-radius:var(--r-mark); vertical-align:-1px; margin:0 2px 0 6px; }
 .legend .sq:first-of-type{ margin-left:4px; }
-.axis{ stroke:var(--line); stroke-width:1; }
 .stack{ display:flex; height:14px; border-radius:var(--r-pill); overflow:hidden; gap:2px; background:var(--line); }
 .s-neu{ background:var(--line); } .s-aufbau{ background:color-mix(in srgb, var(--accent) 40%, var(--line)); } .s-sicher{ background:color-mix(in srgb, var(--accent) 75%, var(--line)); } .s-lang{ background:var(--accent); }
 .stack .s-neu{ background:transparent; }
@@ -287,7 +286,6 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .minseg button{ border:0; background:none; border-radius:var(--r-pill); padding:5px 11px; font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--muted); }
 .minseg button[aria-checked="true"]{ background:var(--accent-soft); color:var(--accent-ink); }
 .s-anchored{ background:var(--accent); } .s-mature{ background:color-mix(in srgb, var(--accent) 70%, var(--line)); } .s-young{ background:color-mix(in srgb, var(--accent) 35%, var(--line)); }
-.stack .s-neu{ background:transparent; }
 .toggle .sw{ flex:none; width:44px; height:26px; border-radius:var(--r-pill); background:var(--line); position:relative; transition:background var(--dur-2) var(--ease); }
 .toggle .sw::after{ content:''; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,.25); transition:left var(--dur-2) var(--ease); }
 .toggle[aria-checked="true"] .sw{ background:var(--accent); }
@@ -635,11 +633,6 @@ button.erow:active{ background:var(--accent-soft); }
 .srow .ev{ padding-top:2px; }
 .stp{ font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--accent-ink); margin-top:4px; }
 /* Wann du übst */
-.hours{ width:100%; height:auto; display:block; }
-.hours .hb{ fill:color-mix(in srgb, var(--accent) 45%, transparent); }
-.hours .hb.hi{ fill:var(--accent); }
-.hours text{ font-size:var(--fs-1); fill:var(--muted); }
-.hours .axis{ stroke:var(--line); }
 
 /* Kennzahlen in der Sprachkarte */
 .kpis{ display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }

@@ -6,9 +6,9 @@ test('Überblick: Kalender beginnt bei heute, Tageszeit und Etappen', async ({ p
   await page.click('[data-a=tab][data-v=progress]');
   const sc = await page.$eval('#calscroll', e => ({ left:Math.round(e.scrollLeft), max:e.scrollWidth - e.clientWidth }));
   expect(Math.abs(sc.left - sc.max)).toBeLessThanOrEqual(1);
-  // Tageszeit als Satz in den Lernminuten (vorher eine eigene Karte „Wann du übst“)
-  await expect(page.locator('.chart.mins .mhours')).toHaveText(/^Am häufigsten geübt zwischen \d+ und \d+ Uhr, letzte 60 Tage\.$/);
-  await expect(page.locator('h2.grp', { hasText:'Wann du übst' })).toHaveCount(0);
+  // Tageszeit als eigene Karte: die Verteilung über den Tag, dazu der Satz mit den häufigsten Stunden
+  await expect(page.locator('svg.hours')).toBeVisible();
+  await expect(page.locator('h2.grp', { hasText:'Wann du übst' })).toHaveCount(1);
   // Erstes Jahr: kein „Jahr für Jahr“, die Kopfkarte hat dieselben Zahlen
   await expect(page.locator('h2.grp', { hasText:'Jahr für Jahr' })).toHaveCount(0);
   await expect(page.locator('.wrail .wl').first()).toBeVisible();

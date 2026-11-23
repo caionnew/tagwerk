@@ -111,7 +111,7 @@ test('Hinweis „Tipp auf einen Tag“ nur bis zum ersten Antippen, in Lernminut
   run('DB.used = { dayTap:true }');
   const h = text(run('minutesHtml()'));
   assert.doesNotMatch(h, /Tipp auf einen Tag/);
-  assert.match(h, /Schnitt pro Tag( Am häufigsten geübt zwischen \d+ und \d+ Uhr, letzte 60 Tage\.)?$/);
+  assert.match(h, /Schnitt pro Tag$/);
   run(`S.ptab = 'all'; S.view = 'progress'`);
   const p = text(run('viewProgress()'));
   assert.match(p, /\d+ von \d+ Tagen geübt\.( Wischen für frühere Wochen\.)?/);

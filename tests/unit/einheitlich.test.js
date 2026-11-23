@@ -113,8 +113,8 @@ test('Eine Stelle je Regel im Quelltext: Abgleich, Bewegung reduzieren, Monatsna
   assert.equal(run('pct(0.94)'), '94 %'); assert.equal(run('pct(0.045, true)'), '4,5 %');
 });
 
-// Aufräumen Schritt 3: Fortschritt ohne Wiederholungen im ersten Jahr, Tageszeit als Satz in den Lernminuten
-test('Fortschritt: „Jahr für Jahr“ erst ab dem zweiten Jahr, die Tageszeit steht in den Lernminuten', () => {
+// Aufräumen Schritt 3: Fortschritt ohne Wiederholungen im ersten Jahr; „Wann du übst“ bleibt eine Karte (die Verteilung zählt)
+test('Fortschritt: „Jahr für Jahr“ erst ab dem zweiten Jahr, „Wann du übst“ mit Verteilung', () => {
   const d = base();
   for (let k = 40; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:450 } }; d.done[ds(k)] = true; d.tlog[ds(k)] = { h:{ 7:5, 21:1 } }; }
   setDB(d);
@@ -123,6 +123,9 @@ test('Fortschritt: „Jahr für Jahr“ erst ab dem zweiten Jahr, die Tageszeit 
   assert.match(text(run('yearsHtml()')), /^Jahr für Jahr \d{4} bisher/);
   run(`S.ptab = 'all'; S.view = 'progress'`);
   const p = run('viewProgress()');
-  assert.doesNotMatch(p, /Wann du übst|class="hours"/);
-  assert.match(p, /<div class="chart mins">[\s\S]*<p class="legend mhours">Am häufigsten geübt zwischen 7 und 9 Uhr, letzte 60 Tage\.<\/p>/);
+  // Eigene Karte nach den Lernminuten, 24 Stunden als Säulen; nur um 7 und 21 Uhr geübt: das Fenster beginnt bei 7
+  assert.match(p, /<h2 class="grp">Wann du übst<\/h2><div class="chart"><svg class="hours"/);
+  assert.equal((p.match(/<rect [^>]*class="hb/g) || []).length, 24);
+  assert.ok(p.indexOf('Lernminuten') < p.indexOf('Wann du übst'));
+  assert.match(text(p), /Am häufigsten zwischen 7 und 9 Uhr, letzte 60 Tage\./);
 });

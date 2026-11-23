@@ -303,14 +303,17 @@ function errorSourcesHtml(lang){
   }
   return `${head}<div class="chart">${seg}${lead ? `<p class="legend elead">${lead}</p>` : ''}<div class="erows">${rows}</div><p class="legend">${note}</p></div>`;
 }
-// Wann du meist übst, als Satz in den Lernminuten: die zwei Stunden mit den meisten Aufgaben, letzte 60 Tage (ab fünf Tagen)
-function hoursLine(){
+// Wann wird geübt? Aufgaben pro Stunde, letzte 60 Tage: die Verteilung über den Tag und die zwei häufigsten Stunden
+function hoursHtml(){
   const t = today(), h = new Array(24).fill(0); let days = 0;
   Object.keys(DB.tlog || {}).forEach(d => { if (dayDiff(t, d) >= 60 || !DB.tlog[d].h) return; days++; Object.keys(DB.tlog[d].h).forEach(k => { h[k] += DB.tlog[d].h[k]; }); });
   if (days < 5) return '';
+  const max = Math.max(1, ...h), W = 24 * 13, H = 54;
   // Bei Gleichstand das Fenster, das mit einer geübten Stunde beginnt: nur um 7 Uhr geübt heißt „zwischen 7 und 9 Uhr“, nicht „6 und 8“
   let best = 0, bestSum = -1; for (let i = 0; i < 24; i++) { const sum = h[i] + h[(i + 1) % 24]; if (sum > bestSum || (sum === bestSum && h[i] > h[best])) { bestSum = sum; best = i; } }
-  return `<p class="legend mhours">Am häufigsten geübt zwischen ${best} und ${(best + 2) % 24} Uhr, letzte 60 Tage.</p>`;
+  const bars = h.map((v, i) => `<rect x="${i * 13 + 1}" y="${H - 14 - Math.max(v ? 2 : 0, v / max * (H - 18))}" width="11" height="${Math.max(v ? 2 : 0, v / max * (H - 18))}" rx="2" class="${i === best || i === (best + 1) % 24 ? 'hb hi' : 'hb'}"/>`).join('');
+  const ticks = [0, 6, 12, 18].map(i => `<text x="${i * 13 + 1}" y="${H - 2}">${i}</text>`).join('') + `<text x="${W - 12}" y="${H - 2}">24</text>`;
+  return `<h2 class="grp">Wann du übst</h2><div class="chart"><svg class="hours" viewBox="0 0 ${W} ${H}" role="img" aria-label="Aufgaben nach Uhrzeit"><line x1="0" x2="${W}" y1="${H - 13}" y2="${H - 13}" class="axis"/>${bars}${ticks}</svg><p class="legend">Am häufigsten zwischen ${best} und ${(best + 2) % 24} Uhr, letzte 60 Tage.</p></div>`;
 }
 // Verschiedene Wörter (Grundformen) in deinen Sätzen
 function vocabCount(lang){

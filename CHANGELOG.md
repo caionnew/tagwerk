@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.69.1
+**„Wann du übst“ ist wieder eine eigene Karte mit dem Stundendiagramm.**
+- Der Satz in den Lernminuten aus 24.69.0 nannte nur die zwei häufigsten Stunden; das Diagramm zeigt die Verteilung über den ganzen Tag, etwa ob abends ein zweiter Schwerpunkt liegt. Karte und Platz wie vor 24.69.0, nach den Lernminuten.
+- Bleibt aus 24.69.0: Bei Gleichstand beginnt das genannte Zeitfenster mit einer Stunde, in der du geübt hast, und „Jahr für Jahr“ steht erst ab dem zweiten Jahr da. Der Überblick ist mit zwei Sprachen etwa 3 statt 3,4 Bildschirme lang.
+- Speicherstand unverändert.
+
 ## 24.69.0
 **Aufräumen, Schritt 3: Fortschritt ohne Wiederholungen. Der Überblick ist ein Fünftel kürzer, der Sprach-Tab bleibt.**
 - **„Jahr für Jahr“ erst ab dem zweiten Jahr.** Im ersten Jahr standen dort dieselben Zahlen wie in der Kopfkarte darüber: Übungstage, Minuten, längste Serie, Aufgaben und die Tagwerke je Sprache. Ab Januar steht das Vorjahr neben dem laufenden.

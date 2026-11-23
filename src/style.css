@@ -214,6 +214,7 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .cal .now{ stroke:var(--ink); stroke-width:1.5; }
 .sq{ display:inline-block; width:11px; height:11px; border-radius:var(--r-mark); vertical-align:-1px; margin:0 2px 0 6px; }
 .legend .sq:first-of-type{ margin-left:4px; }
+.axis{ stroke:var(--line); stroke-width:1; }
 .stack{ display:flex; height:14px; border-radius:var(--r-pill); overflow:hidden; gap:2px; background:var(--line); }
 .s-neu{ background:var(--line); } .s-aufbau{ background:color-mix(in srgb, var(--accent) 40%, var(--line)); } .s-sicher{ background:color-mix(in srgb, var(--accent) 75%, var(--line)); } .s-lang{ background:var(--accent); }
 .stack .s-neu{ background:transparent; }
@@ -633,6 +634,11 @@ button.erow:active{ background:var(--accent-soft); }
 .srow .ev{ padding-top:2px; }
 .stp{ font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--accent-ink); margin-top:4px; }
 /* Wann du übst */
+.hours{ width:100%; height:auto; display:block; }
+.hours .hb{ fill:color-mix(in srgb, var(--accent) 45%, transparent); }
+.hours .hb.hi{ fill:var(--accent); }
+.hours text{ font-size:var(--fs-1); fill:var(--muted); }
+.hours .axis{ stroke:var(--line); }
 
 /* Kennzahlen in der Sprachkarte */
 .kpis{ display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }

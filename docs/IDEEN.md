@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 23. November 2026 (nach 24.69.0)
+Stand: 23. November 2026 (nach 24.69.1)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -24,7 +24,7 @@ Befund: kein Neubau nötig. Kein toter JS-Code (ESLint), 0,6 % doppelte Stellen 
 
 Alle drei Schritte sind erledigt: Fehler und Einheitlichkeit 24.66.1, je eine Stelle im Code und Gestaltungssystem 24.66.2 und 24.67.0, Fortschritt 24.69.0.
 
-Schritt 3 fiel kleiner aus als gedacht. Mit zwei Sprachen verglichen (23.11.): Im Überblick wiederholte „Jahr für Jahr“ im ersten Jahr die Kopfkarte samt Tagwerken je Sprache, und „Wann du übst“ war eine eigene Karte für einen Satz. Beides weg, der Überblick ist von 3,4 auf 2,8 Bildschirme kürzer. Der Sprach-Tab bleibt, wie er ist: „Stand der Sätze“ in die Kopfkarte zu ziehen sparte nur ein Zehntel Bildschirm und nähme den Balken zum nächsten Ziel (siehe „Geprüft und zurückgestellt“).
+Schritt 3 fiel kleiner aus als gedacht. Mit zwei Sprachen verglichen (23.11.): Im Überblick wiederholte „Jahr für Jahr“ im ersten Jahr die Kopfkarte samt Tagwerken je Sprache; es steht jetzt erst ab dem zweiten Jahr da, der Überblick ist von 3,4 auf 3 Bildschirme kürzer. „Wann du übst“ bleibt eine eigene Karte: Die Verteilung über den Tag zeigt mehr als der Satz allein (in 24.69.0 kurz nur der Satz, auf deine Rückmeldung in 24.69.1 zurück). Der Sprach-Tab bleibt, wie er ist: „Stand der Sätze“ in die Kopfkarte zu ziehen sparte nur ein Zehntel Bildschirm und nähme den Balken zum nächsten Ziel (siehe „Geprüft und zurückgestellt“).
 
 ### Inhalte: Satzpakete (ab 24.56; Pakete 1 bis 5 erledigt, 24.56 bis 24.60)
 

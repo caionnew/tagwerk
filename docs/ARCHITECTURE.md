@@ -13,7 +13,7 @@ Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihen
 | Datei | Aufgabe |
 |---|---|
 | `data/content.js` | Satzbank (`CONTENT`) |
-| `js/generators.js` | Konjugation, Grammatik-Generatoren (`GENS`) |
+| `js/generators.js` | Konjugation, Grammatik-Generatoren (`GENS`), darunter Nomen tauschen (`det_es`, Aufgabenart `trans` mit `swap`) |
 | `js/forms.js` | Übungsformen: Fehler finden, Umbauen, Uhrzeiten & Zahlen, Genus |
 | `data/gloss.js` | Wörterbuch, `lookupWord()`, Wiktionary-Abfrage |
 | `data/fundstueck.js` | Feste, falsche Freunde, Begrüßung, Auswahl des Fundstücks |

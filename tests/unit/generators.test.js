@@ -37,19 +37,8 @@ test('Umbauen Spanisch: Subjektpronomen und „Ojalá que“ sind auch richtig, 
   });
   assert.ok(seen.pron > 20 && seen.ojala > 5, JSON.stringify(seen));
 });
-test('Adjektiv anpassen: nur Adjektive, die zum Nomen passen; Possessiv nicht bei „väder“', () => {
-  const FIT = app.get('ADJ_FIT_ES'), ADJ = app.get('ADJ_ES');
+test('Possessiv nicht bei „väder“ und „ögonblick“', () => {
   withSeed(9, () => {
-    for (let i = 0; i < 600; i++) {
-      const d = run('genDetEs()');
-      if (d.label !== 'Adjektiv anpassen') continue;
-      const [, noun, adj] = d.full.split(' ');
-      const base = FIT[noun] ? noun : noun.replace(/s$/, '');
-      assert.ok(FIT[base], `kein Adjektiv zu ${noun}`);
-      assert.ok(FIT[base].split('').map(k => ADJ[k]).includes(d.hint), `${d.hint} passt nicht zu ${noun}`);
-      assert.ok(!/^(sangre|gente|leche|sal|verdad|miedo|vez|razón)$/.test(base), d.full);
-      assert.ok(adj);
-    }
     for (let i = 0; i < 400; i++) { const d = run('genDetSv()'); assert.ok(!/^(mitt|ditt|vårt) (väder|ögonblick)$/.test(d.full), d.full); }
   });
 });

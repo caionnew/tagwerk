@@ -4,7 +4,7 @@ const cases = [
   ['es', 'serestar', false], ['es', 'porpara', false], ['es', 'conj', false],
   ['sv', 'np', true], ['sv', 'tempus', true], ['sv', 'inte', true],
   ['sv', 'trans_sv', true], ['sv', 'spot_sv', false], ['sv', 'genus_sv', false],
-  ['es', 'det_es', false], ['sv', 'verbind_sv', false], ['es', 'prep_es', false]
+  ['es', 'det_es', true], ['sv', 'verbind_sv', false], ['es', 'prep_es', false]
 ];
 for (const [lang, gen, shown] of cases) {
   test(`${gen}: Knopf ${shown ? 'sichtbar' : 'nicht sichtbar'}`, async ({ page }) => {

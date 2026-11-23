@@ -48,7 +48,7 @@ Eine Zeile pro Form: `Form|Grundform|Deutsch`. Verbformen der Generatoren erzeug
 | `src/data/terms.js` | Grammatik- und App-Begriffe zum Antippen; Suchmuster als regulärer Ausdruck, Erklärung und Beispiel je Sprache |
 | `src/data/fundstueck.js` | Feste mit Datumsfunktion (bewegliche Feste über `easter()`), falsche Freunde, Begrüßungen |
 | `src/js/forms.js` | Genus-Wörter, Fehler-finden-Rahmen, Umbauen, Uhrzeiten |
-| `src/js/generators.js` | Grammatik-Generatoren (Adjektivendungen, Pluralklassen `PLURAL_SV`, Zeitformen, Konjugation, ser/estar, Verbalperiphrasen `PERI_ES`, por/para, Konnektoren `VERB_SV`/`VERB_ES`, Verben mit Präposition `PREP_SV`/`PREP_ES`). Jeder Generator braucht mindestens 36 verschiedene Aufgaben, dreimal die Wiederholungssperre; `tests/unit/variety.test.js` prüft das |
+| `src/js/generators.js` | Grammatik-Generatoren (Adjektivendungen, Pluralklassen `PLURAL_SV`, Zeitformen, Konjugation, ser/estar, Verbalperiphrasen `PERI_ES`, por/para, Konnektoren `VERB_SV`/`VERB_ES`, Verben mit Präposition `PREP_SV`/`PREP_ES`, Nomen tauschen `SWAP_ES`/`SWAP_N_ES`). Jeder Generator braucht mindestens 36 verschiedene Aufgaben, dreimal die Wiederholungssperre; `tests/unit/variety.test.js` prüft das |
 | `src/data/geo.js` | Kartendaten, **nicht von Hand bearbeiten**: `npm run geo` erzeugt sie aus Natural Earth |
 
 ## Karten
@@ -102,7 +102,18 @@ Eine Zeile aus `VP_SV`:
 
 Verb im Präsens, Rest des Satzes, erlaubte Adverbien, deutsche Verbformen (ich, du, er/sie, wir, sie), deutscher Hauptsatz, deutscher Nebensatz (Verb am Ende), Satzanfang auf Schwedisch und Deutsch für die Inversion. Regeln: nur Verben aus einem Wort (keine Partikelverben wie „tycker om“), deutsches Verb in beiden Vorlagen dieselbe Form (kein „kaufe … ein“ / „einkaufe“), „inte“ nur, wo „nicht“ im Deutschen passt (bei unbestimmten Objekten wäre es „kein“). Spanisch: `ES_DAY` und `ES_VP` in `src/js/forms.js`, Infinitiv und Ergänzung; unregelmäßige Formen kommen aus `IRR_ES` und `PART_IRR`. Die Ergänzung muss zu jeder Person passen (also „a los abuelos“, nicht „a su madre“, das bei tú schief wäre). Dasselbe gilt für `CONJ_COMP` in `src/js/generators.js` (Verbformen): Jedes Verb aus `IRR_ES` und `REG_ES` braucht dort eine Ergänzung, die mit allen vier Signalen einen sinnvollen Satz ergibt (Normalmente …, Ayer …, Antes … siempre …, Es importante que …). Hängt sie von Zahl oder Zeitform ab, ist sie eine Funktion (ser: puntual/puntuales); passt eine Zeitform gar nicht (ayer + vivir), wird sie im Generator ausgelassen.
 
-Weitere richtige Fassungen gehören in die Lösungen: bei `VP_SV` als neuntes Feld (`[['åker', 'på semester i juli'], ['har', 'semester i juli']]`), beim Umbauen auf Spanisch kommen das betonte Subjektpronomen (Quiero que tú vengas) und „Ojalá que“ von selbst dazu, bei Uhrzeiten „klockan är …“, „en punto“ und die Digitalform (las tres y cuarenta). Auswahlaufgaben (`VERB_SV`, `VERB_ES`, `PREP_SV`, `PREP_ES`) haben genau eine richtige Option, auch ohne den deutschen Satz: Eine seltene, aber korrekte Variante (fiarse en) gehört nicht unter die falschen Optionen. Adjektive bei „Begleiter & Adjektive“ (Spanisch) nur, wo sie inhaltlich passen (`ADJ_FIT_ES`); Wörter mit zwei richtigen Genera (radio, mar) stehen nicht in `GENUS`.
+Weitere richtige Fassungen gehören in die Lösungen: bei `VP_SV` als neuntes Feld (`[['åker', 'på semester i juli'], ['har', 'semester i juli']]`), beim Umbauen auf Spanisch kommen das betonte Subjektpronomen (Quiero que tú vengas) und „Ojalá que“ von selbst dazu, bei Uhrzeiten „klockan är …“, „en punto“ und die Digitalform (las tres y cuarenta). Auswahlaufgaben (`VERB_SV`, `VERB_ES`, `PREP_SV`, `PREP_ES`) haben genau eine richtige Option, auch ohne den deutschen Satz: Eine seltene, aber korrekte Variante (fiarse en) gehört nicht unter die falschen Optionen. Wörter mit zwei richtigen Genera (radio, mar) stehen nicht in `GENUS`.
+
+### Nomen tauschen (`SWAP_ES` in `src/js/generators.js`)
+
+Eine Zeile je Vorlage: der Satz und die Nomen, die inhaltlich hineinpassen. `{N}` ist das Nomen, `{w}` richtet sich nach ihm und steht in der Form, die bei einem männlichen Nomen dort stünde (`{buen}`, `{primer}`, `{ningún}`, `{lo}`, `{frío}`); die weibliche Form bildet `femEs()` (Endung -o → -a, dazu el, del, al, un, este, ese, aquel, lo, mío und die verkürzten Formen). `{=w}` bleibt gleich und wird in der Erklärung genannt, wenn sich das Geschlecht ändert (`{=gran}`, `{=importante}`, `{=mucho}` als Adverb). Nomen stehen in `SWAP_N_ES` mit Geschlecht und Deutsch samt Artikel; `á` markiert weibliche Wörter mit betontem a (agua, aula, área, hambre, águila).
+
+Regeln, die `tests/unit/swap.test.js` prüft oder die beim Schreiben gelten:
+- Jede Nomenliste hat beide Geschlechter und mindestens fünf Wörter; jeder Satz muss mit jedem Nomen der Liste idiomatisch sein (alle Fassungen mit `node -e` ausgeben und lesen, nicht nur eine).
+- Genau eine richtige Lösung: Pronomen nur für Sachen (bei Personen ginge auch le), keine Periphrase mit Pronomen (lo vamos a resolver / vamos a resolverlo), kein lo, das auch „es“ (neutral) heißen könnte.
+- Betontes a nur nach el, del, al oder einem Begleiter, der weiblich bleibt (esta agua, mucha hambre, cuánta agua). Nicht nach un, algún, ningún und nicht mit todo: Dort sind beide Formen üblich (un/una águila, todo/toda el agua).
+- Kein Nomen, dessen Geschlecht schwankt (mar, radio, azúcar, calor als la calor gilt nicht).
+- Das Nomen wird nach der Vorlage gewählt, nie nach seinem Geschlecht; sonst verrät schon die Auswahl die Lösung.
 
 ## Lesetipps (`READING` in `src/js/part_views.js`)
 

@@ -5688,6 +5688,119 @@ muestro|mostrar|ich zeige
 comentado|comentar|erwähnt (Partizip)
 encontramos|encontrarse|nos encontramos = wir treffen uns (ohne nos: wir finden)
 acordarme|acordarse|mich erinnern; acordarse de = sich erinnern an
+aceite||Öl
+aire||Luft
+alfombra||Teppich
+aparcamiento||Parkplatz
+aplicación||App, Anwendung
+ardilla||Eichhörnchen
+armario||Schrank
+arroz||Reis
+asunto||Angelegenheit, Sache
+aula||Unterrichtsraum, Hörsaal
+batidora||Mixer, Stabmixer
+baño||Bad, Badezimmer
+bolso||Handtasche
+bolígrafo||Kugelschreiber
+buenísimo|bueno|sehr gut
+cafetera||Kaffeemaschine
+calculadora||Taschenrechner
+camisa||Hemd
+cartera||Geldbeutel, Brieftasche
+catedral||Kathedrale, Dom
+cerraron|cerrar|sie schlossen (Indefinido)
+cerveza||Bier
+cocido||Eintopf (mit Kichererbsen)
+colchón||Matratze
+complicado||kompliziert
+conflicto||Konflikt
+construido|construir|gebaut (Partizip)
+cuaderno||Heft
+cuello||Hals
+cuestión||Frage, Angelegenheit
+cámara||Kamera
+cómodo||bequem
+despacho||Büro, Arbeitszimmer
+dilema||Dilemma
+disco||Album, Schallplatte
+duro||hart, schwer
+entiendo|entender|ich verstehe
+espacio||Raum, Platz
+espalda||Rücken
+espejo||Spiegel
+estadio||Stadion
+estómago||Magen
+flan||Karamellpudding
+garganta||Hals, Kehle
+gazpacho||Gazpacho (kalte Gemüsesuppe)
+goma||Radiergummi; Gummi
+gorra||Kappe, Schirmmütze
+grifo||Wasserhahn
+habitación||Zimmer
+hambre||Hunger
+horno||Backofen
+impresora||Drucker
+inolvidable||unvergesslich
+jarrón||Vase
+jersey||Pullover
+laboratorio||Labor
+lagarto||Eidechse
+lavadora||Waschmaschine
+lechuga||Salat, Kopfsalat
+librería||Buchhandlung
+limpió|limpiar|putzte (Indefinido)
+lámpara||Lampe
+mejoró|mejorar|wurde besser (Indefinido)
+melón||Melone
+microondas||Mikrowelle
+mochila||Rucksack
+muralla||Stadtmauer
+método||Methode
+mío||meiner; el mío = meiner
+olla||Topf, Kochtopf
+oportunidad||Gelegenheit, Chance
+ordenador||Computer
+oído||Ohr, Gehör
+panadería||Bäckerei
+pantalón||Hose
+pareció|parecer|schien (Indefinido); me pareció = ich fand
+perdemos|perder|wir verlieren, wir verpassen
+piscina||Schwimmbad, Schwimmbecken
+piña||Ananas
+plato||Teller; Gericht
+podrido||verfault
+ponerlo|poner|es hinstellen, es hinlegen
+ponerla|poner|es hinstellen, es hinlegen
+precioso||wunderschön
+prefiero|preferir|ich ziehe vor, mir ist lieber
+programa||Programm; Sendung
+práctico||praktisch
+queso||Käse
+rabia||Wut
+rana||Frosch
+recomendé|recomendar|ich empfahl
+regalado|regalar|geschenkt (Partizip); me han regalado = ich habe geschenkt bekommen
+resolveremos|resolver|wir werden lösen (Futur)
+revista||Zeitschrift
+rodilla||Knie
+sandía||Wassermelone
+secador||Föhn
+sed||Durst
+serie||Serie
+sillón||Sessel
+sitio||Platz, Ort
+situado||gelegen
+sombrilla||Sonnenschirm
+taza||Tasse
+temporada||Saison, Zeit
+tercer|tercero|dritter (vor männlichem Nomen)
+trataremos|tratar|wir werden besprechen (Futur)
+té||Tee
+urgente||dringend
+vuestro||euer; el vuestro = eurer
+vídeo||Video
+zorro||Fuchs
+águila||Adler
 `
 };
 

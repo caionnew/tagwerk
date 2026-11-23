@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.70.0
+**Spanisch: „Nomen tauschen“ ersetzt „Begleiter & Adjektive anpassen“. Ein Satz, ein neues Nomen, und alles, was sich danach richtet, muss mit.**
+- **Warum:** Die alte Übung fragte einen Begleiter vor einem einzelnen Nomen ab, mit deutschem Stichwort („dieser da“). Die Zahl stand schon am Nomen, mi/tu hatten nichts anzupassen, und übrig blieb das Geschlecht, das „el oder la?“ ohnehin übt. Dazu trennte „dieser da“ nicht zwischen ese und aquel, und die Erklärung nannte bei „aquel sol“ das Geschlecht als Grund, obwohl es stimmte (deine Meldung vom 23.11.).
+- **Die Aufgabe:** „¿El **café**? Está frío, no lo bebo.“ Mit *agua* statt *café*: „¿El agua? Está fría, no la bebo.“ Du schreibst den ganzen Satz. Geprüft wird beides: das Geschlecht des neuen Nomens kennen und es durch den Satz tragen, über Begleiter, Adjektiv nach ser und estar, Partizip und Pronomen. Kein Stichwort, kein Hinweis. Das neue Nomen lässt sich antippen.
+- **42 Vorlagen, 228 Nomen, gut 2.100 Aufgaben,** darunter die Fallen für Fortgeschrittene: el agua, aber esta agua, fría und mucha hambre; buen, primer, ningún nur vor männlichen Nomen (una buena noche); gran, importante und mucho beim Verb bleiben gleich (me duele mucho la mano); el problema, el mapa, la mano.
+- **Erklärung beim Fehler:** das Geschlecht, der deutsche Artikel, wo er in die Irre führt („Deutsch die Karte, aber el mapa, obwohl es auf -a endet.“), und was sich mit dem Geschlecht ändert („Weiblich ohne Verkürzung: buena.“). Stimmen alle angepassten Wörter, aber etwas anderes nicht: „Die Anpassung stimmt. Der Unterschied liegt woanders.“
+- **Kein Verraten:** Welches Nomen kommt, hängt nur von der Vorlage ab, nie von seinem Geschlecht. Mal ändert sich alles, mal nur das Nomen. Wörter, die du bei „el oder la?“ zuletzt falsch hattest, kommen dreimal so oft. Dieselbe Vorlage kommt frühestens nach zwölf anderen wieder.
+- **Thema** heißt jetzt „Übereinstimmung im Satz“, mit Übersicht der Sonderfälle im Themenblatt. Statistik und Lernstand laufen unter derselben Kennung weiter.
+- **Prüfung:** Die Fehlerart zählt Wörter jetzt mit ihrer Anzahl. Vorher galt „Este agua está …“ als Wortschatzfehler und damit als „fast richtig“, weil „esta“ (aus „está“) schon einmal vorkam; jetzt ist es ein Formfehler.
+- Wörterbuch: 113 neue Einträge. `npm run sicht`: neue Ansichten „nomen-tauschen“ und „nomen-tauschen-falsch“.
+- Tests: neue Dateien `swap.test.js` (Vorlagen, alle Formen, betontes a, Prüfung, Erklärung, Auswahl) und `swap.spec.js` im Browser; die Tests der alten Übung entfallen.
+- Speicherstand unverändert. Eine offene Runde mit einer Aufgabe der alten Art lädt weiter.
+
 ## 24.69.1
 **„Wann du übst“ ist wieder eine eigene Karte mit dem Stundendiagramm.**
 - Der Satz in den Lernminuten aus 24.69.0 nannte nur die zwei häufigsten Stunden; das Diagramm zeigt die Verteilung über den ganzen Tag, etwa ob abends ein zweiter Schwerpunkt liegt. Karte und Platz wie vor 24.69.0, nach den Lernminuten.

@@ -753,7 +753,7 @@ function rememberLooked(lang, id, w){
   if (mine.length > 300) mine.sort((a, b) => (a[2] < b[2] ? -1 : a[2] > b[2] ? 1 : 0)).slice(0, mine.length - 300).forEach(([k, x]) => { delete all[k][x]; if (!Object.keys(all[k]).length) delete all[k]; });
 }
 
-/* ---------- Begleiter: min/mitt/mina, den här + bestimmte Form; nuestro/a/os/as, este/esa, Adjektiv-Übereinstimmung ---------- */
+/* ---------- Begleiter: min/mitt/mina, den här + bestimmte Form ---------- */
 // „mitt väder“, „ditt ögonblick“: richtig gebeugt, aber so sagt es niemand
 const NO_POSS_SV = ['väder', 'ögonblick'];
 const POSS_SV = [['mein', 'min', 'mitt', 'mina'], ['dein', 'din', 'ditt', 'dina'], ['unser', 'vår', 'vårt', 'våra']];
@@ -771,31 +771,169 @@ function genDetSv(){
   if (type === 'dempl') return { prompt:`___ här ${defPl}`, deLine:`diese ${dePl} hier`, answers:['de'], label:'den, det oder de?', hint:'den / det / de', gap:true, full:`de här ${defPl}`, note:'Im Plural: de här und die bestimmte Pluralform.' };
   return { prompt:`${d} här ___`, deLine:`${da} ${de} hier`, answers:[def], label:'Welche Form nach den/det här?', hint:sv, gap:true, full:`${d} här ${def}`, note:`Anders als im Deutschen steht nach den/det här die bestimmte Form: ${d} här ${def}.` };
 }
-const POSS_ES = [['mein', 'mi', 'mi', 'mis', 'mis'], ['dein', 'tu', 'tu', 'tus', 'tus'], ['unser', 'nuestro', 'nuestra', 'nuestros', 'nuestras']];
-const DEM_ES = [['dieser hier', 'este', 'esta', 'estos', 'estas'], ['dieser da', 'ese', 'esa', 'esos', 'esas']];
-// Welche Adjektive inhaltlich zum Nomen passen (n nuevo, v viejo, k pequeño, b bonito, p perfecto, t típico).
-// Fehlt ein Nomen, gibt es dazu keine Adjektiv-Aufgabe: „la sangre bonita“ wäre richtig gebeugt, aber kein Spanisch, das jemand sagt.
-const ADJ_FIT_ES = { problema:'nt', día:'pt', mapa:'nvkb', idioma:'n', tema:'nt', sistema:'nvpt', clima:'pt', sofá:'nvkb', planeta:'k', mano:'kb', foto:'nvkbpt', moto:'nvkb',
-  coche:'nvkbpt', noche:'pt', clase:'nkpt', puente:'nvkb', color:'bpt', crisis:'t', viaje:'nbpt', calle:'nvkbt', lunes:'t', ciudad:'nvkbpt', nube:'kb', diente:'nk', pared:'nv',
-  reloj:'nvkb', llave:'nvk', café:'pt', flor:'kb', árbol:'vkb', nariz:'kb', luz:'p', lápiz:'nvk', cama:'nvkb', hospital:'nvk', estación:'nvkb', aeropuerto:'nvk', playa:'kbpt',
-  billete:'nv', maleta:'nvkb', pasaporte:'nv', mesa:'nvkb', silla:'nvkb', luna:'n', cuchillo:'nvk', cuchara:'nvk', tenedor:'nvk', lugar:'nbpt', pie:'k', papel:'nv',
-  canción:'nvbpt', examen:'npt', imagen:'nvbpt' };
-const ADJ_ES = { n:'nuevo', v:'viejo', k:'pequeño', b:'bonito', p:'perfecto', t:'típico' };
-const NO_PL_ES = ['leche', 'sal', 'sangre', 'gente', 'mar', 'crisis', 'lunes', 'miedo'];
-// Männlich Einzahl bei Nomen auf -o wäre geschenkt (Lösung = Hinweis); bleibt drin nur bei männlichen Nomen auf -a (el problema bonito)
-function genDetEs(){
-  let d = genDetEsOne();
-  for (let k = 0; k < 20 && d.label === 'Adjektiv anpassen' && d.answers[0] === d.hint && !/a$/.test(d.full.split(' ')[1]); k++) d = genDetEsOne();
-  return d;
+/* ---------- Nomen tauschen (Spanisch): Begleiter, Adjektive, Partizipien und Pronomen richten sich nach dem Nomen ---------- */
+// Ein Satz, ein Nomen wird ersetzt, alles, was sich danach richtet, muss mit. Geprüft wird beides zugleich: das Geschlecht des
+// Nomens kennen (Wortschatz) und es im Satz durchhalten, auch nach ser/estar und beim Pronomen. Kein Hinweis, kein deutsches Stichwort.
+// Nomen: Geschlecht (m/f, á = weiblich mit betontem a: el agua, aber esta agua, fría), Deutsch mit Artikel für die Erklärung
+// („Deutsch die Karte, aber el mapa“). Bei „das“ gibt es keinen Kontrast.
+const SWAP_N_ES = {
+  café:'m der Kaffee', té:'m der Tee', vino:'m der Wein', agua:'fá das Wasser', leche:'f die Milch', cerveza:'f das Bier',
+  chocolate:'m die Schokolade', infusión:'f der Kräutertee', sopa:'f die Suppe', queso:'m der Käse', pan:'m das Brot', fruta:'f das Obst',
+  salsa:'f die Soße', tortilla:'f die Tortilla', arroz:'m der Reis', aceite:'m das Öl', harina:'f das Mehl', sal:'f das Salz',
+  paella:'f die Paella', cocido:'m der Eintopf', flan:'m der Karamellpudding', gazpacho:'m der Gazpacho', melón:'m die Melone',
+  sandía:'f die Wassermelone', piña:'f die Ananas', mango:'m die Mango', aguacate:'m die Avocado', pera:'f die Birne', tomate:'m die Tomate',
+  lechuga:'f der Salat',
+  problema:'m das Problem', asunto:'m die Angelegenheit', conflicto:'m der Konflikt', dilema:'m das Dilemma', cuestión:'f die Frage',
+  situación:'f die Lage', crisis:'f die Krise', duda:'f der Zweifel', tema:'m das Thema', punto:'m der Punkt', propuesta:'f der Vorschlag',
+  farmacia:'f die Apotheke', supermercado:'m der Supermarkt', bar:'m die Kneipe', restaurante:'m das Restaurant', tienda:'f der Laden',
+  panadería:'f die Bäckerei', museo:'m das Museum', biblioteca:'f die Bibliothek', cine:'m das Kino', teatro:'m das Theater',
+  mercado:'m der Markt', librería:'f die Buchhandlung', piscina:'f das Schwimmbad', barrio:'m das Viertel', pueblo:'m das Dorf',
+  parque:'m der Park', ciudad:'f die Stadt', plaza:'f der Platz', calle:'f die Straße', playa:'f der Strand', edificio:'m das Gebäude',
+  casa:'f das Haus', estadio:'m das Stadion', puente:'m die Brücke', iglesia:'f die Kirche', estación:'f der Bahnhof',
+  catedral:'f die Kathedrale', castillo:'m die Burg', torre:'f der Turm', palacio:'m der Palast', muralla:'f die Stadtmauer',
+  hotel:'m das Hotel', zona:'f die Gegend', piso:'m die Wohnung', aula:'fá der Unterrichtsraum', despacho:'m das Büro', sala:'f der Saal',
+  laboratorio:'m das Labor', cocina:'f die Küche', gimnasio:'m die Turnhalle', área:'fá der Bereich', espacio:'m der Raum',
+  aparcamiento:'m der Parkplatz', terraza:'f die Terrasse', baño:'m das Bad', suelo:'m der Boden', habitación:'f das Zimmer',
+  ducha:'f die Dusche', clima:'m das Klima', aire:'m die Luft', tierra:'f die Erde', verano:'m der Sommer', invierno:'m der Winter',
+  primavera:'f der Frühling',
+  sofá:'m das Sofa', sillón:'m der Sessel', colchón:'m die Matratze', coche:'m das Auto', cama:'f das Bett', silla:'f der Stuhl',
+  mochila:'f der Rucksack', almohada:'f das Kissen', reloj:'m die Uhr', móvil:'m das Handy', mapa:'m die Karte', paraguas:'m der Regenschirm',
+  billete:'m die Fahrkarte', pasaporte:'m der Pass', llave:'f der Schlüssel', cartera:'f der Geldbeutel', cámara:'f die Kamera',
+  bolso:'m die Handtasche', abrigo:'m der Mantel', jersey:'m der Pullover', chaqueta:'f die Jacke', maleta:'f der Koffer', camisa:'f das Hemd',
+  moto:'f das Motorrad', bici:'f das Fahrrad', toalla:'f das Handtuch', sombrilla:'f der Sonnenschirm', sitio:'m der Platz', mesa:'f der Tisch',
+  libro:'m das Buch', cuaderno:'m das Heft', bolígrafo:'m der Kugelschreiber', lápiz:'m der Bleistift', mando:'m die Fernbedienung',
+  periódico:'m die Zeitung', revista:'f die Zeitschrift', goma:'f der Radiergummi', carpeta:'f die Mappe', calculadora:'f der Taschenrechner',
+  cuadro:'m das Bild', lámpara:'f die Lampe', planta:'f die Pflanze', jarrón:'m die Vase', espejo:'m der Spiegel', alfombra:'f der Teppich',
+  grifo:'m der Wasserhahn', horno:'m der Backofen', nevera:'f der Kühlschrank', ventana:'f das Fenster', enchufe:'m die Steckdose',
+  puerta:'f die Tür', armario:'m der Schrank', ordenador:'m der Computer', impresora:'f der Drucker', lavadora:'f die Waschmaschine',
+  cafetera:'f die Kaffeemaschine', secador:'m der Föhn', batidora:'f der Mixer', microondas:'m die Mikrowelle', cuchillo:'m das Messer',
+  cuchara:'f der Löffel', olla:'f der Topf', taza:'f die Tasse', vaso:'m das Glas', plato:'m der Teller', tenedor:'m die Gabel',
+  bandeja:'f das Tablett', falda:'f der Rock', pantalón:'m die Hose', vestido:'m das Kleid', gorra:'f die Kappe',
+  día:'m der Tag', mes:'m der Monat', año:'m das Jahr', semana:'f die Woche', noche:'f die Nacht', clase:'f die Unterrichtsstunde',
+  examen:'m die Prüfung', viaje:'m die Reise', tarde:'f der Nachmittag', fiesta:'f das Fest', concierto:'m das Konzert', boda:'f die Hochzeit',
+  partido:'m das Spiel', cena:'f das Abendessen', momento:'m der Moment', época:'f die Zeit', temporada:'f die Saison',
+  película:'f der Film', documental:'m der Dokumentarfilm', serie:'f die Serie', programa:'m das Programm', vídeo:'m das Video',
+  obra:'f das Theaterstück', novela:'f der Roman', canción:'f das Lied', disco:'m das Album',
+  hambre:'fá der Hunger', sed:'f der Durst', miedo:'m die Angst', sueño:'m die Müdigkeit', frío:'m die Kälte', calor:'m die Hitze', rabia:'f die Wut',
+  sistema:'m das System', método:'m die Methode', juego:'m das Spiel', aplicación:'f die App', regla:'f die Regel', norma:'f die Vorschrift',
+  plataforma:'f die Plattform',
+  águila:'fá der Adler', pájaro:'m der Vogel', gato:'m die Katze', perro:'m der Hund', tortuga:'f die Schildkröte', ardilla:'f das Eichhörnchen',
+  zorro:'m der Fuchs', rana:'f der Frosch', lagarto:'m die Eidechse',
+  espalda:'f der Rücken', cabeza:'f der Kopf', mano:'f die Hand', pie:'m der Fuß', brazo:'m der Arm', rodilla:'f das Knie', cuello:'m der Hals',
+  oído:'m das Ohr', garganta:'f der Hals', estómago:'m der Magen',
+  oportunidad:'f die Gelegenheit', tren:'m der Zug', vuelo:'m der Flug'
+};
+// Vorlage und die Nomen, die inhaltlich hineinpassen. {N} das Nomen; {w} richtet sich nach ihm (in der männlichen Form geschrieben,
+// wie sie vor oder nach einem männlichen Nomen steht: buen, primer, ningún); {=w} bleibt gleich und wird in der Erklärung genannt.
+// Regeln: Pronomen nur für Sachen (bei Personen ginge auch le), keine Periphrase mit Pronomen (lo vamos a / vamos a …lo),
+// Wörter mit betontem a nur, wo direkt davor el, del, al oder ein Begleiter steht, der weiblich bleibt (esta agua, mucha hambre),
+// nicht nach un, algún, ningún und nicht mit todo (dort ist beides üblich). Jede Liste hat beide Geschlechter.
+const SWAP_ES = [
+  ['¿{El} {N}? Está {frío}, no {lo} bebo.', 'café té agua leche chocolate infusión'],
+  ['{Este} {N} está muy {bueno}; ¿dónde {lo} has comprado?', 'pan queso vino café tortilla salsa fruta agua cerveza aceite'],
+  ['{Ese} {N} es bastante {complicado}, pero {lo} resolveremos.', 'problema asunto conflicto dilema cuestión situación crisis duda'],
+  ['No hay {ningún} {N} {abierto} a estas horas.', 'farmacia supermercado bar restaurante tienda panadería museo biblioteca'],
+  ['{El} {primer} {N} fue {duro}, pero luego todo mejoró.', 'día mes año semana noche clase examen'],
+  ['Fue {un} {buen} {N}, {tranquilo} y sin prisas.', 'día viaje verano año noche semana tarde'],
+  ['{El} {N} {nuevo} es mucho más {cómodo} que {el} {viejo}.', 'sofá sillón colchón coche cama silla mochila almohada'],
+  ['No encuentro {el} {N}; ¿{lo} has visto?', 'reloj móvil mapa paraguas billete pasaporte llave cartera mochila cámara'],
+  ['{Aquel} {N} era {precioso}, pero {lo} cerraron hace años.', 'cine teatro mercado bar restaurante tienda librería panadería piscina'],
+  ['{Nuestro} {N} está {lleno} de gente los fines de semana.', 'barrio pueblo parque ciudad plaza calle playa'],
+  ['Me duele {=mucho} {el} {N} desde ayer.', 'espalda cabeza mano pie brazo rodilla cuello oído garganta estómago'],
+  ['Tengo {mucho} {N}; ¿podemos parar un momento?', 'hambre sed sueño frío calor'],
+  ['Tenía {tanto} {N} que no podía pensar en otra cosa.', 'hambre sed miedo frío calor rabia'],
+  ['{Este} {N} me gusta, pero prefiero {el} {otro}; es más {práctico}.', 'bolso abrigo reloj jersey chaqueta mochila maleta camisa'],
+  ['¿Has visto {el} {N} que te recomendé? Me pareció {buenísimo}.', 'película documental serie programa vídeo obra'],
+  ['{Ese} {N} no es {el} que te dije; {el} {mío} es {rojo}.', 'coche moto bici abrigo chaqueta paraguas bolso mochila'],
+  ['¿Me pasas {el} {N}? {Lo} necesito un momento.', 'libro cuaderno bolígrafo lápiz mando periódico revista goma carpeta calculadora'],
+  ['{Este} {N} ha sido {el} más {largo} de mi vida.', 'año viaje verano semana invierno noche mes'],
+  ['Me han regalado {un} {N} {precioso}, pero no sé dónde poner{lo}.', 'cuadro lámpara planta jarrón espejo alfombra reloj'],
+  ['{El} {N} del hotel estaba {sucio} y nadie {lo} limpió.', 'baño suelo habitación piscina cocina terraza ducha'],
+  ['¿{Cuánto} {N} necesitas para la receta?', 'agua leche harina arroz aceite sal queso'],
+  ['{El} {N} del segundo piso está {cerrado} hoy.', 'aula despacho sala laboratorio cocina gimnasio biblioteca'],
+  ['{Este} {N} está {reservado} para los socios.', 'área zona espacio aparcamiento sala terraza'],
+  ['{El} {N} que vimos ayer era {pequeño}, pero muy {bonito}.', 'águila pájaro gato perro tortuga ardilla zorro rana lagarto'],
+  ['{El} {N} fue {construido} hace más de cien años.', 'puente iglesia estación catedral castillo mercado teatro torre palacio muralla'],
+  ['A esa hora, {todo} {el} {N} estaba {vacío}.', 'edificio casa barrio playa pueblo calle restaurante estadio plaza'],
+  ['Llevas {el} {mismo} {N} que ayer.', 'jersey camisa chaqueta abrigo falda pantalón vestido gorra'],
+  ['¿Me traes {otro} {N}? {Este} está {frío}.', 'café té sopa chocolate infusión'],
+  ['{Este} {N} es {=importante}, pero no {=urgente}; {lo} trataremos mañana.', 'tema asunto problema cuestión punto propuesta'],
+  ['{El} {N} que compramos en el mercado estaba {podrido}.', 'melón sandía piña mango aguacate pera tomate lechuga'],
+  ['Me encanta {este} {N}; es {tranquilo} y está muy bien {situado}.', 'barrio pueblo hotel calle plaza zona piso casa'],
+  ['Necesito {un} {N} {nuevo}; {el} {mío} ya no funciona.', 'ordenador móvil impresora lavadora nevera cafetera secador batidora microondas'],
+  ['Todavía me acuerdo de {aquel} {N}; fue {=inolvidable}.', 'viaje verano noche fiesta concierto boda partido cena'],
+  ['¿Dónde está {el} {N} {pequeño}? {Lo} dejé aquí ayer.', 'cuchillo cuchara olla taza vaso plato tenedor bandeja'],
+  ['{El} {N} de mi abuela era {famoso} en todo el pueblo.', 'tortilla paella sopa cocido flan gazpacho'],
+  ['Es {un} {=gran} {N}, aunque poco {conocido}.', 'libro película novela canción disco museo ciudad'],
+  ['Ya es {el} {tercer} {N} que perdemos este mes.', 'partido tren vuelo paraguas llave oportunidad'],
+  ['Fue {un} {mal} {N} para todos, sobre todo para los niños.', 'momento año época semana día temporada verano'],
+  ['{Este} {N} es {nuevo} y todavía no {lo} entiendo bien.', 'sistema programa método juego aplicación regla norma plataforma'],
+  ['{El} {N} de esta región es muy {seco}.', 'clima aire tierra verano invierno primavera'],
+  ['{El} {N} de la cocina está {roto} desde el lunes.', 'grifo horno nevera lámpara ventana enchufe puerta armario'],
+  ['{Este} {N} es {nuestro}; {el} {vuestro} está allí.', 'mesa sitio coche toalla sombrilla bici']
+];
+const FEM_ES = { el:'la', del:'de la', al:'a la', un:'una', algún:'alguna', ningún:'ninguna', buen:'buena', mal:'mala', primer:'primera', tercer:'tercera', este:'esta', ese:'esa', aquel:'aquella', lo:'la', mío:'mía' };
+const APOC_ES = ['buen', 'mal', 'primer', 'tercer', 'algún', 'ningún'];
+function femEs(w){
+  const lw = w.toLowerCase(), f = FEM_ES[lw] || (/o$/.test(lw) ? lw.slice(0, -1) + 'a' : '');
+  if (!f) throw new Error('femEs: ' + w);
+  return w[0] !== lw[0] ? f[0].toUpperCase() + f.slice(1) : f;
 }
-function genDetEsOne(){
-  const [w, g, de, extra] = pick(GENUS.es.filter(x => x[0] !== 'agua')), fem = g === 'la';
-  const pl = /[aeiouáéó]$/.test(w) && !NO_PL_ES.includes(w) && Math.random() < 0.4, noun = pl ? w + 's' : w, k = 1 + (fem ? 1 : 0) + (pl ? 2 : 0);
-  const deL = pl ? `${de}, Mehrzahl` : de, why = `${w} ist ${fem ? 'weiblich' : 'männlich'}${pl ? ', hier in der Mehrzahl' : ''}.${extra ? ' ' + extra : ''}`;
-  const fit = ADJ_FIT_ES[w], type = pick(fit ? ['poss', 'dem', 'adj', 'adj'] : ['poss', 'dem']);
-  if (type === 'poss' || type === 'dem') { const P = pick(type === 'poss' ? POSS_ES : DEM_ES), f = P[k]; return { prompt:`___ ${noun}`, deLine:deL, answers:[f], label:'Welche Form passt?', hint:P[0], gap:true, full:`${f} ${noun}`, note:`${why} Also ${f} ${noun}.` }; }
-  const a = ADJ_ES[pick(fit.split(''))], af = a.replace(/o$/, fem ? 'a' : 'o') + (pl ? 's' : ''), art = pl ? (fem ? 'las' : 'los') : g;
-  return { prompt:`${art} ${noun} ___`, deLine:deL, answers:[af], label:'Adjektiv anpassen', hint:a, gap:true, full:`${art} ${noun} ${af}`, note:`${why} Also ${af}.` };
+const swapNoun = w => { const [fl, ...de] = SWAP_N_ES[w].split(' '); return { w, fem:fl[0] === 'f', a:fl.includes('á'), de:de.join(' ') }; };
+// Satz mit diesem Nomen und die Wörter, die sich nach ihm richten (in der Form, die dort steht)
+function swapRender(tpl, n){
+  const words = [];
+  const text = tpl.replace(/\{(=?)([^}]+)\}/g, (m, inv, w, at) => {
+    if (w === 'N') return n.w;
+    if (inv) return w;
+    // el, del, al direkt vor betontem a: el agua, del aula. Alles andere bleibt weiblich.
+    const keep = n.a && /^(el|del|al)$/i.test(w) && tpl.startsWith(' {N}', at + m.length);
+    const out = n.fem && !keep ? femEs(w) : w;
+    words.push(out);
+    return out;
+  });
+  return { text, words };
+}
+// Endungen, die in die Irre führen, und Regeln, die helfen (Zusatz zur Zeile über das Geschlecht)
+function swapEnd(n){
+  if (n.w === 'foto' || n.w === 'moto') return `, kurz für la ${n.w === 'foto' ? 'fotografía' : 'motocicleta'}`;
+  if (!n.fem && /ma$/.test(n.w)) return ', wie viele Wörter auf -ma';
+  if (!n.fem && /a$/.test(n.w)) return ', obwohl es auf -a endet';
+  if (n.fem && /o$/.test(n.w)) return ', obwohl es auf -o endet';
+  if (n.fem && /[cs]ión$/.test(n.w)) return ', wie die Wörter auf -ción und -sión';
+  if (n.fem && /[dt]ad$/.test(n.w)) return ', wie die Wörter auf -dad und -tad';
+  return '';
+}
+// Erklärung: das Geschlecht des neuen Nomens (mit dem deutschen Artikel, wo er in die Irre führt), bei betontem a die Ausnahme beim
+// Artikel, und wenn sich das Geschlecht ändert, was dabei leicht schiefgeht: Verkürzung (buen/buena), Wörter, die gleich bleiben.
+function swapNote(tpl, A, B, words){
+  const dArt = B.de.split(' ')[0], contrast = (dArt === 'der' && B.fem) || (dArt === 'die' && !B.fem), out = [];
+  if (B.a) {
+    const rest = [...new Set(words.map(w => w.toLowerCase()).filter(w => !/^(el|del|al)$/.test(w)))];
+    out.push(`${contrast ? `Deutsch ${B.de}, aber ` : ''}${B.w} ist weiblich; el ${B.w} nur wegen des betonten a.${rest.length ? ` Also ${rest.join(', ')}.` : ''}`);
+  } else out.push(`${contrast ? `Deutsch ${B.de}, aber ${B.fem ? 'la' : 'el'} ${B.w}` : `${B.w} ist ${B.fem ? 'weiblich' : 'männlich'}`}${swapEnd(B)}.`);
+  if (A.fem !== B.fem) {
+    const apo = APOC_ES.filter(w => tpl.toLowerCase().includes(`{${w}}`));
+    if (apo.length) out.push(B.fem ? `Weiblich ohne Verkürzung: ${apo.map(femEs).join(', ')}.` : `Vor einem männlichen Nomen verkürzt: ${apo.join(', ')}.`);
+    const inv = [...tpl.matchAll(/\{=([^}]+)\}/g)].map(m => m[1]);
+    if (inv.includes('gran')) out.push('gran bleibt vor beiden Geschlechtern gleich.');
+    if (inv.includes('mucho')) out.push('mucho gehört hier zum Verb und bleibt gleich.');
+    const adj = inv.filter(w => w !== 'gran' && w !== 'mucho');
+    if (adj.length) out.push(`${adj.join(' und ')} ${adj.length > 1 ? 'haben' : 'hat'} nur eine Form.`);
+  }
+  return out.join(' ');
+}
+// Das Nomen wird nach der Vorlage gewählt, nie nach seinem Geschlecht: Sonst verriete schon die Auswahl die Lösung.
+// Wörter, die bei „el oder la?“ zuletzt falsch waren, kommen dreimal so oft.
+function genSwapEs(){
+  const i = Math.floor(Math.random() * SWAP_ES.length), ns = SWAP_ES[i][1].split(' '), st = (DB.genus && DB.genus.es) || {};
+  const from = pick(ns), to = pickWeighted(ns.filter(w => w !== from), w => (st[w] && st[w].last === 0 ? 3 : 1));
+  return swapTask(i, from, to);
+}
+function swapTask(i, from, to){
+  const tpl = SWAP_ES[i][0], A = swapNoun(from), B = swapNoun(to), r = swapRender(tpl, B);
+  return { kind:'trans', src:swapRender(tpl, A).text, start:'', answers:[r.text], full:r.text, swap:[from, to], key:[...new Set(r.words)], keyLabel:'Die Anpassung stimmt',
+    note:swapNote(tpl, A, B, r.words), trap:'concord', label:'Tausch das Nomen aus und pass den Satz an', rep:'swap' + i };
 }
 /* ---------- Pluralklassen: flickor, bilar, datorer, äpplen, hus, böcker, män ---------- */
 // [Einzahl, en/ett, Mehrzahl, Mehrzahl bestimmt, deutsch Einzahl, deutsch Mehrzahl, Klasse, Rahmen: m = beweglich (auch „Var är …?“), t = Zeit (nur unbestimmt)]
@@ -905,7 +1043,7 @@ const GENS = {
   serestar:{ lang:'es', trap:'serestar', short:'ser/estar', label:'ser oder estar', make:genSerEstar },
   perifrasis:{ lang:'es', trap:'perifrasis', short:'Periphrasen', label:'Verbalperiphrasen', make:genPerifrasis },
   porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara },
-  det_es:{ lang:'es', trap:'concord', short:'Übereinstimmung', label:'Begleiter & Adjektive anpassen', make:genDetEs },
+  det_es:{ lang:'es', trap:'concord', short:'Übereinstimmung', label:'Nomen tauschen', make:genSwapEs },
   verbind_sv:{ lang:'sv', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_SV) },
   verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) },
   prep_sv:{ lang:'sv', trap:'prep', short:'Präpositionen', label:'Verben mit Präposition', make:genPrep(PREP_SV) },

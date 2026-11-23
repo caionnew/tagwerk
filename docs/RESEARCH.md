@@ -14,6 +14,12 @@ Brunmair & Richter (2019), *Psychological Bulletin*: Metaanalyse über 59 Studie
 
 Im Tagwerk selbst (eigene Festlegung, 24.54.0): kein Thema mit mehr als einem Viertel der Wiederholungen, und das Thema der letzten Aufgabe kommt als Nächstes nur mit halbem Gewicht, wie die Fehlerart bei „Fehler finden“. Ein Verbot wäre selbst eine Regel, die man mit der Zeit durchschaut („gerade war X, also sicher nicht X“). Simuliert über 20.000 Tagwerke: reiner Zufall 2,3 direkte Wiederholungen je Tagwerk und in 17 % der Tagwerke ein Dreierblock; mit halbem Gewicht 1,3 und 6 %; nach Thema X folgt X in 9 % statt 15 % der Fälle, also selten, aber nicht ausgeschlossen. Vorher kamen bei vielen fälligen Sätzen eines Themas oft vier, fünf davon hintereinander, und die Lösung war absehbar, bevor man den Satz gelesen hatte.
 
+## Übereinstimmung: ganze Sätze statt Wortpaare
+
+- Lernende des Spanischen mit einer Erstsprache, die selbst Genus hat (Niederländisch), setzen die männliche Einzahl am Begleiter am sichersten; weiblich, Mehrzahl und Adjektive sind deutlich fehleranfälliger, und unsichere Fälle fallen auf die männliche Form zurück (González González, Mayans & van den Berg, *IRAL* 60 (2), 2022: Nominal agreement in the interlanguage of Dutch L2 learners of Spanish). Fehler bei der Übereinstimmung halten sich bis in fortgeschrittene Stufen (Ayres 2012, Masterarbeit University of Georgia). Einschränkung: schriftliche Produktion, Niederländisch und Englisch statt Deutsch als Erstsprache.
+- Eigene Festlegung (24.70.0): Die Übung „Nomen tauschen“ ersetzt das Ergänzen eines Begleiters vor einem einzelnen Nomen. Dort stand die Zahl schon am Nomen, und die einzige Entscheidung war das Geschlecht, das „el oder la?“ ohnehin übt. Jetzt muss das Geschlecht durch den Satz getragen werden: Begleiter, Adjektiv nach ser und estar, Partizip, Pronomen. Ohne deutsches Stichwort, weil die deutsche Bezeichnung (dieser da) zwischen ese und aquel nicht trennt.
+- Die Auswahl hängt nur von der Vorlage ab und vom eigenen Fehler bei „el oder la?“, nie vom Geschlecht. Würde man Aufgaben verwerfen, deren Lösung sich nicht ändert, verriete schon das Erscheinen einer Aufgabe die Lösung (wie bei „Fehler finden“ unten).
+
 ## Fehler finden: Prüfen statt Suchen
 
 - Fehler zu erkennen (Grammatikalitätsurteil) übt nur dann das Urteil, wenn der Satz auch richtig sein kann. Steckt sicher ein Fehler im Satz und gibt es nur einen Kandidaten, wird daraus Suchen. Darum ist rund jeder dritte bis zweite Satz richtig.

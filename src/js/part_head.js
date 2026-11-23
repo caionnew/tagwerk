@@ -28,7 +28,9 @@ const TRAPS = {
   es:[
     { id:'prep', label:'Verben mit Präposition', kind:'gen', gen:'prep_es', short:'Viele Verben und Adjektive haben eine feste Präposition, oft eine andere als im Deutschen.', rule:'Am besten als Ganzes lernen: soñar con, pensar en, acordarse de, dejar de, empezar a, confiar en, tener ganas de.' },
     { id:'lesen', vocab:true, label:'Lücken aus Lesetexten', kind:'gen', gen:'textgap_es', short:'Ein Wort aus einem gelesenen Text ergänzen. Die deutsche Bedeutung sagt, welches; beim Lesen Nachgeschlagenes kommt zuerst.', rule:'Holt Wörter aus Texten zurück, die du schon verstanden hast: Abruf festigt mehr als erneutes Lesen.' },
-    { id:'concord', label:'Begleiter & Adjektive anpassen', kind:'gen', gen:'det_es', short:'Possessiv, Demonstrativ und Adjektiv richten sich nach Geschlecht und Zahl des Nomens.', rule:'nuestro/nuestra/nuestros/nuestras, este/esta/estos/estas, mi/mis. Vorsicht bei Ausnahmen: el problema, el día, el mapa, la mano, la foto, la radio: nuestro problema, las manos pequeñas.' },
+    { id:'concord', label:'Übereinstimmung im Satz', kind:'gen', gen:'det_es', short:'Begleiter, Adjektive, Partizipien und Pronomen richten sich nach dem Geschlecht des Nomens.',
+      table:[['el agua, el aula', 'weiblich; el nur direkt vor betontem a', 'esta agua fría, mucha hambre'], ['buen, primer, ningún', 'verkürzt nur vor männlichem Nomen', 'un buen día, una buena noche'], ['gran', 'vor dem Nomen für beide gleich', 'una gran novela'], ['-e, -z, -ista', 'eine Form für beide', 'importante, feliz, optimista'], ['lo, la', 'Pronomen nach dem Nomen', '¿La leche? No la bebo.']],
+      rule:'Das Geschlecht gehört zum Wort und weicht oft vom Deutschen ab: el mapa, el problema, la mano, la llave. Fehler passieren eher beim Adjektiv als beim Artikel, darum übt die Aufgabe ganze Sätze.' },
     { id:'verbind', label:'Konnektoren & feste Verbindungen', kind:'gen', gen:'verbind_es', short:'sin embargo, por lo tanto, en cambio verbinden Sätze; Verben und Nomen gehören fest zusammen.', rule:'para que, en cuanto (Zukunft) und siempre que verlangen Subjuntivo. Feste Verbindungen als Ganzes lernen: tomar una decisión, hacer una pregunta, dar un paseo, tener razón.' },
     { id:'konjugation', label:'Verbformen', kind:'gen', gen:'conj', short:'Signale: normalmente = Präsens, ayer = Indefinido, antes/siempre = Imperfecto, es importante que = Subjuntivo.', rule:'Unregelmäßige Formen wie tuve, hice, fui, sea, vaya lohnen sich auswendig.' },
     { id:'serestar', label:'ser oder estar', kind:'form', gen:'serestar', short:'ser für Identität und Eigenschaften, estar für Zustand und Ort.', rule:'Auch ser: Uhrzeit und wo ein Ereignis stattfindet (la fiesta es en casa de Ana). Auch estar: Ergebnis und estar + Gerundium.' },
@@ -626,7 +628,8 @@ function freshFirst(items, slot, n, prefer){
 }
 // Erzeugte Aufgaben ohne Wiederholung: Jeder Generator merkt sich seine letzten Aufgaben, auch über Runden hinweg.
 const GEN_MEMORY = 12;
-const genKey = d => String(d.word || d.full || (d.answers && d.answers[0]) || d.prompt || '').toLowerCase();
+// rep: gleiche Vorlage mit anderen Wörtern zählt als Wiederholung (Nomen tauschen)
+const genKey = d => String(d.rep || d.word || d.full || (d.answers && d.answers[0]) || d.prompt || '').toLowerCase();
 function makeFresh(g){
   const mem = DB.used.genRecent = DB.used.genRecent || {};
   const list = mem[g] = mem[g] || [];

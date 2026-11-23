@@ -350,7 +350,10 @@ function viewRun(){
       ${done || d.mode !== 'write' ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'trans') {
     const d = ex.data;
-    body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${esc(d.src)}</p><p class="vocab">Beginne mit „${esc(d.start.trim())} …“${d.aim ? `. ${esc(d.aim)}` : ''}</p>
+    // Nomen tauschen: das alte Nomen im Satz fett, darunter das neue (antippbar für die Bedeutung). Kein Satzanfang vorgegeben.
+    const src = d.swap ? d.src.split(' ').map(t => { const m = t.match(/^([¿¡]*)(.*?)([.,;:!?]*)$/); return m[2] === d.swap[0] ? `${esc(m[1])}<b>${esc(m[2])}</b>${esc(m[3])}` : esc(t); }).join(' ') : esc(d.src);
+    const how = d.swap ? `Mit <b class="swapto" lang="${lang}" data-a="lookup" data-w="${esc(d.swap[1])}">${esc(d.swap[1])}</b> statt <span lang="${lang}">${esc(d.swap[0])}</span>` : `Beginne mit „${esc(d.start.trim())} …“${d.aim ? `. ${esc(d.aim)}` : ''}`;
+    body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${src}</p><p class="vocab">${how}</p>
       <div class="ex-a">${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" aria-label="Umgebauter Satz">${esc(c.input)}</textarea>`}
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'gen') {

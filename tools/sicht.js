@@ -33,6 +33,9 @@ const bottom = async p => {
 const WIKI_BODY = 'Allmänna skyddsrum i Stockholm byggdes under det kalla kriget för att skydda befolkningen. De flesta skyddsrummen ligger djupt under jorden och används i dag som garage eller förråd. Kommunen kontrollerar regelbundet att dörrarna fungerar och att ventilationen är intakt. Under en kris ska skyddsrummen kunna öppnas inom fyrtioåtta timmar. Många stockholmare vet inte var det närmaste skyddsrummet finns, trots att skyltarna sitter på husväggarna.';
 const mockWiki = p => p.route('https://sv.wikipedia.org/w/api.php**', r => r.fulfill({ headers:{ 'Access-Control-Allow-Origin':'*' }, json:{ query:{ pages:[{ title:'Allmänna skyddsrum i Stockholm', extract:WIKI_BODY, fullurl:'https://sv.wikipedia.org/wiki/Skyddsrum' }] } } }));
 const answerAll = async p => { for (let k = 0; k < 40 && await p.$('.runbar'); k++) { await answerWrong(p); await p.click('[data-a=next]'); } };
+// Nomen tauschen: das typische Versehen, nur das Nomen ersetzt und den Rest stehen gelassen
+const swapNaive = async p => { const src = await p.textContent('.ex .de'), a = await p.textContent('.ex .de b'), b = await p.textContent('.vocab .swapto'); await p.fill('#answer', src.trim().replace(a.trim(), b.trim())); await p.click('[data-a=check]'); };
+const swapOpen = [click('[data-a=tab][data-v=extra]'), click('[data-a=forms]'), click('[data-a=gengo][data-g=det_es]')];
 // Name, Lernstand, Schritte nach dem Start
 const SCENES = [
   ['heute', rich, []],
@@ -42,6 +45,8 @@ const SCENES = [
   ['fortschritt-sprache', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]')]],
   ['aufgabe', rich, [click('[data-a=daily]')]],
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
+  ['nomen-tauschen', () => richDB('es'), swapOpen],
+  ['nomen-tauschen-falsch', () => richDB('es'), [...swapOpen, swapNaive]],
   ['rundenende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll]],
   ['tagwerk-ende', rich, [click('[data-a=daily]'), answerAll, p => p.evaluate(() => { const g = document.querySelector('.grprow') || document.querySelector('.donebox h2'); if (g) g.scrollIntoView(); })]],
   // Tagwerk-Ende mit aufgeklapptem Thema: deine Antworten und die Lösungen

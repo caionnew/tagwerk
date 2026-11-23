@@ -58,7 +58,9 @@ function mistake(input, answers, lang, tested, lexical){
   const key = x => x.slice().sort().join(' ');
   if (A.join(' ') === best.join(' ')) return null;
   if (A.length > 1 && key(A) === key(best)) return { kind:'order' };
-  const missing = best.filter(w => !A.includes(w)), extra = A.filter(w => !best.includes(w));
+  // Als Mehrfachmenge: „Este agua está …“ statt „Esta agua está …“ hat „esta“ (aus está) nur einmal, gesucht ist es zweimal
+  const minus = (X, Y) => { const r = Y.slice(); return X.filter(w => { const i = r.indexOf(w); if (i < 0) return true; r.splice(i, 1); return false; }); };
+  const missing = minus(best, A), extra = minus(A, best);
   if (!extra.length && missing.length) return { kind:'missing' };
   // Knapp daneben zählt nur als Schreibfehler, wenn das Getippte kein echtes Wort ist.
   // „stor“ statt „stort“ oder „gusta“ statt „gustan“ sind echte Wörter in falscher Form: ein Grammatikfehler.

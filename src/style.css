@@ -144,6 +144,8 @@ label.row{ cursor:pointer; }
 .hintw{ display:inline-block; font-size:var(--fs-4); color:var(--accent-ink); background:var(--accent-soft); border-radius:var(--r-xs); padding:0 7px; margin-left:8px; }
 .de{ font-family:var(--serif); font-size:var(--fs-11); line-height:1.38; margin:0 0 16px; }
 .vocab{ font-size:var(--fs-5); color:var(--muted); margin:-8px 0 14px; }
+/* Nomen tauschen: das neue Nomen in voller Farbe, antippbar für die Bedeutung */
+.vocab .swapto{ color:var(--ink); cursor:pointer; }
 .gloss{ color:var(--muted); margin:4px 0 0; font-size:var(--fs-6); }
 .cloze{ font-family:var(--serif); font-size:var(--fs-9); line-height:1.9; margin:0 0 12px; color:var(--accent-ink); }
 select, input[type="text"]{ width:100%; background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-m); padding:11px 13px; font-size:var(--fs-6); }

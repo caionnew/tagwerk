@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.70.1
+**Nach dem Einspielen eines Backups zeigt „Heute“ gleich die richtige Sprache. Die Arbeitsanleitung liegt jetzt im Repo.**
+- **Backup:** Nach dem Einspielen blieb „Heute“ bis zum Neustart in der Sprache, die vorher gewählt war. Ein offenes spanisches Tagwerk aus dem Backup war dort nicht zu sehen, wenn vorher Schwedisch eingestellt war (verloren ging nichts). Jetzt gilt sofort die Sprache des Tages aus dem Backup, wie beim Start; ebenso nach „Rückgängig“. Gefunden beim Prüfen von Export und Einspielen über die Versionsgrenze 24.69.1 → 24.70.0, der Fehler war älter.
+- **CLAUDE.md:** die Anleitung für die Arbeit am Repo (Arbeitsweise, Tests, Lieferung als Patch, Code-Landkarte, festgelegte Entscheidungen), ohne Versions- und Testzahlen. Überarbeitet: Prüfung, ob ein Patch angekommen ist, mit `git cherry` vor dem Zurücksetzen; Einheitstests in UTC und in Ortszeit statt zweimal gleich; Version über `npm version`; Backup-Prüfung über die Versionsgrenze bei Änderungen an Speicher oder Aufgabenarten; veraltete Hinweise (file://, Satzbank ohne Erklärung, Fahrplan) entfernt.
+- Tests: `anleitung.test.js` (jede in CLAUDE.md genannte Datei existiert, jedes Modul steht in der Code-Landkarte, keine Versionsnummer), Sprache nach dem Einspielen als Einheits- und Browser-Test.
+- Speicherstand unverändert.
+
 ## 24.70.0
 **Spanisch: „Nomen tauschen“ ersetzt „Begleiter & Adjektive anpassen“. Ein Satz, ein neues Nomen, und alles, was sich danach richtet, muss mit.**
 - **Warum:** Die alte Übung fragte einen Begleiter vor einem einzelnen Nomen ab, mit deutschem Stichwort („dieser da“). Die Zahl stand schon am Nomen, mi/tu hatten nichts anzupassen, und übrig blieb das Geschlecht, das „el oder la?“ ohnehin übt. Dazu trennte „dieser da“ nicht zwischen ese und aquel, und die Erklärung nannte bei „aquel sol“ das Geschlecht als Grund, obwohl es stimmte (deine Meldung vom 23.11.).

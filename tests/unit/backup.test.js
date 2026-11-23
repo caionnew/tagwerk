@@ -25,6 +25,15 @@ test('Backup mit offenem Tagwerk: Ergebnisse und zweiter Versuch kommen zurück,
   run('S.dailyRun.cur = { state:"answer" }');
   assert.deepEqual(segs(), ['s-ok', 's-bad', 's-cur', 're re1']);
 });
+test('Nach dem Einspielen gilt die Sprache des Tages aus dem Backup, nicht die vorher gewählte', () => {
+  const [a] = run(`BANK.es.filter(i => i.gap).slice(0, 1).map(i => i.id)`);
+  const db = { v:3, settings:{ size:'normal', lang:'es' }, st:{}, log:{}, done:{}, gen:{}, dayLang:{ d:run('today()'), l:'es' },
+    run:{ date:run('today()'), lang:'es', queue:[{ type:'cloze', id:a }], idx:0, ok:0, bad:0, res:[], secs:0, combo:0, best:0 } };
+  run(`DB = freshDB(); S.lang = 'sv'; S.run = null; S.dailyRun = null;`);
+  run(`applyBackup(parseBackup(${JSON.stringify(JSON.stringify(db))}))`);
+  assert.equal(run('S.lang'), 'es');
+  assert.equal(run('S.dailyRun.lang'), 'es');
+});
 test('Backup ohne offenes Tagwerk schließt ein vorher offenes', () => {
   run(`S.dailyRun = { kind:'daily', lang:'sv', queue:[{ type:'gen', gen:'inte' }], idx:0, ok:0, bad:0, res:[], cur:null }; S.run = S.dailyRun;`);
   run(`applyBackup(parseBackup(JSON.stringify({ v:3, st:{}, log:{}, done:{} })))`);

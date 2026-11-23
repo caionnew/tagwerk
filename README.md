@@ -33,9 +33,9 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, ESLint, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (402 Tests)
+npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (406 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (99 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (100 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 npm run sicht -- --vs origin/main   # Bildschirmfotos aller Ansichten, vorher/nachher
 ```
@@ -60,10 +60,11 @@ tests/
   e2e/                Playwright-Tests
   helpers/, fixtures/ Lader für die VM, FSRS-Referenzdaten
 docs/                 Installation, Architektur, Inhalte, Forschungsgrundlagen, Ideen
+CLAUDE.md             Arbeitsweise am Repo: Tests, Lieferung als Patch, Code-Landkarte, festgelegte Entscheidungen
 .github/workflows/    CI (Tests) und Pages (Veröffentlichung)
 ```
 
-Details: [Architektur](docs/ARCHITECTURE.md) · [Inhalte pflegen](docs/CONTENT.md) · [Forschungsgrundlagen](docs/RESEARCH.md) · [Ideen](docs/IDEEN.md) · [Änderungen](CHANGELOG.md)
+Details: [Architektur](docs/ARCHITECTURE.md) · [Inhalte pflegen](docs/CONTENT.md) · [Forschungsgrundlagen](docs/RESEARCH.md) · [Ideen](docs/IDEEN.md) · [Änderungen](CHANGELOG.md) · [Arbeitsweise am Repo](CLAUDE.md)
 
 ## Daten und Datenschutz
 

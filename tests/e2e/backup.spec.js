@@ -32,6 +32,19 @@ test('Export und Import ergeben denselben Stand, auch auf einem leeren Gerät', 
   expect(errors).toEqual([]);
   await ctx.close();
 });
+test('Nach dem Einspielen zeigt „Heute“ die Sprache des Backups, ohne Neustart', async ({ page }) => {
+  await page.goto(APP);
+  await expect(page.locator('.today')).toContainText('Schwedisch');
+  const t = new Date(), pad = n => String(n).padStart(2, '0'), today = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`;
+  const db = Object.assign(richDB('es'), { dayLang:{ d:today, l:'es' } });
+  const file = path.join(os.tmpdir(), `tw-es-${Date.now()}.json`);
+  fs.writeFileSync(file, JSON.stringify(db));
+  await page.click('[data-a=settings] >> nth=0');
+  await page.setInputFiles('#importFile', file);
+  await expect(page.locator('.notice')).toContainText('Backup eingespielt');
+  await page.click('[data-a=tab][data-v=home]');
+  await expect(page.locator('.today')).toContainText('Spanisch');
+});
 test('Einspielen lässt sich rückgängig machen; fremde Dateien ändern nichts', async ({ page }) => {
   await seed(page, richDB('sv'));
   await page.goto(APP);

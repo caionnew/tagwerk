@@ -227,7 +227,9 @@ function parseBackup(text){
 function applyBackup(d){ adoptDB(d); flushSave(); buildBank(); runsFromDB(); }
 // Nach Einspielen oder Rückgängig: Ein offenes Tagwerk kommt aus dem neuen Stand, nicht aus dem Arbeitsspeicher von vorher
 // (sonst ginge „Fortsetzen“ ins alte Tagwerk, und das nächste Speichern schriebe es über das eingespielte).
-function runsFromDB(){ S.run = null; S.dailyRun = null; restoreRun(); }
+// Nach Einspielen oder Rückgängig: offene Runden aus dem neuen Stand und die Sprache des Tages wie beim Start
+// (sonst zeigte „Heute“ bis zum Neustart die vorher gewählte Sprache, ein offenes Tagwerk der anderen fehlte dort)
+function runsFromDB(){ S.run = null; S.dailyRun = null; restoreRun(); S.lang = dayLang(); }
 function backupSummary(){
   const n = Object.keys(DB.st || {}).length, days = Object.keys(DB.log || {}).length;
   return `${n === 1 ? '1 Satz' : `${n} Sätze`}, ${days === 1 ? '1 Übungstag' : `${days} Übungstage`}`;

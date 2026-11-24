@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.70.2
+**Wortkästchen: Richtige Wortstellungen, die als falsch galten, zählen jetzt, darunter „Se lo he explicado ya tres veces …“ aus deinem Screenshot.**
+- **Der Fall:** Zu „Ich habe es ihm schon dreimal erklärt …“ kannte die App nur „Ya se lo he explicado …“. „ya“ nach dem Partizip ist genauso richtig. Bei Wortkästchen gibt es kein „Meine ist auch richtig“, also blieb deine Antwort falsch. Das übrige Wort war „le“, das hattest du richtig liegen lassen.
+- **Durchgesehen:** alle 205 Sätze, die als Wortkästchen kommen (Objektpronomen; Nebensatz, Inversion, Partikelverben), dazu alle spanischen Sätze, die mit „ya“ beginnen. 21 neue Alternativen in 18 Sätzen; bei 14 davon lehnten die Kästchen bisher eine richtige Reihenfolge ab:
+  - Spanisch: ya nach dem Partizip (Se lo he dicho ya); por favor dort, wo der deutsche Satz „bitte“ hat (Devuélveme los libros, por favor, cuando …); die Zeitangabe vorn (Hasta ayer no nos lo comunicaron, Por su cumpleaños le regalamos …, Ahora mismo el camarero …); das indirekte Objekt vor dem direkten, wie im deutschen Satz (Le regalo a mi madre flores, Le hicimos a la vecina un bizcocho …).
+  - Schwedisch: … kände jag direkt igen henne; … inte längre åker tåg när tågen är försenade hela tiden; … hade gått bra trots allt; Jag står inte längre ut med det här oljudet; Till hösten ska regeringen …
+  - Nur fürs freie Übersetzen, die Kästchen haben dort andere Wörter: Era ya tarde …, Te lo he dicho ya, ¿Habéis reservado ya …?, Se lo dije ya (cien veces), Se lo expliqué ya …
+- **Ablenkwort „le“:** „Ich kann ihn nicht finden“ ließ offen, ob ein Mann gemeint ist. Dann wäre „No le puedo encontrar“ (Leísmo) auch richtig, und genau das „le“ liegt als übriges Wort dabei. Der deutsche Satz nennt jetzt „(den Schlüssel)“.
+- **Geprüft und gelassen:** Haupt- und Nebensatz tauschen (Eftersom jag inte mår bra stannar jag hemma). Das ist richtig, aber die Reihenfolge der Teilsätze gibt der deutsche Satz vor, und so legt man die Kästchen auch. Für Satzadverbien wie inte und alltid gibt es im Schwedischen nur eine richtige Stelle; genau das wird geübt.
+- Doku: CONTENT.md nennt ya und por favor bei den Wortstellungen und verlangt bei Wortkästchen jede richtige Reihenfolge; bei „ihn“ steht das Bezugswort in Klammern.
+- Kein neuer Test: Geändert sind nur Inhalte, und die vorhandenen Tests prüfen Format und Wörterbuch.
+- Speicherstand unverändert. Die Kennung eines Satzes hängt am Zielsatz, und der bleibt gleich; dein Lernstand zu diesen Sätzen bleibt erhalten.
+
 ## 24.70.1
 **Nach dem Einspielen eines Backups zeigt „Heute“ gleich die richtige Sprache. Die Arbeitsanleitung liegt jetzt im Repo.**
 - **Backup:** Nach dem Einspielen blieb „Heute“ bis zum Neustart in der Sprache, die vorher gewählt war. Ein offenes spanisches Tagwerk aus dem Backup war dort nicht zu sehen, wenn vorher Schwedisch eingestellt war (verloren ging nichts). Jetzt gilt sofort die Sprache des Tages aus dem Backup, wie beim Start; ebenso nach „Rückgängig“. Gefunden beim Prüfen von Export und Einspielen über die Versionsgrenze 24.69.1 → 24.70.0, der Fehler war älter.

@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 24. November 2026 (nach 24.71.1)
+Stand: 24. November 2026 (nach 24.72.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -111,18 +111,26 @@ Spanisch:
 
 ## Offen: Rückmeldung von dir
 
-- **Perfecto vs. Indefinido: welche Norm (24.11.).** 39 der 69 Sätze haben Perfecto als Lösung, 37 davon lassen auch das Indefinido gelten (Lateinamerika). Wer immer Indefinido schreibt, hat 67 von 69 richtig; geprüft wird nur „kein Perfecto bei ayer, el año pasado“. Vorschlag bei Spanien als Ziel (B+): Indefinido dort „fast richtig“ mit „In Spanien: he perdido“, zählt in den Fehlerquellen gegen das Thema. Bei Lateinamerika oder beidem (B): die 37 Sätze zählen nicht fürs Thema, das dann „Indefinido bei abgeschlossener Zeit“ heißt. So lassen: C. Dieselbe Frage stellt sich bei Indefinido vs. Imperfecto, wo der Aspekt oft beides zulässt.
+Derzeit nichts.
 
 ## Nach echter Nutzung nachstellen
 
+- **Fehlermodell, Halbwertszeit 14 Tage (seit 24.72.0).** Gewählt am Volumen im Backup vom 24.11. (rund 1,2 Aufgaben je Thema und Tag). Ab etwa Mai 2027, mit einem halben Jahr Daten, über die Vorhersagegüte für den nächsten Tag wählen: je Kandidat (7, 10, 14, 21, 30 Tage) die mittlere log-Wahrscheinlichkeit der Antworten eines Tages unter dem Modell aus den Tagen davor. Braucht ein Werkzeug in `tools/`, das ein Backup liest.
 - **Nachsprechen, Schwellen (seit 24.26.0).** Pause ab 0,35 s, Stopp nach 1,2 s Stille, Tempo-Urteil bei 0,8 bis 1,25 des Originals. Begründete Startwerte, nur mit vorgetäuschtem Mikrofon getestet. Nachstellen, wenn die Aufnahme am Handy zu früh stoppt oder Stockungen falsch markiert.
 - **Tempo bei Tatoeba-Aufnahmen.** Das genaue Urteil gibt es nur, wenn der Tatoeba-Server das Auslesen der Datei erlaubt (CORS). Ungetestet; sonst steht dort „ca.“ ohne Urteil.
 
 ## Geprüft und zurückgestellt
 
 - **„Stand der Sätze“ in der Kopfkarte des Sprach-Tabs (B−, geprüft am 23.11.).** Der Balken verankert, gefestigt, im Aufbau, neu statt des Balkens zum nächsten Ziel, der eigene Abschnitt entfiele. Spart kaum Platz (2,8 auf 2,7 Bildschirme), die Kopfkarte wird dichter, und der Fortschritt zum nächsten Ziel stünde nur noch als Text da.
+- **Perfecto vs. Indefinido: welche Norm (zurückgestellt am 24.11.).** 39 der 69 Sätze haben Perfecto als Lösung, 37 davon lassen auch das Indefinido gelten (Lateinamerika); wer immer Indefinido schreibt, hat 67 von 69 richtig. Vorschläge: bei Spanien als Ziel Indefinido dort „fast richtig“ mit „In Spanien: he perdido“ und als Fehler des Themas gezählt (B+); bei Lateinamerika oder beidem die 37 Sätze aus dem Thema nehmen, das dann „Indefinido bei abgeschlossener Zeit“ heißt (B). Dieselbe Frage bei Indefinido vs. Imperfecto. Seit 24.72 sieht man im Fehlermodell, dass das Thema bei dir vorn steht; die Zahl misst aber nur die Richtung „kein Perfecto bei ayer“.
+- **Fehlermodell, weitere Schritte (geprüft am 24.11.).**
+  - **Übungsart herausrechnen (B−):** logit p = β₀ + u_Thema + γ_Übungsart mit u ~ N(0, σ²). Trennt „Thema schwer“ von „Übungsform schwer“ (Inversion kommt oft als Wortkästchen). Braucht Zählungen Thema × Übungsart (neues, abwärtskompatibles Feld in `tlog`) und einen Monat Daten.
+  - **Eine Statistik für die ganze App (B):** Fehler finden gewichtet noch mit (Fehler + 1)/(Aufgaben + 5), die Etappen testen mit z-Test und Wilson-Grenzen. Beides ließe sich aufs Fehlermodell stellen (Etappe „halbiert“: P(θ_neu < θ_alt/2) ≥ 99 %). Größerer Umbau, die Etappen sind per Simulation abgestimmt.
+  - **Unsicherheit über m mitnehmen (C+):** über das Gitter von (μ, m) mitteln statt den Modus zu nehmen. Bereiche würden etwas breiter; auf dem Handy rund zehnmal langsamer.
+  - **Quantil-Punkte statt Flächen (C+):** 20 Punkte je Thema, je einer für 5 % Wahrscheinlichkeit; für Laien oft leichter lesbar, bei sechs Themen aber unruhig.
+  - **Satzschwierigkeit (Rasch-Modell) (C):** zu wenige Antworten je Satz.
 - **Pfeil in den antippbaren Zeilen der Fehlerquellen im Sprach-Tab (C+, geprüft am 24.11.).** Auf Heute haben die Zeilen einen, im Reiter „Thema“ nicht. Der Hinweis „Tipp auf ein Thema für die Regel“ steht darunter, und ein Pfeil nähme der ohnehin schmalen Namensspalte 12 px.
-- **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11., gewählt: geglättete Quote ab 10 Aufgaben, 24.71.0).**
+- **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11.; in 24.71.0 geglättete Quote ab 10 Aufgaben, seit 24.72.0 das Fehlermodell mit Vergessen).**
   - **Anzahl der Fehler (C, bis 24.70):** misst eher, wie oft ein Thema drankommt; 7 von 73 stand vor 5 von 13.
   - **Rohe Quote ab 10 Aufgaben (B−):** einfach, aber bei wenigen Aufgaben sprunghaft.
   - **Untere Wilson-Grenze (B):** robust, aber die Reihenfolge widerspricht öfter den Prozent daneben.

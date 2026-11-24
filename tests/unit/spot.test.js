@@ -59,9 +59,10 @@ test('Rundenthemen nach dem Thema der erzeugten Aufgabe; nach fehlerfreier Runde
   const r = { lang:'es', kind:'form', ok:4, bad:0, res:[{ good:true, gen:'spot_es', trap:'serestar' }, { good:true, gen:'spot_es', trap:'porpara' }, { good:true, gen:'spot_es', trap:'serestar' }, { good:true, gen:'spot_es', trap:'subjuntivo' }] };
   assert.equal(roundTopics(r).map(t => t.trap).sort().join(), 'porpara,serestar,subjuntivo');
   const d = app.get('today')();
-  app.run(`DB.tlog = { '${d}': { es:{ 'p:pasado':[10, 4], 'p:serestar':[10, 5], 'p:gustar':[3, 3] } } };`);
+  // Schwächstes Thema außerhalb der Runde, sicher über dem Schnitt (Fehlermodell); ser/estar war in der Runde
+  app.run(`DB.tlog = { '${d}': { es:{ 'p:pasado':[20, 11], 'p:serestar':[10, 5], 'p:gustar':[30, 2], 'p:prep':[30, 2] } } };`);
   const html = app.get('nextTopicHtml')(r);
-  assert.match(html, /Indefinido vs\. Imperfecto/); assert.match(html, /4 von 10/);
+  assert.match(html, /Indefinido vs\. Imperfecto/); assert.match(html, /geschätzt \d+\u00a0% falsch/);
   assert.equal(app.get('nextTopicHtml')(Object.assign({}, r, { bad:1 })), '');
 });
 test('jede Fehlerart einzeln: genau eine Fehlerstelle, die Verbesserung passt zum richtigen Satz', () => {

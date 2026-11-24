@@ -14,9 +14,9 @@ test('Verhältnisse: „20 von 22“ heute, „6 von 48“ in den Fehlerquellen,
   setDB(d);
   const h = run(`todayHtml('sv')`);
   assert.match(text(h), /20 von 22 Wiederholungen gewusst/);
-  d.tlog[ds(0)] = { sv:{ 'p:inversion':[48, 6], 'p:tempus':[20, 3], 't:gap':[68, 9] } }; setDB(d); run(`S.errTab = 'p'`);
+  d.tlog[ds(0)] = { sv:{ 'p:inversion':[48, 6], 'p:tempus':[20, 3], 't:gap':[68, 9] } }; setDB(d); run(`S.errTab = 't'`);
   const e = run(`errorSourcesHtml('sv')`);
-  assert.match(e, /<span class="esub">6 von 48 Aufgaben<\/span>/);
+  assert.match(e, /<span class="mcount">9 von 68<\/span>/);
   assert.doesNotMatch(text(h) + text(e), /\d\/\d/);
 });
 
@@ -42,12 +42,13 @@ test('Zeit: Fließtext „5 Std. 7 Min.“, in einer Karte mit Summe in Minuten 
 
 test('Ein Name je Sache: Fehlerquellen heute wie auf Fortschritt; Hinweise mit „Tipp auf“, nicht „Antippen für“', () => {
   const d = base();
-  for (let k = 10; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:600 } }; d.tlog[ds(k)] = { sv:{ 'p:inversion':[10, 3], 'p:tempus':[10, 2] } }; }
+  for (let k = 10; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:600 } }; d.tlog[ds(k)] = { sv:{ 'p:inversion':[10, 3], 'p:tempus':[10, 2], 't:gap':[20, 5] } }; }
   setDB(d);
   const all = run(`viewHome()`) + run(`(S.ptab = 'sv', viewProgress())`);
   assert.doesNotMatch(all, /Meiste Fehler/);
   assert.doesNotMatch(all, /Antippen für/);
-  assert.match(all, /Fehlerquellen, letzte 30 Tage/);
+  // Heute und Fortschritt heißen gleich; die Zeitbasis steht beim jeweiligen Reiter (Vergessen beim Thema, 30 Tage sonst)
+  assert.equal((all.match(/<h2 class="grp">Fehlerquellen<\/h2>/g) || []).length, 2);
 });
 
 test('Blätter: „Schließen“ steht links, vor dem Hauptweg oder dem Verweis', () => {

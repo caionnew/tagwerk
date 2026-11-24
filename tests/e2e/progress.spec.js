@@ -21,9 +21,13 @@ test('Sprachreiter: Kennzahlen, Themenraster und Fehlerquellen', async ({ page }
   await page.click('[data-a=ptab][data-t=sv]');
   await expect(page.locator('.kpis div')).toHaveCount(3);
   expect(await page.locator('.tgrid .tg').count()).toBeGreaterThanOrEqual(8);
-  for (const t of ['t', 'e', 'p']) { await page.click(`[data-a=errtab][data-t=${t}]`); expect(await page.locator('.erows .erow').count()).toBeGreaterThan(0); }
-  await page.click('button.erow >> nth=0');
+  for (const t of ['t', 'e', 'p']) { await page.click(`[data-a=errtab][data-t=${t}]`); expect(await page.locator('.erows .mrow').count()).toBeGreaterThan(0); }
+  // Reiter „Thema“: Streifen mit Schätzung und Achse; Tipp auf ein Thema öffnet das Themenblatt mit der Schätzung
+  await expect(page.locator('.erows .mstrip').first()).toBeVisible();
+  await expect(page.locator('.erows .maxis')).toHaveCount(1);
+  await page.click('button.mrow >> nth=0');
   await expect(page.locator('.pop .pop-h')).toBeVisible();
+  await expect(page.locator('.pop')).toContainText('Fehlerquote geschätzt');
 });
 test('Fehlerquellen, Reiter „Sätze“: hartnäckige Sätze in beiden Sprachen, volle Zeilenbreite, Tipp öffnet die Regel', async ({ page }) => {
   for (const lang of ['sv', 'es']) {
@@ -57,19 +61,23 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
 });
-test('Heute „Fehlerquellen“ mit Anteil falsch; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
+test('Heute „Fehlerquellen“ mit Schätzung und Bereich; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
   const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] }, textgap_sv:{ ok:9, bad:3, recent:[1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] } };
   await seed(page, db);
   await page.goto(APP);
-  await expect(page.locator('h2.grp', { hasText:'Fehlerquellen, letzte 30 Tage' })).toHaveCount(1);
-  const weak = page.locator('.row.bars:has(.wbar)');
+  await expect(page.locator('h2.grp', { hasText:'Fehlerquellen' })).toHaveCount(1);
+  const weak = page.locator('.row.mrowh');
   expect(await weak.count()).toBeGreaterThanOrEqual(1);
   expect(await weak.count()).toBeLessThanOrEqual(3);
-  await expect(weak.first().locator('.rd')).toHaveText(/^\d+\u00a0% falsch, \d+ von \d+$/);
-  // Der rote Anteil liegt auf der Spur, die für 100 % steht
-  const w = await weak.first().evaluate(r => ({ all:r.querySelector('.wbar').getBoundingClientRect().width, bad:r.querySelector('.wbar span').getBoundingClientRect().width, rate:parseInt(r.querySelector('.rd').textContent, 10) }));
-  expect(w.bad).toBeGreaterThan(0);
-  expect(Math.abs(w.bad / w.all * 100 - w.rate)).toBeLessThan(3);
+  await expect(weak.first().locator('.mpct')).toHaveText(/^\d+\u00a0%$/);
+  // Punkt im Bereich, Bereich im Streifen; darunter die Legende mit „Schätzung“ zum Antippen
+  const g = await weak.first().evaluate(r => { const b = e => r.querySelector(e).getBoundingClientRect(); const s = b('.mstrip'), w = b('.m95'), d = b('.mdot');
+    return { s:[s.left, s.right], w:[w.left, w.right], d:(d.left + d.right) / 2 }; });
+  expect(g.w[0]).toBeGreaterThanOrEqual(g.s[0] - 0.5); expect(g.w[1]).toBeLessThanOrEqual(g.s[1] + 0.5);
+  expect(g.d).toBeGreaterThanOrEqual(g.w[0]); expect(g.d).toBeLessThanOrEqual(g.w[1]);
+  await page.click('.mkey [data-a=term][data-k=schaetzung]');
+  await expect(page.locator('.pop')).toContainText('Geschätzte Fehlerquote');
+  await page.click('.pop [data-a=popclose] >> nth=-1');
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=pickTopic]');
   const gen = page.locator('.row.bars[data-t=species]');

@@ -163,17 +163,6 @@ function errStats(lang, days){
   });
   return out;
 }
-// Schwäche je Thema aus errStats: eine Rechnung für alle Stellen, die Themen nach Fehlern ordnen oder wählen (Heute,
-// Fehlerquellen nach Thema, Schwerpunkt der Woche, „Als Nächstes“). Erst ab 10 Aufgaben, wie Prozent bei erzeugten Bereichen.
-// Reihenfolge nach geglätteter Quote: (Fehler + 10 × deine Quote über alle Themen) / (Aufgaben + 10). Wenige Aufgaben ziehen
-// zur eigenen Quote hin, viele zählen fast voll. So steht 5 von 13 (38 %) vor 8 von 37 (22 %) und 7 von 73 (10 %); bis 24.70
-// galt die Anzahl der Fehler, und ein oft geübtes, sicheres Thema stand vorn, nur weil es oft drankam.
-const TOPIC_MIN = 10, TOPIC_PRIOR = 10;
-function topicStats(s){
-  const ids = Object.keys(s.p), N = ids.reduce((a, id) => a + s.p[id][0], 0), B = ids.reduce((a, id) => a + s.p[id][1], 0), mean = N ? B / N : 0;
-  return ids.map(id => { const [n, bad] = s.p[id]; return { id, n, bad, rate:n ? bad / n : 0, score:(bad + TOPIC_PRIOR * mean) / (n + TOPIC_PRIOR) }; })
-    .filter(x => x.n >= TOPIC_MIN).sort((a, b) => b.score - a.score || b.n - a.n);
-}
 // Themen-Etappen: Die Fehlerquote eines Themas ist deutlich und belastbar gesunken,
 // gegenüber jeder früheren Zeit, nicht nur gegenüber dem Anfang. Gezählt wie in den Fehlerquellen (nur erste Versuche;
 // Wortschatz- und Tippfehler belasten das Grammatikthema nicht).
@@ -271,14 +260,30 @@ function hardPattern(lang, list){
   const top = Object.keys(n).sort((a, b) => n[b] - n[a])[0];
   return top && n[top] >= 2 ? { trap:top, n:n[top] } : null;
 }
+// Zeilen der Fehlerquellen: Name und Zahl oben, Grafik darunter über die volle Breite (alle Balken beginnen an der Textkante).
+const mLine = (name, right, sub) => `<span class="mtop"><span class="mname">${name}</span><span class="mright">${right}</span></span>${sub ? `<span class="msub">${sub}</span>` : ''}`;
+const mBar = share => `<span class="mbar" aria-hidden="true"><i style="width:max(3px, ${+(Math.min(1, share) * 100).toFixed(1)}%)"></i></span>`;
+// Schätzung aus dem Fehlermodell: Punkt = Posterior-Mittel, dunkel 50 %, hell 95 %, Strich = Schnitt aller Themen (μ).
+// Skala bis 50, 75 oder 100 %, je nachdem, wie weit der breiteste Bereich reicht; darunter eine Achse mit 25er-Schritten.
+const modelScale = (list, mu) => { const top = Math.max(mu, ...list.map(x => x.hi)); return top <= 0.5 ? 0.5 : top <= 0.75 ? 0.75 : 1; };
+function modelStripHtml(x, mu, max){
+  const f = v => Math.min(1, v / max) * 100, at = v => `${f(v).toFixed(1)}%`, span = (a, b) => `left:${at(a)}; width:${(f(b) - f(a)).toFixed(1)}%`;
+  return `<span class="mstrip" aria-hidden="true"><i class="m95" style="${span(x.lo, x.hi)}"></i><i class="m50" style="${span(x.lo50, x.hi50)}"></i><i class="mmu" style="left:${at(mu)}"></i><i class="mdot" style="left:${at(x.mean)}"></i></span>`;
+}
+const modelAxisHtml = max => `<div class="maxis" aria-hidden="true">${Array.from({ length:Math.round(max * 4) + 1 }, (_, i) => `<span style="left:${(i / (max * 4) * 100).toFixed(1)}%">${i * 25}\u00a0%</span>`).join('')}</div>`;
+const modelRight = x => `${x.trend ? `<span class="mtr ${x.trend.better ? 'up' : 'down'}">${x.trend.better ? 'besser' : 'schlechter'}</span>` : ''}<span class="mpct">${pct(x.mean)}</span>`;
+const modelAria = (label, x) => `${label}: geschätzt ${pct(x.mean)} falsch, wahrscheinlich ${pct(x.lo)} bis ${pct(x.hi)}${x.trend ? `, ${x.trend.better ? 'besser' : 'schlechter'} als vorher` : ''}`;
+// Legende mit Zeichen statt Sätzen; „Schätzung“ öffnet die Erklärung (Begriff „schaetzung“)
+const modelKeyHtml = mu => `<span class="mkey"><span><i class="mk-dot"></i><button type="button" class="term" data-a="term" data-k="schaetzung">Schätzung</button></span><span><i class="mk-band"></i>Bereich</span><span><i class="mk-mu"></i>Schnitt ${pct(mu)}</span></span>`;
 function errorSourcesHtml(lang){
   const s = errStats(lang, 30), hard = hardSentences(lang), few = s.bad < 8;
-  const head = `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2>`;
+  const head = `<h2 class="grp">Fehlerquellen</h2>`;
   const gate = `${s.n ? `${plural(s.bad, 'Fehler', 'Fehler')} bei ${s.n} Aufgaben. ` : ''}Die Auswertung erscheint ab 8 Fehlern in 30 Tagen.`;
   if (few && !hard.length) return `${head}<div class="chart"><p class="legend m0">${gate}</p></div>`;
   const tab = S.errTab || (few ? 's' : 'p');
   const seg = `<div class="minseg errseg" role="radiogroup">${[['p', 'Thema'], ['t', 'Übungsart'], ['e', 'Fehlerart'], ['s', 'Sätze']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
   let rows = '', note = '', lead = '';
+  const last = (i, n) => (i === n - 1 ? ' mlast' : '');
   if (tab === 's') {
     rows = hard.map(i => { const st = stOf(i.id), tap = !!(i.trap && trapMeta(lang, i.trap)); return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="erow srow"><span class="el"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span>${tap ? `<span class="stp">${esc(keepHyph(trapLabel(lang, i.trap)))}</span>` : ''}</span><span class="ev">${st.lapses}×</span></${tap ? 'button' : 'div'}>`; }).join('');
     const pat = hardPattern(lang, hard);
@@ -286,25 +291,25 @@ function errorSourcesHtml(lang){
       : `${pat ? `<b>${esc(keepHyph(trapLabel(lang, pat.trap)))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Tipp auf einen Satz für die Regel dazu.`;
   } else if (few) note = gate;
   else if (tab === 'p') {
-    // Anteil falscher Antworten je Thema, wie bei „Übungsart“; Reihenfolge und Auswahl aus topicStats (geglättete Quote,
-    // ab 10 Aufgaben). Unter dem Namen die Anzahl, damit 38 % bei 13 Aufgaben nicht genauer wirkt, als es ist.
-    const list = topicStats(s).filter(x => x.bad).slice(0, 6);
-    lead = list.length ? 'Anteil falscher Antworten, ab 10 Aufgaben:' : '';
-    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(keepHyph(trapLabel(lang, x.id)))}<span class="esub">${x.bad} von ${x.n} Aufgaben</span></span><span class="ebar" aria-hidden="true"><span style="width:${Math.max(4, x.rate * 100)}%"></span></span><span class="ev">${pct(x.rate)}</span></${tap ? 'button' : 'div'}>`; }).join('');
-    note = list.length ? 'Wenige Aufgaben zählen für die Reihenfolge weniger. Tipp auf ein Thema für die Regel.'
-      : 'Noch kein Thema mit 10 Aufgaben und einem Fehler.';
+    // Die sechs Themen mit der höchsten Schätzung aus dem Fehlermodell (part_model.js), ab 3 gewichteten Aufgaben
+    const M = topicModel(lang), list = M.topics.filter(x => x.n >= MODEL.MIN_N).slice(0, 6), max = modelScale(list, M.mu);
+    lead = list.length ? modelKeyHtml(M.mu) : '';
+    rows = list.map((x, i) => { const tap = !!trapMeta(lang, x.id), label = trapLabel(lang, x.id);
+      return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="mrow${last(i, list.length)}" aria-label="${esc(modelAria(label, x))}">${mLine(esc(keepHyph(label)), modelRight(x))}${modelStripHtml(x, M.mu, max)}</${tap ? 'button' : 'div'}>`; }).join('') + (list.length ? modelAxisHtml(max) : '');
+    note = list.length ? 'Tipp auf ein Thema für Regel und Zahlen.' : 'Noch kein Thema mit genug Aufgaben.';
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);
-    lead = 'Anteil falscher Antworten je Übungsart:';
-    rows = list.map(x => `<div class="erow"><span class="el">${esc(ERR_TYPES[x.id] || x.id)}</span><span class="ebar"><span style="width:${Math.max(4, x.bad / x.n * 100)}%"></span></span><span class="ev">${pct(x.bad / x.n)}</span></div>`).join('');
+    lead = 'Anteil falsch je Übungsart, letzte 30 Tage:';
+    rows = list.map((x, i) => `<div class="mrow${last(i, list.length)}">${mLine(esc(ERR_TYPES[x.id] || x.id), `<span class="mcount">${x.bad} von ${x.n}</span><span class="mpct">${pct(x.bad / x.n)}</span>`)}${mBar(x.bad / x.n)}</div>`).join('');
     note = 'Ab 5 Aufgaben. Freies Schreiben ist schwerer als Antippen, das ist normal.';
   } else {
     // Aufteilung der Fehler, keine Fehlerquote: Anzahlen statt Prozent, damit „94 %“ nicht wie „94 % falsch“ aussieht
     const tot = Object.values(s.e).reduce((a, x) => a + x, 0);
     if (tot < 5) rows = '', note = 'Zählt nur getippte Antworten. Noch zu wenige für eine Aufteilung.';
     else {
-      lead = `So verteilen sich deine ${tot} getippten Fehler:`;
-      rows = Object.keys(ERR_KINDS).filter(k => s.e[k]).sort((a, b) => s.e[b] - s.e[a]).map(k => `<div class="erow"><span class="el">${ERR_KINDS[k][0]}<span class="esub">${ERR_KINDS[k][1]}</span></span><span class="ebar"><span style="width:${Math.max(4, s.e[k] / tot * 100)}%"></span></span><span class="ev">${s.e[k]}</span></div>`).join('');
+      lead = `${tot} getippte Fehler der letzten 30 Tage:`;
+      const ks = Object.keys(ERR_KINDS).filter(k => s.e[k]).sort((a, b) => s.e[b] - s.e[a]);
+      rows = ks.map((k, i) => `<div class="mrow${last(i, ks.length)}">${mLine(ERR_KINDS[k][0], `<span class="mpct">${s.e[k]}</span>`, ERR_KINDS[k][1])}${mBar(s.e[k] / tot)}</div>`).join('');
       const top = Object.keys(s.e).sort((a, b) => s.e[b] - s.e[a])[0];
       note = top === 'order' && lang === 'sv' ? 'Bei der Wortstellung helfen die Themen <button type="button" class="link inl" data-a="topic" data-t="inversion">Inversion</button> und ' + nobr('<button type="button" class="link inl" data-a="topic" data-t="bisats">Nebensatz</button>.')
         : top === 'spell' ? 'Meist Tippfehler. Das Wissen sitzt, es hapert an der Schreibung.'

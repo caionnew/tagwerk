@@ -412,10 +412,11 @@ function dueItems(lang){
   const t = today();
   return BANK[lang].filter(i => { const s = stOf(i.id); return s && s.due <= t; }).sort((a, b) => stOf(a.id).due.localeCompare(stOf(b.id).due));
 }
-// Themen mit vielen Fehlern in den letzten 30 Tagen: Dort kommen auch für Fortgeschrittene die Grundlagen-Sätze
+// Themen, in denen du geschätzt mindestens jede vierte Antwort falsch hast (Fehlermodell): Dort kommen auch für
+// Fortgeschrittene die Grundlagen-Sätze. Bis 24.71: rohe Quote der letzten 30 Tage ab 4 Aufgaben.
 function weakTraps(lang){
-  const p = (typeof errStats === 'function' ? errStats(lang, 30).p : {}) || {};
-  return new Set(Object.keys(p).filter(k => p[k][0] >= 4 && p[k][1] / p[k][0] >= 0.25));
+  if (typeof topicModel !== 'function') return new Set();
+  return new Set(topicModel(lang).topics.filter(x => x.n >= MODEL.MIN_N && x.mean >= 0.25).map(x => x.id));
 }
 function levelOrder(lang, list, strict){
   const niv = DB.settings.niveau || 'mittel';
@@ -437,24 +438,27 @@ function focusTrap(lang){
   const cands = focusCandidates(lang); if (!cands.length) return null;
   DB.focus[lang] = { trap:cands[0], week:mo }; return cands[0];
 }
-// Schwäche wie in den Fehlerquellen (topicStats: geglättete Quote, ab 10 Aufgaben); Themen ohne Fehler zählen wie ungeübte
+// Reihenfolge der Kandidaten: Themen mit Daten (ab 3 gewichteten Aufgaben) und offenen Sätzen per Thompson-Sampling aus dem
+// Fehlermodell, mit der Woche als Startwert; ein Thema steht so oft vorn, wie wahrscheinlich es dein schwächstes ist.
+// Danach Themen ohne Daten, nach offenen Sätzen ab Mittelstufe. „Ändern“ nimmt das nächste der Reihe.
 function focusCandidates(lang){
-  const weak = {};
-  if (typeof topicStats === 'function') topicStats(errStats(lang, 30)).forEach(x => { if (x.bad) weak[x.id] = x.score; });
   const open = t => BANK[lang].filter(i => i.trap === t && !stOf(i.id) && (i.lvl || 1) >= 2).length;
-  return TRAPS[lang].filter(t => t.kind !== 'gen' && BANK[lang].some(i => i.trap === t.id)).map(t => t.id)
-    .map(id => ({ id, err:weak[id] || 0, open:open(id) }))
-    .sort((a, b) => b.err - a.err || b.open - a.open).map(x => x.id);
+  const ids = TRAPS[lang].filter(t => t.kind !== 'gen' && BANK[lang].some(i => i.trap === t.id)).map(t => t.id);
+  const has = new Set(typeof topicModel === 'function' ? topicModel(lang).topics.filter(x => x.n >= MODEL.MIN_N).map(x => x.id) : []);
+  const data = ids.filter(id => has.has(id) && BANK[lang].some(i => i.trap === id && !stOf(i.id)));
+  const rest = ids.filter(id => !data.includes(id)).map(id => ({ id, open:open(id) })).sort((a, b) => b.open - a.open).map(x => x.id);
+  return (data.length ? thompsonOrder(lang, data, focusSeed(lang, mondayOf(today()))) : []).concat(rest);
 }
 function pickNew(lang, n, onlyTrap){
   let unseen = levelOrder(lang, BANK[lang].filter(i => !stOf(i.id) && (!onlyTrap || i.trap === onlyTrap)), !onlyTrap);
+  const weakSet = weakTraps(lang);
   // Schwerpunkt der Woche: bis zu einem Drittel der neuen Sätze aus diesem Thema, vorn eingereiht
   const ft = !onlyTrap && focusTrap(lang);
   let fx = [];
   if (ft) {
     // Ist der Schwerpunkt bei „Fortgeschritten“ ein schwaches Thema, erst die Grundlagen festigen
     fx = unseen.filter(i => i.trap === ft);
-    if ((DB.settings.niveau || 'mittel') === 'fort' && weakTraps(lang).has(ft)) fx = fx.slice().sort((a, b) => (a.lvl || 1) - (b.lvl || 1));
+    if ((DB.settings.niveau || 'mittel') === 'fort' && weakSet.has(ft)) fx = fx.slice().sort((a, b) => (a.lvl || 1) - (b.lvl || 1));
     fx = fx.slice(0, Math.ceil(n / 3)); unseen = fx.concat(unseen.filter(i => !fx.includes(i)));
   }
   // Fest dabei: eigene Sätze, von Hand geholte Tatoeba-Sätze und der Schwerpunkt (nur das Drittel, vorher bis zur Hälfte)
@@ -467,7 +471,7 @@ function pickNew(lang, n, onlyTrap){
     if (!rest.length) break;
     // Fortgeschritten: Grundlagen-Sätze schwacher Themen sind erlaubt, andere erst, wenn sonst nichts mehr da ist
     const fort = (DB.settings.niveau || 'mittel') === 'fort' && !onlyTrap;
-    const ok = fort ? rest.filter(i => (i.own || i.tat || (i.lvl || 1) >= 2) || weakTraps(lang).has(i.trap)) : rest;
+    const ok = fort ? rest.filter(i => (i.own || i.tat || (i.lvl || 1) >= 2) || weakSet.has(i.trap)) : rest;
     const pool = ok.length ? ok : rest;
     // Das Thema mit den wenigsten geübten Sätzen, aber höchstens zwei neue Sätze je Thema, solange andere da sind
     const tps = [...new Set(pool.map(i => i.trap))].sort((a, b) => ((now[a] || 0) >= 2) - ((now[b] || 0) >= 2) || (count[a] || 0) - (count[b] || 0) || Math.random() - 0.5);

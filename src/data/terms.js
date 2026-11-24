@@ -99,6 +99,8 @@ const TERMS = [
     app:['Die nächste Wiederholung liegt ein Jahr oder weiter in der Zukunft. Solche Sätze sitzen sehr fest.', 'Nächste Wiederholung in 365 Tagen oder später'] },
   { k:'abrufbar', t:'Geschätzt abrufbar', re:'abrufbar',
     app:['Für jeden geübten Satz schätzt das Wiederholungsverfahren (FSRS), wie wahrscheinlich du ihn heute noch weißt. Die Summe dieser Wahrscheinlichkeiten ergibt die Zahl. Sie sinkt, wenn du pausierst, und steigt beim Üben.', '90 Sätze mit je 95 % Wahrscheinlichkeit ≈ 86 abrufbar'] },
+  { k:'schaetzung', t:'Geschätzte Fehlerquote', re:'Fehlerschätzung',
+    app:['Je Thema schätzt die App, wie oft du gerade falsch liegst. Neuere Antworten zählen mehr: eine von vor 14 Tagen halb, eine von vor 28 Tagen ein Viertel. Bei wenigen Antworten liegt die Schätzung nahe am Schnitt aller deiner Themen (der Strich), mit jeder Antwort zählt das Thema selbst mehr. Der dunkle Bereich enthält die wahre Quote mit 50 % Wahrscheinlichkeit, der helle mit 95 %. „besser“ oder „schlechter“ heißt: Die letzten 14 Tage unterscheiden sich mit mindestens 95 % Wahrscheinlichkeit von den 28 davor. Gerechnet mit einem Beta-Binomial-Modell, empirisch-bayessch.', '5 von 13 falsch, Schnitt aller Themen 17 %: geschätzt 24 %, wahrscheinlich zwischen 11 und 40 %'] },
   { k:'lix', t:'LIX', re:'LIX',
     app:['Der schwedische Lesbarkeitsindex (läsbarhetsindex) von Carl-Hugo Björnsson aus dem Jahr 1968: durchschnittliche Satzlänge plus Anteil langer Wörter (mehr als sechs Buchstaben) in Prozent. Unter 30 gilt ein Text als sehr leicht, um 40 als mittel, über 50 als schwer. Für Spanisch ist er nur ein grober Vergleichswert.', '10 Wörter pro Satz und 20 % lange Wörter ergeben LIX 30'] }
 ];

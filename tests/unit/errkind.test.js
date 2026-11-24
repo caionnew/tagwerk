@@ -101,9 +101,11 @@ test('Grammatik-Thema: Lückenwort bleibt Grammatik, auch als Inhaltswort', () =
 test('Fehlerart zeigt die Aufteilung als Anzahl, nicht als Prozent', () => {
   run(`DB.tlog = { [today()]: { sv: { 'e:word': 17, 'e:missing': 1, 't:gap': [64, 18] } } }; S.errTab = 'e';`);
   const html = run(`errorSourcesHtml('sv')`);
-  assert.match(html, /So verteilen sich deine 18 getippten Fehler/);
-  assert.match(html, /<span class="ev">17<\/span>/); assert.match(html, /<span class="ev">1<\/span>/);
-  assert.doesNotMatch(html, /class="ev">[^<]*%/);
+  assert.match(html, /18 getippte Fehler der letzten 30 Tage:/);
+  assert.match(html, /<span class="mpct">17<\/span>/); assert.match(html, /<span class="mpct">1<\/span>/);
+  assert.doesNotMatch(html, /class="mpct">[^<]*%/);
+  // Balken über die volle Breite, Anteil an allen getippten Fehlern
+  assert.match(html, /class="mbar"[^>]*><i style="width:max\(3px, 94\.4%\)">/);
   assert.match(html, /data-a="errtab" data-t="t"/);
 });
 test('Unbekannte Form eines bekannten Wortes ist dieselbe Wortfamilie, kein anderes Wort', () => {

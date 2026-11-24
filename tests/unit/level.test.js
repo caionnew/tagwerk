@@ -34,12 +34,15 @@ test('Grundlagen: leichte zuerst; Mittel: alle Stufen', () => {
   for (const x of Array.from(pick('grund')).slice(0, traps.length)) { const [l, t] = x.split(':'); assert.equal(Number(l), minOf[t], x); }
   const m = Array.from(pick('mittel')); assert.equal(m.length, 12);
 });
-test('Schwerpunkt der Woche: schwächstes Thema, bleibt die Woche über, ein Drittel der neuen Sätze', () => {
+test('Schwerpunkt der Woche: Ziehung aus dem Fehlermodell mit der Woche als Startwert, bleibt die Woche über, ein Drittel der neuen Sätze', () => {
   const t = app.run('today()');
   app.run(`DB.st = {}; DB.focus = {}; DB.settings.niveau = 'mittel'; DB.tlog = { '${t}':{ sv:{ 'p:passiv':[10, 7], 'p:tid':[10, 1] } } };`);
-  assert.equal(app.run("focusTrap('sv')"), 'passiv');
+  // Fester Startwert je Woche: dieselbe Ziehung wie thompsonOrder (P(passiv vorn) ≈ 98 %, siehe modell.test.js)
+  const first = app.run("thompsonOrder('sv', TRAPS.sv.map(t => t.id).filter(id => ['passiv', 'tid'].includes(id)), focusSeed('sv', mondayOf(today())))[0]");
+  assert.equal(app.run("focusTrap('sv')"), first);
   app.run(`DB.tlog = { '${t}':{ sv:{ 'p:tid':[10, 9] } } };`);
-  assert.equal(app.run("focusTrap('sv')"), 'passiv', 'innerhalb der Woche stabil');
+  assert.equal(app.run("focusTrap('sv')"), first, 'innerhalb der Woche stabil');
+  app.run(`DB.focus = { sv:{ trap:'passiv', week:mondayOf(today()) } }`);
   const got = Array.from(app.run("pickNew('sv', 6).map(i => i.trap)"));
   assert.ok(got.filter(x => x === 'passiv').length >= 2, got.join(' '));
 });

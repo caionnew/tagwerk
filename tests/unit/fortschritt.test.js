@@ -36,14 +36,17 @@ test('Themenkachel nennt geübt und gefestigt, passend zu beiden Balken', () => 
   assert.ok(n > 3);
 });
 
-test('Fehlerquellen: Thema und Übungsart sagen oben, was die Zahl ist', () => {
-  run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:inversion': [48, 6], 'p:bisats': [25, 5], 't:free': [12, 6], 't:gap': [64, 8], 'e:word': 10 } } };`);
+test('Fehlerquellen: Thema, Übungsart und Fehlerart sagen oben, was die Zahl ist', () => {
+  run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:inversion': [48, 6], 'p:bisats': [25, 5], 'p:tempus': [12, 1], 't:free': [12, 6], 't:gap': [64, 8], 'e:word': 10 } } };`);
   run(`S.errTab = 'p'`);
   let html = run(`errorSourcesHtml('sv')`);
-  assert.match(text(html), /Anteil falscher Antworten, ab 10 Aufgaben:/); assert.match(html, /6 von 48 Aufgaben/); assert.match(html, /13\u00a0%/);
+  // Legende mit Zeichen; „Schätzung“ öffnet die Erklärung, kein geschwungenes Gleichheitszeichen
+  assert.match(html, /<i class="mk-dot"><\/i><button type="button" class="term" data-a="term" data-k="schaetzung">Schätzung<\/button>/);
+  assert.match(text(html), /Schätzung Bereich Schnitt \d+\u00a0%/);
+  assert.doesNotMatch(html, /≈/);
   run(`S.errTab = 't'`);
   html = run(`errorSourcesHtml('sv')`);
-  assert.match(html, /Anteil falscher Antworten je Übungsart:/); assert.match(html, /50 %|50 %/);
+  assert.match(html, /Anteil falsch je Übungsart, letzte 30 Tage:/); assert.match(html, /50\u00a0%/); assert.match(html, /6 von 12/);
 });
 
 test('Behalten deutlich über Plan: unter „Fortgeschritten“ längeres Tagwerk, sonst erst schwerere Sätze', () => {
@@ -58,34 +61,28 @@ test('Behalten deutlich über Plan: unter „Fortgeschritten“ längeres Tagwer
   assert.match(html, /Ein längeres Tagwerk würde dich nicht überfordern/);
 });
 
-test('Fehlerquellen nach Thema: Anteil falsch, ab 10 Aufgaben, das schwächste Thema vorn statt des häufigsten', () => {
-  // Zahlen aus dem Screenshot vom 24.11.: bis 24.70 nach Anzahl der Fehler sortiert, 5 von 13 stand unten
-  run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:bisats': [37, 8], 'p:inversion': [73, 7], 'p:species': [13, 5], 'p:passiv': [4, 3], 'p:tid': [20, 0], 't:gap': [147, 23] } } }; S.errTab = 'p';`);
-  const html = run(`errorSourcesHtml('sv')`);
-  const rows = [...html.matchAll(/<span class="el">([^<]+)<span class="esub">(\d+) von (\d+) Aufgaben<\/span><\/span><span class="ebar"[^>]*><span style="width:([\d.]+)%"><\/span><\/span><span class="ev">(\d+)\u00a0%</g)]
-    .map(m => ({ label:m[1], n:`${m[2]}/${m[3]}`, w:+m[4], p:+m[5] }));
-  // 4 Aufgaben (3 falsch) sind noch keine Aussage, ein Thema ohne Fehler keine Fehlerquelle
-  assert.deepEqual(rows.map(r => r.n), ['5/13', '8/37', '7/73']);
-  assert.deepEqual(rows.map(r => r.p), [38, 22, 10]);
-  rows.forEach(r => { const [b, n] = r.n.split('/').map(Number); assert.ok(Math.abs(r.w - b / n * 100) < 0.1, r.label); });
-  assert.match(text(html), /Wenige Aufgaben zählen für die Reihenfolge weniger/);
-});
-
-test('Geglättete Quote: wenige Aufgaben ziehen zur eigenen Quote, eine Rechnung für alle Stellen', () => {
-  run(`DB = freshDB(); DB.st = {}; DB.focus = {}; DB.tlog = { [today()]: { es: { 'p:condicional': [40, 15], 'p:perfecto': [10, 4], 'p:prep': [12, 4], 'p:porpara': [30, 1], 'p:genus': [20, 6], 'p:subjuntivo': [6, 3], 't:gap': [118, 33] } } }; S.errTab = 'p';`);
-  // 15 von 40 (38 %) vor 4 von 10 (40 %): bei 10 Aufgaben ist der Anteil noch unsicher; 3 von 6 fehlt (unter 10)
-  const list = run(`topicStats(errStats('es', 30))`);
-  assert.deepEqual(list.map(x => x.id), ['condicional', 'perfecto', 'prep', 'genus', 'porpara']);
-  const mean = 33 / 118;
-  assert.ok(Math.abs(list[1].score - (4 + 10 * mean) / 20) < 1e-9);
-  // Dieselbe Reihenfolge auf Heute (ohne Genus, nicht übbar), im Reiter „Thema“ und beim Schwerpunkt der Woche
-  assert.deepEqual(run(`weakTopics('es').map(x => x.id)`), ['condicional', 'perfecto', 'prep']);
-  const src = text(run(`errorSourcesHtml('es')`));
-  assert.ok(src.indexOf('Konditional') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Verben mit Präposition'));
-  assert.equal(run(`focusCandidates('es')[0]`), 'condicional');
-  // Schwerpunkt erst ab 10 Aufgaben: 3 von 6 (50 %) zählt noch nicht als schwach
-  run(`DB.tlog = { [today()]: { es: { 'p:subjuntivo': [6, 3], 'p:condicional': [20, 3], 't:gap': [26, 6] } } };`);
-  assert.equal(run(`focusCandidates('es')[0]`), 'condicional');
+test('Fehlerquellen nach Thema: Schätzung aus dem Fehlermodell, Streifen mit Bereich, Achse, Reihenfolge nach Schätzung', () => {
+  // Zahlen aus dem Screenshot vom 24.11. (alles von heute, also ohne Vergessen); bis 24.70 stand 5 von 13 unten
+  run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:bisats': [37, 8], 'p:inversion': [73, 7], 'p:species': [13, 5], 'p:tid': [20, 0], 'p:passiv': [2, 1], 't:gap': [145, 21] } } }; S.errTab = 'p';`);
+  const M = run(`topicModel('sv')`), html = run(`errorSourcesHtml('sv')`);
+  const rows = [...html.matchAll(/data-t="(\w+)" class="mrow[^"]*"[^>]*>.*?<span class="mpct">(\d+)\u00a0%<\/span>.*?<i class="m95" style="left:([\d.]+)%; width:([\d.]+)%"><\/i><i class="m50" style="left:([\d.]+)%; width:([\d.]+)%"><\/i><i class="mmu" style="left:([\d.]+)%"><\/i><i class="mdot" style="left:([\d.]+)%"><\/i>/g)]
+    .map(m => ({ id:m[1], p:+m[2], lo:+m[3], w:+m[4], dot:+m[8], mu:+m[7] }));
+  // Reihenfolge und Zahlen wie im Modell; unter 3 Aufgaben (2 von passiv) kein eigener Eintrag
+  assert.deepEqual(rows.map(r => r.id), M.topics.filter(x => x.n >= 3).map(x => x.id));
+  // 5 von 13 vorn, das oft geübte, sichere Thema (7 von 73) hinter Wortstellung im Nebensatz
+  assert.equal(rows[0].id, 'species');
+  assert.ok(rows.findIndex(r => r.id === 'bisats') < rows.findIndex(r => r.id === 'inversion'));
+  const max = /<span style="left:100\.0%">50\u00a0%<\/span>/.test(html) ? 0.5 : /75\u00a0%<\/span><\/div>/.test(html) ? 0.75 : 1;
+  rows.forEach(r => { const x = M.topics.find(y => y.id === r.id);
+    assert.equal(r.p, Math.round(x.mean * 100), r.id);
+    assert.ok(Math.abs(r.dot - Math.min(1, x.mean / max) * 100) < 0.06, r.id);
+    assert.ok(Math.abs(r.lo - Math.min(1, x.lo / max) * 100) < 0.06 && Math.abs(r.lo + r.w - Math.min(1, x.hi / max) * 100) < 0.11, r.id);
+    assert.ok(Math.abs(r.mu - M.mu / max * 100) < 0.06); });
+  // Achse in 25er-Schritten bis zur Skala; der letzte Eintrag ohne Trennlinie
+  assert.match(html, /<div class="maxis" aria-hidden="true"><span style="left:0\.0%">0\u00a0%<\/span>/);
+  assert.equal((html.match(/class="mrow mlast"/g) || []).length, 1);
+  // Vorlesen: was die Grafik zeigt, als Satz
+  assert.match(html, /aria-label="Adjektivendungen &amp; bestimmte Form: geschätzt \d+\u00a0% falsch, wahrscheinlich \d+\u00a0% bis \d+\u00a0%"/);
 });
 
 test('Themennamen brechen nicht am Bindestrich um: „si‑Sätze“, „s‑Passiv“ mit geschütztem Bindestrich', () => {
@@ -136,27 +133,22 @@ test('Erzeugte Bereiche: ab 10 Aufgaben grüner Balken und Prozent, derselbe Ant
   assert.match(text(html.split('Immer neu erzeugt')[1]), /^Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben/);
 });
 
-test('Heute, „Fehlerquellen“: wie auf Fortschritt, erst ab 8 Fehlern, je Thema mindestens 2 Fehler und 10 Aufgaben, nur übbare Themen', () => {
+test('Heute, „Fehlerquellen“: Themen über deinem Schnitt wie im Sprach-Tab, erst ab 8 Fehlern, nur übbare Themen', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     BANK.es.filter(i => i.trap === 'serestar').slice(0, 5).forEach(i => { DB.st[i.id] = { ok: 1, bad: 0, alts: [], s: 2, d: 5, ivl: 2, last: t, due: addDays(t, 2), reps: 1 }; }); })()`);
-  // Geübt, aber keine Fehler: kein Block mehr (früher standen hier Themen mit 0 gefestigt)
   assert.equal(run(`weakHtml('es')`), '');
-  run(`DB.tlog = {
-    [today()]: { es: { 'p:condicional': [30, 5], 'p:prep': [12, 3], 'p:perfecto': [10, 2], 'p:porpara': [14, 1], 'p:genus': [20, 6], 'p:subjuntivo': [7, 3], 't:gap': [93, 20] } },
-    [addDays(today(), -30)]: { es: { 'p:idiom': [19, 9], 't:gap': [19, 9] } } };`);
-  assert.deepEqual(run(`weakTopics('es').map(x => x.id)`), ['prep', 'perfecto', 'condicional']);
-  // Gleiche Reihenfolge wie im Reiter „Thema“ der Fehlerquellen, dort ohne die nicht übbaren Bereiche
-  const src = text(run(`(S.errTab = 'p', errorSourcesHtml('es'))`));
-  assert.ok(src.indexOf('Verben mit Präposition') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Konditional'));
+  run(`DB.tlog = { [today()]: { es: { 'p:condicional': [30, 9], 'p:prep': [12, 4], 'p:perfecto': [10, 4], 'p:porpara': [30, 1], 'p:serestar': [25, 2], 'p:genus': [20, 9], 'p:subjuntivo': [2, 2], 't:gap': [129, 31] } } };`);
+  const M = run(`topicModel('es')`), ids = run(`weakTopics('es').map(x => x.id)`);
+  // Höchstens drei, alle über dem Schnitt, in der Reihenfolge des Modells; Genus (nicht übbar) und unter 3 Aufgaben nicht
+  const expect = M.topics.filter(x => !['genus', 'subjuntivo'].includes(x.id) && x.mean > M.mu).slice(0, 3).map(x => x.id);
+  assert.deepEqual(ids, expect);
+  assert.ok(ids.length >= 2 && !ids.includes('porpara') && !ids.includes('genus'));
   const html = run(`weakHtml('es')`);
-  assert.match(text(html), /^Fehlerquellen, letzte 30 Tage /, 'derselbe Name wie auf Fortschritt');
-  // Die Zeile sagt, was der Balken zeigt: Anteil falsch, dazu die Anzahl; der Balken ist der Anteil auf voller Spur
-  const cond = html.split('data-t="condicional"')[1].split('</button>')[0];
-  assert.match(text(cond), /17\u00a0% falsch, 5 von 30$/);
-  assert.match(cond, /class="bar wbar"[^>]*><span style="width:max\(3px, 16\.7%\)">/);
-  assert.equal((html.match(/class="bar wbar"/g) || []).length, 3);
+  assert.match(text(html), /^Fehlerquellen /, 'derselbe Name wie auf Fortschritt');
+  assert.equal((html.match(/class="mstrip"/g) || []).length, ids.length);
+  assert.match(html, /<p class="legend below"><span class="mkey">/);
   // Unter 8 Fehlern in der Sprache sagt die Liste noch nichts
-  run(`DB.tlog[today()].es['t:gap'] = [93, 7]`);
+  run(`DB.tlog[today()].es['t:gap'] = [129, 7]`);
   assert.deepEqual(run(`weakTopics('es')`), []);
   assert.equal(run(`weakHtml('es')`), '');
 });

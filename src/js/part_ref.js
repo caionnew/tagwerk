@@ -45,6 +45,9 @@ function topicSheetHtml(P){
   const rc = tr.gen && DB.gen[tr.gen] && DB.gen[tr.gen].recent;
   const stats = items.length ? `${items.length} Sätze im Thema, ${seen} geübt, ${mat} gefestigt.` : '';
   const genStat = rc && rc.length >= 10 ? ` Erzeugte Aufgaben: zuletzt ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)}\u00a0% richtig.` : '';
+  // Fehlermodell (part_model.js): Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage, Trend
+  const mx = modelTopic(lang, P.trap), mu = topicModel(lang).mu;
+  const model = mx && mx.n >= 1 ? `Fehlerquote geschätzt ${pct(mx.mean)}, wahrscheinlich ${pct(mx.lo)} bis ${pct(mx.hi)}; mit ${pct(mx.pAbove)} Wahrscheinlichkeit über deinem Schnitt von ${pct(mu)}.${mx.n30 ? ` Letzte 30 Tage: ${mx.k30} von ${mx.n30} falsch.` : ''}${mx.trend ? ` Letzte 14 Tage ${mx.trend.better ? 'besser' : 'schlechter'} als die 28 davor (Wahrscheinlichkeit ${pct(mx.trend.p)}).` : ''}` : '';
   const err = P.err;
   return `<div class="popov" data-a="popclose"></div><div class="pop tall" role="dialog" aria-label="${esc(tr.label)}">
     <p class="find-k">Thema</p><p class="pop-h">${esc(keepHyph(tr.label))}</p>
@@ -54,6 +57,7 @@ function topicSheetHtml(P){
     ${P.examples.length ? `<p class="pop-sub">Beispiele</p><ul class="exl">${P.examples.map(x => `<li><span class="wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="exg">${esc(x.de)}</span>` : ''}</li>`).join('')}</ul>` : ''}
     ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}
     ${stats || genStat ? `<p class="legend mt-12">${stats}${genStat}</p>` : ''}
+    ${model ? `<p class="legend">${model}</p>` : ''}
     <div class="popfoot"><button type="button" class="ghost" data-a="popclose">Schließen</button>${S.view === 'run' ? '' : `<button type="button" class="primary" data-a="trapgo" data-l="${lang}" data-t="${P.trap}">10 Aufgaben üben</button>`}</div>
   </div>`;
 }

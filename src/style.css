@@ -89,8 +89,9 @@ label.row{ cursor:pointer; }
 .row.armed{ background:var(--bad-soft); }
 .bars .bar{ flex:none; width:28%; height:7px; border-radius:var(--r-mark); background:var(--line); overflow:hidden; }
 .bars .bar span{ display:block; height:100%; background:var(--accent); border-radius:var(--r-mark); }
-/* Fehlerquellen auf Heute: Anteil falscher Antworten, rot auf der vollen Spur, wie in den Fehlerquellen */
-.bars .bar.wbar span{ background:var(--bad); opacity:.75; }
+/* Fehlerquellen auf Heute: Name und Schätzung oben, Streifen darunter (wie im Sprach-Tab) */
+.row.mrowh .mtop .rt{ min-width:0; }
+.row.mrowh .mstrip{ margin-top:8px; }
 /* Erzeugte Themen in „Thema üben“: Anteil richtig, grün statt Sprachfarbe, damit er nicht wie Fortschritt aussieht */
 .bars .bar.qbar span{ background:var(--ok); }
 .lead-s.grp-lead{ margin:-4px 4px 10px; font-size:var(--fs-4); }
@@ -615,9 +616,42 @@ button.row[disabled]::after{ display:none; }
 .erow:last-child{ border-bottom:0; }
 button.erow:active{ background:var(--accent-soft); }
 .el{ font-size:var(--fs-4); font-weight:var(--fw-semibold); display:flex; flex-direction:column; }
-.esub{ font-size:var(--fs-3); font-weight:var(--fw-regular); color:var(--muted); }
-.ebar{ height:7px; border-radius:var(--r-mark); background:var(--line); overflow:hidden; }
-.ebar span{ display:block; height:100%; border-radius:var(--r-mark); background:var(--bad); opacity:.75; }
+/* Fehlerquellen: Name und Zahl oben, Grafik darunter über die volle Breite */
+.mrow{ display:block; width:100%; padding:10px 0 11px; border:0; border-bottom:1px solid var(--line); background:none; color:var(--ink); text-align:left; font:inherit; }
+.mrow.mlast{ border-bottom:0; }
+button.mrow:active{ background:var(--accent-soft); }
+.mtop{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.mname{ min-width:0; font-size:var(--fs-4); font-weight:var(--fw-semibold); }
+.msub{ display:block; font-size:var(--fs-3); color:var(--muted); }
+.mright{ display:flex; align-items:baseline; gap:8px; flex:none; }
+.mcount{ font-size:var(--fs-3); color:var(--muted); font-variant-numeric:tabular-nums; }
+.mpct{ font-size:var(--fs-4); font-weight:var(--fw-semibold); font-variant-numeric:tabular-nums; }
+.mtr{ font-size:var(--fs-2); font-weight:var(--fw-semibold); padding:1px 8px; border-radius:var(--r-pill); }
+.mtr.up{ color:var(--ok); background:var(--ok-soft); }
+.mtr.down{ color:var(--bad); background:var(--bad-soft); }
+.mbar{ display:block; position:relative; height:6px; margin:7px 0 0; border-radius:var(--r-mark); background:var(--line); }
+.mbar > i{ position:absolute; left:0; top:0; bottom:0; border-radius:var(--r-mark); background:var(--bad); opacity:.75; }
+/* Schätzung mit Bereich: hell 95 %, dunkel 50 %, Punkt, Strich beim Schnitt */
+.mstrip{ display:block; position:relative; height:12px; margin:6px 0 0; }
+.mstrip::before{ content:''; position:absolute; left:0; right:0; top:5px; height:2px; border-radius:var(--r-mark); background:var(--line); }
+.mstrip > i{ position:absolute; display:block; }
+.mstrip .m95, .mstrip .m50{ top:2px; height:8px; border-radius:var(--r-mark); background:var(--bad); }
+.mstrip .m95{ opacity:.22; }
+.mstrip .m50{ opacity:.45; }
+.mstrip .mmu, .mkey .mk-mu{ width:2px; border-radius:var(--r-mark); background:var(--ink); opacity:.45; }
+.mstrip .mmu{ top:-2px; bottom:-2px; margin-left:-1px; }
+.mstrip .mdot, .mkey .mk-dot{ width:10px; height:10px; border-radius:50%; background:var(--bad); }
+.mstrip .mdot{ top:1px; margin-left:-5px; box-shadow:0 0 0 2px var(--surface); }
+.maxis{ position:relative; height:16px; margin:2px 0 0; font-size:var(--fs-1); color:var(--muted); font-variant-numeric:tabular-nums; }
+.maxis span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
+.maxis span:first-child{ transform:none; }
+.maxis span:last-child{ transform:translateX(-100%); }
+/* Legende mit Zeichen statt Sätzen */
+.mkey{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 14px; }
+.mkey > span{ display:inline-flex; align-items:center; gap:6px; }
+.mkey .mk-mu{ display:inline-block; height:12px; }
+.mkey .mk-dot{ display:inline-block; }
+.mkey .mk-band{ display:inline-block; width:22px; height:8px; border-radius:var(--r-mark); background:linear-gradient(90deg, color-mix(in srgb, var(--bad) 22%, transparent) 0 25%, color-mix(in srgb, var(--bad) 45%, transparent) 25% 75%, color-mix(in srgb, var(--bad) 22%, transparent) 75%); }
 /* Zahl rechts in den Fehlerquellen (nicht .ev allein: das sind auch die Belegstellen im Lesetext) */
 .erow .ev{ font-size:var(--fs-3); color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
 .srow{ grid-template-columns:minmax(0, 1fr) auto; align-items:start; padding:9px 0; }

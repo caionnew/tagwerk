@@ -46,6 +46,8 @@ const SCENES = [
   // Fehlerquellen: auf Heute nach dem Tagwerk (wie im Screenshot vom 24.11.) und im Sprach-Tab, Reiter „Thema“
   ['heute-fehlerquellen', doneDB, [p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent.startsWith('Fehlerquellen')); if (h) h.scrollIntoView({ block:'start' }); })]],
   ['fehlerquellen', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), p => p.evaluate(() => { const e = document.querySelector('.errseg'); if (e) e.scrollIntoView({ block:'start' }); })]],
+  ['fehlerquellen-schaetzung', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('.mkey [data-a=term][data-k=schaetzung]')]],
+  ['fehlerquellen-uebungsart', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('[data-a=errtab][data-t=t]'), p => p.evaluate(() => { const e = document.querySelector('.errseg'); if (e) e.scrollIntoView({ block:'start' }); })]],
   ['aufgabe', rich, [click('[data-a=daily]')]],
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
   ['nomen-tauschen', () => richDB('es'), swapOpen],

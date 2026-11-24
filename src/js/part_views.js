@@ -180,19 +180,18 @@ function topicRows(lang){
 const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${esc(r.text)}</span></span>`;
 const barRow = r => rowText(r) + (r.gen ? (r.rate == null ? '' : `<span class="bar qbar" aria-hidden="true"><span style="width:${Math.max(3, Math.round(r.rate * 100))}%"></span></span>`)
   : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
-// Die schwächsten Themen der letzten 30 Tage, dieselben Zahlen und dieselbe Reihenfolge wie „Fehlerquellen nach Thema“
-// (topicStats: geglättete Quote, ab 10 Aufgaben). Erst ab 8 Fehlern in der Sprache (wie dort) und je Thema mindestens 2;
-// vorher sagt die Liste nichts. Nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
+// Heute, „Fehlerquellen“: die drei Themen mit der höchsten Schätzung über deinem Schnitt, aus dem Fehlermodell wie im Sprach-Tab.
+// Erst ab 8 Fehlern in 30 Tagen (wie dort); nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
 function weakTopics(lang){
-  const s = errStats(lang, 30); if (s.bad < 8) return [];
-  const ids = new Set(topicIds(lang));
-  return topicStats(s).filter(x => ids.has(x.id) && x.bad >= 2).slice(0, 3).map(x => Object.assign({ label:trapMeta(lang, x.id).label }, x));
+  if (errStats(lang, 30).bad < 8) return [];
+  const ids = new Set(topicIds(lang)), M = topicModel(lang);
+  return M.topics.filter(x => ids.has(x.id) && x.n >= MODEL.MIN_N && x.mean > M.mu).slice(0, 3).map(x => Object.assign({ label:trapMeta(lang, x.id).label }, x));
 }
-// Balken wie in den Fehlerquellen: Anteil falscher Antworten, rot auf voller Spur (die Spur ist 100 %)
 function weakHtml(lang){
   const list = weakTopics(lang);
   if (!list.length) return '';
-  return `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2><div class="rows">${list.map(x => `<button type="button" class="row bars" data-a="trapgo" data-t="${x.id}">${rowText({ label:x.label, text:`${pct(x.rate)} falsch, ${x.bad} von ${x.n}` })}<span class="bar wbar" aria-hidden="true"><span style="width:max(3px, ${+(x.rate * 100).toFixed(1)}%)"></span></span></button>`).join('')}</div>`;
+  const M = topicModel(lang), max = modelScale(list, M.mu);
+  return `<h2 class="grp">Fehlerquellen</h2><div class="rows">${list.map(x => `<button type="button" class="row mrowh" data-a="trapgo" data-t="${x.id}" aria-label="${esc(modelAria(x.label, x))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x))}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}</div><p class="legend below">${modelKeyHtml(M.mu)}</p>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
@@ -545,15 +544,14 @@ function roundTopics(r){
   });
   return [...map.values()].sort((a, b) => b.bad - a.bad || b.off - a.off || b.dots.length - a.dots.length);
 }
-// Nach einer fehlerfreien Übungsrunde: das schwächste Thema der letzten 30 Tage aus topicStats (ab 10 Aufgaben), wenn
-// mindestens jede fünfte Antwort falsch war. Noch eine Runde vom selben bringt dann am wenigsten.
+// Nach einer fehlerfreien Übungsrunde: das Thema mit der höchsten Schätzung, das mit mindestens 80 % Wahrscheinlichkeit über
+// deinem Schnitt liegt (Fehlermodell). Noch eine Runde vom selben bringt dann am wenigsten.
 function nextTopicHtml(r){
   if (r.kind === 'daily' || r.bad || (r.ok || 0) < 3) return '';
-  const lang = r.lang, here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean));
-  const list = topicStats(errStats(lang, 30)).filter(x => x.id !== 'eigene' && trapMeta(lang, x.id) && !here.has(x.id) && x.bad * 5 >= x.n);
-  if (!list.length) return '';
-  const x = list[0];
-  return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(keepHyph(trapLabel(lang, x.id)))}</b>: in den letzten 30 Tagen ${x.bad} von ${x.n} falsch. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
+  const lang = r.lang, here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean)), M = topicModel(lang);
+  const x = M.topics.find(y => y.id !== 'eigene' && trapMeta(lang, y.id) && !here.has(y.id) && y.n >= MODEL.MIN_N && y.pAbove >= 0.8);
+  if (!x) return '';
+  return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(keepHyph(trapLabel(lang, x.id)))}</b>: geschätzt ${pct(x.mean)} falsch, dein Schnitt ${pct(M.mu)}. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
 }
 // Eine Aufgabe der Runde: was gefragt war, deine Antwort (überzählige Wörter gestrichen), die richtige Fassung, die ihr am nächsten
 // ist (abweichende Stellen markiert), und der Grund. Runden aus älteren Fassungen ohne Antwort zeigen Aufgabe und Lösung.

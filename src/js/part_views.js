@@ -180,21 +180,19 @@ function topicRows(lang){
 const rowText = r => `<span class="txt"><span class="rt">${esc(r.label)}</span><span class="rd">${esc(r.text)}</span></span>`;
 const barRow = r => rowText(r) + (r.gen ? (r.rate == null ? '' : `<span class="bar qbar" aria-hidden="true"><span style="width:${Math.max(3, Math.round(r.rate * 100))}%"></span></span>`)
   : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
-// Themen mit den meisten Fehlern der letzten 30 Tage, dieselben Zahlen und dieselbe Reihenfolge wie „Fehlerquellen nach Thema“:
-// nach Anzahl der Fehler, bei Gleichstand mehr Aufgaben zuerst. Erst ab 8 Fehlern in der Sprache (wie dort) und je Thema
-// mindestens 2; vorher sagt die Liste nichts. Nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
+// Die schwächsten Themen der letzten 30 Tage, dieselben Zahlen und dieselbe Reihenfolge wie „Fehlerquellen nach Thema“
+// (topicStats: geglättete Quote, ab 10 Aufgaben). Erst ab 8 Fehlern in der Sprache (wie dort) und je Thema mindestens 2;
+// vorher sagt die Liste nichts. Nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
 function weakTopics(lang){
   const s = errStats(lang, 30); if (s.bad < 8) return [];
   const ids = new Set(topicIds(lang));
-  return Object.keys(s.p).filter(id => ids.has(id) && s.p[id][1] >= 2).map(id => ({ id, label:trapMeta(lang, id).label, n:s.p[id][0], bad:s.p[id][1] }))
-    .sort((a, b) => b.bad - a.bad || b.n - a.n).slice(0, 3);
+  return topicStats(s).filter(x => ids.has(x.id) && x.bad >= 2).slice(0, 3).map(x => Object.assign({ label:trapMeta(lang, x.id).label }, x));
 }
-// Balken wie in den Fehlerquellen: Aufgaben (grau) und Fehler (rot) auf einer gemeinsamen Skala
+// Balken wie in den Fehlerquellen: Anteil falscher Antworten, rot auf voller Spur (die Spur ist 100 %)
 function weakHtml(lang){
   const list = weakTopics(lang);
   if (!list.length) return '';
-  const max = Math.max(...list.map(x => x.n)), w = v => +(v / max * 100).toFixed(1);
-  return `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2><div class="rows">${list.map(x => `<button type="button" class="row bars" data-a="trapgo" data-t="${x.id}">${rowText({ label:x.label, text:`${x.bad} Fehler bei ${x.n} Aufgaben` })}<span class="bar wbar" aria-hidden="true"><span class="w-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="w-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span></button>`).join('')}</div>`;
+  return `<h2 class="grp">Fehlerquellen, letzte 30 Tage</h2><div class="rows">${list.map(x => `<button type="button" class="row bars" data-a="trapgo" data-t="${x.id}">${rowText({ label:x.label, text:`${pct(x.rate)} falsch, ${x.bad} von ${x.n}` })}<span class="bar wbar" aria-hidden="true"><span style="width:max(3px, ${+(x.rate * 100).toFixed(1)}%)"></span></span></button>`).join('')}</div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
@@ -547,14 +545,12 @@ function roundTopics(r){
   });
   return [...map.values()].sort((a, b) => b.bad - a.bad || b.off - a.off || b.dots.length - a.dots.length);
 }
-// Nach einer fehlerfreien Übungsrunde: das Thema, das in den letzten 30 Tagen am häufigsten hakte (ab 5 Aufgaben, mindestens jede fünfte falsch).
-// Noch eine Runde vom selben bringt dann am wenigsten.
+// Nach einer fehlerfreien Übungsrunde: das schwächste Thema der letzten 30 Tage aus topicStats (ab 10 Aufgaben), wenn
+// mindestens jede fünfte Antwort falsch war. Noch eine Runde vom selben bringt dann am wenigsten.
 function nextTopicHtml(r){
   if (r.kind === 'daily' || r.bad || (r.ok || 0) < 3) return '';
-  const lang = r.lang, s = errStats(lang, 30), here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean));
-  const list = Object.keys(s.p).filter(id => id !== 'eigene' && trapMeta(lang, id) && !here.has(id))
-    .map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.n >= 5 && x.bad * 5 >= x.n)
-    .sort((a, b) => b.bad / b.n - a.bad / a.n || b.n - a.n);
+  const lang = r.lang, here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean));
+  const list = topicStats(errStats(lang, 30)).filter(x => x.id !== 'eigene' && trapMeta(lang, x.id) && !here.has(x.id) && x.bad * 5 >= x.n);
   if (!list.length) return '';
   const x = list[0];
   return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(trapLabel(lang, x.id))}</b>: in den letzten 30 Tagen ${x.bad} von ${x.n} falsch. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;

@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 23. November 2026 (nach 24.70.0)
+Stand: 24. November 2026 (nach 24.71.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -58,22 +58,22 @@ Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unt
 2. **Übereinstimmung in deinen Übersetzungen messen (B+).** Gleiches Wort, nur die Endung für Geschlecht oder Zahl anders (bonito/bonita, este/esta, lo/la, buen/buena) als eigene Fehlerart in den Fehlerquellen. Zeigt an echten Sätzen, ob die Übereinstimmung überhaupt ein Engpass ist und „Nomen tauschen“ (24.70) öfter kommen sollte.
 3. **Fehler finden mit zwei Kandidaten (B).** Sätze mit zwei typischen Fehlerstellen verschiedener Sorten, höchstens eine davon falsch: ein ser/estar und ein por/para (Estoy en Madrid por trabajo), im Schwedischen etwa eine Inversion und ein Adjektiv mit en/ett-Endung. Dann reicht es nicht, das einzige kritische Wort zu finden; man muss beide prüfen. Nächster Schritt nach 24.45 (richtige Sätze, Verbessern). Braucht neue Satzvorlagen, je Sprache mindestens 36 (dreimal die Wiederholungssperre), mit einer Erklärung zu beiden Stellen.
 4. **Verwechslung beim Namen nennen (B).** Erkennt die Prüfung ein vertauschtes Paar (por/para, ser/estar, en/ett, sin/hans), steht in einer Zeile, was hier gilt und warum. Ergänzt die Erklärung je Satz um die gemachte Verwechslung; für Präteritum/Perfekt gibt es das schon, für ein vergessenes Reflexivpronomen seit 24.62.0 (quedamos statt nos quedamos).
+5. **Verbindungen von Alternativen automatisch gelten lassen (B).** Ändern zwei Alternativen verschiedene Stellen eines Satzes (Wortstellung und ein Synonym, ya und Zeitform), fehlt oft ihre Verbindung: Am 24.11. waren es 732 Sätze, etwa „Fast hon har bott länge i Sverige …“ oder „Si me hubiese levantado más temprano, habría tomado el tren“. Die Prüfung könnte solche Verbindungen beim Aufbau der Satzbank selbst bilden. Fast alle Stichproben waren richtig, aber jede erzeugte Fassung muss vorher gelesen werden (Übereinstimmung über zwei Stellen hinweg). Betrifft vor allem das freie Übersetzen, wo es „Meine ist auch richtig“ gibt; Lücken und Wortkästchen sind durchgesehen (24.70.2, 24.71.0).
 
 ### Hören und Sprechen
 
-5. **Hörunterscheidung, spanische Betonung (B, vorher B+), sonst Minimalpaare (B).** Nett, aber kein Engpass. término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
-6. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
-7. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
-8. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
+6. **Hörunterscheidung, spanische Betonung (B, vorher B+), sonst Minimalpaare (B).** Nett, aber kein Engpass. término, termino, terminó: Betonung entscheidet über die Bedeutung, und die Akzente zählen beim Prüfen nur als „fast richtig“. Schwedische Paare (tak, tack) bringen auf deinem Niveau weniger. Paare nur aus geprüften Listen.
+7. **Unterwegs: Deutsch hören, selbst sagen, dann die Lösung (B).** Anders als die Hörrunde (erst die Zielsprache) übt das den Abruf, ohne Antippen. Ohne Wertung, also ohne Wirkung auf die Wiederholung; nutzt die Bildschirmsperre-Lösung der Hörrunde.
+8. **Muttersprachler-Aufnahmen offline (B, vorher B+).** Nutzen klar, Machbarkeit offen: Tatoeba liefert die Dateien vermutlich ohne CORS-Freigabe, dann wären sie im Cache nur undurchsichtig nutzbar, und der Speicher wächst. Erst prüfen, dann entscheiden.
+9. **Diktat ganzer Lesetexte (B−).** Längeres Hören mit Zusammenhang; die Hörrunde und das Diktat decken viel davon schon ab.
 
 ### Schreiben
 
-9. **Korrekturen aus dem Schreiben ins Tagwerk (C+ solange du nicht schreibst, sonst B+).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
+10. **Korrekturen aus dem Schreiben ins Tagwerk (C+ solange du nicht schreibst, sonst B+).** Aus eigenen Fehlern lernt man am meisten. Herabgestuft, weil LanguageTool für Schwedisch fast nur die Rechtschreibung prüft und es nur greift, wenn du regelmäßig schreibst.
 
 ### Planung und Rückblick
 
-10. **Bedeutung von „gefestigt“ hinschreiben (B+).** In Zeile und Erklärtext, und bei der Etappe am Rundenende (im Etappen-Vergleich vom 21.11. „Ein Satz, was die Zahl heißt“, A−): „Sätze, die du auch nach drei Wochen ohne Üben noch weißt“. Stimmt genau: Der geplante Abstand ist bei FSRS die Zeit, bis die Erinnerung auf 90 % fällt, und die Wiederholung, die einen Satz festigt, ist im Tagwerk frei aus dem Deutschen geschrieben. Klein, ändert keine Zahl.
-11. **Schwerpunkt der Woche erst ab 10 Aufgaben je Thema (B).** Bisher reichen 4; am 20.11. hätte das die Wahl auf Redewendungen (2 von 4) und Modalpartikeln (2 von 5) gelegt, beides auf zwei Fehlern.
+11. **Bedeutung von „gefestigt“ hinschreiben (B+).** In Zeile und Erklärtext, und bei der Etappe am Rundenende (im Etappen-Vergleich vom 21.11. „Ein Satz, was die Zahl heißt“, A−): „Sätze, die du auch nach drei Wochen ohne Üben noch weißt“. Stimmt genau: Der geplante Abstand ist bei FSRS die Zeit, bis die Erinnerung auf 90 % fällt, und die Wiederholung, die einen Satz festigt, ist im Tagwerk frei aus dem Deutschen geschrieben. Klein, ändert keine Zahl.
 12. **Zuwachs in der Sprachen-Kachel (B, ab Mitte Dezember).** „+18 in 7 Tagen“ statt „heute geübt“ (das zeigt der Kalender darüber). Zeigt das Tempo je Sprache; misst aber wie „gefestigt“ vor allem Regelmäßigkeit. Daten liegen im Tagesstand.
 13. **„Verankert“ ausblenden, bis der erste Satz es ist (B−).** Frühestens im Mai 2027 möglich; bis dahin steht in „Stand der Sätze“ eine feste Null.
 14. **Nachschub nach Worthäufigkeit (B−, vorher B+).** Hilft erst, wenn die eingebauten Sätze aufgebraucht sind und der Nachschub läuft; kuratierte B2/C1-Sätze bringen mehr. Braucht eine frei lizenzierte Häufigkeitsliste.
@@ -111,7 +111,7 @@ Spanisch:
 
 ## Offen: Rückmeldung von dir
 
-Derzeit nichts.
+- **Perfecto vs. Indefinido: welche Norm (24.11.).** 39 der 69 Sätze haben Perfecto als Lösung, 37 davon lassen auch das Indefinido gelten (Lateinamerika). Wer immer Indefinido schreibt, hat 67 von 69 richtig; geprüft wird nur „kein Perfecto bei ayer, el año pasado“. Vorschlag bei Spanien als Ziel (B+): Indefinido dort „fast richtig“ mit „In Spanien: he perdido“, zählt in den Fehlerquellen gegen das Thema. Bei Lateinamerika oder beidem (B): die 37 Sätze zählen nicht fürs Thema, das dann „Indefinido bei abgeschlossener Zeit“ heißt. So lassen: C. Dieselbe Frage stellt sich bei Indefinido vs. Imperfecto, wo der Aspekt oft beides zulässt.
 
 ## Nach echter Nutzung nachstellen
 
@@ -121,6 +121,12 @@ Derzeit nichts.
 ## Geprüft und zurückgestellt
 
 - **„Stand der Sätze“ in der Kopfkarte des Sprach-Tabs (B−, geprüft am 23.11.).** Der Balken verankert, gefestigt, im Aufbau, neu statt des Balkens zum nächsten Ziel, der eigene Abschnitt entfiele. Spart kaum Platz (2,8 auf 2,7 Bildschirme), die Kopfkarte wird dichter, und der Fortschritt zum nächsten Ziel stünde nur noch als Text da.
+- **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11., gewählt: geglättete Quote ab 10 Aufgaben, 24.71.0).**
+  - **Anzahl der Fehler (C, bis 24.70):** misst eher, wie oft ein Thema drankommt; 7 von 73 stand vor 5 von 13.
+  - **Rohe Quote ab 10 Aufgaben (B−):** einfach, aber bei wenigen Aufgaben sprunghaft.
+  - **Untere Wilson-Grenze (B):** robust, aber die Reihenfolge widerspricht öfter den Prozent daneben.
+  - **Fehler über der eigenen Quote (B):** wo Üben am meisten Fehler spart; eine neue, schwer greifbare Zahl, und die Liste wird leer, wenn alles gleich gut ist.
+  - **Bereinigt nach Übungsart (C+):** fachlich am saubersten (Inversion kommt oft als Wortkästchen, Adjektive als getippte Lücke), braucht aber ein neues Feld Thema × Übungsart im Speicher und 30 Tage Daten.
 - **Fehlerquellen nach Thema im Themenraster (C+).** Zwei Themenlisten im Sprach-Tab; zusammengelegt fehlte aber die Liste nach Fehlern, die auch „Heute“ zeigt.
 - **Wochenbilanz zum Schwerpunkt (C+, vorher B−).** Ersetzt durch „neue Sätze beim ersten Mal richtig“ (Fahrplan): gleiche Übungsform und Stufe statt wechselnder Übungsarten.
 - **Andere Hauptzahl statt „gefestigt“ (geprüft am 20.11.).** „Gefestigt“ bleibt: ehrlicher Bestand dessen, was dauerhaft sitzt, auch wenn die Zahl allein wenig erklärt und in den ersten drei Wochen bauartbedingt 0 ist.

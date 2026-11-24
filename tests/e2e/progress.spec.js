@@ -57,7 +57,7 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
 });
-test('Heute „Fehlerquellen“ mit Aufgaben und Fehlern; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
+test('Heute „Fehlerquellen“ mit Anteil falsch; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
   const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] }, textgap_sv:{ ok:9, bad:3, recent:[1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] } };
   await seed(page, db);
   await page.goto(APP);
@@ -65,11 +65,11 @@ test('Heute „Fehlerquellen“ mit Aufgaben und Fehlern; „Thema üben“: erz
   const weak = page.locator('.row.bars:has(.wbar)');
   expect(await weak.count()).toBeGreaterThanOrEqual(1);
   expect(await weak.count()).toBeLessThanOrEqual(3);
-  await expect(weak.first().locator('.rd')).toHaveText(/^\d+ Fehler bei \d+ Aufgaben$/);
-  // Rot liegt im Grau: Fehler nie länger als die Aufgaben
-  const w = await weak.first().evaluate(r => ({ all:r.querySelector('.w-all').getBoundingClientRect().width, bad:r.querySelector('.w-bad').getBoundingClientRect().width }));
+  await expect(weak.first().locator('.rd')).toHaveText(/^\d+\u00a0% falsch, \d+ von \d+$/);
+  // Der rote Anteil liegt auf der Spur, die für 100 % steht
+  const w = await weak.first().evaluate(r => ({ all:r.querySelector('.wbar').getBoundingClientRect().width, bad:r.querySelector('.wbar span').getBoundingClientRect().width, rate:parseInt(r.querySelector('.rd').textContent, 10) }));
   expect(w.bad).toBeGreaterThan(0);
-  expect(w.bad).toBeLessThanOrEqual(w.all);
+  expect(Math.abs(w.bad / w.all * 100 - w.rate)).toBeLessThan(3);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=pickTopic]');
   const gen = page.locator('.row.bars[data-t=species]');

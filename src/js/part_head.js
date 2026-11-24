@@ -435,11 +435,13 @@ function focusTrap(lang){
   const cands = focusCandidates(lang); if (!cands.length) return null;
   DB.focus[lang] = { trap:cands[0], week:mo }; return cands[0];
 }
+// Schwäche wie in den Fehlerquellen (topicStats: geglättete Quote, ab 10 Aufgaben); Themen ohne Fehler zählen wie ungeübte
 function focusCandidates(lang){
-  const p = (typeof errStats === 'function' ? errStats(lang, 30).p : {}) || {};
+  const weak = {};
+  if (typeof topicStats === 'function') topicStats(errStats(lang, 30)).forEach(x => { if (x.bad) weak[x.id] = x.score; });
   const open = t => BANK[lang].filter(i => i.trap === t && !stOf(i.id) && (i.lvl || 1) >= 2).length;
   return TRAPS[lang].filter(t => t.kind !== 'gen' && BANK[lang].some(i => i.trap === t.id)).map(t => t.id)
-    .map(id => ({ id, err:p[id] && p[id][0] >= 4 ? p[id][1] / p[id][0] : 0, open:open(id) }))
+    .map(id => ({ id, err:weak[id] || 0, open:open(id) }))
     .sort((a, b) => b.err - a.err || b.open - a.open).map(x => x.id);
 }
 function pickNew(lang, n, onlyTrap){

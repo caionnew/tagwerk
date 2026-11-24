@@ -163,6 +163,17 @@ function errStats(lang, days){
   });
   return out;
 }
+// Schwäche je Thema aus errStats: eine Rechnung für alle Stellen, die Themen nach Fehlern ordnen oder wählen (Heute,
+// Fehlerquellen nach Thema, Schwerpunkt der Woche, „Als Nächstes“). Erst ab 10 Aufgaben, wie Prozent bei erzeugten Bereichen.
+// Reihenfolge nach geglätteter Quote: (Fehler + 10 × deine Quote über alle Themen) / (Aufgaben + 10). Wenige Aufgaben ziehen
+// zur eigenen Quote hin, viele zählen fast voll. So steht 5 von 13 (38 %) vor 8 von 37 (22 %) und 7 von 73 (10 %); bis 24.70
+// galt die Anzahl der Fehler, und ein oft geübtes, sicheres Thema stand vorn, nur weil es oft drankam.
+const TOPIC_MIN = 10, TOPIC_PRIOR = 10;
+function topicStats(s){
+  const ids = Object.keys(s.p), N = ids.reduce((a, id) => a + s.p[id][0], 0), B = ids.reduce((a, id) => a + s.p[id][1], 0), mean = N ? B / N : 0;
+  return ids.map(id => { const [n, bad] = s.p[id]; return { id, n, bad, rate:n ? bad / n : 0, score:(bad + TOPIC_PRIOR * mean) / (n + TOPIC_PRIOR) }; })
+    .filter(x => x.n >= TOPIC_MIN).sort((a, b) => b.score - a.score || b.n - a.n);
+}
 // Themen-Etappen: Die Fehlerquote eines Themas ist deutlich und belastbar gesunken,
 // gegenüber jeder früheren Zeit, nicht nur gegenüber dem Anfang. Gezählt wie in den Fehlerquellen (nur erste Versuche;
 // Wortschatz- und Tippfehler belasten das Grammatikthema nicht).
@@ -275,16 +286,13 @@ function errorSourcesHtml(lang){
       : `${pat ? `<b>${esc(trapLabel(lang, pat.trap))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Tipp auf einen Satz für die Regel dazu.`;
   } else if (few) note = gate;
   else if (tab === 'p') {
-    // Reihenfolge nach Anzahl der Fehler (woher sie kommen), bei Gleichstand das Thema mit mehr Aufgaben zuerst:
-    // Dort ist die Aussage belastbarer, und Mini-Stichproben (1 von 2) fallen als Erste aus den sechs Zeilen.
-    // Balken: Aufgaben (grau) und Fehler (rot) auf einer gemeinsamen Skala. Länge = Menge, rot im Grau = Anteil;
-    // wenige Aufgaben sehen klein aus statt wie eine sichere Quote, und keine Zeile ist voll, nur weil sie vorn liegt.
-    const list = Object.keys(s.p).map(id => ({ id, n:s.p[id][0], bad:s.p[id][1] })).filter(x => x.bad && x.n)
-      .sort((a, b) => b.bad - a.bad || b.n - a.n).slice(0, 6);
-    const max = Math.max(1, ...list.map(x => x.n)), w = v => +(v / max * 100).toFixed(1);
-    lead = '<span class="sq e-bad-sq"></span>falsch von <span class="sq e-all-sq"></span>allen Aufgaben im Thema:';
-    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}</span><span class="ebar eboth" aria-hidden="true"><span class="e-all" style="width:max(6px, ${w(x.n)}%)"></span><span class="e-bad" style="width:max(3px, ${w(x.bad)}%)"></span></span><span class="ev">${x.bad} von ${x.n}</span></${tap ? 'button' : 'div'}>`; }).join('');
-    note = 'Tipp auf ein Thema für die Regel.';
+    // Anteil falscher Antworten je Thema, wie bei „Übungsart“; Reihenfolge und Auswahl aus topicStats (geglättete Quote,
+    // ab 10 Aufgaben). Unter dem Namen die Anzahl, damit 38 % bei 13 Aufgaben nicht genauer wirkt, als es ist.
+    const list = topicStats(s).filter(x => x.bad).slice(0, 6);
+    lead = list.length ? 'Anteil falscher Antworten je Thema, ab 10 Aufgaben:' : '';
+    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}<span class="esub">${x.bad} von ${x.n} Aufgaben</span></span><span class="ebar" aria-hidden="true"><span style="width:${Math.max(4, x.rate * 100)}%"></span></span><span class="ev">${pct(x.rate)}</span></${tap ? 'button' : 'div'}>`; }).join('');
+    note = list.length ? 'Wenige Aufgaben zählen für die Reihenfolge weniger. Tipp auf ein Thema für die Regel.'
+      : 'Noch kein Thema mit 10 Aufgaben und einem Fehler.';
   } else if (tab === 't') {
     const list = Object.keys(s.t).map(id => ({ id, n:s.t[id][0], bad:s.t[id][1] })).filter(x => x.n >= 5).sort((a, b) => b.bad / b.n - a.bad / a.n);
     lead = 'Anteil falscher Antworten je Übungsart:';

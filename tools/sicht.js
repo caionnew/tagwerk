@@ -43,6 +43,9 @@ const SCENES = [
   ['ueben', rich, [click('[data-a=tab][data-v=extra]')]],
   ['fortschritt', rich, [click('[data-a=tab][data-v=progress]')]],
   ['fortschritt-sprache', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]')]],
+  // Fehlerquellen: auf Heute nach dem Tagwerk (wie im Screenshot vom 24.11.) und im Sprach-Tab, Reiter „Thema“
+  ['heute-fehlerquellen', doneDB, [p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent.startsWith('Fehlerquellen')); if (h) h.scrollIntoView({ block:'start' }); })]],
+  ['fehlerquellen', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), p => p.evaluate(() => { const e = document.querySelector('.errseg'); if (e) e.scrollIntoView({ block:'start' }); })]],
   ['aufgabe', rich, [click('[data-a=daily]')]],
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
   ['nomen-tauschen', () => richDB('es'), swapOpen],

@@ -2,6 +2,21 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.71.0
+**Fehlerquellen nach Anteil statt nach Anzahl: Das schwächste Thema steht vorn. Dazu fehlende Verbindungen in der Satzbank, darunter „¿Alguna vez pensaste en …?“ aus deinem Screenshot.**
+- **Der Fall:** Auf „Heute“ stand „Inversion & inte“ mit 7 von 73 (10 %) vor „Adjektivendungen“ mit 5 von 13 (38 %). Sortiert war nach der Zahl der Fehler, und die zählt vor allem, wie oft ein Thema drankommt. Der Balken zeigte die Aufgaben auf gemeinsamer Skala; der Anteil steckte nur im Verhältnis Rot zu Grau und war nicht ablesbar.
+- **Jetzt:** Reihenfolge nach geglätteter Quote, (Fehler + 10 × deine Quote über alle Themen) / (Aufgaben + 10). Wenige Aufgaben ziehen zu deiner eigenen Quote hin, viele zählen fast voll; so steht 15 von 40 (38 %) vor 4 von 10 (40 %). Gezählt ab 10 Aufgaben je Thema, wie die Prozent bei erzeugten Bereichen. Mit deinen Zahlen: Adjektivendungen, Wortstellung im Nebensatz, Inversion.
+- **Anzeige:** Der Balken ist der Anteil falscher Antworten auf einer Spur, die für 100 % steht. Auf „Heute“ steht darunter „38 % falsch, 5 von 13“; im Sprach-Tab (Reiter „Thema“) wie bei „Übungsart“ die Prozent rechts, die Anzahl unter dem Namen, oben „Anteil falscher Antworten je Thema, ab 10 Aufgaben“.
+- **Eine Rechnung für vier Stellen** (`topicStats`): Heute, Fehlerquellen nach Thema, Schwerpunkt der Woche und „Als Nächstes“ nach einer fehlerfreien Runde. Bisher zählten Heute und Fortschritt Fehler, Schwerpunkt und „Als Nächstes“ die rohe Quote ab 4 bzw. 5 Aufgaben; so konnten zwei Stellen verschiedene Themen als schwächstes nennen. Der Schwerpunkt braucht jetzt 10 Aufgaben im Thema (IDEEN Nr. 11, am 20.11. hätten 2 von 4 gereicht).
+- **Satzbank, der Fall:** Zu „Hast du jemals darüber nachgedacht, im Ausland zu leben?“ galten „has pensado en“ (anderes Verb) und „te planteaste“ (Indefinido), aber nicht beides zusammen. „pensaste en“ war falsch und zählte als Formfehler gegen „Perfecto vs. Indefinido“, obwohl die Erklärung das Indefinido für Lateinamerika nennt.
+- **Durchgesehen:** alle 67 Lücken mit mindestens drei richtigen Füllungen und alle Sätze, in denen zwei Alternativen dieselbe Stelle verschieden ändern (Form und Wort). 52 neue Alternativen in 30 Sätzen, darunter: se celebrará, ella vivió, ¿ya encontraste?, ¿ya lo decidiste?, aumentaron, ha renunciado, pudiesen, hubiera tomado, iba a perjudicar, se ha hecho daño, se acostumbró, se volvió vegetariano, se volvieron amarillas, hemos paseado, ir con ustedes; im Schwedischen nästan inte setts, skulle ha ringt till, blev byggt år, blev översatt, har talat, vi ska nog klara det.
+- **„Se me olvidó escribirte“:** Ohne Zeitangabe ist in Spanien das Perfecto üblich. „Se me ha olvidado“, „He olvidado“ und „Me he olvidado de“ galten bisher als falsch; die Erklärung nennt das jetzt.
+- **Geprüft und gelassen:** Verbindungen, die verschiedene Stellen ändern (Wortstellung und Synonym), fehlen in 732 Sätzen, fast alle beim freien Übersetzen. Bewertet in IDEEN.md (automatisch bilden, B).
+- Doku: CONTENT.md verlangt bei zwei Varianten an derselben Stelle auch ihre Verbindung. IDEEN.md: Nr. 11 umgesetzt, die verworfenen Reihenfolgen unter „Geprüft und zurückgestellt“, offen deine Antwort zu Perfecto vs. Indefinido.
+- `npm run sicht`: neue Ansichten „heute-fehlerquellen“ und „fehlerquellen“.
+- Tests: Reihenfolge und Anzeige mit den Zahlen aus dem Screenshot, geglättete Quote mit derselben Reihenfolge auf Heute, im Reiter „Thema“ und beim Schwerpunkt, Schwerpunkt erst ab 10 Aufgaben; Heute und Fortschritt im Browser mit Anteil.
+- Speicherstand unverändert.
+
 ## 24.70.2
 **Wortkästchen: Richtige Wortstellungen, die als falsch galten, zählen jetzt, darunter „Se lo he explicado ya tres veces …“ aus deinem Screenshot.**
 - **Der Fall:** Zu „Ich habe es ihm schon dreimal erklärt …“ kannte die App nur „Ya se lo he explicado …“. „ya“ nach dem Partizip ist genauso richtig. Bei Wortkästchen gibt es kein „Meine ist auch richtig“, also blieb deine Antwort falsch. Das übrige Wort war „le“, das hattest du richtig liegen lassen.

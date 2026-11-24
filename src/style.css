@@ -89,11 +89,8 @@ label.row{ cursor:pointer; }
 .row.armed{ background:var(--bad-soft); }
 .bars .bar{ flex:none; width:28%; height:7px; border-radius:var(--r-mark); background:var(--line); overflow:hidden; }
 .bars .bar span{ display:block; height:100%; background:var(--accent); border-radius:var(--r-mark); }
-/* „Meiste Fehler“ auf Heute: Aufgaben grau, Fehler rot, wie in den Fehlerquellen */
-.bars .bar.wbar{ position:relative; background:none; }
-.bars .bar.wbar span{ position:absolute; left:0; top:0; bottom:0; }
-.bars .bar .w-all{ background:color-mix(in srgb, var(--muted) 45%, transparent); }
-.bars .bar .w-bad{ background:var(--bad); opacity:.85; }
+/* Fehlerquellen auf Heute: Anteil falscher Antworten, rot auf der vollen Spur, wie in den Fehlerquellen */
+.bars .bar.wbar span{ background:var(--bad); opacity:.75; }
 /* Erzeugte Themen in „Thema üben“: Anteil richtig, grün statt Sprachfarbe, damit er nicht wie Fortschritt aussieht */
 .bars .bar.qbar span{ background:var(--ok); }
 .lead-s.grp-lead{ margin:-4px 4px 10px; font-size:var(--fs-4); }
@@ -621,13 +618,6 @@ button.erow:active{ background:var(--accent-soft); }
 .esub{ font-size:var(--fs-3); font-weight:var(--fw-regular); color:var(--muted); }
 .ebar{ height:7px; border-radius:var(--r-mark); background:var(--line); overflow:hidden; }
 .ebar span{ display:block; height:100%; border-radius:var(--r-mark); background:var(--bad); opacity:.75; }
-/* Thema: Aufgaben grau, davon falsch rot, gemeinsame Skala; ohne Spur, damit die Länge die Menge zeigt */
-.ebar.eboth{ position:relative; background:none; }
-.ebar.eboth span{ position:absolute; left:0; top:0; bottom:0; }
-.ebar .e-all, .sq.e-all-sq{ background:color-mix(in srgb, var(--muted) 45%, transparent); opacity:1; }
-.ebar .e-bad, .sq.e-bad-sq{ background:var(--bad); opacity:.85; }
-.elead .sq{ margin:0 4px 0 0; }
-.elead .sq:not(:first-child){ margin-left:6px; }
 /* Zahl rechts in den Fehlerquellen (nicht .ev allein: das sind auch die Belegstellen im Lesetext) */
 .erow .ev{ font-size:var(--fs-3); color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
 .srow{ grid-template-columns:minmax(0, 1fr) auto; align-items:start; padding:9px 0; }

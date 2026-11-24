@@ -40,7 +40,7 @@ test('Fehlerquellen: Thema und Übungsart sagen oben, was die Zahl ist', () => {
   run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:inversion': [48, 6], 'p:bisats': [25, 5], 't:free': [12, 6], 't:gap': [64, 8], 'e:word': 10 } } };`);
   run(`S.errTab = 'p'`);
   let html = run(`errorSourcesHtml('sv')`);
-  assert.match(text(html), /falsch von allen Aufgaben im Thema:/); assert.match(html, /6 von 48/);
+  assert.match(text(html), /Anteil falscher Antworten je Thema, ab 10 Aufgaben:/); assert.match(html, /6 von 48 Aufgaben/); assert.match(html, /13\u00a0%/);
   run(`S.errTab = 't'`);
   html = run(`errorSourcesHtml('sv')`);
   assert.match(html, /Anteil falscher Antworten je Übungsart:/); assert.match(html, /50 %|50 %/);
@@ -58,19 +58,34 @@ test('Behalten deutlich über Plan: unter „Fortgeschritten“ längeres Tagwer
   assert.match(html, /Ein längeres Tagwerk würde dich nicht überfordern/);
 });
 
-test('Fehlerquellen nach Thema: Aufgaben und Fehler auf einer Skala, kein voller Balken nur für den Spitzenreiter', () => {
-  // Zahlen aus einem echten Stand: 12/58 war voll, 2/4 (halb falsch) ein Sechstel davon
-  run(`DB = freshDB(); DB.tlog = { [today()]: { es: { 'p:condicional': [58, 12], 'p:perfecto': [8, 2], 'p:idiom': [4, 2], 'p:prep': [7, 2], 'p:serestar': [21, 1], 't:gap': [98, 19] } } }; S.errTab = 'p';`);
-  const html = run(`errorSourcesHtml('es')`);
-  const rows = [...html.matchAll(/<span class="el">([^<]+)<\/span><span class="ebar eboth"[^>]*><span class="e-all" style="width:max\(6px, ([\d.]+)%\)"><\/span><span class="e-bad" style="width:max\(3px, ([\d.]+)%\)"><\/span><\/span><span class="ev">(\d+) von (\d+)</g)]
-    .map(m => ({ label:m[1], all:+m[2], bad:+m[3], n:`${m[4]}/${m[5]}` }));
-  assert.equal(rows.length, 5);
-  // Reihenfolge: meiste Fehler zuerst, bei Gleichstand mehr Aufgaben zuerst (belastbarer; 2/8 vor 2/7 vor 2/4)
-  assert.deepEqual(rows.map(r => r.n), ['12/58', '2/8', '2/7', '2/4', '1/21']);
-  // Gemeinsame Skala: das Thema mit den meisten Aufgaben ist die volle Länge, rot ist davon der falsche Teil
-  assert.equal(rows[0].all, 100); assert.equal(rows[0].bad, 20.7);
-  const idiom = rows[3]; assert.equal(idiom.all, 6.9); assert.equal(idiom.bad, 3.4);
-  rows.forEach(r => { const [b, n] = r.n.split('/').map(Number); assert.ok(Math.abs(r.bad / r.all - b / n) < 0.02, r.label); });
+test('Fehlerquellen nach Thema: Anteil falsch, ab 10 Aufgaben, das schwächste Thema vorn statt des häufigsten', () => {
+  // Zahlen aus dem Screenshot vom 24.11.: bis 24.70 nach Anzahl der Fehler sortiert, 5 von 13 stand unten
+  run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:bisats': [37, 8], 'p:inversion': [73, 7], 'p:species': [13, 5], 'p:passiv': [4, 3], 'p:tid': [20, 0], 't:gap': [147, 23] } } }; S.errTab = 'p';`);
+  const html = run(`errorSourcesHtml('sv')`);
+  const rows = [...html.matchAll(/<span class="el">([^<]+)<span class="esub">(\d+) von (\d+) Aufgaben<\/span><\/span><span class="ebar"[^>]*><span style="width:([\d.]+)%"><\/span><\/span><span class="ev">(\d+)\u00a0%</g)]
+    .map(m => ({ label:m[1], n:`${m[2]}/${m[3]}`, w:+m[4], p:+m[5] }));
+  // 4 Aufgaben (3 falsch) sind noch keine Aussage, ein Thema ohne Fehler keine Fehlerquelle
+  assert.deepEqual(rows.map(r => r.n), ['5/13', '8/37', '7/73']);
+  assert.deepEqual(rows.map(r => r.p), [38, 22, 10]);
+  rows.forEach(r => { const [b, n] = r.n.split('/').map(Number); assert.ok(Math.abs(r.w - b / n * 100) < 0.1, r.label); });
+  assert.match(text(html), /Wenige Aufgaben zählen für die Reihenfolge weniger/);
+});
+
+test('Geglättete Quote: wenige Aufgaben ziehen zur eigenen Quote, eine Rechnung für alle Stellen', () => {
+  run(`DB = freshDB(); DB.st = {}; DB.focus = {}; DB.tlog = { [today()]: { es: { 'p:condicional': [40, 15], 'p:perfecto': [10, 4], 'p:prep': [12, 4], 'p:porpara': [30, 1], 'p:genus': [20, 6], 'p:subjuntivo': [6, 3], 't:gap': [118, 33] } } }; S.errTab = 'p';`);
+  // 15 von 40 (38 %) vor 4 von 10 (40 %): bei 10 Aufgaben ist der Anteil noch unsicher; 3 von 6 fehlt (unter 10)
+  const list = run(`topicStats(errStats('es', 30))`);
+  assert.deepEqual(list.map(x => x.id), ['condicional', 'perfecto', 'prep', 'genus', 'porpara']);
+  const mean = 33 / 118;
+  assert.ok(Math.abs(list[1].score - (4 + 10 * mean) / 20) < 1e-9);
+  // Dieselbe Reihenfolge auf Heute (ohne Genus, nicht übbar), im Reiter „Thema“ und beim Schwerpunkt der Woche
+  assert.deepEqual(run(`weakTopics('es').map(x => x.id)`), ['condicional', 'perfecto', 'prep']);
+  const src = text(run(`errorSourcesHtml('es')`));
+  assert.ok(src.indexOf('Konditional') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Verben mit Präposition'));
+  assert.equal(run(`focusCandidates('es')[0]`), 'condicional');
+  // Schwerpunkt erst ab 10 Aufgaben: 3 von 6 (50 %) zählt noch nicht als schwach
+  run(`DB.tlog = { [today()]: { es: { 'p:subjuntivo': [6, 3], 'p:condicional': [20, 3], 't:gap': [26, 6] } } };`);
+  assert.equal(run(`focusCandidates('es')[0]`), 'condicional');
 });
 
 test('Thema üben: Satz-Themen mit Balken für den gefestigten Anteil, erzeugte Themen unter 10 Aufgaben ohne Balken, als Anzahl', () => {
@@ -110,24 +125,27 @@ test('Erzeugte Bereiche: ab 10 Aufgaben grüner Balken und Prozent, derselbe Ant
   assert.match(text(html.split('Immer neu erzeugt')[1]), /^Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben/);
 });
 
-test('Heute, „Fehlerquellen“: wie auf Fortschritt nach Anzahl, erst ab 8 Fehlern, je Thema mindestens 2, nur übbare Themen', () => {
+test('Heute, „Fehlerquellen“: wie auf Fortschritt, erst ab 8 Fehlern, je Thema mindestens 2 Fehler und 10 Aufgaben, nur übbare Themen', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     BANK.es.filter(i => i.trap === 'serestar').slice(0, 5).forEach(i => { DB.st[i.id] = { ok: 1, bad: 0, alts: [], s: 2, d: 5, ivl: 2, last: t, due: addDays(t, 2), reps: 1 }; }); })()`);
   // Geübt, aber keine Fehler: kein Block mehr (früher standen hier Themen mit 0 gefestigt)
   assert.equal(run(`weakHtml('es')`), '');
   run(`DB.tlog = {
-    [today()]: { es: { 'p:condicional': [30, 5], 'p:prep': [7, 2], 'p:perfecto': [8, 2], 'p:porpara': [14, 1], 'p:genus': [20, 6], 't:gap': [59, 10] } },
-    [addDays(today(), -30)]: { es: { 'p:idiom': [9, 9], 't:gap': [9, 9] } } };`);
-  assert.deepEqual(run(`weakTopics('es').map(x => x.id)`), ['condicional', 'perfecto', 'prep']);
+    [today()]: { es: { 'p:condicional': [30, 5], 'p:prep': [12, 3], 'p:perfecto': [10, 2], 'p:porpara': [14, 1], 'p:genus': [20, 6], 'p:subjuntivo': [7, 3], 't:gap': [93, 20] } },
+    [addDays(today(), -30)]: { es: { 'p:idiom': [19, 9], 't:gap': [19, 9] } } };`);
+  assert.deepEqual(run(`weakTopics('es').map(x => x.id)`), ['prep', 'perfecto', 'condicional']);
   // Gleiche Reihenfolge wie im Reiter „Thema“ der Fehlerquellen, dort ohne die nicht übbaren Bereiche
   const src = text(run(`(S.errTab = 'p', errorSourcesHtml('es'))`));
-  assert.ok(src.indexOf('Konditional') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Verben mit Präposition'));
+  assert.ok(src.indexOf('Verben mit Präposition') < src.indexOf('Perfecto') && src.indexOf('Perfecto') < src.indexOf('Konditional'));
   const html = run(`weakHtml('es')`);
   assert.match(text(html), /^Fehlerquellen, letzte 30 Tage /, 'derselbe Name wie auf Fortschritt');
-  assert.match(text(html.split('data-t="condicional"')[1].split('</button>')[0]), /5 Fehler bei 30 Aufgaben/);
-  assert.equal((html.match(/class="w-bad"/g) || []).length, 3);
+  // Die Zeile sagt, was der Balken zeigt: Anteil falsch, dazu die Anzahl; der Balken ist der Anteil auf voller Spur
+  const cond = html.split('data-t="condicional"')[1].split('</button>')[0];
+  assert.match(text(cond), /17\u00a0% falsch, 5 von 30$/);
+  assert.match(cond, /class="bar wbar"[^>]*><span style="width:max\(3px, 16\.7%\)">/);
+  assert.equal((html.match(/class="bar wbar"/g) || []).length, 3);
   // Unter 8 Fehlern in der Sprache sagt die Liste noch nichts
-  run(`DB.tlog[today()].es['t:gap'] = [59, 7]`);
+  run(`DB.tlog[today()].es['t:gap'] = [93, 7]`);
   assert.deepEqual(run(`weakTopics('es')`), []);
   assert.equal(run(`weakHtml('es')`), '');
 });

@@ -16,7 +16,7 @@ test('Verhältnisse: „20 von 22“ heute, „6 von 48“ in den Fehlerquellen,
   assert.match(text(h), /20 von 22 Wiederholungen gewusst/);
   d.tlog[ds(0)] = { sv:{ 'p:inversion':[48, 6], 'p:tempus':[20, 3], 't:gap':[68, 9] } }; setDB(d); run(`S.errTab = 'p'`);
   const e = run(`errorSourcesHtml('sv')`);
-  assert.match(e, /<span class="ev">6 von 48<\/span>/);
+  assert.match(e, /<span class="esub">6 von 48 Aufgaben<\/span>/);
   assert.doesNotMatch(text(h) + text(e), /\d\/\d/);
 });
 

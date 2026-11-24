@@ -14,7 +14,7 @@ const SYN = `(() => { DB = freshDB(); DB.focus = {}; const ds = k => addDays(tod
   [ds(20)]: { sv: { 'p:inversion':[6,1], 'p:species':[2,2], 'p:tid':[2,0] } },
   [ds(28)]: { sv: { 'p:bisats':[5,2], 'p:tempus':[3,0] } } }; })()`;
 
-test('Mathematik: lnΓ, I_x(a, b), Beta-Quantile und P(X < Y) wie scipy', () => {
+test('Mathematik: lnΓ, I_x(a, b) und Beta-Quantile wie scipy', () => {
   near(run('lgam(0.3)'), 1.0957979948, 1e-9); near(run('lgam(100.7)'), 362.3567752034, 1e-8); near(run('lgam(1)'), 0, 1e-12);
   [[0.3, 2.5, 7.1, 0.6490225790], [0.05, 0.4, 3, 0.4925999852], [0.9, 30, 4, 0.5769436641], [0.5, 120.3, 80.2, 0.0022029070]]
     .forEach(([x, a, b, v]) => near(run(`ibeta(${x}, ${a}, ${b})`), v, 1e-9, `I_${x}(${a}, ${b})`));
@@ -52,7 +52,9 @@ test('Kein Trend je Thema (seit 24.72.1): auch ein starker Rückgang zeigt nur d
   run(`DB = freshDB(); DB.tlog = { [addDays(today(), -2)]: { sv: { 'p:bisats':[20, 0], 'p:inversion':[20, 4], 'p:tempus':[20, 4] } }, [addDays(today(), -20)]: { sv: { 'p:bisats':[20, 13], 'p:inversion':[20, 4], 'p:tempus':[20, 4], 't:gap':[120, 29] } } }; S.errTab = 'p';`);
   assert.equal('trend' in run(`modelTopic('sv', 'bisats')`), false);
   const h = run(`errorSourcesHtml('sv')`) + run(`weakHtml('sv')`) + run(`S.view = 'progress'; openTopic('sv', 'bisats'); topicSheetHtml(S.pop)`);
-  assert.match(h, /Fehlerquote geschätzt/); assert.doesNotMatch(h, /besser|schlechter|class="mtr/);
+  // Nur die Zahlen prüfen: Die Beispielsätze im Themenblatt sind zufällig und dürfen „besser“ enthalten
+  // („Jag hoppas att du snart mår bättre.“), daran ist 24.72.1 auf GitHub gescheitert.
+  assert.match(h, /Fehlerquote geschätzt/); assert.doesNotMatch(h, /class="mtr|Letzte 14 Tage|als die 28 davor|>besser<|>schlechter</);
 });
 
 test('Thompson-Sampling: Thema vorn so oft, wie es wahrscheinlich das schwächste ist; fester Startwert je Woche', () => {
@@ -79,11 +81,12 @@ test('Schwerpunkt der Woche: Themen mit Daten per Thompson-Sampling, danach die 
   assert.equal(run(`focusTrap('sv')`), ft, 'innerhalb der Woche stabil');
 });
 
-test('Grundlagensätze bei „Fortgeschritten“: Themen mit geschätzt mindestens 25 % falsch', () => {
+test('Grundlagensätze bei „Fortgeschritten“: in den Fehlerquellen (mit mindestens 75 % über dem Schnitt)', () => {
   run(SYN);
   const weak = run(`[...weakTraps('sv')]`).sort(), M = run(`topicModel('sv')`);
-  assert.deepEqual(weak, M.topics.filter(x => x.n >= 3 && x.mean >= 0.25).map(x => x.id).sort());
-  assert.deepEqual(weak, ['bisats', 'species', 'tid']);
+  assert.deepEqual(weak, M.topics.filter(x => x.n >= 3 && x.pAbove >= 0.75).map(x => x.id).sort());
+  // species: geschätzt 43 %, P(über dem Schnitt) 77 %; bisats 31 % mit nur 49 % ist knapp über dem Schnitt, aber keine Fehlerquelle
+  assert.deepEqual(weak, ['species']);
 });
 
 test('Themenblatt: Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage', () => {

@@ -412,11 +412,11 @@ function dueItems(lang){
   const t = today();
   return BANK[lang].filter(i => { const s = stOf(i.id); return s && s.due <= t; }).sort((a, b) => stOf(a.id).due.localeCompare(stOf(b.id).due));
 }
-// Themen, in denen du geschätzt mindestens jede vierte Antwort falsch hast (Fehlermodell): Dort kommen auch für
-// Fortgeschrittene die Grundlagen-Sätze. Bis 24.71: rohe Quote der letzten 30 Tage ab 4 Aufgaben.
+// Fehlerquellen (isWeak, part_model.js): Dort kommen auch für Fortgeschrittene die Grundlagen-Sätze. Bis 24.71 rohe Quote
+// der letzten 30 Tage ab 4 Aufgaben; 24.72 Schätzung ab 25 %, die durch das Schrumpfen zum Schnitt fast nie erreicht wurde.
 function weakTraps(lang){
   if (typeof topicModel !== 'function') return new Set();
-  return new Set(topicModel(lang).topics.filter(x => x.n >= MODEL.MIN_N && x.mean >= 0.25).map(x => x.id));
+  return new Set(topicModel(lang).topics.filter(isWeak).map(x => x.id));
 }
 function levelOrder(lang, list, strict){
   const niv = DB.settings.niveau || 'mittel';
@@ -430,7 +430,7 @@ function levelOrder(lang, list, strict){
   const main = sorted.filter(i => lvl(i) >= 2 || weak.has(i.trap));
   return main.concat(sorted.filter(i => !main.includes(i)));
 }
-// Schwerpunkt der Woche: ein Thema je Sprache, montags neu gewählt (das schwächste der letzten 30 Tage, sonst das mit den meisten offenen Sätzen ab Mittelstufe)
+// Schwerpunkt der Woche: ein Thema je Sprache, montags neu gewählt (Reihenfolge siehe focusCandidates)
 function focusTrap(lang){
   const mo = mondayOf(today()); DB.focus = DB.focus || {};
   const f = DB.focus[lang];

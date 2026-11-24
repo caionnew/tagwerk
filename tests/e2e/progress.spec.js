@@ -61,7 +61,7 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
 });
-test('Heute „Fehlerquellen“ mit Schätzung und Bereich; „Thema üben“: erzeugte Themen ab 10 Aufgaben mit grünem Balken', async ({ page }) => {
+test('Heute „Fehlerquellen“ mit Schätzung und Bereich; „Thema üben“ mit Schätzung, Fehlerquellen oben', async ({ page }) => {
   const db = richDB('sv'); db.gen = { np:{ ok:2, bad:1, recent:[1, 0, 1] }, textgap_sv:{ ok:9, bad:3, recent:[1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] } };
   await seed(page, db);
   await page.goto(APP);
@@ -69,6 +69,7 @@ test('Heute „Fehlerquellen“ mit Schätzung und Bereich; „Thema üben“: e
   const weak = page.locator('.row.mrowh');
   expect(await weak.count()).toBeGreaterThanOrEqual(1);
   expect(await weak.count()).toBeLessThanOrEqual(3);
+  await expect(weak.first()).toContainText('Adjektivendungen');
   await expect(weak.first().locator('.mpct')).toHaveText(/^\d+\u00a0%$/);
   // Punkt im Bereich, Bereich im Streifen; darunter die Legende mit „Schätzung“ zum Antippen
   const g = await weak.first().evaluate(r => { const b = e => r.querySelector(e).getBoundingClientRect(); const s = b('.mstrip'), w = b('.m95'), d = b('.mdot');
@@ -78,18 +79,25 @@ test('Heute „Fehlerquellen“ mit Schätzung und Bereich; „Thema üben“: e
   await page.click('.mkey [data-a=term][data-k=schaetzung]');
   await expect(page.locator('.pop')).toContainText('Geschätzte Fehlerquote');
   await page.click('.pop [data-a=popclose] >> nth=-1');
+  // Schwerpunkt als Begriff
+  await page.click('.focusline [data-a=term][data-k=schwerpunkt]');
+  await expect(page.locator('.pop .pop-h')).toHaveText('Schwerpunkt der Woche');
+  await page.click('.pop [data-a=popclose] >> nth=-1');
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=pickTopic]');
-  const gen = page.locator('.row.bars[data-t=species]');
-  await expect(gen.locator('.rd')).toHaveText('3 Aufgaben, 2 richtig');
+  // Fehlerquellen als eigene Gruppe oben; erzeugte Themen ohne Balken und ohne Generator-Quote
+  await expect(page.locator('h2.grp >> nth=0')).toHaveText('Fehlerquellen');
+  const gen = page.locator('.rows >> nth=0').locator('.row.bars[data-t=species]');
+  await expect(gen.locator('.rd')).toHaveText(/^geschätzt \d+\u00a0% falsch$/);
   await expect(gen.locator('.bar')).toHaveCount(0);
+  await expect(page.locator('.row.bars[data-t=species]')).toHaveCount(1);
+  await expect(page.locator('.row.bars[data-t=lesen] .bar')).toHaveCount(0);
+  await expect(page.locator('.row.bars[data-t=lesen] .rd')).not.toContainText('richtig');
   await expect(page.locator('.row.bars[data-t=inversion] .bar')).toHaveCount(1);
-  // Ab 10 Aufgaben: Balken mit dem Anteil richtig, in anderer Farbe als der Fortschritt der Satz-Themen
-  await expect(page.locator('.row.bars[data-t=lesen] .rd')).toHaveText('Zuletzt 75\u00a0% richtig (letzte 12)');
-  const q = await page.$eval('.row.bars[data-t=lesen] .qbar', b => { const f = b.firstElementChild; return { w:f.getBoundingClientRect().width / b.getBoundingClientRect().width, c:getComputedStyle(f).backgroundColor }; });
-  const fill = await page.$eval('.row.bars[data-t=inversion] .bar > span', f => getComputedStyle(f).backgroundColor);
-  expect(Math.abs(q.w - 0.75)).toBeLessThan(0.02);
-  expect(q.c).not.toBe(fill);
-  await page.click('.grp-lead [data-a=term]');
+  await expect(page.locator('.row.bars[data-t=inversion] .rd')).toHaveText(/^geschätzt \d+\u00a0% falsch · \d+ von \d+ Sätzen geübt/);
+  await page.click('.grp-lead [data-a=term][data-k=schaetzung]');
+  await expect(page.locator('.pop')).toContainText('Als Fehlerquelle gilt');
+  await page.click('.pop [data-a=popclose] >> nth=-1');
+  await page.click('.grp-lead [data-a=term][data-k=gefestigt]');
   await expect(page.locator('.pop .pop-h')).toBeVisible();
 });

@@ -42,9 +42,7 @@ function topicSheetHtml(P){
   const tr = trapMeta(P.lang, P.trap), lang = P.lang;
   const items = BANK[lang].filter(i => i.trap === P.trap);
   const seen = items.filter(i => stOf(i.id)).length, mat = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
-  const rc = tr.gen && DB.gen[tr.gen] && DB.gen[tr.gen].recent;
   const stats = items.length ? `${items.length} Sätze im Thema, ${seen} geübt, ${mat} gefestigt.` : '';
-  const genStat = rc && rc.length >= 10 ? ` Erzeugte Aufgaben: zuletzt ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)}\u00a0% richtig.` : '';
   // Fehlermodell (part_model.js): Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage
   const mx = modelTopic(lang, P.trap), mu = topicModel(lang).mu;
   const model = mx && mx.n >= 1 ? `Fehlerquote geschätzt ${pct(mx.mean)}, wahrscheinlich ${pct(mx.lo)} bis ${pct(mx.hi)}; mit ${pct(mx.pAbove)} Wahrscheinlichkeit über deinem Schnitt von ${pct(mu)}.${mx.n30 ? ` Letzte 30 Tage: ${mx.k30} von ${mx.n30} falsch.` : ''}` : '';
@@ -56,7 +54,7 @@ function topicSheetHtml(P){
     ${tr.rule ? `<p class="pop-t">${termify(tr.rule)}</p>` : ''}
     ${P.examples.length ? `<p class="pop-sub">Beispiele</p><ul class="exl">${P.examples.map(x => `<li><span class="wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="exg">${esc(x.de)}</span>` : ''}</li>`).join('')}</ul>` : ''}
     ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}
-    ${stats || genStat ? `<p class="legend mt-12">${stats}${genStat}</p>` : ''}
+    ${stats ? `<p class="legend mt-12">${stats}</p>` : ''}
     ${model ? `<p class="legend">${model}</p>` : ''}
     <div class="popfoot"><button type="button" class="ghost" data-a="popclose">Schließen</button>${S.view === 'run' ? '' : `<button type="button" class="primary" data-a="trapgo" data-l="${lang}" data-t="${P.trap}">10 Aufgaben üben</button>`}</div>
   </div>`;
@@ -80,7 +78,8 @@ function viewRef(){
   }
   if (kind === 'kultur') return viewKultur(back);
   if (kind === 'terms') {
-    return backBar('Grammatik-Begriffe', back) + `<p class="lead-s">Die Fachwörter aus den Erklärungen, in Alltagssprache und mit ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Beispielen. In jeder Erklärung kannst du sie auch direkt antippen.</p><div class="rows">${termsFor(lang).sort((a, b) => a.t.localeCompare(b.t, 'de')).map(t => `<button type="button" class="row" data-a="term" data-k="${t.k}"><span class="txt"><span class="rt">${esc(t.t)}</span><span class="rd">${esc(t[lang][0].split('. ')[0].replace(/\.$/, ''))}.</span></span></button>`).join('')}</div>`;
+    return backBar('Grammatik-Begriffe', back) + `<p class="lead-s">Die Fachwörter aus den Erklärungen, in Alltagssprache und mit ${lang === 'sv' ? 'schwedischen' : 'spanischen'} Beispielen. In jeder Erklärung kannst du sie auch direkt antippen.</p><div class="rows">${termsFor(lang).sort((a, b) => a.t.localeCompare(b.t, 'de')).map(t => `<button type="button" class="row" data-a="term" data-k="${t.k}"><span class="txt"><span class="rt">${esc(t.t)}</span><span class="rd">${esc(t[lang][0].split('. ')[0].replace(/\.$/, ''))}.</span></span></button>`).join('')}</div>
+      <h2 class="grp">Begriffe der App</h2><div class="rows">${TERMS.filter(t => t.app).sort((a, b) => a.t.localeCompare(b.t, 'de')).map(t => `<button type="button" class="row" data-a="term" data-k="${t.k}"><span class="txt"><span class="rt">${esc(t.t)}</span><span class="rd">${esc(t.app[0].split(/[.:] /)[0].replace(/\.$/, ''))}.</span></span></button>`).join('')}</div>`;
   }
   if (kind === 'friends') {
     return backBar('Falsche Freunde', back) + `<p class="lead-s">Wörter, die nach Deutsch klingen und etwas anderes bedeuten.</p><div class="rows">${FALSE_FRIENDS[lang].map(f => `<div class="row static ffrow"><span class="txt"><span class="rt"><span class="wordrow" lang="${lang}">${linkWords(f[0], lang)}</span> = ${esc(f[1])}</span><span class="rd">${esc(capFirst(f[2]))}.</span></span></div>`).join('')}</div>`;

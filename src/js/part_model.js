@@ -15,7 +15,10 @@
 // ohne Änderung aber 3 bis 10 % Fehlalarme (am meisten beim Schwerpunkt). Fortschritt zeigt die Schätzung selbst, gesicherte
 // Verbesserungen die Themen-Etappen (part_stats.js). Rechnung in docs/RESEARCH.md.
 // Schwerpunkt der Woche: Thompson-Sampling, je Thema ein θ aus der Posterior gezogen, mit der Woche als festem Startwert.
-const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3 };
+const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3, WEAK_P:0.75 };
+// Fehlerquelle: ein Thema, das mit mindestens 75 % Wahrscheinlichkeit über deinem Schnitt liegt. Eine Definition für Heute,
+// „Als Nächstes“, „Thema üben“ und die Grundlagensätze bei „Fortgeschritten“ (bis 24.72: vier verschiedene Regeln).
+const isWeak = x => !!x && x.n >= MODEL.MIN_N && x.pAbove >= MODEL.WEAK_P;
 
 // Logarithmus der Gammafunktion (Lanczos, g = 7)
 const LANCZOS = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];

@@ -117,7 +117,10 @@ test('Eine Stelle je Regel im Quelltext: Abgleich, Bewegung reduzieren, Monatsna
 // Aufräumen Schritt 3: Fortschritt ohne Wiederholungen im ersten Jahr; „Wann du übst“ bleibt eine Karte (die Verteilung zählt)
 test('Fortschritt: „Jahr für Jahr“ erst ab dem zweiten Jahr, „Wann du übst“ mit Verteilung', () => {
   const d = base();
-  for (let k = 40; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:450 } }; d.done[ds(k)] = true; d.tlog[ds(k)] = { h:{ 7:5, 21:1 } }; }
+  // Höchstens bis zum 1. Januar zurück: Anfang Januar lägen 40 Tage sonst in zwei Jahren (dann zeigt die App zu Recht zwei Karten)
+  const span = Math.min(40, run(`dayDiff(today(), today().slice(0, 4) + '-01-01')`));
+  for (let k = span; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:450 } }; d.done[ds(k)] = true; }
+  for (let k = 40; k >= 0; k--) { d.tlog[ds(k)] = { h:{ 7:5, 21:1 } }; }
   setDB(d);
   assert.equal(run('yearsHtml()'), '', 'ein Jahr: dieselben Zahlen stehen in der Kopfkarte');
   d.log[ds(400)] = { sv:{ n:5, secs:120 } }; setDB(d);

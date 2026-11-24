@@ -23,9 +23,9 @@ test('Fortgeschritten: keine Grundlagen-Sätze, solange schwerere da sind', () =
   assert.equal(got.length, 12);
   assert.ok(got.every(x => !x.startsWith('1:')), got.join(' '));
 });
-test('Fortgeschritten mit vielen Fehlern in einem Thema: dort kommen auch einfache Sätze', () => {
+test('Fortgeschritten mit einer Fehlerquelle: dort kommen auch einfache Sätze', () => {
   const t = app.run('today()');
-  const got = Array.from(pick('fort', { [t]:{ sv:{ 'p:partikel':[10, 6] } } }));
+  const got = Array.from(pick('fort', { [t]:{ sv:{ 'p:partikel':[10, 6], 'p:inversion':[20, 1], 'p:tempus':[20, 1], 'p:bisats':[20, 2] } } }));
   assert.ok(got.some(x => x === '1:partikel'), got.join(' '));
 });
 test('Grundlagen: leichte zuerst; Mittel: alle Stufen', () => {

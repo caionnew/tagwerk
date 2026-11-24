@@ -2,6 +2,23 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.73.0
+**Eine Regel für „Fehlerquelle“, Grundlagensätze wieder an, „Thema üben“ mit Schätzung, doppelte Quoten weg. Dazu der rote Build von 24.72.1.**
+- **Roter Build auf GitHub (24.72.1):** Der neue Test „kein Trend“ verbot „besser“ im ganzen Themenblatt; dessen Beispielsätze sind zufällig, und einer heißt „Ich hoffe, dass du dich bald besser fühlst“. Lokal zufällig grün, auf GitHub rot, die Seite blieb auf 24.72.0. Der Test prüft jetzt nur die Zahlen. Bei der Suche nach weiteren Zufalls- und Datumsfehlern (25 Läufe, sechs verschobene Daten in zwei Zeitzonen) zwei Tests gefunden, die ab dem 1. Januar rot geworden wären (Testdaten über den Jahreswechsel); beide korrigiert.
+- **Grundlagensätze bei „Fortgeschritten“ kommen wieder:** 24.72 verlangte eine Schätzung ab 25 %. Durch das Ziehen zum Schnitt erreichte das in deinem Backup kein Thema, leichtere Sätze kamen nirgends mehr.
+- **Fehlerquelle, eine Definition:** ein Thema, das mit mindestens 75 % Wahrscheinlichkeit über deinem Schnitt liegt. Gilt für Heute, „Als Nächstes“, „Thema üben“, die Grundlagensätze und den Tatoeba-Nachschub (vorher vier verschiedene Regeln). Heute zeigt dadurch nur noch, was sich wirklich abhebt: bei dir Schwedisch Adjektivendungen, Spanisch Perfecto und Konditional. Die Erklärung zu „Schätzung“ nennt die Regel.
+- **Fehler finden** wählt die Fehlerarten nach der Schätzung im Verhältnis zu deinem Schnitt (½ bis 2), nicht mehr nach eigener Formel.
+- **„Thema üben“:** je Thema „geschätzt 19 % falsch“, oben eine Gruppe „Fehlerquellen“. Erzeugte Themen ohne den grünen Balken „Anteil richtig“: Der kam nur aus dem Generator und widersprach dem Themenblatt (Adjektivendungen „6 Aufgaben, 3 richtig“ gegen „5 von 13 falsch“). Das Grammatik-Training zählt weiter je Generator.
+- **Doppelte Quoten weg:** „Erzeugte Aufgaben, zuletzt richtig: …“ unter dem Themenraster und „zuletzt 77 % richtig“ im Themenblatt erzeugter Themen. Die Genus-Fallen bleiben.
+- **Schwerpunkt der Woche** ist antippbar und erklärt das Los nach Fehlerquote.
+- **„Alle Begriffe“** zeigt am Ende eine Gruppe „Begriffe der App“ (Gefestigt, Verankert, Geschätzt abrufbar, Geschätzte Fehlerquote, Schwerpunkt der Woche, LIX). Vorher führte der Link aus diesen Erklärungen in eine Liste ohne sie.
+- **Behalten:** „deutlich darüber/darunter“ nur noch, wenn es mit 95 % Wahrscheinlichkeit stimmt (10 von 10 reichen nicht, 20 von 20 schon); sonst „Für ein sicheres Urteil sind 10 Wiederholungen noch zu wenige.“
+- Spanische Kurznamen auf Deutsch wie bei Schwedisch: „Konnektoren“ statt „Konectores“ (auch falsch geschrieben), „Präpositionen“ statt „Preposiciones“.
+- Doku: ARCHITECTURE.md (Fehlerquelle, „Thema üben“), RESEARCH.md (Regel und Begründung, Gewichte, „Behalten“), IDEEN.md (Schreiben-Pfeil zurückgestellt, README-Bilder für Runde 3 vorgemerkt), CLAUDE.md.
+- `npm run sicht`: neue Ansicht „thema-ueben“; Testprofil um ein klar schwaches und ein sicheres Thema ergänzt, damit es eine Fehlerquelle gibt.
+- Tests: Fehlerquelle in Heute, „Als Nächstes“, Grundlagensätzen und „Thema üben“; Gewichte bei „Fehler finden“; „Behalten“ mit und ohne sicheres Urteil; keine Generator-Quote mehr; Kurznamen; Schwerpunkt-Begriff und App-Begriffe; Jahreswechsel.
+- Speicherstand unverändert.
+
 ## 24.72.1
 **Kein Trend je Thema mehr; Themen-Etappen mit echtem Volumen nachgeprüft.**
 - **Trend entfernt:** „besser“ und „schlechter“ (14 gegen 28 Tage) sind wieder raus. Exakt nachgerechnet mit dem Volumen aus deinem Backup (je Thema im Median 1,2 Aufgaben am Tag): Ein Thema bei 20 % hätte bei 1,2 am Tag selbst bei 0 % nie „besser“ gezeigt; bei 3,7 am Tag hätte es auf 9 % fallen müssen, beim Schwerpunkt (7,3) auf 12 %. Ohne jede Änderung zeigten dagegen 3 bis 10 % der Themen einen Trend, am häufigsten beim Schwerpunkt (ungleiches Schrumpfen der beiden Abschnitte, Regression zur Mitte nach der Auswahl), und die Wörter hätten mit dem täglich verschobenen Fenster geflackert. Fortschritt zeigt die Schätzung mit Vergessen selbst; gesicherte Verbesserungen bleiben Sache der Themen-Etappen.

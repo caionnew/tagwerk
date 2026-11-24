@@ -60,7 +60,7 @@ test('Mehrere Etappen: Können vor Fleiß, die übrigen in einer Zeile, Ausschni
   const t500 = J('wayEvents().done').find(e => e.t === '500 Aufgaben');
   app.run(`globalThis.__r = { lang:'sv', miles:[${JSON.stringify(t500)}], crossed:{ mature:[], anchored:[] } };`);
   const h2 = app.run('mileHtml(__r)');
-  assert.match(text(h2), /^Etappe 100 Aufgaben \d+\. \S+ 500 Aufgaben heute 1\.000 Aufgaben noch 456 Dein Weg$/);
+  assert.match(text(h2), /^Etappe 100 Aufgaben \d+\. \S+(?: \d{4})? 500 Aufgaben heute 1\.000 Aufgaben noch 456 Dein Weg$/);
 });
 
 test('Gefestigt in dieser Runde: nur Sätze, die die Schwelle überschritten haben, die mit den meisten Fehlern zuerst', () => {

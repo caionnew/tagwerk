@@ -89,66 +89,119 @@ test('Themennamen brechen nicht am Bindestrich um: „si‑Sätze“, „s‑Pas
   assert.equal(run(`keepHyph('Konditional & si-Sätze')`), 'Konditional & si\u2011Sätze');
   assert.equal(run(`keepHyph('s-Passiv, „man“ & „det finns“')`), 's\u2011Passiv, „man“ & „det finns“');
   assert.equal(run(`keepHyph('Präteritum oder Perfekt')`), 'Präteritum oder Perfekt');
-  run(`DB = freshDB(); DB.st = {}; DB.focus = {}; DB.tlog = { [today()]: { es: { 'p:condicional': [40, 15], 'p:perfecto': [12, 2], 't:gap': [52, 17] } } }; S.errTab = 'p';`);
+  run(`DB = freshDB(); DB.st = {}; DB.focus = {}; DB.tlog = { [today()]: { es: { 'p:condicional': [40, 15], 'p:perfecto': [12, 2], 'p:porpara': [30, 1], 'p:serestar': [30, 1], 't:gap': [112, 19] } } }; S.errTab = 'p';`);
   assert.match(run(`errorSourcesHtml('es')`), /Konditional &amp; si\u2011Sätze/);
   assert.match(run(`weakHtml('es')`), /Konditional &amp; si\u2011Sätze/);
   // Schwerpunkt: der Name bleibt als Ganzes zusammen
   assert.match(run(`(S.lang = 'es', DB.settings.lang = 'es', viewHome())`), /<b class="nobr">Konditional &amp; si\u2011Sätze<\/b>/);
 });
 
-test('Thema üben: Satz-Themen mit Balken für den gefestigten Anteil, erzeugte Themen unter 10 Aufgaben ohne Balken, als Anzahl', () => {
+test('Thema üben: Schätzung je Thema, Fehlerquellen als eigene Gruppe oben; Satz-Themen mit Balken, erzeugte ohne', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     DB.gen = { prep_es: { ok: 2, bad: 1, recent: [1, 0, 1] }, det_es: { ok: 3, bad: 0, recent: [1, 1, 1] } };
     BANK.es.filter(i => i.trap === 'condicional').slice(0, 2).forEach(i => { DB.st[i.id] = { ok: 2, bad: 0, alts: [], s: 30, d: 5, ivl: 6, last: t, due: addDays(t, 6), reps: 2 }; });
     S.lang = 'es'; })()`);
-  const html = run('viewPickTopic()');
-  const [sents, gens] = html.split('Immer neu erzeugt');
+  let html = run('viewPickTopic()');
+  let [sents, gens] = html.split('Immer neu erzeugt');
   assert.ok(gens, 'zweite Gruppe fehlt');
   const sentRows = run(`topicRows('es').filter(r => !r.gen).length`), genRows = run(`topicRows('es').filter(r => r.gen).length`);
   assert.equal((sents.match(/class="bar"/g) || []).length, sentRows);
-  assert.equal((gens.match(/class="bar/g) || []).length, 0);
+  assert.equal((gens.match(/class="bar/g) || []).length, 0, 'erzeugte Themen ohne Balken (kein „Anteil richtig“ mehr)');
   assert.equal((gens.match(/data-a="trapgo"/g) || []).length, genRows);
   assert.match(text(sents), /Der Balken zeigt, wie viele Sätze im Thema gefestigt sind/);
-  assert.match(text(gens.split('data-t="prep"')[1].split('</button>')[0]), /3 Aufgaben, 2 richtig/);
-  assert.match(text(gens.split('data-t="concord"')[1].split('</button>')[0]), /3 Aufgaben, 3 richtig/);
-  assert.doesNotMatch(text(gens), /%/);
-  assert.match(text(sents.split('data-t="condicional"')[1].split('</button>')[0]), /2 von \d+ Sätzen geübt, 0 gefestigt/);
+  assert.doesNotMatch(text(html), /richtig|grüne Balken|Fehlerquellen/, 'ohne Daten keine Fehlerquellen, keine Generator-Quote');
+  const row = (h, t) => text(h.split(`data-t="${t}"`)[1].split('</button>')[0].replace(/^[^>]*>/, ''));
+  assert.match(row(gens, 'prep'), /^Verben mit Präposition Noch zu wenige Aufgaben für eine Schätzung$/);
+  assert.match(row(sents, 'condicional'), /2 von \d+ Sätzen geübt, 0 gefestigt/);
+  // Mit Daten: Schätzung aus dem Fehlermodell; Fehlerquellen (Satz- und erzeugte Themen) oben in eigener Gruppe, nicht doppelt
+  run(`DB.tlog = { [today()]: { es: { 'p:condicional':[40, 16], 'p:prep':[24, 10], 'p:porpara':[30, 1], 'p:serestar':[30, 1], 'p:pasado':[30, 2] } } };`);
+  html = run('viewPickTopic()');
+  const est = id => run(`pct(modelTopic('es', '${id}').mean)`), mu = run(`pct(topicModel('es').mu)`);
+  assert.ok(run(`isWeak(modelTopic('es', 'condicional')) && isWeak(modelTopic('es', 'prep')) && !isWeak(modelTopic('es', 'porpara'))`));
+  const [, weakPart] = html.split('<h2 class="grp">Fehlerquellen</h2>'), top = weakPart.split('<h2 class="grp">Sätze</h2>')[0];
+  assert.match(text(top), new RegExp(`^Geschätzt mit mindestens 75.% Wahrscheinlichkeit über deinem Schnitt von ${mu}\\.`));
+  assert.deepEqual((top.match(/data-t="[^"]+"/g) || []).map(x => x.slice(8, -1)), run(`['condicional', 'prep'].sort((a, b) => modelTopic('es', b).mean - modelTopic('es', a).mean)`));
+  assert.match(row(top, 'condicional'), new RegExp(`^Konditional &amp; si.Sätze geschätzt ${est('condicional')} falsch · 2 von \\d+ Sätzen geübt`));
+  assert.match(row(top, 'prep'), new RegExp(`^Verben mit Präposition geschätzt ${est('prep')} falsch$`));
+  assert.equal((html.match(/data-t="condicional"/g) || []).length, 1, 'nicht doppelt');
+  [sents, gens] = html.split('<h2 class="grp">Sätze</h2>')[1].split('Immer neu erzeugt');
+  assert.match(row(sents, 'porpara'), new RegExp(`geschätzt ${est('porpara')} falsch · \\d+ Sätze, noch nicht begonnen$`));
 });
 
-test('Erzeugte Bereiche: ab 10 Aufgaben grüner Balken und Prozent, derselbe Anteil in Balken, „Thema üben“ und „Grammatik-Training“', () => {
+test('Grammatik-Training zählt nur den Generator (ab 10 Aufgaben als Anteil), „Thema üben“ das ganze Thema', () => {
   run(`DB = freshDB(); DB.gen = { prep_es: { ok: 9, bad: 3, recent: [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] }, det_es: { ok: 8, bad: 2, recent: [1, 1] } }; S.lang = 'es';`);
-  assert.equal(run(`genStatText('prep_es')`), 'Zuletzt 75 % richtig (letzte 12)');
-  assert.equal(run(`genStatText('det_es')`), 'Bisher 80 % richtig');
+  assert.equal(run(`genStatText('prep_es')`), 'Zuletzt 75\u00a0% richtig (letzte 12)');
+  assert.equal(run(`genStatText('det_es')`), 'Bisher 80\u00a0% richtig');
   assert.equal(run(`genStatText('conj')`), 'Noch nicht geübt');
   run(`DB.gen.conj = { ok: 1, bad: 0, recent: [1] }`);
   assert.equal(run(`genStatText('conj')`), '1 Aufgabe, 1 richtig');
-  const topic = text(run('viewPickTopic()').split('data-t="prep"')[1].split('</button>')[0]);
   const drill = text(run('viewPickGen()').split('data-g="prep_es"')[1].split('</button>')[0]);
-  assert.match(topic, /Zuletzt 75 % richtig \(letzte 12\)/);
-  assert.match(drill, /Zuletzt 75 % richtig \(letzte 12\)/);
-  const html = run('viewPickTopic()'), rowOf = t => html.split(`data-t="${t}"`)[1].split('</button>')[0];
-  assert.match(rowOf('prep'), /class="bar qbar"[^>]*><span style="width:75%"/);
-  assert.match(rowOf('concord'), /class="bar qbar"[^>]*><span style="width:80%"/);
-  assert.doesNotMatch(rowOf('konjugation'), /class="bar/);
-  assert.match(text(html.split('Immer neu erzeugt')[1]), /^Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben/);
+  assert.match(drill, /Zuletzt 75\u00a0% richtig \(letzte 12\)/);
+  const topic = text(run('viewPickTopic()').split('data-t="prep"')[1].split('</button>')[0]);
+  assert.doesNotMatch(topic, /richtig/);
 });
 
-test('Heute, „Fehlerquellen“: Themen über deinem Schnitt wie im Sprach-Tab, erst ab 8 Fehlern, nur übbare Themen', () => {
+test('Heute, „Fehlerquellen“: nur Fehlerquellen (P über dem Schnitt ≥ 75 %) wie im Sprach-Tab, erst ab 8 Fehlern, nur übbare Themen', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     BANK.es.filter(i => i.trap === 'serestar').slice(0, 5).forEach(i => { DB.st[i.id] = { ok: 1, bad: 0, alts: [], s: 2, d: 5, ivl: 2, last: t, due: addDays(t, 2), reps: 1 }; }); })()`);
   assert.equal(run(`weakHtml('es')`), '');
-  run(`DB.tlog = { [today()]: { es: { 'p:condicional': [30, 9], 'p:prep': [12, 4], 'p:perfecto': [10, 4], 'p:porpara': [30, 1], 'p:serestar': [25, 2], 'p:genus': [20, 9], 'p:subjuntivo': [2, 2], 't:gap': [129, 31] } } };`);
+  run(`DB.tlog = { [today()]: { es: { 'p:condicional':[40, 16], 'p:prep':[24, 10], 'p:perfecto':[20, 9], 'p:porpara':[30, 1], 'p:serestar':[30, 1], 'p:pasado':[30, 2], 'p:genus':[20, 9], 'p:subjuntivo':[2, 2], 't:gap':[196, 50] } } };`);
   const M = run(`topicModel('es')`), ids = run(`weakTopics('es').map(x => x.id)`);
-  // Höchstens drei, alle über dem Schnitt, in der Reihenfolge des Modells; Genus (nicht übbar) und unter 3 Aufgaben nicht
-  const expect = M.topics.filter(x => !['genus', 'subjuntivo'].includes(x.id) && x.mean > M.mu).slice(0, 3).map(x => x.id);
+  // Höchstens drei Fehlerquellen in der Reihenfolge des Modells; Genus (nicht übbar) und unter 3 Aufgaben nicht
+  const expect = M.topics.filter(x => !['genus', 'subjuntivo'].includes(x.id) && x.n >= 3 && x.pAbove >= 0.75).slice(0, 3).map(x => x.id);
   assert.deepEqual(ids, expect);
-  assert.ok(ids.length >= 2 && !ids.includes('porpara') && !ids.includes('genus'));
+  assert.deepEqual(ids, ['perfecto', 'prep', 'condicional']);
+  // Knapp über dem Schnitt reicht nicht: mit 3 von 10 ist Perfecto keine Fehlerquelle
+  run(`DB.tlog[today()].es['p:perfecto'] = [10, 3]`);
+  assert.ok(!run(`weakTopics('es').map(x => x.id)`).includes('perfecto'));
+  run(`DB.tlog[today()].es['p:perfecto'] = [20, 9]`);
   const html = run(`weakHtml('es')`);
   assert.match(text(html), /^Fehlerquellen /, 'derselbe Name wie auf Fortschritt');
   assert.equal((html.match(/class="mstrip"/g) || []).length, ids.length);
   assert.match(html, /<p class="legend below"><span class="mkey">/);
   // Unter 8 Fehlern in der Sprache sagt die Liste noch nichts
-  run(`DB.tlog[today()].es['t:gap'] = [129, 7]`);
+  run(`DB.tlog[today()].es['t:gap'] = [196, 7]`);
   assert.deepEqual(run(`weakTopics('es')`), []);
   assert.equal(run(`weakHtml('es')`), '');
+});
+
+// Runde 2 (24.73): eine Zahl je Sache, Urteile nur mit genug Daten
+test('Behalten: „deutlich darüber/darunter“ nur, wenn es mit 95 % stimmt; 10 von 10 reichen dafür nicht', () => {
+  const view = (ok, n, niv) => text(run(`(() => { DB = freshDB(); DB.settings.niveau = '${niv || 'mittel'}'; DB.log = { [today()]: { sv: { n: ${n}, rev: ${n}, revOk: ${ok} } } }; DB.st = {}; S.view = 'progress'; S.ptab = 'sv'; S.lang = 'sv'; return viewProgress(); })()`));
+  assert.match(view(10, 10), /Für ein sicheres Urteil sind 10 Wiederholungen noch zu wenige\./);
+  assert.match(view(90, 93, 'fort'), /Du liegst deutlich darüber\. Ein längeres Tagwerk würde dich nicht überfordern\./);
+  assert.match(view(7, 10), /Du liegst deutlich darunter\./, '7 von 10 liegen weit genug unter 90 %: P(darunter) 97 %');
+  assert.match(view(30, 50), /Du liegst deutlich darunter\./);
+  assert.match(view(45, 50), /Du liegst im Plan\./);
+});
+
+test('Erzeugte Themen: keine zweite Quote „zuletzt richtig“ unter dem Themenraster und im Themenblatt; Genus-Fallen bleiben', () => {
+  run(`DB = freshDB(); DB.st = {}; DB.gen = { prep_es: { ok: 9, bad: 3, recent: [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0] } }; DB.genus = { es: { mano: { ok: 0, bad: 1, last: 0 } } };
+    DB.tlog = { [today()]: { es: { 'p:prep':[12, 3], 'p:porpara':[20, 2], 'p:serestar':[20, 1] } } }; S.view = 'progress'; S.ptab = 'es'; S.lang = 'es';`);
+  const p = text(run('viewProgress()'));
+  assert.doesNotMatch(p, /zuletzt richtig|Erzeugte Aufgaben/);
+  assert.match(p, /Genus-Fallen: la mano\. Genus üben/);
+  run(`openTopic('es', 'prep')`);
+  const sheet = text(run('topicSheetHtml(S.pop)'));
+  assert.doesNotMatch(sheet, /richtig\./);
+  assert.match(sheet, /Fehlerquote geschätzt \d+\s%/);
+});
+
+test('Kurznamen der Generatoren auf Deutsch, in beiden Sprachen gleich', () => {
+  const shorts = run(`Object.fromEntries(Object.entries(GENS).map(([k, g]) => [k, g.short || '']))`);
+  assert.equal(shorts.verbind_es, shorts.verbind_sv); assert.equal(shorts.prep_es, shorts.prep_sv);
+  assert.ok(!Object.values(shorts).some(s => /Konectores|Conectores|Preposiciones/.test(s)), JSON.stringify(shorts));
+});
+
+test('Schwerpunkt der Woche: auf „Heute“ als Begriff erklärt; „Alle Begriffe“ führt zu einer Liste mit den Begriffen der App', () => {
+  run(`DB = freshDB(); DB.st = {}; DB.focus = {}; S.lang = 'sv'; DB.settings.lang = 'sv';`);
+  assert.match(run('viewHome()'), /<p class="hint focusline"><button type="button" class="term" data-a="term" data-k="schwerpunkt">Schwerpunkt der Woche<\/button>: <b class="nobr">/);
+  run(`S.pop = { type:'term', k:'schwerpunkt', lang:'sv' }`);
+  const sheet = text(run('termSheetHtml(S.pop)'));
+  assert.match(sheet, /so oft Schwerpunkt, wie wahrscheinlich es gerade dein schwächstes ist/);
+  assert.match(run('termSheetHtml(S.pop)'), /data-a="ref" data-r="terms">Alle Begriffe/);
+  const list = run(`(S.ref = 'terms', viewRef())`), app = list.split('Begriffe der App')[1];
+  assert.ok(app, 'Gruppe der App-Begriffe fehlt');
+  for (const k of run(`TERMS.filter(t => t.app).map(t => t.k)`)) assert.match(app, new RegExp(`data-k="${k}"`), k);
+  assert.doesNotMatch(list.split('Begriffe der App')[0], /data-k="schaetzung"/);
 });

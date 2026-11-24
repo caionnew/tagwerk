@@ -124,7 +124,7 @@ function viewHome(){
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
     card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue, lang)} Min.</span></p>${doneOther ? `<p class="hint mt-4">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
       <ul class="plan2">${parts.join('')}</ul>
-      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b class="nobr">${esc(keepHyph(trapMeta(lang, ft).label))}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
+      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline"><button type="button" class="term" data-a="term" data-k="schwerpunkt">Schwerpunkt der Woche</button>: <b class="nobr">${esc(keepHyph(trapMeta(lang, ft).label))}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">${LANG[lang].deName}-Tagwerk starten</button>
       <p class="hint lenlink">${size().label}, ${size().newPer} neue Sätze pro Tag <button type="button" class="link" data-a="toSettings">Länge ändern</button></p>`;
     if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
@@ -155,37 +155,41 @@ function genRate(g){
   if (rc.length >= 10) return rc.reduce((a, x) => a + x, 0) / rc.length;
   return n >= 10 ? st.ok / n : null;
 }
-// Stand eines erzeugten Bereichs in Worten, gleich für „Thema üben“ und „Grammatik-Training“: ab 10 Aufgaben derselbe Anteil
-// wie der Balken in Prozent, darunter als Anzahl („3 Aufgaben, 2 richtig“).
+// Stand eines erzeugten Bereichs in Worten für „Grammatik-Training“ (nur dieser Generator): ab 10 Aufgaben als Anteil,
+// darunter als Anzahl („3 Aufgaben, 2 richtig“). „Thema üben“ zeigt dagegen das ganze Thema aus dem Fehlermodell.
 function genStatText(g){
   const st = DB.gen[g] || { ok:0, bad:0 }, n = st.ok + st.bad, rc = st.recent || [], r = genRate(g);
   if (r != null) return rc.length >= 10 ? `Zuletzt ${pct(r)} richtig (letzte ${rc.length})` : `Bisher ${pct(r)} richtig`;
   return n ? `${plural(n, 'Aufgabe', 'Aufgaben')}, ${st.ok} richtig` : 'Noch nicht geübt';
 }
-// Zeilen für „Thema üben“. Satz-Themen haben einen festen Bestand, ihr Balken zeigt den gefestigten Anteil daran.
-// Erzeugte Themen haben keinen Bestand; ihr Balken zeigt den Anteil richtig, in eigener Gruppe und Farbe, erst ab 10 Aufgaben.
+// Zeilen für „Thema üben“: je Thema die Schätzung aus dem Fehlermodell (ab 3 gewichteten Aufgaben); Fehlerquellen (weak) bekommen
+// oben eine eigene Gruppe.
+// Satz-Themen haben einen festen Bestand, ihr Balken zeigt den gefestigten Anteil daran. Erzeugte Themen haben keinen Bestand
+// und keinen Balken (bis 24.72 ein grüner Balken „Anteil richtig“ nur aus dem Generator, der den anderen Zahlen widersprach).
 function topicRows(lang){
+  const M = topicModel(lang);
   return topicIds(lang).map(id => {
-    const tr = trapMeta(lang, id);
+    const tr = trapMeta(lang, id), x = M.topics.find(t => t.id === id), weak = isWeak(x);
+    const est = x && x.n >= MODEL.MIN_N ? `geschätzt ${pct(x.mean)} falsch` : '';
     if (tr.kind === 'gen') {
-      const g = DB.gen[tr.gen] || { ok:0, bad:0 };
-      return { id, label:tr.label, gen:true, rate:genRate(tr.gen), text:genStatText(tr.gen), touched:g.ok + g.bad > 0 };
+      const g = DB.gen[tr.gen] || { ok:0, bad:0 }, touched = g.ok + g.bad > 0 || !!x;
+      return { id, label:tr.label, gen:true, weak, mean:x ? x.mean : 0, text:est || (touched ? 'Noch zu wenige Aufgaben für eine Schätzung' : 'Noch nicht geübt'), touched };
     }
     const items = BANK[lang].filter(i => i.trap === id);
     const seen = items.filter(i => stOf(i.id)).length;
     const mature = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
-    return { id, label:tr.label, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`, touched:seen > 0 };
+    const base = seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`;
+    return { id, label:tr.label, weak, mean:x ? x.mean : 0, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:est ? `${est} · ${base}` : base, touched:seen > 0 };
   });
 }
 const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${esc(r.text)}</span></span>`;
-const barRow = r => rowText(r) + (r.gen ? (r.rate == null ? '' : `<span class="bar qbar" aria-hidden="true"><span style="width:${Math.max(3, Math.round(r.rate * 100))}%"></span></span>`)
-  : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
-// Heute, „Fehlerquellen“: die drei Themen mit der höchsten Schätzung über deinem Schnitt, aus dem Fehlermodell wie im Sprach-Tab.
-// Erst ab 8 Fehlern in 30 Tagen (wie dort); nur Themen, die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
+const barRow = r => rowText(r) + (r.gen ? '' : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
+// Heute, „Fehlerquellen“: bis zu drei Fehlerquellen mit der höchsten Schätzung, aus dem Fehlermodell wie im Sprach-Tab.
+// Erst ab 8 Fehlern in 30 Tagen (wie dort); nur Fehlerquellen (isWeak), die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
 function weakTopics(lang){
   if (errStats(lang, 30).bad < 8) return [];
   const ids = new Set(topicIds(lang)), M = topicModel(lang);
-  return M.topics.filter(x => ids.has(x.id) && x.n >= MODEL.MIN_N && x.mean > M.mu).slice(0, 3).map(x => Object.assign({ label:trapMeta(lang, x.id).label }, x));
+  return M.topics.filter(x => ids.has(x.id) && isWeak(x)).slice(0, 3).map(x => Object.assign({ label:trapMeta(lang, x.id).label }, x));
 }
 function weakHtml(lang){
   const list = weakTopics(lang);
@@ -220,13 +224,15 @@ function viewExtra(){
   <h2 class="grp">Nachschlagen</h2>
   <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'rules')}${row('ref', 'Grammatik-Begriffe', `${termsFor(lang).length} Fachwörter wie ${lang === 'sv' ? 'Supinum und Inversion' : 'Subjuntivo und Gerundium'}, in Alltagssprache`, ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Sprache, Alltag und Gesellschaft`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste, nach Datum sortiert`, ' data-r="feasts"', 'feast')}</div>`;
 }
+// Oben die Fehlerquellen (höchste Schätzung zuerst, Satz- und erzeugte Themen zusammen), darunter die übrigen in fester Reihenfolge
 function viewPickTopic(){
-  const lang = S.lang;
-  const rows = topicRows(lang), list = rs => `<div class="rows">${rs.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
-  const gens = rows.filter(r => r.gen);
+  const lang = S.lang, rows = topicRows(lang);
+  const list = rs => `<div class="rows">${rs.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
+  const weak = rows.filter(r => r.weak).sort((a, b) => b.mean - a.mean), rest = rows.filter(r => !r.weak), gens = rest.filter(r => r.gen);
   return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema.</p>
-    <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button> sind.</p>${list(rows.filter(r => !r.gen))}
-    ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2><p class="lead-s grp-lead">Der grüne Balken zeigt den Anteil richtiger Antworten, ab 10 Aufgaben.</p>${list(gens)}` : ''}`;
+    ${weak.length ? `<h2 class="grp">Fehlerquellen</h2><p class="lead-s grp-lead"><button type="button" class="term" data-a="term" data-k="schaetzung">Geschätzt</button> mit mindestens ${pct(MODEL.WEAK_P)} Wahrscheinlichkeit über deinem Schnitt von ${pct(topicModel(lang).mu)}.</p>${list(weak)}` : ''}
+    <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button> sind.</p>${list(rest.filter(r => !r.gen))}
+    ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2>${list(gens)}` : ''}`;
 }
 function viewPickGen(){
   const lang = S.lang;
@@ -544,12 +550,12 @@ function roundTopics(r){
   });
   return [...map.values()].sort((a, b) => b.bad - a.bad || b.off - a.off || b.dots.length - a.dots.length);
 }
-// Nach einer fehlerfreien Übungsrunde: das Thema mit der höchsten Schätzung, das mit mindestens 80 % Wahrscheinlichkeit über
-// deinem Schnitt liegt (Fehlermodell). Noch eine Runde vom selben bringt dann am wenigsten.
+// Nach einer fehlerfreien Übungsrunde: die Fehlerquelle mit der höchsten Schätzung (isWeak, Fehlermodell), die in der Runde
+// nicht vorkam. Noch eine Runde vom selben bringt dann am wenigsten.
 function nextTopicHtml(r){
   if (r.kind === 'daily' || r.bad || (r.ok || 0) < 3) return '';
   const lang = r.lang, here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean)), M = topicModel(lang);
-  const x = M.topics.find(y => y.id !== 'eigene' && trapMeta(lang, y.id) && !here.has(y.id) && y.n >= MODEL.MIN_N && y.pAbove >= 0.8);
+  const x = M.topics.find(y => y.id !== 'eigene' && trapMeta(lang, y.id) && !here.has(y.id) && isWeak(y));
   if (!x) return '';
   return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(keepHyph(trapLabel(lang, x.id)))}</b>: geschätzt ${pct(x.mean)} falsch, dein Schnitt ${pct(M.mu)}. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
 }
@@ -1098,6 +1104,9 @@ function viewProgress(){
   const collected = DB.own[lang].map(o => ({ id:o.id, de:o.de, target:o.target })).concat(DB.tat[lang].filter(o => !o.auto).map(o => ({ id:o.id, de:o.de, target:o.target })));
   const firstDate = tot.first ? dateOf(tot.first) : null;
   const ret = rev30 >= 10 ? revOk30 / rev30 : null;
+  // „Deutlich darüber/darunter“ nur, wenn es mit 95 % Wahrscheinlichkeit stimmt: Beta(richtig + ½, falsch + ½) gegen die
+  // geplanten 90 % (bis 24.72 schon ab 10 Wiederholungen; 10 von 10 sind mit dem Plan noch gut vereinbar)
+  const pLow = ret != null ? ibeta(0.9, revOk30 + 0.5, rev30 - revOk30 + 0.5) : 0.5, retSure = pLow >= 0.95 || pLow <= 0.05;
   const tabs = `<div class="ptabs" role="tablist">${[['all', 'Überblick'], ['sv', 'Schwedisch'], ['es', 'Spanisch']].map(([k, l]) => `<button type="button" role="tab" aria-selected="${tab === k}" data-a="ptab" data-t="${k}">${l}</button>`).join('')}</div>`;
   if (tab === 'all') {
     const tw = activeLangs().reduce((a, l) => a + tagwerkCount(l), 0);
@@ -1142,7 +1151,7 @@ function viewProgress(){
   <div class="chart"><p class="stat">${ret != null ? `<b>${pct(ret)}</b> Von ${rev30} fälligen Sätzen wusstest du ${revOk30} beim ersten Versuch noch.` : rev30 ? `Erst ${plural(rev30, 'Wiederholung', 'Wiederholungen')}. Ab 10 gibt es hier eine Quote.` : 'Noch keine Wiederholungen. Sätze kommen ab dem Tag nach dem ersten Üben wieder.'}</p>
   ${retTrend(lang)}
   ${revM30 >= 10 ? `<p class="legend">Bei gefestigten Sätzen: ${pct(revMOk30 / revM30)} (${revMOk30} von ${revM30}).</p>` : ''}
-  ${ret != null ? `<p class="legend">Die Wiederholungen sind so geplant, dass du etwa 90 % noch weißt. ${ret < 0.8 ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 ? ((DB.settings.niveau || 'mittel') === 'fort' ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst deutlich darüber. Wenn dir die Sätze leicht fallen: Das Niveau <button type="button" class="link inl" data-a="settings">„Fortgeschritten“</button> bringt längere und schwerere.') : 'Du liegst im Plan.'}</p>` : ''}</div>
+  ${ret != null ? `<p class="legend">Die Wiederholungen sind so geplant, dass du etwa 90 % noch weißt. ${ret < 0.8 && retSure ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 && retSure ? ((DB.settings.niveau || 'mittel') === 'fort' ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst deutlich darüber. Wenn dir die Sätze leicht fallen: Das Niveau <button type="button" class="link inl" data-a="settings">„Fortgeschritten“</button> bringt längere und schwerere.') : ret < 0.8 || ret > 0.95 ? `Für ein sicheres Urteil sind ${rev30} Wiederholungen noch zu wenige.` : 'Du liegst im Plan.'}</p>` : ''}</div>
   <h2 class="grp">Stand der Sätze</h2>
   <div class="chart"><div class="stack" aria-hidden="true">${['anchored', 'mature', 'young', 'neu'].map(k => dist[k] ? `<span class="s-${k}" style="flex:${dist[k]}"></span>` : '').join('')}</div>
   <p class="legend distline"><span><span class="sq s-anchored"></span>${dist.anchored} <button type="button" class="term" data-a="term" data-k="verankert">verankert</button></span><span><span class="sq s-mature"></span>${dist.mature} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button></span><span><span class="sq s-young"></span>${dist.young} im Aufbau</span><span><span class="sq s-neu"></span>${dist.neu} neu</span></p></div>
@@ -1153,8 +1162,7 @@ function viewProgress(){
   ${topicGridHtml(lang)}
   ${writingTrendHtml(lang)}
   ${(() => { const gl = (DB.genus && DB.genus[lang]) || {}, traps = Object.keys(gl).filter(w => gl[w].last === 0);
-    const gens = genIds(lang).map(g => { const rc = (DB.gen[g] && DB.gen[g].recent) || []; return rc.length >= 10 ? `${GENS[g].short || GENS[g].label} ${pct(rc.reduce((a, x) => a + x, 0) / rc.length)}` : ''; }).filter(Boolean);
-    return gens.length || traps.length ? `<p class="legend below">${gens.length ? `Erzeugte Aufgaben, zuletzt richtig: ${esc(gens.join(', '))}.` : ''}${traps.length ? ` Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button>` : ''}</p>` : ''; })()}
+    return traps.length ? `<p class="legend below">Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button></p>` : ''; })()}
   ${collected.length ? `<h2 class="grp">Gesammelte Sätze (${collected.length})</h2><div class="rows">${collected.slice().reverse().slice(0, S.colAll ? 9999 : 5).map(o => `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(o.target)}</span><span class="rd">${esc(o.de)}</span></span><button type="button" class="link${S.armed === 'del:' + o.id ? ' armed' : ''}" data-a="coldel" data-id="${o.id}">${S.armed === 'del:' + o.id ? 'Wirklich entfernen?' : 'Entfernen'}</button>${S.armed === 'del:' + o.id ? '<span class="armnote">Der Lernstand geht verloren.</span>' : ''}</div>`).join('')}</div>${collected.length > 5 ? `<div class="btnrow"><button type="button" class="ghost" data-a="colall">${S.colAll ? 'Weniger anzeigen' : `Alle ${collected.length} anzeigen`}</button></div>` : ''}` : ''}
 
 `;
@@ -1204,7 +1212,7 @@ function viewSettings(){
   <p class="setl-n">${(DB.settings.langMode || 'auto') === 'auto' ? 'Die App nimmt die Sprache, in der mehr fällig ist oder die länger nicht dran war. Ein Wechsel oben auf „Heute“ gilt bis morgen.' : 'Die App öffnet in der zuletzt gewählten Sprache.'}</p>
   <h2 class="grp">Mein Niveau</h2>
   <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
-  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen, in denen du zuletzt öfter Fehler gemacht hast. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
+  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in deinen Fehlerquellen. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
   <h2 class="grp">Vorlesen</h2>
   <div class="rows">
     <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.autoplay}" data-a="autoplay"><span class="txt"><span class="rt">Lösung nach dem Prüfen vorlesen</span><span class="rd">Verbindet Schriftbild und Aussprache. Unterwegs ohne Kopfhörer besser aus.</span></span><span class="sw" aria-hidden="true"></span></button>

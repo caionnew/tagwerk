@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 24. November 2026 (nach 24.72.1)
+Stand: 24. November 2026 (nach 24.73.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -134,6 +134,8 @@ Derzeit nichts.
   - **Trend nur beim Schwerpunkt (C):** dort genug Aufgaben, aber gerade dort die Regression zur Mitte durch die Auswahl.
   - **Hierarchisches Modell für die Änderung (C+):** log-Odds-Änderung je Thema ~ N(0, τ²), τ empirisch-bayessch; richtig gegen Fehlalarme, würde bei diesen Daten aber fast nie etwas zeigen.
   - Wieder ansehen, wenn je Thema 5 und mehr Aufgaben am Tag üblich sind.
+- **Schreiben: grüner Pfeil erst ab 3 gegen 3 Texte (C+, geprüft am 24.11.).** Heute reicht +0,05 im Mittel aus 1 bis 3 Texten; Wörter pro Satz und LIX hängen stark vom Thema des Textes ab. Zurückgestellt, weil der Vergleich als „anfangs … jetzt“ beschriftet ist und keine Wahrscheinlichkeit behauptet.
+- **README-Bilder neu aufnehmen (A−, für Runde 3 vorgemerkt).** Die Bilder stammen aus 24.4.0 und zeigen noch „Schwächste Themen“; neu nach dem Farbschema, damit es nur eine Aufnahme braucht.
 - **Themen-Etappen sequenziell statt in Blöcken (C+, geprüft am 24.11.).** Ein Test mit E-Werten (anytime-valid, Ville-Ungleichung) dürfte nach jeder Antwort prüfen, ohne die Fehlalarme zu erhöhen. Braucht ein neues Speicherfeld je Thema und neue Abstimmung; der Gewinn ist begrenzt, weil schon ein idealer Einzeltest für 20 → 10 % rund 310 Aufgaben braucht (bei 1,2 am Tag 260 Tage). Die Regel bleibt, `tools/themen-etappen.js` rechnet jetzt mit echtem Volumen.
 - **Pfeil in den antippbaren Zeilen der Fehlerquellen im Sprach-Tab (C+, geprüft am 24.11.).** Auf Heute haben die Zeilen einen, im Reiter „Thema“ nicht. Der Hinweis „Tipp auf ein Thema für die Regel“ steht darunter, und ein Pfeil nähme der ohnehin schmalen Namensspalte 12 px.
 - **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11.; in 24.71.0 geglättete Quote ab 10 Aufgaben, seit 24.72.0 das Fehlermodell mit Vergessen).**

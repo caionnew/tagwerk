@@ -195,16 +195,17 @@ function spotWeight(lang, k){
   return Math.min(1, bankSpots(lang).filter(f => f.trap === k).length / 12);
 }
 // Welche Fehlerart kommt: nur Wahrscheinlichkeiten, keine festen Regeln, die man mit der Zeit durchschaut. Jede Art kann jederzeit kommen,
-// auch zweimal hintereinander. Gewicht = Grundgewicht (Satzbank-Arten mit wenigen Sätzen seltener) × eigene Fehlerquote im Thema
-// in den letzten 30 Tagen (sichere Arten halb so oft, wacklige bis doppelt so oft) × REPEAT_DAMP für die Art der letzten Aufgabe
+// auch zweimal hintereinander. Gewicht = Grundgewicht (Satzbank-Arten mit wenigen Sätzen seltener) × Schätzung des Themas aus dem
+// Fehlermodell geteilt durch deinen Schnitt, begrenzt auf ½ bis 2 (sichere Arten bis halb so oft, wacklige bis doppelt so oft;
+// ohne Daten 1; bis 24.72 eigene Formel (Fehler + 1)/(Aufgaben + 5)) × REPEAT_DAMP für die Art der letzten Aufgabe
 // (mischt, ohne zu verbieten; dieselbe Regel ordnet die Themen im Tagwerk, siehe spreadTopics).
 // Richtig oder fehlerhaft entscheidet jedes Mal unabhängig der Zufall (40 %): Aus den vorigen Sätzen lässt sich nichts ablesen.
 function spotWeights(lang){
-  const p = errStats(lang, 30).p, last = ((DB.used || {}).spotLast || {})[lang];
+  const M = topicModel(lang), last = ((DB.used || {}).spotLast || {})[lang];
   const w = {};
   Object.keys(SPOT_CATS[lang]).forEach(k => {
-    const [n, bad] = p[k] || [0, 0], rate = (bad + 1) / (n + 5);
-    w[k] = spotWeight(lang, k) * Math.min(2, Math.max(0.5, 0.5 + 2.5 * rate)) * (k === last ? REPEAT_DAMP : 1);
+    const x = M.topics.find(t => t.id === k), rel = x && M.mu > 0 ? x.mean / M.mu : 1;
+    w[k] = spotWeight(lang, k) * Math.min(2, Math.max(0.5, rel)) * (k === last ? REPEAT_DAMP : 1);
   });
   return w;
 }

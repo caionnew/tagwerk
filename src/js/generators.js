@@ -1045,9 +1045,9 @@ const GENS = {
   porpara:{ lang:'es', trap:'porpara', short:'por/para', label:'por oder para', make:genPorPara },
   det_es:{ lang:'es', trap:'concord', short:'Übereinstimmung', label:'Nomen tauschen', make:genSwapEs },
   verbind_sv:{ lang:'sv', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_SV) },
-  verbind_es:{ lang:'es', trap:'verbind', short:'Konectores', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) },
+  verbind_es:{ lang:'es', trap:'verbind', short:'Konnektoren', label:'Konnektoren & feste Verbindungen', make:genVerbind(VERB_ES) },
   prep_sv:{ lang:'sv', trap:'prep', short:'Präpositionen', label:'Verben mit Präposition', make:genPrep(PREP_SV) },
-  prep_es:{ lang:'es', trap:'prep', short:'Preposiciones', label:'Verben mit Präposition', make:genPrep(PREP_ES) },
+  prep_es:{ lang:'es', trap:'prep', short:'Präpositionen', label:'Verben mit Präposition', make:genPrep(PREP_ES) },
   textgap_sv:{ lang:'sv', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('sv'), noGloss:true, avail:() => readTexts('sv').length > 0, unavail:'Lies zuerst einen Text und beantworte die Fragen dazu. Danach kommen Lücken aus diesem Text.' },
   textgap_es:{ lang:'es', trap:'lesen', short:'Lesetext-Lücken', label:'Lücken aus Lesetexten', make:genTextGap('es'), noGloss:true, avail:() => readTexts('es').length > 0, unavail:'Lies zuerst einen Text und beantworte die Fragen dazu. Danach kommen Lücken aus diesem Text.' }
 };

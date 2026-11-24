@@ -20,7 +20,7 @@ function richDB(lang){
   for (let k = 40; k >= 1; k--) {
     if (k % 6 === 0) continue;
     db.done[ds(k)] = true; db.log[ds(k)] = { [lang]:{ n:14, secs:420 + (k % 5) * 60, fresh:k % 3 ? 2 : 0, mat:k % 4 ? 0 : 1 } };
-    db.tlog[ds(k)] = { h:{ [k % 3 ? 7 : 21]:10 }, [lang]:{ 'p:inversion':[3, k % 2], 'p:bisats':[3, k % 3 ? 1 : 0], 't:free':[4, k % 2], 't:tiles':[4, 0], 't:gap':[3, k % 4 ? 0 : 1], 'e:order':k % 2, 'e:word':k % 3 ? 0 : 1, 'e:spell':k % 7 ? 0 : 1 } };
+    db.tlog[ds(k)] = { h:{ [k % 3 ? 7 : 21]:10 }, [lang]:{ 'p:inversion':[3, k % 2], 'p:bisats':[3, k % 3 ? 1 : 0], 'p:species':[2, k % 2], 'p:tempus':[2, 0], 't:free':[4, k % 2], 't:tiles':[4, 0], 't:gap':[3, k % 4 ? 0 : 1], 'e:order':k % 2, 'e:word':k % 3 ? 0 : 1, 'e:spell':k % 7 ? 0 : 1 } };
   }
   bankIds(lang, 90).forEach((id, i) => { db.st[id] = { s:10 + i, d:4, ivl:i % 3 === 0 ? 30 : 6, last:ds(2), due:ds(-3), reps:3, ok:3, bad:0, alts:[] }; });
   return db;

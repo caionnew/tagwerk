@@ -96,8 +96,9 @@ test('Auswahl nach Wahrscheinlichkeit: wacklige Themen öfter, sichere seltener,
   app.run(`DB.tlog = { '${d}': { es:{ 'p:serestar':[20, 0], 'p:subjuntivo':[20, 10] } } }; DB.used = DB.used || {}; DB.used.spotLast = { es:'porpara' };`);
   const w = app.get('spotWeights')('es');
   assert.ok(w.subjuntivo > w.prep && w.prep > w.serestar, JSON.stringify(w));
-  // 0 von 20 falsch → 0,6; 10 von 20 falsch → 1,6 (geglättet mit einem Fehler auf fünf Aufgaben vorweg)
-  assert.ok(Math.abs(w.serestar - 0.6) < 1e-9 && Math.abs(w.subjuntivo - 1.6) < 1e-9, JSON.stringify(w));
+  // Schätzung geteilt durch den Schnitt, ½ bis 2: zwei Themen mit Daten → gepoolter Schnitt 25 %, m = 10;
+  // 0 von 20 → 2,5/30 = 8 % → ⅓, begrenzt auf ½; 10 von 20 → 12,5/30 = 42 % → 1⅔; ohne Daten 1
+  assert.ok(Math.abs(w.serestar - 0.5) < 1e-9 && Math.abs(w.subjuntivo - app.get('spotWeight')('es', 'subjuntivo') * 5 / 3) < 1e-9, JSON.stringify(w));
   assert.equal(w.porpara * 2, w.prep);
   // Arten aus der Satzbank mit weniger als 12 Sätzen kommen anteilig seltener (Gewicht = Sätze / 12, höchstens 1)
   for (const [lang, k] of [['sv', 'sin'], ['es', 'subjuntivo'], ['es', 'perfecto'], ['es', 'gustar']]) {

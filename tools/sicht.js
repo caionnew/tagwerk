@@ -68,6 +68,7 @@ const SCENES = [
   ['schreiben', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=write]')]],
   ['hoerrunde', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=radio]')]],
   ['diktat', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=dict]')]],
+  ['thema-ueben', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=pickTopic]')]],
   ['grammatik', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=topics]')]],
   ['land-und-leute', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=kultur]')]],
   ['wort', rich, [click('.find [data-a=lookup] >> nth=1')]],

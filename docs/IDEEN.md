@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 24. November 2026 (nach 24.72.0)
+Stand: 24. November 2026 (nach 24.72.1)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -129,6 +129,12 @@ Derzeit nichts.
   - **Unsicherheit über m mitnehmen (C+):** über das Gitter von (μ, m) mitteln statt den Modus zu nehmen. Bereiche würden etwas breiter; auf dem Handy rund zehnmal langsamer.
   - **Quantil-Punkte statt Flächen (C+):** 20 Punkte je Thema, je einer für 5 % Wahrscheinlichkeit; für Laien oft leichter lesbar, bei sechs Themen aber unruhig.
   - **Satzschwierigkeit (Rasch-Modell) (C):** zu wenige Antworten je Satz.
+- **Trend je Thema (geprüft am 24.11., in 24.72.1 entfernt).** Bei 1,2 Aufgaben je Thema und Tag nicht erkennbar, dafür 3 bis 10 % Fehlalarme (Zahlen in RESEARCH.md). Geprüfte Ersatzformen:
+  - **Grauer Punkt „vor 4 Wochen“ auf dem Streifen (C+):** zeigt bei normalem Volumen vor allem Zufall.
+  - **Trend nur beim Schwerpunkt (C):** dort genug Aufgaben, aber gerade dort die Regression zur Mitte durch die Auswahl.
+  - **Hierarchisches Modell für die Änderung (C+):** log-Odds-Änderung je Thema ~ N(0, τ²), τ empirisch-bayessch; richtig gegen Fehlalarme, würde bei diesen Daten aber fast nie etwas zeigen.
+  - Wieder ansehen, wenn je Thema 5 und mehr Aufgaben am Tag üblich sind.
+- **Themen-Etappen sequenziell statt in Blöcken (C+, geprüft am 24.11.).** Ein Test mit E-Werten (anytime-valid, Ville-Ungleichung) dürfte nach jeder Antwort prüfen, ohne die Fehlalarme zu erhöhen. Braucht ein neues Speicherfeld je Thema und neue Abstimmung; der Gewinn ist begrenzt, weil schon ein idealer Einzeltest für 20 → 10 % rund 310 Aufgaben braucht (bei 1,2 am Tag 260 Tage). Die Regel bleibt, `tools/themen-etappen.js` rechnet jetzt mit echtem Volumen.
 - **Pfeil in den antippbaren Zeilen der Fehlerquellen im Sprach-Tab (C+, geprüft am 24.11.).** Auf Heute haben die Zeilen einen, im Reiter „Thema“ nicht. Der Hinweis „Tipp auf ein Thema für die Regel“ steht darunter, und ein Pfeil nähme der ohnehin schmalen Namensspalte 12 px.
 - **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11.; in 24.71.0 geglättete Quote ab 10 Aufgaben, seit 24.72.0 das Fehlermodell mit Vergessen).**
   - **Anzahl der Fehler (C, bis 24.70):** misst eher, wie oft ein Thema drankommt; 7 von 73 stand vor 5 von 13.

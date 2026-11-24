@@ -19,8 +19,6 @@ test('Mathematik: lnΓ, I_x(a, b), Beta-Quantile und P(X < Y) wie scipy', () => 
   [[0.3, 2.5, 7.1, 0.6490225790], [0.05, 0.4, 3, 0.4925999852], [0.9, 30, 4, 0.5769436641], [0.5, 120.3, 80.2, 0.0022029070]]
     .forEach(([x, a, b, v]) => near(run(`ibeta(${x}, ${a}, ${b})`), v, 1e-9, `I_${x}(${a}, ${b})`));
   near(run('betaQ(0.025, 10.02, 28.48)'), 0.136345, 1e-6); near(run('betaQ(0.975, 10.02, 28.48)'), 0.407731, 1e-6);
-  near(run('betaLess(11, 9, 5, 15)'), 0.02241, 1e-4); near(run('betaLess(3, 10, 4, 9)'), 0.67980, 1e-4);
-  near(run('betaLess(0.5, 8, 1.2, 7)'), 0.77421, 1e-4, 'Dichte am Rand unendlich');
 });
 
 test('Modell: Vergessen mit Halbwertszeit 14 Tage, μ und m aus der Hyperprior, Posterior je Thema wie scipy', () => {
@@ -50,22 +48,11 @@ test('Modell: unter drei Themen mit Daten gepoolte Quote und m = 10; eine Pause 
   assert.ok(M.topics[0].hi - M.topics[0].lo > wide && M.topics[0].mean < 0.55);
 });
 
-test('Trend: letzte 14 Tage gegen die 28 davor, angezeigt ab 95 %', () => {
-  run(`(() => { DB = freshDB(); const ds = k => addDays(today(), -k); DB.tlog = {
-    [ds(2)]: { sv: { 'p:bisats':[10, 0], 'p:inversion':[10, 2], 'p:tempus':[10, 2], 'p:tid':[10, 1] } },
-    [ds(9)]: { sv: { 'p:bisats':[10, 1], 'p:inversion':[10, 2], 'p:tempus':[10, 2], 'p:tid':[10, 9] } },
-    [ds(20)]: { sv: { 'p:bisats':[10, 6], 'p:inversion':[10, 2], 'p:tempus':[10, 2], 'p:tid':[10, 1] } },
-    [ds(30)]: { sv: { 'p:bisats':[10, 7], 'p:inversion':[10, 2], 'p:tempus':[10, 2], 'p:tid':[10, 1] } } }; })()`);
-  const by = id => run(`modelTopic('sv', '${id}')`);
-  assert.equal(by('bisats').trend.better, true); assert.ok(by('bisats').trend.p >= 0.95);
-  assert.equal(by('tid').trend.better, false, '1 von 20 vorher, 10 von 20 zuletzt');
-  assert.equal(by('inversion').trend, null, 'gleichbleibend: kein Trend');
-  // Ältere Hälfte unter 8 Aufgaben: kein Urteil
-  run(`DB.tlog = { [addDays(today(), -2)]: { sv: { 'p:bisats':[10, 0], 'p:inversion':[10, 2], 'p:tempus':[10, 2] } }, [addDays(today(), -20)]: { sv: { 'p:bisats':[5, 5] } } };`);
-  assert.equal(by('bisats').trend, null);
-  // Anzeige: Wort neben der Schätzung
-  run(`DB.tlog = { [addDays(today(), -2)]: { sv: { 'p:bisats':[20, 0], 'p:inversion':[20, 4], 'p:tempus':[20, 4] } }, [addDays(today(), -20)]: { sv: { 'p:bisats':[20, 13], 'p:inversion':[20, 4], 'p:tempus':[20, 4], 't:gap':[120, 29] } } }; S.errTab = 'p';`);
-  assert.match(run(`errorSourcesHtml('sv')`), /<span class="mtr up">besser<\/span><span class="mpct">/);
+test('Kein Trend je Thema (seit 24.72.1): auch ein starker Rückgang zeigt nur die Schätzung, kein „besser“', () => {
+  run(`DB = freshDB(); DB.tlog = { [addDays(today(), -2)]: { sv: { 'p:bisats':[20, 0], 'p:inversion':[20, 4], 'p:tempus':[20, 4] } }, [addDays(today(), -20)]: { sv: { 'p:bisats':[20, 13], 'p:inversion':[20, 4], 'p:tempus':[20, 4], 't:gap':[120, 29] } } }; S.errTab = 'p';`);
+  assert.equal('trend' in run(`modelTopic('sv', 'bisats')`), false);
+  const h = run(`errorSourcesHtml('sv')`) + run(`weakHtml('sv')`) + run(`S.view = 'progress'; openTopic('sv', 'bisats'); topicSheetHtml(S.pop)`);
+  assert.match(h, /Fehlerquote geschätzt/); assert.doesNotMatch(h, /besser|schlechter|class="mtr/);
 });
 
 test('Thompson-Sampling: Thema vorn so oft, wie es wahrscheinlich das schwächste ist; fester Startwert je Woche', () => {

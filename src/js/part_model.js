@@ -10,9 +10,12 @@
 // nach Gelman u. a., Bayesian Data Analysis, Kap. 5. Ohne sie läge das Maximum der Randlikelihood oft bei m → ∞: In den ersten
 // Wochen (Backup vom 24.11.) streuen die Themen nicht mehr, als der Zufall erklärt; die Likelihood ist ab m ≈ 20 fast flach.
 // Erst ab drei Themen mit mindestens 3 gewichteten Aufgaben; sonst die gepoolte Quote und m = 10 (wie bis 24.71).
-// Trend: letzte 14 Tage gegen die 28 davor, ungewichtet, je mit derselben Vorverteilung; angezeigt ab P ≥ 95 %.
+// Kein Trend je Thema (24.72.0 hatte „besser“/„schlechter“, 14 gegen 28 Tage): Bei rund 1 Aufgabe je Thema und Tag stehen
+// 17 gegen 34 Aufgaben, der Standardfehler liegt bei ±10 Punkten. Ein Thema bei 20 % hätte selbst bei 0 % nie „besser“ gezeigt,
+// ohne Änderung aber 3 bis 10 % Fehlalarme (am meisten beim Schwerpunkt). Fortschritt zeigt die Schätzung selbst, gesicherte
+// Verbesserungen die Themen-Etappen (part_stats.js). Rechnung in docs/RESEARCH.md.
 // Schwerpunkt der Woche: Thompson-Sampling, je Thema ein θ aus der Posterior gezogen, mit der Woche als festem Startwert.
-const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3, TREND_NEW:14, TREND_OLD:28, TREND_N:8, TREND_P:0.95 };
+const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3 };
 
 // Logarithmus der Gammafunktion (Lanczos, g = 7)
 const LANCZOS = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
@@ -45,17 +48,6 @@ function ibeta(x, a, b){
 }
 // Quantil der Beta-Verteilung: Bisektion auf I_x, 30 Schritte (Genauigkeit 1e-9)
 function betaQ(p, a, b){ let lo = 0, hi = 1; for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; if (ibeta(mid, a, b) < p) lo = mid; else hi = mid; } return (lo + hi) / 2; }
-// P(X < Y) für X ~ Beta(a1, b1), Y ~ Beta(a2, b2) = ∫ f_Y(y) I_y(a1, b1) dy; Simpson nach y = sin²(πs/2), damit die Dichte
-// an den Rändern endlich bleibt
-function betaLess(a1, b1, a2, b2){
-  const N = 400, lb = lbeta(a2, b2); let s = 0;
-  for (let i = 1; i < N; i++) {
-    const u = Math.PI * i / (2 * N), sn = Math.sin(u), cs = Math.cos(u), y = sn * sn;
-    const f = Math.exp((2 * a2 - 1) * Math.log(sn) + (2 * b2 - 1) * Math.log(cs) - lb) * Math.PI;
-    if (isFinite(f)) s += (i % 2 ? 4 : 2) * f * ibeta(y, a1, b1);
-  }
-  return Math.min(1, Math.max(0, s / (3 * N)));
-}
 // Zufall mit festem Startwert (mulberry32) und Ziehungen aus Gamma- und Betaverteilung (Marsaglia–Tsang)
 function rng32(seed){ let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 function seedOf(s){ let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -89,7 +81,7 @@ function fitPrior(list){
 }
 
 // Modell einer Sprache aus dem Fehlerprotokoll (DB.tlog, Einträge p:Thema = [Aufgaben, Fehler] je Tag).
-// Ergebnis: { mu, m, H, topics:[{ id, n, k (gewichtet), n30, k30 (letzte 30 Tage), mean, lo, hi, lo50, hi50, pAbove, trend }] },
+// Ergebnis: { mu, m, H, topics:[{ id, n, k (gewichtet), n30, k30 (letzte 30 Tage), mean, lo, hi, lo50, hi50, pAbove }] },
 // nach Schätzung absteigend. Zwischengespeichert, solange sich Tag und Protokoll der Sprache nicht ändern.
 let modelCache = {};
 function topicModel(lang){
@@ -102,22 +94,15 @@ function topicModel(lang){
     const w = Math.pow(2, -age / MODEL.H);
     Object.keys(L).forEach(key => {
       if (!key.startsWith('p:') || !Array.isArray(L[key])) return;
-      const [n, bad] = L[key], x = by[key.slice(2)] = by[key.slice(2)] || { id:key.slice(2), n:0, k:0, n30:0, k30:0, nNew:0, kNew:0, nOld:0, kOld:0 };
+      const [n, bad] = L[key], x = by[key.slice(2)] = by[key.slice(2)] || { id:key.slice(2), n:0, k:0, n30:0, k30:0 };
       x.n += w * n; x.k += w * bad;
       if (age < 30) { x.n30 += n; x.k30 += bad; }
-      if (age < MODEL.TREND_NEW) { x.nNew += n; x.kNew += bad; } else if (age < MODEL.TREND_NEW + MODEL.TREND_OLD) { x.nOld += n; x.kOld += bad; }
     });
   });
   const list = Object.values(by), P = fitPrior(list), a0 = P.mu * P.m, b0 = (1 - P.mu) * P.m;
   const topics = list.map(x => {
     const a = a0 + x.k, b = b0 + x.n - x.k;
-    let trend = null;
-    if (x.nNew >= MODEL.TREND_N && x.nOld >= MODEL.TREND_N) {
-      const p = betaLess(a0 + x.kNew, b0 + x.nNew - x.kNew, a0 + x.kOld, b0 + x.nOld - x.kOld);
-      if (p >= MODEL.TREND_P) trend = { better:true, p };
-      else if (1 - p >= MODEL.TREND_P) trend = { better:false, p:1 - p };
-    }
-    return { id:x.id, n:x.n, k:x.k, n30:x.n30, k30:x.k30, mean:a / (a + b), lo:betaQ(0.025, a, b), hi:betaQ(0.975, a, b), lo50:betaQ(0.25, a, b), hi50:betaQ(0.75, a, b), pAbove:1 - ibeta(P.mu, a, b), trend };
+    return { id:x.id, n:x.n, k:x.k, n30:x.n30, k30:x.k30, mean:a / (a + b), lo:betaQ(0.025, a, b), hi:betaQ(0.975, a, b), lo50:betaQ(0.25, a, b), hi50:betaQ(0.75, a, b), pAbove:1 - ibeta(P.mu, a, b) };
   }).sort((p, q) => q.mean - p.mean || q.n - p.n);
   const v = { mu:P.mu, m:P.m, fitted:P.fitted, H:MODEL.H, topics };
   modelCache[lang] = { sig, v };

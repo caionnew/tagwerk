@@ -626,9 +626,6 @@ button.mrow:active{ background:var(--accent-soft); }
 .mright{ display:flex; align-items:baseline; gap:8px; flex:none; }
 .mcount{ font-size:var(--fs-3); color:var(--muted); font-variant-numeric:tabular-nums; }
 .mpct{ font-size:var(--fs-4); font-weight:var(--fw-semibold); font-variant-numeric:tabular-nums; }
-.mtr{ font-size:var(--fs-2); font-weight:var(--fw-semibold); padding:1px 8px; border-radius:var(--r-pill); }
-.mtr.up{ color:var(--ok); background:var(--ok-soft); }
-.mtr.down{ color:var(--bad); background:var(--bad-soft); }
 .mbar{ display:block; position:relative; height:6px; margin:7px 0 0; border-radius:var(--r-mark); background:var(--line); }
 .mbar > i{ position:absolute; left:0; top:0; bottom:0; border-radius:var(--r-mark); background:var(--bad); opacity:.75; }
 /* Schätzung mit Bereich: hell 95 %, dunkel 50 %, Punkt, Strich beim Schnitt */

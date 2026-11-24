@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.72.1
+**Kein Trend je Thema mehr; Themen-Etappen mit echtem Volumen nachgeprüft.**
+- **Trend entfernt:** „besser“ und „schlechter“ (14 gegen 28 Tage) sind wieder raus. Exakt nachgerechnet mit dem Volumen aus deinem Backup (je Thema im Median 1,2 Aufgaben am Tag): Ein Thema bei 20 % hätte bei 1,2 am Tag selbst bei 0 % nie „besser“ gezeigt; bei 3,7 am Tag hätte es auf 9 % fallen müssen, beim Schwerpunkt (7,3) auf 12 %. Ohne jede Änderung zeigten dagegen 3 bis 10 % der Themen einen Trend, am häufigsten beim Schwerpunkt (ungleiches Schrumpfen der beiden Abschnitte, Regression zur Mitte nach der Auswahl), und die Wörter hätten mit dem täglich verschobenen Fenster geflackert. Fortschritt zeigt die Schätzung mit Vergessen selbst; gesicherte Verbesserungen bleiben Sache der Themen-Etappen.
+- Die Erklärung zu „Schätzung“ sagt jetzt: Wird ein Thema leichter, wandert der Punkt über die Wochen nach links; gesicherte Fortschritte zeigt „Dein Weg“ als Etappe. Das Themenblatt nennt keinen Trend mehr.
+- **Themen-Etappen geprüft, Regel bleibt:** `tools/themen-etappen.js` rechnet jetzt mit deinem Volumen (0,6 bis 7,3 Aufgaben je Thema und Tag, dazu Schwerpunkt-Wochen). Falsche Halbierungen bei gleichbleibender Quote: etwa eine je 150 Themenjahre im Median-Volumen, eine je 25 im Schwerpunkt-Volumen. Echte Verbesserungen brauchen Geduld: von 30 auf 8 % „halbiert“ nach etwa 90 Tagen, von 20 auf 10 % nach etwa 200 Tagen bei gut einem Drittel der Themen, sonst später als „sitzt“. Das ist das Volumen, nicht die Regel: Schon ein einzelner idealer Test bräuchte für 20 → 10 % rund 310 Aufgaben.
+- Doku: RESEARCH.md (Rechnung zum Trend, Etappen nachgeprüft), ARCHITECTURE.md, CLAUDE.md, IDEEN.md (Ersatzformen für den Trend und sequenzielle Etappen bewertet und zurückgestellt), Kommentar in `part_stats.js` mit den neuen Zahlen.
+- Tests: Der Trend-Test wird zu „kein Trend, auch bei starkem Rückgang“; die Prüfung der dafür nötigen Beta-Vergleichsfunktion entfällt mit ihr.
+- Speicherstand unverändert.
+
 ## 24.72.0
 **Fehlerquellen mit echter Statistik: ein Fehlermodell je Thema mit Vergessen, Schätzung und Bereich, Trend, Schwerpunkt per Thompson-Sampling.**
 - **Modell:** hierarchisches Beta-Binomial-Modell je Sprache. Die Fehlerquote eines Themas kommt aus einer gemeinsamen Verteilung Beta(μm, (1−μ)m); nach deinen Antworten ist sie Beta(μm + k, (1−μ)m + n − k). Schätzung = Posterior-Mittel, dazu der 50- und der 95-%-Bereich und die Wahrscheinlichkeit, über deinem Schnitt μ zu liegen. Wenige Antworten rücken die Schätzung zum Schnitt, viele zählen fast voll; die Mindestzahl von 10 Aufgaben entfällt, ein Thema braucht 3 gewichtete Aufgaben.

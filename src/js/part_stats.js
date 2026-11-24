@@ -177,9 +177,12 @@ function errStats(lang, days){
 // „Thema sitzt“ (einmal je Thema): irgendwann früher sicher über 15 % falsch (untere Wilson-Grenze, 95 %), jetzt sicher
 //   darunter (obere Grenze, 99 %), in Abschnitten von 120 oder 240 Aufgaben; praktisch von über 20 % auf unter 8 %.
 // Nach jeder Halbierung zählt der neue Stand als Bezug: Die nächste braucht eine weitere Halbierung.
-// tools/themen-etappen.js simuliert die Regel (5 Jahre, 1,5 bis 6 Aufgaben je Thema und Tag): Bei gleichbleibender Quote
-// von 5 bis 45 % kommt etwa eine falsche Halbierung je 60 Themenjahre und kein falsches „sitzt“; Tagesschwankungen wie
-// mal 1 von 3, mal 2 von 3 falsch lösen nichts aus.
+// tools/themen-etappen.js simuliert die Regel mit dem Volumen aus dem Backup vom 24.11.2026 (je Thema im Median 1,2 Aufgaben
+// am Tag, Schwerpunkt 7): Bei gleichbleibender Quote von 5 bis 45 % kommt im Median-Volumen etwa eine falsche Halbierung je
+// 150 Themenjahre, im Schwerpunkt-Volumen eine je 25; ein falsches „sitzt“ ist selten. Tagesschwankungen lösen nichts aus.
+// Der Preis ist Geduld: Bei 1,2 am Tag kommt „halbiert“ nach einem Sprung von 30 auf 8 % nach etwa 90 Tagen, nach 20 auf 10 %
+// erst nach etwa 200 Tagen und nur bei gut einem Drittel der Themen (sonst später als „sitzt“). Das liegt am Volumen, nicht
+// an der Regel: Schon ein einzelner idealer Test (5 % Fehlalarm, 80 % Trefferquote) bräuchte für 20 → 10 % rund 310 Aufgaben.
 const TOPIC_BLOCK = 60, TOPIC_Z = 3.5, TOPIC_Z_FAR = 3, TOPIC_FAR = 8, TOPIC_BACK = 3;
 function zDrop(b, bn, c, cn){ const p = (b + c) / (bn + cn), se = Math.sqrt(p * (1 - p) * (1 / bn + 1 / cn)); return se ? (b / bn - c / cn) / se : 0; }
 // Wilson-Grenze für k von n: z > 0 obere, z < 0 untere
@@ -271,8 +274,8 @@ function modelStripHtml(x, mu, max){
   return `<span class="mstrip" aria-hidden="true"><i class="m95" style="${span(x.lo, x.hi)}"></i><i class="m50" style="${span(x.lo50, x.hi50)}"></i><i class="mmu" style="left:${at(mu)}"></i><i class="mdot" style="left:${at(x.mean)}"></i></span>`;
 }
 const modelAxisHtml = max => `<div class="maxis" aria-hidden="true">${Array.from({ length:Math.round(max * 4) + 1 }, (_, i) => `<span style="left:${(i / (max * 4) * 100).toFixed(1)}%">${i * 25}\u00a0%</span>`).join('')}</div>`;
-const modelRight = x => `${x.trend ? `<span class="mtr ${x.trend.better ? 'up' : 'down'}">${x.trend.better ? 'besser' : 'schlechter'}</span>` : ''}<span class="mpct">${pct(x.mean)}</span>`;
-const modelAria = (label, x) => `${label}: geschätzt ${pct(x.mean)} falsch, wahrscheinlich ${pct(x.lo)} bis ${pct(x.hi)}${x.trend ? `, ${x.trend.better ? 'besser' : 'schlechter'} als vorher` : ''}`;
+const modelRight = x => `<span class="mpct">${pct(x.mean)}</span>`;
+const modelAria = (label, x) => `${label}: geschätzt ${pct(x.mean)} falsch, wahrscheinlich ${pct(x.lo)} bis ${pct(x.hi)}`;
 // Legende mit Zeichen statt Sätzen; „Schätzung“ öffnet die Erklärung (Begriff „schaetzung“)
 const modelKeyHtml = mu => `<span class="mkey"><span><i class="mk-dot"></i><button type="button" class="term" data-a="term" data-k="schaetzung">Schätzung</button></span><span><i class="mk-band"></i>Bereich</span><span><i class="mk-mu"></i>Schnitt ${pct(mu)}</span></span>`;
 function errorSourcesHtml(lang){

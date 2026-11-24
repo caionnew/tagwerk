@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 24. November 2026 (nach 24.71.0)
+Stand: 24. November 2026 (nach 24.71.1)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -121,6 +121,7 @@ Spanisch:
 ## Geprüft und zurückgestellt
 
 - **„Stand der Sätze“ in der Kopfkarte des Sprach-Tabs (B−, geprüft am 23.11.).** Der Balken verankert, gefestigt, im Aufbau, neu statt des Balkens zum nächsten Ziel, der eigene Abschnitt entfiele. Spart kaum Platz (2,8 auf 2,7 Bildschirme), die Kopfkarte wird dichter, und der Fortschritt zum nächsten Ziel stünde nur noch als Text da.
+- **Pfeil in den antippbaren Zeilen der Fehlerquellen im Sprach-Tab (C+, geprüft am 24.11.).** Auf Heute haben die Zeilen einen, im Reiter „Thema“ nicht. Der Hinweis „Tipp auf ein Thema für die Regel“ steht darunter, und ein Pfeil nähme der ohnehin schmalen Namensspalte 12 px.
 - **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11., gewählt: geglättete Quote ab 10 Aufgaben, 24.71.0).**
   - **Anzahl der Fehler (C, bis 24.70):** misst eher, wie oft ein Thema drankommt; 7 von 73 stand vor 5 von 13.
   - **Rohe Quote ab 10 Aufgaben (B−):** einfach, aber bei wenigen Aufgaben sprunghaft.

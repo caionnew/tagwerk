@@ -204,7 +204,7 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 @keyframes blink{ 0%{ width:0 } 100%{ width:1.2em } }
 
 /* Fortschritt */
-.lenlink{ margin:10px 4px 0; }
+.lenlink{ margin:10px 0 0; }
 .mbar{ height:8px; border-radius:var(--r-mark); background:var(--line); overflow:hidden; }
 .mbar span{ display:block; height:100%; background:var(--accent); border-radius:var(--r-mark); }
 .chart{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-l); padding:14px 16px; }
@@ -611,7 +611,7 @@ button.row[disabled]::after{ display:none; }
 .legend.elead{ margin:0 0 2px; }
 .errseg button{ padding:5px 9px; }
 .erows{ display:grid; gap:4px; }
-.erow{ display:grid; grid-template-columns:minmax(0, 1fr) 80px 64px; align-items:center; gap:10px; padding:7px 0; background:none; border:0; border-bottom:1px solid var(--line); color:var(--ink); text-align:left; font:inherit; width:100%; }
+.erow{ display:grid; grid-template-columns:minmax(0, 1fr) 80px 44px; align-items:center; gap:10px; padding:7px 0; background:none; border:0; border-bottom:1px solid var(--line); color:var(--ink); text-align:left; font:inherit; width:100%; }
 .erow:last-child{ border-bottom:0; }
 button.erow:active{ background:var(--accent-soft); }
 .el{ font-size:var(--fs-4); font-weight:var(--fw-semibold); display:flex; flex-direction:column; }

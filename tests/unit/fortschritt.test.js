@@ -40,7 +40,7 @@ test('Fehlerquellen: Thema und Übungsart sagen oben, was die Zahl ist', () => {
   run(`DB = freshDB(); DB.tlog = { [today()]: { sv: { 'p:inversion': [48, 6], 'p:bisats': [25, 5], 't:free': [12, 6], 't:gap': [64, 8], 'e:word': 10 } } };`);
   run(`S.errTab = 'p'`);
   let html = run(`errorSourcesHtml('sv')`);
-  assert.match(text(html), /Anteil falscher Antworten je Thema, ab 10 Aufgaben:/); assert.match(html, /6 von 48 Aufgaben/); assert.match(html, /13\u00a0%/);
+  assert.match(text(html), /Anteil falscher Antworten, ab 10 Aufgaben:/); assert.match(html, /6 von 48 Aufgaben/); assert.match(html, /13\u00a0%/);
   run(`S.errTab = 't'`);
   html = run(`errorSourcesHtml('sv')`);
   assert.match(html, /Anteil falscher Antworten je Übungsart:/); assert.match(html, /50 %|50 %/);
@@ -86,6 +86,17 @@ test('Geglättete Quote: wenige Aufgaben ziehen zur eigenen Quote, eine Rechnung
   // Schwerpunkt erst ab 10 Aufgaben: 3 von 6 (50 %) zählt noch nicht als schwach
   run(`DB.tlog = { [today()]: { es: { 'p:subjuntivo': [6, 3], 'p:condicional': [20, 3], 't:gap': [26, 6] } } };`);
   assert.equal(run(`focusCandidates('es')[0]`), 'condicional');
+});
+
+test('Themennamen brechen nicht am Bindestrich um: „si‑Sätze“, „s‑Passiv“ mit geschütztem Bindestrich', () => {
+  assert.equal(run(`keepHyph('Konditional & si-Sätze')`), 'Konditional & si\u2011Sätze');
+  assert.equal(run(`keepHyph('s-Passiv, „man“ & „det finns“')`), 's\u2011Passiv, „man“ & „det finns“');
+  assert.equal(run(`keepHyph('Präteritum oder Perfekt')`), 'Präteritum oder Perfekt');
+  run(`DB = freshDB(); DB.st = {}; DB.focus = {}; DB.tlog = { [today()]: { es: { 'p:condicional': [40, 15], 'p:perfecto': [12, 2], 't:gap': [52, 17] } } }; S.errTab = 'p';`);
+  assert.match(run(`errorSourcesHtml('es')`), /Konditional &amp; si\u2011Sätze/);
+  assert.match(run(`weakHtml('es')`), /Konditional &amp; si\u2011Sätze/);
+  // Schwerpunkt: der Name bleibt als Ganzes zusammen
+  assert.match(run(`(S.lang = 'es', DB.settings.lang = 'es', viewHome())`), /<b class="nobr">Konditional &amp; si\u2011Sätze<\/b>/);
 });
 
 test('Thema üben: Satz-Themen mit Balken für den gefestigten Anteil, erzeugte Themen unter 10 Aufgaben ohne Balken, als Anzahl', () => {

@@ -47,7 +47,7 @@ function topicSheetHtml(P){
   const genStat = rc && rc.length >= 10 ? ` Erzeugte Aufgaben: zuletzt ${Math.round(rc.reduce((a, x) => a + x, 0) / rc.length * 100)}\u00a0% richtig.` : '';
   const err = P.err;
   return `<div class="popov" data-a="popclose"></div><div class="pop tall" role="dialog" aria-label="${esc(tr.label)}">
-    <p class="find-k">Thema</p><p class="pop-h">${esc(tr.label)}</p>
+    <p class="find-k">Thema</p><p class="pop-h">${esc(keepHyph(tr.label))}</p>
     <p class="popde"><b>${termify(tr.short)}</b></p>
     ${tr.table ? `<div class="ttab">${tr.table.map(([v, when, ex]) => `<div class="tt-r"><span class="tt-v" lang="${lang}">${esc(v)}</span><span class="tt-d">${esc(when)}<span class="tt-x" lang="${lang}">${esc(ex)}</span></span></div>`).join('')}</div>` : ''}
     ${tr.rule ? `<p class="pop-t">${termify(tr.rule)}</p>` : ''}

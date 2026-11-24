@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.71.1
+**Feinschliff der Fehlerquellen: Themennamen brechen nicht mehr am Bindestrich, die Einleitung passt in eine Zeile, die Namensspalte ist breiter.**
+- **Bindestrich:** „Konditional & si-Sätze“ brach als „si-“ / „Sätze“ um, „s-Passiv“ hätte als „s-“ / „Passiv“ umbrechen können. Themennamen haben jetzt einen geschützten Bindestrich, überall wo sie stehen: Fehlerquellen auf Heute und im Sprach-Tab, Themenraster, Themenblatt, Rundenende, „Als Nächstes“, „Thema:“ unter einer Aufgabe, Tagesdetails, „Thema üben“. Der Schwerpunkt der Woche bleibt als Ganzes zusammen: „Schwerpunkt der Woche:“, darunter „Konditional & si-Sätze Ändern“.
+- **Reiter „Thema“:** Die Einleitung heißt „Anteil falscher Antworten, ab 10 Aufgaben:“ und passt auch bei 360 px in eine Zeile; vorher stand „Aufgaben:“ allein in der zweiten. Die Zahlenspalte ist 44 statt 64 px breit, sie zeigt nur noch „38 %“; die Namen bekommen 20 px mehr. Gilt ebenso für „Übungsart“ und „Fehlerart“.
+- **Tagwerk-Karte:** „Normal, 6 neue Sätze pro Tag“ war 4 px eingerückt und stand nicht bündig mit dem Text darüber.
+- **Geprüft und gelassen:** Die neuen Zeilen auf Heute haben dieselben Maße wie die übrigen (Titel 16/24 halbfett, Unterzeile 14/21, Innenabstand 13/16 px), Balken und Prozent stehen genau mittig. Lange Namen brechen bei 360 bis 390 px auf zwei Zeilen um; der Balken bleibt so breit wie bei „Thema üben“ (28 % der Zeile).
+- Tests: geschützter Bindestrich in den Fehlerquellen, auf Heute und beim Schwerpunkt.
+- Speicherstand unverändert.
+
 ## 24.71.0
 **Fehlerquellen nach Anteil statt nach Anzahl: Das schwächste Thema steht vorn. Dazu fehlende Verbindungen in der Satzbank, darunter „¿Alguna vez pensaste en …?“ aus deinem Screenshot.**
 - **Der Fall:** Auf „Heute“ stand „Inversion & inte“ mit 7 von 73 (10 %) vor „Adjektivendungen“ mit 5 von 13 (38 %). Sortiert war nach der Zahl der Fehler, und die zählt vor allem, wie oft ein Thema drankommt. Der Balken zeigte die Aufgaben auf gemeinsamer Skala; der Anteil steckte nur im Verhältnis Rot zu Grau und war nicht ablesbar.

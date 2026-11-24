@@ -124,7 +124,7 @@ function viewHome(){
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
     card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue, lang)} Min.</span></p>${doneOther ? `<p class="hint mt-4">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
       <ul class="plan2">${parts.join('')}</ul>
-      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b>${esc(trapMeta(lang, ft).label)}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
+      ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline">Schwerpunkt der Woche: <b class="nobr">${esc(keepHyph(trapMeta(lang, ft).label))}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">${LANG[lang].deName}-Tagwerk starten</button>
       <p class="hint lenlink">${size().label}, ${size().newPer} neue Sätze pro Tag <button type="button" class="link" data-a="toSettings">Länge ändern</button></p>`;
     if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
@@ -177,7 +177,7 @@ function topicRows(lang){
     return { id, label:tr.label, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`, touched:seen > 0 };
   });
 }
-const rowText = r => `<span class="txt"><span class="rt">${esc(r.label)}</span><span class="rd">${esc(r.text)}</span></span>`;
+const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${esc(r.text)}</span></span>`;
 const barRow = r => rowText(r) + (r.gen ? (r.rate == null ? '' : `<span class="bar qbar" aria-hidden="true"><span style="width:${Math.max(3, Math.round(r.rate * 100))}%"></span></span>`)
   : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
 // Die schwächsten Themen der letzten 30 Tage, dieselben Zahlen und dieselbe Reihenfolge wie „Fehlerquellen nach Thema“
@@ -422,7 +422,7 @@ function feedbackHtml(r, ex, c){
     if (line) out += `<p class="expl spotline">${line}</p>`;
     out += `<div class="solrow"><p class="sol" lang="${lang}">${fixed.map((w, i) => `<span data-a="lookup" data-w="${esc(w.replace(/[.,!?¿¡]/g, ''))}"${changed.has(i) ? ' class="w-fix"' : ''}>${esc(w)}</span>`).join(' ')}</p>${speakBtn(d.full, lang)}</div>`;
     out += `<p class="expl">${termify(d.note)}</p>`;
-    const tr = trapMeta(lang, d.trap); if (tr) out += `<p class="src">Thema: ${esc(tr.label)}</p>`;
+    const tr = trapMeta(lang, d.trap); if (tr) out += `<p class="src">Thema: ${esc(keepHyph(tr.label))}</p>`;
     return out;
   }
   if (ex.type === 'gen' && ex.data.kind === 'genus') {
@@ -553,7 +553,7 @@ function nextTopicHtml(r){
   const list = topicStats(errStats(lang, 30)).filter(x => x.id !== 'eigene' && trapMeta(lang, x.id) && !here.has(x.id) && x.bad * 5 >= x.n);
   if (!list.length) return '';
   const x = list[0];
-  return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(trapLabel(lang, x.id))}</b>: in den letzten 30 Tagen ${x.bad} von ${x.n} falsch. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
+  return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(keepHyph(trapLabel(lang, x.id)))}</b>: in den letzten 30 Tagen ${x.bad} von ${x.n} falsch. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
 }
 // Eine Aufgabe der Runde: was gefragt war, deine Antwort (überzählige Wörter gestrichen), die richtige Fassung, die ihr am nächsten
 // ist (abweichende Stellen markiert), und der Grund. Runden aus älteren Fassungen ohne Antwort zeigen Aufgabe und Lösung.
@@ -588,7 +588,7 @@ function topicsHtml(r){
   const rows = (S.topicsAll ? tps : tps.slice(0, nShow)).map((t, i) => {
     const ok = t.dots.length - t.bad - t.off, aria = `${ok} richtig${t.bad ? `, ${t.bad} falsch` : ''}${t.off ? `, ${t.off} mit Fehler außerhalb des Themas` : ''}`;
     const open = S.topicOpen === t.key, sheet = t.trap && t.trap !== 'eigene';
-    const head = `<button type="button" class="row trow${open ? ' open' : ''}" data-a="topicopen" data-k="${esc(t.key)}" aria-expanded="${open}" aria-controls="tdet-${i}"><span class="txt"><span class="rt">${esc(t.label)}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span></button>`;
+    const head = `<button type="button" class="row trow${open ? ' open' : ''}" data-a="topicopen" data-k="${esc(t.key)}" aria-expanded="${open}" aria-controls="tdet-${i}"><span class="txt"><span class="rt">${esc(keepHyph(t.label))}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span></button>`;
     if (!open) return head;
     const links = (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '') + (go(t) ? `<button type="button" class="link" ${go(t)}>Thema üben</button>` : '');
     return head + `<div class="tdet${S.topicEnter ? ' enter' : ''}" id="tdet-${i}">${roundTasksHtml(t.list, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>`;
@@ -652,7 +652,7 @@ function bonusHtml(r){
   const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>` : '';
   return `<h2 class="grp">Bonus: eigener Satz</h2><section class="chart bonus">
     <p class="bq">Schreib einen eigenen Satz mit ${ex}</p>
-    ${tr && tr.id !== 'eigene' ? `<p class="legend">Thema: ${esc(tr.label)}</p>` : ''}
+    ${tr && tr.id !== 'eigene' ? `<p class="legend">Thema: ${esc(keepHyph(tr.label))}</p>` : ''}
     ${item ? `<p class="bmodel"><span class="rt wordrow" lang="${lang}">${linkWords(item.target, lang)}</span>${item.de ? `<span class="rd">${esc(item.de)}</span>` : ''}</p>` : ''}
     <textarea id="bonusText" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="Dein Satz">${esc(b.text || '')}</textarea>
     ${charbar(lang)}
@@ -953,7 +953,7 @@ function actTable(rows){
 function errLine(rows){
   const all = [];
   rows.forEach(({ l, a }) => Object.entries(a.topics).forEach(([id, v]) => { if (v[1] > 0) all.push({ l, id, bad:v[1], n:v[0] }); }));
-  const top = all.sort((x, y) => y.bad - x.bad || y.n - x.n).slice(0, 2).map(x => { const tr = trapMeta(x.l, x.id); return !tr ? '' : tr.id === 'eigene' ? esc(tr.label) : `<button type="button" class="term" data-a="topic" data-l="${x.l}" data-t="${tr.id}">${esc(tr.label)}</button>`; }).filter(Boolean);
+  const top = all.sort((x, y) => y.bad - x.bad || y.n - x.n).slice(0, 2).map(x => { const tr = trapMeta(x.l, x.id); return !tr ? '' : tr.id === 'eigene' ? esc(tr.label) : `<button type="button" class="term" data-a="topic" data-l="${x.l}" data-t="${tr.id}">${esc(keepHyph(tr.label))}</button>`; }).filter(Boolean);
   return top.length ? `<p class="dc-x">Fehler bei ${top.length > 1 ? `${top[0]} und ` : ''}${nobr(`${top[top.length - 1]}.`)}</p>` : '';
 }
 function detailCard(title, sub, rows, empty, extra){

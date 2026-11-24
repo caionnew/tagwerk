@@ -66,6 +66,8 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 // Knopf und folgendes Satzzeichen zusammenhalten: Nach einem Knopf (inline-block) darf die Zeile sonst vor dem Punkt umbrechen
 const nobr = html => `<span class="nobr">${html}</span>`;
+// Namen wie „Konditional & si-Sätze“ oder „s-Passiv“ nicht am Bindestrich umbrechen: geschützter Bindestrich (U+2011)
+const keepHyph = s => String(s).replace(/(\p{L})-(\p{L})/gu, '$1\u2011$2');
 // Bewegung nur, wenn das System sie nicht abgeschaltet hat (Bewegung reduzieren)
 const calmMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 // Dieselben Stufen wie --dur-1, --dur-2 und --ease in style.css, für Bewegung aus dem Skript

@@ -280,17 +280,17 @@ function errorSourcesHtml(lang){
   const seg = `<div class="minseg errseg" role="radiogroup">${[['p', 'Thema'], ['t', 'Übungsart'], ['e', 'Fehlerart'], ['s', 'Sätze']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
   let rows = '', note = '', lead = '';
   if (tab === 's') {
-    rows = hard.map(i => { const st = stOf(i.id), tap = !!(i.trap && trapMeta(lang, i.trap)); return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="erow srow"><span class="el"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span>${tap ? `<span class="stp">${esc(trapLabel(lang, i.trap))}</span>` : ''}</span><span class="ev">${st.lapses}×</span></${tap ? 'button' : 'div'}>`; }).join('');
+    rows = hard.map(i => { const st = stOf(i.id), tap = !!(i.trap && trapMeta(lang, i.trap)); return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="erow srow"><span class="el"><span class="rt" lang="${lang}">${esc(i.target)}</span><span class="rd">${esc(i.de)}</span>${tap ? `<span class="stp">${esc(keepHyph(trapLabel(lang, i.trap)))}</span>` : ''}</span><span class="ev">${st.lapses}×</span></${tap ? 'button' : 'div'}>`; }).join('');
     const pat = hardPattern(lang, hard);
     note = !hard.length ? 'Gerade kein Satz, den du bei Wiederholungen mehrmals nicht wusstest.'
-      : `${pat ? `<b>${esc(trapLabel(lang, pat.trap))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Tipp auf einen Satz für die Regel dazu.`;
+      : `${pat ? `<b>${esc(keepHyph(trapLabel(lang, pat.trap)))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Tipp auf einen Satz für die Regel dazu.`;
   } else if (few) note = gate;
   else if (tab === 'p') {
     // Anteil falscher Antworten je Thema, wie bei „Übungsart“; Reihenfolge und Auswahl aus topicStats (geglättete Quote,
     // ab 10 Aufgaben). Unter dem Namen die Anzahl, damit 38 % bei 13 Aufgaben nicht genauer wirkt, als es ist.
     const list = topicStats(s).filter(x => x.bad).slice(0, 6);
-    lead = list.length ? 'Anteil falscher Antworten je Thema, ab 10 Aufgaben:' : '';
-    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(trapLabel(lang, x.id))}<span class="esub">${x.bad} von ${x.n} Aufgaben</span></span><span class="ebar" aria-hidden="true"><span style="width:${Math.max(4, x.rate * 100)}%"></span></span><span class="ev">${pct(x.rate)}</span></${tap ? 'button' : 'div'}>`; }).join('');
+    lead = list.length ? 'Anteil falscher Antworten, ab 10 Aufgaben:' : '';
+    rows = list.map(x => { const tap = !!trapMeta(lang, x.id); return `<${tap ? `button type="button" data-a="topic" data-t="${x.id}"` : 'div'} class="erow"><span class="el">${esc(keepHyph(trapLabel(lang, x.id)))}<span class="esub">${x.bad} von ${x.n} Aufgaben</span></span><span class="ebar" aria-hidden="true"><span style="width:${Math.max(4, x.rate * 100)}%"></span></span><span class="ev">${pct(x.rate)}</span></${tap ? 'button' : 'div'}>`; }).join('');
     note = list.length ? 'Wenige Aufgaben zählen für die Reihenfolge weniger. Tipp auf ein Thema für die Regel.'
       : 'Noch kein Thema mit 10 Aufgaben und einem Fehler.';
   } else if (tab === 't') {

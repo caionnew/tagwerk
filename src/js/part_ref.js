@@ -30,34 +30,82 @@ function topicExamples(lang, trap){
   cand.slice(0, 10).forEach(i => { if (out.length < 3 && !out.includes(i)) out.push(i); });
   return out.map(i => ({ target:i.target, de:i.de }));
 }
-function openTopic(lang, trap){
+function openTopic(lang, trap, tab){
   const tr = trapMeta(lang, trap); if (!tr) return;
   let examples;
   if (tr.kind === 'gen' && tr.gen) examples = Array.from({ length:3 }, () => { const d = GENS[tr.gen].make(); return { target:d.full || d.answers[0], de:d.deLine || (d.gap ? '' : d.prompt) }; });
   else examples = topicExamples(lang, trap);
-  S.pop = { type:'topic', lang, trap, examples, err:typicalError(lang, trap) };
+  S.pop = { type:'topic', lang, trap, examples, err:typicalError(lang, trap), tab:tab || 'rule' };
   renderPopup();
 }
+// Themenblatt mit zwei Reitern (seit 24.75): „Regel“ (Erklärung, Beispiele, typischer Fehler) und „Deine Zahlen“. Aus der
+// Themenliste in Fortschritt öffnet es auf „Deine Zahlen“, sonst auf „Regel“.
 function topicSheetHtml(P){
-  const tr = trapMeta(P.lang, P.trap), lang = P.lang;
-  const items = BANK[lang].filter(i => i.trap === P.trap);
-  const seen = items.filter(i => stOf(i.id)).length, mat = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
-  const stats = items.length ? `${items.length} Sätze im Thema, ${seen} geübt, ${mat} gefestigt.` : '';
-  // Fehlermodell (part_model.js): Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage
-  const mx = modelTopic(lang, P.trap), mu = topicModel(lang).mu;
-  const model = mx && mx.n >= 1 ? `Fehlerquote geschätzt ${pct(mx.mean)}, wahrscheinlich ${pct(mx.lo)} bis ${pct(mx.hi)}; mit ${pct(mx.pAbove)} Wahrscheinlichkeit über deinem Schnitt von ${pct(mu)}.${mx.n30 ? ` Letzte 30 Tage: ${mx.k30} von ${mx.n30} falsch.` : ''}` : '';
-  const err = P.err;
-  return `<div class="popov" data-a="popclose"></div><div class="pop tall" role="dialog" aria-label="${esc(tr.label)}">
-    <p class="find-k">Thema</p><p class="pop-h">${esc(keepHyph(tr.label))}</p>
-    <p class="popde"><b>${termify(tr.short)}</b></p>
+  const tr = trapMeta(P.lang, P.trap), lang = P.lang, num = P.tab === 'num', err = P.err;
+  const seg = `<div class="minseg dseg" role="radiogroup">${[['rule', 'Regel'], ['num', 'Deine Zahlen']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(P.tab || 'rule') === k}" data-a="toptab" data-t="${k}">${l}</button>`).join('')}</div>`;
+  const rule = `<p class="popde"><b>${termify(tr.short)}</b></p>
     ${tr.table ? `<div class="ttab">${tr.table.map(([v, when, ex]) => `<div class="tt-r"><span class="tt-v" lang="${lang}">${esc(v)}</span><span class="tt-d">${esc(when)}<span class="tt-x" lang="${lang}">${esc(ex)}</span></span></div>`).join('')}</div>` : ''}
     ${tr.rule ? `<p class="pop-t">${termify(tr.rule)}</p>` : ''}
     ${P.examples.length ? `<p class="pop-sub">Beispiele</p><ul class="exl">${P.examples.map(x => `<li><span class="wordrow" lang="${lang}">${linkWords(x.target, lang)}</span>${x.de ? `<span class="exg">${esc(x.de)}</span>` : ''}</li>`).join('')}</ul>` : ''}
-    ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}
-    ${stats ? `<p class="legend mt-12">${stats}</p>` : ''}
-    ${model ? `<p class="legend">${model}</p>` : ''}
+    ${err ? `<p class="pop-sub">Typischer Fehler</p><p class="errx" lang="${lang}">${err.words.map((w, i) => err.wrong.includes(i) ? `<span class="w-bad">${esc(w)}</span>` : esc(w)).join(' ')}</p><p class="okx" lang="${lang}">${esc(err.full)}</p>` : ''}`;
+  return `<div class="popov" data-a="popclose"></div><div class="pop tall" role="dialog" aria-label="${esc(tr.label)}">
+    <p class="find-k">Thema</p><p class="pop-h">${esc(keepHyph(tr.label))}</p>${seg}
+    ${num ? topicNumbersHtml(lang, P.trap) : rule}
     <div class="popfoot"><button type="button" class="ghost" data-a="popclose">Schließen</button>${S.view === 'run' ? '' : `<button type="button" class="primary" data-a="trapgo" data-l="${lang}" data-t="${P.trap}">10 Aufgaben üben</button>`}</div>
   </div>`;
+}
+// „Deine Zahlen“: Schätzung, Veränderung (die Quelle des Pfeils in der Themenliste), Verlauf über 12 Wochen, Stand der Sätze,
+// Etappen und Sätze, die du bei Wiederholungen nicht wusstest. Hier steht auch „gefestigt“ je Thema.
+function topicNumbersHtml(lang, trap){
+  const M = topicModel(lang), x = M.topics.find(t => t.id === trap), clear = clearSet(lang).has(trap);
+  let h = '';
+  if (M.fitted && x && x.n >= MODEL.MIN_N) {
+    const max = modelScale([x], M.mu);
+    h += `<p class="dbig">${pctPill(x.mean, clear)}<span>geschätzt falsch${clear ? ', klar über Schnitt' : ''}</span></p>${modelStripHtml(x, M.mu, max)}${modelAxisHtml(max)}
+      <p class="dsub">Wahrscheinlich ${pct(x.lo)} bis ${pct(x.hi)}; mit ${probPct(x.pAbove)} Wahrscheinlichkeit über deinem <button type="button" class="term" data-a="term" data-k="schaetzung">Schnitt</button> von ${pct(M.mu)}.</p>`;
+  } else h += `<p class="dtxt">Noch zu wenige Aufgaben für eine Schätzung${x && x.n30 ? `; letzte 30 Tage ${x.k30} von ${x.n30} falsch` : ''}.</p>`;
+  // Veränderung: dieselben Zahlen wie der Pfeil, montags neu
+  const C = topicChange(lang), c = C.topics[trap], cnt = v => (v && v.n ? `${pct(v.k / v.n)} (${v.k} von ${v.n})` : 'keine Aufgaben');
+  h += '<p class="pop-sub">Veränderung</p>';
+  if (!C.ready) h += `<p class="dtxt">${x && x.n30 ? `Letzte 30 Tage ${x.k30} von ${x.n30} falsch. ` : ''}${C.from ? `Ab ${fmtDayShort(C.from)} vergleicht` : 'Sobald acht Wochen Aufgaben da sind, vergleicht'} die App jeden Montag die letzten vier Wochen mit den vier davor.</p>`;
+  else {
+    const head = `Vier Wochen bis ${fmtDM(addDays(C.mon, -1))}: ${cnt(c && c.A)} falsch, die vier davor ${cnt(c && c.B)}`;
+    const tail = !c || c.p == null ? '. Zu wenige für einen Vergleich, es braucht je 5 Aufgaben.'
+      : c.lvl ? `: <b class="dchg"><span class="nobr">${arrowSvg(c.better, c.lvl)}${changeWord(c).replace(' ', '</span> ')}</b>.`
+      : Math.round(Math.max(c.p, 1 - c.p) * 100) === 50 ? ': besser und schlechter gleich wahrscheinlich, kein Pfeil.' : `: ${changeWord(c)}, zu unsicher für einen Pfeil.`;
+    h += `<p class="dtxt">${head}${tail}</p>`;
+  }
+  const H = topicHistory(lang, trap);
+  if (H.filter(w => w.mean != null).length >= 2) h += `<p class="pop-sub">Verlauf, 12 Wochen</p>${historySvg(H)}<p class="legend"><span class="mkey"><span><i class="dk-line"></i>Schätzung</span><span><i class="mk-band"></i>50 %</span><span><i class="dk-raw"></i>Woche, Größe nach Anzahl</span><span><i class="dk-mu"></i>Schnitt</span></span></p>`;
+  // Stand der Sätze (Satz-Themen) mit dem Zuwachs an gefestigten seit 30 Tagen (bis 24.74 im Themenraster)
+  const items = BANK[lang].filter(i => i.trap === trap);
+  if (items.length) {
+    const seen = items.filter(i => stOf(i.id)).length, mat = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length, ago = snapAgo(lang, 30), d = ago && ago.t ? mat - (ago.t[trap] || 0) : 0;
+    h += `<p class="pop-sub">Stand</p><p class="dtxt">${items.length} Sätze im Thema, ${seen} geübt, ${mat} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button>${d > 0 ? `, ${d} mehr als vor 30 Tagen` : ''}.</p>`;
+  }
+  // Etappen des Themas (part_stats.js): erreichte und, solange keine da ist, wie weit die Blöcke sind
+  const et = (Array.isArray(DB.etap) ? DB.etap : []).filter(e => e.l === lang && e.k === trap), bl = ((DB.tblk || {})[lang] || {})[trap], done = bl ? bl.b.length * TOPIC_BLOCK + bl.cn : 0;
+  h += `<p class="pop-sub">Etappen</p>${et.length ? `<ul class="dlist">${et.map(e => `<li><span class="dl-d">${fmtDM(e.d)}</span>${e.s === 2 ? 'Thema sitzt' : 'Fehler halbiert'}${e.b && e.c ? `: ${pct(e.b[1] / e.b[0], true)} → ${pct(e.c[1] / e.c[0], true)}` : ''}</li>`).join('')}</ul>`
+    : `<p class="dtxt">Noch keine. Geprüft wird alle ${TOPIC_BLOCK} Aufgaben im Thema, zuerst nach ${2 * TOPIC_BLOCK}${done ? `; bisher ${done}` : ''}.</p>`}`;
+  // Sätze des Themas, die du bei Wiederholungen nicht wusstest (lapses), die häufigsten zuerst
+  const miss = items.filter(i => (stOf(i.id) || {}).lapses >= 1).sort((p, q) => stOf(q.id).lapses - stOf(p.id).lapses || String(stOf(q.id).last || '').localeCompare(String(stOf(p.id).last || ''))).slice(0, 3);
+  if (miss.length) h += `<p class="pop-sub">Bei Wiederholungen nicht gewusst</p><ul class="exl">${miss.map(i => `<li><span class="wordrow" lang="${lang}">${linkWords(i.target, lang)}</span><span class="exg">${esc(i.de)} · ${stOf(i.id).lapses}×</span></li>`).join('')}</ul>`;
+  return h;
+}
+// Verlauf: Linie und Fläche = Schätzung mit 50-%-Bereich am Ende jeder Woche, gestrichelt der Schnitt, Punkte = rohe Wochenquote
+// (Fläche nach Anzahl der Aufgaben). Skala bis 50, 75 oder 100 %; eine Wochenquote darüber sitzt am oberen Rand.
+function historySvg(H){
+  const W = 320, Ht = 140, L = 30, R = 8, T = 10, B = 22, xs = i => L + i * (W - L - R) / 11;
+  const est = H.map((w, i) => Object.assign({ i }, w)).filter(w => w.mean != null);
+  const top = rateScale(Math.max(0.01, ...est.map(w => Math.max(w.hi50, w.mu)), ...H.filter(w => w.n >= 5).map(w => w.k / w.n))), y = v => T + (1 - Math.min(top, v) / top) * (Ht - T - B);
+  let g = Array.from({ length:top < 1 ? top * 4 + 1 : 3 }, (_, i) => i * (top < 1 ? 0.25 : 0.5)).map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" class="gl"/><text x="${L - 4}" y="${(y(v) + 3).toFixed(1)}" class="yl">${Math.round(v * 100)}${v === top ? ' %' : ''}</text>`).join('');
+  const P = (w, v) => `${xs(w.i).toFixed(1)},${y(v).toFixed(1)}`;
+  g += `<polygon points="${est.map(w => P(w, w.hi50)).concat(est.slice().reverse().map(w => P(w, w.lo50))).join(' ')}" class="cband"/>`;
+  g += `<polyline points="${est.map(w => P(w, w.mu)).join(' ')}" class="cmu"/><polyline points="${est.map(w => P(w, w.mean)).join(' ')}" class="cline"/>`;
+  H.forEach((w, i) => { if (w.n) g += `<circle cx="${xs(i).toFixed(1)}" cy="${y(w.k / w.n).toFixed(1)}" r="${Math.min(6, 1.5 + Math.sqrt(w.n) * 0.6).toFixed(1)}" class="craw"/>`; });
+  const now = est[est.length - 1]; if (now && now.i === 11) g += `<circle cx="${xs(11).toFixed(1)}" cy="${y(now.mean).toFixed(1)}" r="4" class="cnow"/>`;
+  [[3, 'vor 8 Wochen'], [7, 'vor 4 Wochen'], [11, 'jetzt']].forEach(([i, t]) => { g += `<text x="${xs(i).toFixed(1)}" y="${Ht - 6}" class="xl${i === 11 ? ' xe' : ''}">${t}</text>`; });
+  return `<svg viewBox="0 0 ${W} ${Ht}" class="dsvg" role="img" aria-label="Verlauf der geschätzten Fehlerquote über 12 Wochen">${g}</svg>`;
 }
 // Wo kommt das Wort sonst noch vor? Bevorzugt Sätze, die du schon geübt hast
 function examplesFor(lang, w){

@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 25. November 2026 (nach 24.74.0)
+Stand: 25. November 2026 (nach 24.75.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -111,10 +111,11 @@ Spanisch:
 
 ## Offen: Rückmeldung von dir
 
-- **Themen dreimal (für Runde 3, Analyse vom 25.11.).** Raster „Themen“ im Sprach-Tab (geübt/gefestigt), Reiter „Thema“ der Karte „Fehler“ (Schätzung) und „Thema üben“ (beides). (a) Im Sprach-Tab eine Liste „Themen“ mit Schätzung und gefestigt je Zeile, der Reiter „Thema“ entfällt (B+, größerer Umbau); (b) alles bleibt, aber gleicher Balken und Wortlaut (B). Entscheidung steht aus.
+- Gerade nichts offen. („Themen dreimal“ ist mit 24.75.0 entschieden: eine Themenliste im Sprach-Tab, „gefestigt“ je Thema im Themenblatt.)
 
 ## Nach echter Nutzung nachstellen
 
+- **Veränderungspfeile, Stufen 60/80/95 und vier gegen vier Wochen (seit 24.75.0).** Gerechnet mit `tools/pfeile.js` am Volumen vom 24.11.; sichtbar ab 11. Januar 2027. Nach drei Monaten prüfen: Wie oft wechselt ein kräftiger Pfeil von Woche zu Woche die Richtung (bei reinem Rauschen selten, weil sich die Zeiträume zur Hälfte überlappen), und passen die Pfeile zu den Etappen? Wenn die Liste unruhig wirkt: kräftig erst ab 97,5 % (B).
 - **„Klar über Schnitt“, Hysterese 90/60 (seit 24.74.0).** Gewählt per Simulation (`tools/fehlerquoten-schwelle.js`) mit dem Volumen vom 24.11. Nach einem halben Jahr prüfen, wie oft die Markierung tatsächlich wechselt und ob sie zu spät kommt (Median 27 Tage bei 1,2 Aufgaben je Thema am Tag).
 - **Fehlermodell, Halbwertszeit 14 Tage (seit 24.72.0).** Gewählt am Volumen im Backup vom 24.11. (rund 1,2 Aufgaben je Thema und Tag). Ab etwa Mai 2027, mit einem halben Jahr Daten, über die Vorhersagegüte für den nächsten Tag wählen: je Kandidat (7, 10, 14, 21, 30 Tage) die mittlere log-Wahrscheinlichkeit der Antworten eines Tages unter dem Modell aus den Tagen davor. Braucht ein Werkzeug in `tools/`, das ein Backup liest.
 - **Nachsprechen, Schwellen (seit 24.26.0).** Pause ab 0,35 s, Stopp nach 1,2 s Stille, Tempo-Urteil bei 0,8 bis 1,25 des Originals. Begründete Startwerte, nur mit vorgetäuschtem Mikrofon getestet. Nachstellen, wenn die Aufnahme am Handy zu früh stoppt oder Stockungen falsch markiert.
@@ -130,23 +131,25 @@ Spanisch:
   - **Unsicherheit über m mitnehmen (C+):** über das Gitter von (μ, m) mitteln statt den Modus zu nehmen. Bereiche würden etwas breiter; auf dem Handy rund zehnmal langsamer.
   - **Quantil-Punkte statt Flächen (C+):** 20 Punkte je Thema, je einer für 5 % Wahrscheinlichkeit; für Laien oft leichter lesbar, bei sechs Themen aber unruhig.
   - **Satzschwierigkeit (Rasch-Modell) (C):** zu wenige Antworten je Satz.
-- **Trend je Thema (geprüft am 24.11., in 24.72.1 entfernt).** Bei 1,2 Aufgaben je Thema und Tag nicht erkennbar, dafür 3 bis 10 % Fehlalarme (Zahlen in RESEARCH.md). Geprüfte Ersatzformen:
+  - **„Deine Zahlen“: Fehler nach Übungsart je Thema (B−, geprüft am 25.11.):** zeigte, ob ein Thema nur beim freien Schreiben hakt. Braucht dasselbe neue Feld Thema × Übungsart wie „Übungsart herausrechnen“.
+- **Trend je Thema (geprüft am 24.11., in 24.72.1 entfernt; seit 24.75 als Pfeil mit Sicherheitsstufen, vier gegen vier Wochen).** Als Ja/Nein-Urteil bei 1,2 Aufgaben je Thema und Tag nicht erkennbar, dafür 3 bis 10 % Fehlalarme (Zahlen in RESEARCH.md). Geprüfte Ersatzformen:
   - **Grauer Punkt „vor 4 Wochen“ auf dem Streifen (C+):** zeigt bei normalem Volumen vor allem Zufall.
   - **Trend nur beim Schwerpunkt (C):** dort genug Aufgaben, aber gerade dort die Regression zur Mitte durch die Auswahl.
   - **Hierarchisches Modell für die Änderung (C+):** log-Odds-Änderung je Thema ~ N(0, τ²), τ empirisch-bayessch; richtig gegen Fehlalarme, würde bei diesen Daten aber fast nie etwas zeigen.
+  - **Farbige Pfeile (C+, geprüft am 25.11.):** Grün und Rot behaupteten Gewissheit, und Rot heißt in Fortschritt schon „Fehlerquote“.
+  - **Waagrechter Pfeil für „kaum Unterschied“ (B):** behauptete „gleich geblieben“; eine leere Stelle heißt ehrlicher „keine Aussage“.
+  - **Kleiner Verlauf je Zeile statt Pfeil (C+):** zwölf Wochenwerte je Thema, bei 1,2 Aufgaben am Tag fast nur Zufall und in 19 Zeilen unruhig; der Verlauf steht im Themenblatt.
   - Wieder ansehen, wenn je Thema 5 und mehr Aufgaben am Tag üblich sind.
 - **Schreiben: grüner Pfeil erst ab 3 gegen 3 Texte (C+, geprüft am 24.11.).** Heute reicht +0,05 im Mittel aus 1 bis 3 Texten; Wörter pro Satz und LIX hängen stark vom Thema des Textes ab. Zurückgestellt, weil der Vergleich als „anfangs … jetzt“ beschriftet ist und keine Wahrscheinlichkeit behauptet.
 - **Weitere Punkte der Analyse vom 25.11. (zurückgestellt):** „N gefestigte Sätze“ oben zählt verankerte mit, „Stand der Sätze“ getrennt; weicht ab dem ersten verankerten Satz ab (B−). „neue Sätze gezielt zu typischen Fehlern“ auf Heute liest sich neben den Fehlerquoten wie „deine Fehler“ (C+). Absolute Grenze für Grundlagensätze, wenn alle Themen schwer sind (C+, eher ein Fall fürs Niveau).
-- **README-Bilder neu aufnehmen (A−, für Runde 3 vorgemerkt).** Die Bilder stammen aus 24.4.0 und zeigen noch „Schwächste Themen“; neu nach dem Farbschema, damit es nur eine Aufnahme braucht.
 - **Themen-Etappen sequenziell statt in Blöcken (C+, geprüft am 24.11.).** Ein Test mit E-Werten (anytime-valid, Ville-Ungleichung) dürfte nach jeder Antwort prüfen, ohne die Fehlalarme zu erhöhen. Braucht ein neues Speicherfeld je Thema und neue Abstimmung; der Gewinn ist begrenzt, weil schon ein idealer Einzeltest für 20 → 10 % rund 310 Aufgaben braucht (bei 1,2 am Tag 260 Tage). Die Regel bleibt, `tools/themen-etappen.js` rechnet jetzt mit echtem Volumen.
-- **Pfeil in den antippbaren Zeilen der Fehlerquellen im Sprach-Tab (C+, geprüft am 24.11.).** Auf Heute haben die Zeilen einen, im Reiter „Thema“ nicht. Der Hinweis „Tipp auf ein Thema für die Regel“ steht darunter, und ein Pfeil nähme der ohnehin schmalen Namensspalte 12 px.
+- **Chevron in den antippbaren Zeilen der Themenliste im Sprach-Tab (C+, geprüft am 24.11., wieder am 25.11.).** Auf Heute haben die Zeilen einen, in der Themenliste nicht. Der Hinweis „Tipp auf ein Thema …“ steht darunter, und neben der Pfeilspalte nähme ein Chevron der Namensspalte weitere 12 px.
 - **Fehlerquellen: andere Reihenfolgen (geprüft am 24.11.; in 24.71.0 geglättete Quote ab 10 Aufgaben, seit 24.72.0 das Fehlermodell mit Vergessen).**
   - **Anzahl der Fehler (C, bis 24.70):** misst eher, wie oft ein Thema drankommt; 7 von 73 stand vor 5 von 13.
   - **Rohe Quote ab 10 Aufgaben (B−):** einfach, aber bei wenigen Aufgaben sprunghaft.
   - **Untere Wilson-Grenze (B):** robust, aber die Reihenfolge widerspricht öfter den Prozent daneben.
   - **Fehler über der eigenen Quote (B):** wo Üben am meisten Fehler spart; eine neue, schwer greifbare Zahl, und die Liste wird leer, wenn alles gleich gut ist.
   - **Bereinigt nach Übungsart (C+):** fachlich am saubersten (Inversion kommt oft als Wortkästchen, Adjektive als getippte Lücke), braucht aber ein neues Feld Thema × Übungsart im Speicher und 30 Tage Daten.
-- **Fehlerquellen nach Thema im Themenraster (C+).** Zwei Themenlisten im Sprach-Tab; zusammengelegt fehlte aber die Liste nach Fehlern, die auch „Heute“ zeigt.
 - **Wochenbilanz zum Schwerpunkt (C+, vorher B−).** Ersetzt durch „neue Sätze beim ersten Mal richtig“ (Fahrplan): gleiche Übungsform und Stufe statt wechselnder Übungsarten.
 - **Andere Hauptzahl statt „gefestigt“ (geprüft am 20.11.).** „Gefestigt“ bleibt: ehrlicher Bestand dessen, was dauerhaft sitzt, auch wenn die Zahl allein wenig erklärt und in den ersten drei Wochen bauartbedingt 0 ist.
   - **Bezugsgröße „97 von 529“ (B−):** zeigt der Balken „Stand der Sätze“ schon.

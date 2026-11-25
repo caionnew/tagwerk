@@ -1,5 +1,6 @@
-// Fortschritt mit sechs Wochen Daten: Kalender, Etappen, Kennzahlen, Themenraster, Karte „Fehler“; dazu „Höchste Fehlerquoten“ auf Heute und „Thema üben“.
-const { test, expect, APP, seed, richDB } = require('./helpers');
+// Fortschritt mit sechs (für die Pfeile zehn) Wochen Daten: Kalender, Etappen, Kennzahlen, Themenliste, Karte „Wie du Fehler machst“,
+// Themenblatt mit „Deine Zahlen“; dazu „Höchste Fehlerquoten“ auf Heute und „Thema üben“.
+const { test, expect, APP, seed, richDB, longDB } = require('./helpers');
 test('Überblick: Kalender beginnt bei heute, Tageszeit und Etappen', async ({ page }) => {
   await seed(page, richDB('sv'));
   await page.goto(APP);
@@ -14,26 +15,47 @@ test('Überblick: Kalender beginnt bei heute, Tageszeit und Etappen', async ({ p
   await expect(page.locator('.wrail .wl').first()).toBeVisible();
   await expect(page.locator('.wrail .wl-next').first()).toBeVisible();
 });
-test('Sprachreiter: Kennzahlen, Themenraster und Karte „Fehler“', async ({ page }) => {
-  await seed(page, richDB('sv'));
+test('Sprachreiter: Kennzahlen, Themenliste mit Pfeilen in einer Spalte, Karte „Wie du Fehler machst“, Themenblatt auf „Deine Zahlen“', async ({ page }) => {
+  await seed(page, longDB('sv'));
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=progress]');
   await page.click('[data-a=ptab][data-t=sv]');
   await expect(page.locator('.kpis div')).toHaveCount(3);
-  expect(await page.locator('.tgrid .tg').count()).toBeGreaterThanOrEqual(8);
-  for (const t of ['t', 'e', 'p']) { await page.click(`[data-a=errtab][data-t=${t}]`); expect(await page.locator('.erows .mrow').count()).toBeGreaterThan(0); }
-  // Reiter „Thema“: Streifen mit Schätzung und Achse; Tipp auf ein Thema öffnet das Themenblatt mit der Schätzung
-  await expect(page.locator('.erows .mstrip').first()).toBeVisible();
-  await expect(page.locator('.erows .maxis')).toHaveCount(1);
+  await expect(page.locator('.tgrid')).toHaveCount(0);
+  await expect(page.locator('h2.grp', { hasText:/^Themen$/ })).toHaveCount(1);
+  const rows = page.locator('.mrow[data-z="1"]');
+  expect(await rows.count()).toBeGreaterThanOrEqual(4);
+  // Jede Zeile hat eine Pfeilstelle; Pfeile und Quoten stehen genau untereinander, auch neben der rot hinterlegten Quote
+  await expect(page.locator('.mrow[data-z="1"] .aslot')).toHaveCount(await rows.count());
+  expect(await page.locator('.mrow[data-z="1"] .aslot svg.arw').count()).toBeGreaterThanOrEqual(1);
+  const col = await page.evaluate(() => { const r = [...document.querySelectorAll('.mrow[data-z="1"]')];
+    return { slot:r.map(x => Math.round(x.querySelector('.aslot').getBoundingClientRect().left * 2) / 2), val:r.map(x => Math.round(x.querySelector('.mval').getBoundingClientRect().right * 2) / 2), pill:r.some(x => x.querySelector('.mpct.cl')) }; });
+  expect(new Set(col.slot).size).toBe(1); expect(new Set(col.val).size).toBe(1);
+  expect(col.pill).toBe(true);
+  await expect(page.locator('.legend.akey')).toContainText('kräftiger = sicherer');
   // Legende unter der Achse, innerhalb der Karte
-  const ly = await page.evaluate(() => { const c = document.querySelector('.errseg').closest('.chart'), k = c.querySelector('.mkey'), a = c.querySelector('.maxis'); return { k:k.getBoundingClientRect().top, a:a.getBoundingClientRect().bottom, inside:c.contains(k) }; });
+  const ly = await page.evaluate(() => { const c = document.querySelector('.mrow[data-z="1"]').closest('.chart'), k = c.querySelector('.mkey'), a = c.querySelector('.maxis'); return { k:k.getBoundingClientRect().top, a:a.getBoundingClientRect().bottom, inside:c.contains(k) }; });
   expect(ly.inside).toBe(true); expect(ly.k).toBeGreaterThanOrEqual(ly.a - 1);
-  await expect(page.locator('h2.grp', { hasText:/^Fehler$/ })).toHaveCount(1);
-  await page.click('button.mrow >> nth=0');
-  await expect(page.locator('.pop .pop-h')).toBeVisible();
-  await expect(page.locator('.pop')).toContainText('Fehlerquote geschätzt');
+  // Karte „Wie du Fehler machst“: Übungsart als Schätzung mit Streifen, Fehlerart grau gestapelt
+  await expect(page.locator('h2.grp', { hasText:'Wie du Fehler machst' })).toHaveCount(1);
+  await expect(page.locator('h2.grp', { hasText:/^Fehler$/ })).toHaveCount(0);
+  const card = page.locator('.errseg').locator('xpath=..');
+  await expect(card.locator('.mstrip').first()).toBeVisible();
+  await page.click('[data-a=errtab][data-t=e]');
+  await expect(page.locator('.stack.kinds')).toBeVisible();
+  expect(await page.locator('.errseg ~ .erows .mrow').count()).toBeGreaterThan(0);
+  // Tipp auf ein Thema: Themenblatt auf „Deine Zahlen“ mit Verlauf; „Regel“ zeigt die Erklärung
+  await rows.first().click();
+  await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
+  await expect(page.locator('.pop')).toContainText('geschätzt falsch');
+  await expect(page.locator('.pop')).toContainText(/Vier Wochen bis .*: (besser|schlechter|besser und schlechter)/);
+  await expect(page.locator('.pop svg.dsvg')).toBeVisible();
+  await page.click('.pop [data-a=toptab][data-t=rule]');
+  await expect(page.locator('.pop [data-a=toptab][data-t=rule]')).toHaveAttribute('aria-checked', 'true');
+  await expect(page.locator('.pop svg.dsvg')).toHaveCount(0);
+  await expect(page.locator('.pop .popde')).toBeVisible();
 });
-test('Karte „Fehler“, Reiter „Sätze“: hartnäckige Sätze in beiden Sprachen, Aufbau wie die anderen Reiter, Tipp öffnet die Regel', async ({ page }) => {
+test('Karte „Wie du Fehler machst“, Reiter „Sätze“: hartnäckige Sätze in beiden Sprachen, Aufbau wie die anderen Reiter, Tipp öffnet die Regel', async ({ page }) => {
   for (const lang of ['sv', 'es']) {
     const db = richDB(lang);
     // Zwei Sätze bei Wiederholungen mehrfach nicht gewusst und noch nicht gefestigt
@@ -61,7 +83,9 @@ test('Themenblatt „werden“: Übersicht mit fünf Verben, Hauptknopf ohne Scr
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=progress]');
   await page.click('[data-a=ptab][data-t=es]');
-  await page.click('.tgrid [data-t=cambio]');
+  // Noch ohne Schätzung: als Verweis unter der Themenliste, öffnet auf „Regel“
+  await page.click('.chart [data-a=topic][data-t=cambio]');
+  await expect(page.locator('.pop [data-a=toptab][data-t=rule]')).toHaveAttribute('aria-checked', 'true');
   await expect(page.locator('.pop .ttab .tt-r')).toHaveCount(5);
   await expect(page.locator('.pop [data-a=trapgo]')).toBeInViewport();
 });
@@ -82,6 +106,9 @@ test('Heute „Höchste Fehlerquoten“ mit Schätzung und Bereich; „Thema üb
   expect(g.w[0]).toBeGreaterThanOrEqual(g.s[0] - 0.5); expect(g.w[1]).toBeLessThanOrEqual(g.s[1] + 0.5);
   expect(g.d).toBeGreaterThanOrEqual(g.w[0]); expect(g.d).toBeLessThanOrEqual(g.w[1]);
   await expect(page.locator('.rows .legend.inrows .mkey')).toHaveCount(1);
+  // Klar über Schnitt: rot hinterlegte Quote, die Legende nennt es nur dann
+  if (await page.locator('.row.mrowh .mpct.cl').count()) await expect(page.locator('.inrows')).toContainText('klar über Schnitt');
+  else await expect(page.locator('.inrows')).not.toContainText('klar über Schnitt');
   await page.click('.inrows [data-a=term][data-k=schaetzung]');
   await expect(page.locator('.pop')).toContainText('Klar über Schnitt');
   await page.click('.pop [data-a=popclose] >> nth=-1');
@@ -103,6 +130,5 @@ test('Heute „Höchste Fehlerquoten“ mit Schätzung und Bereich; „Thema üb
   await page.click('.grp-lead [data-a=term][data-k=schaetzung]');
   await expect(page.locator('.pop')).toContainText('Klar über Schnitt');
   await page.click('.pop [data-a=popclose] >> nth=-1');
-  await page.click('.grp-lead [data-a=term][data-k=gefestigt]');
-  await expect(page.locator('.pop .pop-h')).toBeVisible();
+  await expect(page.locator('.grp-lead', { hasText:'wie viele Sätze im Thema du schon geübt hast' })).toHaveCount(1);
 });

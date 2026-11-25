@@ -55,7 +55,7 @@ document.addEventListener('click', e => {
   const a = b.dataset.a;
   if (!['coldel', 'reset'].includes(a)) S.armed = null;
   if (a === 'reset' && S.armed && S.armed !== 'reset:' + (b.dataset.l || S.lang)) S.armed = null;
-  if (S.pop && !['popclose', 'popext', 'popweb', 'lookup', 'speak', 'topic', 'term'].includes(a)) { S.pop = null; renderPopup(); }
+  if (S.pop && !['popclose', 'popext', 'popweb', 'lookup', 'speak', 'topic', 'toptab', 'term'].includes(a)) { S.pop = null; renderPopup(); }
   const r = S.run;
   switch (a) {
     case 'tab': {
@@ -281,7 +281,8 @@ document.addEventListener('click', e => {
     case 'tplay': { const ex = r && r.queue[r.idx]; if (ex && ex.data) speak(ex.data.say, r.lang, Number(b.dataset.rate)); break; }
     case 'ptab': { const t = b.dataset.t; S.ptab = t; if (t !== 'all') { S.lang = t; DB.settings.lang = t; save(); } S.calDay = null; S.minDay = null; render(); window.scrollTo(0, 0); break; }
     case 'term': S.pop = { type:'term', k:b.dataset.k, lang:(S.view === 'run' && S.run && S.run.lang) || S.lang }; renderPopup(); break;
-    case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t); break;
+    case 'topic': openTopic(b.dataset.l || ((S.view === 'run' || S.view === 'runDone') && S.run && S.run.lang) || S.lang, b.dataset.t, b.dataset.z ? 'num' : 'rule'); break;
+    case 'toptab': if (S.pop && S.pop.type === 'topic') { S.pop.tab = b.dataset.t; renderPopup(); } break;
     case 'ref': S.ref = b.dataset.r; S.kultCat = null; S.refFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'extra'; goView('ref'); break;
     // Dein Weg: ein Jahr auf- oder zuklappen; die Jahreszeile bleibt im Blick
     case 'wayfold': { const y = b.dataset.y; S.wayOpen = Object.assign({}, S.wayOpen, { [y]:!(S.wayOpen && S.wayOpen[y]) }); S.wayAnim = S.wayOpen[y] ? y : null; render(); const el = document.querySelector(`[data-a=wayfold][data-y="${y}"]`); if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest' }); break; }

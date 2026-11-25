@@ -1,4 +1,4 @@
-/* ---------- Langfristiger Fortschritt: Etappen, Themenraster, Veränderung über 30 Tage ---------- */
+/* ---------- Langfristiger Fortschritt: Etappen, Dein Weg, Jahr für Jahr, Veränderung über 30 Tage ---------- */
 // Tagesstand ergänzen: Wortschatz (Grundformen) und gefestigte Sätze je Thema
 function snapshotExtra(snap){
   ['sv', 'es'].forEach(l => {
@@ -377,15 +377,4 @@ function yearsHtml(){
       ${(inMin => langs.map(l => `<p class="y-l"><span class="sq rl-${l}-sq"></span><b>${LANG[l].deName}</b> ${tagwerkCount(l, Y.y + '-01-01', Y.y + '-12-31').toLocaleString('de-DE')} Tagwerke, ${Y[l].fresh.toLocaleString('de-DE')} neue Sätze, ${Y[l].mat.toLocaleString('de-DE')} gefestigt, ${Y[l].n.toLocaleString('de-DE')} Aufgaben, ${fmtMin(Y[l].secs, inMin)}</p>`).join('') + (Y.topMonth != null && Y.days >= 20 ? `<p class="legend mt-8">Stärkster Monat: ${MONTHS_FULL[Y.topMonth]} mit ${fmtMin(Y.topSecs, inMin)}</p>` : ''))(bigTime(Y.secs)[1] !== 'Stunden')}</div>`;
   };
   return `<h2 class="grp">Jahr für Jahr</h2><div class="ygrid">${ys.map(card).join('')}</div>`;
-}
-// Themenraster: je Thema geübt und gefestigt (Balken hell und dunkel, beide Zahlen benannt) und Veränderung seit etwa 30 Tagen
-function topicGridHtml(lang){
-  const ago = snapAgo(lang, 30);
-  const tiles = TRAPS[lang].filter(tr => tr.kind !== 'gen').map(tr => {
-    const items = BANK[lang].filter(i => i.trap === tr.id); if (!items.length) return '';
-    const seen = items.filter(i => stOf(i.id)).length, mat = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
-    const d = ago && ago.t ? mat - (ago.t[tr.id] || 0) : null;
-    return `<button type="button" class="tg${seen ? '' : ' tg-new'}" data-a="topic" data-t="${tr.id}"><span class="tg-l">${esc(keepHyph(tr.label))}</span><span class="tg-b" aria-hidden="true"><span style="width:${Math.round(seen / items.length * 100)}%" class="tg-seen"></span><span style="width:${Math.round(mat / items.length * 100)}%" class="tg-mat"></span></span><span class="tg-n">${seen ? `${seen} geübt · ${mat} gefestigt` : `${items.length} Sätze, neu`}${d ? ` <span class="tg-d">+${d}</span>` : ''}</span></button>`;
-  }).join('');
-  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend below"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Tipp auf ein Thema für Regel, Beispiele und Zahlen.</p>`;
 }

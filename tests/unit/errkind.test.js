@@ -98,14 +98,16 @@ test('Grammatik-Thema: Lückenwort bleibt Grammatik, auch als Inhaltswort', () =
   const L = record('sv', { type:'cloze', id:item.id }, 'cyklade');
   assert.equal(L['e:word'], 1); assert.deepEqual(L['p:tempus'], [1, 1]);
 });
-test('Fehlerart zeigt die Aufteilung als Anzahl, nicht als Prozent', () => {
+test('Fehlerart zeigt die Aufteilung als Anzahl, nicht als Prozent, grau gestapelt', () => {
   run(`DB.tlog = { [today()]: { sv: { 'e:word': 17, 'e:missing': 1, 't:gap': [64, 18] } } }; S.errTab = 'e';`);
-  const html = run(`errorSourcesHtml('sv')`);
+  const html = run(`errorWaysHtml('sv')`);
   assert.match(html, /18 getippte Fehler der letzten 30 Tage:/);
   assert.match(html, /<span class="mpct">17<\/span>/); assert.match(html, /<span class="mpct">1<\/span>/);
   assert.doesNotMatch(html, /class="mpct">[^<]*%/);
-  // Balken über die volle Breite, Anteil an allen getippten Fehlern
-  assert.match(html, /class="mbar"[^>]*><i style="width:max\(3px, 94\.4%\)">/);
+  // Anteile als ein gestapelter Balken in Grau (kd0, kd1 …), mit denselben Farbfeldern vor den Zeilen; kein roter Quotenbalken
+  assert.match(html, /<div class="stack kinds" aria-hidden="true"><span class="kd0" style="flex:17"><\/span><span class="kd1" style="flex:1"><\/span><\/div>/);
+  assert.match(html, /<i class="sq kd0"><\/i>Form oder Funktionswort/);
+  assert.doesNotMatch(html, /class="mbar"|mstrip/);
   assert.match(html, /data-a="errtab" data-t="t"/);
 });
 test('Unbekannte Form eines bekannten Wortes ist dieselbe Wortfamilie, kein anderes Wort', () => {

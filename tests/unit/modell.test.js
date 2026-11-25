@@ -48,13 +48,14 @@ test('Modell: unter drei Themen mit Daten gepoolte Quote und m = 10; eine Pause 
   assert.ok(M.topics[0].hi - M.topics[0].lo > wide && M.topics[0].mean < 0.55);
 });
 
-test('Kein Trend je Thema (seit 24.72.1): auch ein starker Rückgang zeigt nur die Schätzung, kein „besser“', () => {
-  run(`DB = freshDB(); DB.tlog = { [addDays(today(), -2)]: { sv: { 'p:bisats':[20, 0], 'p:inversion':[20, 4], 'p:tempus':[20, 4] } }, [addDays(today(), -20)]: { sv: { 'p:bisats':[20, 13], 'p:inversion':[20, 4], 'p:tempus':[20, 4], 't:gap':[120, 29] } } }; S.errTab = 'p';`);
-  assert.equal('trend' in run(`modelTopic('sv', 'bisats')`), false);
-  const h = run(`errorSourcesHtml('sv')`) + run(`weakHtml('sv')`) + run(`S.view = 'progress'; openTopic('sv', 'bisats'); topicSheetHtml(S.pop)`);
+test('Kein kurzfristiger Trend (seit 24.72.1): ein starker Rückgang in drei Wochen zeigt nur die Schätzung; Pfeile erst nach acht Wochen', () => {
+  run(`DB = freshDB(); DB.tlog = { [addDays(today(), -2)]: { sv: { 'p:bisats':[20, 0], 'p:inversion':[20, 4], 'p:tempus':[20, 4] } }, [addDays(today(), -20)]: { sv: { 'p:bisats':[20, 13], 'p:inversion':[20, 4], 'p:tempus':[20, 4], 't:gap':[120, 29] } } };`);
+  assert.equal('trend' in run(`topicModel('sv').topics.find(x => x.id === 'bisats')`), false);
+  const h = run(`topicListHtml('sv')`) + run(`weakHtml('sv')`) + run(`S.view = 'progress'; openTopic('sv', 'bisats', 'num'); topicSheetHtml(S.pop)`);
   // Nur die Zahlen prüfen: Die Beispielsätze im Themenblatt sind zufällig und dürfen „besser“ enthalten
   // („Jag hoppas att du snart mår bättre.“), daran ist 24.72.1 auf GitHub gescheitert.
-  assert.match(h, /Fehlerquote geschätzt/); assert.doesNotMatch(h, /class="mtr|Letzte 14 Tage|als die 28 davor|>besser<|>schlechter</);
+  assert.match(h, /geschätzt falsch/); assert.doesNotMatch(h, /class="mtr|class="arw|Letzte 14 Tage|als die 28 davor|>besser<|>schlechter</);
+  assert.match(h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '), /Ab \d+\. \S+ vergleicht die App jeden Montag die letzten vier Wochen mit den vier davor\./);
 });
 
 test('Thompson-Sampling: Thema vorn so oft, wie es wahrscheinlich das schwächste ist; fester Startwert je Woche', () => {
@@ -102,16 +103,24 @@ test('Klar über Schnitt mit Hysterese: rein ab 90 %, raus unter 60 %, Stand vom
   assert.deepEqual(run(`[...clearSet('sv')]`), []);
   // Ab 90 % kommt ein Thema auch ohne Vortag dazu
   run(`DB.clear = {}; DB.tlog[today()].sv['p:species'] = [20, 14];`);
-  assert.ok(run(`modelTopic('sv', 'species').pAbove`) >= 0.9);
+  assert.ok(run(`topicModel('sv').topics.find(x => x.id === 'species').pAbove`) >= 0.9);
   assert.deepEqual(run(`[...clearSet('sv')]`), ['species']);
 });
 
-test('Themenblatt: Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage', () => {
-  run(SYN); run(`S.view = 'progress'; openTopic('sv', 'species')`);
-  const html = run(`topicSheetHtml(S.pop)`);
-  assert.match(html, /Fehlerquote geschätzt 43 %, wahrscheinlich 14 % bis 76 %; mit 77 % Wahrscheinlichkeit über deinem Schnitt von 31 %\. Letzte 30 Tage: 4 von 7 falsch\./);
-  run(`openTopic('sv', 'framtid')`);
-  assert.doesNotMatch(run(`topicSheetHtml(S.pop)`), /Fehlerquote geschätzt/, 'ohne Daten keine Schätzung');
+test('Themenblatt „Deine Zahlen“: Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage', () => {
+  run(SYN); run(`S.view = 'progress'; openTopic('sv', 'species', 'num')`);
+  const t = run(`topicSheetHtml(S.pop)`).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  assert.match(t, /43 % geschätzt falsch .*Wahrscheinlich 14 % bis 76 %; mit 77 % Wahrscheinlichkeit über deinem Schnitt ?von 31 %\./);
+  assert.match(t, /Veränderung Letzte 30 Tage 4 von 7 falsch\. /);
+  run(`openTopic('sv', 'framtid', 'num')`);
+  assert.match(run(`topicSheetHtml(S.pop)`), /Noch zu wenige Aufgaben für eine Schätzung\./, 'ohne Daten keine Schätzung');
+});
+
+test('pLess: P(X1 < X2) für zwei Beta-Verteilungen auf vier Stellen wie scipy, auch mit Spitze bei 0 oder 1', () => {
+  // Referenz: scipy.integrate.quad über f1(x)·(1 − F2(x)) bzw. f2(y)·F1(y); Fälle mit a < 1 entstehen bei Zeiträumen ohne Fehler
+  const cases = [[2, 8, 4, 6, 0.8529], [14, 82, 21, 63, 0.9622], [0.034, 29.97, 0.034, 29.97, 0.5], [0.05, 30, 1.2, 40, 0.9671], [3, 0.4, 5, 0.3, 0.6422],
+    [0.02, 110, 0.5, 60, 0.9734], [20, 3, 30, 0.6, 0.9659], [0.039, 51.96, 1.04, 50.96, 0.975], [1.04, 50.96, 0.039, 51.96, 0.025], [2.3, 10, 0.3, 30, 0.0096], [30, 0.3, 40, 0.2, 0.632]];
+  for (const [a1, b1, a2, b2, ref] of cases) near(run(`pLess(${a1}, ${b1}, ${a2}, ${b2})`), ref, 6e-5, `${a1}, ${b1}, ${a2}, ${b2}`);
 });
 
 test('„Als Nächstes“ nach fehlerfreier Runde: höchste Schätzung, mit mindestens 80 % über dem Schnitt', () => {

@@ -27,8 +27,8 @@ for (const lang of ['sv', 'es']) {
     const list = J(`hardSentences('${lang}').map(i => i.id)`);
     assert.deepEqual(list, [x.a, x.b]);
     assert.deepEqual(J(`hardPattern('${lang}', hardSentences('${lang}'))`), { trap:x.trap, n:2 });
-    // Kein Modell (zu wenige Themen mit Daten): Der Abschnitt öffnet direkt mit „Sätze“
-    const html = app.run(`errorSourcesHtml('${lang}')`);
+    // Keine Übungsarten mit Daten: Die Karte öffnet direkt mit „Sätze“
+    const html = app.run(`errorWaysHtml('${lang}')`);
     assert.ok(html.includes('aria-checked="true" data-a="errtab" data-t="s"'), 'Reiter „Sätze“ vorgewählt');
     assert.ok(html.includes(`steckt in 2 von 2 Sätzen`));
     assert.equal((html.match(/class="mrow msent( mlast)?"/g) || []).length, 2, 'Satzzeilen im selben Aufbau wie die anderen Reiter');
@@ -40,8 +40,8 @@ for (const lang of ['sv', 'es']) {
 
 test('Ohne Daten und ohne hartnäckige Sätze bleibt der Hinweis, keine Reiter', () => {
   app.run(`DB.st = {}; DB.tlog = {}; S.errTab = null;`);
-  const html = app.run(`errorSourcesHtml('es')`);
-  assert.ok(html.includes('Erscheint, sobald drei Themen genug Aufgaben haben.'));
-  assert.ok(html.includes('<h2 class="grp">Fehler</h2>'));
+  const html = app.run(`errorWaysHtml('es')`);
+  assert.ok(html.includes('Erscheint, sobald drei Übungsarten genug Aufgaben haben.'));
+  assert.ok(html.includes('<h2 class="grp">Wie du Fehler machst</h2>'));
   assert.ok(!html.includes('errseg'));
 });

@@ -103,35 +103,37 @@ function fitPrior(list){
   return { mu:inner(m).x, m, fitted:true };
 }
 
-// Modell einer Sprache aus dem Fehlerprotokoll (DB.tlog, Einträge p:Thema = [Aufgaben, Fehler] je Tag).
+// Modell aus dem Fehlerprotokoll (DB.tlog, je Tag [Aufgaben, Fehler]): pre 'p' = Themen, 't' = Übungsarten (seit 24.75 dasselbe
+// Modell für beide, vorher roh über 30 Tage). at: Stichtag, sonst heute; für den Verlauf im Themenblatt.
 // Ergebnis: { mu, m, H, topics:[{ id, n, k (gewichtet), n30, k30 (letzte 30 Tage), mean, lo, hi, lo50, hi50, pAbove }] },
-// nach Schätzung absteigend. Zwischengespeichert, solange sich Tag und Protokoll der Sprache nicht ändern.
+// nach Schätzung absteigend. Zwischengespeichert, solange sich Tag und Protokoll der Gruppe nicht ändern.
 let modelCache = {};
-function topicModel(lang){
-  const t = today(), days = Object.keys(DB.tlog || {}).sort();
-  const sig = t + '|' + days.map(d => { const L = DB.tlog[d] && DB.tlog[d][lang]; return L ? d + Object.keys(L).filter(k => k.startsWith('p:')).map(k => k + L[k]).join() : ''; }).join(';');
-  if (modelCache[lang] && modelCache[lang].sig === sig) return modelCache[lang].v;
+function rateModel(lang, pre, at){
+  const t = at || today(), days = Object.keys(DB.tlog || {}).filter(d => d <= t).sort(), P = pre + ':', ck = lang + P + (at || '');
+  const sig = t + '|' + days.map(d => { const L = DB.tlog[d] && DB.tlog[d][lang]; return L ? d + Object.keys(L).filter(k => k.startsWith(P)).map(k => k + L[k]).join() : ''; }).join(';');
+  if (modelCache[ck] && modelCache[ck].sig === sig) return modelCache[ck].v;
   const by = {};
   days.forEach(d => {
     const L = DB.tlog[d] && DB.tlog[d][lang], age = dayDiff(t, d); if (!L || age < 0) return;
     const w = Math.pow(2, -age / MODEL.H);
     Object.keys(L).forEach(key => {
-      if (!key.startsWith('p:') || !Array.isArray(L[key])) return;
+      if (!key.startsWith(P) || !Array.isArray(L[key])) return;
       const [n, bad] = L[key], x = by[key.slice(2)] = by[key.slice(2)] || { id:key.slice(2), n:0, k:0, n30:0, k30:0 };
       x.n += w * n; x.k += w * bad;
       if (age < 30) { x.n30 += n; x.k30 += bad; }
     });
   });
-  const list = Object.values(by), P = fitPrior(list), a0 = P.mu * P.m, b0 = (1 - P.mu) * P.m;
+  const list = Object.values(by), F = fitPrior(list), a0 = F.mu * F.m, b0 = (1 - F.mu) * F.m;
   const topics = list.map(x => {
     const a = a0 + x.k, b = b0 + x.n - x.k;
-    return { id:x.id, n:x.n, k:x.k, n30:x.n30, k30:x.k30, mean:a / (a + b), lo:betaQ(0.025, a, b), hi:betaQ(0.975, a, b), lo50:betaQ(0.25, a, b), hi50:betaQ(0.75, a, b), pAbove:1 - ibeta(P.mu, a, b) };
+    return { id:x.id, n:x.n, k:x.k, n30:x.n30, k30:x.k30, mean:a / (a + b), lo:betaQ(0.025, a, b), hi:betaQ(0.975, a, b), lo50:betaQ(0.25, a, b), hi50:betaQ(0.75, a, b), pAbove:1 - ibeta(F.mu, a, b) };
   }).sort((p, q) => q.mean - p.mean || q.n - p.n);
-  const v = { mu:P.mu, m:P.m, fitted:P.fitted, H:MODEL.H, topics };
-  modelCache[lang] = { sig, v };
+  const v = { mu:F.mu, m:F.m, fitted:F.fitted, H:MODEL.H, topics };
+  modelCache[ck] = { sig, v };
   return v;
 }
-const modelTopic = (lang, id) => topicModel(lang).topics.find(x => x.id === id) || null;
+function topicModel(lang){ return rateModel(lang, 'p'); }
+function typeModel(lang){ return rateModel(lang, 't'); }
 // Thompson-Sampling: je Thema ein θ aus der Posterior (ohne Daten: aus der Vorverteilung), absteigend sortiert.
 // Ein Thema steht so oft vorn, wie wahrscheinlich es das schwächste ist.
 function thompsonOrder(lang, ids, seed){
@@ -140,3 +142,69 @@ function thompsonOrder(lang, ids, seed){
     .sort((p, q) => q.v - p.v).map(x => x.id);
 }
 const focusSeed = (lang, week) => seedOf(`${week}:${lang}`);
+
+/* ---------- Veränderung je Thema: die letzten vier Wochen gegen die vier davor ---------- */
+// Seit 24.75 ein Pfeil je Thema, auch wenn er oft nur Rauschen zeigt; seine Kräftigkeit sagt, wie sicher er ist.
+// Zwei getrennte Zeiträume zu 28 Tagen, gezählt bis zum letzten Sonntag: Die Pfeile ändern sich nur montags (im Takt des
+// Schwerpunkts), nicht mit jeder Aufgabe. Je Zeitraum Beta(2q + k, 2(1 − q) + n − k) mit q = (kA + kB + 1)/(nA + nB + 2):
+// eine schwache Vorverteilung ums Thema selbst (2 Aufgaben), damit ein Zeitraum mit 0 Fehlern nicht 0 % behauptet.
+// P(besser) = P(θ_jetzt < θ_davor), exakt als Integral (pLess). Richtung nach P, Stufe nach der Sicherheit |2P − 1|:
+// unter 0,2 (P zwischen 40 und 60 %) kein Pfeil, dann blass ab 60 %, mittel ab 80 %, kräftig ab 95 %.
+// Erst, wenn das Protokoll der Sprache acht volle Wochen zurückreicht, und je Thema ab 5 Aufgaben in jedem Zeitraum.
+// Ohne jede Veränderung zeigt ein Thema mit 10 bis 13 % Wahrscheinlichkeit einen kräftigen Pfeil, bei 19 Themen also meist
+// ein bis drei; von 20 auf 10 % bekommt bei 1,2 Aufgaben am Tag ein Drittel einen kräftigen Pfeil (tools/pfeile.js, docs/RESEARCH.md).
+// Darum ohne Farbe, und die Zahlen dazu stehen im Themenblatt.
+Object.assign(MODEL, { CH_DAYS:28, CH_MIN:5, CH_LV:[0.2, 0.6, 0.9] });
+// P(X1 < X2) für X1 ~ Beta(a1, b1), X2 ~ Beta(a2, b2): ∫ f2(y) I_y(a1, b1) dy, mit Simpson (400 Schritte) nach einer
+// Substitution, die die Dichte von X2 endlich macht. Spitze bei 0 (a2 < 1, kommt vor, wenn ein Zeitraum ohne Fehler ist:
+// a = 2q mit kleinem q): y = s^(1/a2), dann ist f2(y) dy = (1 − y)^(b2 − 1) / (a2 B) ds; Spitze bei 1 (b2 < 1) gespiegelt;
+// sonst y = sin²(πs/2). Außen steht immer die spitzere Verteilung, sonst stiege I_y innen zu steil an:
+// P(X1 < X2) = 1 − P(X2 < X1). Auf vier Stellen gleich mit adaptiver Quadratur (scipy), auch für Zeiträume ohne Fehler.
+function pLess(a1, b1, a2, b2, swapped){
+  const m1 = Math.min(a1, b1);
+  if (!swapped && m1 < Math.min(a2, b2) && m1 < 1) return 1 - pLess(a2, b2, a1, b1, true);
+  const N = 400, lb = lbeta(a2, b2), mode = a2 < 1 && b2 >= 1 ? 0 : b2 < 1 && a2 >= 1 ? 1 : 2;
+  // Randwerte: Nur bei gespiegelter Spitze (s = 0 ist y = 1, I = 1) und in den Grenzfällen a2 = 1, b2 = 1 oder b2 = ½ nicht 0
+  let sum = mode === 0 ? (b2 === 1 ? Math.exp(-lb) / a2 : 0) : mode === 1 ? Math.exp(-lb) / b2 : b2 === 0.5 ? Math.PI * Math.exp(-lb) : 0;
+  for (let i = 1; i < N; i++) {
+    const s = i / N, w = i % 2 ? 4 : 2;
+    if (mode === 0) { const y = Math.pow(s, 1 / a2); sum += w * Math.exp((b2 - 1) * Math.log1p(-y) - lb) / a2 * ibeta(y, a1, b1); }
+    else if (mode === 1) { const z = Math.pow(s, 1 / b2); sum += w * Math.exp((a2 - 1) * Math.log1p(-z) - lb) / b2 * (1 - ibeta(z, b1, a1)); }
+    else { const u = Math.PI / 2 * s, sn = Math.sin(u), cs = Math.cos(u); sum += w * Math.PI * Math.exp((2 * a2 - 1) * Math.log(sn) + (2 * b2 - 1) * Math.log(cs) - lb) * ibeta(sn * sn, a1, b1); }
+  }
+  return Math.min(1, Math.max(0, sum / (3 * N)));
+}
+const changeLevel = p => { const c = Math.abs(2 * p - 1), L = MODEL.CH_LV; return c < L[0] ? 0 : c < L[1] ? 1 : c < L[2] ? 2 : 3; };
+const mondayOnOrAfter = d => { const m = mondayOf(d); return m === d ? d : addDays(m, 7); };
+// { ready, from (erster Montag mit Pfeilen), mon, aFrom, bFrom, topics:{ id:{ A:{n,k}, B:{n,k}, p, lvl, better } } }
+let changeCache = {};
+function topicChange(lang){
+  const mon = mondayOf(today()), aFrom = addDays(mon, -MODEL.CH_DAYS), bFrom = addDays(aFrom, -MODEL.CH_DAYS);
+  const all = Object.keys(DB.tlog || {}).filter(d => DB.tlog[d] && DB.tlog[d][lang] && Object.keys(DB.tlog[d][lang]).some(k => k.startsWith('p:'))).sort();
+  const days = all.filter(d => d < mon), first = all[0] || null;
+  const sig = mon + '|' + first + '|' + days.filter(d => d >= bFrom).map(d => d + Object.keys(DB.tlog[d][lang]).filter(k => k.startsWith('p:')).map(k => k + DB.tlog[d][lang][k]).join()).join(';');
+  if (changeCache[lang] && changeCache[lang].sig === sig) return changeCache[lang].v;
+  const from = first ? mondayOnOrAfter(addDays(first, 2 * MODEL.CH_DAYS)) : null;
+  const A = {}, B = {}, add = (O, id, v) => { const x = O[id] = O[id] || { n:0, k:0 }; x.n += v[0]; x.k += v[1]; };
+  days.forEach(d => { const O = d >= aFrom ? A : d >= bFrom ? B : null; if (!O) return; const L = DB.tlog[d][lang]; Object.keys(L).forEach(k => { if (k.startsWith('p:') && Array.isArray(L[k])) add(O, k.slice(2), L[k]); }); });
+  const topics = {};
+  new Set(Object.keys(A).concat(Object.keys(B))).forEach(id => {
+    const a = A[id] || { n:0, k:0 }, b = B[id] || { n:0, k:0 }; let p = null;
+    if (a.n >= MODEL.CH_MIN && b.n >= MODEL.CH_MIN) { const q = (a.k + b.k + 1) / (a.n + b.n + 2); p = pLess(2 * q + a.k, 2 * (1 - q) + a.n - a.k, 2 * q + b.k, 2 * (1 - q) + b.n - b.k); }
+    topics[id] = { A:a, B:b, p, lvl:p == null ? 0 : changeLevel(p), better:p != null && p >= 0.5 };
+  });
+  const v = { ready:!!first && first <= bFrom, from, mon, aFrom, bFrom, topics };
+  changeCache[lang] = { sig, v };
+  return v;
+}
+// Verlauf eines Themas über 12 Wochen: je Woche die Schätzung am Sonntag (diese Woche: heute) und die rohe Wochenquote
+function topicHistory(lang, id){
+  const t = today(), mon = mondayOf(t), out = [];
+  for (let w = 11; w >= 0; w--) {
+    const from = addDays(mon, -7 * w), end = w ? addDays(from, 6) : t, M = rateModel(lang, 'p', w ? end : null), x = M.fitted ? M.topics.find(y => y.id === id) : null;
+    let n = 0, k = 0;
+    for (let d = from; d <= end; d = addDays(d, 1)) { const v = DB.tlog && DB.tlog[d] && DB.tlog[d][lang] && DB.tlog[d][lang]['p:' + id]; if (Array.isArray(v)) { n += v[0]; k += v[1]; } }
+    out.push({ from, end, mu:M.mu, fitted:M.fitted, mean:x && x.n >= MODEL.MIN_N ? x.mean : null, lo50:x ? x.lo50 : null, hi50:x ? x.hi50 : null, n, k });
+  }
+  return out;
+}

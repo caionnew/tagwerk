@@ -25,6 +25,22 @@ function richDB(lang){
   bankIds(lang, 90).forEach((id, i) => { db.st[id] = { s:10 + i, d:4, ivl:i % 3 === 0 ? 30 : 6, last:ds(2), due:ds(-3), reps:3, ok:3, bad:0, alts:[] }; });
   return db;
 }
+// Zehn Wochen Protokoll: dieselben Muster wie richDB, nur weiter zurück, damit die Veränderungspfeile erscheinen (ab acht Wochen);
+// die Adjektivendungen mit zwei von drei falsch, also klar über dem Schnitt (rot hinterlegt)
+function longDB(lang){
+  const db = richDB(lang), pad = n => String(n).padStart(2, '0'), t = new Date();
+  const ds = k => { const d = new Date(t.getFullYear(), t.getMonth(), t.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+  for (let k = 70; k > 40; k--) db.tlog[ds(k)] = { [lang]:{ 'p:inversion':[3, k % 3 ? 1 : 2], 'p:bisats':[3, k % 3 ? 1 : 0], 'p:species':[2, k % 2], 'p:tempus':[2, 0], 't:free':[4, k % 2], 't:tiles':[4, 0], 't:gap':[3, k % 4 ? 0 : 1] } };
+  Object.values(db.tlog).forEach(d => { d[lang]['p:species'] = [3, 2]; });
+  // Schwedisch: acht weitere Themen mit fester Zufallsfolge, einige besser, einige schlechter (Quote vor → nach dem Wechsel vor 5 Wochen)
+  if (lang === 'sv') {
+    let a = 7; const rnd = () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; };
+    const T = { tid:[0.15, 0.3], prep:[0.32, 0.12], partikel:[0.12, 0.12], modal:[0.2, 0.2], framtid:[0.28, 0.08], sin:[0.1, 0.1], plural:[0.18, 0.26], passiv:[0.2, 0.2] };
+    for (let k = 70; k >= 1; k--) { const d = db.tlog[ds(k)]; if (!d) continue;
+      Object.entries(T).forEach(([id, [r0, r1]]) => { const n = 1 + (rnd() < 0.4 ? 1 : 0), r = k > 35 ? r0 : r1; let bad = 0; for (let j = 0; j < n; j++) if (rnd() < r) bad++; d[lang]['p:' + id] = [n, bad]; }); }
+  }
+  return db;
+}
 // Profil vor dem ersten Laden setzen (nur einmal pro Seite, damit Neuladen den Stand behält)
 async function seed(page, db){
   await page.addInitScript(([k, v]) => { if (!sessionStorage.getItem('seeded')) { sessionStorage.setItem('seeded', '1'); localStorage.setItem(k, v); } }, [KEY, JSON.stringify(db)]);
@@ -83,4 +99,4 @@ const test = base.test.extend({
     base.expect(errors, 'JavaScript-Fehler auf der Seite').toEqual([]);
   }
 });
-module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };
+module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, longDB, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };

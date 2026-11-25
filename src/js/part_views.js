@@ -162,36 +162,32 @@ function genStatText(g){
   if (r != null) return rc.length >= 10 ? `Zuletzt ${pct(r)} richtig (letzte ${rc.length})` : `Bisher ${pct(r)} richtig`;
   return n ? `${plural(n, 'Aufgabe', 'Aufgaben')}, ${st.ok} richtig` : 'Noch nicht geübt';
 }
-// Zeilen für „Thema üben“: je Thema die Schätzung aus dem Fehlermodell (ab 3 gewichteten Aufgaben), „klar über Schnitt“ markiert.
-// Satz-Themen haben einen festen Bestand, ihr Balken zeigt den gefestigten Anteil daran. Erzeugte Themen haben keinen Bestand
-// und keinen Balken (bis 24.72 ein grüner Balken „Anteil richtig“ nur aus dem Generator, der den anderen Zahlen widersprach).
+// Zeilen für „Thema üben“: je Thema die Schätzung aus dem Fehlermodell (ab 3 gewichteten Aufgaben), „klar über Schnitt“ rot
+// hinterlegt. Satz-Themen haben einen festen Bestand, ihr Balken zeigt den geübten Anteil daran: Das sagt, wo es noch Neues gibt
+// (bis 24.74 der gefestigte Anteil; der steht jetzt im Themenblatt). Erzeugte Themen haben keinen Bestand und keinen Balken.
 function topicRows(lang){
   const M = topicModel(lang), cl = clearSet(lang);
   return topicIds(lang).map(id => {
-    const tr = trapMeta(lang, id), x = M.topics.find(t => t.id === id), clear = cl.has(id);
-    const est = x && x.n >= MODEL.MIN_N ? `geschätzt ${pct(x.mean)} falsch` : '';
+    const tr = trapMeta(lang, id), x = M.topics.find(t => t.id === id), clear = cl.has(id), est = !!(M.fitted && x && x.n >= MODEL.MIN_N);
     if (tr.kind === 'gen') {
       const g = DB.gen[tr.gen] || { ok:0, bad:0 }, touched = g.ok + g.bad > 0 || !!x;
-      return { id, label:tr.label, gen:true, clear, mean:x ? x.mean : 0, text:est || (touched ? 'Noch zu wenige Aufgaben für eine Schätzung' : 'Noch nicht geübt'), touched };
+      return { id, label:tr.label, gen:true, clear, est, mean:x ? x.mean : 0, base:est ? '' : touched ? 'Noch zu wenige Aufgaben für eine Schätzung' : 'Noch nicht geübt', touched };
     }
-    const items = BANK[lang].filter(i => i.trap === id);
-    const seen = items.filter(i => stOf(i.id)).length;
-    const mature = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
-    const base = seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`;
-    return { id, label:tr.label, clear, mean:x ? x.mean : 0, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:est ? `${est} · ${base}` : base, touched:seen > 0 };
+    const items = BANK[lang].filter(i => i.trap === id), seen = items.filter(i => stOf(i.id)).length;
+    return { id, label:tr.label, clear, est, mean:x ? x.mean : 0, pct:items.length ? Math.round(seen / items.length * 100) : 0, base:seen ? `${seen} von ${items.length} Sätzen geübt` : `${items.length} Sätze, noch nicht begonnen`, touched:seen > 0 };
   });
 }
-const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${r.clear ? clearMark + ' · ' : ''}${esc(r.text)}</span></span>`;
+const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${r.est ? `geschätzt ${pctPill(r.mean, r.clear)} falsch${r.base ? ' · ' : ''}` : ''}${esc(r.base)}</span></span>`;
 const barRow = r => rowText(r) + (r.gen ? '' : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
 // Heute, „Höchste Fehlerquoten“: die drei höchsten Schätzungen unter den übbaren Themen (topRates, part_model.js), immer, sobald
-// das Modell rechnet, auch wenn alle Themen gleich liegen. „Klar über Schnitt“ (Hysterese) steht darunter in Rot.
+// das Modell rechnet, auch wenn alle Themen gleich liegen. „Klar über Schnitt“ (Hysterese) ist rot hinterlegt.
 // Bis 24.73 „Fehlerquellen“: nur Themen mit P ≥ 75 % und erst ab 8 Fehlern in 30 Tagen.
 const weakTopics = lang => topRates(lang, 3);
 function weakHtml(lang){
   const list = weakTopics(lang);
   if (!list.length) return '';
   const M = topicModel(lang), max = modelScale(list, M.mu);
-  return `<h2 class="grp">Höchste Fehlerquoten</h2><div class="rows">${list.map(x => `<button type="button" class="row mrowh" data-a="trapgo" data-t="${x.id}" aria-label="${esc(modelAria(x.label, x))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x), x.clear ? clearMark : '')}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}<p class="legend inrows">${modelKeyHtml(M.mu)}</p></div>`;
+  return `<h2 class="grp">Höchste Fehlerquoten</h2><div class="rows">${list.map(x => `<button type="button" class="row mrowh" data-a="trapgo" data-t="${x.id}" aria-label="${esc(modelAria(x.label, x) + (x.clear ? ', klar über Schnitt' : ''))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x))}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:list.some(x => x.clear) })}</p></div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
@@ -226,8 +222,8 @@ function viewPickTopic(){
   const list = rs => `<div class="rows">${rs.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
   const top = topIds.map(id => rows.find(r => r.id === id)).filter(Boolean), rest = rows.filter(r => !topIds.includes(r.id)), gens = rest.filter(r => r.gen);
   return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema.</p>
-    ${top.length ? `<h2 class="grp">Höchste Fehlerquoten</h2><p class="lead-s grp-lead"><button type="button" class="term" data-a="term" data-k="schaetzung">Geschätzt</button>, dein Schnitt ${pct(topicModel(lang).mu)}.</p>${list(top)}` : ''}
-    <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button> sind.</p>${list(rest.filter(r => !r.gen))}
+    ${top.length ? `<h2 class="grp">Höchste Fehlerquoten</h2><p class="lead-s grp-lead"><button type="button" class="term" data-a="term" data-k="schaetzung">Geschätzt</button>, dein Schnitt ${pct(topicModel(lang).mu)}.${rows.some(r => r.clear && r.est) ? ' <span class="mpct cl kpill">%</span> klar über Schnitt.' : ''}</p>${list(top)}` : ''}
+    <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema du schon geübt hast.</p>${list(rest.filter(r => !r.gen))}
     ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2>${list(gens)}` : ''}`;
 }
 function viewPickGen(){
@@ -1156,8 +1152,8 @@ function viewProgress(){
   <h2 class="grp">Wiederholungen der nächsten Tage</h2>
   <div class="chart">${fc.every(f => !f.n) ? '<p class="stat">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
   ${fc.some(f => f.n > cap) ? `<p class="legend">Höchstens ${cap} je Tagwerk, der Rest kommt am Tag darauf.</p>` : ''}</div>
-  ${errorSourcesHtml(lang)}
-  ${topicGridHtml(lang)}
+  ${topicListHtml(lang)}
+  ${errorWaysHtml(lang)}
   ${writingTrendHtml(lang)}
   ${(() => { const gl = (DB.genus && DB.genus[lang]) || {}, traps = Object.keys(gl).filter(w => gl[w].last === 0);
     return traps.length ? `<p class="legend below">Genus-Fallen: ${esc(traps.slice(0, 6).map(w => { const it = GENUS[lang].find(x => x[0] === w); return it ? `${it[1]} ${w}` : w; }).join(', '))}. <button type="button" class="link inl" data-a="form" data-g="genus_${lang}">Genus üben</button></p>` : ''; })()}

@@ -10,7 +10,7 @@
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome. Zufall ist im Browser festgelegt, damit beide Stände dasselbe zeigen.
 const path = require('path'), fs = require('fs'), os = require('os'), { execFileSync } = require('child_process');
 const { chromium } = require('@playwright/test');
-const { freshDB, richDB, answerWrong, fakeVoice, speechWav, fakeMicArgs } = require('../tests/e2e/helpers.js');
+const { freshDB, richDB, longDB, answerWrong, fakeVoice, speechWav, fakeMicArgs } = require('../tests/e2e/helpers.js');
 const ROOT = path.join(__dirname, '..'), OUT = path.join(ROOT, 'sicht');
 const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
 const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz');
@@ -18,7 +18,7 @@ const SIZES = [[390, 844], [411, 923]], SCHEMES = ['light', 'dark'];
 
 const pad = n => String(n).padStart(2, '0'), now = new Date();
 const TODAY = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-const rich = () => richDB('sv');
+const rich = () => richDB('sv'), long = () => longDB('sv');
 const doneDB = () => { const db = rich(); db.done[TODAY] = true; db.doneLang = { [TODAY]:{ sv:true } }; db.log[TODAY] = { sv:{ n:31, ok:26, secs:742, fresh:5, rev:22, revOk:20, mat:2 } }; return db; };
 // Vorgetäuschtes Mikrofon (Testsignal mit einer Pause) und eine Test-Stimme, damit Nachsprechen überall gleich aussieht
 const LAUNCH = { ...(process.env.CHROMIUM_PATH ? { executablePath:process.env.CHROMIUM_PATH } : {}), args:fakeMicArgs(speechWav(path.join(os.tmpdir(), 'tagwerk-sicht-mikro.wav'), [['s', 0.5], ['v', 0.8], ['s', 0.6], ['v', 0.7], ['s', 5]])) };
@@ -43,11 +43,16 @@ const SCENES = [
   ['ueben', rich, [click('[data-a=tab][data-v=extra]')]],
   ['fortschritt', rich, [click('[data-a=tab][data-v=progress]')]],
   ['fortschritt-sprache', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]')]],
-  // Fehlerquellen: auf Heute nach dem Tagwerk (wie im Screenshot vom 24.11.) und im Sprach-Tab, Reiter „Thema“
-  ['heute-fehlerquellen', doneDB, [p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent.startsWith('Fehlerquellen')); if (h) h.scrollIntoView({ block:'start' }); })]],
-  ['fehlerquellen', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), p => p.evaluate(() => { const e = document.querySelector('.errseg'); if (e) e.scrollIntoView({ block:'start' }); })]],
-  ['fehlerquellen-schaetzung', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('.mkey [data-a=term][data-k=schaetzung]')]],
-  ['fehlerquellen-uebungsart', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('[data-a=errtab][data-t=t]'), p => p.evaluate(() => { const e = document.querySelector('.errseg'); if (e) e.scrollIntoView({ block:'start' }); })]],
+  // Fehlerquoten auf Heute nach dem Tagwerk (wie im Screenshot vom 24.11.); im Sprach-Tab die Themenliste mit Pfeilen (zehn Wochen
+  // Protokoll), die Karte „Wie du Fehler machst“ und das Themenblatt auf „Deine Zahlen“
+  ['heute-fehlerquoten', doneDB, [p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent === 'Höchste Fehlerquoten'); if (h) h.scrollIntoView({ block:'start' }); })]],
+  ['themenliste', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent === 'Themen'); if (h) h.scrollIntoView({ block:'start' }); })]],
+  ['themenliste-unten', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent === 'Wie du Fehler machst'); if (h) h.scrollIntoView({ block:'start' }); }), p => p.evaluate(() => window.scrollBy(0, -360))]],
+  ['fehler-karte', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent === 'Wie du Fehler machst'); if (h) h.scrollIntoView({ block:'start' }); })]],
+  ['fehler-fehlerart', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('[data-a=errtab][data-t=e]'), p => p.evaluate(() => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent === 'Wie du Fehler machst'); if (h) h.scrollIntoView({ block:'start' }); })]],
+  ['fehlerquoten-schaetzung', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('.mkey [data-a=term][data-k=schaetzung]')]],
+  ['thema-zahlen', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('.mrow[data-z] >> nth=0')]],
+  ['thema-zahlen-unten', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('.mrow[data-z] >> nth=0'), p => p.evaluate(() => { const e = document.querySelector('.pop'); e.scrollTop = e.scrollHeight; })]],
   ['aufgabe', rich, [click('[data-a=daily]')]],
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
   ['nomen-tauschen', () => richDB('es'), swapOpen],
@@ -72,7 +77,7 @@ const SCENES = [
   ['grammatik', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=topics]')]],
   ['land-und-leute', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=kultur]')]],
   ['wort', rich, [click('.find [data-a=lookup] >> nth=1')]],
-  ['thema', rich, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('[data-a=topic] >> nth=0')]],
+  ['thema', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=ref][data-r=topics]'), click('[data-a=topic][data-t=inversion]')]],
   ['lesen', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]')]],
   ['hoeren-antwort', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=tdefmode][data-v=listen]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'), click('[data-a=tpick][data-k="0"][data-i="0"]')]],
   ['lesen-ende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=texts]'), click('[data-a=textopen][data-id=vasa]'), click('[data-a=tquiz]'),

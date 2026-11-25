@@ -9,15 +9,17 @@ const text = html => html.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replac
 const base = () => ({ v:3, settings:{ size:'normal', lang:'sv' }, st:{}, own:{ sv:[], es:[] }, tat:{ sv:[], es:[] }, log:{}, done:{}, doneLang:{}, gen:{}, run:null, tlog:{} });
 const setDB = d => { app.setDB(d); run('buildBank()'); };
 
-test('Verhältnisse: „20 von 22“ heute, „6 von 48“ in den Fehlerquellen, kein Schrägstrich', () => {
+test('Verhältnisse: „20 von 22“ heute, „6 von 48“ im Themenblatt, kein Schrägstrich', () => {
   const d = base(); d.log[ds(0)] = { sv:{ n:30, secs:720, fresh:5, rev:22, revOk:20 } };
   setDB(d);
   const h = run(`todayHtml('sv')`);
   assert.match(text(h), /20 von 22 Wiederholungen gewusst/);
-  d.tlog[ds(0)] = { sv:{ 'p:inversion':[48, 6], 'p:tempus':[20, 3], 't:gap':[68, 9] } }; setDB(d); run(`S.errTab = 't'`);
-  const e = run(`errorSourcesHtml('sv')`);
-  assert.match(e, /<span class="mcount">9 von 68<\/span>/);
-  assert.doesNotMatch(text(h) + text(e), /\d\/\d/);
+  // Acht Wochen Protokoll: „Deine Zahlen“ nennt beide Zeiträume als „k von n“
+  for (let k = 70; k >= 0; k--) d.tlog[ds(k)] = { sv:{ 'p:inversion':[4, k % 5 ? 0 : 2], 'p:tempus':[3, k % 3 ? 0 : 1], 'p:bisats':[3, 1], 't:gap':[10, 2] } };
+  setDB(d);
+  const z = text(run(`topicNumbersHtml('sv', 'inversion')`));
+  assert.match(z, /Vier Wochen bis .*: \d+ % \(\d+ von \d+\) falsch, die vier davor \d+ % \(\d+ von \d+\)/);
+  assert.doesNotMatch(text(h) + z + text(run(`errorWaysHtml('sv')`)), /\d\/\d/);
 });
 
 test('Zeit: Fließtext „5 Std. 7 Min.“, in einer Karte mit Summe in Minuten auch die Teile in Minuten; „Min.“ immer mit Punkt', () => {
@@ -40,16 +42,19 @@ test('Zeit: Fließtext „5 Std. 7 Min.“, in einer Karte mit Summe in Minuten 
   assert.doesNotMatch(run('wayHtml()'), /\d Min(?!\.)\b/);
 });
 
-test('Ein Name je Sache: „Höchste Fehlerquoten“ auf Heute, „Fehler“ im Sprach-Tab, kein „Fehlerquelle“ mehr; Hinweise mit „Tipp auf“', () => {
+test('Ein Name je Sache: „Höchste Fehlerquoten“ auf Heute, „Themen“ und „Wie du Fehler machst“ im Sprach-Tab, kein „Fehlerquelle“ mehr; Hinweise mit „Tipp auf“', () => {
   const d = base();
   for (let k = 10; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:600 } }; d.tlog[ds(k)] = { sv:{ 'p:inversion':[10, 3], 'p:tempus':[10, 2], 'p:bisats':[10, 1], 't:gap':[30, 6] } }; }
   setDB(d);
   const all = run(`viewHome()`) + run(`(S.ptab = 'sv', viewProgress())`);
   assert.doesNotMatch(all, /Meiste Fehler/);
   assert.doesNotMatch(all, /Antippen für/);
-  // Heute zeigt Quoten, keine Behauptung „Quelle“ (seit 24.74); die Karte im Sprach-Tab heißt „Fehler“
+  // Heute zeigt Quoten, keine Behauptung „Quelle“ (seit 24.74); im Sprach-Tab eine Themenliste (seit 24.75 statt Raster und
+  // Reiter „Thema“) und die Karte „Wie du Fehler machst“
   assert.equal((all.match(/<h2 class="grp">Höchste Fehlerquoten<\/h2>/g) || []).length, 1);
-  assert.equal((all.match(/<h2 class="grp">Fehler<\/h2>/g) || []).length, 1);
+  assert.equal((all.match(/<h2 class="grp">Themen<\/h2>/g) || []).length, 1);
+  assert.equal((all.match(/<h2 class="grp">Wie du Fehler machst<\/h2>/g) || []).length, 1);
+  assert.doesNotMatch(all, /<h2 class="grp">Fehler<\/h2>|class="tgrid"/);
   assert.doesNotMatch(all, /Fehlerquelle/);
 });
 

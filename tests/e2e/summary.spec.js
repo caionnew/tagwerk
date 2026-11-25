@@ -117,7 +117,9 @@ test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden 
   await page.click('[data-a=bonuscheck]');
   await expect(page.locator('.bres.is-warn')).toContainText('kommt noch nicht vor');
   await expect(page.locator('.bonus .dots')).toHaveText('Wird geprüft');
-  const tasks = () => page.evaluate(() => { const d = JSON.parse(localStorage.getItem('tagwerk-offline-v1')); const t = new Date(), p = x => String(x).padStart(2, '0'); return d.log[`${t.getFullYear()}-${p(t.getMonth() + 1)}-${p(t.getDate())}`].sv.n; });
+  // Gespeichert wird 150 ms nach der letzten Änderung. Direkt nach dem Rundenende fehlte im Speicher noch die letzte Aufgabe;
+  // war der Test schnell genug (auf GitHub am 25.11.), zählte „vorher“ eine zu wenig. „pagehide“ speichert sofort, wie beim Schließen.
+  const tasks = () => page.evaluate(() => { dispatchEvent(new Event('pagehide')); const d = JSON.parse(localStorage.getItem('tagwerk-offline-v1')); const t = new Date(), p = x => String(x).padStart(2, '0'); return d.log[`${t.getFullYear()}-${p(t.getMonth() + 1)}-${p(t.getDate())}`].sv.n; });
   const before = await tasks();
   await box.fill(`Igår sa min granne något om ${expr} på bussen.`);
   await page.click('[data-a=bonuscheck]');
@@ -134,6 +136,5 @@ test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden 
   await expect(page.locator('[data-a=bonuscheck]')).toBeEnabled();
   // Die Übung zählt als Aufgabe des Tages, aber nur einmal
   await page.click('[data-a=bonuscheck]');
-  await page.waitForTimeout(300);
   expect(await tasks()).toBe(before + 1);
 });

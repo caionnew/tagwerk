@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.75.1
+**Roter Build von 24.75.0 behoben (Test, nicht die App).**
+- Der Browser-Test zum Bonus „Eigener Satz“ las den Tageszähler zweimal aus dem Speicher. Die App speichert 150 ms nach der letzten Änderung; direkt nach dem Rundenende fehlte dort noch die letzte Aufgabe. Auf GitHub lief der Test schnell genug, dass „vorher“ eine Aufgabe zu wenig zählte (12 erwartet, 13 gefunden). Nachgestellt: Unmittelbar nach dem Rundenende steht im Speicher 11, nach sofortigem Speichern 12. Der Test löst jetzt vor jedem Lesen das Speichern aus, wie es die App beim Schließen tut. In der App ging nichts verloren: Beim Schließen oder Wechseln wird sofort gespeichert.
+- Die Seite blieb bis hierhin auf 24.74.0.
+
 ## 24.75.0
 **Eine Themenliste mit Veränderungspfeilen, Themenblatt mit „Deine Zahlen“, Karte „Wie du Fehler machst“, Farben in Fortschritt.**
 - **Themenliste im Sprach-Tab** statt Themenraster und Reiter „Thema“: Themen standen bisher dreimal da, mit verschiedenen Zahlen. Jetzt alle Themen mit Schätzung, nach Schätzung sortiert, je Zeile Quote und Streifen; Themen ohne Schätzung darunter als Verweise. „Geübt“ und „gefestigt“ je Thema stehen im Themenblatt: Sie sagen, was der Plan schon gebracht hat, nicht, wo du Fehler machst.

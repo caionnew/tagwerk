@@ -161,11 +161,13 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .tile[disabled]{ cursor:default; }
 .chars{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
 .ch{ min-width:42px; height:40px; border:1px solid var(--line); background:var(--surface); border-radius:var(--r-s); font-family:var(--serif); font-size:var(--fs-9); }
-.verdict{ display:inline-block; font-weight:var(--fw-bold); font-size:var(--fs-5); padding:3px 11px; border-radius:var(--r-pill); margin:0 0 10px; }
+.verdict{ display:inline-block; font-weight:var(--fw-bold); font-size:var(--fs-5); padding:3px 11px; border-radius:var(--r-pill); margin:0; }
 .v-ok{ background:var(--ok-soft); color:var(--ok); }
 .v-mid{ background:var(--warn-soft); color:var(--warn); }
 .v-bad{ background:var(--bad-soft); color:var(--bad); }
 .solrow{ display:flex; align-items:flex-start; gap:10px; }
+/* Knopf mittig zur ersten Zeile der Lösung (Zeile 20 px × 1,38, Knopf 40 px) statt oben bündig */
+.solrow .speak{ margin-top:calc((var(--fs-9) * 1.38 - 40px) / 2); }
 .sol{ font-family:var(--serif); font-size:var(--fs-9); line-height:1.38; margin:0; flex:1; }
 .expl{ font-size:var(--fs-6); margin:10px 0 0; }
 .more{ margin:6px 0 0; font-size:var(--fs-5); color:var(--muted); }
@@ -280,8 +282,8 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 #app .cloze input.gapin.near{ color:var(--warn); border-color:var(--warn); }
 #app .cloze input.gapin.bad{ color:var(--bad); border-color:var(--bad); text-decoration:line-through; }
 .gapfix{ color:var(--ok); font-weight:var(--fw-semibold); }
-.sol [data-a="lookup"]{ cursor:pointer; border-radius:var(--r-mark); }
-.sol [data-a="lookup"]:active{ background:var(--accent-soft); }
+.sol [data-a="lookup"], .cloze [data-a="lookup"]{ cursor:pointer; border-radius:var(--r-mark); }
+.sol [data-a="lookup"]:active, .cloze [data-a="lookup"]:active{ background:var(--accent-soft); }
 .recap{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:11px 14px; font-size:var(--fs-5); margin:0 0 14px; }
 .minseg{ display:inline-flex; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-pill); padding:2px; margin:0 0 8px; }
 .minseg button{ border:0; background:none; border-radius:var(--r-pill); padding:5px 11px; font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--muted); }
@@ -381,7 +383,9 @@ button.row[disabled]::after{ display:none; }
 .lk{ display:inline-block; width:18px; height:0; border-top:2.5px solid; vertical-align:middle; }
 .lk.ln-n{ border-color:var(--faint); } .lk.ln-k{ border-top-style:dashed; border-color:color-mix(in srgb, var(--accent) 55%, var(--surface)); } .lk.ln-m{ border-color:var(--accent); }
 .mc.unm .mcv{ color:var(--faint); }
-.vrow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+/* Urteil, Serie und „wann wieder“ auf einer Mittellinie (vorher hing der Abstand unten an der Pille, sie saß 5 px zu hoch) */
+.vrow{ display:flex; align-items:center; gap:10px; margin:0 0 10px; }
+.vrow-l{ flex:1; display:flex; align-items:center; gap:6px 10px; flex-wrap:wrap; }
 .nexthint{ font-size:var(--fs-4); color:var(--muted); }
 .wordrow{ font-family:var(--serif); }
 .wordrow [data-a="lookup"]{ cursor:pointer; }
@@ -781,7 +785,7 @@ button.mrow:active{ background:var(--accent-soft); }
 .sits b{ color:var(--ink); font-weight:var(--fw-semibold); }
 .donebox .notice{ margin-top:18px; }
 .readtip{ margin-top:16px; }
-.combo{ display:inline-block; margin:0 0 10px 8px; padding:3px 10px; border-radius:var(--r-pill); font-size:var(--fs-4); font-weight:var(--fw-bold); color:var(--accent-ink); background:var(--accent-soft); }
+.combo{ display:inline-block; margin:0; padding:3px 10px; border-radius:var(--r-pill); font-size:var(--fs-4); font-weight:var(--fw-bold); color:var(--accent-ink); background:var(--accent-soft); }
 
 /* Hörrunde */
 .radio-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-l); padding:18px 18px 22px; margin-top:14px; min-height:210px; }
@@ -946,8 +950,10 @@ section.ex #fb:empty{ display:none; }
 
 /* Lücke nach dem Prüfen */
 .gapdone{ font-weight:var(--fw-semibold); text-decoration-thickness:2px; text-underline-offset:5px; }
-.gapdone.ok, .gapdone.fix{ color:var(--ok); text-decoration:underline; text-decoration-color:var(--ok); }
-.gapdone.near{ color:var(--ink); text-decoration:underline; text-decoration-color:var(--warn); }
+/* Unterstrich als Hintergrund: Die Wörter darin sind einzeln antippbar, ein Unterstrich je Wort hätte Nähte zwischen den Wörtern */
+.gapdone.ok, .gapdone.fix, .gapdone.near{ background:linear-gradient(var(--ok), var(--ok)) 0 100% / 100% 2px no-repeat; padding-bottom:2px; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+.gapdone.ok, .gapdone.fix{ color:var(--ok); }
+.gapdone.near{ color:var(--ink); background-image:linear-gradient(var(--warn), var(--warn)); }
 .gapdone.bad{ color:var(--bad); text-decoration-line:line-through; text-decoration-color:var(--bad); font-weight:var(--fw-medium); }
 
 /* Kopf von „Heute“: Gruß links, Woche rechts */

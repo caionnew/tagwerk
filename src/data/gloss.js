@@ -2873,7 +2873,7 @@ uppehåll||die Pause; utan uppehåll = ununterbrochen
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
 agresivo||aggressiv
-blanco||weiß; quedarse en blanco = ein Blackout haben
+blanco||weiß; quedarse en blanco = einen Blackout haben
 broma||Witz, Scherz
 callado||still, schweigsam; quedarse callado = verstummen
 callada|callado|still, schweigsam
@@ -2901,6 +2901,9 @@ separación||Trennung
 sueldos|sueldo|Gehälter (Plural)
 tenso||angespannt
 tensa|tenso|angespannt
+sesión||Sitzung
+salarios|salario|Gehälter, Löhne (Plural)
+surgió|surgir|aufkommen, entstehen (Indefinido)
 vegetariano||Vegetarier; vegetarisch
 viudo||Witwer; quedarse viudo = Witwer werden
 viuda|viudo|Witwe

@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 25. November 2026 (nach 24.76.0)
+Stand: 25. November 2026 (nach 24.77.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -165,6 +165,9 @@ Spanisch:
 - **Lernminuten: Sprachen nebeneinander statt übereinander (C+, geprüft am 22.11.).** Jede Sprache stünde auf der Grundlinie, aber zwei Säulen von 6 px je Tag sind unruhig, und die Summe des Tages ist schwerer zu sehen.
 - **Übrige Säulen abblenden, wenn ein Tag gewählt ist (C+, geprüft am 22.11.).** Im Dunkeln werden die Farben matt; die Markierung der Säule reicht.
 - **Rundenende mit einem Thema, weitere Punkte (geprüft am 25.11., umgesetzt ist 24.76.0: Schätzung vorher und nachher, Fehler offen).** Sekunden je Aufgabe (C, Tempo ist kein Lernziel); „richtig in Folge“ bei nur einem Fehler weglassen (C+, die Leiste zeigt es, stört aber nicht); „Eigener Satz“ auch nach erzeugten Aufgaben (B−, ohne Ausdruck aus der Satzbank fehlt die Aufgabe, LanguageTool prüft Schwedisch fast nur auf Rechtschreibung).
+- **Zweiter Versuch als Lücke an der Fehlerstelle (B, geprüft am 25.11.; gewählt in 24.77.0: der ganze Satz, wenn die Lücke schon stimmte).** „La reunión se puso ___ cuando …“ statt des ganzen Satzes wäre schneller. Die Fehlerstelle kommt aber aus dem Vergleich mit der nächsten Lösung, und ein Synonym, das in den Alternativen fehlt, sähe dort genauso aus wie ein Fehler; die Lücke fragte dann ein richtiges Wort ab.
+- **Pause nach der Antwort zählt wie „Weiter“ (B, geprüft am 25.11.; gewählt in 24.77.0: Rückmeldung speichern).** So macht es „Beenden“ in den übrigen Runden. Beim Tagwerk ginge damit „Meine ist auch richtig“ verloren, und eine App, die Android ohne Pause beendet, stellte die Frage weiter neu.
+- **Wortkästchen: Lösungssatz nicht wiederholen (C+, geprüft am 25.11.).** Wie bei den Lücken steht die Lösung nach einer richtigen Antwort oben schon da, aber als Kästchen ohne Großschreibung und Satzzeichen; der Satz darunter liest sich besser.
 - **Rundenende: Themen und „Noch nicht sicher“ zusammenlegen (B−, geprüft am 22.11.).** Jeder falsche Satz unter seinem Thema; liegt jeder Fehler in einem anderen Thema, doppeln sich die beiden Listen fast. Aber Umbau zweier Abschnitte, und das Muster großer Themen („1 von 7 falsch“) ginge verloren. Wieder ansehen, wenn die Doppelung nach längerer Nutzung stört.
 - **Üben-Seite straffen (C+).** 20 Einträge in sechs Gruppen; lang, aber gegliedert. Erst angehen, wenn etwas Neues dazukommt.
 - **Eigene FSRS-Parameter aus deinen Wiederholungen (C).** Bräuchte ein Protokoll jeder Wiederholung (Speicher) und Monate an Daten; die Standardparameter treffen im Benchmark bereits gut.

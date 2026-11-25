@@ -31,7 +31,9 @@ test('Verbformen: ganzer Satz mit Ergänzung; vorgelesen wird der Lösungssatz, 
     await expect(page.locator('.cloze')).toHaveText(/^(Normalmente|Ayer|Antes|Es importante que) \S+( siempre)?\s+\S.*\.$/);
     await page.fill('#answer', 'zzz');
     await page.click('[data-a=check]');
-    const sol = (await page.locator('#fb .sol').textContent()).trim();
+    // Seit 24.77 steht der Lösungssatz nur noch oben (deine Antwort durchgestrichen, die Lösung an ihrem Platz), nicht noch einmal in der Rückmeldung
+    await expect(page.locator('#fb .sol')).toHaveCount(0);
+    const sol = (await page.locator('.cloze').evaluate(e => { const c = e.cloneNode(true); c.querySelectorAll('s').forEach(x => x.remove()); return c.textContent; })).replace(/\s+/g, ' ').trim();
     expect(sol).toMatch(/^[A-Z].+\.$/);
     await expect.poll(() => page.evaluate(() => window.__spoken[window.__spoken.length - 1])).toBe(sol);
     await expect(page.locator('#fb [data-a=speak]')).toHaveAttribute('data-text', sol);

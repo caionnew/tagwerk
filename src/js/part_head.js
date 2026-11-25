@@ -273,9 +273,16 @@ function snapshot(){
   DB.snap = DB.snap || {};
   if (Object.keys(snap).length) { DB.snap[t] = snap; save(); }
 }
+// Beantwortet, aber noch nicht „Weiter“: Die Rückmeldung kommt mit (cur), damit „Fortsetzen“ auch nach einem Neustart der App dort
+// weitermacht, statt dieselbe Aufgabe noch einmal zu stellen. Gezählt wird weiter erst bei „Weiter“ („Meine ist auch richtig“ bleibt).
 function persistRun(){
   const r = S.run;
-  if (r && r.kind === 'daily') DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, wayV:WAY_V, res:r.res, secs:r.secs, combo:r.combo, best:r.best };
+  if (r && r.kind === 'daily') {
+    const c = r.cur, done = c && c.state === 'done' ? Object.assign({}, c, { enter:false, intro:false }) : undefined;
+    // Eine laufende Prüfung mit LanguageTool nicht: Nach einem Neustart käme die Antwort nie an
+    if (done && done.lt === 'loading') delete done.lt;
+    DB.run = r.finished ? null : { date:today(), lang:r.lang, queue:r.queue, idx:r.idx, ok:r.ok, bad:r.bad, wayBefore:r.wayBefore, wayV:WAY_V, res:r.res, secs:r.secs, combo:r.combo, best:r.best, cur:done };
+  }
   save();
 }
 function dayLog(d, lang){ const x = DB.log[d] && DB.log[d][lang]; return typeof x === 'number' ? { n:x } : (x || {}); }
@@ -698,7 +705,9 @@ function restoreRun(){
   const d = DB.run;
   if (!d || d.date !== today() || !Array.isArray(d.queue) || d.idx >= d.queue.length) { DB.run = null; return; }
   if (d.queue.some(ex => ex.id && !itemById(ex.id))) { DB.run = null; return; }
-  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur:null, wayBefore:d.wayV === WAY_V ? d.wayBefore : null, res:d.res || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
+  // Eine beantwortete Aufgabe (seit 24.77) nur, wenn sie vollständig ist; ältere Stände haben keine
+  const c = d.cur, cur = c && typeof c === 'object' && c.state === 'done' && ['ok', 'near', 'bad'].includes(c.result) ? c : null;
+  S.dailyRun = { kind:'daily', lang:d.lang, queue:d.queue, idx:d.idx, ok:d.ok || 0, bad:d.bad || 0, cur, wayBefore:d.wayV === WAY_V ? d.wayBefore : null, res:d.res || [], secs:d.secs || 0, combo:d.combo || 0, best:d.best || 0 };
 }
 function resumeDaily(){
   const d = openDaily(); if (!d) return false;

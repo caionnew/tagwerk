@@ -10,7 +10,7 @@
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome. Zufall ist im Browser festgelegt, damit beide Stände dasselbe zeigen.
 const path = require('path'), fs = require('fs'), os = require('os'), { execFileSync } = require('child_process');
 const { chromium } = require('@playwright/test');
-const { freshDB, richDB, longDB, answerWrong, fakeVoice, speechWav, fakeMicArgs } = require('../tests/e2e/helpers.js');
+const { freshDB, richDB, longDB, answerWrong, fakeVoice, speechWav, fakeMicArgs, hash } = require('../tests/e2e/helpers.js');
 const ROOT = path.join(__dirname, '..'), OUT = path.join(ROOT, 'sicht');
 const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
 const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz');
@@ -63,6 +63,11 @@ const answerOneWrong = bad => async p => {
 // Nomen tauschen: das typische Versehen, nur das Nomen ersetzt und den Rest stehen gelassen
 const swapNaive = async p => { const src = await p.textContent('.ex .de'), a = await p.textContent('.ex .de b'), b = await p.textContent('.vocab .swapto'); await p.fill('#answer', src.trim().replace(a.trim(), b.trim())); await p.click('[data-a=check]'); };
 const swapOpen = [click('[data-a=tab][data-v=extra]'), click('[data-a=forms]'), click('[data-a=gengo][data-g=det_es]')];
+// Ein offenes Tagwerk mit einem bestimmten Satz der Satzbank, gefunden über den Zielsatz: die Fälle aus den Screenshots vom 25.11.
+const runDB = (lang, type, target) => () => { const db = richDB(lang), id = `${lang}:${hash(target)}`; db.run = { date:TODAY, lang, queue:[{ type, id }, { type:'cloze', id }], idx:0, ok:0, bad:0, res:[], secs:0, combo:0, best:0 }; return db; };
+// LanguageTool ohne Netz: findet nichts
+const mockLT = p => p.route('https://api.languagetool.org/**', r => r.fulfill({ headers:{ 'Access-Control-Allow-Origin':'*' }, json:{ matches:[] } }));
+const answer = text => async p => { await p.fill('#answer', text); await p.click('[data-a=check]'); };
 // Name, Lernstand, Schritte nach dem Start
 const SCENES = [
   ['heute', rich, []],
@@ -82,6 +87,9 @@ const SCENES = [
   ['thema-zahlen-unten', long, [click('[data-a=tab][data-v=progress]'), click('[data-a=ptab][data-t=sv]'), click('.mrow[data-z] >> nth=0'), p => p.evaluate(() => { const e = document.querySelector('.pop'); e.scrollTop = e.scrollHeight; })]],
   ['aufgabe', rich, [click('[data-a=daily]')]],
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
+  ['luecke-richtig', runDB('sv', 'cloze', 'Jag har inte sett dig på flera år!'), [click('[data-a=daily]'), answer('på flera år')]],
+  ['luecke-falsch', runDB('sv', 'cloze', 'Jag har inte sett dig på flera år!'), [click('[data-a=daily]'), answer('i flera år')]],
+  ['uebersetzung-falsch', runDB('es', 'free', 'La reunión se puso tensa cuando salió el tema de los sueldos.'), [mockLT, click('[data-a=daily]'), answer('La sesión se puso tenso cuando surgió el tema de los sueldos'), click('[data-a=ltfree]'), p => p.waitForSelector('#fb a[href="https://languagetool.org"]')]],
   ['nomen-tauschen', () => richDB('es'), swapOpen],
   ['nomen-tauschen-falsch', () => richDB('es'), [...swapOpen, swapNaive]],
   ['rundenende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll]],

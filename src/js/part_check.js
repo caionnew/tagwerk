@@ -51,10 +51,22 @@ function formWhy(lang, pairs){
   const mean = (w, base) => { const de = g(w).de.split(';')[0].trim(), m = de.match(/^(.*?) \(([^()]*)\)$/); return !m ? de : base && m[2] === base ? m[1] : `${m[1]}, ${m[2]}`; };
   const parts = (pairs || []).filter(([x, m]) => x && m && deacc(x.toLowerCase()) !== deacc(m.toLowerCase()) && g(m) && sameWord(lang, x, m)).map(([x, m]) => {
     const gx = g(x), gm = g(m), lemma = gm.l && g(gm.l) ? g(gm.l).de : gx && !gx.l ? gx.de : '';
-    if (gx && !gx.l && gm.l) return `„${x}“ ist die Grundform (${mean(x)}), hier braucht es „${m}“ (${mean(m, lemma)})`;
-    return `„${m}“ (${mean(m, lemma)}) statt „${x}“`;
+    const mx = gx ? mean(x) : '', mm = mean(m, lemma);
+    // Gleiche Bedeutung (tenso, tensa: beide „angespannt“): die Bedeutung nur einmal, dazu was sich ändert, im Spanischen Geschlecht und Zahl
+    const gn = mx === mm && lang === 'es' ? esGenderNum(x, m) : null;
+    if (gx && !gx.l && gm.l) {
+      if (gn) return `„${x}“ ist die ${gn[0]} (${mx}), hier braucht es die ${gn[1]}: „${m}“`;
+      return mx === mm ? `„${x}“ ist die Grundform (${mx}), hier braucht es „${m}“` : `„${x}“ ist die Grundform (${mx}), hier braucht es „${m}“ (${mm})`;
+    }
+    return `„${m}“ (${gn ? gn[1] : mm}) statt „${x}“`;
   });
   return parts.slice(0, 2).join('; ');
+}
+// Spanisch: dasselbe Wort mit anderer Endung für Geschlecht und Zahl (tenso, tensa, tensos, tensas)
+const ES_GN = { o:'männliche Form', a:'weibliche Form', os:'männliche Mehrzahl', as:'weibliche Mehrzahl' };
+function esGenderNum(x, m){
+  const a = deacc(String(x).toLowerCase()).match(/^(.+?)(os|as|o|a)$/), b = deacc(String(m).toLowerCase()).match(/^(.+?)(os|as|o|a)$/);
+  return a && b && a[1] === b[1] && a[2] !== b[2] ? [ES_GN[a[2]], ES_GN[b[2]]] : null;
 }
 // Tippfehler auf einer Tastatur: zwei Buchstaben vertauscht, ein Nachbarbuchstabe getroffen, ein Buchstabe doppelt oder zu wenig doppelt.
 // Nur in einem Wort, nicht am Wortanfang oder in den letzten zwei Buchstaben (Endungen sind Grammatik), nicht im geprüften Wort.
@@ -298,7 +310,12 @@ function finishAnswer(r, ex, c){
     c.nextIvl = FSRS.review(DB.st[ex.id] || {}, g, today(), true).ivl;
   }
   if (ex.type === 'free') { DB.used = DB.used || {}; DB.used.mic = (DB.used.mic || 0) + 1; }
-  render(); scrollFb(); autoSpeak(r, ex);
+  answered(r, c); render(); scrollFb(); autoSpeak(r, ex);
+}
+// Nach der Antwort: Bedenkzeit merken und das Tagwerk mit der Rückmeldung speichern (Pause oder Neustart verlieren sie nicht)
+function answered(r, c){
+  c.took = Math.min(120, Math.max(0, Math.round((Date.now() - (r.shownAt || Date.now())) / 1000)));
+  if (r.kind === 'daily') persistRun();
 }
 function autoSpeak(r, ex){
   if (!DB.settings.autoplay || ex.type === 'dict') return;
@@ -314,7 +331,7 @@ function giveUp(){
   // Auch „Weiß ich nicht“: Vorher fehlte das hier, ein aufgegebener fälliger Satz zählte als neuer Satz und nicht als Rückfall
   c.result = 'bad'; c.gaveUp = true; c.state = 'done'; markSeen(c, r.queue[r.idx].id);
   if (!r.queue[r.idx].requeue) r.combo = 0;
-  render(); scrollFb();
+  answered(r, c); render(); scrollFb();
 }
 function selfAccept(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur;
@@ -375,7 +392,8 @@ function next(){
     // Das Rundenergebnis zählt nur den ersten Versuch. Der zweite kommt kurz nach der Lösung und sagt wenig.
     const counts = !ex.requeue;
     if (counts) { if (good) r.ok++; else r.bad++; }
-    const f = { n:1, a:1, ok:good ? 1 : 0, secs:Math.min(120, Math.max(0, Math.round((Date.now() - (r.shownAt || Date.now())) / 1000))) };
+    // Nach einem Neustart fehlt shownAt: dann die Zeit bis zur Antwort (took)
+    const f = { n:1, a:1, ok:good ? 1 : 0, secs:r.shownAt ? Math.min(120, Math.max(0, Math.round((Date.now() - r.shownAt) / 1000))) : (c.took || 0) };
     r.secs = (r.secs || 0) + f.secs;
     // Eigenes Tempo je Übungsart für die Zeitschätzung (nur erste Versuche, wie sie im Plan stehen)
     if (counts) notePace(r.lang, ex.type, f.secs);
@@ -407,7 +425,9 @@ function next(){
         DB.st[ex.id] = st;
         if (r.res && r.res.length) Object.assign(r.res[r.res.length - 1], { ivl:st.ivl, pivl:oldIvl });
         const item = itemById(ex.id);
-        if (!good) r.queue.push({ type:item.kind === 'order' ? 'tiles' : 'cloze', id:ex.id, requeue:true });
+        // Zweiter Versuch: meist die Lücke. Stimmte sie beim Übersetzen schon („Der knifflige Teil stimmt“), lag der Fehler woanders;
+        // die Lücke prüfte dann nichts, und der verbesserte Rest stünde schon da. Dann noch einmal der ganze Satz.
+        if (!good) r.queue.push({ type:item.kind === 'order' ? 'tiles' : ex.type === 'free' && c.keyOk && !c.gaveUp ? 'free' : 'cloze', id:ex.id, requeue:true });
       }
     }
     if (ex.type === 'gen' && good && ex.data.looked) lookedDone(ex.data.looked);

@@ -277,11 +277,14 @@ function tipChip(text, lang, c, kind0){
 }
 // Lücke nach dem Prüfen als Text statt Eingabefeld: richtig grün; fast richtig zeigt die richtige Form (zählt ja als richtig);
 // falsch zeigt deine Antwort durchgestrichen und die Lösung daneben. So steht nie dasselbe Wort doppelt da.
+// Die Wörter der Lösung lassen sich wie im übrigen Satz antippen.
 function gapDone(c, want, lang){
-  if (c.result === 'ok') return `<span class="gapdone ok" lang="${lang}">${esc(c.input.trim() || want)}</span>`;
-  if (c.result === 'near') return `<span class="gapdone near" lang="${lang}">${esc(want)}</span>`;
-  return `${c.input.trim() && !c.gaveUp ? `<s class="gapdone bad" lang="${lang}">${esc(c.input.trim())}</s> ` : ''}<span class="gapdone fix" lang="${lang}">${esc(want)}</span>`;
+  if (c.result === 'ok') return `<span class="gapdone ok" lang="${lang}">${linkWords(c.input.trim() || want, lang)}</span>`;
+  if (c.result === 'near') return `<span class="gapdone near" lang="${lang}">${linkWords(want, lang)}</span>`;
+  return `${c.input.trim() && !c.gaveUp ? `<s class="gapdone bad" lang="${lang}">${esc(c.input.trim())}</s> ` : ''}<span class="gapdone fix" lang="${lang}">${linkWords(want, lang)}</span>`;
 }
+// Satz um die Lücke: nach dem Prüfen zum Nachschlagen antippbar (er ist dann die Lösung, die Rückmeldung wiederholt ihn nicht)
+const gapText = (t, lang, done) => (done ? linkWords(t, lang) : esc(t));
 function viewRun(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur, lang = r.lang, L = LANG[lang];
   const done = c.state === 'done';
@@ -309,7 +312,7 @@ function viewRun(){
     // Feste Wendung beim ersten Kontakt: das wörtliche Bild als Hinweis, danach nicht mehr (dann ist es Abruf)
     const lit = !ex.requeue && !stOf(item.id) ? literalOf(item) : '';
     body = `<p class="kicker">Ergänze die Lücke${hintTxt ? tipChip(hintTxt, lang, c) : ''}${lit ? tipChip(`wörtlich: ${lit}`, 'de', c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
-      <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${esc(item.target.slice(0, pos))}${field}${esc(item.target.slice(pos + item.gap.length))}` : field}</p>
+      <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${gapText(item.target.slice(0, pos), lang, done)}${field}${gapText(item.target.slice(pos + item.gap.length), lang, done)}` : field}</p>
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'free') {
     const item = itemById(ex.id);
@@ -358,7 +361,7 @@ function viewRun(){
       const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
       const field = done ? gapDone(c, d.full.slice(pos, d.full.length - (d.prompt.length - pos - 3)), lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}"${d.ph ? ` placeholder="${esc(d.ph)}"` : ''}${done ? ' readonly' : ''} aria-label="Lücke${d.ph ? `, beginnt mit ${esc(d.ph.replace('…', ''))}` : ''}">${done && c.result !== 'ok' ? ` <span class="gapfix">${esc(d.answers[0])}</span>` : ''}`;
       body = `<p class="kicker">${esc(d.label)}${d.hint ? tipChip(d.hint, lang, c, d.tip) : ''}</p>${d.deLine ? `<p class="de" lang="de">${esc(d.deLine)}</p>` : ''}
-        <div class="ex-a"><p class="cloze" lang="${lang}">${esc(d.prompt.slice(0, pos))}${field}${esc(d.prompt.slice(pos + 3))}</p>
+        <div class="ex-a"><p class="cloze" lang="${lang}">${gapText(d.prompt.slice(0, pos), lang, done)}${field}${gapText(d.prompt.slice(pos + 3), lang, done)}</p>
         ${done ? '' : charbar(lang)}</div>`;
     } else {
       body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${d.sub ? lang : 'de'}">${esc(d.prompt)}</p>${d.sub ? `<p class="vocab">${esc(d.sub)}</p>` : ''}
@@ -406,7 +409,9 @@ function feedbackHtml(r, ex, c){
   const pill = c.result === 'ok' ? '<span class="verdict v-ok">Richtig</span>' : c.result === 'near' ? '<span class="verdict v-mid">Fast richtig</span>' : c.gaveUp ? '<span class="verdict v-bad">Lösung</span>' : '<span class="verdict v-bad">Falsch</span>';
   const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : ivlText(c.nextIvl)}</span>` : '';
   const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${c.combo} in Folge</span>` : '';
-  let out = `<div class="vrow">${pill}${combo}${next}</div>`;
+  // Bei Lücken steht rechts der Knopf zum Vorlesen; Urteil und „wann wieder“ brechen links davon um
+  const vrow = extra => `<div class="vrow"><div class="vrow-l">${pill}${combo}${next}</div>${extra}</div>`;
+  let out = vrow('');
   if (ex.type === 'gen' && ex.data.kind === 'spot') {
     const d = ex.data, fixed = d.full.split(' '), clean = d.wrong.length === 0;
     // Geänderte Wörter über die längste gemeinsame Folge: auch wenn die Verbesserung kürzer ist („he ido“ → „fui“)
@@ -449,7 +454,10 @@ function feedbackHtml(r, ex, c){
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   const sol = solShown(lang, ex, c);
   const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(sol, lang);
-  out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
+  // Lücke: Der Satz steht oben schon ganz da, mit der Lösung an ihrem Platz. Hier nicht noch einmal, nur der Knopf zum Vorlesen.
+  const gapTask = ex.type === 'cloze' || (ex.type === 'gen' && ex.data.gap);
+  if (gapTask) out = vrow(sBtn);
+  else out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
   if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
   else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
@@ -471,7 +479,8 @@ function feedbackHtml(r, ex, c){
       if (c.lt === undefined) out += `<p class="hint">Unsicher, ob deine Fassung auch stimmt? <button type="button" class="link" data-a="ltfree">Mit LanguageTool prüfen (online)</button></p>`;
       else if (c.lt === 'loading') out += `<p class="hint"><span class="dots">Prüfe</span></p>`;
       else if (typeof c.lt === 'string') out += `<p class="hint">${esc(c.lt)}</p>`;
-      else out += ltHtml(c.input, c.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.</p>`;
+      // Nichts gefunden heißt nicht richtig (neben „Falsch“ las sich das grüne „Keine Fehler gefunden“ so): neutral, mit der Grenze dazu
+      else out += (c.lt.length ? ltHtml(c.input, c.lt, lang, false) : '<p class="hint lt-none">LanguageTool hat nichts gefunden.</p>') + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Es findet nicht jeden Grammatikfehler und prüft nicht, ob die Bedeutung passt.</p>`;
     }
   }
   // Beim ersten Kontakt auch bei richtiger Antwort: Die Geschichte hinter dem Bild hilft beim Merken

@@ -624,7 +624,7 @@ function startRun(kind, opts){
   if (S.run && !S.run.finished && S.run.kind === 'daily' && kind !== 'daily') S.dailyRun = S.run;
   if (kind === 'daily') S.dailyRun = null;
   S.notice = null;
-  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, wayBefore:wayKeys(), res:[], secs:0, combo:0, best:0 };
+  S.run = { kind, lang, queue, idx:0, ok:0, bad:0, endless:kind === 'gen', gen:opts && opts.gen, trap:opts && opts.trap, text:opts && opts.text, wiki:opts && opts.body ? { body:opts.body, title:opts.title } : null, cur:null, wayBefore:wayKeys(), est0:estSnap(lang), res:[], secs:0, combo:0, best:0 };
   S.view = 'run'; prepCur(); persistRun(); render(); window.scrollTo(0, 0);
 }
 // Zufallsauswahl ohne Wiederholung der letzten Runden: zuletzt Gewähltes kommt nach hinten, solange es genug anderes gibt

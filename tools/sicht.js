@@ -33,6 +33,33 @@ const bottom = async p => {
 const WIKI_BODY = 'Allmänna skyddsrum i Stockholm byggdes under det kalla kriget för att skydda befolkningen. De flesta skyddsrummen ligger djupt under jorden och används i dag som garage eller förråd. Kommunen kontrollerar regelbundet att dörrarna fungerar och att ventilationen är intakt. Under en kris ska skyddsrummen kunna öppnas inom fyrtioåtta timmar. Många stockholmare vet inte var det närmaste skyddsrummet finns, trots att skyltarna sitter på husväggarna.';
 const mockWiki = p => p.route('https://sv.wikipedia.org/w/api.php**', r => r.fulfill({ headers:{ 'Access-Control-Allow-Origin':'*' }, json:{ query:{ pages:[{ title:'Allmänna skyddsrum i Stockholm', extract:WIKI_BODY, fullurl:'https://sv.wikipedia.org/wiki/Skyddsrum' }] } } }));
 const answerAll = async p => { for (let k = 0; k < 40 && await p.$('.runbar'); k++) { await answerWrong(p); await p.click('[data-a=next]'); } };
+// „Thema üben“: Adjektivendungen (zehn erzeugte Aufgaben)
+const speciesOpen = [click('[data-a=tab][data-v=extra]'), click('[data-a=pickTopic]'), click('[data-a=trapgo][data-t=species]')];
+// Adjektivendungen richtig beantworten: Die App läuft im Browser abgekapselt, die Lösung steht erst nach dem Prüfen da. Darum die
+// Lösungen hier in Node aus demselben Generator, gefunden über den sichtbaren Aufgabentext (Anweisung, deutsche Zeile, Satz ohne Lücke).
+let npSol = null;
+function npSolutions(){
+  if (npSol) return npSol;
+  const app = require('../tests/helpers/load.js').loadApp(); npSol = new Map();
+  for (let i = 0; i < 20000; i++) {
+    const d = app.run('GENS.np.make()'), parts = [d.label, d.deLine || '', ...(d.gap ? d.prompt.split('___') : [d.prompt])].map(x => x.trim()).filter(Boolean);
+    npSol.set(parts.join('|'), d.answers[0]);
+  }
+  return npSol;
+}
+const npAnswer = async p => {
+  const text = (await p.innerText('.ex')).replace(/\s+/g, ' ');
+  const hit = [...npSolutions()].filter(([k]) => k.split('|').every(x => text.includes(x))).sort((a, b) => b[0].length - a[0].length)[0];
+  return hit ? hit[1] : 'zzz';
+};
+// „Thema üben“ Adjektivendungen: alles richtig, nur die Aufgabe Nummer bad (ab 0) falsch
+const answerOneWrong = bad => async p => {
+  for (let k = 0; k < 40 && await p.$('.runbar'); k++) {
+    if (k === bad) await answerWrong(p);
+    else { await p.fill('#answer', await npAnswer(p)); await p.click('[data-a=check]'); }
+    await p.click('[data-a=next]');
+  }
+};
 // Nomen tauschen: das typische Versehen, nur das Nomen ersetzt und den Rest stehen gelassen
 const swapNaive = async p => { const src = await p.textContent('.ex .de'), a = await p.textContent('.ex .de b'), b = await p.textContent('.vocab .swapto'); await p.fill('#answer', src.trim().replace(a.trim(), b.trim())); await p.click('[data-a=check]'); };
 const swapOpen = [click('[data-a=tab][data-v=extra]'), click('[data-a=forms]'), click('[data-a=gengo][data-g=det_es]')];
@@ -62,6 +89,10 @@ const SCENES = [
   // Tagwerk-Ende mit aufgeklapptem Thema: deine Antworten und die Lösungen
   ['tagwerk-thema', rich, [click('[data-a=daily]'), answerAll, click('.trow >> nth=0'), p => p.waitForTimeout(400)]],
   ['rundenende-unten', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, bottom]],
+  // Runde mit einem Thema (Grammatik-Training Adjektivendungen, wie im Screenshot vom 25.11.): Schätzung vor und nach der Runde,
+  // die falsche Aufgabe gleich offen; dazu fehlerfrei
+  ['rundenende-thema', rich, [...speciesOpen, answerOneWrong(8)]],
+  ['rundenende-thema-fehlerfrei', rich, [...speciesOpen, answerOneWrong(-1)]],
   ['bonus', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, click('[data-a=bonus]'), p => p.fill('#bonusText', 'Jag tycker att det är skönt att jobba hemma.'), click('[data-a=bonuscheck]'), p => p.evaluate(() => document.querySelector('.bonus').scrollIntoView({ block:'end' }))]],
   ['einstellungen', rich, [click('[data-a=settings] >> nth=0')]],
   ['einstellungen-unten', rich, [click('[data-a=settings] >> nth=0'), bottom]],

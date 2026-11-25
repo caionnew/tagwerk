@@ -568,14 +568,44 @@ function roundTasksHtml(list, lang){
   const rank = x => (!x.good ? 0 : x.near ? 1 : 2);
   return `<ul class="rks">${list.slice().sort((a, b) => rank(a) - rank(b)).map(x => roundTaskHtml(x, lang)).join('')}</ul>`;
 }
+const topicGo = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
+const backLine = r => ((r.res || []).some(x => x.id && !x.good) ? '<p class="legend">Falsche Sätze kommen morgen wieder.</p>' : '');
+// Runde mit einem Thema („Thema üben“, Grammatik-Training): Die Punkte je Aufgabe wiederholten die Leiste darüber, das Neue
+// stand erst nach einem Tipp da. Stattdessen die Schätzung des Themas aus dem Fehlermodell mit dem Stand vor der Runde (Ring)
+// und die falschen und fast richtigen Aufgaben gleich offen. Ohne Schätzung (Modell rechnet noch nicht, Thema ohne Daten) nur
+// die Aufgaben; fehlerfrei und ohne Schätzung nichts, die Leiste sagt dann alles.
+function oneTopicHtml(r, t){
+  // Thema im Fehlermodell: das der Runde, bei Uhrzeiten und Genus das der Aufgaben (zeit, zahl, genus), wenn es nur eins ist
+  const own = [...new Set(t.list.map(y => y.trap).filter(Boolean))];
+  const lang = r.lang, id = t.trap || (own.length === 1 ? own[0] : null) || (t.gen && GENS[t.gen] && GENS[t.gen].trap) || null, M = topicModel(lang);
+  const x = id && M.fitted ? M.topics.find(y => y.id === id && y.n >= MODEL.MIN_N) : null;
+  const off = t.list.filter(y => !y.good || y.near);
+  if (!x && !off.length) return '';
+  const sheet = !!(t.trap && t.trap !== 'eigene' && trapMeta(lang, t.trap)), label = esc(keepHyph(t.label));
+  let head;
+  if (x) {
+    const prev = r.est0 && r.est0[id] != null ? r.est0[id] : null, clear = clearSet(lang).has(id);
+    const max = rateScale(Math.max(M.mu, x.hi, prev || 0));
+    const aria = modelAria(t.label, x) + (clear ? ', klar über Schnitt' : '') + (prev != null ? `, vor der Runde ${pct(prev)}` : '');
+    // Was die Zahl rechts zählt, steht darunter (die Leiste darüber zählt Richtige); der Ring ist das Zeichen für „vor der Runde“
+    const sub = `geschätzte Fehlerquote${prev != null ? `, <i class="mk-ring"></i>vor der Runde ${pct(prev)}` : ''}`;
+    const tag = sheet ? `button type="button" data-a="topic" data-t="${id}" data-z="1"` : 'div';
+    head = `<${tag} class="row mrowh" aria-label="${esc(aria)}"><span class="txt">${mLine(`<span class="rt">${label}</span>`, modelRight({ mean:x.mean, clear }), sub)}${modelStripHtml(x, M.mu, max, prev)}</span></${sheet ? 'button' : 'div'}><p class="legend inrows">${modelKeyHtml(M.mu, { clear })}</p>`;
+  } else head = `<div class="row"><span class="txt"><span class="rt">${label}</span></span></div>`;
+  // „Thema üben“ nur, wenn die Runde nicht schon dieses Thema war (dort ist es „Noch eine Runde“)
+  const links = !off.length ? '' : (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '')
+    + (!['trap', 'form'].includes(r.kind) && topicGo(t) ? `<button type="button" class="link" ${topicGo(t)}>Thema üben</button>` : '');
+  const det = off.length ? `<div class="tdet">${roundTasksHtml(off, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>` : '';
+  return `<h2 class="grp">Thema dieser Runde</h2><div class="rows">${head}${det}</div>${backLine(r)}`;
+}
 function topicsHtml(r){
   const tps = roundTopics(r), lang = r.lang;
-  // Ein einziges Thema ohne Fehler: Die Ergebnisleiste sagt schon alles
-  if (!tps.length || (tps.length < 2 && tps[0].dots.every(d => d === 'ok'))) return '';
+  if (!tps.length) return '';
+  if (tps.length === 1) return oneTopicHtml(r, tps[0]);
   // Fehler bündeln: Hakt es mindestens zweimal im selben Thema, ist das der nächste Schritt (andere Sätze, gleiche Regel)
   // Nur wenn ein Thema klar vorn liegt: mindestens zwei Fehler und mehr als jedes andere Thema
-  const nBad = tps.reduce((a, t) => a + t.bad, 0), worst = tps.length > 1 && tps[0].bad >= 2 && tps[0].bad > tps[1].bad ? tps[0] : null;
-  const go = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
+  const nBad = tps.reduce((a, t) => a + t.bad, 0), worst = tps[0].bad >= 2 && tps[0].bad > tps[1].bad ? tps[0] : null;
+  const go = topicGo;
   const bundle = worst && go(worst) ? `<p class="hint bundle">${worst.bad === nBad ? (nBad === 2 ? 'Beide Fehler' : `Alle ${nBad} Fehler`) : `${worst.bad} von ${nBad} Fehlern`}: <b>${esc(worst.label)}</b>. <button type="button" class="link inl" ${go(worst)}>Thema üben</button></p>` : '';
   const dot = d => `<i class="d-${d}"></i>`;
   // Jedes Thema mit Fehler steht da, aufgefüllt bis fünf Zeilen; der Rest ist fehlerfrei und klappt auf
@@ -591,8 +621,8 @@ function topicsHtml(r){
   }).join('');
   S.topicEnter = false;
   const more = rest > 0 ? `<p class="t-more"><button type="button" class="link" data-a="topicsall" aria-expanded="${S.topicsAll ? 'true' : 'false'}">${S.topicsAll ? 'Weniger zeigen' : `und ${plural(rest, 'weiteres Thema', 'weitere Themen')} ohne Fehler`}</button></p>` : '';
-  const back = (r.res || []).some(x => x.id && !x.good) ? '<p class="legend">Falsche Sätze kommen morgen wieder.</p>' : '';
-  return `<h2 class="grp">${tps.length === 1 ? 'Thema dieser Runde' : 'Themen dieser Runde'}</h2>${bundle}<div class="rows">${rows}</div>${more}${back}`;
+  const back = backLine(r);
+  return `<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}${back}`;
 }
 // Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
 // (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).

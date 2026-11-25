@@ -138,3 +138,61 @@ test('Zweiter Versuch und Aufgeben landen beim ersten Versuch', () => {
   assert.deepEqual([gu.gu, gu.ans, gu.good], [1, undefined, false]);
   assert.match(run(`roundTaskHtml(${JSON.stringify(gu)}, 'sv')`), /<span class="rk-you">Weiß ich nicht<\/span>/);
 });
+
+// Runde mit einem Thema (25.11.): „Thema üben“ Adjektivendungen, 9 von 10 richtig. Bis 24.75 stand dort eine Zeile mit zehn Punkten,
+// dieselben wie in der Leiste darüber, und die falsche Aufgabe erst nach einem Tipp.
+test('Runde mit einem Thema: Schätzung mit Stand vor der Runde, falsche Aufgaben offen, keine Punkte', () => {
+  // Vier Themen im Protokoll, damit das Modell rechnet; Adjektivendungen klar schwächer
+  app.run(`DB.tlog = {}; for (let k = 1; k <= 20; k++) DB.tlog[addDays(today(), -k)] = { sv:{ 'p:inversion':[3, k % 3 ? 0 : 1], 'p:bisats':[3, k % 2], 'p:species':[2, 1], 'p:tempus':[2, 0] } };`);
+  const est0 = run(`estSnap('sv')`);
+  assert.deepEqual(Object.keys(est0).sort(), ['bisats', 'inversion', 'species', 'tempus']);
+  // Die Runde: das Protokoll von heute bekommt ihre zehn Aufgaben, eine davon falsch
+  app.run(`DB.tlog[today()] = { sv:{ 'p:species':[10, 1] } }`);
+  const ok = { gen:'np', good:true, target:'den stora bilen' }, bad = { gen:'np', good:false, ty:'free', q:'die guten Hunde', ans:'zzz qqq', target:'de bra hundarna', why:'Doppelte Bestimmtheit im Plural.' };
+  const res = [ok, ok, ok, ok, ok, ok, ok, ok, bad, ok];
+  const set = (kind, r, e0) => app.run(`S.run = { kind:'${kind}', lang:'sv', ok:${r.filter(x => x.good).length}, bad:${r.filter(x => !x.good).length}, est0:${JSON.stringify(e0)}, res:${JSON.stringify(r)} }`);
+  set('trap', res, est0);
+  let h = run('topicsHtml(S.run)');
+  const now = run(`topicModel('sv').topics.find(x => x.id === 'species').mean`);
+  assert.ok(now < est0.species, 'neun von zehn richtig senken die Schätzung');
+  assert.match(h, /<h2 class="grp">Thema dieser Runde<\/h2>/);
+  assert.doesNotMatch(h, /trow|tdots|topicopen/, 'keine Punkte, nichts aufzuklappen');
+  // Zeile wie in der Themenliste, Tipp öffnet „Deine Zahlen“; Zahl, was sie zählt, Stand vorher als Ring
+  assert.match(h, /<button type="button" data-a="topic" data-t="species" data-z="1" class="row mrowh"/);
+  const P = v => run(`pct(${v})`).replace(/\s/g, ' ');
+  assert.match(text(h), new RegExp(`^Thema dieser Runde Adjektivendungen & bestimmte Form ${P(now)} geschätzte Fehlerquote, vor der Runde ${P(est0.species)} Schätzung`));
+  assert.equal((h.match(/class="mring"/g) || []).length, 1);
+  assert.match(h, /class="mpct cl"/, 'klar über Schnitt rot hinterlegt wie überall');
+  // Die falsche Aufgabe offen, die richtigen nicht; Regel, aber kein „Thema üben“ (das ist „Noch eine Runde“)
+  assert.equal((h.match(/<li class="rk /g) || []).length, 1);
+  assert.match(text(h), /die guten Hunde Du: zzz qqq de bra hundarna Doppelte Bestimmtheit im Plural\. Regel und Beispiele$/);
+  assert.doesNotMatch(h, /trapgo/);
+  // Dieselbe Runde aus „Schnell üben“: dort führt „Thema üben“ weiter
+  set('quick', res, est0);
+  assert.match(run('topicsHtml(S.run)'), /data-a="trapgo" data-t="species">Thema üben/);
+  // Fehlerfrei: die Schätzung bleibt, Aufgaben und Links entfallen
+  set('trap', res.map(() => ok), est0);
+  h = run('topicsHtml(S.run)');
+  assert.match(h, /vor der Runde/); assert.doesNotMatch(h, /class="tdet|Regel und Beispiele/);
+  // Ohne Stand vorher (fortgesetztes Tagwerk): ohne „vor der Runde“ und ohne Ring
+  set('trap', res, null);
+  h = run('topicsHtml(S.run)');
+  assert.match(text(h), /geschätzte Fehlerquote Schätzung/); assert.doesNotMatch(h, /mring|vor der Runde/);
+  // Ohne Modell (zu wenig Themen mit Daten): nur die Aufgaben; fehlerfrei nichts, die Leiste sagt alles
+  app.run(`DB.tlog = {}`);
+  set('trap', res, null);
+  h = run('topicsHtml(S.run)');
+  assert.doesNotMatch(h, /mstrip/); assert.match(h, /<span class="rt">Adjektivendungen &amp; bestimmte Form<\/span>/); assert.match(h, /Du:/);
+  set('trap', res.map(() => ok), null);
+  assert.equal(run('topicsHtml(S.run)'), '');
+});
+
+test('Runde mit einem Thema ohne Themenblatt (Genus): Schätzung aus dem Thema der Aufgaben, Zeile ohne Tipp', () => {
+  app.run(`DB.tlog = {}; for (let k = 1; k <= 20; k++) DB.tlog[addDays(today(), -k)] = { sv:{ 'p:inversion':[3, k % 3 ? 0 : 1], 'p:bisats':[3, k % 2], 'p:genus':[2, k % 4 ? 0 : 1], 'p:tempus':[2, 0] } };`);
+  const g = { gen:'genus_sv', trap:'genus', good:true, target:'ett hus' };
+  app.run(`S.run = { kind:'form', lang:'sv', ok:3, bad:1, est0:${JSON.stringify(run(`estSnap('sv')`))}, res:${JSON.stringify([g, g, { ...g, good:false, ans:'en', target:'ett bord' }, g])} }`);
+  const h = run('topicsHtml(S.run)');
+  assert.match(h, /<div class="row mrowh"/); assert.doesNotMatch(h, /data-a="topic"/);
+  assert.match(h, /vor der Runde/);
+  app.run('DB.tlog = {}');
+});

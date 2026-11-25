@@ -121,8 +121,9 @@ test('Hören: nach der Antwort stehen Frage, Fundstelle und „Nächste Frage“
   await expect(next).toHaveText('Nächste Frage');
   await expect(page.locator('.tq [data-a=tqnext]')).toHaveCount(0);
   await page.waitForTimeout(500);
-  const barTop = await page.$eval('.reader-bar', e => e.getBoundingClientRect().top);
-  const src = await page.$eval('.tq-src', e => e.getBoundingClientRect().bottom), q = await page.$eval('.tq-q', e => e.getBoundingClientRect().top);
+  // In einem Schritt gemessen: Solange der Text läuft, zeichnet die App die Seite etwa alle 0,6 s neu. $eval sucht und misst in
+  // zwei Schritten; lag ein Neuzeichnen dazwischen, maß der Test ein abgehängtes Element (oben 0). Am 25.11. in jedem zweiten Lauf.
+  const { barTop, src, q } = await page.evaluate(() => { const r = s => document.querySelector(s).getBoundingClientRect(); return { barTop:r('.reader-bar').top, src:r('.tq-src').bottom, q:r('.tq-q').top }; });
   expect(src).toBeLessThanOrEqual(barTop);
   expect(q).toBeGreaterThanOrEqual(0);
   await next.click();
@@ -158,11 +159,13 @@ test('Hören: Bei den Fragen spielt „Abspielen“ den ganzen Text von vorn, di
   const play = page.locator('.reader-bar [data-a=tplayall]');
   await expect(play).toHaveAttribute('aria-label', 'Von vorn hören');
   const before = await page.evaluate(() => window.__said.length);
-  const qTop = await page.$eval('.tq-q', e => Math.round(e.getBoundingClientRect().top));
+  // In einem Schritt gemessen (wie oben): Beim Abspielen zeichnet die App neu, $eval könnte ein abgehängtes Element messen
+  const top = () => page.evaluate(() => Math.round(document.querySelector('.tq-q').getBoundingClientRect().top));
+  const qTop = await top();
   await play.click();
   await expect.poll(() => page.evaluate(n => window.__said.slice(n), before)).toContain('Mucha gente cree que en España todo el mundo duerme la siesta.');
   await expect.poll(() => page.evaluate(n => window.__said.length - n, before), { timeout:8000 }).toBeGreaterThanOrEqual(3);
-  expect(await page.$eval('.tq-q', e => Math.round(e.getBoundingClientRect().top))).toBe(qTop);
+  expect(await top()).toBe(qTop);
 });
 test('Lückentext: aus dem Wikipedia-Fundstück und aus einem Lesetext, „Noch eine Runde“ bleibt beim selben Text', async ({ page }) => {
   const body = 'Allmänna skyddsrum i Stockholm byggdes under det kalla kriget för att skydda befolkningen. De flesta skyddsrummen ligger djupt under jorden och används i dag som garage eller förråd. Kommunen kontrollerar regelbundet att dörrarna fungerar och att ventilationen är intakt. Under en kris ska skyddsrummen kunna öppnas inom fyrtioåtta timmar. Många stockholmare vet inte var det närmaste skyddsrummet finns, trots att skyltarna sitter på husväggarna.';

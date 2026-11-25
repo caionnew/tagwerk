@@ -32,6 +32,13 @@ function clearSet(lang){
   if (!s || s.day !== t || (s.cur || []).join() !== cur.join()) DB.clear[lang] = { day:t, prev:[...base], cur };
   return new Set(cur);
 }
+// Stand vor einer Runde (startRun): Schätzung je Thema ab 3 gewichteten Aufgaben, fürs Rundenende „vor der Runde“. Nur in der
+// laufenden Sitzung; ein fortgesetztes Tagwerk hat ihn nicht, dann fehlt „vor der Runde“.
+function estSnap(lang){
+  const M = topicModel(lang); if (!M.fitted) return null;
+  const by = {}; M.topics.forEach(x => { if (x.n >= MODEL.MIN_N) by[x.id] = x.mean; });
+  return by;
+}
 // Die höchsten Schätzungen unter den Themen, die sich üben lassen (topicIds), ab 3 gewichteten Aufgaben; für Heute und „Thema üben“.
 // Erst, wenn das Modell gerechnet hat (mindestens 3 Themen mit Daten), sonst stünde dort nur der gepoolte Schnitt.
 function topRates(lang, k){

@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.76.0
+**Rundenende mit einem Thema: Schätzung vor und nach der Runde, die Fehler gleich offen. Dazu zwei Browser-Tests, die beim Hören zufällig rot wurden.**
+- **Der Fall aus deinem Screenshot:** Nach „Thema üben“ Adjektivendungen (9 von 10) standen unter „Thema dieser Runde“ zehn Punkte, dieselben wie in der Leiste darüber, und die falsche Aufgabe erst nach einem Tipp.
+- **Jetzt, bei Runden mit nur einem Thema** („Thema üben“, Grammatik-Training, auch eine kurze Runde, die zufällig nur ein Thema hatte): die Zeile aus der Themenliste mit Schätzung, Streifen, Schnitt und „klar über Schnitt“, darunter „geschätzte Fehlerquote, ○ vor der Runde 29 %“; der Stand vor der Runde steht als Ring im Streifen. Tipp öffnet das Themenblatt auf „Deine Zahlen“. Darunter die falschen und fast richtigen Aufgaben offen, wie aufgeklappt (deine Antwort, Lösung in deinem Wort, Grund), dazu „Regel und Beispiele“; „Thema üben“ nur, wenn die Runde nicht schon dieses Thema war. Fehlerfrei bleibt die Schätzung stehen, ohne Aufgaben.
+- **Ehrlich gelesen:** Der Unterschied ist die neue Schätzung nach zehn Aufgaben, kein gesicherter Fortschritt. Mit den Zahlen vom 24.11. (Adjektivendungen 5 von 13, Schnitt 17 %) verschiebt eine Runde die Schätzung von 25 % auf etwa 20 % ohne Fehler, 22 % mit einem und 27 % mit dreien. Darum stehen nur die beiden Zahlen da, ohne „besser“ (RESEARCH.md).
+- Genus und Uhrzeiten haben kein Themenblatt: Dort steht die Zeile ohne Tipp; mischt eine Runde Uhrzeiten und Zahlen, sind es zwei Themen im Modell und keine Schätzung.
+- **Ohne Schätzung** (das Modell rechnet erst ab drei Themen mit Daten): nur die Aufgaben; fehlerfrei dann nichts, die Leiste sagt alles. Den Stand vor der Runde merkt sich die App beim Start, nur in der laufenden Sitzung; ein fortgesetztes Tagwerk zeigt deshalb kein „vor der Runde“. Runden mit mehreren Themen bleiben, wie sie sind.
+- **Browser-Tests beim Hören:** Zwei Tests maßen die Lage von Leiste und Frage mit `$eval`, das in zwei Schritten sucht und misst. Solange der Text läuft, zeichnet die App die Seite etwa alle 0,6 s neu; lag das dazwischen, maß der Test ein abgehängtes Element (oben 0). Heute rot in 10 von 16 Läufen, auch ohne diese Änderung. Jetzt in einem Schritt gemessen: 24 von 24 grün. In der App war nichts falsch.
+- Doku: ARCHITECTURE.md (Rundenende mit einem Thema), RESEARCH.md (vor und nach einer Runde), IDEEN.md (umgesetzt heraus, die übrigen Punkte vom 25.11. unter „Geprüft und zurückgestellt“).
+- `npm run sicht`: neue Ansichten rundenende-thema und rundenende-thema-fehlerfrei; sie beantworten „Thema üben“ Adjektivendungen richtig, mit Lösungen aus demselben Generator in Node.
+- Tests: Rundenende mit einem Thema (Schätzung vorher und nachher, „klar über Schnitt“, offene Fehler, Links je Rundenart, fehlerfrei, ohne Stand vorher, ohne Modell, Genus ohne Themenblatt); im Browser „Thema üben“ mit Ring und Punkt auf einer Höhe und „Deine Zahlen“ auf Tipp.
+- Speicherstand unverändert.
+
 ## 24.75.2
 **Roter Build behoben (Test, nicht die App). „die billigen Kleider“ gilt auch mit kläderna, bei „kläder“ nennt die Rückmeldung die fehlende Endung.**
 - **Roter Build von 24.75.1:** Der Browser-Test zum Aufklappen am Rundenende prüfte nur die erste Antwort im ersten Thema und erwartete dort eine getippte („zzz qqq“). Welche Aufgaben ein Tagwerk bringt und welche vorn steht, ist zufällig; stand eine Wortkästchen-Aufgabe vorn, lautete die Antwort „Du: inte arbetslösheten har …“, und der Test war rot. Nachgestellt: 8 von 40 Läufen rot, möglich seit 24.69.0. Der Test klappt jetzt jedes Thema auf und prüft jede Antwort nach ihrer Übungsart (getippt, Lücke und Auswahl, Wortkästchen, aufgegeben): 40 von 40 grün. In der App war nichts falsch.

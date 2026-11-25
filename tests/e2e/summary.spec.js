@@ -110,6 +110,27 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen klappt deine Antworten 
   await expect(page.locator('.pop')).toContainText('Thema');
   await expect(page.locator('.pop [data-a=trapgo]')).toHaveText('10 Aufgaben üben');
 });
+test('Runde mit einem Thema: Schätzung vor und nach der Runde, falsche Aufgaben gleich offen, Tipp öffnet „Deine Zahlen“', async ({ page }) => {
+  await seed(page, richDB('sv'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=pickTopic]');
+  await page.click('[data-a=trapgo][data-t=species]');
+  for (let k = 0; k < 30 && await page.$('.runbar'); k++) { await answerWrong(page); await page.click('[data-a=next]'); }
+  await expect(page.locator('.done-h')).toHaveText('Runde beendet');
+  await expect(page.locator('.donebox h2.grp', { hasText:'Thema dieser Runde' })).toHaveCount(1);
+  // Keine Punkte (die Leiste zeigt dasselbe), nichts aufzuklappen; alle zehn Aufgaben offen, weil alle falsch
+  await expect(page.locator('.trow')).toHaveCount(0);
+  await expect(page.locator('.tdet .rk-you')).toHaveCount(await page.locator('.rstrip .rs').count());
+  const row = page.locator('.donebox .mrowh[data-z]');
+  await expect(row.locator('.msub')).toHaveText(/^geschätzte Fehlerquote, vor der Runde \d+\s%$/);
+  // Ring (vor der Runde) und Punkt (jetzt) auf einer Höhe im Streifen; alles falsch: der Punkt rechts vom Ring
+  const [ring, dot] = await page.$$eval('.donebox .mstrip .mring, .donebox .mstrip .mdot', els => els.map(e => e.getBoundingClientRect()));
+  expect(Math.abs(ring.top - dot.top)).toBeLessThanOrEqual(1);
+  expect(dot.left).toBeGreaterThan(ring.left);
+  await row.click();
+  await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
+});
 test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden erkannt, eigene Sätze gleich mit LanguageTool', async ({ page }) => {
   await seed(page, richDB('sv'));
   let ltCalls = 0;

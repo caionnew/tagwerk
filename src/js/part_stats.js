@@ -268,9 +268,10 @@ const mLine = (name, right, sub) => `<span class="mtop"><span class="mname">${na
 // Schätzung aus dem Fehlermodell: Punkt = Posterior-Mittel, dunkel 50 %, hell 95 %, Strich = Schnitt aller Themen (μ).
 // Skala bis 50, 75 oder 100 %, je nachdem, wie weit der breiteste Bereich reicht; darunter eine Achse mit 25er-Schritten.
 const modelScale = (list, mu) => { const top = Math.max(mu, ...list.map(x => x.hi)); return top <= 0.5 ? 0.5 : top <= 0.75 ? 0.75 : 1; };
-function modelStripHtml(x, mu, max){
+// prev (optional): Schätzung vor der Runde als Ring, unter dem Punkt (Rundenende)
+function modelStripHtml(x, mu, max, prev){
   const f = v => Math.min(1, v / max) * 100, at = v => `${f(v).toFixed(1)}%`, span = (a, b) => `left:${at(a)}; width:${(f(b) - f(a)).toFixed(1)}%`;
-  return `<span class="mstrip" aria-hidden="true"><i class="m95" style="${span(x.lo, x.hi)}"></i><i class="m50" style="${span(x.lo50, x.hi50)}"></i><i class="mmu" style="left:${at(mu)}"></i><i class="mdot" style="left:${at(x.mean)}"></i></span>`;
+  return `<span class="mstrip" aria-hidden="true"><i class="m95" style="${span(x.lo, x.hi)}"></i><i class="m50" style="${span(x.lo50, x.hi50)}"></i><i class="mmu" style="left:${at(mu)}"></i>${prev == null ? '' : `<i class="mring" style="left:${at(prev)}"></i>`}<i class="mdot" style="left:${at(x.mean)}"></i></span>`;
 }
 const modelAxisHtml = max => `<div class="maxis" aria-hidden="true">${Array.from({ length:Math.round(max * 4) + 1 }, (_, i) => `<span style="left:${(i / (max * 4) * 100).toFixed(1)}%">${i * 25}\u00a0%</span>`).join('')}</div>`;
 const modelAria = (label, x) => `${label}: geschätzt ${pct(x.mean)} falsch, wahrscheinlich ${pct(x.lo)} bis ${pct(x.hi)}`;

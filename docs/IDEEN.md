@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 25. November 2026 (nach 24.75.2)
+Stand: 25. November 2026 (nach 24.76.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -83,9 +83,6 @@ Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unt
     - **Balken bis zur nächsten Etappe am Rundenende:** Den Abstand nennt schon der Ausschnitt aus „Dein Weg“ („noch 15“); Fortschritt hat den Balken.
 16. **Deine letzten Fehler im Themenblatt, auch auf Fortschritt (C+).** Am Rundenende stehen sie seit 24.68 beim Thema. Überall bräuchte es ein dauerhaftes Protokoll falscher Antworten je Thema; erst, wenn sich das Aufklappen am Rundenende bewährt.
 17. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
-18. **Rundenende mit nur einem Thema: Fehler gleich offen (A−, geprüft am 25.11.).** Bei „Thema üben“ und im Grammatik-Training wiederholen die Punkte der Themenzeile die Leiste darüber Aufgabe für Aufgabe; das Einzige, was die Runde Neues sagt (deine falsche Antwort, die Lösung in deinem Wort, der Grund), steht erst nach einem Tipp da. Stattdessen die falschen Aufgaben offen, darunter „Regel und Beispiele“. Klein, keine neue Zahl.
-19. **Rundenende mit nur einem Thema: Schätzung vorher und nachher (B+, geprüft am 25.11.).** Statt der Punkte die Zeile aus der Themenliste: „geschätzt 22 % falsch, vor der Runde 25 %“, Streifen mit Bereich und Schnitt, rot hinterlegt bei „klar über Schnitt“, Tipp öffnet „Deine Zahlen“. Verbindet das Üben mit dem Fehlermodell, die Rechnung gibt es schon. Ehrlich: Eine Runde mit 10 Aufgaben verschiebt die Schätzung um einige Punkte (mit den Zahlen vom 24.11. etwa 25 → 20 % ohne Fehler, → 22 % mit einem, → 27 % mit drei); das ist, was das Modell jetzt annimmt, kein gesicherter Fortschritt, und so muss es dastehen.
-    - Geprüft und nicht gewählt: weitere Kennzahlen wie Sekunden je Aufgabe (C, Tempo ist kein Lernziel); „richtig in Folge“ bei nur einem Fehler weglassen (C+, die Leiste zeigt es, stört aber nicht); „Eigener Satz“ auch nach erzeugten Aufgaben (B−, ohne Ausdruck aus der Satzbank fehlt die Aufgabe, LanguageTool prüft Schwedisch fast nur auf Rechtschreibung).
 
 
 ## Lesetexte: Themen für später
@@ -114,7 +111,6 @@ Spanisch:
 
 ## Offen: Rückmeldung von dir
 
-- **Rundenende mit nur einem Thema (Nr. 18 und 19):** beides zusammen umsetzen, nur 18, oder so lassen?
 - **Sprachausgabe auf dem Handy (25.11.):** wo genau sie schweigt (Rückmeldung, Rundenende, Hörrunde, Lesen) und ob „Üben“ den Hinweis auf eine fehlende Stimme zeigt. Das Vorlesen ist seit 24.26.0 unverändert.
 
 ## Nach echter Nutzung nachstellen
@@ -168,6 +164,7 @@ Spanisch:
 - **Lernminuten ohne Bahn, Säulen frei auf einer Grundlinie (B−, geprüft am 22.11.).** Leichter und wie „Wann du übst“, aber leere Tage sind nur ein kurzer Strich, und vierzehn Tage ohne Übung wirken fast leer. Die Bahn zeigt jeden Tag als Platz.
 - **Lernminuten: Sprachen nebeneinander statt übereinander (C+, geprüft am 22.11.).** Jede Sprache stünde auf der Grundlinie, aber zwei Säulen von 6 px je Tag sind unruhig, und die Summe des Tages ist schwerer zu sehen.
 - **Übrige Säulen abblenden, wenn ein Tag gewählt ist (C+, geprüft am 22.11.).** Im Dunkeln werden die Farben matt; die Markierung der Säule reicht.
+- **Rundenende mit einem Thema, weitere Punkte (geprüft am 25.11., umgesetzt ist 24.76.0: Schätzung vorher und nachher, Fehler offen).** Sekunden je Aufgabe (C, Tempo ist kein Lernziel); „richtig in Folge“ bei nur einem Fehler weglassen (C+, die Leiste zeigt es, stört aber nicht); „Eigener Satz“ auch nach erzeugten Aufgaben (B−, ohne Ausdruck aus der Satzbank fehlt die Aufgabe, LanguageTool prüft Schwedisch fast nur auf Rechtschreibung).
 - **Rundenende: Themen und „Noch nicht sicher“ zusammenlegen (B−, geprüft am 22.11.).** Jeder falsche Satz unter seinem Thema; liegt jeder Fehler in einem anderen Thema, doppeln sich die beiden Listen fast. Aber Umbau zweier Abschnitte, und das Muster großer Themen („1 von 7 falsch“) ginge verloren. Wieder ansehen, wenn die Doppelung nach längerer Nutzung stört.
 - **Üben-Seite straffen (C+).** 20 Einträge in sechs Gruppen; lang, aber gegliedert. Erst angehen, wenn etwas Neues dazukommt.
 - **Eigene FSRS-Parameter aus deinen Wiederholungen (C).** Bräuchte ein Protokoll jeder Wiederholung (Speicher) und Monate an Daten; die Standardparameter treffen im Benchmark bereits gut.

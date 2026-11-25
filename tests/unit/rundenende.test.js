@@ -29,10 +29,12 @@ test('Fehler bündeln: nur wenn ein Thema mit mindestens zwei Fehlern klar vorn 
   h = app.run('topicsHtml(S.run)');
   assert.doesNotMatch(h, /class="hint bundle"/, 'Gleichstand: kein Hinweis');
   assert.match(h, /Themen dieser Runde/);
-  // Ein einziges Thema: mit Fehlern eine Zeile zum Aufklappen, ohne Bündel-Hinweis; fehlerfrei nichts (die Leiste sagt alles)
+  // Ein einziges Thema: die Fehler gleich offen statt einer Zeile zum Aufklappen, ohne Bündel-Hinweis; fehlerfrei und ohne
+  // Schätzung (hier kein Protokoll) nichts, die Leiste sagt alles. Mit Schätzung: themen-runde.test.js
   run([{ id:a1.id, good:false }, { id:a2.id, good:false }]);
   h = app.run('topicsHtml(S.run)');
-  assert.match(h, /Thema dieser Runde/); assert.doesNotMatch(h, /class="hint bundle"/);
+  assert.match(h, /Thema dieser Runde/); assert.doesNotMatch(h, /class="hint bundle"|trow/);
+  assert.equal((h.match(/<li class="rk bad"/g) || []).length, 2);
   run([{ id:a1.id, good:true }, { id:a2.id, good:true }]);
   assert.equal(app.run('topicsHtml(S.run)'), '', 'ein Thema, alles richtig: keine Liste');
 });

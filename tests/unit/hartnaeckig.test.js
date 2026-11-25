@@ -27,19 +27,21 @@ for (const lang of ['sv', 'es']) {
     const list = J(`hardSentences('${lang}').map(i => i.id)`);
     assert.deepEqual(list, [x.a, x.b]);
     assert.deepEqual(J(`hardPattern('${lang}', hardSentences('${lang}'))`), { trap:x.trap, n:2 });
-    // Wenige Fehler im Protokoll: Der Abschnitt öffnet direkt mit „Sätze“
+    // Kein Modell (zu wenige Themen mit Daten): Der Abschnitt öffnet direkt mit „Sätze“
     const html = app.run(`errorSourcesHtml('${lang}')`);
     assert.ok(html.includes('aria-checked="true" data-a="errtab" data-t="s"'), 'Reiter „Sätze“ vorgewählt');
     assert.ok(html.includes(`steckt in 2 von 2 Sätzen`));
-    assert.equal((html.match(/class="erow srow"/g) || []).length, 2);
+    assert.equal((html.match(/class="mrow msent( mlast)?"/g) || []).length, 2, 'Satzzeilen im selben Aufbau wie die anderen Reiter');
+    assert.match(html, /<span class="msub stp">/);
     assert.ok(html.includes(`data-a="topic" data-t="${x.trap}"`), 'Antippen öffnet die Regel');
     assert.ok(!html.includes('data-a="hard"'), 'kein Extra-Üben-Knopf');
   });
 }
 
-test('Ohne Fehler und ohne hartnäckige Sätze bleibt der Hinweis, keine Reiter', () => {
+test('Ohne Daten und ohne hartnäckige Sätze bleibt der Hinweis, keine Reiter', () => {
   app.run(`DB.st = {}; DB.tlog = {}; S.errTab = null;`);
   const html = app.run(`errorSourcesHtml('es')`);
-  assert.ok(html.includes('Die Auswertung erscheint ab 8 Fehlern'));
+  assert.ok(html.includes('Erscheint, sobald drei Themen genug Aufgaben haben.'));
+  assert.ok(html.includes('<h2 class="grp">Fehler</h2>'));
   assert.ok(!html.includes('errseg'));
 });

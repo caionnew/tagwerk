@@ -162,40 +162,36 @@ function genStatText(g){
   if (r != null) return rc.length >= 10 ? `Zuletzt ${pct(r)} richtig (letzte ${rc.length})` : `Bisher ${pct(r)} richtig`;
   return n ? `${plural(n, 'Aufgabe', 'Aufgaben')}, ${st.ok} richtig` : 'Noch nicht geübt';
 }
-// Zeilen für „Thema üben“: je Thema die Schätzung aus dem Fehlermodell (ab 3 gewichteten Aufgaben); Fehlerquellen (weak) bekommen
-// oben eine eigene Gruppe.
+// Zeilen für „Thema üben“: je Thema die Schätzung aus dem Fehlermodell (ab 3 gewichteten Aufgaben), „klar über Schnitt“ markiert.
 // Satz-Themen haben einen festen Bestand, ihr Balken zeigt den gefestigten Anteil daran. Erzeugte Themen haben keinen Bestand
 // und keinen Balken (bis 24.72 ein grüner Balken „Anteil richtig“ nur aus dem Generator, der den anderen Zahlen widersprach).
 function topicRows(lang){
-  const M = topicModel(lang);
+  const M = topicModel(lang), cl = clearSet(lang);
   return topicIds(lang).map(id => {
-    const tr = trapMeta(lang, id), x = M.topics.find(t => t.id === id), weak = isWeak(x);
+    const tr = trapMeta(lang, id), x = M.topics.find(t => t.id === id), clear = cl.has(id);
     const est = x && x.n >= MODEL.MIN_N ? `geschätzt ${pct(x.mean)} falsch` : '';
     if (tr.kind === 'gen') {
       const g = DB.gen[tr.gen] || { ok:0, bad:0 }, touched = g.ok + g.bad > 0 || !!x;
-      return { id, label:tr.label, gen:true, weak, mean:x ? x.mean : 0, text:est || (touched ? 'Noch zu wenige Aufgaben für eine Schätzung' : 'Noch nicht geübt'), touched };
+      return { id, label:tr.label, gen:true, clear, mean:x ? x.mean : 0, text:est || (touched ? 'Noch zu wenige Aufgaben für eine Schätzung' : 'Noch nicht geübt'), touched };
     }
     const items = BANK[lang].filter(i => i.trap === id);
     const seen = items.filter(i => stOf(i.id)).length;
     const mature = items.filter(i => stOf(i.id) && (stOf(i.id).ivl || 0) >= MATURE).length;
     const base = seen ? `${seen} von ${items.length} Sätzen geübt, ${mature} gefestigt` : `${items.length} Sätze, noch nicht begonnen`;
-    return { id, label:tr.label, weak, mean:x ? x.mean : 0, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:est ? `${est} · ${base}` : base, touched:seen > 0 };
+    return { id, label:tr.label, clear, mean:x ? x.mean : 0, pct:items.length ? Math.round(mature / items.length * 100) : 0, text:est ? `${est} · ${base}` : base, touched:seen > 0 };
   });
 }
-const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${esc(r.text)}</span></span>`;
+const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${r.clear ? clearMark + ' · ' : ''}${esc(r.text)}</span></span>`;
 const barRow = r => rowText(r) + (r.gen ? '' : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
-// Heute, „Fehlerquellen“: bis zu drei Fehlerquellen mit der höchsten Schätzung, aus dem Fehlermodell wie im Sprach-Tab.
-// Erst ab 8 Fehlern in 30 Tagen (wie dort); nur Fehlerquellen (isWeak), die sich üben lassen (nicht Genus, Uhrzeiten, Zahlen).
-function weakTopics(lang){
-  if (errStats(lang, 30).bad < 8) return [];
-  const ids = new Set(topicIds(lang)), M = topicModel(lang);
-  return M.topics.filter(x => ids.has(x.id) && isWeak(x)).slice(0, 3).map(x => Object.assign({ label:trapMeta(lang, x.id).label }, x));
-}
+// Heute, „Höchste Fehlerquoten“: die drei höchsten Schätzungen unter den übbaren Themen (topRates, part_model.js), immer, sobald
+// das Modell rechnet, auch wenn alle Themen gleich liegen. „Klar über Schnitt“ (Hysterese) steht darunter in Rot.
+// Bis 24.73 „Fehlerquellen“: nur Themen mit P ≥ 75 % und erst ab 8 Fehlern in 30 Tagen.
+const weakTopics = lang => topRates(lang, 3);
 function weakHtml(lang){
   const list = weakTopics(lang);
   if (!list.length) return '';
   const M = topicModel(lang), max = modelScale(list, M.mu);
-  return `<h2 class="grp">Fehlerquellen</h2><div class="rows">${list.map(x => `<button type="button" class="row mrowh" data-a="trapgo" data-t="${x.id}" aria-label="${esc(modelAria(x.label, x))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x))}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}</div><p class="legend below">${modelKeyHtml(M.mu)}</p>`;
+  return `<h2 class="grp">Höchste Fehlerquoten</h2><div class="rows">${list.map(x => `<button type="button" class="row mrowh" data-a="trapgo" data-t="${x.id}" aria-label="${esc(modelAria(x.label, x))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x), x.clear ? clearMark : '')}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}<p class="legend inrows">${modelKeyHtml(M.mu)}</p></div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];
@@ -224,13 +220,13 @@ function viewExtra(){
   <h2 class="grp">Nachschlagen</h2>
   <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'rules')}${row('ref', 'Grammatik-Begriffe', `${termsFor(lang).length} Fachwörter wie ${lang === 'sv' ? 'Supinum und Inversion' : 'Subjuntivo und Gerundium'}, in Alltagssprache`, ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Sprache, Alltag und Gesellschaft`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste, nach Datum sortiert`, ' data-r="feasts"', 'feast')}</div>`;
 }
-// Oben die Fehlerquellen (höchste Schätzung zuerst, Satz- und erzeugte Themen zusammen), darunter die übrigen in fester Reihenfolge
+// Oben dieselben drei höchsten Fehlerquoten wie auf Heute, darunter die übrigen Themen in fester Reihenfolge, ohne Doppelung
 function viewPickTopic(){
-  const lang = S.lang, rows = topicRows(lang);
+  const lang = S.lang, rows = topicRows(lang), topIds = weakTopics(lang).map(x => x.id);
   const list = rs => `<div class="rows">${rs.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
-  const weak = rows.filter(r => r.weak).sort((a, b) => b.mean - a.mean), rest = rows.filter(r => !r.weak), gens = rest.filter(r => r.gen);
+  const top = topIds.map(id => rows.find(r => r.id === id)).filter(Boolean), rest = rows.filter(r => !topIds.includes(r.id)), gens = rest.filter(r => r.gen);
   return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema.</p>
-    ${weak.length ? `<h2 class="grp">Fehlerquellen</h2><p class="lead-s grp-lead"><button type="button" class="term" data-a="term" data-k="schaetzung">Geschätzt</button> mit mindestens ${pct(MODEL.WEAK_P)} Wahrscheinlichkeit über deinem Schnitt von ${pct(topicModel(lang).mu)}.</p>${list(weak)}` : ''}
+    ${top.length ? `<h2 class="grp">Höchste Fehlerquoten</h2><p class="lead-s grp-lead"><button type="button" class="term" data-a="term" data-k="schaetzung">Geschätzt</button>, dein Schnitt ${pct(topicModel(lang).mu)}.</p>${list(top)}` : ''}
     <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button> sind.</p>${list(rest.filter(r => !r.gen))}
     ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2>${list(gens)}` : ''}`;
 }
@@ -550,12 +546,12 @@ function roundTopics(r){
   });
   return [...map.values()].sort((a, b) => b.bad - a.bad || b.off - a.off || b.dots.length - a.dots.length);
 }
-// Nach einer fehlerfreien Übungsrunde: die Fehlerquelle mit der höchsten Schätzung (isWeak, Fehlermodell), die in der Runde
-// nicht vorkam. Noch eine Runde vom selben bringt dann am wenigsten.
+// Nach einer fehlerfreien Übungsrunde: das Thema klar über deinem Schnitt (clearSet) mit der höchsten Schätzung, das in der Runde
+// nicht vorkam. Noch eine Runde vom selben bringt dann am wenigsten. Ohne solches Thema kein Vorschlag.
 function nextTopicHtml(r){
   if (r.kind === 'daily' || r.bad || (r.ok || 0) < 3) return '';
-  const lang = r.lang, here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean)), M = topicModel(lang);
-  const x = M.topics.find(y => y.id !== 'eigene' && trapMeta(lang, y.id) && !here.has(y.id) && isWeak(y));
+  const lang = r.lang, here = new Set(roundTopics(r).map(t => t.trap).filter(Boolean)), M = topicModel(lang), cl = clearSet(lang);
+  const x = M.topics.find(y => y.id !== 'eigene' && trapMeta(lang, y.id) && !here.has(y.id) && cl.has(y.id));
   if (!x) return '';
   return `<h2 class="grp">Als Nächstes</h2><p class="hint bundle"><b>${esc(keepHyph(trapLabel(lang, x.id)))}</b>: geschätzt ${pct(x.mean)} falsch, dein Schnitt ${pct(M.mu)}. <button type="button" class="link inl" data-a="trapgo" data-t="${x.id}">Thema üben</button></p>`;
 }
@@ -997,7 +993,9 @@ function minutesHtml(){
     prevTxt = ps ? `Die 14 Tage davor: ${pv} ${pu}.` : 'Die 14 Tage davor: nicht geübt.';
   }
   const avgKey = span >= 3 && total ? '<span><i class="mavgk"></i>Schnitt pro Tag</span>' : '';
-  const key = none ? '' : activeLangs().length > 1 ? `<p class="legend keyrow mkey"><span><i class="sq m-sv"></i>Schwedisch</span><span><i class="sq m-es"></i>Spanisch</span>${avgKey}</p>` : avgKey ? `<p class="legend keyrow mkey">${avgKey}</p>` : '';
+  // Gestrichelte Säule = Pausetag wie im Kalender; bis 24.73 dort ohne Erklärung
+  const free = streakData().free, freeKey = data.some(x => !x.pre && free.has(x.key) && !minTasks(x)) ? '<span><i class="sq c0 fr"></i>Pausetag</span>' : '';
+  const key = none ? '' : activeLangs().length > 1 ? `<p class="legend keyrow mkey"><span><i class="sq m-sv"></i>Schwedisch</span><span><i class="sq m-es"></i>Spanisch</span>${avgKey}${freeKey}</p>` : avgKey || freeKey ? `<p class="legend keyrow mkey">${avgKey}${freeKey}</p>` : '';
   const unm = data.some(x => minTasks(x) > 0 && !minSecs(x)) ? '<p class="legend">„–“: geübt, noch ohne Zeitmessung.</p>' : '';
   return `<h2 class="grp">Lernminuten, letzte 14 Tage</h2><div class="chart mins">
     <div class="kpis mk">${kp.map(([v, lab]) => `<div><b>${v}</b><span>${lab}</span></div>`).join('')}</div>
@@ -1096,7 +1094,7 @@ function viewProgress(){
   // Nächstes Ziel wie in Dein Weg und am Rundenende (wayEvents): über dem höchsten erreichten Stand
   const mature = matureCount(lang), hiM = matureHigh(lang), nm = wayEvents().next.find(n => n.k === 'mature' && n.l === lang), nextM = nm ? nm.v : nextMilestone(hiM), prevM = prevMilestone(hiM);
   const known = Math.round(knownEstimate(lang));
-  const secs7 = sumLog(lang, 7, 'secs');
+  const secs14 = sumLog(lang, 14, 'secs');
   const rev30 = sumLog(lang, 30, 'rev'), revOk30 = sumLog(lang, 30, 'revOk'), revM30 = sumLog(lang, 30, 'revM'), revMOk30 = sumLog(lang, 30, 'revMOk');
   const fc = forecast(lang), fcMax = Math.max(1, ...fc.map(f => f.n)), cap = size().maxRev;
   const dist = { anchored:0, mature:0, young:0, neu:0 };
@@ -1143,7 +1141,7 @@ function viewProgress(){
       return `<div class="kpis">
         <div><b>${known}</b><span>von ${practiced} <button type="button" class="term" data-a="term" data-k="abrufbar">abrufbar</button></span></div>
         <div><b>${v.all.toLocaleString('de-DE')}</b><span>Wörter${dv ? ` <span class="up">+${dv}</span>` : ''}</span></div>
-        <div><b>${secs7 ? bigTime(secs7)[0] : '–'}</b><span>${secs7 ? bigTime(secs7)[1] : 'Minuten'}, letzte 7 Tage</span></div>
+        <div><b>${secs14 ? bigTime(secs14)[0] : '–'}</b><span>${secs14 ? bigTime(secs14)[1] : 'Minuten'}, letzte 14 Tage</span></div>
       </div>`; })() : ''}
   </section>
   ${progressChart(lang)}
@@ -1212,7 +1210,7 @@ function viewSettings(){
   <p class="setl-n">${(DB.settings.langMode || 'auto') === 'auto' ? 'Die App nimmt die Sprache, in der mehr fällig ist oder die länger nicht dran war. Ein Wechsel oben auf „Heute“ gilt bis morgen.' : 'Die App öffnet in der zuletzt gewählten Sprache.'}</p>
   <h2 class="grp">Mein Niveau</h2>
   <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
-  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in deinen Fehlerquellen. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
+  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen klar über deinem Schnitt. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
   <h2 class="grp">Vorlesen</h2>
   <div class="rows">
     <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.autoplay}" data-a="autoplay"><span class="txt"><span class="rt">Lösung nach dem Prüfen vorlesen</span><span class="rd">Verbindet Schriftbild und Aussprache. Unterwegs ohne Kopfhörer besser aus.</span></span><span class="sw" aria-hidden="true"></span></button>

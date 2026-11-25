@@ -96,7 +96,7 @@ test('Themennamen brechen nicht am Bindestrich um: „si‑Sätze“, „s‑Pas
   assert.match(run(`(S.lang = 'es', DB.settings.lang = 'es', viewHome())`), /<b class="nobr">Konditional &amp; si\u2011Sätze<\/b>/);
 });
 
-test('Thema üben: Schätzung je Thema, Fehlerquellen als eigene Gruppe oben; Satz-Themen mit Balken, erzeugte ohne', () => {
+test('Thema üben: Schätzung je Thema; oben dieselben drei höchsten Fehlerquoten wie auf Heute; Satz-Themen mit Balken, erzeugte ohne', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     DB.gen = { prep_es: { ok: 2, bad: 1, recent: [1, 0, 1] }, det_es: { ok: 3, bad: 0, recent: [1, 1, 1] } };
     BANK.es.filter(i => i.trap === 'condicional').slice(0, 2).forEach(i => { DB.st[i.id] = { ok: 2, bad: 0, alts: [], s: 30, d: 5, ivl: 6, last: t, due: addDays(t, 6), reps: 2 }; });
@@ -109,23 +109,25 @@ test('Thema üben: Schätzung je Thema, Fehlerquellen als eigene Gruppe oben; Sa
   assert.equal((gens.match(/class="bar/g) || []).length, 0, 'erzeugte Themen ohne Balken (kein „Anteil richtig“ mehr)');
   assert.equal((gens.match(/data-a="trapgo"/g) || []).length, genRows);
   assert.match(text(sents), /Der Balken zeigt, wie viele Sätze im Thema gefestigt sind/);
-  assert.doesNotMatch(text(html), /richtig|grüne Balken|Fehlerquellen/, 'ohne Daten keine Fehlerquellen, keine Generator-Quote');
+  assert.doesNotMatch(text(html), /richtig|grüne Balken|Höchste Fehlerquoten|klar über/, 'ohne Daten keine Liste oben, keine Generator-Quote');
   const row = (h, t) => text(h.split(`data-t="${t}"`)[1].split('</button>')[0].replace(/^[^>]*>/, ''));
   assert.match(row(gens, 'prep'), /^Verben mit Präposition Noch zu wenige Aufgaben für eine Schätzung$/);
   assert.match(row(sents, 'condicional'), /2 von \d+ Sätzen geübt, 0 gefestigt/);
-  // Mit Daten: Schätzung aus dem Fehlermodell; Fehlerquellen (Satz- und erzeugte Themen) oben in eigener Gruppe, nicht doppelt
+  // Mit Daten: oben dieselben drei wie auf Heute (Satz- und erzeugte Themen zusammen), nicht doppelt; markiert nur klar über Schnitt
   run(`DB.tlog = { [today()]: { es: { 'p:condicional':[40, 16], 'p:prep':[24, 10], 'p:porpara':[30, 1], 'p:serestar':[30, 1], 'p:pasado':[30, 2] } } };`);
   html = run('viewPickTopic()');
-  const est = id => run(`pct(modelTopic('es', '${id}').mean)`), mu = run(`pct(topicModel('es').mu)`);
-  assert.ok(run(`isWeak(modelTopic('es', 'condicional')) && isWeak(modelTopic('es', 'prep')) && !isWeak(modelTopic('es', 'porpara'))`));
-  const [, weakPart] = html.split('<h2 class="grp">Fehlerquellen</h2>'), top = weakPart.split('<h2 class="grp">Sätze</h2>')[0];
-  assert.match(text(top), new RegExp(`^Geschätzt mit mindestens 75.% Wahrscheinlichkeit über deinem Schnitt von ${mu}\\.`));
-  assert.deepEqual((top.match(/data-t="[^"]+"/g) || []).map(x => x.slice(8, -1)), run(`['condicional', 'prep'].sort((a, b) => modelTopic('es', b).mean - modelTopic('es', a).mean)`));
-  assert.match(row(top, 'condicional'), new RegExp(`^Konditional &amp; si.Sätze geschätzt ${est('condicional')} falsch · 2 von \\d+ Sätzen geübt`));
-  assert.match(row(top, 'prep'), new RegExp(`^Verben mit Präposition geschätzt ${est('prep')} falsch$`));
-  assert.equal((html.match(/data-t="condicional"/g) || []).length, 1, 'nicht doppelt');
+  const est = id => run(`pct(modelTopic('es', '${id}').mean)`), mu = run(`pct(topicModel('es').mu)`), top3 = run(`weakTopics('es').map(x => x.id)`), clear = run(`[...clearSet('es')]`);
+  const [, topPart] = html.split('<h2 class="grp">Höchste Fehlerquoten</h2>'), top = topPart.split('<h2 class="grp">Sätze</h2>')[0];
+  assert.match(text(top), new RegExp(`^Geschätzt ?, dein Schnitt ${mu}\\.`));
+  assert.deepEqual((top.match(/data-t="[^"]+"/g) || []).map(x => x.slice(8, -1)), top3);
+  assert.deepEqual(top3.slice(0, 2).sort(), ['condicional', 'prep']);
+  assert.ok(clear.includes('condicional'), JSON.stringify(run(`topicModel('es').topics.map(x => [x.id, x.pAbove])`)));
+  assert.match(row(top, 'condicional'), new RegExp(`^Konditional &amp; si.Sätze klar über Schnitt · geschätzt ${est('condicional')} falsch · 2 von \\d+ Sätzen geübt`));
+  assert.match(row(top, 'prep'), new RegExp(`^Verben mit Präposition ${clear.includes('prep') ? 'klar über Schnitt · ' : ''}geschätzt ${est('prep')} falsch$`));
+  for (const id of top3) assert.equal((html.match(new RegExp(`data-t="${id}"`, 'g')) || []).length, 1, 'nicht doppelt: ' + id);
   [sents, gens] = html.split('<h2 class="grp">Sätze</h2>')[1].split('Immer neu erzeugt');
-  assert.match(row(sents, 'porpara'), new RegExp(`geschätzt ${est('porpara')} falsch · \\d+ Sätze, noch nicht begonnen$`));
+  const low = ['porpara', 'serestar', 'pasado'].find(id => !top3.includes(id));
+  assert.match(row(sents, low), new RegExp(`geschätzt ${est(low)} falsch · \\d+ Sätze, noch nicht begonnen$`));
 });
 
 test('Grammatik-Training zählt nur den Generator (ab 10 Aufgaben als Anteil), „Thema üben“ das ganze Thema', () => {
@@ -141,28 +143,29 @@ test('Grammatik-Training zählt nur den Generator (ab 10 Aufgaben als Anteil), �
   assert.doesNotMatch(topic, /richtig/);
 });
 
-test('Heute, „Fehlerquellen“: nur Fehlerquellen (P über dem Schnitt ≥ 75 %) wie im Sprach-Tab, erst ab 8 Fehlern, nur übbare Themen', () => {
+test('Heute, „Höchste Fehlerquoten“: immer die drei höchsten Schätzungen übbarer Themen, sobald das Modell rechnet; markiert nur klar über Schnitt', () => {
   run(`(() => { DB = freshDB(); const t = today(); DB.st = {};
     BANK.es.filter(i => i.trap === 'serestar').slice(0, 5).forEach(i => { DB.st[i.id] = { ok: 1, bad: 0, alts: [], s: 2, d: 5, ivl: 2, last: t, due: addDays(t, 2), reps: 1 }; }); })()`);
   assert.equal(run(`weakHtml('es')`), '');
   run(`DB.tlog = { [today()]: { es: { 'p:condicional':[40, 16], 'p:prep':[24, 10], 'p:perfecto':[20, 9], 'p:porpara':[30, 1], 'p:serestar':[30, 1], 'p:pasado':[30, 2], 'p:genus':[20, 9], 'p:subjuntivo':[2, 2], 't:gap':[196, 50] } } };`);
   const M = run(`topicModel('es')`), ids = run(`weakTopics('es').map(x => x.id)`);
-  // Höchstens drei Fehlerquellen in der Reihenfolge des Modells; Genus (nicht übbar) und unter 3 Aufgaben nicht
-  const expect = M.topics.filter(x => !['genus', 'subjuntivo'].includes(x.id) && x.n >= 3 && x.pAbove >= 0.75).slice(0, 3).map(x => x.id);
+  // Drei höchste Schätzungen in der Reihenfolge des Modells; Genus (nicht übbar) und unter 3 Aufgaben nicht
+  const expect = M.topics.filter(x => !['genus', 'subjuntivo'].includes(x.id) && x.n >= 3).slice(0, 3).map(x => x.id);
   assert.deepEqual(ids, expect);
   assert.deepEqual(ids, ['perfecto', 'prep', 'condicional']);
-  // Knapp über dem Schnitt reicht nicht: mit 3 von 10 ist Perfecto keine Fehlerquelle
-  run(`DB.tlog[today()].es['p:perfecto'] = [10, 3]`);
-  assert.ok(!run(`weakTopics('es').map(x => x.id)`).includes('perfecto'));
-  run(`DB.tlog[today()].es['p:perfecto'] = [20, 9]`);
-  const html = run(`weakHtml('es')`);
-  assert.match(text(html), /^Fehlerquellen /, 'derselbe Name wie auf Fortschritt');
-  assert.equal((html.match(/class="mstrip"/g) || []).length, ids.length);
-  assert.match(html, /<p class="legend below"><span class="mkey">/);
-  // Unter 8 Fehlern in der Sprache sagt die Liste noch nichts
-  run(`DB.tlog[today()].es['t:gap'] = [196, 7]`);
+  const html = run(`weakHtml('es')`), clear = run(`[...clearSet('es')]`);
+  assert.match(text(html), /^Höchste Fehlerquoten /);
+  assert.equal((html.match(/class="mstrip"/g) || []).length, 3);
+  assert.equal((html.match(/class="mclear"/g) || []).length, ids.filter(i => clear.includes(i)).length);
+  // Legende innen unter den Zeilen
+  assert.match(html, /<p class="legend inrows"><span class="mkey">.*<\/p><\/div>$/);
+  // Auch wenig Fehler (unter 8) oder alle gleich: die Liste steht trotzdem, ohne Markierung
+  run(`DB.clear = {}; DB.tlog = { [today()]: { es: { 'p:condicional':[30, 3], 'p:prep':[30, 3], 'p:perfecto':[30, 3], 'p:porpara':[30, 3], 't:gap':[120, 7] } } };`);
+  assert.equal(run(`weakTopics('es').length`), 3);
+  assert.doesNotMatch(run(`weakHtml('es')`), /mclear/);
+  // Rechnet das Modell nicht (weniger als 3 Themen mit Daten), bleibt die Liste weg
+  run(`DB.tlog = { [today()]: { es: { 'p:condicional':[30, 9], 'p:prep':[30, 3] } } };`);
   assert.deepEqual(run(`weakTopics('es')`), []);
-  assert.equal(run(`weakHtml('es')`), '');
 });
 
 // Runde 2 (24.73): eine Zahl je Sache, Urteile nur mit genug Daten
@@ -204,4 +207,50 @@ test('Schwerpunkt der Woche: auf „Heute“ als Begriff erklärt; „Alle Begri
   assert.ok(app, 'Gruppe der App-Begriffe fehlt');
   for (const k of run(`TERMS.filter(t => t.app).map(t => t.k)`)) assert.match(app, new RegExp(`data-k="${k}"`), k);
   assert.doesNotMatch(list.split('Begriffe der App')[0], /data-k="schaetzung"/);
+});
+
+// Runde 2b (24.74): Fehlerquoten zeigen, nur bei „klar über Schnitt“ handeln; Karte „Fehler“
+test('Karte „Fehler“: Reiter mit eigener Schwelle, Legende unter der Grafik, Uhrzeiten führen zur Übung, Übungsart mit gleicher Skala', () => {
+  run(`DB = freshDB(); DB.st = {}; DB.clear = {}; S.errTab = null; S.lang = 'sv';
+    DB.tlog = { [today()]: { sv: { 'p:species':[20, 9], 'p:bisats':[30, 4], 'p:inversion':[30, 3], 'p:zeit':[20, 4], 't:gap':[60, 5], 't:free':[20, 2] } } };`);
+  let html = run(`errorSourcesHtml('sv')`);
+  // Thema ist vorgewählt, obwohl es unter 8 Fehlern in 30 Tagen sind (7): Das Modell rechnet
+  assert.match(html, /<h2 class="grp">Fehler<\/h2>/);
+  assert.ok(html.includes('aria-checked="true" data-a="errtab" data-t="p"'));
+  const legendAt = html.indexOf('<span class="mkey">'), axisAt = html.indexOf('class="maxis"');
+  assert.ok(axisAt > 0 && legendAt > axisAt, 'Legende unter Streifen und Achse');
+  assert.match(text(html), /Tipp auf ein Thema für Regel, Beispiele und Zahlen\.$/);
+  assert.match(html, /<button type="button" data-a="form" data-g="time_sv" class="mrow[^"]*" aria-label="Uhrzeiten: geschätzt/);
+  const clear = run(`[...clearSet('sv')]`);
+  assert.equal((html.match(/class="mclear"/g) || []).length, clear.length);
+  // Übungsart und Fehlerart brauchen weiter 8 Fehler
+  run(`S.errTab = 't'`);
+  assert.match(text(run(`errorSourcesHtml('sv')`)), /7 Fehler bei \d+ Aufgaben\. Die Auswertung erscheint ab 8 Fehlern in 30 Tagen\./);
+  run(`DB.tlog[today()].sv['t:gap'] = [60, 12]`);
+  html = run(`errorSourcesHtml('sv')`);
+  // höchste Quote 20 % → Skala bis 50 % wie beim Thema: 20 % füllt 40 % der Breite, mit Achse
+  assert.match(html, /Lücke füllen.*?<i style="width:max\(3px, 40%\)"><\/i>/);
+  assert.match(html, /class="maxis"/);
+  run(`S.errTab = null`);
+});
+
+test('Sprach-Tab: Minuten der letzten 14 Tage wie im Überblick; Lernminuten erklären den gestrichelten Pausetag', () => {
+  run(`(() => { DB = freshDB(); DB.st = {}; const t = today(); for (let k = 0; k < 20; k++) if (k !== 3) DB.log[addDays(t, -k)] = { sv:{ n:10, secs:600 } }; DB.done = {}; for (let k = 0; k < 20; k++) if (k !== 3) DB.done[addDays(t, -k)] = true;
+    BANK.sv.slice(0, 3).forEach(i => { DB.st[i.id] = { ok:1, bad:0, alts:[], s:2, d:5, ivl:2, last:t, due:addDays(t, 2), reps:1 }; }); S.view = 'progress'; S.ptab = 'sv'; S.lang = 'sv'; })()`);
+  const p = text(run('viewProgress()'));
+  assert.match(p, /\b130 Minuten, letzte 14 Tage/);
+  assert.doesNotMatch(p, /letzte 7 Tage/);
+  const free = run(`streakData().free.has(addDays(today(), -3))`), m = text(run('minutesHtml()'));
+  if (free) assert.match(m, /Pausetag/); else assert.doesNotMatch(m, /Pausetag/);
+});
+
+test('Erklärung „Schätzung“: klar über Schnitt (90/60), Unterschied zu „Behalten“, Schnitt der Themen; kein „Fehlerquelle“ in den Texten', () => {
+  const t = run(`TERMS.find(x => x.k === 'schaetzung').app[0]`);
+  assert.match(t, /„Klar über Schnitt“ heißt: mit mindestens 90 % Wahrscheinlichkeit über deinem Schnitt; die Markierung bleibt, bis es unter 60 % fällt/);
+  assert.match(t, /„Behalten“ zählt nur Wiederholungen/);
+  assert.match(t, /jedes Thema zählt gleich, nicht jede Aufgabe/);
+  const all = run(`JSON.stringify(TERMS)`);
+  assert.doesNotMatch(all, /Fehlerquelle/);
+  run(`DB = freshDB(); DB.settings.niveau = 'fort'; S.view = 'settings'`);
+  assert.match(text(run('viewSettings()')), /Einfache nur in Themen klar über deinem Schnitt\./);
 });

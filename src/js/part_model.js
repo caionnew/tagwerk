@@ -15,10 +15,30 @@
 // ohne Änderung aber 3 bis 10 % Fehlalarme (am meisten beim Schwerpunkt). Fortschritt zeigt die Schätzung selbst, gesicherte
 // Verbesserungen die Themen-Etappen (part_stats.js). Rechnung in docs/RESEARCH.md.
 // Schwerpunkt der Woche: Thompson-Sampling, je Thema ein θ aus der Posterior gezogen, mit der Woche als festem Startwert.
-const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3, WEAK_P:0.75 };
-// Fehlerquelle: ein Thema, das mit mindestens 75 % Wahrscheinlichkeit über deinem Schnitt liegt. Eine Definition für Heute,
-// „Als Nächstes“, „Thema üben“ und die Grundlagensätze bei „Fortgeschritten“ (bis 24.72: vier verschiedene Regeln).
-const isWeak = x => !!x && x.n >= MODEL.MIN_N && x.pAbove >= MODEL.WEAK_P;
+const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3, CLEAR_IN:0.9, CLEAR_OUT:0.6 };
+// Anzeigen und Handeln getrennt (seit 24.74): Angezeigt werden immer die höchsten Schätzungen (Heute 3, „Thema üben“ 3, Sprach-Tab 6),
+// auch wenn alle Themen gleich liegen. Gehandelt wird nur bei „klar über Schnitt“: Grundlagensätze bei „Fortgeschritten“,
+// Tatoeba-Nachschub dort und „Als Nächstes“. Bis 24.73 hieß beides „Fehlerquelle“ mit P(θ > μ) ≥ 75 %, ohne Gedächtnis: Die Liste
+// wechselte im Dauerbetrieb etwa 15-mal im Monat, ein Thema fiel allein durchs Vergessen heraus (tools/fehlerquoten-schwelle.js).
+// „Klar über Schnitt“ mit Hysterese: rein ab P(θ > μ) ≥ 90 %, raus erst unter 60 %. In der Simulation mit deinem Volumen fast so
+// viele klar schwere Themen erkannt wie mit 75 % (48 gegen 50 %), ein Fünftel der Fehlalarme, 1,7 statt 15 Wechsel im Monat;
+// dafür kommt eine neue Schwäche bei 1,2 Aufgaben am Tag im Median erst nach 27 statt 12 Tagen dazu.
+// Gedächtnis im Speicherstand: DB.clear[lang] = { day, prev, cur }; prev ist der Stand vom letzten früheren Tag, cur der von heute.
+// Fehlt das Feld (ältere Stände), zählt nur die Schwelle zum Hereinkommen.
+function clearSet(lang){
+  const M = topicModel(lang), t = today(); DB.clear = DB.clear || {};
+  const s = DB.clear[lang], base = new Set(s ? (s.day === t ? s.prev : s.cur) || [] : []);
+  const cur = M.topics.filter(x => x.n >= MODEL.MIN_N && (x.pAbove >= MODEL.CLEAR_IN || (base.has(x.id) && x.pAbove >= MODEL.CLEAR_OUT))).map(x => x.id);
+  if (!s || s.day !== t || (s.cur || []).join() !== cur.join()) DB.clear[lang] = { day:t, prev:[...base], cur };
+  return new Set(cur);
+}
+// Die höchsten Schätzungen unter den Themen, die sich üben lassen (topicIds), ab 3 gewichteten Aufgaben; für Heute und „Thema üben“.
+// Erst, wenn das Modell gerechnet hat (mindestens 3 Themen mit Daten), sonst stünde dort nur der gepoolte Schnitt.
+function topRates(lang, k){
+  const M = topicModel(lang); if (!M.fitted) return [];
+  const ids = new Set(topicIds(lang)), clear = clearSet(lang);
+  return M.topics.filter(x => ids.has(x.id) && x.n >= MODEL.MIN_N).slice(0, k).map(x => Object.assign({ label:trapMeta(lang, x.id).label, clear:clear.has(x.id) }, x));
+}
 
 // Logarithmus der Gammafunktion (Lanczos, g = 7)
 const LANCZOS = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];

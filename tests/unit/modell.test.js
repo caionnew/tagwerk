@@ -81,12 +81,29 @@ test('Schwerpunkt der Woche: Themen mit Daten per Thompson-Sampling, danach die 
   assert.equal(run(`focusTrap('sv')`), ft, 'innerhalb der Woche stabil');
 });
 
-test('Grundlagensätze bei „Fortgeschritten“: in den Fehlerquellen (mit mindestens 75 % über dem Schnitt)', () => {
+test('Klar über Schnitt mit Hysterese: rein ab 90 %, raus unter 60 %, Stand vom Vortag im Speicherstand; Grundlagensätze nur dort', () => {
   run(SYN);
-  const weak = run(`[...weakTraps('sv')]`).sort(), M = run(`topicModel('sv')`);
-  assert.deepEqual(weak, M.topics.filter(x => x.n >= 3 && x.pAbove >= 0.75).map(x => x.id).sort());
-  // species: geschätzt 43 %, P(über dem Schnitt) 77 %; bisats 31 % mit nur 49 % ist knapp über dem Schnitt, aber keine Fehlerquelle
-  assert.deepEqual(weak, ['species']);
+  const M = run(`topicModel('sv')`), p = id => M.topics.find(x => x.id === id).pAbove;
+  // species: P(über dem Schnitt) 77 %, bisats 49 %; ohne gespeicherten Stand zählt nur die Schwelle zum Hereinkommen
+  assert.ok(p('species') > 0.6 && p('species') < 0.9 && p('bisats') < 0.6, JSON.stringify(M.topics.map(x => [x.id, x.pAbove])));
+  run(`delete DB.clear`);
+  assert.deepEqual(run(`[...weakTraps('sv')]`), []);
+  assert.deepEqual(run(`DB.clear.sv`), { day:run('today()'), prev:[], cur:[] }, 'Stand von heute gespeichert');
+  // Gestern klar über Schnitt: bleibt, solange P ≥ 60 %; bisats (49 %) fällt heraus
+  run(`DB.clear = { sv:{ day:addDays(today(), -1), prev:[], cur:['species', 'bisats'] } }`);
+  assert.deepEqual(run(`[...clearSet('sv')]`), ['species']);
+  assert.deepEqual(run(`DB.clear.sv`), { day:run('today()'), prev:['species', 'bisats'], cur:['species'] });
+  assert.deepEqual(run(`[...weakTraps('sv')]`), ['species'], 'Grundlagensätze nur in Themen klar über Schnitt');
+  // Am selben Tag gilt weiter der Stand von gestern (prev), nicht der eben gerechnete: kein Hin und Her innerhalb eines Tages
+  run(`DB.clear.sv.cur = []`);
+  assert.deepEqual(run(`[...clearSet('sv')]`), ['species']);
+  // Älterer Speicherstand ohne Feld: funktioniert, nur ohne Gedächtnis
+  run(`DB.clear = undefined`);
+  assert.deepEqual(run(`[...clearSet('sv')]`), []);
+  // Ab 90 % kommt ein Thema auch ohne Vortag dazu
+  run(`DB.clear = {}; DB.tlog[today()].sv['p:species'] = [20, 14];`);
+  assert.ok(run(`modelTopic('sv', 'species').pAbove`) >= 0.9);
+  assert.deepEqual(run(`[...clearSet('sv')]`), ['species']);
 });
 
 test('Themenblatt: Schätzung mit Bereich, Abstand zum Schnitt, rohe Zahlen der letzten 30 Tage', () => {

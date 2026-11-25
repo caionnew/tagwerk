@@ -387,5 +387,5 @@ function topicGridHtml(lang){
     const d = ago && ago.t ? mat - (ago.t[tr.id] || 0) : null;
     return `<button type="button" class="tg${seen ? '' : ' tg-new'}" data-a="topic" data-t="${tr.id}"><span class="tg-l">${esc(keepHyph(tr.label))}</span><span class="tg-b" aria-hidden="true"><span style="width:${Math.round(seen / items.length * 100)}%" class="tg-seen"></span><span style="width:${Math.round(mat / items.length * 100)}%" class="tg-mat"></span></span><span class="tg-n">${seen ? `${seen} geübt · ${mat} gefestigt` : `${items.length} Sätze, neu`}${d ? ` <span class="tg-d">+${d}</span>` : ''}</span></button>`;
   }).join('');
-  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend below"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Tipp auf ein Thema für Regel und Beispiele.</p>`;
+  return `<h2 class="grp">Themen</h2><div class="tgrid">${tiles}</div><p class="legend below"><span class="sq tg-mat-sq"></span>gefestigt <span class="sq tg-seen-sq"></span>geübt${ago && ago.t ? ' · grüne Zahl: mehr gefestigt als vor 30 Tagen' : ''}. Tipp auf ein Thema für Regel, Beispiele und Zahlen.</p>`;
 }

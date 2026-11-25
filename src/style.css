@@ -89,10 +89,13 @@ label.row{ cursor:pointer; }
 .row.armed{ background:var(--bad-soft); }
 .bars .bar{ flex:none; width:28%; height:7px; border-radius:var(--r-mark); background:var(--line); overflow:hidden; }
 .bars .bar span{ display:block; height:100%; background:var(--accent); border-radius:var(--r-mark); }
-/* Fehlerquellen auf Heute: Name und Schätzung oben, Streifen darunter (wie im Sprach-Tab) */
+/* Fehlerquoten auf Heute: Name und Schätzung oben, Streifen darunter (wie im Sprach-Tab) */
 .row.mrowh .mtop .rt{ min-width:0; }
 .row.mrowh .mstrip{ margin-top:8px; }
-/* Erzeugte Themen in „Thema üben“: Anteil richtig, grün statt Sprachfarbe, damit er nicht wie Fortschritt aussieht */
+/* Legende innen unter den Zeilen (Heute, „Höchste Fehlerquoten“), wie in den Karten des Fortschritts */
+.rows .legend.inrows{ margin:0; padding:8px 16px 10px; border-top:1px solid var(--line); }
+/* „Klar über Schnitt“: rot und fett unter dem Namen (Heute, Karte „Fehler“) bzw. vor dem Text („Thema üben“) */
+.mclear{ color:var(--bad); font-weight:var(--fw-semibold); }
 .lead-s.grp-lead{ margin:-4px 4px 10px; font-size:var(--fs-4); }
 .seg2, .seg3{ display:flex; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:4px; margin:0 0 12px; }
 .seg2 button, .seg3 button{ flex:1; border:0; background:none; border-radius:var(--r-s); padding:9px 6px; font-weight:var(--fw-semibold); font-size:var(--fs-5); color:var(--muted); }
@@ -611,16 +614,12 @@ button.row[disabled]::after{ display:none; }
 .legend.elead{ margin:0 0 2px; }
 .errseg button{ padding:5px 9px; }
 .erows{ display:grid; gap:4px; }
-.erow{ display:grid; grid-template-columns:minmax(0, 1fr) 80px 44px; align-items:center; gap:10px; padding:7px 0; background:none; border:0; border-bottom:1px solid var(--line); color:var(--ink); text-align:left; font:inherit; width:100%; }
-.erow:last-child{ border-bottom:0; }
-button.erow:active{ background:var(--accent-soft); }
-.el{ font-size:var(--fs-4); font-weight:var(--fw-semibold); display:flex; flex-direction:column; }
-/* Fehlerquellen: Name und Zahl oben, Grafik darunter über die volle Breite */
+/* Karte „Fehler“: Name und Zahl oben, Grafik darunter über die volle Breite; im Reiter „Sätze“ Satz, Übersetzung, Thema */
 .mrow{ display:block; width:100%; padding:10px 0 11px; border:0; border-bottom:1px solid var(--line); background:none; color:var(--ink); text-align:left; font:inherit; }
 .mrow.mlast{ border-bottom:0; }
 button.mrow:active{ background:var(--accent-soft); }
 .mtop{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
-.mname{ min-width:0; font-size:var(--fs-4); font-weight:var(--fw-semibold); }
+.mname{ flex:1; min-width:0; font-size:var(--fs-4); font-weight:var(--fw-semibold); }
 .msub{ display:block; font-size:var(--fs-3); color:var(--muted); }
 .mright{ display:flex; align-items:baseline; gap:8px; flex:none; }
 .mcount{ font-size:var(--fs-3); color:var(--muted); font-variant-numeric:tabular-nums; }
@@ -649,12 +648,9 @@ button.mrow:active{ background:var(--accent-soft); }
 .mkey .mk-dot{ display:inline-block; }
 .mkey .mk-band{ display:inline-block; width:22px; height:8px; border-radius:var(--r-mark); background:linear-gradient(90deg, color-mix(in srgb, var(--bad) 22%, transparent) 0 25%, color-mix(in srgb, var(--bad) 45%, transparent) 25% 75%, color-mix(in srgb, var(--bad) 22%, transparent) 75%); }
 /* Zahl rechts in den Fehlerquellen (nicht .ev allein: das sind auch die Belegstellen im Lesetext) */
-.erow .ev{ font-size:var(--fs-3); color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
-.srow{ grid-template-columns:minmax(0, 1fr) auto; align-items:start; padding:9px 0; }
-.srow .rt{ font-size:var(--fs-5); }
-.srow .rd{ font-size:var(--fs-4); font-weight:var(--fw-regular); }
-.srow .ev{ padding-top:2px; }
-.stp{ font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--accent-ink); margin-top:4px; }
+.mrow.msent .mname{ font-size:var(--fs-5); }
+.mrow.msent .msub{ font-size:var(--fs-4); margin-top:1px; }
+.mrow.msent .msub.stp{ font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--accent-ink); margin-top:4px; }
 /* Wann du übst */
 .hours{ width:100%; height:auto; display:block; }
 .hours .hb{ fill:color-mix(in srgb, var(--accent) 45%, transparent); }

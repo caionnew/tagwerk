@@ -40,15 +40,17 @@ test('Zeit: Fließtext „5 Std. 7 Min.“, in einer Karte mit Summe in Minuten 
   assert.doesNotMatch(run('wayHtml()'), /\d Min(?!\.)\b/);
 });
 
-test('Ein Name je Sache: Fehlerquellen heute wie auf Fortschritt; Hinweise mit „Tipp auf“, nicht „Antippen für“', () => {
+test('Ein Name je Sache: „Höchste Fehlerquoten“ auf Heute, „Fehler“ im Sprach-Tab, kein „Fehlerquelle“ mehr; Hinweise mit „Tipp auf“', () => {
   const d = base();
-  for (let k = 10; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:600 } }; d.tlog[ds(k)] = { sv:{ 'p:inversion':[10, 3], 'p:tempus':[10, 2], 't:gap':[20, 5] } }; }
+  for (let k = 10; k >= 0; k--) { d.log[ds(k)] = { sv:{ n:20, secs:600 } }; d.tlog[ds(k)] = { sv:{ 'p:inversion':[10, 3], 'p:tempus':[10, 2], 'p:bisats':[10, 1], 't:gap':[30, 6] } }; }
   setDB(d);
   const all = run(`viewHome()`) + run(`(S.ptab = 'sv', viewProgress())`);
   assert.doesNotMatch(all, /Meiste Fehler/);
   assert.doesNotMatch(all, /Antippen für/);
-  // Heute und Fortschritt heißen gleich; die Zeitbasis steht beim jeweiligen Reiter (Vergessen beim Thema, 30 Tage sonst)
-  assert.equal((all.match(/<h2 class="grp">Fehlerquellen<\/h2>/g) || []).length, 2);
+  // Heute zeigt Quoten, keine Behauptung „Quelle“ (seit 24.74); die Karte im Sprach-Tab heißt „Fehler“
+  assert.equal((all.match(/<h2 class="grp">Höchste Fehlerquoten<\/h2>/g) || []).length, 1);
+  assert.equal((all.match(/<h2 class="grp">Fehler<\/h2>/g) || []).length, 1);
+  assert.doesNotMatch(all, /Fehlerquelle/);
 });
 
 test('Blätter: „Schließen“ steht links, vor dem Hauptweg oder dem Verweis', () => {

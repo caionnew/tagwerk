@@ -412,11 +412,11 @@ function dueItems(lang){
   const t = today();
   return BANK[lang].filter(i => { const s = stOf(i.id); return s && s.due <= t; }).sort((a, b) => stOf(a.id).due.localeCompare(stOf(b.id).due));
 }
-// Fehlerquellen (isWeak, part_model.js): Dort kommen auch für Fortgeschrittene die Grundlagen-Sätze. Bis 24.71 rohe Quote
-// der letzten 30 Tage ab 4 Aufgaben; 24.72 Schätzung ab 25 %, die durch das Schrumpfen zum Schnitt fast nie erreicht wurde.
+// Themen klar über deinem Schnitt (clearSet, part_model.js): Dort kommen auch für Fortgeschrittene die Grundlagen-Sätze. Bis 24.71
+// rohe Quote der letzten 30 Tage ab 4 Aufgaben; 24.72 Schätzung ab 25 % (durch das Schrumpfen fast nie erreicht); 24.73 P ≥ 75 %.
 function weakTraps(lang){
   if (typeof topicModel !== 'function') return new Set();
-  return new Set(topicModel(lang).topics.filter(isWeak).map(x => x.id));
+  return clearSet(lang);
 }
 function levelOrder(lang, list, strict){
   const niv = DB.settings.niveau || 'mittel';

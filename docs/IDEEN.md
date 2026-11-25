@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 24. November 2026 (nach 24.73.0)
+Stand: 25. November 2026 (nach 24.74.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -111,10 +111,11 @@ Spanisch:
 
 ## Offen: Rückmeldung von dir
 
-Derzeit nichts.
+- **Themen dreimal (für Runde 3, Analyse vom 25.11.).** Raster „Themen“ im Sprach-Tab (geübt/gefestigt), Reiter „Thema“ der Karte „Fehler“ (Schätzung) und „Thema üben“ (beides). (a) Im Sprach-Tab eine Liste „Themen“ mit Schätzung und gefestigt je Zeile, der Reiter „Thema“ entfällt (B+, größerer Umbau); (b) alles bleibt, aber gleicher Balken und Wortlaut (B). Entscheidung steht aus.
 
 ## Nach echter Nutzung nachstellen
 
+- **„Klar über Schnitt“, Hysterese 90/60 (seit 24.74.0).** Gewählt per Simulation (`tools/fehlerquoten-schwelle.js`) mit dem Volumen vom 24.11. Nach einem halben Jahr prüfen, wie oft die Markierung tatsächlich wechselt und ob sie zu spät kommt (Median 27 Tage bei 1,2 Aufgaben je Thema am Tag).
 - **Fehlermodell, Halbwertszeit 14 Tage (seit 24.72.0).** Gewählt am Volumen im Backup vom 24.11. (rund 1,2 Aufgaben je Thema und Tag). Ab etwa Mai 2027, mit einem halben Jahr Daten, über die Vorhersagegüte für den nächsten Tag wählen: je Kandidat (7, 10, 14, 21, 30 Tage) die mittlere log-Wahrscheinlichkeit der Antworten eines Tages unter dem Modell aus den Tagen davor. Braucht ein Werkzeug in `tools/`, das ein Backup liest.
 - **Nachsprechen, Schwellen (seit 24.26.0).** Pause ab 0,35 s, Stopp nach 1,2 s Stille, Tempo-Urteil bei 0,8 bis 1,25 des Originals. Begründete Startwerte, nur mit vorgetäuschtem Mikrofon getestet. Nachstellen, wenn die Aufnahme am Handy zu früh stoppt oder Stockungen falsch markiert.
 - **Tempo bei Tatoeba-Aufnahmen.** Das genaue Urteil gibt es nur, wenn der Tatoeba-Server das Auslesen der Datei erlaubt (CORS). Ungetestet; sonst steht dort „ca.“ ohne Urteil.
@@ -135,6 +136,7 @@ Derzeit nichts.
   - **Hierarchisches Modell für die Änderung (C+):** log-Odds-Änderung je Thema ~ N(0, τ²), τ empirisch-bayessch; richtig gegen Fehlalarme, würde bei diesen Daten aber fast nie etwas zeigen.
   - Wieder ansehen, wenn je Thema 5 und mehr Aufgaben am Tag üblich sind.
 - **Schreiben: grüner Pfeil erst ab 3 gegen 3 Texte (C+, geprüft am 24.11.).** Heute reicht +0,05 im Mittel aus 1 bis 3 Texten; Wörter pro Satz und LIX hängen stark vom Thema des Textes ab. Zurückgestellt, weil der Vergleich als „anfangs … jetzt“ beschriftet ist und keine Wahrscheinlichkeit behauptet.
+- **Weitere Punkte der Analyse vom 25.11. (zurückgestellt):** „N gefestigte Sätze“ oben zählt verankerte mit, „Stand der Sätze“ getrennt; weicht ab dem ersten verankerten Satz ab (B−). „neue Sätze gezielt zu typischen Fehlern“ auf Heute liest sich neben den Fehlerquoten wie „deine Fehler“ (C+). Absolute Grenze für Grundlagensätze, wenn alle Themen schwer sind (C+, eher ein Fall fürs Niveau).
 - **README-Bilder neu aufnehmen (A−, für Runde 3 vorgemerkt).** Die Bilder stammen aus 24.4.0 und zeigen noch „Schwächste Themen“; neu nach dem Farbschema, damit es nur eine Aufnahme braucht.
 - **Themen-Etappen sequenziell statt in Blöcken (C+, geprüft am 24.11.).** Ein Test mit E-Werten (anytime-valid, Ville-Ungleichung) dürfte nach jeder Antwort prüfen, ohne die Fehlalarme zu erhöhen. Braucht ein neues Speicherfeld je Thema und neue Abstimmung; der Gewinn ist begrenzt, weil schon ein idealer Einzeltest für 20 → 10 % rund 310 Aufgaben braucht (bei 1,2 am Tag 260 Tage). Die Regel bleibt, `tools/themen-etappen.js` rechnet jetzt mit echtem Volumen.
 - **Pfeil in den antippbaren Zeilen der Fehlerquellen im Sprach-Tab (C+, geprüft am 24.11.).** Auf Heute haben die Zeilen einen, im Reiter „Thema“ nicht. Der Hinweis „Tipp auf ein Thema für die Regel“ steht darunter, und ein Pfeil nähme der ohnehin schmalen Namensspalte 12 px.

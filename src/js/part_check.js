@@ -29,7 +29,9 @@ function equiv(t, lang){
 const OWN_WORDS = { sv:[
   ['\\bjobb(?=(?:a|ar|ade|at)\\b)', '\\barbet(?:a|ar|ade|at)\\b', 'arbet'], ['\\barbet(?=(?:a|ar|ade|at)\\b)', '\\bjobb(?:a|ar|ade|at)\\b', 'jobb'],
   ['\\bmig\\b', '\\bmej\\b', 'mej'], ['\\bdig\\b', '\\bdej\\b', 'dej'], ['\\bsig\\b', '\\bsej\\b', 'sej'],
-  ['\\bmejl(?=(?:et|en|a|ar|ade|at)?\\b)', '\\bmail', 'mail']
+  ['\\bmejl(?=(?:et|en|a|ar|ade|at)?\\b)', '\\bmail', 'mail'],
+  // „Kleider“ heißt auch Kleidung: Wer kläder schreibt, sieht die Lösung mit kläder (de billiga kläderna)
+  ['\\bklänningar(?=(?:na)?\\b)', '\\bkläder', 'kläder']
 ] };
 function ownWords(lang, input, text){
   let out = String(text);

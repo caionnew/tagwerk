@@ -75,20 +75,35 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen klappt deine Antworten 
   // Punkte bündig rechts, auch in Zeilen ohne Regel (ohne Pfeil)
   const rights = await page.$$eval('.trow .tdots', els => els.map(e => Math.round(e.getBoundingClientRect().right)));
   expect(new Set(rights).size).toBe(1);
-  // Antippen klappt auf: deine Antwort gestrichen, die Lösung, ins Bild geholt über den Knöpfen; nochmal tippen klappt zu
+  // Antippen klappt auf: deine Antwort, die Lösung, ins Bild geholt über den Knöpfen; nochmal tippen klappt zu
   const first = page.locator('button.trow').first();
   await first.click();
   await expect(first).toHaveAttribute('aria-expanded', 'true');
   const det = page.locator('.tdet');
   await expect(det).toHaveCount(1);
-  // Getippte Sätze gestrichen, Lücken und Auswahl in Anführungszeichen (welche Aufgabe vorn steht, ist zufällig)
-  await expect(det.locator('.rk-you').first()).toHaveText(/^Du: (zzz qqq|„zzz qqq“)$/);
-  for (const el of await det.locator('.rk-you').all()) if (/^Du: zzz qqq$/.test(await el.textContent())) await expect(el.locator('.w-extra').first()).toHaveText('zzz');
+  await expect(det.locator('.rk-you').first()).not.toBeEmpty();
   await expect(det.locator('.rk-s').first()).not.toBeEmpty();
   // Ganz im Bild über den Knöpfen, oder (wenn länger als der Bildschirm) oben am Bildrand
   await expect.poll(() => page.evaluate(() => { const d = document.querySelector('.tdet').getBoundingClientRect(), bar = document.querySelector('.actionbar').getBoundingClientRect(); return d.top >= 0 && (d.bottom <= bar.top || d.top <= 130); })).toBe(true);
   await first.click();
   await expect(page.locator('.tdet')).toHaveCount(0);
+  // Deine Antwort je Übungsart, in allen Themen: Welche Aufgaben die Runde bringt und welche vorn steht, ist zufällig (am 25.11.
+  // stand in jeder fünften Runde eine Wortkästchen-Aufgabe vorn, und der Test prüfte nur die erste). Getippt „zzz qqq“ ohne
+  // Anführungszeichen, das überzählige Wort gestrichen; Lücke und Auswahl in Anführungszeichen; Wortkästchen als gelegte
+  // Reihenfolge; aufgegeben „Weiß ich nicht“.
+  let typed = 0;
+  for (let i = 0; i < await rows.count(); i++) {
+    await rows.nth(i).click();
+    await expect(rows.nth(i)).toHaveAttribute('aria-expanded', 'true');
+    for (const el of await page.locator('.tdet .rk-you').all()) {
+      const t = await el.textContent();
+      if (!t.includes('zzz')) { expect(t).toMatch(/^(Weiß ich nicht|Du: „[^„“]+“|Du: [^„“]+)$/); continue; }
+      typed++;
+      expect(t).toMatch(/^Du: (zzz qqq|„zzz qqq“)$/);
+      if (!t.includes('„')) await expect(el.locator('.w-extra').first()).toHaveText('zzz');
+    }
+  }
+  expect(typed).toBeGreaterThan(0);
   // Wieder aufgeklappt: darin die Regel mit „10 Aufgaben üben“
   await page.locator('button.trow').first().click();
   await page.locator('.tdet [data-a=topic]').click();

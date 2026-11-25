@@ -30,6 +30,29 @@ test('Fall aus dem Screenshot: „arbeta“ statt „arbetar“ — Lösung in d
   assert.match(a.res.why, /^Die Stellung von „inte“ stimmt\. Aber „arbeta“ ist die Grundform/);
 });
 
+test('Fall aus dem Screenshot vom 25.11.: „Kleider“ heißt auch Kleidung; kläderna gilt, bei „kläder“ fehlt die Endung', () => {
+  // Generator mit festgelegtem Zufall: Kleid, billig, Aufgabenart (0 indef, 1 def, 3 pl, 4 defpl, 6 pred, 7 predpl)
+  const kleid = t => run(`(() => { const N = NOUNS.findIndex(n => n[0] === 'Kleid'), A = NOUNS[N][8].indexOf('b'), seq = [(N + 0.5) / NOUNS.length, (A + 0.5) / NOUNS[N][8].length, ${t + 0.5} / 8], orig = Math.random;
+    Math.random = () => seq.shift(); try { return genNP(); } finally { Math.random = orig; } })()`);
+  const d = kleid(4);
+  assert.equal(d.prompt, 'die billigen Kleider');
+  assert.deepEqual(d.answers, ['de billiga klänningarna', 'de billiga kläderna']);
+  assert.match(d.note, /de \+ Adjektiv auf -a \+ klänningarna\. „Kleider“ als Kleidung: kläderna\.$/);
+  const ex = { type:'gen', gen:'np', data:d };
+  assert.equal(answer(ex, 'de billiga kläderna').result, 'ok');
+  // Bisher: „klänningarna“ als Lösung und „kläder“ ganz gestrichen, als wäre das Wort falsch. Jetzt die Lösung in deinem Wort,
+  // falsch ist nur die fehlende bestimmte Form
+  const a = answer(ex, 'de billiga kläder');
+  assert.equal(a.result, 'bad');
+  assert.equal(a.best, 'de billiga kläderna');
+  assert.match(text(a.fb), /^Falsch de billiga kläderna „kläder“ ist die Grundform \(Kleider, Kleidung\), hier braucht es „kläderna“/);
+  assert.equal(a.res.best, 'de billiga kläderna');
+  // Die anderen Pluralfälle ebenso; im Singular gibt es nichts Zweites: das Kleid ist klänningen
+  assert.deepEqual(kleid(3).answers, ['billiga klänningar', 'billiga kläder']);
+  assert.deepEqual(kleid(7).answers, ['Klänningarna är billiga.', 'Kläderna är billiga.']);
+  assert.deepEqual([0, 1, 6].map(t => kleid(t).answers), [['en billig klänning'], ['den billiga klänningen'], ['Klänningen är billig.']]);
+});
+
 test('Lösung in deinen Wörtern: nur gleichwertige Wörter, die du benutzt hast', () => {
   assert.equal(run(`ownWords('sv', 'jag arbetade igår', 'Jag jobbade igår.')`), 'Jag arbetade igår.');
   assert.equal(run(`ownWords('sv', 'Arbeta mer', 'Jobba mer!')`), 'Arbeta mer!');
@@ -37,6 +60,9 @@ test('Lösung in deinen Wörtern: nur gleichwertige Wörter, die du benutzt hast
   assert.equal(run(`ownWords('sv', 'jag jobbar', 'Jag jobbar.')`), 'Jag jobbar.');
   assert.equal(run(`ownWords('sv', 'jag har ett arbete', 'Jag har ett jobb.')`), 'Jag har ett jobb.', 'Hauptwort „jobb“ bleibt');
   assert.equal(run(`ownWords('es', 'trabajo', 'Trabajo.')`), 'Trabajo.');
+  assert.equal(run(`ownWords('sv', 'rena kläder', 'rena klänningar')`), 'rena kläder');
+  assert.equal(run(`ownWords('sv', 'kläderna är rena', 'Klänningarna är rena.')`), 'Kläderna är rena.');
+  assert.equal(run(`ownWords('sv', 'de rena klänningar', 'de rena klänningarna')`), 'de rena klänningarna');
 });
 
 test('Formfehler beim Namen: nur zwei Formen desselben Wortes, mit Bedeutung aus dem Wörterbuch', () => {

@@ -834,6 +834,7 @@ anställd|anställd|angestellt; en anställd = ein Mitarbeiter
 skrivbord|skrivbord|Schreibtisch
 systers|syster|der Schwester (Genitiv)
 kläder|kläder|Kleider, Kleidung
+kläderna|kläder|die Kleider, die Kleidung
 städade|städa|räumte auf, putzte (Präteritum)
 själva|själv|selbst (Plural)
 dess|dess|dessen, deren (bei Sachen und Firmen)

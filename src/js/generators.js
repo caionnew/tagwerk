@@ -14,7 +14,8 @@ const REPEAT_DAMP = 0.5;
 const capFirst = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 /* Schwedisch: Adjektiv + Substantiv (en/ett, bestimmte Form, Doppelbestimmung) */
-// [de, deGenus, dePlural, sv, en|ett, bestimmt, Plural, bestimmter Plural, erlaubte Adjektive]
+// [de, deGenus, dePlural, sv, en|ett, bestimmt, Plural, bestimmter Plural, erlaubte Adjektive, Plural auch]
+// „Plural auch“: wo der deutsche Plural noch etwas anderes heißt, [Plural, bestimmter Plural, Bedeutung] (Kleider: auch kläder)
 const NOUNS = [
   ['Haus','n','Häuser','hus','ett','huset','hus','husen','gknastbrwvclmy'],
   ['Auto','n','Autos','bil','en','bilen','bilar','bilarna','gknastbrwvc'],
@@ -37,7 +38,7 @@ const NOUNS = [
   ['Brief','m','Briefe','brev','ett','brevet','brev','breven','nasi'],
   ['Straße','f','Straßen','gata','en','gatan','gator','gatorna','gknascl'],
   ['Problem','n','Probleme','problem','ett','problemet','problem','problemen','gknai'],
-  ['Kleid','n','Kleider','klänning','en','klänningen','klänningar','klänningarna','gknastbrwvc'],
+  ['Kleid','n','Kleider','klänning','en','klänningen','klänningar','klänningarna','gknastbrwvc',['kläder','kläderna','Kleidung']],
   ['Frage','f','Fragen','fråga','en','frågan','frågor','frågorna','gknaui'],
   ['Bild','n','Bilder','bild','en','bilden','bilder','bilderna','gknasti'],
   ['Land','n','Länder','land','ett','landet','länder','länderna','gknasi']
@@ -65,13 +66,15 @@ const DE_ART = { m:['ein','der','er'], f:['eine','die','e'], n:['ein','das','es'
 function svForms(f){ return { base:f[0], t:f[1], a:f[2], defSg:f[3] || f[2], pl:f[4] || f[2] }; }
 function genNP(){
   const N = pick(NOUNS);
-  const [de, g, dePl, sv, art, def, pl, defPl, allowed] = N;
+  const [de, g, dePl, sv, art, def, pl, defPl, allowed, also] = N;
   const key = pick(allowed.split(''));
   const A = ADJS[key];
   const forms = [A[2]].concat(A[3] || []).map(svForms);
   const ett = art === 'ett';
   const type = pick(['indef', 'def', 'def', 'pl', 'defpl', 'defpl', 'pred', 'predpl']);
   const da = DE_ART[g];
+  // Mehrdeutiger deutscher Plural: dieselbe Aufgabe mit dem anderen Wort gilt auch, die Erklärung nennt es
+  const plAlso = (make, form) => (also ? { answers:forms.map(f => make(f, also[0], also[1])), note:` „${dePl}“ als ${also[2]}: ${form(also)}.` } : { answers:[], note:'' });
   let prompt, answers, note;
   switch (type) {
     case 'indef':
@@ -84,25 +87,31 @@ function genNP(){
       answers = forms.map(f => `${ett ? 'det' : 'den'} ${f.defSg} ${def}`);
       note = `Doppelte Bestimmtheit: ${ett ? 'det' : 'den'} + Adjektiv auf -a + bestimmte Form (${def}).`;
       break;
-    case 'pl':
+    case 'pl': {
+      const make = (f, p) => `${f.pl} ${p}`, x = plAlso(make, a => a[0]);
       prompt = `${A[1]}e ${dePl}`;
-      answers = forms.map(f => `${f.pl} ${pl}`);
-      note = `Plural unbestimmt: Adjektiv auf -a, Substantiv im Plural (${pl}).`;
+      answers = forms.map(f => make(f, pl)).concat(x.answers);
+      note = `Plural unbestimmt: Adjektiv auf -a, Substantiv im Plural (${pl}).${x.note}`;
       break;
-    case 'defpl':
+    }
+    case 'defpl': {
+      const make = (f, p, dp) => `de ${f.pl} ${dp}`, x = plAlso(make, a => a[1]);
       prompt = `die ${A[1]}en ${dePl}`;
-      answers = forms.map(f => `de ${f.pl} ${defPl}`);
-      note = `Doppelte Bestimmtheit im Plural: de + Adjektiv auf -a + ${defPl}.`;
+      answers = forms.map(f => make(f, pl, defPl)).concat(x.answers);
+      note = `Doppelte Bestimmtheit im Plural: de + Adjektiv auf -a + ${defPl}.${x.note}`;
       break;
+    }
     case 'pred':
       prompt = `${capFirst(da[1])} ${de} ist ${A[0]}.`;
       answers = forms.map(f => `${capFirst(def)} är ${ett ? f.t : f.base}.`);
       note = `Auch nach „är“ passt sich das Adjektiv an: ${sv} ist ein ${art}-Wort.`;
       break;
-    default:
+    default: {
+      const make = (f, p, dp) => `${capFirst(dp)} är ${f.pl}.`, x = plAlso(make, a => a[1]);
       prompt = `Die ${dePl} sind ${A[0]}.`;
-      answers = forms.map(f => `${capFirst(defPl)} är ${f.pl}.`);
-      note = `Nach „är“ im Plural: Adjektiv auf -a (${forms[0].pl}).`;
+      answers = forms.map(f => make(f, pl, defPl)).concat(x.answers);
+      note = `Nach „är“ im Plural: Adjektiv auf -a (${forms[0].pl}).${x.note}`;
+    }
   }
   return { prompt, answers, note, label:'Übersetze ins Schwedische' };
 }

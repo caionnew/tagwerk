@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.75.2
+**Roter Build behoben (Test, nicht die App). „die billigen Kleider“ gilt auch mit kläderna, bei „kläder“ nennt die Rückmeldung die fehlende Endung.**
+- **Roter Build von 24.75.1:** Der Browser-Test zum Aufklappen am Rundenende prüfte nur die erste Antwort im ersten Thema und erwartete dort eine getippte („zzz qqq“). Welche Aufgaben ein Tagwerk bringt und welche vorn steht, ist zufällig; stand eine Wortkästchen-Aufgabe vorn, lautete die Antwort „Du: inte arbetslösheten har …“, und der Test war rot. Nachgestellt: 8 von 40 Läufen rot, möglich seit 24.69.0. Der Test klappt jetzt jedes Thema auf und prüft jede Antwort nach ihrer Übungsart (getippt, Lücke und Auswahl, Wortkästchen, aufgegeben): 40 von 40 grün. In der App war nichts falsch.
+- **Der Fall aus deinem Screenshot:** Zu „die billigen Kleider“ war deine Antwort „de billiga kläder“ wirklich falsch, nach „de“ braucht auch das Nomen die bestimmte Form. Die Rückmeldung zeigte aber nur „de billiga klänningarna“ und strich „kläder“ ganz, als wäre das Wort falsch. „Kleider“ heißt auch Kleidung, so übersetzt die Satzbank selbst „die Kleider ihrer Schwester“ (sin systers kläder).
+- **Jetzt:** In den Pluralaufgaben zu „Kleider“ gelten klänningar und kläder (billiga kläder, de billiga kläderna, Kläderna är billiga), die Erklärung sagt „„Kleider“ als Kleidung: kläderna.“ Wer kläder schreibt, sieht die Lösung in seinem Wort: „de billiga kläderna“ und dazu „„kläder“ ist die Grundform (Kleider, Kleidung), hier braucht es „kläderna““. Vorher galt „de billiga kläderna“ nur als „fast richtig“ mit „kläderna statt klänningarna“. Im Singular bleibt es bei klänning (Kleid). Alle 66 Fassungen mit Kleid gelesen.
+- Neu im Wörterbuch: kläderna. CONTENT.md nennt das neue zehnte Feld in `NOUNS` (zweite Bedeutung im Plural).
+- Sprachausgabe geprüft: Das Vorlesen ist seit 24.26.0 (16.11.) unverändert. Mit einer Teststimme lesen der Knopf in der Rückmeldung und der am Rundenende den Satz vor (sv-SE, schwedische Stimme gewählt). Was auf dem Handy hakt, ist noch offen (IDEEN.md, „Offen“).
+- IDEEN.md: Rundenende bei Runden mit einem Thema bewertet.
+- Tests: Fall aus dem Screenshot mit festgelegtem Zufall (alle Pluralfälle, Singular unverändert, Lösung in deinem Wort).
+- Speicherstand unverändert.
+
 ## 24.75.1
 **Roter Build von 24.75.0 behoben (Test, nicht die App).**
 - Der Browser-Test zum Bonus „Eigener Satz“ las den Tageszähler zweimal aus dem Speicher. Die App speichert 150 ms nach der letzten Änderung; direkt nach dem Rundenende fehlte dort noch die letzte Aufgabe. Auf GitHub lief der Test schnell genug, dass „vorher“ eine Aufgabe zu wenig zählte (12 erwartet, 13 gefunden). Nachgestellt: Unmittelbar nach dem Rundenende steht im Speicher 11, nach sofortigem Speichern 12. Der Test löst jetzt vor jedem Lesen das Speichern aus, wie es die App beim Schließen tut. In der App ging nichts verloren: Beim Schließen oder Wechseln wird sofort gespeichert.

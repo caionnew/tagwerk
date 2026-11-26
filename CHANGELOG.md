@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.78.2
+**Deine Fragen zur Legende bei „Jetzt klar über Schnitt“, dazu die CI in Firefox wieder grün (zwei Tests, nicht die App).**
+- **Legende:** Bei „Jetzt klar über Schnitt“ fehlte sie nicht aus Versehen. Sie sollte einmal für beide Abschnitte gelten und stand darum nur im letzten, las sich aber, als gehöre sie nur zu „Nicht mehr klar über Schnitt“. Jetzt hat jeder Abschnitt dieselbe Legende.
+- **Wie oft „klar über Schnitt“ dasteht:** Mit beiden Richtungen stand es viermal da, zweimal in den Überschriften und zweimal in der Legende samt Schwellen („ab 90 % Wahrscheinlichkeit darüber, heraus erst unter 60 %“). Jetzt einmal je Abschnitt, in der Überschrift. Die Legende ist wieder die kurze aus der Themenliste („Schätzung, Bereich, Schnitt“, eine Zeile): Die rote Quote steht direkt unter „Jetzt klar über Schnitt“ und braucht keinen eigenen Eintrag. Die Schwellen sind ein Umsetzungsdetail. Wer sie wissen will, findet sie einen Tipp weiter, unter „Schätzung“ in derselben Legende; dort standen sie schon.
+- **Runde mit einem Thema:** Steht „Jetzt klar über deinem Schnitt.“ unter der Überschrift, wiederholt die Legende es nicht.
+- **CI rot in Firefox (24.78.1):**
+  - Der Test „Thema rein und raus“ begann ein neues Tagwerk. Was es an neuen Sätzen und erzeugten Aufgaben dazu bringt, verschiebt den Schnitt mit, gerechnet bis von 26 auf 41 %; dann kam Inversion nicht über 90 %. In Firefox war das so. Jetzt besteht das Tagwerk im Test nur aus je fünf Sätzen beider Themen, als fortgesetztes Tagwerk; die Profilwerte sind so gewählt, dass schon diese Antworten den Wechsel sicher auslösen (Nebensätze 67 → 46 %, Inversion 78 → 98 %).
+  - Der Test „Urteil und ‚wann wieder‘ auf einer Höhe“ (seit 24.77) maß Pille, Text und Knopf in drei Schritten, während die Karte noch 8 px heraufgleitet. In Firefox lag ein Stück Bewegung dazwischen (1,9 statt höchstens 1,5 px); schon die Doku-Änderung vom 25.11. war daran rot, mit demselben Code wie das grüne 24.77.0. Jetzt in einem Schritt, nach dem Einblenden.
+  - In der App war nichts falsch.
+- Doku: ARCHITECTURE.md, IDEEN.md.
+- Tests: zwei Abschnitte mit derselben kurzen Legende, „klar über Schnitt“ einmal je Abschnitt, bei einer Runde mit einem Thema ohne Eintrag in der Legende.
+- Speicherstand unverändert.
+
 ## 24.78.1
 **Deine Punkte zu 24.78.0: je Richtung eine eigene Überschrift, das aufgeklappte Thema überarbeitet (Text, Ausrichtung, Abstände).**
 - **Überschrift:** „Klar über Schnitt“ stand auch über einem Thema, das es nicht mehr ist. Jetzt je Richtung ein Abschnitt, „Jetzt klar über Schnitt“ und „Nicht mehr klar über Schnitt“, beide vor „Themen dieser Runde“. In der Zeile steht dafür nur noch „geschätzte Fehlerquote, ○ vor dem Tagwerk 32 %“ (vorher dazu „jetzt klar über deinem Schnitt;“, zwei Zeilen).

@@ -217,8 +217,9 @@ test('Rundenende: Wechsel bei „klar über Schnitt“ durch die Runde, rein und
   let h = run('topicsHtml(S.run)');
   const P = v => run(`pct(${v})`).replace(/\s/g, ' ');
   const now = run(`topicModel('sv').topics.find(x => x.id === 'species').mean`);
-  // Überschrift nach Richtung (24.78.1), in der Zeile nur Quote und Stand vorher, die Schwellen in der Legende
-  assert.match(text(h), new RegExp(`^Jetzt klar über Schnitt Adjektivendungen & bestimmte Form ${P(now)} geschätzte Fehlerquote, vor dem Tagwerk ${P(est0.species)} Schätzung Bereich Schnitt [\\d\\s]+% % klar über Schnitt: ab 90\\s% Wahrscheinlichkeit darüber, heraus erst unter 60\\s% Themen dieser Runde`));
+  // Überschrift nach Richtung (24.78.1), in der Zeile nur Quote und Stand vorher; die Legende kurz, ohne „klar über Schnitt“:
+  // das sagt die Überschrift, die Schwellen erklärt „Schätzung“ (24.78.2)
+  assert.match(text(h), new RegExp(`^Jetzt klar über Schnitt Adjektivendungen & bestimmte Form ${P(now)} geschätzte Fehlerquote, vor dem Tagwerk ${P(est0.species)} Schätzung Bereich Schnitt [\\d\\s]+% Themen dieser Runde`));
   assert.doesNotMatch(h, /Nicht mehr klar/);
   assert.match(h, /<button type="button" data-a="topic" data-t="species" data-z="1" class="row mrowh"/);
   assert.equal((h.match(/class="mring"/g) || []).length, 1);
@@ -230,14 +231,21 @@ test('Rundenende: Wechsel bei „klar über Schnitt“ durch die Runde, rein und
   app.run(`DB.tlog[today()] = { sv:{ 'p:species':[12, 0], 'p:tempus':[2, 0] } }`);
   daily([tw('species', true), tw('species', true), tw('tempus', true), tw('tempus', false)], `, est0:${JSON.stringify(e1)}, clear0:${JSON.stringify(c1)}`);
   h = run('topicsHtml(S.run)');
-  assert.match(text(h), /^Nicht mehr klar über Schnitt Adjektivendungen & bestimmte Form [\d\s]+% geschätzte Fehlerquote, vor dem Tagwerk [\d\s]+% Schätzung Bereich Schnitt [\d\s]+% % klar über Schnitt: ab 90\s% Wahrscheinlichkeit darüber, heraus erst unter 60\s% Themen dieser Runde/);
+  assert.match(text(h), /^Nicht mehr klar über Schnitt Adjektivendungen & bestimmte Form [\d\s]+% geschätzte Fehlerquote, vor dem Tagwerk [\d\s]+% Schätzung Bereich Schnitt [\d\s]+% Themen dieser Runde/);
   assert.doesNotMatch(h.slice(0, h.indexOf('Themen dieser Runde')), /class="mpct cl"/, 'keine rot hinterlegte Quote');
   assert.doesNotMatch(h, /Jetzt klar/);
-  // Beide Richtungen in einer Runde: zwei Abschnitte, „Jetzt“ zuerst, die Legende einmal im letzten
+  // Beide Richtungen in einer Runde: zwei Abschnitte, „Jetzt“ zuerst, jeder mit derselben kurzen Legende (24.78.2; in 24.78.1 nur
+  // im letzten und mit den Schwellen, das las sich, als gehöre sie nur zu „Nicht mehr klar“)
   const both = run(`(() => { const s = clearChanges; clearChanges = () => [{ id:'species', on:false }, { id:'tempus', on:true }]; try { return topicsHtml(S.run); } finally { clearChanges = s; } })()`);
   assert.match(text(both), /^Jetzt klar über Schnitt Präteritum oder Perfekt .* Nicht mehr klar über Schnitt Adjektivendungen & bestimmte Form .* Themen dieser Runde/);
-  assert.equal((both.match(/class="legend inrows"/g) || []).length, 1);
-  assert.ok(both.indexOf('legend inrows') > both.indexOf('Nicht mehr klar'), 'Legende im letzten Abschnitt');
+  const keys = [...both.matchAll(/<p class="legend inrows">(.*?)<\/p>/g)].map(m => m[1]);
+  assert.equal(keys.length, 2);
+  assert.equal(keys[0], keys[1], 'dieselbe Legende in beiden');
+  assert.doesNotMatch(keys[0], /klar über Schnitt/);
+  const v2 = both.slice(0, both.indexOf('Themen dieser Runde'));
+  assert.equal((text(v2).match(/klar über Schnitt/g) || []).length, 2, 'einmal je Abschnitt, in der Überschrift');
+  const iOff = both.indexOf('Nicht mehr klar');
+  assert.ok(both.indexOf('legend inrows') < iOff && both.lastIndexOf('legend inrows') > iOff, 'je eine in jedem Abschnitt');
   // Fortgesetztes Tagwerk (ohne Stand beim Start): Vergleich mit dem Stand vom letzten früheren Tag, ohne Ring
   daily([tw('species', true), tw('tempus', true)]);
   h = run('topicsHtml(S.run)');

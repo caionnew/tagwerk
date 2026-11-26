@@ -1,5 +1,5 @@
 // Rundenende: Ergebnisleiste, Fehler je Thema ohne sofortige Übungsrunde, passende Knöpfe. Tagesbilanz auf „Heute“.
-const { test, expect, APP, seed, richDB, klarDB, topicItems, fixedRandom, answerOnly, answerWrong, stored } = require('./helpers');
+const { test, expect, APP, seed, richDB, klarRunDB, topicItems, answerOnly, answerWrong, stored } = require('./helpers');
 test('Kurze Runde: Leiste je Aufgabe, Fehler beim Thema, keine sofortige Übungsrunde', async ({ page }) => {
   await seed(page, richDB('sv'));
   await page.goto(APP);
@@ -125,9 +125,9 @@ test('Runde mit einem Thema: Schätzung vor und nach der Runde, falsche Aufgaben
   const row = page.locator('.donebox .mrowh[data-z]');
   await expect(row.locator('.msub')).toHaveText(/^geschätzte Fehlerquote, vor der Runde \d+\s%$/);
   // Adjektivendungen lagen vorher bei 77 % über dem Schnitt; zehn falsche machen sie „klar über Schnitt“: unter der Überschrift
-  // genannt, die Schwellen in der Legende (24.78.1)
+  // genannt (24.78.1); die Legende wiederholt es nicht (24.78.2)
   await expect(page.locator('.donebox h2.grp:text-is("Thema dieser Runde") + .grp-lead')).toHaveText('Jetzt klar über deinem Schnitt.');
-  await expect(page.locator('.donebox .rows .legend.inrows')).toContainText(/klar über Schnitt: ab 90\s% Wahrscheinlichkeit darüber, heraus erst unter 60\s%/);
+  await expect(page.locator('.donebox .rows .legend.inrows')).not.toContainText('klar über Schnitt');
   // Ring (vor der Runde) und Punkt (jetzt) auf einer Höhe im Streifen; alles falsch: der Punkt rechts vom Ring
   const [ring, dot] = await page.$$eval('.donebox .mstrip .mring, .donebox .mstrip .mdot', els => els.map(e => e.getBoundingClientRect()));
   expect(Math.abs(ring.top - dot.top)).toBeLessThanOrEqual(1);
@@ -136,12 +136,14 @@ test('Runde mit einem Thema: Schätzung vor und nach der Runde, falsche Aufgaben
   await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
 });
 // 24.78: Wechsel bei „klar über Schnitt“ oben, die Schätzung im aufgeklappten Thema. Gestern Nebensätze klar über dem Schnitt,
-// Inversion knapp darunter; im Tagwerk Nebensätze richtig, alles andere falsch (fester Zufall: welche Aufgaben es bringt)
-test('Tagwerk-Ende: Thema rein und raus bei „klar über Schnitt“, aufgeklapptes Thema mit Schätzung und Stand vor dem Tagwerk', async ({ page }) => {
-  await page.addInitScript(fixedRandom, 20261116);
-  await seed(page, klarDB('sv', 'bisats', 'inversion'));
+// Inversion knapp darunter; ein offenes Tagwerk aus je fünf Sätzen beider Themen, die Nebensätze richtig, Inversion falsch.
+// Bis 24.78.1 begann der Test ein neues Tagwerk: Was es an neuen Sätzen und erzeugten Aufgaben dazu bringt, verschiebt den Schnitt,
+// und in Firefox kam so kein Thema über die Schwelle (CI am 26.11.). Fortgesetzt fehlt der Stand beim Start: kein Ring, verglichen
+// wird mit gestern; Ring und „vor dem Tagwerk“ prüfen die Einheitstests und „Runde mit einem Thema“.
+test('Tagwerk-Ende: Thema rein und raus bei „klar über Schnitt“ (fortgesetztes Tagwerk), aufgeklapptes Thema als Zeile', async ({ page }) => {
+  await seed(page, klarRunDB('sv', 'bisats', 'inversion'));
   await page.goto(APP);
-  await page.click('[data-a=daily]');
+  await page.click('.today [data-a=daily]');
   await answerOnly(page, topicItems('sv', 'bisats'));
   await expect(page.locator('.done-h')).toHaveText('Tagwerk erledigt');
   // Je Richtung eine Überschrift (24.78.1), „Jetzt“ zuerst, beide vor den Themen der Runde
@@ -154,31 +156,25 @@ test('Tagwerk-Ende: Thema rein und raus bei „klar über Schnitt“, aufgeklapp
   await expect(on.locator('.mpct.cl')).toHaveCount(1);
   await expect(off.locator('.rt')).toHaveText('Wortstellung im Nebensatz');
   await expect(off.locator('.mpct.cl')).toHaveCount(0);
-  for (const r of [on, off]) await expect(r.locator('.msub')).toHaveText(/^geschätzte Fehlerquote, vor dem Tagwerk \d+\s%$/);
-  await expect(page.locator('.donebox .rows .mrowh .mring')).toHaveCount(2);
-  // Die Legende einmal, im letzten Abschnitt, mit den Schwellen; das Zeichen auf der ersten Zeile des Texts
-  await expect(page.locator('.donebox .legend.inrows')).toHaveCount(1);
-  await expect(page.locator('.donebox h2.grp:text-is("Nicht mehr klar über Schnitt") + .rows .legend.inrows')).toContainText(/ab 90\s% Wahrscheinlichkeit darüber, heraus erst unter 60\s%/);
-  const [pill, txt] = await page.locator('.mkrule').evaluate(e => { const p = e.querySelector('.kpill').getBoundingClientRect(), r = document.createRange(); r.selectNodeContents(e.lastChild); const l = r.getClientRects()[0]; return [p.top + p.height / 2, l.top + l.height / 2]; });
-  expect(Math.abs(pill - txt)).toBeLessThan(4);
+  for (const r of [on, off]) await expect(r.locator('.msub')).toHaveText('geschätzte Fehlerquote');
+  await expect(page.locator('.donebox .mring')).toHaveCount(0);
+  // In jedem Abschnitt dieselbe kurze Legende (24.78.2): „klar über Schnitt“ steht nur in den Überschriften
+  const keys = page.locator('.donebox .legend.inrows');
+  await expect(keys).toHaveCount(2);
+  expect(await keys.nth(0).textContent()).toBe(await keys.nth(1).textContent());
+  await expect(keys.nth(0)).toHaveText(/^Schätzung\s*Bereich\s*Schnitt \d+\s%$/);
   // Tipp öffnet „Deine Zahlen“
   await off.click();
   await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
   await page.click('.pop [data-a=popclose]');
-  // Aufgeklappt: Schätzung über den Aufgaben, gebaut wie eine Zeile; Ring und Punkt auf einer Höhe; die Pfeilspitze unter der des Themas
+  // Aufgeklappt: Schätzung über den Aufgaben, gebaut wie eine Zeile; die Pfeilspitze unter der des Themas
   await page.click('.trow[data-k=inversion]');
   const est = page.locator('.tdet .tdest');
   await expect(est).toHaveCount(1);
   await expect(est.locator('.mname')).toHaveText('Geschätzte Fehlerquote');
-  await expect(est.locator('.msub')).toHaveText(/^vor dem Tagwerk \d+\s%$/);
+  await expect(est.locator('.msub')).toHaveCount(0);
   const [c1, c2] = await page.$$eval('.trow.open, .tdest', els => els.map(e => { const s = getComputedStyle(e, '::after'), r = e.getBoundingClientRect(); return r.right - parseFloat(getComputedStyle(e).paddingRight) - parseFloat(s.marginRight || 0); }));
   expect(Math.abs(c1 - c2)).toBeLessThan(1);
-  // Ring am Zeilenanfang bündig mit dem Text darüber
-  const [lab, ringL] = await page.$$eval('.tdest .mname, .tdest .msub .mk-ring', els => els.map(e => e.getBoundingClientRect().left));
-  expect(Math.abs(lab - ringL)).toBeLessThan(1);
-  const [ring, dot] = await page.$$eval('.tdest .mring, .tdest .mdot', els => els.map(e => e.getBoundingClientRect()));
-  expect(Math.abs(ring.top - dot.top)).toBeLessThanOrEqual(1);
-  expect(dot.left).toBeGreaterThan(ring.left);
   expect(await page.evaluate(() => document.querySelector('.tdest').getBoundingClientRect().bottom <= document.querySelector('.tdet .rk').getBoundingClientRect().top)).toBe(true);
   await expect(page.locator('.tdet .rk-links .link')).toHaveText(['Regel und Beispiele', 'Thema üben']);
   await est.click();

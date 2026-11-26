@@ -54,17 +54,24 @@ function topicItems(lang, trap){
 function klarDB(lang, out, inn){
   const db = richDB(lang), pad = n => String(n).padStart(2, '0'), t = new Date();
   const ds = k => { const d = new Date(t.getFullYear(), t.getMonth(), t.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
-  // Vorher: out 86 % über dem Schnitt (bleibt durch die Hysterese), inn 76 %; danach 37 und 94 % (gerechnet mit dem Modell)
-  Object.keys(db.tlog).forEach((d, k) => { db.tlog[d][lang]['p:' + out] = [3, 1]; db.tlog[d][lang]['p:' + inn] = [2, k % 3 ? 1 : 0]; });
+  // Vorher: out 67 % über dem Schnitt (bleibt durch die Hysterese), inn 78 %. Allein die fünf eigenen Antworten bringen sie auf
+  // 46 und 98 % (gerechnet mit dem Modell). Was das Tagwerk sonst bringt, verschiebt den Schnitt mit; darum prüfen die Browser-Tests
+  // mit klarRunDB, wo das Tagwerk nur aus diesen zehn Sätzen besteht.
+  Object.keys(db.tlog).forEach((d, k) => { db.tlog[d][lang]['p:' + out] = [3, k % 8 ? 1 : 0]; db.tlog[d][lang]['p:' + inn] = [2, k % 3 ? 1 : 0]; });
   db.settings.size = 'kurz';
   db.st = {};
   [out, inn].forEach(trap => topicItems(lang, trap).slice(0, 5).forEach((it, i) => { db.st[it.id] = { s:4 + i, d:5, ivl:4, last:ds(6), due:ds(2), reps:3, ok:3, bad:0, alts:[] }; }));
   db.clear = { [lang]:{ day:ds(1), prev:[out], cur:[out] } };
   return db;
 }
-// Fester Zufall im Browser (mulberry32), vor dem Laden gesetzt: für Tests, deren Ablauf davon abhängt, welche Aufgaben ein
-// Tagwerk bringt. Aufruf: page.addInitScript(fixedRandom, startwert)
-const fixedRandom = seed => { let a = seed; Math.random = () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+// Dasselbe als offenes Tagwerk aus genau diesen zehn Sätzen, abwechselnd (wie nach einer Pause): unabhängig davon, welche neuen
+// Sätze und erzeugten Aufgaben ein Tagwerk sonst brächte. Fortgesetzt fehlt der Stand beim Start, verglichen wird mit gestern.
+function klarRunDB(lang, out, inn){
+  const db = klarDB(lang, out, inn), t = new Date(), pad = n => String(n).padStart(2, '0'), today = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`;
+  const a = topicItems(lang, out).slice(0, 5), b = topicItems(lang, inn).slice(0, 5);
+  db.run = { date:today, lang, queue:a.flatMap((x, i) => [{ type:'free', id:x.id }, { type:'free', id:b[i].id }]), idx:0, ok:0, bad:0, res:[], secs:0, combo:0, best:0 };
+  return db;
+}
 // Beantwortet die Aufgaben einer Runde: Sätze aus right frei übersetzt richtig, alles andere falsch
 async function answerOnly(page, right){
   for (let k = 0; k < 80 && await page.$('.runbar'); k++) {
@@ -131,4 +138,4 @@ const test = base.test.extend({
     base.expect(errors, 'JavaScript-Fehler auf der Seite').toEqual([]);
   }
 });
-module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, longDB, klarDB, topicItems, fixedRandom, answerOnly, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };
+module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, longDB, klarDB, klarRunDB, topicItems, answerOnly, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };

@@ -606,13 +606,14 @@ function estRowHtml(r, t, id, x, M){
   const e = estParts(r, id, x, M), at = numsAttr(r.lang, id), tag = at ? 'button' : 'div';
   return `<${tag}${at ? ` type="button" ${at}` : ''} class="row mrowh" aria-label="${esc(`${t.label}: ${e.aria}`)}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(t.label))}</span>`, e.right, `geschätzte Fehlerquote${e.before ? `, ${e.before}` : ''}`)}${e.strip}</span></${tag}>`;
 }
-// Wechsel bei „klar über Schnitt“ als Überschrift; die Schwellen stehen in der Legende (modelKeyHtml mit rule)
+// Wechsel bei „klar über Schnitt“ als Überschrift. Was „klar“ heißt (90 % hinein, unter 60 % heraus), erklärt der Begriff
+// „Schätzung“ in der Legende; in der Legende selbst stand es in 24.78.1 doppelt.
 const clearHead = on => (on ? 'Jetzt klar über Schnitt' : 'Nicht mehr klar über Schnitt');
 // Runde mit einem Thema („Thema üben“, Grammatik-Training): Die Punkte je Aufgabe wiederholten die Leiste darüber, das Neue
 // stand erst nach einem Tipp da. Stattdessen die Schätzung des Themas aus dem Fehlermodell mit dem Stand vor der Runde (Ring)
 // und die falschen und fast richtigen Aufgaben gleich offen. Ohne Schätzung (Modell rechnet noch nicht, Thema ohne Daten) nur
 // die Aufgaben; fehlerfrei und ohne Schätzung nichts, die Leiste sagt dann alles. Hat die Runde das Thema über die Schwelle
-// gebracht oder darunter, steht das unter der Überschrift, die Schwellen in der Legende (seit 24.78.1; in 24.78.0 in der Zeile).
+// gebracht oder darunter, steht das unter der Überschrift (seit 24.78.1; in 24.78.0 in der Zeile).
 function oneTopicHtml(r, t){
   const lang = r.lang, id = modelIdOf(t), M = topicModel(lang), x = modelX(M, id);
   const off = t.list.filter(y => !y.good || y.near);
@@ -622,7 +623,8 @@ function oneTopicHtml(r, t){
   if (x) {
     const chg = clearChanges(lang, [id], r.clear0)[0];
     if (chg) lead = `<p class="lead-s grp-lead">${chg.on ? 'Jetzt klar über deinem Schnitt.' : 'Nicht mehr klar über deinem Schnitt.'}</p>`;
-    head = `${estRowHtml(r, t, id, x, M)}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:clearSet(lang).has(id), rule:!!chg })}</p>`;
+    // Die rote Quote erklärt bei einem Wechsel der Satz darüber, sonst die Legende
+    head = `${estRowHtml(r, t, id, x, M)}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:clearSet(lang).has(id) && !chg })}</p>`;
   } else head = `<div class="row"><span class="txt"><span class="rt">${label}</span></span></div>`;
   // „Thema üben“ nur, wenn die Runde nicht schon dieses Thema war (dort ist es „Noch eine Runde“)
   const links = !off.length ? '' : (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '')
@@ -634,12 +636,14 @@ function oneTopicHtml(r, t){
 // mit Schätzung und Stand vor der Runde. Etwa zweimal im Monat; ein Wechsel ändert, was die App tut (Grundlagensätze bei
 // „Fortgeschritten“, „Als Nächstes“). Die Verschiebung je Thema ist in einem Tagwerk sonst klein (1 bis 3 Punkte, RESEARCH.md).
 // Je Richtung ein Abschnitt mit eigener Überschrift (seit 24.78.1; vorher eine Überschrift „Klar über Schnitt“ auch über einem
-// Thema, das es nicht mehr ist); die Legende einmal, im letzten, mit den Schwellen.
+// Thema, das es nicht mehr ist). Jeder mit derselben kurzen Legende (seit 24.78.2; in 24.78.1 nur im letzten Abschnitt und mit
+// den Schwellen, das las sich, als gehöre sie nur zu „Nicht mehr klar über Schnitt“). „Klar über Schnitt“ steht so einmal je
+// Abschnitt, in der Überschrift; die rote Quote darunter braucht keinen Legendeneintrag.
 function clearChangeHtml(r, tps){
   const lang = r.lang, M = topicModel(lang), ids = [...new Set(tps.map(modelIdOf).filter(Boolean))];
   const ch = clearChanges(lang, ids, r.clear0).filter(c => modelX(M, c.id));
   const groups = [true, false].map(on => ch.filter(c => c.on === on)).filter(g => g.length);
-  return groups.map((g, k) => `<h2 class="grp">${clearHead(g[0].on)}</h2><div class="rows">${g.map(c => estRowHtml(r, tps.find(t => modelIdOf(t) === c.id), c.id, modelX(M, c.id), M)).join('')}${k === groups.length - 1 ? `<p class="legend inrows">${modelKeyHtml(M.mu, { rule:true })}</p>` : ''}</div>`).join('');
+  return groups.map(g => `<h2 class="grp">${clearHead(g[0].on)}</h2><div class="rows">${g.map(c => estRowHtml(r, tps.find(t => modelIdOf(t) === c.id), c.id, modelX(M, c.id), M)).join('')}<p class="legend inrows">${modelKeyHtml(M.mu)}</p></div>`).join('');
 }
 // Aufgeklapptes Thema (seit 24.78): über den Aufgaben die Schätzung, gebaut wie eine Zeile der Themenliste ohne Namen (der steht
 // darüber): „Geschätzte Fehlerquote“ und Quote, darunter der Stand vor der Runde, der Streifen; Tipp öffnet „Deine Zahlen“.

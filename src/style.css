@@ -690,8 +690,6 @@ button.mrow:active{ background:var(--accent-soft); }
 /* Legende mit Zeichen statt Sätzen */
 .mkey{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 14px; }
 .mkey > span{ display:inline-flex; align-items:center; gap:6px; }
-/* Mit den Schwellen bricht der Text um: das Zeichen auf der ersten Zeile, nicht zwischen beiden */
-.mkey > span.mkrule{ align-items:baseline; }
 .mkey .mk-mu{ display:inline-block; height:12px; }
 .mkey .mk-dot{ display:inline-block; }
 .mkey .mk-band{ display:inline-block; width:22px; height:8px; border-radius:var(--r-mark); background:linear-gradient(90deg, color-mix(in srgb, var(--bad) 22%, transparent) 0 25%, color-mix(in srgb, var(--bad) 45%, transparent) 25% 75%, color-mix(in srgb, var(--bad) 22%, transparent) 75%); }

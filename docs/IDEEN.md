@@ -170,9 +170,14 @@ Spanisch:
   - **Quote in jeder Zeile neben den Punkten (B−):** „27 %“ neben drei Punkten liest sich als Quote von heute; die Themenliste in Fortschritt hat die Zahlen.
   - **Alle Fehler als kompakte Liste „falsch → richtig“ (B−):** schnell zu überfliegen, doppelt aber die Themenliste; beim Übersetzen stünde der ganze Satz zweimal da.
   - **„Erwartet etwa 6 Fehler (3 bis 9), heute 4“ (C+):** fast jeder Tag liegt im Bereich, das Modell kennt Übungsart und neu/Wiederholung nicht, und es folgt nichts daraus.
-- **Wechsel bei „klar über Schnitt“: Überschrift (geprüft am 26.11.; gewählt in 24.78.1: je Richtung eine, die Schwellen in der Legende).**
+- **Wechsel bei „klar über Schnitt“: Überschrift und Legende (geprüft am 26.11.; gewählt in 24.78.1 und 24.78.2: je Richtung eine Überschrift, darunter die kurze Legende; „klar über Schnitt“ einmal je Abschnitt, die Schwellen unter „Schätzung“).**
   - **Eine Überschrift „Klar über Schnitt“ für beide Richtungen (C, 24.78.0):** stand auch über einem Thema, das es nicht mehr ist.
   - **Je Richtung eine Erklärzeile unter der Überschrift („Mit mindestens 90 % Wahrscheinlichkeit über deinem Schnitt.“) (B−):** genau, aber je zwei Zeilen mehr; die Schwellen stehen einmal in der Legende beim Zeichen.
+  - **Legende einmal, im letzten Abschnitt (C+, 24.78.1):** sollte für beide gelten, las sich aber, als gehöre sie nur zu „Nicht mehr klar über Schnitt“.
+  - **Schwellen in der Legende („ab 90 % Wahrscheinlichkeit darüber, heraus erst unter 60 %“) (C+, 24.78.1):** zwei Zeilen je Abschnitt für ein Umsetzungsdetail, das einen Tipp weiter unter „Schätzung“ steht; mit beiden Richtungen stand „klar über Schnitt“ viermal da.
+  - **Legendeneintrag „% klar über Schnitt“ nur bei „Jetzt klar“ (B):** erklärt die rote Quote, die die Überschrift direkt darüber schon erklärt; die Legenden wären wieder verschieden.
+  - **„klar über Schnitt“ in der Überschrift antippbar (B−):** gepunktet unterstrichene Überschriften gibt es sonst nicht, und die Erklärung steht schon unter „Schätzung“.
+  - **Stand beim Start auch im gespeicherten Tagwerk (B, offen):** `est0` und `clear0` leben nur in der Sitzung; beendet Android die App mitten im Tagwerk, fehlen danach Ring und „vor dem Tagwerk“, verglichen wird mit gestern. Zwei kleine Felder in `run`, abwärtskompatibel; lohnt, wenn es dir auffällt.
   - **„Deine Zahlen“ als eigener Link unter den Aufgaben (B−, 24.78.0):** drei Links brachen bei 390 px um; der Tipp auf die Schätzung öffnet es jetzt wie in jeder Zeile.
 - **Schätzung im aufgeklappten Thema, Darstellungen (geprüft am 26.11.; gewählt: Streifen wie überall, Stand vor der Runde als Ring, mit Legende).**
   - **Wahrscheinlichkeit über dem Schnitt mit den Schwellen 60 und 90 % (B):** zeigt genau die Größe hinter „klar über Schnitt“ und wie nah ein Wechsel ist; aber eine zweite Prozentzahl neben der Fehlerquote, und sie bewegt sich stark mit dem Schnitt. Steht als Satz in „Deine Zahlen“.

@@ -690,6 +690,8 @@ button.mrow:active{ background:var(--accent-soft); }
 /* Legende mit Zeichen statt Sätzen */
 .mkey{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 14px; }
 .mkey > span{ display:inline-flex; align-items:center; gap:6px; }
+/* Mit den Schwellen bricht der Text um: das Zeichen auf der ersten Zeile, nicht zwischen beiden */
+.mkey > span.mkrule{ align-items:baseline; }
 .mkey .mk-mu{ display:inline-block; height:12px; }
 .mkey .mk-dot{ display:inline-block; }
 .mkey .mk-band{ display:inline-block; width:22px; height:8px; border-radius:var(--r-mark); background:linear-gradient(90deg, color-mix(in srgb, var(--bad) 22%, transparent) 0 25%, color-mix(in srgb, var(--bad) 45%, transparent) 25% 75%, color-mix(in srgb, var(--bad) 22%, transparent) 75%); }
@@ -1135,13 +1137,16 @@ button.row:not([disabled]):active, label.row:active, .langsum:active, .tq-b:not(
 .trow.open::after{ transform:translateY(-2px) rotate(135deg); }
 .tdet{ padding:2px 16px 12px; border-top:1px solid var(--line); background:color-mix(in srgb, var(--bg) 55%, var(--surface)); }
 .tdet.enter{ animation:fadeIn var(--dur-2) var(--ease); }
-/* Aufgeklapptes Thema: Schätzung mit Stand vor der Runde über den Aufgaben (seit 24.78) */
-.tdest{ padding:12px 0 0; }
-.tdest .mtop{ align-items:center; }
+/* Aufgeklapptes Thema: Schätzung über den Aufgaben (seit 24.78), gebaut wie eine Zeile der Themenliste ohne Namen; die Pfeilspitze
+   steht unter der des Themas, Tipp öffnet „Deine Zahlen“. Legende darunter, dann eine Linie zu den Aufgaben. */
+.tdest{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:none; border:0; color:var(--ink); padding:14px 0 0; }
+.tdest .txt{ flex:1; min-width:0; }
+button.tdest::after{ content:''; flex:none; width:8px; height:8px; margin-left:4px; border-top:2px solid var(--faint); border-right:2px solid var(--faint); transform:rotate(45deg); }
 .tdest .mname{ font-weight:var(--fw-regular); }
-.tdest .msub{ font-size:var(--fs-4); }
 .tdest .mstrip{ margin-top:8px; }
-.legend.tdkey{ margin:4px 0 0; padding-bottom:6px; border-bottom:1px solid var(--line); }
+/* Ring am Zeilenanfang bündig mit dem Text darüber */
+.tdest .msub .mk-ring:first-child{ margin-left:0; }
+.legend.tdkey{ margin:8px 0 0; padding-bottom:12px; border-bottom:1px solid var(--line); }
 .rks{ list-style:none; margin:0; padding:0; }
 .rk{ display:flex; flex-direction:column; gap:2px; padding:10px 0; border-bottom:1px solid var(--line); }
 .rks .rk:last-child{ border-bottom:0; }

@@ -590,58 +590,64 @@ function modelIdOf(t){
   return t.trap || (own.length === 1 ? own[0] : null) || (t.gen && GENS[t.gen] && GENS[t.gen].trap) || null;
 }
 const modelX = (M, id) => (id && M.fitted ? M.topics.find(y => y.id === id && y.n >= MODEL.MIN_N) : null);
-// Schätzung eines Themas am Rundenende, für die Zeile (Runde mit einem Thema, Wechsel bei „klar über Schnitt“) und das
-// aufgeklappte Thema: Was die Zahl rechts zählt, steht darunter (die Leiste darüber zählt Richtige), dazu ein Wechsel bei
-// „klar über Schnitt“ (chg: 'on' oder 'off') und der Stand vor der Runde als Ring (nur in der Sitzung, siehe est0).
-function estParts(r, id, x, M, chg){
+// Schätzung eines Themas am Rundenende (Runde mit einem Thema, Wechsel bei „klar über Schnitt“, aufgeklapptes Thema): Quote,
+// Streifen und der Stand vor der Runde als Ring (nur in der Sitzung, siehe est0). Was die Zahl zählt, steht darunter.
+function estParts(r, id, x, M){
   const lang = r.lang, prev = r.est0 && r.est0[id] != null ? r.est0[id] : null, clear = clearSet(lang).has(id);
-  const when = r.kind === 'daily' ? 'vor dem Tagwerk' : 'vor der Runde';
-  const word = chg === 'on' ? 'jetzt klar über deinem Schnitt' : chg === 'off' ? 'nicht mehr klar über deinem Schnitt' : '';
-  const sub = `geschätzte Fehlerquote${word ? `, ${word}` : ''}${prev != null ? `${word ? ';' : ','} <i class="mk-ring"></i>${when} ${pct(prev)}` : ''}`;
-  const aria = `${modelAria('', x).replace(/^: /, '')}${clear ? ', klar über Schnitt' : ''}${word && !clear ? `, ${word}` : ''}${prev != null ? `, ${when} ${pct(prev)}` : ''}`;
-  return { sub, aria, clear, right:modelRight({ mean:x.mean, clear }), strip:modelStripHtml(x, M.mu, rateScale(Math.max(M.mu, x.hi, prev || 0)), prev), key:modelKeyHtml(M.mu, { clear }) };
+  // Ring, Wort und Zahl brechen zusammen um, sonst stand bei 390 px „32 %“ allein in der zweiten Zeile
+  const before = prev != null ? nobr(`<i class="mk-ring"></i>${r.kind === 'daily' ? 'vor dem Tagwerk' : 'vor der Runde'} ${pct(prev)}`) : '';
+  const aria = `${modelAria('', x).replace(/^: /, '')}${clear ? ', klar über Schnitt' : ''}${prev != null ? `, ${r.kind === 'daily' ? 'vor dem Tagwerk' : 'vor der Runde'} ${pct(prev)}` : ''}`;
+  return { before, aria, clear, right:modelRight({ mean:x.mean, clear }), strip:modelStripHtml(x, M.mu, rateScale(Math.max(M.mu, x.hi, prev || 0)), prev), key:modelKeyHtml(M.mu, { clear }) };
 }
-// Zeile mit Namen, Schätzung und Streifen; Tipp öffnet „Deine Zahlen“, wo es ein Themenblatt gibt
-function estRowHtml(r, t, id, x, M, chg){
-  const e = estParts(r, id, x, M, chg), sheet = !!(id && trapMeta(r.lang, id)), tag = sheet ? `button type="button" data-a="topic" data-t="${id}" data-z="1"` : 'div';
-  return `<${tag} class="row mrowh" aria-label="${esc(`${t.label}: ${e.aria}`)}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(t.label))}</span>`, e.right, e.sub)}${e.strip}</span></${sheet ? 'button' : 'div'}>`;
+// Tipp öffnet „Deine Zahlen“, wo es ein Themenblatt gibt (Genus und Uhrzeiten haben keins)
+const numsAttr = (lang, id) => (id && trapMeta(lang, id) ? `data-a="topic" data-t="${id}" data-z="1"` : '');
+// Zeile mit Namen, Quote, „geschätzte Fehlerquote, ○ vor …“ und Streifen, wie in der Themenliste
+function estRowHtml(r, t, id, x, M){
+  const e = estParts(r, id, x, M), at = numsAttr(r.lang, id), tag = at ? 'button' : 'div';
+  return `<${tag}${at ? ` type="button" ${at}` : ''} class="row mrowh" aria-label="${esc(`${t.label}: ${e.aria}`)}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(t.label))}</span>`, e.right, `geschätzte Fehlerquote${e.before ? `, ${e.before}` : ''}`)}${e.strip}</span></${tag}>`;
 }
+// Wechsel bei „klar über Schnitt“ als Überschrift; die Schwellen stehen in der Legende (modelKeyHtml mit rule)
+const clearHead = on => (on ? 'Jetzt klar über Schnitt' : 'Nicht mehr klar über Schnitt');
 // Runde mit einem Thema („Thema üben“, Grammatik-Training): Die Punkte je Aufgabe wiederholten die Leiste darüber, das Neue
 // stand erst nach einem Tipp da. Stattdessen die Schätzung des Themas aus dem Fehlermodell mit dem Stand vor der Runde (Ring)
 // und die falschen und fast richtigen Aufgaben gleich offen. Ohne Schätzung (Modell rechnet noch nicht, Thema ohne Daten) nur
-// die Aufgaben; fehlerfrei und ohne Schätzung nichts, die Leiste sagt dann alles.
+// die Aufgaben; fehlerfrei und ohne Schätzung nichts, die Leiste sagt dann alles. Hat die Runde das Thema über die Schwelle
+// gebracht oder darunter, steht das unter der Überschrift, die Schwellen in der Legende (seit 24.78.1; in 24.78.0 in der Zeile).
 function oneTopicHtml(r, t){
   const lang = r.lang, id = modelIdOf(t), M = topicModel(lang), x = modelX(M, id);
   const off = t.list.filter(y => !y.good || y.near);
   if (!x && !off.length) return '';
   const sheet = !!(t.trap && t.trap !== 'eigene' && trapMeta(lang, t.trap)), label = esc(keepHyph(t.label));
-  let head;
+  let head, lead = '';
   if (x) {
     const chg = clearChanges(lang, [id], r.clear0)[0];
-    head = `${estRowHtml(r, t, id, x, M, chg && (chg.on ? 'on' : 'off'))}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:clearSet(lang).has(id) })}</p>`;
+    if (chg) lead = `<p class="lead-s grp-lead">${chg.on ? 'Jetzt klar über deinem Schnitt.' : 'Nicht mehr klar über deinem Schnitt.'}</p>`;
+    head = `${estRowHtml(r, t, id, x, M)}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:clearSet(lang).has(id), rule:!!chg })}</p>`;
   } else head = `<div class="row"><span class="txt"><span class="rt">${label}</span></span></div>`;
   // „Thema üben“ nur, wenn die Runde nicht schon dieses Thema war (dort ist es „Noch eine Runde“)
   const links = !off.length ? '' : (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '')
     + (!['trap', 'form'].includes(r.kind) && topicGo(t) ? `<button type="button" class="link" ${topicGo(t)}>Thema üben</button>` : '');
   const det = off.length ? `<div class="tdet">${roundTasksHtml(off, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>` : '';
-  return `<h2 class="grp">Thema dieser Runde</h2><div class="rows">${head}${det}</div>${backLine(r)}`;
+  return `<h2 class="grp">Thema dieser Runde</h2>${lead}<div class="rows">${head}${det}</div>${backLine(r)}`;
 }
 // Runden mit mehreren Themen (seit 24.78): Themen, die durch die Runde „klar über Schnitt“ wurden oder es nicht mehr sind, oben
 // mit Schätzung und Stand vor der Runde. Etwa zweimal im Monat; ein Wechsel ändert, was die App tut (Grundlagensätze bei
 // „Fortgeschritten“, „Als Nächstes“). Die Verschiebung je Thema ist in einem Tagwerk sonst klein (1 bis 3 Punkte, RESEARCH.md).
+// Je Richtung ein Abschnitt mit eigener Überschrift (seit 24.78.1; vorher eine Überschrift „Klar über Schnitt“ auch über einem
+// Thema, das es nicht mehr ist); die Legende einmal, im letzten, mit den Schwellen.
 function clearChangeHtml(r, tps){
   const lang = r.lang, M = topicModel(lang), ids = [...new Set(tps.map(modelIdOf).filter(Boolean))];
   const ch = clearChanges(lang, ids, r.clear0).filter(c => modelX(M, c.id));
-  if (!ch.length) return '';
-  const rows = ch.map(c => estRowHtml(r, tps.find(t => modelIdOf(t) === c.id), c.id, modelX(M, c.id), M, c.on ? 'on' : 'off')).join('');
-  return `<h2 class="grp">Klar über Schnitt</h2><div class="rows">${rows}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:ch.some(c => c.on) })}</p></div>`;
+  const groups = [true, false].map(on => ch.filter(c => c.on === on)).filter(g => g.length);
+  return groups.map((g, k) => `<h2 class="grp">${clearHead(g[0].on)}</h2><div class="rows">${g.map(c => estRowHtml(r, tps.find(t => modelIdOf(t) === c.id), c.id, modelX(M, c.id), M)).join('')}${k === groups.length - 1 ? `<p class="legend inrows">${modelKeyHtml(M.mu, { rule:true })}</p>` : ''}</div>`).join('');
 }
-// Aufgeklapptes Thema (seit 24.78): zuerst die Schätzung mit dem Stand vor der Runde, wie bei einer Runde mit einem Thema
+// Aufgeklapptes Thema (seit 24.78): über den Aufgaben die Schätzung, gebaut wie eine Zeile der Themenliste ohne Namen (der steht
+// darüber): „Geschätzte Fehlerquote“ und Quote, darunter der Stand vor der Runde, der Streifen; Tipp öffnet „Deine Zahlen“.
 function estInnerHtml(r, t){
   const lang = r.lang, id = modelIdOf(t), M = topicModel(lang), x = modelX(M, id);
   if (!x) return '';
-  const chg = clearChanges(lang, [id], r.clear0)[0], e = estParts(r, id, x, M, chg && (chg.on ? 'on' : 'off'));
-  return `<div class="tdest" role="img" aria-label="${esc(e.aria)}">${mLine(`<span class="msub">${e.sub}</span>`, e.right)}${e.strip}</div><p class="legend tdkey">${e.key}</p>`;
+  const e = estParts(r, id, x, M), at = numsAttr(lang, id), tag = at ? 'button' : 'div';
+  return `<${tag}${at ? ` type="button" ${at}` : ''} class="tdest" aria-label="${esc(`Geschätzte Fehlerquote: ${e.aria}`)}"><span class="txt">${mLine('<span class="mlab">Geschätzte Fehlerquote</span>', e.right, e.before)}${e.strip}</span></${tag}><p class="legend tdkey">${e.key}</p>`;
 }
 function topicsHtml(r){
   const tps = roundTopics(r), lang = r.lang;
@@ -661,9 +667,8 @@ function topicsHtml(r){
     const open = S.topicOpen === t.key, sheet = t.trap && t.trap !== 'eigene';
     const head = `<button type="button" class="row trow${open ? ' open' : ''}" data-a="topicopen" data-k="${esc(t.key)}" aria-expanded="${open}" aria-controls="tdet-${i}"><span class="txt"><span class="rt">${esc(keepHyph(t.label))}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span></button>`;
     if (!open) return head;
-    const est = estInnerHtml(r, t), mid = modelIdOf(t), nums = est && mid && trapMeta(lang, mid) ? `<button type="button" class="link" data-a="topic" data-t="${mid}" data-z="1">Deine Zahlen</button>` : '';
-    const links = (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '') + nums + (go(t) ? `<button type="button" class="link" ${go(t)}>Thema üben</button>` : '');
-    return head + `<div class="tdet${S.topicEnter ? ' enter' : ''}" id="tdet-${i}">${est}${roundTasksHtml(t.list, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>`;
+    const links = (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '') + (go(t) ? `<button type="button" class="link" ${go(t)}>Thema üben</button>` : '');
+    return head + `<div class="tdet${S.topicEnter ? ' enter' : ''}" id="tdet-${i}">${estInnerHtml(r, t)}${roundTasksHtml(t.list, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>`;
   }).join('');
   S.topicEnter = false;
   const more = rest > 0 ? `<p class="t-more"><button type="button" class="link" data-a="topicsall" aria-expanded="${S.topicsAll ? 'true' : 'false'}">${S.topicsAll ? 'Weniger zeigen' : `und ${plural(rest, 'weiteres Thema', 'weitere Themen')} ohne Fehler`}</button></p>` : '';

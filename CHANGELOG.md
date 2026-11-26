@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.78.1
+**Deine Punkte zu 24.78.0: je Richtung eine eigene Überschrift, das aufgeklappte Thema überarbeitet (Text, Ausrichtung, Abstände).**
+- **Überschrift:** „Klar über Schnitt“ stand auch über einem Thema, das es nicht mehr ist. Jetzt je Richtung ein Abschnitt, „Jetzt klar über Schnitt“ und „Nicht mehr klar über Schnitt“, beide vor „Themen dieser Runde“. In der Zeile steht dafür nur noch „geschätzte Fehlerquote, ○ vor dem Tagwerk 32 %“ (vorher dazu „jetzt klar über deinem Schnitt;“, zwei Zeilen).
+- **Was „klar“ heißt,** steht einmal, in der Legende beim Zeichen: „klar über Schnitt: ab 90 % Wahrscheinlichkeit darüber, heraus erst unter 60 %“. Das Zeichen steht auf der ersten Zeile des Texts, nicht zwischen beiden.
+- **Runde mit einem Thema:** Der Wechsel steht als Satz unter „Thema dieser Runde“ („Jetzt klar über deinem Schnitt.“), die Zeile bleibt wie vorher.
+- **Aufgeklapptes Thema:** gebaut wie eine Zeile der Themenliste, nur ohne Namen (der steht darüber): links „Geschätzte Fehlerquote“, rechts die Quote auf derselben Linie, darunter „○ vor dem Tagwerk 32 %“, dann der Streifen. Vorher stand ein zweizeiliger Satz neben der Quote. Die Pfeilspitze steht genau unter der des Themas, ein Tipp öffnet „Deine Zahlen“; der eigene Link dafür entfällt, darunter bleiben „Regel und Beispiele“ und „Thema üben“ auf einer Zeile (vorher brachen drei Links bei 390 px um).
+- **Kleinigkeiten:** Der Ring am Zeilenanfang steht bündig mit dem Text darüber (vorher 2 px eingerückt). „○ vor dem Tagwerk 32 %“ bricht als Ganzes um (bei 390 px stand vorher „32 %“ allein in der zweiten Zeile). Abstände: 14 px oben, 8 px bis zum Streifen (wie in den Zeilen der Themenliste), 8 px bis zur Legende, 12 px bis zur Linie vor den Aufgaben.
+- Doku: ARCHITECTURE.md, IDEEN.md (Überschrift: geprüfte Varianten).
+- Tests: Überschrift je Richtung, beide Richtungen zugleich (zwei Abschnitte, Legende nur im letzten), Schwellen in der Legende, Satz bei einer Runde mit einem Thema, aufgeklapptes Thema als Zeile; im Browser Reihenfolge der Abschnitte, Legende einmal, Zeichen auf der ersten Zeile, Pfeilspitzen untereinander, Ring bündig, Tipp öffnet „Deine Zahlen“.
+- Speicherstand unverändert.
+
 ## 24.78.0
 **Deine Punkte vom 26.11.: kein leerer Streifen unter „Richtig“, „Auch richtig“ bei Lücken; am Rundenende der Wechsel bei „klar über Schnitt“ und die Schätzung im aufgeklappten Thema. Dazu ein Browser-Test, der donnerstags rot war.**
 - **Der Fall aus deinem Screenshot („te acostumbras“ im Thema-Üben):** Unter „Richtig“ stand ein leerer Streifen. Die Zeile mit dem Urteil hielt 10 px Abstand für eine Zeile darunter, die im Thema-Üben nicht kommt (dort fehlt „Thema: …“, es steht oben): oben 16, unten 26 px. Jetzt gleich.

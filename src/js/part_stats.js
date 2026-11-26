@@ -290,7 +290,8 @@ const changeSlot = c => `<span class="aslot">${c && c.lvl ? arrowSvg(c.better, c
 const probPct = q => (q >= 0.995 ? 'über 99\u00a0%' : q < 0.005 ? 'unter 1\u00a0%' : pct(q));
 const changeWord = c => `${c.better ? 'besser' : 'schlechter'} mit ${probPct(c.better ? c.p : 1 - c.p)} Wahrscheinlichkeit`;
 // Legende mit Zeichen statt Sätzen; „Schätzung“ öffnet die Erklärung (Begriff „schaetzung“)
-const modelKeyHtml = (mu, o = {}) => `<span class="mkey"><span><i class="mk-dot"></i><button type="button" class="term" data-a="term" data-k="schaetzung">Schätzung</button></span><span><i class="mk-band"></i>Bereich</span><span><i class="mk-mu"></i>${o.mu || 'Schnitt'} ${pct(mu)}</span>${o.clear ? '<span><span class="mpct cl kpill">%</span>klar über Schnitt</span>' : ''}</span>`;
+// o.rule: dazu die Schwellen von „klar über Schnitt“ (Rundenende, wenn ein Thema hinein- oder herausgekommen ist)
+const modelKeyHtml = (mu, o = {}) => `<span class="mkey"><span><i class="mk-dot"></i><button type="button" class="term" data-a="term" data-k="schaetzung">Schätzung</button></span><span><i class="mk-band"></i>Bereich</span><span><i class="mk-mu"></i>${o.mu || 'Schnitt'} ${pct(mu)}</span>${o.clear || o.rule ? `<span${o.rule ? ' class="mkrule"' : ''}><span class="mpct cl kpill">%</span>klar über Schnitt${o.rule ? `: ab ${Math.round(MODEL.CLEAR_IN * 100)}\u00a0% Wahrscheinlichkeit darüber, heraus erst unter ${Math.round(MODEL.CLEAR_OUT * 100)}\u00a0%` : ''}</span>` : ''}</span>`;
 const changeKeyHtml = () => `<p class="legend akey"><span class="nobr">${arrowSvg(true, 3)}${arrowSvg(true, 1)} besser,</span> <span class="nobr">${arrowSvg(false, 3)} schlechter</span> als die vier Wochen davor; kräftiger = sicherer</p>`;
 // Fehlerquoten teilen eine Skala: bis 50, 75 oder 100 %
 const rateScale = top => (top <= 0.5 ? 0.5 : top <= 0.75 ? 0.75 : 1);

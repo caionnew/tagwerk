@@ -86,3 +86,26 @@ test('Fall aus dem Screenshot: „sesión“ und „surgió“ gelten, der zweit
   await page.click('[data-a=check]');
   await expect(page.locator('#fb .verdict')).toHaveText('Richtig');
 });
+
+// 24.78, Screenshot vom 26.11. (Thema üben, „te acostumbras“ richtig): unter „Richtig“ ein leerer Streifen, vorgelesen die Hauptlösung
+const COSTUMBRE = 'es:' + hash('Con el tiempo te acostumbrarás al ritmo de la ciudad.');
+test('Lücke richtig mit Alternative: „Auch richtig“ mit der Hauptlösung, vorgelesen wird, was oben steht; kein leerer Streifen', async ({ page }) => {
+  await page.addInitScript(fakeVoice);
+  await seed(page, withRun('es', [{ type:'cloze', id:COSTUMBRE }, { type:'cloze', id:COSTUMBRE }]));
+  await page.goto(APP);
+  await page.click('.today [data-a=daily]');
+  await page.fill('#answer', 'te acostumbras');
+  await page.click('[data-a=check]');
+  await expect(page.locator('#fb .verdict')).toHaveText('Richtig');
+  await expect(page.locator('.cloze .gapdone.ok')).toHaveText('te acostumbras');
+  await expect(page.locator('#fb .also')).toHaveText('Auch richtig: te acostumbrarás');
+  await expect(page.locator('#fb .vrow > [data-a=speak]')).toHaveAttribute('data-text', 'Con el tiempo te acostumbras al ritmo de la ciudad.');
+  // Nachschlagen auch dort
+  await page.click('#fb .also [data-a=lookup][data-w=acostumbrarás]');
+  await expect(page.locator('.pop')).toBeVisible();
+  await page.click('[data-a=popclose]');
+  // Steht nichts unter der Zeile (im Thema-Üben fehlt „Thema: …“), ist der Abstand oben und unten gleich (vorher 16 und 26 px)
+  const gap = await page.evaluate(() => { const fb = document.getElementById('fb'); [...fb.children].filter(e => !e.classList.contains('vrow')).forEach(e => e.remove());
+    const f = fb.getBoundingClientRect(), v = fb.querySelector('.vrow').getBoundingClientRect(); return [v.top - f.top, f.bottom - v.bottom]; });
+  expect(Math.abs(gap[0] - gap[1])).toBeLessThan(1);
+});

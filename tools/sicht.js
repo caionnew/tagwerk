@@ -10,7 +10,7 @@
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome. Zufall ist im Browser festgelegt, damit beide Stände dasselbe zeigen.
 const path = require('path'), fs = require('fs'), os = require('os'), { execFileSync } = require('child_process');
 const { chromium } = require('@playwright/test');
-const { freshDB, richDB, longDB, answerWrong, fakeVoice, speechWav, fakeMicArgs, hash } = require('../tests/e2e/helpers.js');
+const { freshDB, richDB, longDB, klarDB, topicItems, answerOnly, answerWrong, fakeVoice, speechWav, fakeMicArgs, hash } = require('../tests/e2e/helpers.js');
 const ROOT = path.join(__dirname, '..'), OUT = path.join(ROOT, 'sicht');
 const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
 const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz');
@@ -60,6 +60,11 @@ const answerOneWrong = bad => async p => {
     await p.click('[data-a=next]');
   }
 };
+// Tagwerk mit Wechsel bei „klar über Schnitt“ (klarDB): Nebensätze richtig übersetzt, alles andere falsch. Gestern waren die
+// Nebensätze klar über dem Schnitt, Inversion knapp darunter; danach ist es umgekehrt.
+const klarTagwerk = () => klarDB('sv', 'bisats', 'inversion');
+const answerKlar = p => answerOnly(p, topicItems('sv', 'bisats'));
+const toHead = text => p => p.evaluate(t => { const h = [...document.querySelectorAll('h2.grp')].find(x => x.textContent === t); if (h) h.scrollIntoView({ block:'start' }); }, text);
 // Nomen tauschen: das typische Versehen, nur das Nomen ersetzt und den Rest stehen gelassen
 const swapNaive = async p => { const src = await p.textContent('.ex .de'), a = await p.textContent('.ex .de b'), b = await p.textContent('.vocab .swapto'); await p.fill('#answer', src.trim().replace(a.trim(), b.trim())); await p.click('[data-a=check]'); };
 const swapOpen = [click('[data-a=tab][data-v=extra]'), click('[data-a=forms]'), click('[data-a=gengo][data-g=det_es]')];
@@ -89,12 +94,15 @@ const SCENES = [
   ['aufgabe-falsch', rich, [click('[data-a=daily]'), answerWrong]],
   ['luecke-richtig', runDB('sv', 'cloze', 'Jag har inte sett dig på flera år!'), [click('[data-a=daily]'), answer('på flera år')]],
   ['luecke-falsch', runDB('sv', 'cloze', 'Jag har inte sett dig på flera år!'), [click('[data-a=daily]'), answer('i flera år')]],
+  ['luecke-alternative', runDB('es', 'cloze', 'Con el tiempo te acostumbrarás al ritmo de la ciudad.'), [click('[data-a=daily]'), answer('te acostumbras')]],
   ['uebersetzung-falsch', runDB('es', 'free', 'La reunión se puso tensa cuando salió el tema de los sueldos.'), [mockLT, click('[data-a=daily]'), answer('La sesión se puso tenso cuando surgió el tema de los sueldos'), click('[data-a=ltfree]'), p => p.waitForSelector('#fb a[href="https://languagetool.org"]')]],
   ['nomen-tauschen', () => richDB('es'), swapOpen],
   ['nomen-tauschen-falsch', () => richDB('es'), [...swapOpen, swapNaive]],
   ['rundenende', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll]],
   ['tagwerk-ende', rich, [click('[data-a=daily]'), answerAll, p => p.evaluate(() => { const g = document.querySelector('.grprow') || document.querySelector('.donebox h2'); if (g) g.scrollIntoView(); })]],
   // Tagwerk-Ende mit aufgeklapptem Thema: deine Antworten und die Lösungen
+  ['tagwerk-klar', klarTagwerk, [click('[data-a=daily]'), answerKlar, toHead('Klar über Schnitt')]],
+  ['tagwerk-klar-auf', klarTagwerk, [click('[data-a=daily]'), answerKlar, click('.trow[data-k=inversion]'), p => p.waitForTimeout(400), toHead('Themen dieser Runde')]],
   ['tagwerk-thema', rich, [click('[data-a=daily]'), answerAll, click('.trow >> nth=0'), p => p.waitForTimeout(400)]],
   ['rundenende-unten', rich, [click('[data-a=tab][data-v=extra]'), click('[data-a=quick]'), answerAll, bottom]],
   // Runde mit einem Thema (Grammatik-Training Adjektivendungen, wie im Screenshot vom 25.11.): Schätzung vor und nach der Runde,

@@ -196,3 +196,74 @@ test('Runde mit einem Thema ohne Themenblatt (Genus): Schätzung aus dem Thema d
   assert.match(h, /vor der Runde/);
   app.run('DB.tlog = {}');
 });
+
+// 26.11. (24.78): Am Rundenende mit mehreren Themen oben die Themen, die durch die Runde „klar über Schnitt“ wurden oder es nicht
+// mehr sind; im aufgeklappten Thema die Schätzung mit dem Stand vor der Runde. Vier Themen, damit das Modell rechnet.
+// sp: Fehler bei Adjektivendungen je Tag (k % 4 ? 0 : 1: P(über Schnitt) 17 %, k % 2: 72 %)
+const LOG = (sp = 'k % 4 ? 0 : 1') => `DB.tlog = {}; for (let k = 1; k <= 20; k++) DB.tlog[addDays(today(), -k)] = { sv:{ 'p:inversion':[3, k % 3 ? 0 : 1], 'p:bisats':[3, k % 2], 'p:species':[2, ${sp}], 'p:tempus':[2, 0] } };`, LOG4 = LOG();
+// Eine Aufgabe des Tagwerks: aus der Satzbank, Adjektivendungen (species) aus dem Generator np
+const tw = (trap, good) => ({ ...(trap === 'species' ? { gen:'np', q:'die guten Hunde', target:'de bra hundarna' } : { id:byTrap(trap)[0].id, q:byTrap(trap)[0].de, target:byTrap(trap)[0].target }), good, ty:'free', ...(good ? {} : { ans:'zzz', why:'GRUND' }) });
+const daily = (res, more = '') => app.run(`S.run = { kind:'daily', lang:'sv', ok:${res.filter(x => x.good).length}, bad:${res.filter(x => !x.good).length}, res:${JSON.stringify(res)}${more} }; S.topicOpen = null; S.topicsAll = false;`);
+test('Rundenende: Wechsel bei „klar über Schnitt“ durch die Runde, rein und raus, nur Themen der Runde', () => {
+  app.run(`${LOG4} DB.clear = {};`);
+  const est0 = run(`estSnap('sv')`), clear0 = run(`clearSnap('sv')`);
+  assert.deepEqual(clear0, [], 'vorher keins klar');
+  // Das Tagwerk: Adjektivendungen 18 von 20 falsch, die anderen richtig
+  app.run(`DB.tlog[today()] = { sv:{ 'p:species':[20, 18], 'p:inversion':[2, 0], 'p:tempus':[2, 0] } }`);
+  const res = [tw('species', false), tw('species', false), tw('species', true), tw('inversion', true), tw('tempus', true)];
+  daily(res, `, est0:${JSON.stringify(est0)}, clear0:${JSON.stringify(clear0)}`);
+  assert.deepEqual(run(`[...clearSet('sv')]`), ['species']);
+  assert.deepEqual(run(`clearChanges('sv', ['species', 'inversion', 'tempus'], S.run.clear0)`), [{ id:'species', on:true }]);
+  let h = run('topicsHtml(S.run)');
+  const P = v => run(`pct(${v})`).replace(/\s/g, ' ');
+  const now = run(`topicModel('sv').topics.find(x => x.id === 'species').mean`);
+  assert.match(text(h), new RegExp(`^Klar über Schnitt Adjektivendungen & bestimmte Form ${P(now)} geschätzte Fehlerquote, jetzt klar über deinem Schnitt; vor dem Tagwerk ${P(est0.species)} Schätzung Bereich Schnitt [\\d\\s]+% % klar über Schnitt Themen dieser Runde`));
+  assert.match(h, /<button type="button" data-a="topic" data-t="species" data-z="1" class="row mrowh"/);
+  assert.equal((h.match(/class="mring"/g) || []).length, 1);
+  assert.match(h, /class="mpct cl"/);
+  // Raus: gestern klar (P 72 %, bleibt durch die Hysterese), zwölf richtige senken P auf 37 %
+  app.run(`${LOG('k % 2')} DB.clear = { sv:{ day:addDays(today(), -1), prev:[], cur:['species'] } };`);
+  const e1 = run(`estSnap('sv')`), c1 = run(`clearSnap('sv')`);
+  assert.deepEqual(c1, ['species'], 'beim Start noch klar (Hysterese)');
+  app.run(`DB.tlog[today()] = { sv:{ 'p:species':[12, 0], 'p:tempus':[2, 0] } }`);
+  daily([tw('species', true), tw('species', true), tw('tempus', true), tw('tempus', false)], `, est0:${JSON.stringify(e1)}, clear0:${JSON.stringify(c1)}`);
+  h = run('topicsHtml(S.run)');
+  assert.match(text(h), /^Klar über Schnitt Adjektivendungen & bestimmte Form [\d\s]+% geschätzte Fehlerquote, nicht mehr klar über deinem Schnitt; vor dem Tagwerk [\d\s]+% Schätzung Bereich Schnitt [\d\s]+% Themen dieser Runde/);
+  assert.doesNotMatch(h.slice(0, h.indexOf('Themen dieser Runde')), /mpct cl|klar über Schnitt<\/span>/, 'keine rote Quote, keine Legende dafür');
+  // Fortgesetztes Tagwerk (ohne Stand beim Start): Vergleich mit dem Stand vom letzten früheren Tag, ohne Ring
+  daily([tw('species', true), tw('tempus', true)]);
+  h = run('topicsHtml(S.run)');
+  assert.match(text(h), /^Klar über Schnitt Adjektivendungen & bestimmte Form [\d\s]+% geschätzte Fehlerquote, nicht mehr klar über deinem Schnitt Schätzung/);
+  assert.doesNotMatch(h, /mring/);
+  // Stand davor unbekannt (erster Tag mit Gedächtnis): kein Wechsel behauptet
+  app.run(`DB.clear = {}; clearSet('sv');`);
+  assert.equal(run(`clearBase('sv')`), null);
+  assert.doesNotMatch(run('topicsHtml(S.run)'), /Klar über Schnitt/);
+  // Ein Thema, das nicht in der Runde war, steht dort nicht, auch wenn es gewechselt hat
+  app.run(`DB.clear = { sv:{ day:addDays(today(), -1), prev:[], cur:['species'] } };`);
+  daily([tw('tempus', true), tw('inversion', true)]);
+  assert.doesNotMatch(run('topicsHtml(S.run)'), /Klar über Schnitt/);
+  app.run('DB.tlog = {}; DB.clear = {};');
+});
+
+test('Rundenende: aufgeklapptes Thema mit Schätzung und Stand vor dem Tagwerk, „Deine Zahlen“', () => {
+  app.run(`${LOG4} DB.clear = {};`);
+  const est0 = run(`estSnap('sv')`);
+  app.run(`DB.tlog[today()] = { sv:{ 'p:species':[2, 1], 'p:tempus':[2, 0] } }`);
+  daily([tw('species', false), tw('species', true), tw('tempus', true), tw('tempus', true)], `, est0:${JSON.stringify(est0)}, clear0:[]`);
+  let h = run(`(S.topicOpen = 'species', topicsHtml(S.run))`);
+  assert.doesNotMatch(h, /Klar über Schnitt/, 'kein Wechsel');
+  const det = h.slice(h.lastIndexOf('<', h.indexOf('class="tdet')));
+  assert.match(text(det), /^geschätzte Fehlerquote, vor dem Tagwerk [\d\s]+% [\d\s]+% Schätzung Bereich Schnitt [\d\s]+%/);
+  assert.equal((det.match(/class="mring"/g) || []).length, 1);
+  assert.ok(det.indexOf('class="tdest"') < det.indexOf('class="rks"'), 'Schätzung vor den Aufgaben');
+  assert.match(det, /<div class="tdest" role="img" aria-label="geschätzt [\d\s]+% falsch, wahrscheinlich [\d\s]+% bis [\d\s]+%, vor dem Tagwerk [\d\s]+%">/);
+  assert.match(det, /data-t="species">Regel und Beispiele<\/button><button type="button" class="link" data-a="topic" data-t="species" data-z="1">Deine Zahlen<\/button><button type="button" class="link" data-a="trapgo" data-t="species">Thema üben/);
+  // Ohne Stand vorher: ohne Ring; Thema ohne Schätzung: nur die Aufgaben, kein „Deine Zahlen“
+  daily([tw('species', false), tw('tempus', true), tw('partikel', false)]);
+  h = run(`(S.topicOpen = 'species', topicsHtml(S.run))`);
+  assert.match(h, /class="tdest"/); assert.doesNotMatch(h, /mring|vor dem Tagwerk/);
+  h = run(`(S.topicOpen = 'partikel', topicsHtml(S.run))`);
+  assert.doesNotMatch(h, /class="tdest"|Deine Zahlen/);
+  app.run('DB.tlog = {}; DB.clear = {}; S.topicOpen = null;');
+});

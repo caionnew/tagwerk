@@ -453,10 +453,15 @@ function feedbackHtml(r, ex, c){
   let originShown = !(c.result === 'bad' || c.wasSeen === false);
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   const sol = solShown(lang, ex, c);
-  const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(sol, lang);
+  // Lücke, richtig mit einer Alternative (seit 24.78): Oben steht deine Fassung, vorgelesen wird sie auch; die Hauptlösung
+  // darunter als „Auch richtig“. Beim Übersetzen steht die Hauptlösung ohnehin als Lösungssatz da.
+  const altGap = ex.type === 'cloze' && c.result === 'ok' && item && item.gap && String(c.input || '').trim() && norm(c.input, lang) !== norm(item.gap, lang);
+  const pos = altGap ? gapPos(item.target, item.gap) : -1;
+  const spoken = pos >= 0 ? item.target.slice(0, pos) + c.input.trim() + item.target.slice(pos + item.gap.length) : sol;
+  const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(spoken, lang);
   // Lücke: Der Satz steht oben schon ganz da, mit der Lösung an ihrem Platz. Hier nicht noch einmal, nur der Knopf zum Vorlesen.
   const gapTask = ex.type === 'cloze' || (ex.type === 'gen' && ex.data.gap);
-  if (gapTask) out = vrow(sBtn);
+  if (gapTask) out = vrow(sBtn) + (altGap ? `<p class="legend also">Auch richtig: <span lang="${lang}">${linkWords(item.gap, lang)}</span></p>` : '');
   else out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
   if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
@@ -579,33 +584,64 @@ function roundTasksHtml(list, lang){
 }
 const topicGo = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
 const backLine = r => ((r.res || []).some(x => x.id && !x.good) ? '<p class="legend">Falsche Sätze kommen morgen wieder.</p>' : '');
+// Thema im Fehlermodell zu einem Thema der Runde: das eigene, bei Uhrzeiten und Genus das der Aufgaben (zeit, zahl, genus), wenn es nur eins ist
+function modelIdOf(t){
+  const own = [...new Set(t.list.map(y => y.trap).filter(Boolean))];
+  return t.trap || (own.length === 1 ? own[0] : null) || (t.gen && GENS[t.gen] && GENS[t.gen].trap) || null;
+}
+const modelX = (M, id) => (id && M.fitted ? M.topics.find(y => y.id === id && y.n >= MODEL.MIN_N) : null);
+// Schätzung eines Themas am Rundenende, für die Zeile (Runde mit einem Thema, Wechsel bei „klar über Schnitt“) und das
+// aufgeklappte Thema: Was die Zahl rechts zählt, steht darunter (die Leiste darüber zählt Richtige), dazu ein Wechsel bei
+// „klar über Schnitt“ (chg: 'on' oder 'off') und der Stand vor der Runde als Ring (nur in der Sitzung, siehe est0).
+function estParts(r, id, x, M, chg){
+  const lang = r.lang, prev = r.est0 && r.est0[id] != null ? r.est0[id] : null, clear = clearSet(lang).has(id);
+  const when = r.kind === 'daily' ? 'vor dem Tagwerk' : 'vor der Runde';
+  const word = chg === 'on' ? 'jetzt klar über deinem Schnitt' : chg === 'off' ? 'nicht mehr klar über deinem Schnitt' : '';
+  const sub = `geschätzte Fehlerquote${word ? `, ${word}` : ''}${prev != null ? `${word ? ';' : ','} <i class="mk-ring"></i>${when} ${pct(prev)}` : ''}`;
+  const aria = `${modelAria('', x).replace(/^: /, '')}${clear ? ', klar über Schnitt' : ''}${word && !clear ? `, ${word}` : ''}${prev != null ? `, ${when} ${pct(prev)}` : ''}`;
+  return { sub, aria, clear, right:modelRight({ mean:x.mean, clear }), strip:modelStripHtml(x, M.mu, rateScale(Math.max(M.mu, x.hi, prev || 0)), prev), key:modelKeyHtml(M.mu, { clear }) };
+}
+// Zeile mit Namen, Schätzung und Streifen; Tipp öffnet „Deine Zahlen“, wo es ein Themenblatt gibt
+function estRowHtml(r, t, id, x, M, chg){
+  const e = estParts(r, id, x, M, chg), sheet = !!(id && trapMeta(r.lang, id)), tag = sheet ? `button type="button" data-a="topic" data-t="${id}" data-z="1"` : 'div';
+  return `<${tag} class="row mrowh" aria-label="${esc(`${t.label}: ${e.aria}`)}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(t.label))}</span>`, e.right, e.sub)}${e.strip}</span></${sheet ? 'button' : 'div'}>`;
+}
 // Runde mit einem Thema („Thema üben“, Grammatik-Training): Die Punkte je Aufgabe wiederholten die Leiste darüber, das Neue
 // stand erst nach einem Tipp da. Stattdessen die Schätzung des Themas aus dem Fehlermodell mit dem Stand vor der Runde (Ring)
 // und die falschen und fast richtigen Aufgaben gleich offen. Ohne Schätzung (Modell rechnet noch nicht, Thema ohne Daten) nur
 // die Aufgaben; fehlerfrei und ohne Schätzung nichts, die Leiste sagt dann alles.
 function oneTopicHtml(r, t){
-  // Thema im Fehlermodell: das der Runde, bei Uhrzeiten und Genus das der Aufgaben (zeit, zahl, genus), wenn es nur eins ist
-  const own = [...new Set(t.list.map(y => y.trap).filter(Boolean))];
-  const lang = r.lang, id = t.trap || (own.length === 1 ? own[0] : null) || (t.gen && GENS[t.gen] && GENS[t.gen].trap) || null, M = topicModel(lang);
-  const x = id && M.fitted ? M.topics.find(y => y.id === id && y.n >= MODEL.MIN_N) : null;
+  const lang = r.lang, id = modelIdOf(t), M = topicModel(lang), x = modelX(M, id);
   const off = t.list.filter(y => !y.good || y.near);
   if (!x && !off.length) return '';
   const sheet = !!(t.trap && t.trap !== 'eigene' && trapMeta(lang, t.trap)), label = esc(keepHyph(t.label));
   let head;
   if (x) {
-    const prev = r.est0 && r.est0[id] != null ? r.est0[id] : null, clear = clearSet(lang).has(id);
-    const max = rateScale(Math.max(M.mu, x.hi, prev || 0));
-    const aria = modelAria(t.label, x) + (clear ? ', klar über Schnitt' : '') + (prev != null ? `, vor der Runde ${pct(prev)}` : '');
-    // Was die Zahl rechts zählt, steht darunter (die Leiste darüber zählt Richtige); der Ring ist das Zeichen für „vor der Runde“
-    const sub = `geschätzte Fehlerquote${prev != null ? `, <i class="mk-ring"></i>vor der Runde ${pct(prev)}` : ''}`;
-    const tag = sheet ? `button type="button" data-a="topic" data-t="${id}" data-z="1"` : 'div';
-    head = `<${tag} class="row mrowh" aria-label="${esc(aria)}"><span class="txt">${mLine(`<span class="rt">${label}</span>`, modelRight({ mean:x.mean, clear }), sub)}${modelStripHtml(x, M.mu, max, prev)}</span></${sheet ? 'button' : 'div'}><p class="legend inrows">${modelKeyHtml(M.mu, { clear })}</p>`;
+    const chg = clearChanges(lang, [id], r.clear0)[0];
+    head = `${estRowHtml(r, t, id, x, M, chg && (chg.on ? 'on' : 'off'))}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:clearSet(lang).has(id) })}</p>`;
   } else head = `<div class="row"><span class="txt"><span class="rt">${label}</span></span></div>`;
   // „Thema üben“ nur, wenn die Runde nicht schon dieses Thema war (dort ist es „Noch eine Runde“)
   const links = !off.length ? '' : (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '')
     + (!['trap', 'form'].includes(r.kind) && topicGo(t) ? `<button type="button" class="link" ${topicGo(t)}>Thema üben</button>` : '');
   const det = off.length ? `<div class="tdet">${roundTasksHtml(off, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>` : '';
   return `<h2 class="grp">Thema dieser Runde</h2><div class="rows">${head}${det}</div>${backLine(r)}`;
+}
+// Runden mit mehreren Themen (seit 24.78): Themen, die durch die Runde „klar über Schnitt“ wurden oder es nicht mehr sind, oben
+// mit Schätzung und Stand vor der Runde. Etwa zweimal im Monat; ein Wechsel ändert, was die App tut (Grundlagensätze bei
+// „Fortgeschritten“, „Als Nächstes“). Die Verschiebung je Thema ist in einem Tagwerk sonst klein (1 bis 3 Punkte, RESEARCH.md).
+function clearChangeHtml(r, tps){
+  const lang = r.lang, M = topicModel(lang), ids = [...new Set(tps.map(modelIdOf).filter(Boolean))];
+  const ch = clearChanges(lang, ids, r.clear0).filter(c => modelX(M, c.id));
+  if (!ch.length) return '';
+  const rows = ch.map(c => estRowHtml(r, tps.find(t => modelIdOf(t) === c.id), c.id, modelX(M, c.id), M, c.on ? 'on' : 'off')).join('');
+  return `<h2 class="grp">Klar über Schnitt</h2><div class="rows">${rows}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:ch.some(c => c.on) })}</p></div>`;
+}
+// Aufgeklapptes Thema (seit 24.78): zuerst die Schätzung mit dem Stand vor der Runde, wie bei einer Runde mit einem Thema
+function estInnerHtml(r, t){
+  const lang = r.lang, id = modelIdOf(t), M = topicModel(lang), x = modelX(M, id);
+  if (!x) return '';
+  const chg = clearChanges(lang, [id], r.clear0)[0], e = estParts(r, id, x, M, chg && (chg.on ? 'on' : 'off'));
+  return `<div class="tdest" role="img" aria-label="${esc(e.aria)}">${mLine(`<span class="msub">${e.sub}</span>`, e.right)}${e.strip}</div><p class="legend tdkey">${e.key}</p>`;
 }
 function topicsHtml(r){
   const tps = roundTopics(r), lang = r.lang;
@@ -625,13 +661,14 @@ function topicsHtml(r){
     const open = S.topicOpen === t.key, sheet = t.trap && t.trap !== 'eigene';
     const head = `<button type="button" class="row trow${open ? ' open' : ''}" data-a="topicopen" data-k="${esc(t.key)}" aria-expanded="${open}" aria-controls="tdet-${i}"><span class="txt"><span class="rt">${esc(keepHyph(t.label))}</span></span><span class="tdots" role="img" aria-label="${aria}">${t.dots.slice(0, 12).map(dot).join('')}${t.dots.length > 12 ? `<b>+${t.dots.length - 12}</b>` : ''}</span></button>`;
     if (!open) return head;
-    const links = (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '') + (go(t) ? `<button type="button" class="link" ${go(t)}>Thema üben</button>` : '');
-    return head + `<div class="tdet${S.topicEnter ? ' enter' : ''}" id="tdet-${i}">${roundTasksHtml(t.list, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>`;
+    const est = estInnerHtml(r, t), mid = modelIdOf(t), nums = est && mid && trapMeta(lang, mid) ? `<button type="button" class="link" data-a="topic" data-t="${mid}" data-z="1">Deine Zahlen</button>` : '';
+    const links = (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '') + nums + (go(t) ? `<button type="button" class="link" ${go(t)}>Thema üben</button>` : '');
+    return head + `<div class="tdet${S.topicEnter ? ' enter' : ''}" id="tdet-${i}">${est}${roundTasksHtml(t.list, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>`;
   }).join('');
   S.topicEnter = false;
   const more = rest > 0 ? `<p class="t-more"><button type="button" class="link" data-a="topicsall" aria-expanded="${S.topicsAll ? 'true' : 'false'}">${S.topicsAll ? 'Weniger zeigen' : `und ${plural(rest, 'weiteres Thema', 'weitere Themen')} ohne Fehler`}</button></p>` : '';
   const back = backLine(r);
-  return `<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}${back}`;
+  return `${clearChangeHtml(r, tps)}<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}${back}`;
 }
 // Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
 // (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).

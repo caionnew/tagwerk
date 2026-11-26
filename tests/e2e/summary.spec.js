@@ -1,5 +1,5 @@
 // Rundenende: Ergebnisleiste, Fehler je Thema ohne sofortige Übungsrunde, passende Knöpfe. Tagesbilanz auf „Heute“.
-const { test, expect, APP, seed, richDB, answerWrong, stored } = require('./helpers');
+const { test, expect, APP, seed, richDB, klarDB, topicItems, fixedRandom, answerOnly, answerWrong, stored } = require('./helpers');
 test('Kurze Runde: Leiste je Aufgabe, Fehler beim Thema, keine sofortige Übungsrunde', async ({ page }) => {
   await seed(page, richDB('sv'));
   await page.goto(APP);
@@ -106,7 +106,7 @@ test('Tagwerk-Ende: Themen der Runde mit Punkten, Tippen klappt deine Antworten 
   expect(typed).toBeGreaterThan(0);
   // Wieder aufgeklappt: darin die Regel mit „10 Aufgaben üben“
   await page.locator('button.trow').first().click();
-  await page.locator('.tdet [data-a=topic]').click();
+  await page.locator('.tdet [data-a=topic]:not([data-z])').click();
   await expect(page.locator('.pop')).toContainText('Thema');
   await expect(page.locator('.pop [data-a=trapgo]')).toHaveText('10 Aufgaben üben');
 });
@@ -123,12 +123,51 @@ test('Runde mit einem Thema: Schätzung vor und nach der Runde, falsche Aufgaben
   await expect(page.locator('.trow')).toHaveCount(0);
   await expect(page.locator('.tdet .rk-you')).toHaveCount(await page.locator('.rstrip .rs').count());
   const row = page.locator('.donebox .mrowh[data-z]');
-  await expect(row.locator('.msub')).toHaveText(/^geschätzte Fehlerquote, vor der Runde \d+\s%$/);
+  // Adjektivendungen lagen vorher bei 77 % über dem Schnitt; zehn falsche machen sie „klar über Schnitt“ (seit 24.78 genannt)
+  await expect(row.locator('.msub')).toHaveText(/^geschätzte Fehlerquote, jetzt klar über deinem Schnitt; vor der Runde \d+\s%$/);
   // Ring (vor der Runde) und Punkt (jetzt) auf einer Höhe im Streifen; alles falsch: der Punkt rechts vom Ring
   const [ring, dot] = await page.$$eval('.donebox .mstrip .mring, .donebox .mstrip .mdot', els => els.map(e => e.getBoundingClientRect()));
   expect(Math.abs(ring.top - dot.top)).toBeLessThanOrEqual(1);
   expect(dot.left).toBeGreaterThan(ring.left);
   await row.click();
+  await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
+});
+// 24.78: Wechsel bei „klar über Schnitt“ oben, die Schätzung im aufgeklappten Thema. Gestern Nebensätze klar über dem Schnitt,
+// Inversion knapp darunter; im Tagwerk Nebensätze richtig, alles andere falsch (fester Zufall: welche Aufgaben es bringt)
+test('Tagwerk-Ende: Thema rein und raus bei „klar über Schnitt“, aufgeklapptes Thema mit Schätzung und Stand vor dem Tagwerk', async ({ page }) => {
+  await page.addInitScript(fixedRandom, 20261116);
+  await seed(page, klarDB('sv', 'bisats', 'inversion'));
+  await page.goto(APP);
+  await page.click('[data-a=daily]');
+  await answerOnly(page, topicItems('sv', 'bisats'));
+  await expect(page.locator('.done-h')).toHaveText('Tagwerk erledigt');
+  const head = page.locator('.donebox h2.grp', { hasText:'Klar über Schnitt' });
+  await expect(head).toHaveCount(1);
+  const rows = page.locator('.donebox h2.grp:text-is("Klar über Schnitt") + .rows .mrowh');
+  await expect(rows).toHaveCount(2);
+  await expect(rows.nth(0).locator('.rt')).toHaveText('Inversion & „inte“');
+  await expect(rows.nth(0).locator('.msub')).toHaveText(/^geschätzte Fehlerquote, jetzt klar über deinem Schnitt; vor dem Tagwerk \d+\s%$/);
+  await expect(rows.nth(0).locator('.mpct.cl')).toHaveCount(1);
+  await expect(rows.nth(1).locator('.rt')).toHaveText('Wortstellung im Nebensatz');
+  await expect(rows.nth(1).locator('.msub')).toHaveText(/^geschätzte Fehlerquote, nicht mehr klar über deinem Schnitt; vor dem Tagwerk \d+\s%$/);
+  await expect(rows.nth(1).locator('.mpct.cl')).toHaveCount(0);
+  await expect(page.locator('.donebox h2.grp:text-is("Klar über Schnitt") + .rows .mring')).toHaveCount(2);
+  // Oben vor den Themen der Runde; Tipp öffnet „Deine Zahlen“
+  const order = await page.$$eval('.donebox h2.grp', hs => hs.map(h => h.textContent));
+  expect(order.indexOf('Klar über Schnitt')).toBe(order.indexOf('Themen dieser Runde') - 1);
+  await rows.nth(1).click();
+  await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
+  await page.click('.pop [data-a=popclose]');
+  // Aufgeklappt: Schätzung über den Aufgaben, Ring und Punkt auf einer Höhe, „Deine Zahlen“ unter den Aufgaben
+  await page.click('.trow[data-k=inversion]');
+  const est = page.locator('.tdet .tdest');
+  await expect(est).toHaveCount(1);
+  await expect(est.locator('.msub')).toHaveText(/^geschätzte Fehlerquote, jetzt klar über deinem Schnitt; vor dem Tagwerk \d+\s%$/);
+  const [ring, dot] = await page.$$eval('.tdest .mring, .tdest .mdot', els => els.map(e => e.getBoundingClientRect()));
+  expect(Math.abs(ring.top - dot.top)).toBeLessThanOrEqual(1);
+  expect(dot.left).toBeGreaterThan(ring.left);
+  expect(await page.evaluate(() => document.querySelector('.tdest').getBoundingClientRect().bottom <= document.querySelector('.tdet .rk').getBoundingClientRect().top)).toBe(true);
+  await page.click('.tdet [data-a=topic][data-z]');
   await expect(page.locator('.pop [data-a=toptab][data-t=num]')).toHaveAttribute('aria-checked', 'true');
 });
 test('Bonus „Eigener Satz“: aufklappen, Kopie und fehlender Ausdruck werden erkannt, eigene Sätze gleich mit LanguageTool', async ({ page }) => {

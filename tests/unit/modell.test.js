@@ -89,7 +89,9 @@ test('Klar über Schnitt mit Hysterese: rein ab 90 %, raus unter 60 %, Stand vom
   assert.ok(p('species') > 0.6 && p('species') < 0.9 && p('bisats') < 0.6, JSON.stringify(M.topics.map(x => [x.id, x.pAbove])));
   run(`delete DB.clear`);
   assert.deepEqual(run(`[...weakTraps('sv')]`), []);
-  assert.deepEqual(run(`DB.clear.sv`), { day:run('today()'), prev:[], cur:[] }, 'Stand von heute gespeichert');
+  // Ohne Vortag ist der Stand davor unbekannt: prev null (bis 24.77 leer, das las das Rundenende als „vorher nicht klar“)
+  assert.deepEqual(run(`DB.clear.sv`), { day:run('today()'), prev:null, cur:[] }, 'Stand von heute gespeichert');
+  assert.equal(run(`clearBase('sv')`), null);
   // Gestern klar über Schnitt: bleibt, solange P ≥ 60 %; bisats (49 %) fällt heraus
   run(`DB.clear = { sv:{ day:addDays(today(), -1), prev:[], cur:['species', 'bisats'] } }`);
   assert.deepEqual(run(`[...clearSet('sv')]`), ['species']);

@@ -125,3 +125,29 @@ test('Gespeicherte Rückmeldung: falsche Antwort mit „Meine ist auch richtig�
     assert.equal(run('S.dailyRun.cur'), null, JSON.stringify(cur));
   }
 });
+
+// 26.11., Screenshot „te acostumbras“ (Thema üben, richtig): Die Karte war darunter leer, oben stand deine Fassung, vorgelesen wurde
+// die Hauptlösung. Seit 24.78: „Auch richtig“ mit der Hauptlösung, vorgelesen wird, was oben steht.
+const COSTUMBRE = item('es', 'Con el tiempo te acostumbrarás al ritmo de la ciudad.');
+const speakTexts = fb => [...fb.matchAll(/data-a="speak" data-lang="\w+" data-text="([^"]*)"/g)].map(m => m[1]);
+test('Lücke richtig mit einer Alternative: „Auch richtig“ mit der Hauptlösung, vorgelesen wird deine Fassung', () => {
+  const a = answer(COSTUMBRE, 'cloze', 'te acostumbras', 'trap');
+  assert.equal(a.result, 'ok');
+  assert.match(a.task, /<span class="gapdone ok" lang="es">.*acostumbras/);
+  assert.match(text(a.fb), /^Richtig [^.]*wieder Auch richtig: te acostumbrarás( Tipp|$)/);
+  assert.match(a.fb, /<p class="legend also">Auch richtig: <span lang="es"><span data-a="lookup" data-w="te">te<\/span> <span data-a="lookup" data-w="acostumbrarás">acostumbrarás<\/span><\/span><\/p>/);
+  assert.deepEqual(speakTexts(a.fb), ['Con el tiempo te acostumbras al ritmo de la ciudad.']);
+  // Mit der Hauptlösung (auch klein oder mit Satzzeichen) keine Zeile, vorgelesen wird der Satz der Satzbank
+  for (const input of ['te acostumbrarás', 'Te acostumbrarás.']) {
+    const b = answer(COSTUMBRE, 'cloze', input, 'trap');
+    assert.equal(b.result, 'ok', input);
+    assert.doesNotMatch(b.fb, /Auch richtig/, input);
+    assert.deepEqual(speakTexts(b.fb), [COSTUMBRE.target], input);
+  }
+  // Falsch oder fast richtig: wie bisher, die Lösung steht oben in der Lücke
+  assert.doesNotMatch(answer(COSTUMBRE, 'cloze', 'te acostumbre', 'trap').fb, /Auch richtig/);
+  assert.doesNotMatch(answer(COSTUMBRE, 'cloze', 'te acostumbraras', 'trap').fb, /Auch richtig/);
+  // Übersetzen: Die Hauptlösung steht ohnehin als Lösungssatz da
+  const f = answer(COSTUMBRE, 'free', 'Con el tiempo te acostumbras al ritmo de la ciudad.', 'trap');
+  assert.equal(f.result, 'ok'); assert.doesNotMatch(f.fb, /Auch richtig/); assert.match(f.fb, /class="sol"/);
+});

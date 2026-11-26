@@ -385,6 +385,9 @@ button.row[disabled]::after{ display:none; }
 .mc.unm .mcv{ color:var(--faint); }
 /* Urteil, Serie und „wann wieder“ auf einer Mittellinie (vorher hing der Abstand unten an der Pille, sie saß 5 px zu hoch) */
 .vrow{ display:flex; align-items:center; gap:10px; margin:0 0 10px; }
+/* Steht nichts darunter (Lücke richtig, im Thema-Üben), kein Abstand für eine Zeile, die nicht kommt (bis 24.77 unten 26 statt 16 px) */
+.vrow:last-child{ margin-bottom:0; }
+.legend.also{ margin-top:2px; }
 .vrow-l{ flex:1; display:flex; align-items:center; gap:6px 10px; flex-wrap:wrap; }
 .nexthint{ font-size:var(--fs-4); color:var(--muted); }
 .wordrow{ font-family:var(--serif); }
@@ -1132,6 +1135,13 @@ button.row:not([disabled]):active, label.row:active, .langsum:active, .tq-b:not(
 .trow.open::after{ transform:translateY(-2px) rotate(135deg); }
 .tdet{ padding:2px 16px 12px; border-top:1px solid var(--line); background:color-mix(in srgb, var(--bg) 55%, var(--surface)); }
 .tdet.enter{ animation:fadeIn var(--dur-2) var(--ease); }
+/* Aufgeklapptes Thema: Schätzung mit Stand vor der Runde über den Aufgaben (seit 24.78) */
+.tdest{ padding:12px 0 0; }
+.tdest .mtop{ align-items:center; }
+.tdest .mname{ font-weight:var(--fw-regular); }
+.tdest .msub{ font-size:var(--fs-4); }
+.tdest .mstrip{ margin-top:8px; }
+.legend.tdkey{ margin:4px 0 0; padding-bottom:6px; border-bottom:1px solid var(--line); }
 .rks{ list-style:none; margin:0; padding:0; }
 .rk{ display:flex; flex-direction:column; gap:2px; padding:10px 0; border-bottom:1px solid var(--line); }
 .rks .rk:last-child{ border-bottom:0; }

@@ -41,6 +41,38 @@ function longDB(lang){
   }
   return db;
 }
+// Sätze eines Themas aus der Satzbank (Deutsch, Ziel, Lücke), fürs gezielte Beantworten in Sichtprüfung und Tests
+function topicItems(lang, trap){
+  const src = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'data', 'content.js'), 'utf8');
+  const part = lang === 'sv' ? src.slice(0, src.indexOf('es: {')) : src.slice(src.indexOf('es: {'));
+  const i = part.indexOf(`\n${trap}: \``), body = part.slice(i + trap.length + 4, part.indexOf('`', i + trap.length + 4));
+  return body.split('\n').map(l => l.split('|').map(x => x.trim())).filter(p => p.length >= 5).map(p => ({ id:`${lang}:${hash(p[1])}`, de:p[0], target:p[1], gap:p[2].split('/')[0].trim() }));
+}
+// Wechsel bei „klar über Schnitt“ am Tagwerk-Ende (24.78): Gestern war out klar über deinem Schnitt, inn knapp darunter. Fällig sind
+// je fünf Sätze aus beiden, frei zu übersetzen (zwei Tage überfällig, damit die Grenze je Thema nicht greift). Wer out richtig und
+// inn falsch beantwortet, sieht out herausfallen und inn dazukommen; das Tagwerk ist kurz, damit wenig anderes dazwischenkommt.
+function klarDB(lang, out, inn){
+  const db = richDB(lang), pad = n => String(n).padStart(2, '0'), t = new Date();
+  const ds = k => { const d = new Date(t.getFullYear(), t.getMonth(), t.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+  // Vorher: out 86 % über dem Schnitt (bleibt durch die Hysterese), inn 76 %; danach 37 und 94 % (gerechnet mit dem Modell)
+  Object.keys(db.tlog).forEach((d, k) => { db.tlog[d][lang]['p:' + out] = [3, 1]; db.tlog[d][lang]['p:' + inn] = [2, k % 3 ? 1 : 0]; });
+  db.settings.size = 'kurz';
+  db.st = {};
+  [out, inn].forEach(trap => topicItems(lang, trap).slice(0, 5).forEach((it, i) => { db.st[it.id] = { s:4 + i, d:5, ivl:4, last:ds(6), due:ds(2), reps:3, ok:3, bad:0, alts:[] }; }));
+  db.clear = { [lang]:{ day:ds(1), prev:[out], cur:[out] } };
+  return db;
+}
+// Fester Zufall im Browser (mulberry32), vor dem Laden gesetzt: für Tests, deren Ablauf davon abhängt, welche Aufgaben ein
+// Tagwerk bringt. Aufruf: page.addInitScript(fixedRandom, startwert)
+const fixedRandom = seed => { let a = seed; Math.random = () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+// Beantwortet die Aufgaben einer Runde: Sätze aus right frei übersetzt richtig, alles andere falsch
+async function answerOnly(page, right){
+  for (let k = 0; k < 80 && await page.$('.runbar'); k++) {
+    const de = await page.$('.ex .de') ? (await page.textContent('.ex .de')).trim() : '', it = right.find(x => x.de === de);
+    if (it && await page.$('textarea#answer, input#answer')) { await page.fill('#answer', it.target); await page.click('[data-a=check]'); } else await answerWrong(page);
+    await page.click('[data-a=next]');
+  }
+}
 // Profil vor dem ersten Laden setzen (nur einmal pro Seite, damit Neuladen den Stand behält)
 async function seed(page, db){
   await page.addInitScript(([k, v]) => { if (!sessionStorage.getItem('seeded')) { sessionStorage.setItem('seeded', '1'); localStorage.setItem(k, v); } }, [KEY, JSON.stringify(db)]);
@@ -99,4 +131,4 @@ const test = base.test.extend({
     base.expect(errors, 'JavaScript-Fehler auf der Seite').toEqual([]);
   }
 });
-module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, longDB, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };
+module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, longDB, klarDB, topicItems, fixedRandom, answerOnly, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };

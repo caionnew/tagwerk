@@ -25,11 +25,18 @@ const MODEL = { H:14, M_MIN:2, M_MAX:200, M0:10, MIN_N:3, CLEAR_IN:0.9, CLEAR_OU
 // dafür kommt eine neue Schwäche bei 1,2 Aufgaben am Tag im Median erst nach 27 statt 12 Tagen dazu.
 // Gedächtnis im Speicherstand: DB.clear[lang] = { day, prev, cur }; prev ist der Stand vom letzten früheren Tag, cur der von heute.
 // Fehlt das Feld (ältere Stände), zählt nur die Schwelle zum Hereinkommen.
+// Der Stand, an dem sich die Hysterese misst: der vom letzten früheren Tag. Unbekannt (null): ohne Gedächtnis (ältere Stände) und
+// am ersten Tag mit Gedächtnis, dort ist prev seit 24.78 null statt leer. Auch fürs Rundenende, wenn der Stand beim Start der Runde
+// fehlt (fortgesetztes Tagwerk); ein leeres prev hätte dort jedes klare Thema als neu gemeldet.
+function clearBase(lang){
+  const s = DB.clear && DB.clear[lang], b = s ? (s.day === today() ? s.prev : s.cur) : null;
+  return Array.isArray(b) ? new Set(b) : null;
+}
 function clearSet(lang){
   const M = topicModel(lang), t = today(); DB.clear = DB.clear || {};
-  const s = DB.clear[lang], base = new Set(s ? (s.day === t ? s.prev : s.cur) || [] : []);
+  const s = DB.clear[lang], known = clearBase(lang), base = known || new Set();
   const cur = M.topics.filter(x => x.n >= MODEL.MIN_N && (x.pAbove >= MODEL.CLEAR_IN || (base.has(x.id) && x.pAbove >= MODEL.CLEAR_OUT))).map(x => x.id);
-  if (!s || s.day !== t || (s.cur || []).join() !== cur.join()) DB.clear[lang] = { day:t, prev:[...base], cur };
+  if (!s || s.day !== t || (s.cur || []).join() !== cur.join()) DB.clear[lang] = { day:t, prev:known ? [...known] : null, cur };
   return new Set(cur);
 }
 // Stand vor einer Runde (startRun): Schätzung je Thema ab 3 gewichteten Aufgaben, fürs Rundenende „vor der Runde“. Nur in der
@@ -38,6 +45,17 @@ function estSnap(lang){
   const M = topicModel(lang); if (!M.fitted) return null;
   const by = {}; M.topics.forEach(x => { if (x.n >= MODEL.MIN_N) by[x.id] = x.mean; });
   return by;
+}
+// Dazu „klar über Schnitt“ beim Start (seit 24.78), für den Wechsel am Rundenende; ebenso nur in der Sitzung
+function clearSnap(lang){ return topicModel(lang).fitted ? [...clearSet(lang)] : null; }
+// Wechsel bei „klar über Schnitt“ unter den Themen ids: vorher der Stand beim Start der Runde, ohne ihn (fortgesetztes Tagwerk)
+// der vom letzten früheren Tag (before undefined). before null: Beim Start rechnete das Modell noch nicht, also war keins klar.
+// Ergebnis [{ id, on }] in der Reihenfolge von ids; on: jetzt klar über Schnitt.
+function clearChanges(lang, ids, before){
+  if (!topicModel(lang).fitted) return [];
+  const b = before === undefined ? clearBase(lang) : new Set(before || []); if (!b) return [];
+  const now = clearSet(lang);
+  return ids.filter(id => b.has(id) !== now.has(id)).map(id => ({ id, on:now.has(id) }));
 }
 // Die höchsten Schätzungen unter den Themen, die sich üben lassen (topicIds), ab 3 gewichteten Aufgaben; für Heute und „Thema üben“.
 // Erst, wenn das Modell gerechnet hat (mindestens 3 Themen mit Daten), sonst stünde dort nur der gepoolte Schnitt.

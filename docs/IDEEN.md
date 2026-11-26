@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 25. November 2026 (nach 24.77.0)
+Stand: 26. November 2026 (nach 24.78.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -165,6 +165,19 @@ Spanisch:
 - **Lernminuten: Sprachen nebeneinander statt übereinander (C+, geprüft am 22.11.).** Jede Sprache stünde auf der Grundlinie, aber zwei Säulen von 6 px je Tag sind unruhig, und die Summe des Tages ist schwerer zu sehen.
 - **Übrige Säulen abblenden, wenn ein Tag gewählt ist (C+, geprüft am 22.11.).** Im Dunkeln werden die Farben matt; die Markierung der Säule reicht.
 - **Rundenende mit einem Thema, weitere Punkte (geprüft am 25.11., umgesetzt ist 24.76.0: Schätzung vorher und nachher, Fehler offen).** Sekunden je Aufgabe (C, Tempo ist kein Lernziel); „richtig in Folge“ bei nur einem Fehler weglassen (C+, die Leiste zeigt es, stört aber nicht); „Eigener Satz“ auch nach erzeugten Aufgaben (B−, ohne Ausdruck aus der Satzbank fehlt die Aufgabe, LanguageTool prüft Schwedisch fast nur auf Rechtschreibung).
+- **Tagwerk-Ende: Fehlerauswertung, weitere Varianten (geprüft am 26.11.; umgesetzt in 24.78.0: Wechsel bei „klar über Schnitt“ oben, Schätzung im aufgeklappten Thema).** Grundlage: Ein Tagwerk verschiebt die Schätzung je Thema um 1 bis 3 Punkte (RESEARCH.md).
+  - **Jedes Thema mit Streifen und Ring (C+):** Abschnitt 3,5-mal so lang, Ring und Punkt fast deckungsgleich; zeigt die Punkte noch einmal.
+  - **Quote in jeder Zeile neben den Punkten (B−):** „27 %“ neben drei Punkten liest sich als Quote von heute; die Themenliste in Fortschritt hat die Zahlen.
+  - **Alle Fehler als kompakte Liste „falsch → richtig“ (B−):** schnell zu überfliegen, doppelt aber die Themenliste; beim Übersetzen stünde der ganze Satz zweimal da.
+  - **„Erwartet etwa 6 Fehler (3 bis 9), heute 4“ (C+):** fast jeder Tag liegt im Bereich, das Modell kennt Übungsart und neu/Wiederholung nicht, und es folgt nichts daraus.
+- **Schätzung im aufgeklappten Thema, Darstellungen (geprüft am 26.11.; gewählt: Streifen wie überall, Stand vor der Runde als Ring, mit Legende).**
+  - **Wahrscheinlichkeit über dem Schnitt mit den Schwellen 60 und 90 % (B):** zeigt genau die Größe hinter „klar über Schnitt“ und wie nah ein Wechsel ist; aber eine zweite Prozentzahl neben der Fehlerquote, und sie bewegt sich stark mit dem Schnitt. Steht als Satz in „Deine Zahlen“.
+  - **Verlauf über 12 Wochen, klein (B−):** Zusammenhang statt Momentaufnahme, aber 120 px mehr zwischen den Aufgaben und derselbe Verlauf einen Tipp weiter in „Deine Zahlen“.
+  - **Nur Zahlen in einem Satz (B−):** knapp und genau, aber ohne Bild ist der Abstand zum Schnitt schwerer zu sehen.
+  - **Pfeil vom Ring zum Punkt (C+):** Pfeile heißen in der Themenliste „vier gegen vier Wochen“; bei 1 bis 3 Punkten ist er kürzer als der Punkt.
+  - **Zwei Streifen, vorher und jetzt (C+):** doppelte Höhe für zwei fast gleiche Streifen.
+- **Rückmeldung „Richtig“ (geprüft am 26.11.; umgesetzt in 24.78.0: kein leerer Streifen, „Auch richtig“ bei Lücken mit Alternative).** Erklärung beim ersten Kontakt auch bei richtig (B): Geratenes bekäme die Regel, kostet bei neuen Sätzen eine Zeile. Erklärung immer (C+): Lärm bei vier von fünf Antworten.
+- **„se me cortó el dedo“ (geprüft am 26.11., auf deinen Wunsch gelassen).** Falsch gewertet zu Recht (das ungewollte „se me“ gilt für das Ding, dem etwas passiert; den Schnitt macht man selbst: me corté). Die Erklärung des Satzes spricht aber von „mi dedo“, und die Regel des Themas („se me cayó: Es ist mir passiert“) lädt genau zu diesem Fehler ein. Vorschlag war: Erklärung und eine Zeile in der Regel (A−), später eine Erkennung „se me“ statt „me“ (siehe „Verwechslung beim Namen nennen“).
 - **Zweiter Versuch als Lücke an der Fehlerstelle (B, geprüft am 25.11.; gewählt in 24.77.0: der ganze Satz, wenn die Lücke schon stimmte).** „La reunión se puso ___ cuando …“ statt des ganzen Satzes wäre schneller. Die Fehlerstelle kommt aber aus dem Vergleich mit der nächsten Lösung, und ein Synonym, das in den Alternativen fehlt, sähe dort genauso aus wie ein Fehler; die Lücke fragte dann ein richtiges Wort ab.
 - **Pause nach der Antwort zählt wie „Weiter“ (B, geprüft am 25.11.; gewählt in 24.77.0: Rückmeldung speichern).** So macht es „Beenden“ in den übrigen Runden. Beim Tagwerk ginge damit „Meine ist auch richtig“ verloren, und eine App, die Android ohne Pause beendet, stellte die Frage weiter neu.
 - **Wortkästchen: Lösungssatz nicht wiederholen (C+, geprüft am 25.11.).** Wie bei den Lücken steht die Lösung nach einer richtigen Antwort oben schon da, aber als Kästchen ohne Großschreibung und Satzzeichen; der Satz darunter liest sich besser.

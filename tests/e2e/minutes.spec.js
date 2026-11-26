@@ -65,7 +65,8 @@ test('Lernminuten: Die Karte kommt ganz ins Bild, auch wenn die Säulen unten am
   await expect(card).toBeVisible();
   await expect.poll(() => page.evaluate(() => Math.round(document.querySelector('.chart.mins .dcard').getBoundingClientRect().bottom - document.getElementById('tabs').getBoundingClientRect().top))).toBeLessThanOrEqual(0);
   expect(await page.evaluate(() => document.querySelector('.mchart').getBoundingClientRect().top)).toBeGreaterThan(0);
-  expect(await page.evaluate(() => window.__anims)).toEqual(['dcard', 'mc sel']);
+  // Montags trägt die Säule zusätzlich „mon“ (Wochentrenner); ds(3) ist donnerstags ein Montag. Bis 24.77 war der Test dann rot.
+  expect(await page.evaluate(() => window.__anims.map(c => c.split(' ').filter(k => k !== 'mon').join(' ')))).toEqual(['dcard', 'mc sel']);
   // Schließen: ohne Bewegung
   await page.evaluate(() => { window.__anims.length = 0; });
   await page.click(`.mchart .mc[data-k="${ds(3)}"]`);

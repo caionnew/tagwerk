@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 27. November 2026 (nach 24.81.0)
+Stand: 27. November 2026 (nach 24.82.0)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -16,7 +16,7 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 
 ## Fahrplan
 
-Bei den Funktionen ist der Stand gerade die beste Lösung: Fehler beheben, die beim Üben auffallen, Updates bündeln. Die Arbeit geht in die Inhalte. Daneben räumt die App in drei Schritten auf, was beim Wachsen nicht mehr zusammenpasst.
+Die Arbeit geht in die Inhalte. Daneben räumt die App in drei Schritten auf, was beim Wachsen nicht mehr zusammenpasst.
 
 ### Aufräumen nach der Durchsicht vom 22.11.
 
@@ -114,10 +114,6 @@ Spanisch:
 - Castrillo Mota de Judíos: Ein Dorf ändert 2014 seinen Namen. (Anekdote, Geschichte)
 - El Hierro: eine Insel, die mit Wind und Wasser Strom erzeugt. (Lokales)
 - La pelota vasca: Frontón und Jai alai. (Sport)
-
-## Offen: Rückmeldung von dir
-
-- **Sprachausgabe auf dem Handy (25.11.):** wo genau sie schweigt (Rückmeldung, Rundenende, Hörrunde, Lesen) und ob „Üben“ den Hinweis auf eine fehlende Stimme zeigt. Das Vorlesen ist seit 24.26.0 unverändert.
 
 ## Nach echter Nutzung nachstellen
 

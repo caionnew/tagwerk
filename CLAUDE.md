@@ -62,5 +62,5 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
 - Inhalte sachlich korrekt und idiomatisch. Wo zwei Lösungen gehen, als Alternative aufnehmen oder aus den Optionen nehmen. Bei erzeugten Sätzen alle Fassungen lesen, nicht nur Stichproben.
 
 ## Stand
-- Ich nutze die App seit dem 15.11.2026. Bei den Funktionen ist der Status quo gerade die beste Lösung: nutzen, nur gemeldete Fehler beheben, Updates bündeln.
+- Ich nutze die App seit dem 15.11.2026.
 - Was als Nächstes kommt, was zurückgestellt ist und was bewusst nicht kommt, steht in docs/IDEEN.md, nicht hier.

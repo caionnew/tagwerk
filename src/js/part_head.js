@@ -135,6 +135,127 @@ function gapPos(target, gap){
   const m = re.exec(target);
   return m ? m.index : target.indexOf(gap);
 }
+// Kombinationen von Alternativen: Jede Alternative ist eine Änderung am Zielsatz, als Wortbereiche, die nach der längsten
+// gemeinsamen Folge abweichen. Alternativen mit höchstens zwei geänderten Stellen, deren Bereiche sich nicht berühren
+// (auch nicht angrenzen), gelten auch zusammen: „lyfta frågan på mötet“ und „ta upp frågan under mötet“ ergeben
+// „lyfta frågan under mötet“. Was eine Alternative zusammen ändert, bleibt zusammen (la sesión … tensa).
+const altKey = w => w.toLowerCase().replace(/[.!?¡¿,;:"„“”«»()…–—]/g, '');
+// Bereiche [a0, a1) in A, ersetzt durch [b0, b1) aus B (A, B: Schlüssel der Wörter). Gleicher Anfang und gleiches Ende
+// gehören immer zur längsten gemeinsamen Folge; gerechnet wird nur die Mitte.
+function altEdits(A, B){
+  let p = 0, q = 0;
+  while (p < A.length && p < B.length && A[p] === B[p]) p++;
+  while (q < A.length - p && q < B.length - p && A[A.length - 1 - q] === B[B.length - 1 - q]) q++;
+  const n = A.length - q, m = B.length - q, w = m - p + 1;
+  const L = new Uint16Array((n - p + 1) * w), at = (i, j) => (i - p) * w + (j - p);
+  for (let i = n - 1; i >= p; i--) for (let j = m - 1; j >= p; j--) L[at(i, j)] = A[i] === B[j] ? L[at(i + 1, j + 1)] + 1 : Math.max(L[at(i + 1, j)], L[at(i, j + 1)]);
+  const out = [];
+  let i = p, j = p, cur = null;
+  while (i < n || j < m) {
+    if (i < n && j < m && A[i] === B[j]) { if (cur) { out.push(Object.assign(cur, { a1:i, b1:j })); cur = null; } i++; j++; continue; }
+    if (!cur) cur = { a0:i, b0:j };
+    if (j < m && (i === n || L[at(i, j + 1)] >= L[at(i + 1, j)])) j++; else i++;
+  }
+  if (cur) out.push(Object.assign(cur, { a1:i, b1:j }));
+  return out;
+}
+const caseFirst = (w, up) => w.replace(/^([¿¡"„«(]*)(\p{L})/u, (m, p, c) => p + (up ? c.toUpperCase() : c.toLowerCase()));
+function altCombos(target, alts){
+  if (alts.length < 2) return [];
+  const T = target.split(/\s+/), TK = T.map(altKey), all = [target].concat(alts);
+  const eds = alts.map(a => { const b = a.split(/\s+/), e = altEdits(TK, b.map(altKey)); return e.length && e.length <= 2 ? { b, e } : null; }).filter(Boolean);
+  if (eds.length < 2) return [];
+  const touch = (x, y) => x.e.some(r => y.e.some(s => !(r.a1 < s.a0 || s.a1 < r.a0)));
+  // Satzzeichen und Großschreibung: Ein Wort, das in seiner Fassung einen Satz begann (am Anfang oder nach ? . !) und jetzt
+  // mitten im Satz steht, wird klein, außer es steht irgendwo mitten im Satz groß (Namen). Nach ? . ! groß.
+  const ends = w => /[.!?…]$/.test(w || '');
+  const word = (ws, k) => ({ w:ws[k], start:k === 0, sent:k === 0 || ends(ws[k - 1]), last:k === ws.length - 1 });
+  let inner = null;
+  const innerCap = w => (inner || (inner = new Set(all.flatMap(s => { const ws = s.split(/\s+/); return ws.filter((x, k) => k && !ends(ws[k - 1]) && /^[¿¡"„«(]*\p{Lu}/u.test(x)); }).map(altKey)))).has(altKey(w));
+  const trail = w => (/[.,;:!?…]+$/.exec(w) || [''])[0], bare = w => w.replace(/[.,;:!?…]+$/, '');
+  const open = (/^[¿¡]+/.exec(T[0]) || [''])[0], close = trail(T[T.length - 1]).replace(/^[,;:]+/, '');
+  const out = [];
+  const make = set => {
+    const words = T.map((w, k) => word(T, k));
+    set.flatMap(x => x.e.map(r => ({ r, b:x.b }))).sort((p, q) => q.r.a0 - p.r.a0).forEach(({ r, b }) => {
+      // Das Wort vor der Änderung trägt die Satzzeichen der Alternative (år, i Göteborg → år i Göteborg,)
+      if (r.a0 > 0 && r.b0 > 0) words[r.a0 - 1].w = bare(words[r.a0 - 1].w) + trail(b[r.b0 - 1]);
+      words.splice(r.a0, r.a1 - r.a0, ...b.slice(r.b0, r.b1).map((w, k) => word(b, r.b0 + k)));
+    });
+    const ws = [];
+    words.forEach((x, k) => {
+      let w = x.w;
+      if (x.start) w = w.replace(/^[¿¡]+/, '');
+      if (x.last) w = bare(w);
+      ws.push(k === 0 ? open + caseFirst(w, true) : ends(ws[k - 1]) ? caseFirst(w, true) : x.sent && !innerCap(w) ? caseFirst(w, false) : w);
+    });
+    ws[ws.length - 1] = bare(ws[ws.length - 1]) + close;
+    return ws.join(' ');
+  };
+  // alle Gruppen aus mindestens zwei Alternativen, die sich paarweise nicht berühren
+  const grow = (set, from) => {
+    for (let k = from; k < eds.length; k++) {
+      if (set.some(x => touch(x, eds[k]))) continue;
+      const next = set.concat([eds[k]]);
+      if (next.length >= 2) out.push(make(next));
+      grow(next, k + 1);
+    }
+  };
+  grow([], 0);
+  return out;
+}
+// Subjuntivo auf -se wie auf -ra: lloviese wie lloviera. Erkannt werden nur Formen, die esPastSubjForms aus einem Verb
+// des Wörterbuchs bildet: nicht ahora, para, era. Die Formen auf -ra aller Verben einmal je Wörterbuch.
+let RA_FORMS = null;
+function esRaForms(){
+  if (RA_FORMS && RA_FORMS.g === GLOSS) return RA_FORMS.set;
+  const set = new Set();
+  new Set(Object.entries(GLOSS.es).map(([k, e]) => (e.l || k).replace(/(ar|er|ir)se$/, '$1')).filter(x => /^[a-zñ]+(ar|er|ir)$/.test(x)))
+    .forEach(inf => esPastSubjForms(inf).slice(0, 6).forEach(f => set.add(f)));
+  RA_FORMS = { g:GLOSS, set };
+  return set;
+}
+function esSeForm(w){
+  const m = /^([^\p{L}]*)(\p{L}+?)ra(s|mos|is|n)?([^\p{L}]*)$/u.exec(w);
+  if (!m || !esRaForms().has(deacc((m[2] + 'ra' + (m[3] || '')).toLowerCase()))) return '';
+  return m[1] + m[2] + 'se' + (m[3] || '') + m[4];
+}
+function esSeVariants(s){
+  const ws = s.split(/\s+/), at = ws.map((w, k) => (esSeForm(w) ? k : -1)).filter(k => k >= 0), out = [];
+  for (let mask = 1; mask < 1 << Math.min(at.length, 3); mask++) out.push(ws.map((w, k) => (at.indexOf(k) >= 0 && mask & (1 << at.indexOf(k)) ? esSeForm(w) : w)).join(' '));
+  return out;
+}
+// Erzeugte Fassungen eines Satzes: Kombinationen, dann -se zu jeder Fassung mit -ra. Ohne Doppelte, ohne „nicht:“,
+// ohne Fassungen, die Formen beider Normen mischen (he perdido … salí).
+const ES_RA = /\p{L}ra(s|mos|is|n)?(?!\p{L})/u;
+function altsMade(lang, target, alts, not, marks){
+  const se = s => (lang === 'es' && ES_RA.test(s) ? esSeVariants(s) : []);
+  const own = [target].concat(alts), combos = altCombos(target, alts), ownSe = own.map(se);
+  if (!combos.length && !ownSe.some(x => x.length)) return [];
+  const key = s => norm(s, lang), seen = new Set(own.map(key)), bad = new Set(not.map(key)), out = [];
+  const add = s => {
+    const k = key(s), t = ' ' + k + ' ';
+    if (seen.has(k) || bad.has(k)) return;
+    if (new Set(Object.keys(marks).filter(f => t.includes(' ' + f + ' ')).map(f => marks[f])).size > 1) return;
+    seen.add(k); out.push(s);
+  };
+  combos.forEach(add);
+  const fromCombos = out.slice();
+  ownSe.forEach(x => x.forEach(add));
+  fromCombos.forEach(s => se(s).forEach(add));
+  return out;
+}
+// Alternativen eines Satzes: eigene und erzeugte; Lückenfüllungen, die sich aus den Fassungen ergeben (gleicher Anfang und
+// gleiches Ende wie der Zielsatz, also auch lloviese aus der Fassung auf -se)
+function altsFill(lang, target, gaps, own, not, marks){
+  const made = altsMade(lang, target, own, not, marks), alts = own.concat(made), gapAlts = gaps.slice();
+  if (gapAlts[0]) {
+    const pos = gapPos(target, gapAlts[0]);
+    const pre = target.slice(0, pos), post = target.slice(pos + gapAlts[0].length);
+    alts.forEach(a => { if (pos >= 0 && a.startsWith(pre) && a.endsWith(post) && a.length > pre.length + post.length) { const fill = a.slice(pre.length, a.length - post.length).trim(); if (fill && !gapAlts.includes(fill)) gapAlts.push(fill); } });
+  }
+  return { alts, gapAlts, made };
+}
 function buildBank(){
   BANK = { sv:[], es:[] };
   ['sv', 'es'].forEach(lang => {
@@ -149,14 +270,15 @@ function buildBank(){
         // eine Form ohne Zeichen für beide. Ein Satz mit solchen Formen fragt bei jeder Aufgabe eine der beiden Normen ab (exNorm).
         const marks = {};
         const gaps = gap ? gap.split('/').map(x => x.trim()).filter(Boolean).map(x => { const m = /^(ES|LA):\s*(.+)$/.exec(x); if (!m) return x; marks[norm(m[2], lang)] = m[1].toLowerCase(); return m[2]; }) : [];
-        const altList = alts ? alts.split(';;').map(x => x.trim()).filter(Boolean) : [];
-        if (gaps[0]) {
-          // Lückenfüllungen, die sich aus den alternativen Sätzen ergeben (gleicher Anfang und gleiches Ende)
-          const pos = gapPos(target, gaps[0]);
-          const pre = target.slice(0, pos), post = target.slice(pos + gaps[0].length);
-          altList.forEach(a => { if (pos >= 0 && a.startsWith(pre) && a.endsWith(post) && a.length > pre.length + post.length) { const fill = a.slice(pre.length, a.length - post.length).trim(); if (fill && !gaps.includes(fill)) gaps.push(fill); } });
-        }
-        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0, note, norms:Object.keys(marks).length ? marks : null });
+        // Alternativen; „nicht:“ davor heißt: Diese erzeugte Fassung ist falsch (siehe altsMade)
+        const altRaw = alts ? alts.split(';;').map(x => x.trim()).filter(Boolean) : [];
+        const own = altRaw.filter(x => !/^nicht:/.test(x)), not = altRaw.filter(x => /^nicht:/.test(x)).map(x => x.replace(/^nicht:\s*/, ''));
+        const item = { id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', hint, not, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0, note, norms:Object.keys(marks).length ? marks : null };
+        // Alternativen samt erzeugten Fassungen und Lückenfüllungen erst beim ersten Zugriff: Beim Start braucht sie kaum ein Satz
+        let got = null;
+        const fill = () => got || (got = altsFill(lang, target, gaps, own, not, marks));
+        Object.defineProperties(item, { alts:{ get:() => fill().alts, enumerable:true }, gapAlts:{ get:() => fill().gapAlts, enumerable:true }, made:{ get:() => fill().made, enumerable:true } });
+        BANK[lang].push(item);
       });
     });
     (DB.own[lang] || []).forEach(o => BANK[lang].push({ id:o.id, lang, trap:'eigene', kind:'order', de:o.de, target:o.target, gap:'', gapAlts:[], hint:'', alts:[], own:true }));

@@ -1,6 +1,6 @@
 {
   "name": "tagwerk",
-  "version": "24.82.0",
+  "version": "24.83.0",
   "private": true,
   "description": "Offline-Lern-App für Schwedisch und Spanisch: Sätze mit FSRS-Wiederholung, Grammatik-Generatoren, Schreiben mit Textprofil. Ohne Konto, ohne KI.",
   "scripts": {
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "d3-geo": "^3.1.1",
-    "eslint": "9.39.5",
+    "eslint": "10.16.0",
     "globals": "17.14.0",
     "topojson-client": "^3.1.0",
     "topojson-server": "^3.0.1",

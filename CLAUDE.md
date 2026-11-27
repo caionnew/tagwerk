@@ -28,6 +28,7 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
    - Browser-Tests: `CHROMIUM_PATH=$(ls -d /opt/pw-browsers/chromium-*/chrome-linux64/chrome | head -1) npx playwright test --project=chromium`. Firefox fehlt dort; das prüft die CI.
    - Keine Tests, die vom Zufall abhängen; wo Zufall nötig ist, mit festem Startwert. Startdaten in Browser-Tests über `seed()`; Neuladen behält den Speicher.
    - Rund um Mitternacht (UTC oder Ortszeit) können datumsabhängige Tests scheitern; dann danach wiederholen.
+   - Ändern sich Sätze oder Alternativen, nennt tests/unit/kombinationen.test.js neue erzeugte Fassungen (Kombinationen, -se): alle lesen, falsche mit „nicht: …“ in den Alternativen ausschließen, dann `node tools/kombinationen.js --write`.
 4. Sichtprüfung bei UI-Änderungen: `npm run sicht -- --vs origin/main` macht Vorher/Nachher aller Ansichten in 390×844 und 411×923, hell und dunkel. Neue Ansichten in tools/sicht.js aufnehmen und die Bilder wirklich ansehen. Wenn ich ein Backup (JSON) mitschicke, damit prüfen: Echte Daten zeigen mehr als Testprofile.
 5. Ändert sich Speicher, Backup oder eine Aufgabenart: den vorigen Stand mit `git worktree` bauen, dort mit offenem Tagwerk exportieren, im neuen Stand auf leerem Gerät einspielen, weiterüben, wieder exportieren und einspielen.
 6. Release:
@@ -44,10 +45,10 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
 - src/js/part_stats.js: Themenliste im Sprach-Tab (topicListHtml, mit Veränderungspfeilen), Karte „Wie du Fehler machst“ (errorWaysHtml; mistake: Fehlerart; Wortschatz-Themen prüfen das Wort, nicht die Form), hartnäckige Sätze; part_model.js: Fehlermodell je Thema und je Übungsart (rateModel: Beta-Binomial mit Vergessen, empirisch-bayessch: Schätzung, Bereich, höchste Quoten topRates zum Anzeigen, „klar über Schnitt“ clearSet mit Hysterese 90/60 zum Handeln (Wechsel durch eine Runde: clearChanges, oben am Rundenende), Veränderung topicChange vier gegen vier Wochen mit pLess, Verlauf topicHistory, Thompson-Sampling für den Schwerpunkt), eine Rechnung für Heute, Themenliste, Themenblatt, Schwerpunkt, „Als Nächstes“, Grundlagensätze; part_ref.js: Themenblatt mit „Regel“ und „Deine Zahlen“; part_long.js: „Dein Weg“, Jahr für Jahr.
 - src/js/part_read.js: Lesen und Hören; part_radio.js: Hörrunde; part_shadow.js: Nachsprechen; part_speech.js: Vorlesen und Aufnahme; part_write.js: Schreiben; part_ref.js: Themenblatt, Karten; part_online.js: Tatoeba, LanguageTool.
 - src/js/generators.js (GENS, darunter Nomen tauschen mit SWAP_ES) und forms.js: erzeugte Übungen, Fehler finden, Umbauen, Uhrzeiten, Genus.
-- src/data/content.js: Satzbank, je Zeile „Deutsch | Ziel | Lücke | Hinweis | Alternativen | Niveau | Erklärung“ (Niveau optional, Erklärung Pflicht).
+- src/data/content.js: Satzbank, je Zeile „Deutsch | Ziel | Lücke | Hinweis | Alternativen | Niveau | Erklärung“ (Niveau optional, Erklärung Pflicht). Kombinationen von Alternativen und -se zu -ra erzeugt part_head.js (altsMade), beim ersten Zugriff je Satz.
 - src/data/gloss.js: Wörterbuch. Jedes Wort aus Satzbank, Generatoren und Lesetexten muss nachschlagbar sein (Test).
 - src/data/texte.js: Lesetexte; kultur.js, geo.js: Land & Leute; terms.js: Fachbegriffe; fundstueck.js: Feste, falsche Freunde.
-- tests/unit (App in Node über tests/helpers/load.js), tests/e2e (helpers.js: freshDB, richDB, seed, answerWrong, stored); tools/sicht.js, tools/einspielen.sh.
+- tests/unit (App in Node über tests/helpers/load.js), tests/e2e (helpers.js: freshDB, richDB, seed, answerWrong, stored); tools/sicht.js, tools/einspielen.sh, tools/kombinationen.js.
 
 ## Festgelegte Entscheidungen
 - Ein Tagwerk am Tag ist die Einheit, in einer Sprache, gewählt nach Bedarf. Die andere Sprache steht auf „Heute“ mit Stand und „Tagwerk starten“. Die Serie zählt je Tag, Tagwerke werden je Sprache gezählt.

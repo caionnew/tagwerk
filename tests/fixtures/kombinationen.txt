@@ -1,0 +1,811 @@
+# sv bisats | Hon är ledsen eftersom hennes pojkvän inte har ringt henne.
+Hon är ledsen för att hennes pojkvän inte har ringt till henne.
+# sv bisats | Fast han jobbar mycket har han aldrig stress.
+Trots att han arbetar mycket har han aldrig stress.
+# sv bisats | Säg till om du inte orkar mer.
+Säg till när du inte orkar längre.
+# sv bisats | Fast vi inte hade setts på länge kände jag igen henne direkt.
+Trots att vi inte hade träffats på länge kände jag genast igen henne.
+Trots att vi inte hade träffats på länge kände jag direkt igen henne.
+Trots att vi inte hade setts på länge kände jag genast igen henne.
+Trots att vi inte hade setts på länge kände jag direkt igen henne.
+Fast vi inte hade träffats på länge kände jag genast igen henne.
+Fast vi inte hade träffats på länge kände jag direkt igen henne.
+# sv bisats | Jag hade kommit om jag hade vetat att du inte var ensam.
+Jag skulle ha kommit om jag hade vetat att du inte är ensam.
+# sv bisats | Det är inte konstigt att folk inte åker tåg längre när tågen hela tiden är försenade.
+Det är inte konstigt att folk slutar åka tåg när tågen ständigt är försenade.
+Det är inte konstigt att folk slutar åka tåg när tågen är försenade hela tiden.
+Det är inte konstigt att folk inte längre åker tåg när tågen ständigt är försenade.
+# sv bisats | Jag förstår inte varför han aldrig har bett om ursäkt.
+Jag begriper inte varför han aldrig bad om ursäkt.
+# sv bisats | Det är förvånande att hon inte ens frågade.
+Det är märkligt att hon inte ens har frågat.
+# sv bisats | Jag undrar om han verkligen har förstått vad det handlar om.
+Jag undrar om han verkligen förstod vad det gäller.
+# sv bisats | Det är ett problem som man sällan pratar om.
+Det är ett problem man sällan talar om.
+# sv bisats | Han säger att han egentligen inte har lust, men att han följer med ändå.
+Han säger att han egentligen inte har någon lust, men att han ändå följer med.
+# sv bisats | Jag är glad att vi äntligen har pratat ut.
+Jag är glad över att vi äntligen har pratat ut med varandra.
+# sv bisats | Trots att hon har bott i Sverige länge pratar hon knappt svenska.
+Fast hon har bott länge i Sverige pratar hon knappt svenska.
+Fast hon har bott länge i Sverige pratar hon nästan ingen svenska.
+Fast hon har bott i Sverige länge talar hon knappt svenska.
+Fast hon har bott i Sverige länge talar hon nästan ingen svenska.
+Fast hon har bott i Sverige länge pratar hon nästan ingen svenska.
+Trots att hon har bott länge i Sverige pratar hon nästan ingen svenska.
+Trots att hon har bott i Sverige länge talar hon nästan ingen svenska.
+# sv bisats | Säg till om du ändå inte kan komma.
+Säg till ifall du inte kan komma ändå.
+Hör av dig om du inte kan komma ändå.
+# sv bisats | Det var tydligt att vi inte skulle hinna med tåget.
+Det var klart att vi inte längre skulle hinna med tåget.
+Det var uppenbart att vi inte längre skulle hinna med tåget.
+# sv bisats | Många anställda klagar på att de aldrig får veta vad ledningen planerar.
+Många anställda klagar över att de aldrig får reda på vad ledningen planerar.
+# sv bisats | Om du inte hinner läsa hela rapporten räcker det med sammanfattningen.
+Hinner du inte läsa hela rapporten räcker sammanfattningen.
+# sv bisats | Hon blev besviken när hon märkte att ingen ens hade kommit ihåg hennes födelsedag.
+Hon blev besviken när hon insåg att ingen ens kom ihåg hennes födelsedag.
+Hon blev besviken när hon insåg att ingen ens hade mints hennes födelsedag.
+# sv bisats | Vi tog bilen eftersom bussen ändå inte går på söndagar.
+Vi tog bilen för att bussen inte går på söndagar ändå.
+Vi har tagit bilen för att bussen inte går på söndagar ändå.
+Vi har tagit bilen för att bussen ändå inte går på söndagar.
+Vi har tagit bilen eftersom bussen inte går på söndagar ändå.
+# sv bisats | Det märks att han inte är van vid att tala inför publik.
+Man märker att han inte är van att tala inför publik.
+Man märker att han inte är van att prata inför publik.
+Man märker att han inte är van vid att prata inför publik.
+# sv bisats | Ingen förstår varför man inte bara frågar de boende vad de vill ha.
+Ingen begriper varför man inte bara frågar de boende vad de vill.
+Ingen begriper varför man inte helt enkelt frågar de boende vad de vill.
+Ingen förstår varför man inte helt enkelt frågar de boende vad de vill.
+Ingen begriper varför man inte helt enkelt frågar de boende vad de vill ha.
+# sv bisats | Trots att hon alltid har bott i stan kan hon namnet på varenda fågel.
+Fast hon alltid har bott i staden kan hon namnet på varenda fågel.
+Fast hon alltid har bott i staden kan hon namnen på alla fåglar.
+Fast hon alltid har bott i stan kan hon namnen på alla fåglar.
+Fast hon alltid har bott i stan vet hon namnen på alla fåglar.
+Fast hon alltid har bott i stan vet hon namnet på varenda fågel.
+Trots att hon alltid har bott i staden kan hon namnen på alla fåglar.
+Trots att hon alltid har bott i stan vet hon namnen på alla fåglar.
+# sv bisats | Om vi inte gör något åt utsläppen nu blir det mycket dyrare senare.
+Om vi inte gör någonting åt utsläppen nu kommer det att bli mycket dyrare senare.
+Det blir mycket dyrare senare om vi inte gör någonting åt utsläppen nu.
+Gör vi inget åt utsläppen nu kommer det att bli mycket dyrare senare.
+# sv bisats | Barnen får vara ute så länge det inte är mörkt.
+Barnen får vara ute så länge det inte har blivit mörkt ute.
+# sv bisats | Vi kan inte boka resan förrän vi vet om du verkligen får ledigt.
+Vi kan inte boka resan innan vi vet om du verkligen kan ta ledigt.
+Vi kan boka resan först när vi vet om du verkligen kan ta ledigt.
+# sv bisats | Det var skönt att höra att operationen trots allt hade gått bra.
+Det var skönt att få höra att operationen ändå hade gått bra.
+Det var skönt att få höra att operationen trots allt gick bra.
+Det var skönt att få höra att operationen hade gått bra trots allt.
+# sv bisats | Han medgav till slut att han inte hade läst avtalet ordentligt.
+Till slut medgav han att han inte hade läst avtalet noggrant.
+Han erkände till slut att han inte hade läst avtalet noggrant.
+Till slut erkände han att han inte hade läst avtalet noggrant.
+# sv inversion | Vanligtvis dricker jag inte kaffe.
+Normalt dricker jag inget kaffe.
+# sv inversion | Ikväll träffar jag honom inte.
+Ikväll ser jag inte honom.
+# sv inversion | Efter jobbet går jag ofta till gymmet.
+Efter arbetet går jag ofta på gym.
+# sv inversion | Som tur var märkte ingen något.
+Lyckligtvis märkte ingen någonting.
+# sv inversion | Hade jag vetat det tidigare hade jag gjort annorlunda.
+Om jag hade vetat det tidigare hade jag handlat annorlunda.
+# sv inversion | Just det var jag rädd för.
+Precis det har jag befarat.
+# sv inversion | Ju längre jag tänker på det, desto osäkrare blir jag.
+Ju mer jag tänker på det, desto mer osäker blir jag.
+Ju mer jag funderar på det, desto mer osäker blir jag.
+Ju mer jag funderar på det, desto osäkrare blir jag.
+Ju längre jag funderar på det, desto mer osäker blir jag.
+# sv inversion | Där jag växte upp finns det inga affärer längre.
+Där jag växte upp finns det inte några affärer kvar.
+# sv inversion | Under pandemin insåg många hur viktigt det är att ha en trygg bostad.
+Många insåg under pandemin hur viktigt det är med en trygg bostad.
+Under pandemin förstod många hur viktigt det är med en trygg bostad.
+# sv inversion | Därför har regeringen inte lyckats minska arbetslösheten.
+Regeringen har därför inte lyckats få ner arbetslösheten.
+Regeringen har därför inte lyckats sänka arbetslösheten.
+# sv inversion | Om tio år kommer de flesta bilar i Sverige att vara elbilar.
+Om tio år kommer de flesta bilarna i Sverige vara elbilar.
+# sv inversion | Ärligt talat förstår jag inte varför mötet behövdes.
+Ärligt talat begriper jag inte varför vi behövde mötet.
+Jag förstår ärligt talat inte varför vi behövde mötet.
+# sv inversion | Med tanke på priserna är det förståeligt att folk handlar mindre.
+Med tanke på priserna är det begripligt att människor handlar mindre.
+# sv inversion | Vid närmare eftertanke tycker jag inte att förslaget är så dumt.
+Vid närmare eftertanke tycker jag att förslaget inte är så dåligt.
+Jag tycker vid närmare eftertanke inte att förslaget är så dåligt.
+# sv inversion | Plötsligt slocknade alla lampor i hela huset samtidigt.
+Alla lampor i huset slocknade plötsligt samtidigt.
+Plötsligt slocknade alla lampor i huset på en gång.
+Plötsligt släcktes alla lampor i huset på en gång.
+Plötsligt släcktes alla lampor i huset samtidigt.
+Plötsligt släcktes alla lampor i hela huset på en gång.
+# sv inversion | Till skillnad från sin syster har Johan aldrig varit intresserad av politik.
+Johan har till skillnad från sin syster aldrig intresserat sig för politik.
+Johan har till skillnad från sin syster aldrig brytt sig om politik.
+# sv tempus | När jag kom fram hade tåget redan gått.
+När jag kom dit hade tåget redan åkt.
+# sv tempus | Sedan jag flyttade hit har jag aldrig upplevt en så kall vinter.
+Sen jag flyttade hit har jag aldrig varit med om en så kall vinter.
+Så länge jag har bott här har jag aldrig varit med om en så kall vinter.
+# sv tempus | Vi hade precis ätit när det ringde på dörren.
+Vi hade just ätit när det ringde på.
+# sv tempus | Jag har inte sett honom sedan vi gick i skolan.
+Jag har inte träffat honom sen vi gick i skolan.
+# sv tempus | När jag tittade på lägenheten var den redan uthyrd.
+När jag var och tittade på lägenheten hade den redan hyrts ut.
+# sv tempus | Har du någonsin funderat på att emigrera?
+Har du någonsin tänkt på att flytta utomlands?
+Har du någon gång funderat på att flytta utomlands?
+# sv tempus | Vi hade bara bott här i ett halvår när barnet kom.
+Vi hade bara bott här ett halvt år när barnet kom.
+Vi hade bara bott här ett halvt år när barnet föddes.
+Vi hade bara bott här ett halvår när barnet föddes.
+Vi hade bara bott här i ett halvt år när barnet föddes.
+# sv tempus | Jag läste ut boken förra veckan, men jag har fortfarande inte förstått slutet.
+Jag läste klart boken förra veckan, men har fortfarande inte förstått slutet.
+# sv tempus | När fick du veta att hon är gravid?
+När fick du reda på att hon var gravid?
+# sv tempus | Jag studerade i Göteborg i tre år, sedan flyttade jag till Stockholm.
+Jag pluggade i Göteborg i tre år och flyttade sedan till Stockholm.
+Jag pluggade i tre år i Göteborg, sedan flyttade jag till Stockholm.
+Jag pluggade i Göteborg i tre år, sen flyttade jag till Stockholm.
+# sv tempus | Vi hade redan sagt hej då när han ställde en fråga till.
+Vi hade redan sagt adjö när han hade en fråga till.
+Vi hade redan tagit farväl när han hade en fråga till.
+# sv tempus | Forskarna har länge misstänkt att sömnbrist påverkar minnet.
+Forskarna har länge trott att brist på sömn påverkar minnet.
+# sv tempus | Sedan reformen infördes har antalet friskolor ökat kraftigt.
+Sen reformen infördes har antalet friskolor ökat mycket.
+Sen reformen infördes har antalet friskolor stigit kraftigt.
+# sv tempus | På sjuttiotalet flyttade många finländare till Sverige för att arbeta.
+Under sjuttiotalet kom många finländare till Sverige för att arbeta.
+# sv tempus | Igår ringde chefen och berättade att projektet hade lagts ner.
+Chefen ringde igår och sa att projektet hade lagts ned.
+Igår ringde chefen och sa att projektet hade lagts ned.
+# sv tempus | Jag har aldrig förstått varför folk står i kö i timmar för en ny telefon.
+Jag har aldrig förstått varför folk köar i timmar för en ny mobil.
+Jag har aldrig begripit varför folk köar i timmar för en ny mobil.
+Jag har aldrig begripit varför folk köar i timmar för en ny telefon.
+Jag har aldrig begripit varför folk står i kö i timmar för en ny mobil.
+# sv tempus | Tidningen avslöjade förra veckan att flera politiker hade fuskat med reseräkningar.
+Förra veckan avslöjade tidningen att flera politiker hade fuskat med sina reseräkningar.
+# sv tempus | Hon har varit sjukskriven sedan i somras och längtar tillbaka till jobbet.
+Hon har varit sjukskriven sen i somras och längtar tillbaka till arbetet.
+Hon har varit sjukskriven sen i somras och längtar efter att komma tillbaka till arbetet.
+Hon har varit sjukskriven sedan i somras och längtar efter att komma tillbaka till arbetet.
+Hon har varit sjukskriven sen i somras och längtar efter att komma tillbaka till jobbet.
+# sv tempus | Hon flyttade till Berlin 2015 och har bott där sedan dess.
+Hon flyttade till Berlin år 2015 och har bott där sen dess.
+# sv tempus | Boken var så spännande att jag läste ut den på en enda kväll.
+Boken var så spännande att jag läste den på en kväll.
+# sv tempus | Det var första gången som jag åkte skidor, och jag ramlade hela tiden.
+Det var första gången jag åkte skidor, och jag föll hela tiden.
+# sv tempus | Vi har inte fått något svar från kommunen än, trots att vi skickade ansökan i mars.
+Vi har inte fått något svar från kommunen ännu, trots att vi skickade in ansökan i mars.
+Vi har fortfarande inte fått något svar från kommunen, trots att vi skickade in ansökan i mars.
+# sv tempus | Jag hade aldrig sett norrsken innan vi åkte till Abisko.
+Jag hade aldrig sett något norrsken förrän vi åkte till Abisko.
+# sv partikel | Kan du ta reda på när affären öppnar?
+Kan du kolla när butiken öppnar?
+# sv partikel | Jag står inte ut med det här oljudet längre.
+Jag orkar inte med oljudet längre.
+Jag står inte längre ut med oljudet.
+Jag orkar inte med det här bullret längre.
+# sv partikel | Konserten ställdes in på grund av stormen.
+Konserten blev inställd på grund av ovädret.
+# sv partikel | Fabriken ska läggas ner nästa år.
+Fabriken kommer att läggas ned nästa år.
+# sv partikel | Han lade inte märke till att jag hade gått ut ur rummet.
+Han la inte märke till att jag hade lämnat rummet.
+Han märkte inte att jag hade lämnat rummet.
+# sv partikel | Han tog över företaget efter sin pappa.
+Han har tagit över företaget från sin pappa.
+Han har tagit över sin pappas företag.
+# sv partikel | Föreläsningen drog ut på tiden, så vi missade tåget.
+Föreläsningen drog över tiden, så att vi missade tåget.
+Föreläsningen drog över tiden och vi missade tåget.
+# sv partikel | Kan vi gå igenom budgeten en gång till innan vi skickar in den?
+Kan vi gå igenom budgeten igen innan vi lämnar in den?
+# sv partikel | Vi lägger ner mycket tid på att svara på mejl.
+Vi lägger ned mycket tid på att besvara mejl.
+Vi lägger mycket tid på att besvara mejl.
+# sv partikel | Det var hans idé att ta upp frågan på mötet.
+Det var hans idé att lyfta frågan under mötet.
+# sv partikel | Regeringen ska lägga fram ett nytt förslag till hösten.
+Regeringen vill lägga fram ett nytt förslag i höst.
+# sv partikel | Han brukar slå på radion så fort han vaknar.
+Han brukar sätta på radion direkt när han vaknar.
+# sv partikel | Vi har bestämt oss för att sätta igång med renoveringen i vår.
+Vi har beslutat att börja med renoveringen i vår.
+Vi har bestämt att börja med renoveringen i vår.
+# sv modal | Jag sa ju det!
+Jag har ju sagt det till dig!
+# sv modal | Det kunde du väl ha sagt!
+Det kunde du ju ha berättat!
+# sv modal | Kom nu, vi är sena!
+Kom igen, vi är försenade!
+Kom då, vi är försenade!
+# sv sin | Lena berättade för mig att hennes bror ska flytta till Kanada.
+Lena har berättat för mig att hennes bror flyttar till Kanada.
+# sv sin | Läraren bad eleverna att lägga undan sina mobiler.
+Läraren bad eleverna lägga bort sina mobiler.
+# sv sin | Företaget och dess kunder har kommit överens.
+Företaget och deras kunder kom överens.
+# sv sin | Alla ska få säga sin åsikt.
+Alla ska kunna säga sina åsikter.
+# sv sin | Hunden vek inte från sin ägares sida.
+Hunden lämnade inte sin husses sida.
+# sv sin | Många föräldrar tycker att deras tonåringar tillbringar för mycket tid med mobilen.
+Många föräldrar tycker att deras tonåringar sitter för mycket med telefonen.
+# sv sin | Mamma ringde verkstaden och frågade om hennes bil var klar.
+Mamma ringde till verkstaden och frågade om bilen var klar.
+Mamma ringde till verkstaden och frågade om bilen var färdig.
+Mamma ringde till verkstaden och frågade om hennes bil var färdig.
+Mamma ringde verkstaden och frågade om bilen var färdig.
+# sv sin | Hyresgästerna klagade på att deras hyror hade höjts kraftigt.
+Hyresgästerna klagade över att deras hyror hade höjts mycket.
+Hyresgästerna klagade över att hyrorna hade höjts mycket.
+Hyresgästerna klagade över att hyrorna hade höjts kraftigt.
+Hyresgästerna klagade på att hyrorna hade höjts mycket.
+# sv sin | Ingen vill ta ansvar för sina misstag.
+Ingen vill ta ansvaret för sina fel.
+# sv tid | Vi träffades för tre år sedan.
+Vi lärde känna varandra för tre år sen.
+Vi träffade varandra för tre år sen.
+# sv tid | Jag har pluggat svenska sedan mars.
+Jag har läst svenska sen mars.
+Jag har studerat svenska sen mars.
+# sv tid | Jag har inte sett dig på flera år!
+Jag har inte träffat dig på många år!
+# sv tid | Vi sågs inte på flera år.
+Vi träffades inte på många år.
+Vi hade inte setts på många år.
+# sv tid | Om du beställer idag kommer paketet inom tre dagar.
+Beställer du idag levereras paketet inom tre dagar.
+Om ni beställer idag levereras paketet inom tre dagar.
+# sv tid | Han väntade på oss i två timmar utan att klaga.
+Han har väntat på oss två timmar utan att klaga.
+# sv tid | Före jul är det alltid fullt upp här.
+Innan jul är det alltid mycket folk här.
+Före julen är det alltid mycket folk här.
+# sv tid | Jag hör av mig om några dagar, så fort jag vet mer.
+Jag hör av mig om ett par dagar, så snart jag vet mer.
+# sv tid | För över hundra år sedan fanns det bara skog här.
+För mer än hundra år sen fanns det bara skog här.
+Det fanns bara skog här för mer än hundra år sedan.
+# sv tid | Vi ses på torsdag nästa vecka.
+Vi ses torsdag i nästa vecka.
+# sv tid | I vintras frös sjön till för första gången på tio år.
+Förra vintern frös sjön för första gången på tio år.
+# sv tid | Biblioteket håller stängt över jul och nyår.
+Biblioteket är stängt under jul och nyår.
+# sv tid | Vi bor på landet, men min man jobbar i stan.
+Vi bor på landsbygden, men min man arbetar i staden.
+# sv tid | Min farmor lärde sig att hantera surfplattan på bara tre veckor.
+Min mormor lärde sig hantera surfplattan på bara tre veckor.
+# sv framtid | Det kan inte stämma, jag såg det ju själv.
+Det kan inte vara sant, jag har ju sett det själv.
+Det kan inte vara sant, jag såg det själv.
+# sv framtid | Han lär vara väldigt rik.
+Han ska vara mycket rik.
+Han sägs vara mycket rik.
+# sv framtid | Jag tänkte ringa dig, men sedan kom något emellan.
+Jag hade tänkt ringa dig, men sen kom något emellan.
+Jag skulle ringa dig, men sen kom något emellan.
+# sv framtid | Till dess kommer allt att vara klart.
+Då kommer allt vara klart.
+# sv framtid | Du får inte glömma att skriva under blanketten.
+Glöm inte att underteckna blanketten.
+# sv framtid | Patienter får inte äta något efter midnatt före operationen.
+Patienterna får inte äta någonting efter midnatt före operationen.
+# sv framtid | Vi hann inte med tåget, så vi fick ta taxi.
+Vi missade tåget, så vi var tvungna att ta taxi.
+# sv framtid | Det kan dröja innan vi får besked från försäkringsbolaget.
+Det kan ta tid innan vi får besked från försäkringen.
+# sv passiv | Det förväntas att priserna fortsätter att stiga.
+Man förväntar sig att priserna fortsätter stiga.
+# sv passiv | Boken har översatts till över trettio språk.
+Boken blev översatt till mer än trettio språk.
+# sv passiv | Det finns allt färre bondgårdar.
+Det finns färre och färre gårdar.
+Det blir allt färre gårdar.
+# sv passiv | Det sägs att han är väldigt sträng.
+Man säger att han är mycket sträng.
+# sv passiv | De försvunna barnen hittades efter två dagar.
+De saknade barnen blev hittade efter två dagar.
+# sv passiv | Biljetterna såldes slut på några minuter.
+Biljetterna var slutsålda på bara några minuter.
+Biljetterna tog slut på bara några minuter.
+# sv passiv | I Sverige duar man nästan alla, även chefen.
+I Sverige duas nästan alla, till och med chefen.
+# sv passiv | Det finns inga enkla lösningar på bostadsbristen.
+Det finns inga lätta lösningar på bostadskrisen.
+# sv passiv | Kyrkan förstördes i en brand och byggdes upp igen på femtiotalet.
+Kyrkan förstördes vid en brand och återuppbyggdes på femtiotalet.
+Kyrkan förstördes vid en brand och återuppbyggdes på 1950-talet.
+Kyrkan förstördes vid en brand och byggdes upp igen på 1950-talet.
+Kyrkan förstördes i en brand och återuppbyggdes på 1950-talet.
+Kyrkan blev förstörd i en brand och återuppbyggdes på 1950-talet.
+Kyrkan blev förstörd i en brand och återuppbyggdes på femtiotalet.
+Kyrkan blev förstörd i en brand och byggdes upp igen på 1950-talet.
+# sv passiv | Ansökan måste skickas in senast den första mars.
+Ansökan måste lämnas in senast den 1 mars.
+Ansökan måste lämnas in senast första mars.
+# sv passiv | Under natten stals tre cyklar från gården.
+Under natten blev tre cyklar stulna från innergården.
+# sv passiv | Frågan diskuterades länge utan att man kom fram till något.
+Frågan debatterades länge utan att man kom fram till någonting.
+Frågan debatterades länge utan att man kom fram till något resultat.
+# sv passiv | Det har gjorts många försök att förbättra skolresultaten.
+Många försök har gjorts att förbättra resultaten i skolan.
+# sv passiv | Ingenting får ändras utan att styrelsen har godkänt det.
+Inget får ändras utan styrelsens godkännande.
+# sv passiv | Det finns fortfarande mycket som kan förenklas.
+Det finns ännu mycket som skulle kunna förenklas.
+# sv idiom | Ingen fara, det gör ingenting.
+Det är ingen fara, det gör inget.
+# sv idiom | En lägenhet i innerstaden kostar skjortan.
+En lägenhet i innerstan kostar en förmögenhet.
+En lägenhet i city kostar en förmögenhet.
+# sv idiom | Det är ingen ko på isen, vi har fortfarande tid.
+Ingen ko på isen, vi har tid än.
+Ingen fara, vi har tid än.
+Ingen fara, vi har fortfarande tid.
+Det är ingen fara, vi har tid än.
+# sv falska | Räntan har gått upp.
+Räntorna har stigit.
+# sv falska | Jag kommer kanske lite senare, ifall tåget är försenat.
+Jag kanske kommer lite senare om tåget är försenat.
+Jag kommer möjligen lite senare om tåget är försenat.
+# sv falska | Enligt min åsikt borde man ha agerat tidigare.
+Enligt min mening borde man ha handlat tidigare.
+Jag tycker att man borde ha handlat tidigare.
+# sv falska | Många familjer i trakten var mycket fattiga på den tiden.
+Många familjer i området var väldigt fattiga på den tiden.
+# sv falska | Ta på dig rocken, det är minus tio grader ute.
+Sätt på dig kappan, det är minus tio grader ute.
+# sv falska | Affären på hörnet har öppet dygnet runt och säljer även frimärken.
+Butiken på hörnet har öppet dygnet runt och säljer också frimärken.
+# es serestar | ¿Estás seguro de que esta es la dirección correcta?
+¿Estás segura de que es la dirección correcta?
+¿Seguro que es la dirección correcta?
+# es serestar | Mi hermano está de camarero en un hotel mientras busca trabajo de ingeniero.
+Mi hermano trabaja de mesero en un hotel mientras busca trabajo de ingeniero.
+# es serestar | El documental era tan aburrido que la mitad del público se quedó dormida.
+El documental fue tan aburrido que la mitad del público se durmió.
+# es serestar | La gerente está de baja hasta el lunes, así que no se puede firmar nada.
+La gerente está de licencia hasta el lunes, así que no podemos firmar nada.
+# es serestar | Estamos a martes y todavía no ha llegado el pedido.
+Ya es martes y aún no ha llegado el pedido.
+# es pasado | Antes jugábamos al fútbol todos los domingos.
+Antes jugábamos fútbol cada domingo.
+Antes todos los domingos jugábamos fútbol.
+# es pasado | De repente se apagó la luz.
+De pronto se fue la luz.
+# es pasado | Todos los veranos íbamos a la playa.
+Cada verano íbamos al mar.
+# es pasado | Cuando lo conocí, todavía trabajaba de camarero.
+Cuando le conocí, todavía trabajaba como camarero.
+Cuando le conocí, aún trabajaba como camarero.
+Cuando le conocí, aún trabajaba de camarero.
+Cuando le conocí, aún trabajaba como mesero.
+Cuando le conocí, todavía trabajaba como mesero.
+Cuando lo conocí, aún trabajaba como camarero.
+Cuando lo conocí, aún trabajaba como mesero.
+# es pasado | Esperamos el autobús durante tres horas.
+Esperamos al autobús tres horas.
+# es pasado | Quería llamar, pero no tenía cobertura.
+Quiso llamar, pero no tenía señal.
+# es pasado | Ayer por fin supe quién era el culpable.
+Ayer por fin me enteré de quién fue el culpable.
+# es pasado | Justo cuando salí de casa, empezó a llover.
+En el momento en que salí de casa, comenzó a llover.
+# es pasado | Vivimos diez años en Chile y luego volvimos.
+Vivimos en Chile diez años y después regresamos.
+Vivimos en Chile diez años y luego regresamos.
+# es pasado | De niño me daba miedo la oscuridad.
+Cuando era niño tenía miedo a la oscuridad.
+# es pasado | Ayer estuvo practicando piano durante tres horas.
+Ayer estuvo tres horas practicando el piano.
+# es pasado | Mientras el profesor explicaba la tarea, alguien entró sin llamar.
+Mientras el profesor explicaba los deberes, alguien entró sin tocar.
+# es pasado | Pretendía terminar la tesis en junio, pero no lo logré.
+Quería terminar la tesis en junio, pero no lo conseguí.
+# es pasado | El edificio, que estaba abandonado desde hacía años, se derrumbó durante la tormenta.
+El edificio, que llevaba años abandonado, se cayó durante la tormenta.
+# es pasado | Siempre que viajábamos en coche, mi padre se negaba a parar en las gasolineras caras.
+Siempre que viajábamos en carro, mi padre no quería parar en las gasolineras caras.
+# es perfecto | Este año todavía no hemos viajado.
+Este año aún no viajamos.
+# es perfecto | Esta mañana he perdido el autobús.
+Esta mañana perdí el bus.
+# es perfecto | Todavía no he tenido tiempo de leer tu mensaje.
+Aún no he tenido tiempo para leer tu mensaje.
+Aún no tuve tiempo para leer tu mensaje.
+Aún no tuve tiempo de leer tu mensaje.
+Todavía no tuve tiempo para leer tu mensaje.
+# es perfecto | En toda mi vida nunca me he reído tanto.
+Nunca me reí tanto en toda mi vida.
+En mi vida me reí tanto.
+# es perfecto | Cuando era pequeño, una vez me caí a un río.
+Cuando era pequeña, una vez me caí en un río.
+De pequeño, una vez me caí en un río.
+# es perfecto | ¿Has estado alguna vez en Latinoamérica?
+¿Alguna vez has estado en América Latina?
+¿Estuviste alguna vez en América Latina?
+# es perfecto | Nunca he estado en Sudamérica, aunque me encantaría ir.
+Nunca estuve en América del Sur, aunque me encantaría ir.
+# es perfecto | Últimamente he dormido muy mal por el ruido de las obras.
+Últimamente duermo muy mal por el ruido de la obra.
+# es perfecto | Este trimestre hemos recibido más reclamaciones que en todo el año anterior.
+Este trimestre recibimos más quejas que en todo el año anterior.
+# es perfecto | Todavía no han arreglado la calefacción y ya estamos en noviembre.
+Aún no arreglaron la calefacción y ya estamos en noviembre.
+# es perfecto | Ayer no me llamó nadie, pero hoy el teléfono ya ha sonado cinco veces.
+Ayer nadie me llamó, pero hoy ya ha sonado el teléfono cinco veces.
+Ayer nadie me llamó, pero hoy ya sonó el teléfono cinco veces.
+# es perfecto | El lunes empezó el curso y hoy ya hemos hecho el primer examen.
+El curso empezó el lunes y hoy ya hemos tenido el primer examen.
+El curso empezó el lunes y hoy ya tuvimos el primer examen.
+# es perfecto | En 2015 se mudó a Lima, pero nunca ha estado en Bogotá.
+En 2015 se fue a vivir a Lima, pero no ha estado nunca en Bogotá.
+En 2015 se fue a vivir a Lima, pero no estuvo nunca en Bogotá.
+# es perfecto | Esta mañana Lucía ha dado la presentación que preparó la semana pasada.
+Esta mañana Lucía ha hecho la presentación que había preparado la semana pasada.
+Esta mañana Lucía hizo la presentación que había preparado la semana pasada.
+# es perfecto | Mi hermano se mudó a Chile en 2015 y hoy ha abierto su propio restaurante.
+En 2015 mi hermano se fue a vivir a Chile y hoy abrió su propio restaurante.
+En 2015 mi hermano se fue a vivir a Chile y hoy ha abierto su propio restaurante.
+# es perfecto | El año pasado Pablo dejó de fumar y hoy ha corrido su primer maratón.
+Pablo dejó de fumar el año pasado y hoy corrió su primera maratón.
+Pablo dejó de fumar el año pasado y hoy ha corrido su primera maratón.
+# es perfecto | Hace un mes se conocieron y hoy se han comprometido.
+Se conocieron hace un mes y hoy se han prometido.
+Se conocieron hace un mes y hoy se prometieron.
+# es perfecto | Anoche empezó a nevar y esta mañana han cerrado las escuelas.
+Anoche comenzó a nevar y esta mañana se han cerrado las escuelas.
+Anoche comenzó a nevar y esta mañana se cerraron las escuelas.
+Anoche comenzó a nevar y esta mañana las escuelas han cerrado.
+Anoche comenzó a nevar y esta mañana las escuelas cerraron.
+# es subjuntivo | Es posible que venga más tarde.
+Puede que llegue más tarde.
+# es subjuntivo | Busco un piso que tenga terraza y no sea muy caro.
+Busco un apartamento que tenga terraza y que no sea muy caro.
+# es subjuntivo | Es normal que estés nervioso.
+Es lógico que estés nerviosa.
+# es subjuntivo | Aunque llueve, vamos a dar un paseo.
+Aunque está lloviendo, vamos a pasear.
+# es subjuntivo | Nos vamos sin que nadie se dé cuenta.
+Nos iremos sin que nadie lo note.
+# es subjuntivo | Espero que hayáis tenido un buen viaje.
+Espero que hayan tenido buen viaje.
+# es subjuntivo | Era importante que todos llegaran a tiempo.
+Era importante que todos llegasen puntuales.
+Era importante que todos fuesen puntuales.
+# es subjuntivo | Si te apetece, puedes venir con nosotros.
+Si quieres, puedes venir.
+Si tienes ganas, puedes venir.
+# es subjuntivo | Espero a que termines.
+Espero hasta que acabes.
+# es subjuntivo | Aunque no me creas, es verdad.
+Aunque no me lo creas, es cierto.
+# es subjuntivo | Aunque es rico, vive con modestia.
+A pesar de que es rico, vive modestamente.
+# es subjuntivo | Habla como si lo supiera todo.
+Habla como si supiese todo.
+# es subjuntivo | Quería que vinieras conmigo.
+Quería que vinieses.
+# es subjuntivo | Me pidió que la ayudara.
+Me pidió que le ayudase.
+# es subjuntivo | Se fue sin que nadie se diera cuenta.
+Se marchó sin que nadie se diese cuenta.
+Se marchó sin que nadie lo notara.
+# es subjuntivo | No es que no tenga ganas, pero estoy cansado.
+No es que no tenga ganas, es que estoy cansada.
+# es subjuntivo | Es probable que el Gobierno suba los impuestos el año que viene.
+Es probable que el Gobierno aumente los impuestos el próximo año.
+Es probable que el año que viene el Gobierno aumente los impuestos.
+Es probable que el próximo año el Gobierno aumente los impuestos.
+# es subjuntivo | Los vecinos piden que el ayuntamiento limite el tráfico en el barrio.
+Los vecinos exigen que el ayuntamiento reduzca el tráfico en el barrio.
+# es subjuntivo | No conozco a ningún fontanero que trabaje los fines de semana.
+No conozco ningún plomero que trabaje los fines de semana.
+# es subjuntivo | Aunque el examen fue difícil, aprobaron casi todos.
+Aunque el examen era difícil, casi todos aprobaron.
+# es subjuntivo | Ojalá el incendio no llegue a las casas del pueblo.
+Ojalá que el fuego no llegue a las casas del pueblo.
+# es subjuntivo | Es una pena que la biblioteca cierre los domingos.
+Es una lástima que la biblioteca esté cerrada los domingos.
+# es subjuntivo | El hecho de que no conteste no significa que esté enfadado.
+Que no responda no significa que esté enfadado.
+Que no responda no quiere decir que esté enfadado.
+Que no responda no quiere decir que esté enojado.
+Que no responda no significa que esté enojado.
+El hecho de que no responda no quiere decir que esté enfadado.
+El hecho de que no responda no quiere decir que esté enojado.
+El hecho de que no responda no significa que esté enojado.
+Que no conteste no quiere decir que esté enfadado.
+Que no conteste no quiere decir que esté enojado.
+Que no conteste no significa que esté enojado.
+El hecho de que no conteste no quiere decir que esté enojado.
+# es subjuntivo | Está claro que la empresa necesita más ingenieros.
+Es evidente que la compañía necesita más ingenieros.
+# es perifrasis | Llevábamos una hora esperando cuando por fin llegó el tren.
+Hacía una hora que esperábamos cuando el tren llegó por fin.
+Hacía una hora que esperábamos cuando finalmente llegó el tren.
+# es perifrasis | Después de la pelea dejaron de hablarse.
+Tras la discusión dejaron de hablarse.
+Tras la pelea ya no se hablaron más.
+# es perifrasis | La situación va empeorando día a día.
+La situación está empeorando día tras día.
+La situación empeora día tras día.
+# es perifrasis | Al oír la noticia, se echó a llorar.
+Cuando oyó la noticia, se puso a llorar.
+Cuando oyó la noticia, rompió a llorar.
+# es perifrasis | Debe de estar enfermo, porque no ha venido.
+Debe estar enfermo, no ha venido.
+Estará enfermo, no ha venido.
+# es perifrasis | Tuve que volver a hacer el examen.
+He tenido que repetir el examen.
+He tenido que hacer otra vez el examen.
+# es perifrasis | ¿Cuánto tiempo llevas en paro?
+¿Cuánto llevas sin trabajo?
+¿Cuánto llevas desempleado?
+# es porpara | Compré el móvil por 200 euros.
+He comprado el celular por 200 euros.
+# es porpara | El informe tiene que estar listo para el viernes.
+El informe debe estar terminado para el viernes.
+# es porpara | Por mucho que lo intente, no consigo entenderlo.
+Por más que lo intento, no consigo entenderlo.
+# es porpara | Para ser principiante, juega sorprendentemente bien.
+Para ser un principiante, toca sorprendentemente bien.
+# es porpara | Me mudé a Madrid por trabajo.
+Me fui a vivir a Madrid por el trabajo.
+# es porpara | El puente fue diseñado por un arquitecto famoso.
+El puente lo diseñó un arquitecto conocido.
+# es porpara | Haría cualquier cosa por ti.
+Haría lo que fuese por ti.
+# es porpara | He comprado este libro para mi madre.
+Compré este libro para mi mamá.
+# es porpara | Trabaja como intérprete para las Naciones Unidas.
+Trabaja de intérprete para la ONU.
+# es porpara | Llévate mi paraguas, por si llueve.
+Lleva mi paraguas, por si acaso llueve.
+# es porpara | La reforma de la cocina tiene que estar terminada para Navidad.
+La renovación de la cocina tiene que estar acabada para Navidad.
+# es porpara | Todavía quedan muchos detalles por resolver.
+Aún quedan muchos detalles por aclarar.
+# es porpara | Por lo visto, el concierto se ha aplazado hasta la primavera.
+Al parecer, el concierto se aplazó hasta la primavera.
+# es porpara | Mandaron los documentos por mensajero para que llegaran a tiempo.
+Mandaron los documentos por mensajero para que llegasen a tiempo.
+Enviaron los documentos por mensajero para que llegasen a tiempo.
+# es pronombres | Si necesitas el coche, te lo dejo sin problema.
+Si te hace falta el coche, te lo presto sin problema.
+Si te hace falta el carro, te lo presto sin problema.
+Si te hace falta el auto, te lo presto sin problema.
+# es pronombres | ¿Las llaves? Me las dejé en casa.
+¿Las llaves? Las he dejado en casa.
+# es pronombres | Tenemos que decírselo antes de que se entere por otros.
+Se lo tenemos que decir antes de que lo sepa por otros.
+# es pronombres | Le regalamos una bicicleta por su cumpleaños.
+Le hemos regalado una bici por su cumpleaños.
+Le hemos regalado una bicicleta para su cumpleaños.
+Por su cumpleaños le hemos regalado una bicicleta.
+# es pronombres | Deja de quejarte y ayúdame.
+Para de quejarte y échame una mano.
+# es pronombres | Cuando termines el informe trimestral, dáselo a la gerente, por favor.
+Por favor, cuando acabes el informe trimestral, dáselo a la gerente.
+Cuando acabes el informe trimestral, dáselo por favor a la gerente.
+Cuando acabes el informe trimestral, por favor, dáselo a la gerente.
+# es pronombres | Le hicimos un bizcocho a la vecina porque nos ayudó con la mudanza.
+A la vecina le hemos hecho un bizcocho porque nos ayudó con la mudanza.
+# es pronombres | ¿Lo de agosto? Se lo comenté a la jefa esta mañana y no puso pegas.
+¿Lo de agosto? Esta mañana se lo dije a la jefa y no puso pegas.
+# es gustar | Nos falta tiempo para estas cosas.
+No tenemos tiempo para cosas así.
+# es gustar | Estos colores no te quedan bien.
+No te sientan bien estos colores.
+# es gustar | Me da igual lo que piensen los demás.
+No me importa lo que piensen los otros.
+# es gustar | Me alegraría que vinieras.
+Me encantaría que vinieses.
+# es condicional | Si fuera rico, compraría una casa junto al mar.
+Si fuera rica, compraría una casa en la playa.
+Si fuese rico, compraría una casa junto al mar.
+Si fuese rica, compraría una casa junto al mar.
+Si fuese rico, compraría una casa en la playa.
+Si fuese rica, compraría una casa en la playa.
+# es condicional | Yo que tú, aceptaría la oferta.
+Si fuese tú, aceptaría la oferta.
+# es condicional | Si no lloviera, saldríamos a pasear.
+Si no lloviera, iríamos a caminar.
+Si no lloviese, iríamos a caminar.
+# es condicional | Si me hubieras avisado, te habría recogido en la estación.
+Si me hubieses avisado, te hubiera recogido en la estación.
+Si me hubieras avisado, te hubiese recogido en la estación.
+Si me hubieses avisado, te hubiese recogido en la estación.
+# es condicional | En tu lugar, yo no lo habría dicho.
+En tu lugar no lo hubiese dicho.
+# es condicional | Si me hubiera levantado antes, habría cogido el tren.
+Si me hubiese levantado antes, hubiera cogido el tren.
+Si me hubiese levantado antes, habría tomado el tren.
+Si me hubiese levantado más temprano, habría tomado el tren.
+Si me hubiese levantado antes, hubiera tomado el tren.
+Si me hubiera levantado antes, hubiese cogido el tren.
+Si me hubiese levantado antes, hubiese cogido el tren.
+Si me hubiera levantado antes, hubiese tomado el tren.
+Si me hubiese levantado antes, hubiese tomado el tren.
+# es condicional | Dijo que nos ayudaría.
+Nos dijo que nos iba a ayudar.
+# es condicional | Nunca me lo habría imaginado.
+Jamás me lo hubiera imaginado.
+Nunca lo hubiera imaginado.
+Nunca me lo hubiese imaginado.
+Jamás me lo hubiese imaginado.
+Nunca lo hubiese imaginado.
+# es condicional | Deberíamos salir a cenar juntos más a menudo.
+Tendríamos que salir a comer juntos más a menudo.
+Tendríamos que salir a comer juntos más seguido.
+Deberíamos salir a comer juntos más seguido.
+Tendríamos que salir a cenar juntos más seguido.
+# es condicional | Sería bonito que os quedarais más tiempo.
+Sería genial que pudierais quedaros más tiempo.
+Sería genial que se quedaran más tiempo.
+Estaría bien que pudierais quedaros más tiempo.
+Estaría bien que se quedaran más tiempo.
+Sería bonito que os quedaseis más tiempo.
+Sería genial que os quedaseis más tiempo.
+Sería bonito que pudieseis quedaros más tiempo.
+Estaría bien que os quedaseis más tiempo.
+Sería bonito que se quedasen más tiempo.
+Sería genial que pudieseis quedaros más tiempo.
+Sería genial que se quedasen más tiempo.
+Estaría bien que pudieseis quedaros más tiempo.
+Estaría bien que se quedasen más tiempo.
+# es condicional | Si no fuera tan terco, ya nos habríamos puesto de acuerdo.
+Si no fuese tan cabezota, ya nos habríamos puesto de acuerdo.
+Si no fuese tan cabezota, ya nos hubiéramos puesto de acuerdo.
+Si no fuera tan cabezota, ya nos hubiéramos puesto de acuerdo.
+Si no fuese tan terco, ya nos hubiéramos puesto de acuerdo.
+Si no fuera tan terco, ya nos hubiésemos puesto de acuerdo.
+Si no fuese tan terco, ya nos hubiésemos puesto de acuerdo.
+Si no fuese tan cabezota, ya nos hubiésemos puesto de acuerdo.
+Si no fuera tan cabezota, ya nos hubiésemos puesto de acuerdo.
+# es condicional | ¿Te molestaría que pusiera la radio?
+¿Te importaría que pusiese la radio?
+# es condicional | Me gustaría saber por qué nadie avisó.
+Quisiera saber por qué nadie ha avisado.
+Quisiera saber por qué no avisó nadie.
+# es condicional | Si la vivienda no fuera tan cara, menos jóvenes emigrarían al extranjero.
+Si la vivienda no fuese tan cara, emigrarían menos jóvenes al extranjero.
+# es condicional | ¿Le importaría esperar un momento mientras reviso su solicitud?
+¿Le importaría esperar un momento mientras compruebo su petición?
+# es condicional | Si hubiéramos salido antes, no nos habría pillado la tormenta.
+Si hubiésemos salido antes, no nos hubiera pillado la tormenta.
+Si hubiésemos salido antes, la tormenta no nos hubiera pillado.
+Si hubiéramos salido antes, la tormenta no nos hubiera pillado.
+Si hubiésemos salido antes, la tormenta no nos habría pillado.
+Si hubiéramos salido antes, no nos hubiese pillado la tormenta.
+Si hubiésemos salido antes, no nos hubiese pillado la tormenta.
+Si hubiésemos salido antes, la tormenta no nos hubiese pillado.
+Si hubiéramos salido antes, la tormenta no nos hubiese pillado.
+# es condicional | Con un poco más de apoyo, muchos alumnos aprobarían sin problemas.
+Con algo más de ayuda, muchos alumnos aprobarían sin problemas.
+# es condicional | De haberlo sabido, habría reservado mesa con antelación.
+Si lo hubiera sabido, hubiera reservado mesa con antelación.
+Si lo hubiera sabido, hubiera reservado una mesa con antelación.
+Si lo hubiera sabido, habría reservado una mesa con antelación.
+Si lo hubiese sabido, habría reservado mesa con antelación.
+De haberlo sabido, hubiese reservado mesa con antelación.
+De haberlo sabido, hubiese reservado una mesa con antelación.
+Si lo hubiese sabido, hubiera reservado mesa con antelación.
+Si lo hubiera sabido, hubiese reservado mesa con antelación.
+Si lo hubiese sabido, hubiese reservado mesa con antelación.
+Si lo hubiese sabido, hubiera reservado una mesa con antelación.
+Si lo hubiera sabido, hubiese reservado una mesa con antelación.
+Si lo hubiese sabido, hubiese reservado una mesa con antelación.
+Si lo hubiese sabido, habría reservado una mesa con antelación.
+# es condicional | ¿Qué harías tú si te ofrecieran un trabajo en el extranjero?
+¿Qué harías si te ofreciesen un trabajo en el extranjero?
+¿Qué harías si te ofreciesen un empleo en el extranjero?
+# es condicional | Habría sido mejor consultar a un abogado antes de reclamar.
+Hubiera sido mejor consultar con un abogado antes de reclamar.
+Hubiese sido mejor consultar a un abogado antes de reclamar.
+Hubiese sido mejor consultar con un abogado antes de reclamar.
+# es condicional | Si el tren no hubiera tenido retraso, ahora estaríamos ya en casa.
+Si el tren no hubiese tenido retraso, ahora estaríamos ya en casa.
+Si el tren no hubiese tenido retraso, ya estaríamos en casa.
+# es condicional | Deberías revisar el presupuesto antes de presentarlo a la junta.
+Tendrías que revisar el presupuesto antes de presentárselo a la junta.
+# es condicional | Sin la ayuda de los voluntarios, la limpieza de la playa habría durado semanas.
+Sin la ayuda de los voluntarios, la limpieza de la playa hubiese durado semanas.
+# es reflexivo | Se lesionó jugando al fútbol.
+Se hizo daño jugando fútbol.
+Se ha lesionado jugando fútbol.
+Se ha hecho daño jugando fútbol.
+# es reflexivo | Me corté el dedo cocinando.
+Me he cortado el dedo mientras cocinaba.
+Me corté un dedo mientras cocinaba.
+# es reflexivo | Se quitó la chaqueta porque tenía calor.
+Se ha quitado la chamarra porque tenía calor.
+Se sacó la chamarra porque tenía calor.
+# es reflexivo | Se quejó de que la comida estaba fría.
+Se ha quejado de que la comida estuviera fría.
+Se quejó de que la comida estuviese fría.
+Se ha quejado de que la comida estuviese fría.
+# es reflexivo | Date prisa, que llegamos tarde.
+Apúrate, que vamos a llegar tarde.
+# es reflexivo | No me arrepiento de haber cambiado de trabajo, aunque ahora gano menos.
+No me arrepiento de haber cambiado de empleo, aunque gano menos ahora.
+# es cambio | Se puso rojo cuando ella lo miró.
+Se puso colorado cuando ella le miró.
+# es cambio | Se hace tarde, deberíamos irnos.
+Se está haciendo tarde, tenemos que irnos.
+# es cambio | La ciudad se ha convertido en un destino muy popular.
+La ciudad se convirtió en un destino turístico muy popular.
+# es cambio | Se hizo médico como su padre.
+Llegó a ser médico, igual que su padre.
+# es cambio | Llegó a ser ministro, aunque venía de una familia humilde.
+Llegó a ministro a pesar de que venía de una familia humilde.
+# es cambio | Cuando vi la factura, me quedé sin palabras.
+Al ver la factura, me quedé de piedra.
+# es cambio | Con la edad uno se vuelve más prudente.
+Con la edad una se hace más prudente.
+Con los años uno se hace más prudente.
+# es preposiciones | Depende del tiempo.
+Eso depende del clima.
+# es preposiciones | Al final me decidí por el piso más pequeño.
+Al final opté por el apartamento más pequeño.
+# es preposiciones | Hablamos mucho rato del problema.
+Estuvimos hablando mucho rato sobre el problema.
+Hablamos largo rato sobre el problema.
+# es preposiciones | Pienso a menudo en mi época en Sevilla.
+A menudo pienso en mi tiempo en Sevilla.
+Pienso mucho en mi tiempo en Sevilla.
+# es preposiciones | La casa consta de tres plantas.
+La casa tiene tres pisos.
+# es preposiciones | Me enteré de este restaurante por un amigo.
+Supe de este restaurante gracias a un amigo.
+# es idiom | El coche costó un ojo de la cara.
+El coche me costó una fortuna.
+El carro costó una fortuna.
+# es idiom | Fue la gota que colmó el vaso.
+Esa fue la gota que derramó el vaso.
+# es idiom | ¡No tires la toalla tan pronto!
+¡No te rindas tan rápido!
+# es idiom | Fuera está lloviendo a cántaros.
+Afuera está diluviando.
+Está diluviando.
+# es idiom | Sin gafas no veo tres en un burro.
+Sin lentes no veo nada.
+# es idiom | Cuando lo oí, me quedé de piedra.
+Al oírlo, me quedé helado.
+Al oírlo, me quedé helada.
+# es idiom | En el departamento lo tratan como si fuera un cero a la izquierda.
+En el departamento lo tratan como si fuese un cero a la izquierda.
+# es idiom | Estoy hasta las narices de las obras del vecino, empiezan cada día a las siete.
+Estoy harto de las obras del vecino, empiezan a las siete cada día.
+Estoy harto de las obras del vecino, cada día empiezan a las siete.
+# es falsos | Llévate un abrigo, hace frío.
+Lleva un abrigo, que hace frío.
+# es falsos | Mis padres cobran una buena pensión.
+Mis padres reciben una buena jubilación.
+# es falsos | Después de la mudanza, los libros siguen en las cajas.
+Tras la mudanza, los libros todavía están en las cajas.
+# es falsos | Hoy mi jefe me ha dejado salir antes.
+Hoy mi jefe me dejó salir más temprano.
+# es falsos | Mis compañeros de trabajo me regalaron una bicicleta de despedida.
+Mis compañeros me han regalado una bicicleta de despedida.
+Mis colegas me han regalado una bicicleta de despedida.

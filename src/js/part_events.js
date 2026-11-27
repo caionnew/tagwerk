@@ -479,10 +479,11 @@ try {
 } catch (e) {}
 /* ---------- Start ---------- */
 load();
+// Wörterbuch vor der Satzbank: Die Fassungen auf -se (lloviese) erkennt die Satzbank am Verb aus dem Wörterbuch
+buildGloss();
 buildBank();
 // Sprache des Tages erst nach dem Aufbau der Satzbank, sonst zählen die fälligen Wiederholungen nicht
 S.lang = dayLang(); DB.settings.lang = S.lang; save();
-buildGloss();
 // Erreichte Etappen festhalten, bevor Tagesstände und Fehlerprotokoll ausgedünnt werden (Daten bleiben so stabil)
 persistWay();
 pruneTlog();

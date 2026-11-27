@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.83.0
+**Kombinationen von Alternativen gelten von selbst, -se wie -ra, ESLint 10.**
+- **Kombinationen:** Bisher musste jede Kombination von Alternativen einzeln dastehen. „Det var hans idé att lyfta frågan under mötet“ war falsch, obwohl „lyfta frågan på mötet“ und „ta upp frågan under mötet“ galten. Jetzt liest die App jede Alternative als Änderung am Zielsatz und lässt Alternativen, die verschiedene Stellen ändern, auch zusammen gelten. Was eine Alternative zusammen ändert, bleibt zusammen (la sesión … tensa); Stellen, die sich berühren, und Alternativen mit mehr als zwei geänderten Stellen kombiniert sie nicht. Schwedisch: 242 neue Fassungen in 137 Sätzen.
+- **-se wie -ra:** Zu jeder Fassung mit Subjuntivo auf -ra gilt die auf -se: lloviese, llegasen, hubiésemos, auch hubiese im Hauptsatz einer Bedingung in der Vergangenheit (Si me hubieras avisado, te hubiese recogido; die RAE lässt das zu und bevorzugt -ra). Erkannt werden nur Formen, die sich aus einem Verb des Wörterbuchs bilden lassen, nicht para, ahora oder era. Spanisch mit den Kombinationen: 282 neue Fassungen in 150 Sätzen.
+- **Alle 536 erzeugten Fassungen gelesen, 12 falsch und ausgeschlossen:** „Har du redan ätit än?“ (redan und än doppelt), fuese als „draußen“ (Fuera llueve a cántaros, fuera de la nevera) und quisiese als höfliche Bitte (Quisiera un café). Sie stehen mit `nicht:` in den Alternativen. Ändern sich Sätze, listet ein Test die neuen Fassungen zum Lesen.
+- **Start so schnell wie vorher:** Gerechnet wird je Satz beim ersten Zugriff, nicht beim Start für alle. Das Wörterbuch wird jetzt vor der Satzbank aufgebaut, weil die -se-Formen das Verb daraus brauchen.
+- **ESLint 10.16.0 statt 9.39.5:** Version 9 wird nicht mehr gepflegt. Nur ein Werkzeug für die Tests; gleiche Regeln, keine Funde.
+- Doku: CONTENT.md (Kombinationen, -se, `nicht:`), ARCHITECTURE.md, IDEEN.md (Ideen 5 und 5a umgesetzt), CLAUDE.md (Arbeitsweise bei geänderten Inhalten).
+- Tests: Kombination an verschiedenen Stellen, gemeinsam Geändertes bleibt zusammen, berührende und zu große Änderungen nicht; Großschreibung und Satzzeichen erzeugter Sätze; -se gilt, auch hubiese im Hauptsatz; keine -se-Form aus para, ahora, era; jeder `nicht:`-Eintrag trifft eine Fassung; keine Fassung mischt Normen oder wiederholt eine vorhandene; Liste aller erzeugten Fassungen (`tests/fixtures/kombinationen.txt`, `tools/kombinationen.js`).
+- Speicherstand unverändert.
+
 ## 24.82.0
 **Feinschliff Perfecto/Indefinido: „Andere Norm“ statt „fast richtig“, beide Formen nebeneinander statt Fließtext, nichts mehr rot bei richtigem Spanisch, Regelblatt nach Signalwort.**
 - **Normangabe als Teil der Frage:** „wie in Spanien“ steht mit Rahmen und kräftig neben der Anweisung, nicht mehr in derselben Fläche wie die Hinweise („Grundform: ver“). Wer sie übersieht, beantwortet eine andere Frage.

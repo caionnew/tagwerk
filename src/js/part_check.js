@@ -324,11 +324,11 @@ function otherAnswers(ex){
   return ex.type === 'cloze' ? clozeOf(ex).other : [item.target].concat(item.alts).filter(x => normOf(item, x) === o);
 }
 // Rückmeldung, wenn die Form der anderen Norm kam
-// (bei der Lücke mit deiner Form vorn: „vi“ ist die Form aus Lateinamerika.) Mit dem Signalwort aus dem Satz, das der Lücke am nächsten
-// steht, davor bevorzugt: Gelernt wird, was man am Satz bemerkt, nicht die allgemeine Regel.
+// Signalwort aus dem Satz, das der Lücke am nächsten steht, davor bevorzugt: Gelernt wird, was man am Satz bemerkt, nicht die allgemeine Regel.
 const NORM_CUES = [
-  ['gehört zu heute', ['hoy', 'esta mañana', 'esta tarde', 'esta noche', 'este mediodía', 'hace un rato', 'hace un momento', 'hace una hora', 'hace media hora', 'hace unos minutos']],
-  ['läuft noch', ['esta semana', 'este mes', 'este año', 'este verano', 'este invierno', 'este trimestre', 'últimamente']],
+  ['gehört zu heute', ['esta mañana', 'esta tarde', 'esta noche', 'este mediodía', 'hace un rato', 'hace un momento', 'hace una hora', 'hace media hora', 'hace unos minutos']],
+  // hoy hier, nicht bei „gehört zu heute“ (das wäre ein Zirkel)
+  ['läuft noch', ['hoy', 'esta semana', 'este mes', 'este año', 'este verano', 'este invierno', 'este trimestre', 'últimamente']],
   ['reicht bis jetzt', ['ya', 'todavía no', 'aún no', 'nunca', 'jamás', 'alguna vez', 'en toda mi vida', 'en mi vida', 'desde que', 'cuántas veces']]
 ];
 function normCue(sentence, forms){
@@ -345,16 +345,21 @@ function normCue(sentence, forms){
   }));
   return best;
 }
-const NORM_WHY = {
-  es:['Lateinamerika', cue => `In Spanien steht hier Perfecto${cue ? `: „${cue.cue}“ ${cue.why}.` : ', weil der Zeitraum bis jetzt reicht (heute, diese Woche, schon, noch nie).'}`],
-  la:['Spanien', cue => `In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido, auch ${cue ? `mit „${cue.cue}“` : 'bei hoy und ya'}.`]
-};
-function normWhy(ex, c){
-  const w = NORM_WHY[c.why.norm];
-  if (!w) return '';
+const NORM_NAME = { es:'Spanien', la:'Lateinamerika' };
+// Ein Satz Begründung zum Formenpaar in der Rückmeldung, mit dem Signalwort aus dem Satz
+function normReason(ex, c){
   const item = itemById(ex.id), cz = ex.type === 'cloze' ? clozeOf(ex) : null;
   const cue = cz ? normCue(cz.target, [cz.gap]) : normCue(c.best || item.target, item.gapAlts);
-  return (ex.type === 'cloze' && String(c.input || '').trim() ? `„${String(c.input).trim()}“ ist die Form aus ${w[0]}.` : `So sagt man es in ${w[0]}.`) + ' ' + w[1](cue);
+  if (c.why.norm === 'es') return cue ? `„${cue.cue}“ ${cue.why}, darum in Spanien Perfecto.` : 'Der Zeitraum reicht bis jetzt, darum in Spanien Perfecto.';
+  return `In Lateinamerika steht für Abgeschlossenes meist Indefinido${cue ? `, auch mit „${cue.cue}“` : ''}.`;
+}
+// Die beiden Formen nebeneinander: gefragt (Norm der Aufgabe) und deine (andere Norm). Bei der Lücke deine Eingabe,
+// beim Übersetzen die markierte Form aus deinem Satz und die passende aus der gezeigten Lösung.
+function normForms(ex, c){
+  const item = itemById(ex.id), o = otherNorm(ex);
+  if (ex.type === 'cloze') return { want:clozeOf(ex).gap, mine:String(c.input || '').trim() };
+  const has = t => x => (' ' + norm(t || '', item.lang) + ' ').includes(' ' + norm(x, item.lang) + ' ');
+  return { want:item.gapAlts.find(x => normOf(item, x) !== o && has(c.best || item.target)(x)) || '', mine:item.gapAlts.find(x => normOf(item, x) === o && has(c.input)(x)) || '' };
 }
 const NORM_LABEL = { es:'wie in Spanien', la:'wie in Lateinamerika' };
 function check(){
@@ -397,7 +402,8 @@ function check(){
       // Erzeugte Aufgaben: bei falscher Antwort die Standardlösung zeigen (passend zur Erklärung und zum Vorlesen).
       // Satzbank: die richtige Fassung, die deiner Antwort am nächsten ist, damit die Korrektur klein bleibt.
       const best = ownWords(r.lang, c.input, res === 'bad' && ex.type === 'gen' ? answersFor(ex)[0] : closest(c.input, answersFor(ex), r.lang)); c.best = best; c.diff = diffHtml(best, c.input, r.lang);
-      if (ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.mine = mineHtml(c.input, best, r.lang);
+      // Form der anderen Norm: nichts durchstreichen, sie ist richtiges Spanisch; das Formenpaar zeigt den Unterschied
+      if (ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap) && !(j.why && j.why.kind === 'norm')) c.mine = mineHtml(c.input, best, r.lang);
       const toks = ' ' + norm(c.input, r.lang) + ' ';
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
       if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) { c.keyOk = ex.data.posLabel; c.posOk = true; }
@@ -516,6 +522,8 @@ function resDetail(x, ex, c, ra, lang){
   if (q) x.q = String(q).slice(0, 240);
   if (c.gaveUp) x.gu = 1; else if (c.input) x.ans = String(c.input).slice(0, 240);
   if (x.good && !x.near) return x;
+  // Form der anderen Norm: zählt in der Runde nicht als „auf Anhieb richtig“ (die Frage nannte die Norm)
+  if (c.why && c.why.kind === 'norm') x.nrm = 1;
   if (c.best && c.best !== x.target) x.best = c.best;
   if (!x.good && ra.topicOk) x.off = 1;
   const why = roundWhy(c, ra.kind, lang);
@@ -526,7 +534,7 @@ function resDetail(x, ex, c, ra, lang){
 function roundWhy(c, kind, lang){
   const cap = s => s[0].toUpperCase() + s.slice(1);
   const other = p => `Anderes Wort: „${p[0]}“ statt „${p[1]}“`;
-  if (c.result === 'near' && c.why && c.why.kind === 'norm') return c.why.norm === 'es' ? 'Gefragt war Spanien: hier Perfecto' : 'Gefragt war Lateinamerika: hier meist Indefinido';
+  if (c.result === 'near' && c.why && c.why.kind === 'norm') return `Andere Norm, gefragt war ${NORM_NAME[c.why.norm]}`;
   if (c.result === 'near') return c.why && c.why.kind === 'typo' ? `Tippfehler: „${c.why.typed}“ statt „${c.why.want}“` : c.vocab && c.vocab[0] ? other(c.vocab[0]) : lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
   if (c.gaveUp) return '';
   if (c.keyOk) return `${c.keyOk}. ${c.refl ? `Aber ${c.refl}` : c.form ? `Aber ${c.form}.` : 'Der Unterschied liegt woanders.'}`;

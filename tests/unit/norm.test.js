@@ -20,7 +20,7 @@ function show(ex, { input = '', check = false, next = false } = {}){
     ${next ? 'next();' : ''}
     const t = (DB.tlog || {})[today()] || {};
     return { kicker:html.match(/<p class="kicker">[\\s\\S]*?<\\/p>/)[0], cloze:(html.match(/<p class="cloze"[\\s\\S]*?<\\/p>/) || [''])[0].replace(/<input[^>]*>/, '___').replace(/<[^>]+>/g, ''),
-      result:c.result || null, why:c.why || null, fb, norm:S.run.queue[0].norm || null, topic:(t.es || {})['p:perfecto'] || null,
+      result:c.result || null, why:c.why || null, fb, mine:c.mine || null, marked:c.state === 'done' && /<p class="sol"[^>]*>(?:(?!<\\/p>)[\\s\\S])*class="w-/.test(feedbackHtml(S.run, S.run.queue[0], c)), norm:S.run.queue[0].norm || null, topic:(t.es || {})['p:perfecto'] || null,
       queue:S.run.queue.map(q => ({ type:q.type, norm:q.norm || null, requeue:!!q.requeue })) }; })()`);
 }
 
@@ -55,16 +55,22 @@ test('Jede Fassung jedes markierten Satzes: in ihrer Norm richtig, in der andere
   }
   assert.deepEqual(problems, []);
 });
-test('„wie in Spanien“: perdí ist fast richtig, mit Grund, und zählt beim Thema als Fehler', () => {
+test('„wie in Spanien“: perdí ist „Andere Norm“, beide Formen mit Grund, und zählt beim Thema als Fehler', () => {
   const it = item('Esta mañana he perdido el autobús.');
   const r = show({ type:'free', id:it.id, norm:'es' }, { input:'Esta mañana perdí el autobús', check:true, next:true });
   assert.match(r.kicker, /Übersetze ins Spanische<span class="hintw norm">wie in Spanien<\/span>/);
   assert.equal(r.result, 'near');
   assert.deepEqual(r.why, { kind:'norm', norm:'es' });
-  assert.match(r.fb, /Fast richtig/);
-  assert.match(r.fb, /So sagt man es in Lateinamerika\. In Spanien steht hier Perfecto/);
+  assert.match(r.fb, /Andere Norm/);
+  assert.doesNotMatch(r.fb, /Fast richtig/);
+  // Formenpaar: gefragte Form, dann deine
+  assert.match(r.fb, /Spanien he perdido gefragt Lateinamerika perdí deine/);
+  assert.match(r.fb, /„Esta mañana“ gehört zu heute, darum in Spanien Perfecto\s*\./);
   assert.match(r.fb, /Esta mañana he perdido el autobús\./);
   assert.deepEqual(r.topic, [1, 1]);
+  // Nichts durchgestrichen oder rot markiert: Die Lösung steht ohne Markierung, deine Antwort ohne Streichung
+  assert.equal(r.mine, null);
+  assert.equal(r.marked, false);
   // Richtig in der gefragten Norm: kein Fehler
   const ok = show({ type:'free', id:it.id, norm:'es' }, { input:'Esta mañana he perdido el autobús', check:true, next:true });
   assert.equal(ok.result, 'ok');
@@ -78,7 +84,8 @@ test('„wie in Lateinamerika“: Lücke im Satz dieser Norm, he discutido ist f
   assert.equal(show({ type:'cloze', id:it.id, norm:'la' }, { input:'discutí', check:true }).result, 'ok');
   const near = show({ type:'cloze', id:it.id, norm:'la' }, { input:'he discutido', check:true });
   assert.equal(near.result, 'near');
-  assert.match(near.fb, /„he discutido“ ist die Form aus Spanien\. In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido/);
+  assert.match(near.fb, /Lateinamerika discutí gefragt Spanien he discutido deine/);
+  assert.match(near.fb, /In Lateinamerika steht für Abgeschlossenes meist Indefinido\s*, auch mit „Hoy“\./);
   // „wie in Spanien“: der Zielsatz, discutí fast richtig
   assert.equal(show({ type:'cloze', id:it.id, norm:'es' }).cloze, 'Hoy ___ con mi socio y he cancelado dos reuniones.');
   assert.equal(show({ type:'cloze', id:it.id, norm:'es' }, { input:'discutí', check:true }).result, 'near');
@@ -90,19 +97,23 @@ test('Erfahrung: immer „wie in Spanien“ (in Lateinamerika ginge beides, die 
   const r = show({ type:'free', id:it.id, norm:'la' }, { input:'Nunca estuve en México', check:true });
   assert.equal(r.norm, 'es');
   assert.equal(r.result, 'near');
-  assert.match(r.fb, /In Spanien steht hier Perfecto\s*: „Nunca“ reicht bis jetzt\./);
+  assert.match(r.fb, /Spanien he estado gefragt Lateinamerika estuve deine/);
+  assert.match(r.fb, /„Nunca“ reicht bis jetzt, darum in Spanien Perfecto\s*\./);
   assert.equal(show({ type:'cloze', id:it.id }, { input:'he estado', check:true }).result, 'ok');
 });
 test('Rückmeldung nennt das Signalwort am Satz, das der Lücke am nächsten steht', () => {
   const morning = show({ type:'cloze', id:item('Esta mañana he perdido el autobús.').id, norm:'es' }, { input:'perdí', check:true });
-  assert.match(morning.fb, /„perdí“ ist die Form aus Lateinamerika\. In Spanien steht hier Perfecto\s*: „Esta mañana“ gehört zu heute\./);
+  assert.match(morning.fb, /„Esta mañana“ gehört zu heute, darum in Spanien Perfecto\s*\./);
   const year = show({ type:'cloze', id:item('Este verano apenas ha llovido.').id }, { input:'llovió', check:true });
-  assert.match(year.fb, /„Este verano“ läuft noch\./);
+  assert.match(year.fb, /„Este verano“ läuft noch, darum in Spanien Perfecto/);
   // „ya“ steht näher an der Lücke als „hoy“
   const ya = show({ type:'free', id:item('Ayer no me llamó nadie, pero hoy el teléfono ya ha sonado cinco veces.').id, norm:'es' }, { input:'Ayer no me llamó nadie, pero hoy el teléfono ya sonó cinco veces', check:true });
-  assert.match(ya.fb, /In Spanien steht hier Perfecto\s*: „ya“ reicht bis jetzt\./);
+  assert.match(ya.fb, /„ya“ reicht bis jetzt, darum in Spanien Perfecto\s*\./);
+  // hoy allein: „läuft noch“, nicht „gehört zu heute“
+  const hoy = show({ type:'cloze', id:item('Hoy he trabajado mucho.').id, norm:'es' }, { input:'trabajé', check:true });
+  assert.match(hoy.fb, /„Hoy“ läuft noch, darum in Spanien Perfecto/);
   const la = show({ type:'cloze', id:item('Hace un mes se conocieron y hoy se han comprometido.').id, norm:'la' }, { input:'se han comprometido', check:true });
-  assert.match(la.fb, /In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido\s*, auch mit „hoy“\./);
+  assert.match(la.fb, /In Lateinamerika steht für Abgeschlossenes meist Indefinido\s*, auch mit „hoy“\./);
 });
 test('Form der anderen Norm: gleich noch einmal als Lücke mit derselben Norm', () => {
   const it = item('El lunes empezó el curso y hoy ya hemos hecho el primer examen.');
@@ -130,8 +141,25 @@ test('Norm: ausgelost, sobald die Aufgabe dran ist, nur bei Übersetzen und Lüc
   assert.equal(bad.result, 'bad');
   assert.deepEqual(bad.queue[1], { type:'cloze', norm:'la', requeue:true });
 });
-test('Regelblatt nennt beide Normen und die Abfrage', () => {
+test('Regelblatt: Übersicht nach Signalwort, beide Normen je Zeile, die Abfrage erklärt', () => {
   const tr = run("TRAPS.es.find(t => t.id === 'perfecto')");
-  assert.ok(tr.table.some(r => r[0] === 'Spanien') && tr.table.some(r => r[0] === 'Lateinamerika'));
+  assert.deepEqual(tr.table.map(r => r[0]), ['ayer, en 2018', 'hoy, ya', 'nunca, este año']);
+  assert.ok(tr.table.slice(1).every(r => /Spanien/.test(r[1]) && /Lateinamerika/.test(r[1])));
   assert.match(tr.rule, /„wie in Spanien“ oder „wie in Lateinamerika“/);
+  assert.match(tr.rule, /„Andere Norm“, kommt gleich noch einmal/);
+});
+test('Rundenende: Grund bei der anderen Norm', () => {
+  assert.equal(app.get('roundWhy')({ result:'near', why:{ kind:'norm', norm:'la' } }, null, 'es'), 'Andere Norm, gefragt war Lateinamerika');
+});
+test('Rundenende: Antwort in der anderen Norm ist kein „Fehlerfrei“', () => {
+  const it = item('Esta mañana he perdido el autobús.'), ok = item('Ayer no dormí bien.');
+  app.setDB(blank());
+  const done = run(`(() => { buildBank(); S.lang = 'es';
+    S.run = { kind:'practice', lang:'es', queue:[{ type:'free', id:${JSON.stringify(it.id)}, norm:'es' }, { type:'free', id:${JSON.stringify(ok.id)} }, { type:'free', id:${JSON.stringify(ok.id)} }], idx:0, ok:0, bad:0, res:[], missed:[], secs:0, combo:0, best:0 };
+    const answer = t => { prepCur(); S.run.cur = { input:t, state:'answer' }; check(); next(); };
+    answer('Esta mañana perdí el autobús'); S.run.idx = 1; answer('Ayer no dormí bien'); S.run.idx = 2; answer('Ayer no dormí bien');
+    S.view = 'runDone'; return viewRunDone().replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' '); })()`);
+  assert.doesNotMatch(done, /Fehlerfrei/);
+  assert.match(done, /2 von 3 auf Anhieb richtig, 1 in der anderen Norm\./);
+  assert.match(done, /Andere Norm, gefragt war Spanien/);
 });

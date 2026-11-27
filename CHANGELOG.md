@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.82.0
+**Feinschliff Perfecto/Indefinido: „Andere Norm“ statt „fast richtig“, beide Formen nebeneinander statt Fließtext, nichts mehr rot bei richtigem Spanisch, Regelblatt nach Signalwort.**
+- **Normangabe als Teil der Frage:** „wie in Spanien“ steht mit Rahmen und kräftig neben der Anweisung, nicht mehr in derselben Fläche wie die Hinweise („Grundform: ver“). Wer sie übersieht, beantwortet eine andere Frage.
+- **„Andere Norm“ statt „Fast richtig“.** Die Antwort ist richtiges Spanisch, nur nicht das Gefragte; „fast richtig“ hieße, an der Form fehle etwas.
+- **Beide Formen nebeneinander statt zweier Sätze:** Spanien *he perdido* (gefragt), darunter Lateinamerika *perdí* (deine), dann ein Satz: „„Esta mañana“ gehört zu heute, darum in Spanien Perfecto.“ Für hoy jetzt „„Hoy“ läuft noch“ statt des Zirkels „„Hoy“ gehört zu heute“.
+- **Nichts mehr rot bei richtigem Spanisch:** Beim Übersetzen war deine Form durchgestrichen und die Lösung rot unterkringelt. Jetzt steht deine Antwort unverändert da und die Lösung der gefragten Norm ohne Markierung; den Unterschied zeigt das Formenpaar.
+- **Rundenende ehrlich:** Eine Antwort in der anderen Norm war „Fehlerfrei, alle 10 auf Anhieb richtig“. Jetzt: „9 von 10 auf Anhieb richtig, 1 in der anderen Norm.“ Beim Thema steht „Andere Norm, gefragt war Spanien“.
+- **Regelblatt nach Signalwort statt nach Region:** drei Zeilen (ayer, en 2018 · hoy, ya · nunca, este año) mit beiden Normen je Zeile, statt „Lateinamerika“ zweimal; kürzere Einleitung („Die Zeitangabe entscheidet …“), Beispiel ohne Umbruch mitten in der Wendung (nunca he ido · nunca fui).
+- Doku: ARCHITECTURE.md.
+- Tests: Formenpaar und Begründung, keine Streichung und keine Markierung, „Hoy“ läuft noch, Rundenende ohne „Fehlerfrei“, Grund am Rundenende, Regelblatt nach Signalwort.
+
 ## 24.81.0
 **Perfecto/Indefinido nach der lerntheoretischen Prüfung überarbeitet: jede Normangabe zählt, das Signalwort steht in der Erklärung, zweiter Versuch nach der falschen Norm, 24 Sätze mit zwei Zeitrahmen.**
 - **Normangabe nur, wo sie etwas ändert.** In 20 Erfahrungssätzen (nunca, alguna vez, todavía no) gilt in Lateinamerika beides; dort änderte „wie in Lateinamerika“ nichts. Das waren 32 % aller Normangaben, und ein Hinweis, der oft folgenlos bleibt, wird überlesen. Diese Sätze fragen jetzt immer „wie in Spanien“ ab, „wie in Lateinamerika“ kommt nur noch bei Sätzen mit klarem Gegensatz. Gespeicherte Aufgaben aus 24.80.0 werden beim Laden umgestellt.

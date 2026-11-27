@@ -393,14 +393,23 @@ function viewRun(){
 // Nach dem Prüfen steht deine Antwort an ihrem Platz, überzählige oder falsche Wörter gestrichen (vorher stand sie dazu noch einmal
 // als „Du: …“ in der Rückmeldung). Aufgegeben ohne Antwort: kein leeres Feld.
 const doneAnswer = (c, lang) => (String(c.input || '').trim() ? `<p class="tw-done" lang="${lang}">${c.mine && c.result !== 'ok' && !c.gaveUp ? c.mine : esc(c.input)}</p>` : '');
-// Norm der Aufgabe sichtbar neben der Anweisung („wie in Spanien“), immer offen: Sie gehört zur Frage, nicht zur Hilfe
+// Norm der Aufgabe sichtbar neben der Anweisung („wie in Spanien“), immer offen: Sie gehört zur Frage, nicht zur Hilfe,
+// darum mit Rahmen statt Fläche wie die Hinweise
 const normChip = ex => { const n = exNorm(ex); return n ? `<span class="hintw norm">${NORM_LABEL[n]}</span>` : ''; };
+// Rückmeldung bei der Form der anderen Norm: beide Formen untereinander, die gefragte vorn und kräftig, dann ein Satz mit dem Signalwort
+function normPairHtml(ex, c, lang){
+  const f = normForms(ex, c), n = c.why.norm, o = n === 'es' ? 'la' : 'es';
+  const row = (k, form, tag, cls) => form ? `<span class="np-l ${cls}">${NORM_NAME[k]}</span><span class="np-f ${cls}" lang="${lang}">${esc(form)}</span><span class="np-t ${cls}">${tag}</span>` : '';
+  return `<div class="np">${row(n, f.want, 'gefragt', 'want')}${row(o, f.mine, 'deine', 'mine')}</div><p class="expl">${termify(normReason(ex, c))}</p>`;
+}
 function solShown(lang, ex, c){
   if (ex.type === 'gen' && ['spot', 'genus', 'time'].includes(ex.data.kind)) return ex.data.full;
   const item = ex.id ? itemById(ex.id) : null;
   // Lücke: der Satz der gefragten Norm (bei „wie in Lateinamerika“ ggf. eine Alternative); ohne Norm ist es der Zielsatz
   const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : ex.type === 'cloze' ? clozeOf(ex).target : item.target;
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
+  // Andere Norm: die nächste Fassung der gefragten Norm, ohne Markierung (sie ist ja nicht falsch)
+  if (c.why && c.why.kind === 'norm' && ex.type === 'free' && c.best) return c.best;
   return showDiff && c.best ? c.best : solution;
 }
 // Lösungssatz mit dem gesuchten Teil fett, wenn er darin vorkommt (Uhrzeit oder Preis in Worten)
@@ -409,7 +418,8 @@ const ivlText = n => (n <= 1 ? 'morgen wieder' : n === 2 ? 'übermorgen wieder' 
 function feedbackHtml(r, ex, c){
   const lang = r.lang;
   const near = lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
-  const pill = c.result === 'ok' ? '<span class="verdict v-ok">Richtig</span>' : c.result === 'near' ? '<span class="verdict v-mid">Fast richtig</span>' : c.gaveUp ? '<span class="verdict v-bad">Lösung</span>' : '<span class="verdict v-bad">Falsch</span>';
+  // Form der anderen Norm: richtiges Spanisch, nur nicht gefragt. „Fast richtig“ hieße, an der Form fehle etwas.
+  const pill = c.result === 'ok' ? '<span class="verdict v-ok">Richtig</span>' : c.result === 'near' ? `<span class="verdict v-mid">${c.why && c.why.kind === 'norm' ? 'Andere Norm' : 'Fast richtig'}</span>` : c.gaveUp ? '<span class="verdict v-bad">Lösung</span>' : '<span class="verdict v-bad">Falsch</span>';
   const normNear = c.why && c.why.kind === 'norm' && !ex.requeue;
   const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : normNear ? `gleich noch einmal, dann ${ivlText(c.nextIvl)}` : ivlText(c.nextIvl)}</span>` : '';
   const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${c.combo} in Folge</span>` : '';
@@ -455,7 +465,7 @@ function feedbackHtml(r, ex, c){
   const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : item.target;
   const origin = item ? originOf(item) : '', originLine = origin ? `<p class="expl orig"><span class="lbl-o">Herkunft:</span> ${termify(origin)}</p>` : '';
   let originShown = !(c.result === 'bad' || c.wasSeen === false);
-  const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
+  const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap) && !(c.why && c.why.kind === 'norm');
   const sol = solShown(lang, ex, c);
   // Lücke, richtig mit einer Alternative (seit 24.78): Oben steht deine Fassung, vorgelesen wird sie auch; die Hauptlösung
   // darunter als „Auch richtig“. Beim Übersetzen steht die Hauptlösung ohnehin als Lösungssatz da.
@@ -470,7 +480,7 @@ function feedbackHtml(r, ex, c){
   else out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
   if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
-  else if (c.result === 'near' && c.why && c.why.kind === 'norm') out += `<p class="expl">${termify(normWhy(ex, c))}</p>`;
+  else if (c.result === 'near' && c.why && c.why.kind === 'norm') out += normPairHtml(ex, c, lang);
   else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {
@@ -821,12 +831,14 @@ function viewRunDone(){
   const r = S.run, lang = r.lang;
   const daily = r.kind === 'daily';
   const total = r.ok + r.bad, res = r.res || [];
-  const perfect = total > 0 && !r.bad;
+  // Antworten in der anderen Norm (Perfecto/Indefinido) sind richtiges Spanisch, aber nicht das Gefragte: kein „Fehlerfrei“
+  const nNorm = res.filter(x => x.nrm).length;
+  const perfect = total > 0 && !r.bad && !nNorm;
   const title = daily ? 'Tagwerk erledigt' : perfect && total >= 3 ? 'Fehlerfrei' : 'Runde beendet';
-  const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok} von ${total} auf Anhieb richtig.`;
+  const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok - nNorm} von ${total} auf Anhieb richtig${nNorm ? `, ${nNorm} in der anderen Norm` : ''}.`;
   // Ergebnis je Aufgabe als Leiste: auf einen Blick, wo es gehakt hat
   const nOk = res.filter(x => x.good && !x.near).length, nNear = res.filter(x => x.near).length, nBad = res.length - nOk - nNear;
-  const strip = res.length > 1 ? `<div class="rstrip${r.stamped ? '' : ' anim'}" role="img" aria-label="Ergebnis je Aufgabe: ${nOk} richtig${nNear ? `, ${nNear} fast richtig` : ''}${nBad ? `, ${nBad} falsch` : ''}">${res.map((x, k) => `<i class="rs ${x.good ? (x.near ? 'rs-near' : 'rs-ok') : 'rs-bad'}" style="--i:${k}"></i>`).join('')}</div>` : '';
+  const strip = res.length > 1 ? `<div class="rstrip${r.stamped ? '' : ' anim'}" role="img" aria-label="Ergebnis je Aufgabe: ${nOk} richtig${nNear - nNorm ? `, ${nNear - nNorm} fast richtig` : ''}${nNorm ? `, ${nNorm} andere Norm` : ''}${nBad ? `, ${nBad} falsch` : ''}">${res.map((x, k) => `<i class="rs ${x.good ? (x.near ? 'rs-near' : 'rs-ok') : 'rs-bad'}" style="--i:${k}"></i>`).join('')}</div>` : '';
   // Kennzahlen nur, wenn sie etwas sagen
   const fresh = res.filter(x => x.fresh).length;
   const kp = [];

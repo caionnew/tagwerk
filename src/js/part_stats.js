@@ -117,7 +117,9 @@ function recordAnswer(lang, ex, c, good){
   if (k) L['e:' + k] = (L['e:' + k] || 0) + 1;
   // Ein Wortschatz- oder Tippfehler belastet nicht das Grammatikthema des Satzes, ebenso ein Fehler neben der richtig gesetzten Stellung.
   // In Wortschatz-Themen ist das andere Wort im geprüften Teil dagegen genau der Fehler.
-  const trap = exTrap(ex), topicOk = good || (k === 'vocab' && !topicHit) || k === 'spell' || !!c.posOk;
+  // Die Form der anderen Norm (perdí bei „wie in Spanien“) ist fast richtig, aber genau der Fehler, den das Thema prüft
+  const otherNormForm = !!(c.why && c.why.kind === 'norm');
+  const trap = exTrap(ex), topicOk = (good && !otherNormForm) || (k === 'vocab' && !topicHit) || k === 'spell' || !!c.posOk;
   if (trap) { add('p:' + trap, topicOk); blockAdd(lang, trap, topicOk); }
   if (type) add('t:' + type, good);
   if (trap && c.wasSeen === false && (ex.type === 'cloze' || ex.type === 'tiles')) noteFirst(lang, ex.id, trap, topicOk);

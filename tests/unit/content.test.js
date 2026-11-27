@@ -15,7 +15,8 @@ test('jede Zeile der Satzbank hat fünf Felder (sechstes optional: Niveau, siebt
       const [, target, gap] = p;
       if (seen.has(lang + target)) problems.push(`doppelt: ${target}`);
       seen.add(lang + target);
-      if (gap && !target.includes(gap.split('/')[0])) problems.push(`Lücke „${gap}“ fehlt in: ${target} (${trap})`);
+      // Normzeichen vor der Lücke (ES:he perdido) gehören nicht zum Satz
+      if (gap && !target.includes(gap.split('/')[0].replace(/^(ES|LA):\s*/, ''))) problems.push(`Lücke „${gap}“ fehlt in: ${target} (${trap})`);
     });
   }
   assert.ok(n >= 280, `nur ${n} Sätze`);

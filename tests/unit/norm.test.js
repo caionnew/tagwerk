@@ -1,0 +1,105 @@
+// Perfecto/Indefinido mit zwei Normen (27.11.2026): Du wolltest dich nicht auf Spanien oder Lateinamerika festlegen, sondern beides lernen.
+// Vorher galt beides überall, und wer immer Indefinido schrieb, hatte 67 von 69 Sätzen richtig. Jetzt sagt die Aufgabe, welche Norm
+// gefragt ist („wie in Spanien“, „wie in Lateinamerika“); die Form der anderen ist fast richtig und zählt beim Thema als Fehler.
+const test = require('node:test'), assert = require('node:assert/strict');
+const { loadApp } = require('../helpers/load.js');
+const app = loadApp();
+const run = code => { const v = app.run(code); return v && typeof v === 'object' ? JSON.parse(JSON.stringify(v)) : v; };
+const BANK = app.get('BANK'), normOf = app.get('normOf'), clozeOf = app.get('clozeOf'), answersFor = app.get('answersFor'), otherAnswers = app.get('otherAnswers');
+const judgeX = app.get('judgeX'), norm = app.get('norm'), gapPos = app.get('gapPos');
+const blank = () => ({ v:3, settings:{ size:'normal', lang:'es', niveau:'fort' }, used:{ lookup:true, accept:true }, st:{}, own:{ sv:[], es:[] }, tat:{ sv:[], es:[] }, log:{}, done:{}, gen:{}, run:null, focus:{} });
+const item = t => BANK.es.find(i => i.target === t);
+// Eine Aufgabe zeigen und optional prüfen; zurück: Kopfzeile, Lückensatz, Ergebnis, Rückmeldung, Themenzählung, Wiederholung
+function show(ex, { input = '', check = false, next = false } = {}){
+  app.setDB(blank());
+  return run(`(() => { buildBank(); S.lang = 'es'; S.view = 'run';
+    S.run = { kind:'practice', lang:'es', queue:[${JSON.stringify(ex)}], idx:0, ok:0, bad:0, res:[], missed:[], secs:0, combo:0, best:0 };
+    prepCur(); S.run.cur = { input:${JSON.stringify(input)}, state:'answer' };
+    ${check ? 'check();' : ''}
+    const html = viewRun(), c = S.run.cur, fb = c.state === 'done' ? feedbackHtml(S.run, S.run.queue[0], c).replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ') : '';
+    ${next ? 'next();' : ''}
+    const t = (DB.tlog || {})[today()] || {};
+    return { kicker:html.match(/<p class="kicker">[\\s\\S]*?<\\/p>/)[0], cloze:(html.match(/<p class="cloze"[\\s\\S]*?<\\/p>/) || [''])[0].replace(/<input[^>]*>/, '___').replace(/<[^>]+>/g, ''),
+      result:c.result || null, why:c.why || null, fb, norm:S.run.queue[0].norm || null, topic:(t.es || {})['p:perfecto'] || null,
+      queue:S.run.queue.map(q => ({ type:q.type, norm:q.norm || null, requeue:!!q.requeue })) }; })()`);
+}
+
+test('31 Sätze haben Normformen, 11 davon mit spanischer Form als Zielsatz; jede Form steht in der Lücke', () => {
+  const items = BANK.es.filter(i => i.norms);
+  assert.equal(items.length, 31);
+  assert.ok(items.every(i => i.trap === 'perfecto'));
+  assert.equal(items.filter(i => normOf(i, i.target) === 'es').length, 11);
+  // Satz mit Erfahrung: Perfecto gilt in beiden Normen
+  assert.equal(normOf(item('Nunca he estado en México.'), 'Nunca he estado en México.'), '');
+  for (const it of items) for (const k of Object.keys(it.norms)) assert.ok(it.gapAlts.some(g => norm(g, 'es') === k), `${k}: ${it.target}`);
+  // Die Zeichen sind aus Lücke und Lösungen verschwunden
+  assert.ok(BANK.es.every(i => i.gapAlts.every(g => !/^(ES|LA):/.test(g))));
+});
+test('Jede Fassung jedes markierten Satzes: in ihrer Norm richtig, in der anderen fast richtig, sonst in beiden richtig', () => {
+  const problems = [];
+  for (const it of BANK.es.filter(i => i.norms)) for (const n of ['es', 'la']) for (const type of ['free', 'cloze']) {
+    const ex = { type, id:it.id, norm:n }, ok = answersFor(ex), other = otherAnswers(ex);
+    if (type === 'cloze') { const cz = clozeOf(ex); if (gapPos(cz.target, cz.gap) < 0) problems.push(`Lücke nicht im Satz: ${cz.target}`); }
+    for (const v of type === 'free' ? [it.target].concat(it.alts) : it.gapAlts) {
+      const vn = normOf(it, v), want = vn && vn !== n ? 'near' : 'ok';
+      let got = judgeX(v, ok, 'es', {}).res;
+      if (got === 'bad') { const o = judgeX(v, other, 'es', {}); if (o && o.res !== 'bad') got = 'near'; }
+      if (got !== want) problems.push(`${n} ${type}: ${v} → ${got}, erwartet ${want}`);
+    }
+  }
+  assert.deepEqual(problems, []);
+});
+test('„wie in Spanien“: perdí ist fast richtig, mit Grund, und zählt beim Thema als Fehler', () => {
+  const it = item('Esta mañana he perdido el autobús.');
+  const r = show({ type:'free', id:it.id, norm:'es' }, { input:'Esta mañana perdí el autobús', check:true, next:true });
+  assert.match(r.kicker, /Übersetze ins Spanische<span class="hintw norm">wie in Spanien<\/span>/);
+  assert.equal(r.result, 'near');
+  assert.deepEqual(r.why, { kind:'norm', norm:'es' });
+  assert.match(r.fb, /Fast richtig/);
+  assert.match(r.fb, /So sagt man es in Lateinamerika\. In Spanien steht hier Perfecto/);
+  assert.match(r.fb, /Esta mañana he perdido el autobús\./);
+  assert.deepEqual(r.topic, [1, 1]);
+  // Richtig in der gefragten Norm: kein Fehler
+  const ok = show({ type:'free', id:it.id, norm:'es' }, { input:'Esta mañana he perdido el autobús', check:true, next:true });
+  assert.equal(ok.result, 'ok');
+  assert.deepEqual(ok.topic, [1, 0]);
+});
+test('„wie in Lateinamerika“: Lücke im Satz dieser Norm, he discutido ist fast richtig, discutí richtig', () => {
+  const it = item('Hoy he discutido con mi socio y he cancelado dos reuniones.');
+  const r = show({ type:'cloze', id:it.id, norm:'la' });
+  assert.match(r.kicker, /wie in Lateinamerika/);
+  assert.equal(r.cloze, 'Hoy ___ con mi socio y cancelé dos reuniones.');
+  assert.equal(show({ type:'cloze', id:it.id, norm:'la' }, { input:'discutí', check:true }).result, 'ok');
+  const near = show({ type:'cloze', id:it.id, norm:'la' }, { input:'he discutido', check:true });
+  assert.equal(near.result, 'near');
+  assert.match(near.fb, /„he discutido“ ist die Form aus Spanien\. In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido/);
+  // „wie in Spanien“: der Zielsatz, discutí fast richtig
+  assert.equal(show({ type:'cloze', id:it.id, norm:'es' }).cloze, 'Hoy ___ con mi socio y he cancelado dos reuniones.');
+  assert.equal(show({ type:'cloze', id:it.id, norm:'es' }, { input:'discutí', check:true }).result, 'near');
+});
+test('Erfahrung: in Lateinamerika gilt beides, in Spanien ist estuve fast richtig', () => {
+  const it = item('Nunca he estado en México.');
+  for (const a of ['Nunca he estado en México', 'Nunca estuve en México']) assert.equal(show({ type:'free', id:it.id, norm:'la' }, { input:a, check:true }).result, 'ok', a);
+  assert.equal(show({ type:'free', id:it.id, norm:'es' }, { input:'Nunca estuve en México', check:true }).result, 'near');
+  assert.equal(show({ type:'cloze', id:it.id, norm:'es' }, { input:'he estado', check:true }).result, 'ok');
+});
+test('Norm: ausgelost, sobald die Aufgabe dran ist, nur bei Übersetzen und Lücke; die Wiederholung behält sie', () => {
+  const it = item('Esta mañana he perdido el autobús.');
+  const ns = new Set(Array.from({ length:40 }, () => show({ type:'free', id:it.id }).norm));
+  assert.deepEqual([...ns].sort(), ['es', 'la']);
+  assert.equal(show({ type:'dict', id:it.id }).norm, null);
+  // Satz ohne Normformen: keine Norm, kein Hinweis
+  const plain = item('Ayer no dormí bien.');
+  const p = show({ type:'free', id:plain.id });
+  assert.equal(p.norm, null);
+  assert.ok(!/hintw norm/.test(p.kicker));
+  // Falsch: Die Wiederholung kommt mit derselben Norm
+  const bad = show({ type:'free', id:it.id, norm:'la' }, { input:'Esta mañana perdimos el tren', check:true, next:true });
+  assert.equal(bad.result, 'bad');
+  assert.deepEqual(bad.queue[1], { type:'cloze', norm:'la', requeue:true });
+});
+test('Regelblatt nennt beide Normen und die Abfrage', () => {
+  const tr = run("TRAPS.es.find(t => t.id === 'perfecto')");
+  assert.ok(tr.table.some(r => r[0] === 'Spanien') && tr.table.some(r => r[0] === 'Lateinamerika'));
+  assert.match(tr.rule, /„wie in Spanien“ oder „wie in Lateinamerika“/);
+});

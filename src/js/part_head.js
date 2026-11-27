@@ -35,7 +35,10 @@ const TRAPS = {
     { id:'konjugation', label:'Verbformen', kind:'gen', gen:'conj', short:'Signale: normalmente = Präsens, ayer = Indefinido, antes/siempre = Imperfecto, es importante que = Subjuntivo.', rule:'Unregelmäßige Formen wie tuve, hice, fui, sea, vaya lohnen sich auswendig.' },
     { id:'serestar', label:'ser oder estar', kind:'form', gen:'serestar', short:'ser für Identität und Eigenschaften, estar für Zustand und Ort.', rule:'Auch ser: Uhrzeit und wo ein Ereignis stattfindet (la fiesta es en casa de Ana). Auch estar: Ergebnis und estar + Gerundium.' },
     { id:'pasado', label:'Indefinido vs. Imperfecto', kind:'form', short:'Indefinido für abgeschlossene Ereignisse, Imperfecto für Hintergrund und Gewohnheit.', rule:'Estaba leyendo (laufende Handlung) cuando sonó el teléfono (Ereignis). Begrenzte Dauer ebenfalls Indefinido: Estuvo tres años en Berlín.' },
-    { id:'perfecto', label:'Perfecto vs. Indefinido', kind:'form', short:'In Spanien: heute, diese Woche, Erfahrung = Perfecto. Gestern, 2018 = Indefinido.', rule:'In Lateinamerika steht meist Indefinido, auch für heute. Beides wird verstanden.' },
+    { id:'perfecto', label:'Perfecto vs. Indefinido', kind:'form', short:'Ayer, en 2018: überall Indefinido. Hoy, ya, nunca: in Spanien Perfecto, in Lateinamerika meist Indefinido.',
+      table:[['überall', 'abgeschlossene Zeit: ayer, en 2018, hace dos años', 'ayer perdí el autobús'], ['Spanien', 'Zeitraum bis jetzt: hoy, esta semana, ya, nunca', 'hoy he perdido el autobús'],
+        ['Lateinamerika', 'Abgeschlossenes: meist Indefinido, auch bei hoy und ya', 'hoy perdí el autobús'], ['Lateinamerika', 'Erfahrung und was andauert: beides', 'nunca he estado, nunca estuve']],
+      rule:'Die Aufgabe sagt, welche Norm gefragt ist: „wie in Spanien“ oder „wie in Lateinamerika“. Die Form der anderen ist „fast richtig“ und zählt beim Thema als Fehler. Auch in Spanien sprechen Galicien, Asturien und die Kanaren eher wie Lateinamerika.' },
     { id:'subjuntivo', label:'Subjuntivo oder Indikativ', kind:'form', short:'Nach Wunsch, Gefühl, Zweifel und „cuando“ mit Zukunftsbezug: Subjuntivo.', rule:'quiero que, me alegro de que, no creo que, es importante que, para que, antes de que, sin que, ojalá. como si immer mit Imperfecto de subjuntivo (como si lo supiera). Hauptsatz in der Vergangenheit: quería que vinieras. Aber: creo que tiene razón, aunque es rico (Tatsache), cuando llegué (Vergangenheit): Indikativ.' },
     { id:'perifrasis', label:'Verbalperiphrasen', kind:'form', gen:'perifrasis', short:'Ein Hilfsverb mit Infinitiv oder Gerundium sagt, wann, wie lange oder wie oft etwas geschieht.',
       table:[['llevar + Zeit', 'seit, bis jetzt; mit sin: seit … nicht mehr', 'llevo dos horas esperando'], ['acabar de', 'gerade eben; verneint: nicht so recht', 'acabo de llegar'], ['volver a', 'wieder', 'vuelve a llover'], ['soler', 'gewöhnlich', 'suelo ir andando'], ['ponerse a, echarse a', 'anfangen zu', 'se puso a llorar'], ['dejar de', 'aufhören zu', 'dejé de fumar'], ['estar a punto de', 'gleich, beinahe', 'estoy a punto de salir'], ['seguir', 'immer noch; mit sin: immer noch nicht', 'sigue lloviendo'], ['ir', 'allmählich (mit Gerundium)', 'va mejorando'], ['terminar por', 'am Ende doch', 'terminó por aceptar'], ['llegar a', 'sogar so weit gehen', 'llegó a amenazarme'], ['tener + Partizip', 'fertig haben', 'tengo escritas dos cartas']],
@@ -142,7 +145,10 @@ function buildBank(){
         const p = line.split('|').map(x => x.trim());
         if (p.length < 2) return;
         const [de, target, gap = '', hint = '', alts = '', level = '', note = ''] = p;
-        const gaps = gap ? gap.split('/').map(x => x.trim()).filter(Boolean) : [];
+        // Norm (Perfecto/Indefinido): „ES:he perdido/LA:perdí“ in der Lücke. ES gilt nur für Spanien, LA nur für Lateinamerika,
+        // eine Form ohne Zeichen für beide. Ein Satz mit solchen Formen fragt bei jeder Aufgabe eine der beiden Normen ab (exNorm).
+        const marks = {};
+        const gaps = gap ? gap.split('/').map(x => x.trim()).filter(Boolean).map(x => { const m = /^(ES|LA):\s*(.+)$/.exec(x); if (!m) return x; marks[norm(m[2], lang)] = m[1].toLowerCase(); return m[2]; }) : [];
         const altList = alts ? alts.split(';;').map(x => x.trim()).filter(Boolean) : [];
         if (gaps[0]) {
           // Lückenfüllungen, die sich aus den alternativen Sätzen ergeben (gleicher Anfang und gleiches Ende)
@@ -150,7 +156,7 @@ function buildBank(){
           const pre = target.slice(0, pos), post = target.slice(pos + gaps[0].length);
           altList.forEach(a => { if (pos >= 0 && a.startsWith(pre) && a.endsWith(post) && a.length > pre.length + post.length) { const fill = a.slice(pre.length, a.length - post.length).trim(); if (fill && !gaps.includes(fill)) gaps.push(fill); } });
         }
-        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0, note });
+        BANK[lang].push({ id:lang + ':' + hash(target), lang, trap:tr.id, kind:tr.kind === 'order' ? 'order' : 'form', de, target, gap:gaps[0] || '', gapAlts:gaps, hint, alts:altList, lvlTag:{ A2:1, B1:2, B2:3 }[level] || 0, note, norms:Object.keys(marks).length ? marks : null });
       });
     });
     (DB.own[lang] || []).forEach(o => BANK[lang].push({ id:o.id, lang, trap:'eigene', kind:'order', de:o.de, target:o.target, gap:'', gapAlts:[], hint:'', alts:[], own:true }));
@@ -662,6 +668,7 @@ function prepCur(){
   r.shownAt = Date.now();
   if (!ex) { r.cur = null; return; }
   if (ex.type === 'gen' && !ex.data) ex.data = makeFresh(ex.gen);
+  exNorm(ex);
   if (ex.type === 'tiles' && !ex.pool) {
     const item = itemById(ex.id);
     // Inversion: Das erste Wort bleibt groß. Sonst ginge auch die Wortstellung mit dem Subjekt vorn („jag träffar honom inte ikväll“),

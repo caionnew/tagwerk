@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.80.0
+**Perfecto/Indefinido: beide Normen lernen. Jede Aufgabe sagt, ob „wie in Spanien“ oder „wie in Lateinamerika“ gefragt ist.**
+- Vorher galt überall beides, und wer immer Indefinido schrieb, hatte 67 von 69 Sätzen richtig; geübt wurde nur „kein Perfecto bei ayer“. Du wolltest dich nicht auf eine Norm festlegen. Jetzt fragt jede Übersetzungs- und Lückenaufgabe aus 31 Sätzen eine der beiden ab, ausgelost, neben der Anweisung sichtbar.
+  - **11 Sätze mit klarem Gegensatz** (hoy, esta mañana, esta tarde, ya, hace un momento): in Spanien Perfecto, in Lateinamerika meist Indefinido. Bei „wie in Lateinamerika“ kommt die Lücke im Satz dieser Norm (Hoy ___ con mi socio y cancelé dos reuniones).
+  - **20 Sätze mit Erfahrung oder Andauerndem** (nunca, alguna vez, todavía no, este año): in Spanien Perfecto, in Lateinamerika gilt beides.
+  - **Die Form der anderen Norm ist „fast richtig“**, mit Grund: „„vi“ ist die Form aus Lateinamerika. In Spanien steht hier Perfecto, weil der Zeitraum bis jetzt reicht.“ Für die Wiederholung zählt das als „knapp“, beim Thema als Fehler: Genau das prüft es jetzt.
+  - Unverändert: 31 Sätze mit abgeschlossener Zeit (überall Indefinido) und 7 ohne Zeitangabe, wo auch in Spanien beides geht (He perdido mis llaves, Ya te lo he dicho) oder nur das Perfecto (Desde que empezó la obra …). Diktat und Nachsprechen prüfen den gehörten Satz, ohne Norm.
+- Regelblatt neu: überall, Spanien, Lateinamerika in einer Übersicht, dazu, wie die Abfrage funktioniert. Auch in Spanien sprechen Galicien, Asturien und die Kanaren eher wie Lateinamerika.
+- Inhalt: Normzeichen `ES:`/`LA:` in der Lücke (CONTENT.md); bei 3 Sätzen kam die Form aus Lateinamerika neu in die Lücke (discutí, te mudaste, advertí); bei den übrigen stand sie schon da.
+- Nächste Schritte in IDEEN.md: Sätze mit zwei Zeitrahmen (A−), „Fehler finden“ mit Norm (B).
+- Doku: CONTENT.md, ARCHITECTURE.md, IDEEN.md.
+- Tests: Jede Fassung jedes markierten Satzes in beiden Normen, beim Übersetzen und in der Lücke; Rückmeldung, Themenzählung, Lückensatz der Norm, Auslosung, Wiederholung mit derselben Norm, Regelblatt.
+- Speicherstand: Aufgaben eines offenen Tagwerks tragen die Norm (`norm`), eine Antwort der anderen Norm `why.kind = 'norm'`. Ältere Fassungen übergehen beides; ein Tagwerk aus 24.79 bekommt die Norm, sobald die Aufgabe dran ist.
+
 ## 24.79.0
 **Deine Punkte vom 27.11.: die Rückmeldung zu „diéramos“, „se me hace difícil“ passend zur Regel; dazu Antworten auf „morgen wieder“, „Fehler finden“, Serien und Perfecto/Indefinido.**
 - **„Si no lloviera diéramos un paseo“:** zu Recht falsch. Im Hauptsatz steht der Konditional (daríamos); die Form auf -ra gilt dort nur regional, allgemein nur bei hubiera, quisiera, debiera. Die Rückmeldung führte aber in die Irre: „dar un paseo“ stand nicht in den Alternativen, also verglich die App mit „saldríamos a pasear“, strich „un paseo“ durch und erklärte den Stamm von salir; den eigentlichen Fehler nannte sie nicht. „Si no lloviera, daríamos un paseo“ wäre ebenso falsch gewertet worden.

@@ -303,21 +303,21 @@ function viewRun(){
       <div class="ex-a"><div class="tiles-ans" style="min-height:${rows * 52 + 18}px" aria-label="Deine Antwort">${ans}</div>
       ${done ? '' : `<div class="tiles-pool">${pool}</div>`}</div>`;
   } else if (ex.type === 'cloze') {
-    const item = itemById(ex.id);
-    const pos = gapPos(item.target, item.gap);
+    const item = itemById(ex.id), cz = clozeOf(ex);
+    const pos = gapPos(cz.target, cz.gap);
     const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
-    const field = done ? gapDone(c, item.gap, lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}" aria-label="Lücke">`;
+    const field = done ? gapDone(c, cz.gap, lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}" aria-label="Lücke">`;
     const h = item.hint.replace(/[()]/g, '').trim();
     const hintTxt = !h ? '' : h.includes('/') ? h.split('/').map(x => x.trim()).join(' oder ') : `Grundform: ${h}`;
     // Feste Wendung beim ersten Kontakt: das wörtliche Bild als Hinweis, danach nicht mehr (dann ist es Abruf)
     const lit = !ex.requeue && !stOf(item.id) ? literalOf(item) : '';
-    body = `<p class="kicker">Ergänze die Lücke${hintTxt ? tipChip(hintTxt, lang, c) : ''}${lit ? tipChip(`wörtlich: ${lit}`, 'de', c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
-      <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${gapText(item.target.slice(0, pos), lang, done)}${field}${gapText(item.target.slice(pos + item.gap.length), lang, done)}` : field}</p>
+    body = `<p class="kicker">Ergänze die Lücke${normChip(ex)}${hintTxt ? tipChip(hintTxt, lang, c) : ''}${lit ? tipChip(`wörtlich: ${lit}`, 'de', c) : ''}</p><p class="de" lang="de">${esc(item.de)}</p>
+      <div class="ex-a"><p class="cloze" lang="${lang}">${pos >= 0 ? `${gapText(cz.target.slice(0, pos), lang, done)}${field}${gapText(cz.target.slice(pos + cz.gap.length), lang, done)}` : field}</p>
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'free') {
     const item = itemById(ex.id);
     const micTip = !done && !canListen() && (DB.used && DB.used.mic || 0) < 3 ? '<p class="src">Tipp: Mit dem Mikrofon deiner Tastatur kannst du die Antwort auch sprechen. Das übt nebenbei das Sprechen.</p>' : '';
-    body = `<p class="kicker">Übersetze ${L.deAcc}</p><p class="de" lang="de">${esc(item.de)}</p>${micTip}
+    body = `<p class="kicker">Übersetze ${L.deAcc}${normChip(ex)}</p><p class="de" lang="de">${esc(item.de)}</p>${micTip}
       <div class="ex-a">${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}">${esc(c.input)}</textarea>`}
       ${done ? '' : `<div class="inrow">${charbar(lang)}${canListen() ? `<button type="button" class="micbtn${S.listening ? ' on' : ''}" data-a="dictate" aria-label="Antwort sprechen">${ICONS.mic}</button>` : ''}</div>`}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
@@ -393,10 +393,13 @@ function viewRun(){
 // Nach dem Prüfen steht deine Antwort an ihrem Platz, überzählige oder falsche Wörter gestrichen (vorher stand sie dazu noch einmal
 // als „Du: …“ in der Rückmeldung). Aufgegeben ohne Antwort: kein leeres Feld.
 const doneAnswer = (c, lang) => (String(c.input || '').trim() ? `<p class="tw-done" lang="${lang}">${c.mine && c.result !== 'ok' && !c.gaveUp ? c.mine : esc(c.input)}</p>` : '');
+// Norm der Aufgabe sichtbar neben der Anweisung („wie in Spanien“), immer offen: Sie gehört zur Frage, nicht zur Hilfe
+const normChip = ex => { const n = exNorm(ex); return n ? `<span class="hintw norm">${NORM_LABEL[n]}</span>` : ''; };
 function solShown(lang, ex, c){
   if (ex.type === 'gen' && ['spot', 'genus', 'time'].includes(ex.data.kind)) return ex.data.full;
   const item = ex.id ? itemById(ex.id) : null;
-  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : item.target;
+  // Lücke: der Satz der gefragten Norm (bei „wie in Lateinamerika“ ggf. eine Alternative); ohne Norm ist es der Zielsatz
+  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : ex.type === 'cloze' ? clozeOf(ex).target : item.target;
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   return showDiff && c.best ? c.best : solution;
 }
@@ -455,16 +458,18 @@ function feedbackHtml(r, ex, c){
   const sol = solShown(lang, ex, c);
   // Lücke, richtig mit einer Alternative (seit 24.78): Oben steht deine Fassung, vorgelesen wird sie auch; die Hauptlösung
   // darunter als „Auch richtig“. Beim Übersetzen steht die Hauptlösung ohnehin als Lösungssatz da.
-  const altGap = ex.type === 'cloze' && c.result === 'ok' && item && item.gap && String(c.input || '').trim() && norm(c.input, lang) !== norm(item.gap, lang);
-  const pos = altGap ? gapPos(item.target, item.gap) : -1;
-  const spoken = pos >= 0 ? item.target.slice(0, pos) + c.input.trim() + item.target.slice(pos + item.gap.length) : sol;
+  const cz = ex.type === 'cloze' && item ? clozeOf(ex) : null;
+  const altGap = cz && c.result === 'ok' && cz.gap && String(c.input || '').trim() && norm(c.input, lang) !== norm(cz.gap, lang);
+  const pos = altGap ? gapPos(cz.target, cz.gap) : -1;
+  const spoken = pos >= 0 ? cz.target.slice(0, pos) + c.input.trim() + cz.target.slice(pos + cz.gap.length) : sol;
   const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(spoken, lang);
   // Lücke: Der Satz steht oben schon ganz da, mit der Lösung an ihrem Platz. Hier nicht noch einmal, nur der Knopf zum Vorlesen.
   const gapTask = ex.type === 'cloze' || (ex.type === 'gen' && ex.data.gap);
-  if (gapTask) out = vrow(sBtn) + (altGap ? `<p class="legend also">Auch richtig: <span lang="${lang}">${linkWords(item.gap, lang)}</span></p>` : '');
+  if (gapTask) out = vrow(sBtn) + (altGap ? `<p class="legend also">Auch richtig: <span lang="${lang}">${linkWords(cz.gap, lang)}</span></p>` : '');
   else out += `<div class="solrow"><p class="sol" lang="${lang}">${showDiff ? c.diff.html : linkWords(sol, lang)}</p>${sBtn}</div>`;
   const vocabLine = c.vocab && c.vocab.length ? `<p class="expl">Die Grammatik passt, nur ${c.vocab.length === 1 ? 'ein Wort ist' : 'Wörter sind'} anders: ${c.vocab.slice(0, 2).map(([x, w]) => `<span lang="${lang}">„${esc(x)}“</span> statt <span lang="${lang}">„${esc(w)}“</span>`).join(', ')}.</p>` : '';
   if (c.result === 'near' && c.why && c.why.kind === 'vocab') out += vocabLine;
+  else if (c.result === 'near' && c.why && c.why.kind === 'norm') out += `<p class="expl">${termify(normWhy(ex, c))}</p>`;
   else if (c.result === 'near') out += `<p class="expl">${c.why && c.why.kind === 'typo' ? `Zählt als richtig, nur ein Tippfehler: <span lang="${lang}">„${esc(c.why.typed)}“</span> statt <span lang="${lang}">„${esc(c.why.want)}“</span>.` : near}</p>`;
   if (c.result === 'bad' && vocabLine) out += vocabLine;
   if (c.result === 'bad') {

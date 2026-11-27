@@ -272,13 +272,64 @@ function testedPart(ex){
   const it = ex.id ? itemById(ex.id) : null;
   return it ? (it.gapAlts.length ? it.gapAlts : it.gap ? [it.gap] : []) : [];
 }
+// Norm einer Aufgabe bei Sätzen mit markierten Formen (Perfecto/Indefinido): 'es' = wie in Spanien, 'la' = wie in Lateinamerika.
+// Je Aufgabe ausgelost, sobald sie dran ist (prepCur), und mit der Aufgabe gespeichert; die Wiederholung übernimmt sie.
+// Nur Übersetzen und Lücke: Diktat und Nachsprechen prüfen den gehörten Satz.
+function exNorm(ex){
+  if (!ex || !ex.id || !['free', 'cloze'].includes(ex.type)) return '';
+  const item = itemById(ex.id);
+  if (!item || !item.norms) return '';
+  if (ex.norm !== 'es' && ex.norm !== 'la') ex.norm = Math.random() < 0.5 ? 'es' : 'la';
+  return ex.norm;
+}
+const otherNorm = ex => ({ es:'la', la:'es' })[exNorm(ex)] || '';
+// Norm eines Satzes oder einer Lückenform: die der markierten Form, die er enthält ('' = beide oder keine Markierung)
+function normOf(item, text){
+  if (!item || !item.norms) return '';
+  const t = ' ' + norm(text, item.lang) + ' ', hit = new Set(Object.keys(item.norms).filter(k => t.includes(' ' + k + ' ')).map(k => item.norms[k]));
+  return hit.size === 1 ? [...hit][0] : '';
+}
+// Lückensatz: bei „wie in Lateinamerika“ und einem Zielsatz in spanischer Form der erste Satz dieser Norm mit seiner Form als Lücke,
+// damit der Rest des Satzes passt (Hoy ___ con mi socio y cancelé dos reuniones, nicht „… y he cancelado“).
+// ok: Lückenformen, die gelten; other: die Formen der anderen Norm (fast richtig).
+function clozeOf(ex){
+  const item = itemById(ex.id), n = exNorm(ex), o = otherNorm(ex);
+  let target = item.target, gap = item.gap;
+  if (n && normOf(item, target) === o) {
+    for (const a of item.alts) {
+      const g = normOf(item, a) === n && item.gapAlts.find(x => normOf(item, x) === n && gapPos(a, x) >= 0);
+      if (g) { target = a; gap = g; break; }
+    }
+  }
+  const forms = [gap].concat(item.gapAlts.filter(x => x !== gap));
+  return { target, gap, ok:forms.filter(x => !o || normOf(item, x) !== o), other:o ? forms.filter(x => normOf(item, x) === o) : [] };
+}
 function answersFor(ex){
   if (ex.type === 'gen') return ex.data.answers;
   const item = itemById(ex.id);
-  const st = stOf(item.id);
-  if (ex.type === 'cloze') return (item.gapAlts.length ? item.gapAlts : [item.gap]).concat((st && st.gapAlts) || []);
-  return [item.target].concat(item.alts, (st && st.alts) || []);
+  const st = stOf(item.id), o = otherNorm(ex), keep = x => !o || normOf(item, x) !== o;
+  if (ex.type === 'cloze') return (item.gapAlts.length ? clozeOf(ex).ok : [item.gap]).concat(((st && st.gapAlts) || []).filter(keep));
+  return [item.target].concat(item.alts, (st && st.alts) || []).filter(keep);
 }
+// Die Fassungen der anderen Norm: richtiges Spanisch, aber nicht gefragt
+function otherAnswers(ex){
+  const o = otherNorm(ex);
+  if (!o) return [];
+  const item = itemById(ex.id);
+  return ex.type === 'cloze' ? clozeOf(ex).other : [item.target].concat(item.alts).filter(x => normOf(item, x) === o);
+}
+// Rückmeldung, wenn die Form der anderen Norm kam
+// (bei der Lücke mit deiner Form vorn: „vi“ ist die Form aus Lateinamerika.)
+const NORM_WHY = {
+  es:['Lateinamerika', 'In Spanien steht hier Perfecto, weil der Zeitraum bis jetzt reicht (heute, diese Woche, schon, noch nie).'],
+  la:['Spanien', 'In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido, auch bei hoy und ya.']
+};
+function normWhy(ex, c){
+  const w = NORM_WHY[c.why.norm];
+  if (!w) return '';
+  return (ex.type === 'cloze' && String(c.input || '').trim() ? `„${String(c.input).trim()}“ ist die Form aus ${w[0]}.` : `So sagt man es in ${w[0]}.`) + ' ' + w[1];
+}
+const NORM_LABEL = { es:'wie in Spanien', la:'wie in Lateinamerika' };
 function check(){
   const r = S.run, ex = r.queue[r.idx], c = r.cur;
   if (!c || c.state !== 'answer') return;
@@ -309,8 +360,10 @@ function check(){
     c.result = d.clock ? (timeMatches(c.input, d.h, d.m) ? 'ok' : 'bad') : (Number(c.input.replace(/\D/g, '')) === d.num ? 'ok' : 'bad');
   } else {
     const box = $('#answer'); c.input = box ? box.value : c.input;
-    const j = judgeX(c.input, answersFor(ex), r.lang, judgeOpts(ex));
+    let j = judgeX(c.input, answersFor(ex), r.lang, judgeOpts(ex));
     if (!j) return;
+    // Form der anderen Norm (perdí bei „wie in Spanien“): fast richtig, zählt beim Thema aber als Fehler (recordAnswer)
+    if (j.res === 'bad' && otherNorm(ex)) { const o = judgeX(c.input, otherAnswers(ex), r.lang, judgeOpts(ex)); if (o && o.res !== 'bad') j = { res:'near', why:{ kind:'norm', norm:ex.norm } }; }
     const res = j.res;
     c.result = res; c.why = j.why; markSeen(c, ex.id);
     if (res !== 'ok') {
@@ -321,7 +374,7 @@ function check(){
       const toks = ' ' + norm(c.input, r.lang) + ' ';
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
       if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) { c.keyOk = ex.data.posLabel; c.posOk = true; }
-      if (ex.type === 'free') { const item = itemById(ex.id); const g = item.gapAlts.find(x => toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
+      if (ex.type === 'free') { const item = itemById(ex.id), o = otherNorm(ex); const g = item.gapAlts.find(x => (!o || normOf(item, x) !== o) && toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
       // Ganzer Satz getippt: fehlt nur ein Reflexivpronomen, sagt der Hinweis, was das Verb ohne es bedeutet; steht im si-Satz
       // Subjuntivo statt Konditional (oder umgekehrt), nennt er das. c.refl heißt aus alten Ständen so: der konkrete, benannte Fehler.
       if (res === 'bad' && r.lang === 'es' && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) {
@@ -330,8 +383,8 @@ function check(){
       }
       // Lücke: dieselbe Prüfung im ganzen Satz, mit deiner Antwort an der Stelle der Lücke
       if (res === 'bad' && r.lang === 'es' && ex.type === 'cloze') {
-        const item = itemById(ex.id), at = gapPos(item.target, item.gap);
-        if (at >= 0) c.refl = esCondWhy(item.target.slice(0, at) + c.input.trim() + item.target.slice(at + item.gap.length), item.target);
+        const cz = clozeOf(ex), at = gapPos(cz.target, cz.gap);
+        if (at >= 0) c.refl = esCondWhy(cz.target.slice(0, at) + c.input.trim() + cz.target.slice(at + cz.gap.length), cz.target);
       }
     }
     // Lücke mit einem Wort: dieselbe Form-Erklärung („stor“ ist die Grundform, hier braucht es „stort“)
@@ -446,6 +499,7 @@ function resDetail(x, ex, c, ra, lang){
 function roundWhy(c, kind, lang){
   const cap = s => s[0].toUpperCase() + s.slice(1);
   const other = p => `Anderes Wort: „${p[0]}“ statt „${p[1]}“`;
+  if (c.result === 'near' && c.why && c.why.kind === 'norm') return c.why.norm === 'es' ? 'Gefragt war Spanien: hier Perfecto' : 'Gefragt war Lateinamerika: hier meist Indefinido';
   if (c.result === 'near') return c.why && c.why.kind === 'typo' ? `Tippfehler: „${c.why.typed}“ statt „${c.why.want}“` : c.vocab && c.vocab[0] ? other(c.vocab[0]) : lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
   if (c.gaveUp) return '';
   if (c.keyOk) return `${c.keyOk}. ${c.refl ? `Aber ${c.refl}` : c.form ? `Aber ${c.form}.` : 'Der Unterschied liegt woanders.'}`;
@@ -499,7 +553,7 @@ function next(){
         const item = itemById(ex.id);
         // Zweiter Versuch: meist die Lücke. Stimmte sie beim Übersetzen schon („Der knifflige Teil stimmt“), lag der Fehler woanders;
         // die Lücke prüfte dann nichts, und der verbesserte Rest stünde schon da. Dann noch einmal der ganze Satz.
-        if (!good) r.queue.push({ type:item.kind === 'order' ? 'tiles' : ex.type === 'free' && c.keyOk && !c.gaveUp ? 'free' : 'cloze', id:ex.id, requeue:true });
+        if (!good) r.queue.push(Object.assign({ type:item.kind === 'order' ? 'tiles' : ex.type === 'free' && c.keyOk && !c.gaveUp ? 'free' : 'cloze', id:ex.id, requeue:true }, ex.norm ? { norm:ex.norm } : {}));
       }
     }
     if (ex.type === 'gen' && good && ex.data.looked) lookedDone(ex.data.looked);

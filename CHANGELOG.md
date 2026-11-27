@@ -2,6 +2,20 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.79.0
+**Deine Punkte vom 27.11.: die Rückmeldung zu „diéramos“, „se me hace difícil“ passend zur Regel; dazu Antworten auf „morgen wieder“, „Fehler finden“, Serien und Perfecto/Indefinido.**
+- **„Si no lloviera diéramos un paseo“:** zu Recht falsch. Im Hauptsatz steht der Konditional (daríamos); die Form auf -ra gilt dort nur regional, allgemein nur bei hubiera, quisiera, debiera. Die Rückmeldung führte aber in die Irre: „dar un paseo“ stand nicht in den Alternativen, also verglich die App mit „saldríamos a pasear“, strich „un paseo“ durch und erklärte den Stamm von salir; den eigentlichen Fehler nannte sie nicht. „Si no lloviera, daríamos un paseo“ wäre ebenso falsch gewertet worden.
+  - Der Satz lässt jetzt dar un paseo, ir a pasear, salir a dar un paseo, pasear und salir a caminar gelten, je mit lloviera und lloviese; die Lücke auch iríamos.
+  - **Neu: Subjuntivo und Konditional im si-Satz beim Namen genannt:** „„diéramos“ ist Subjuntivo, hier steht der Konditional: daríamos.“ und umgekehrt „„tendría“ ist Konditional. Nach si steht der Subjuntivo: si tuviera.“ Beim Übersetzen und bei Lücken, nur bei demselben Verb in derselben Person; bei hubiera, quisiera, pudiera, debiera im Hauptsatz sagt die App nichts, die gehen dort. Ein so benannter Fehler zählt als Formfehler beim Thema; ohne das hielte die Fehlerart diéramos neben daríamos für ein anderes Wort („Die Grammatik passt …“), weil das Wörterbuch diéramos nicht kennt. Geprüft gegen alle 6446 Paare richtiger Fassungen der spanischen Satzbank: kein Hinweis.
+- **„Es wird mir immer schwerer, früh aufzustehen“:** Die Erklärung („Eindruck, der wächst“) passte nicht zur Regel („hacerse: eigenes Zutun, Beruf, Zeit“), und die Regel war zu eng: Auch „La situación se hizo insostenible“ und „uno se hace más prudente“ geschehen ohne eigenes Zutun. Jetzt in der Regel „hacerse: allmählich, oft mit eigenem Zutun: Beruf, Zeit“ und dazu „Mit me, te, le sagt hacerse, wie es dir vorkommt: se me hace difícil (es fällt mir schwer)“; die Erklärung des Satzes sagt dasselbe. me resulta und me es gelten in der Lücke und im Satz.
+- **„Richtig – morgen wieder“ beim Regensatz:** kein Fehler. Der Satz hatte drei Rückfälle (das fehlende nos, gemeldet am 21.11.), dabei steigt die Schwierigkeit in FSRS fast auf das Maximum (9,7 von 10) und sinkt mit „gewusst“ nicht mehr. Darum wachsen die Abstände langsam: 1, 2, 3, 5, 8, 12, 18, 27 Tage, bei einem unbelasteten Satz 2, 11, 46. Bewertung in IDEEN.md.
+- **„Fehler finden“ nur mit richtigen Sätzen:** In beiden Sprachen sind 40 % der Sätze richtig, unabhängig gewürfelt (gemessen mit deinem Stand: 39,5 und 40,5 %). Bei einer Aufgabe je Sprache und Tagwerk sind 8 richtige von 12 Zufall mit 5,7 % je Sprache. Unverändert.
+- **Serien richtiger Antworten als Etappe:** geprüft und nicht gewählt (C+, über Runden hinweg C), Rechnung in IDEEN.md.
+- **Perfecto/Indefinido:** Befund und vier Varianten in IDEEN.md; was davon kommt, hängt an deiner Antwort, welche Norm gelten soll.
+- Doku: ARCHITECTURE.md (`esCondWhy`), IDEEN.md.
+- Tests: Hinweis in beide Richtungen und die Fälle ohne Behauptung (anderes Verb, fuera schon im si-Satz, quería, hubiera, pudiera); keine richtige Fassung der Satzbank löst ihn aus; beide Sätze mit Alternativen, Rückmeldung und Fehlerart.
+- Speicherstand unverändert bis auf ein Feld in der gespeicherten Rückmeldung eines offenen Tagwerks (`cond`, wahr oder fehlt); ältere Fassungen übergehen es.
+
 ## 24.78.2
 **Deine Fragen zur Legende bei „Jetzt klar über Schnitt“, dazu die CI in Firefox wieder grün (zwei Tests, nicht die App).**
 - **Legende:** Bei „Jetzt klar über Schnitt“ fehlte sie nicht aus Versehen. Sie sollte einmal für beide Abschnitte gelten und stand darum nur im letzten, las sich aber, als gehöre sie nur zu „Nicht mehr klar über Schnitt“. Jetzt hat jeder Abschnitt dieselbe Legende.

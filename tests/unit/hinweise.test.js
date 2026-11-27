@@ -81,3 +81,55 @@ test('Lücke „Suelo“: normalmente ist falsch, die Erklärung widerspricht de
   assert.match(r.fb, /normalmente voy, nicht normalmente ir/);
   for (const a of ['Suelo ir al trabajo a pie', 'Normalmente voy al trabajo andando']) assert.equal(judgeX(a, [it.target].concat(it.alts), 'es').res, 'ok', a);
 });
+
+// Gemeldet am 27.11.2026 (Screenshots): „Si no lloviera diéramos un paseo“ war zu Recht falsch, aber die Rückmeldung strich
+// „dar un paseo“ durch und erklärte den Stamm von salir; „daríamos un paseo“ wäre ebenso falsch gewertet worden.
+// „se me hace difícil“ passte nicht zur Regel des Themas („hacerse: eigenes Zutun, Beruf, Zeit“).
+const esCondWhy = app.get('esCondWhy');
+test('si-Satz: Subjuntivo statt Konditional und umgekehrt wird benannt, nur bei demselben Verb', () => {
+  assert.equal(esCondWhy('Si no lloviera diéramos un paseo', 'Si no lloviera, daríamos un paseo.'),
+    '„diéramos“ ist Subjuntivo, hier steht der Konditional: daríamos. Die Form auf -ra statt des Konditionals ist nur regional üblich (allgemein nur hubiera, quisiera, debiera).');
+  assert.match(esCondWhy('Si no lloviera, saliésemos a pasear', 'Si no lloviera, saldríamos a pasear.'), /^„saliésemos“ ist Subjuntivo, hier steht der Konditional: saldríamos\./);
+  assert.match(esCondWhy('Si tuviera tiempo, mantuviera la casa', 'Si tuviera tiempo, mantendría la casa.'), /Konditional: mantendría/);
+  assert.match(esCondWhy('Si fuera rico, fuera feliz', 'Si fuera rico, sería feliz.'), /„fuera“ ist Subjuntivo, hier steht der Konditional: sería/);
+  assert.equal(esCondWhy('Si tendría tiempo, te ayudaría', 'Si tuviera tiempo, te ayudaría.'), '„tendría“ ist Konditional. Nach si steht der Subjuntivo: si tuviera.');
+  assert.equal(esCondWhy('Si me lo dirías, te ayudaría', 'Si me lo dijeras, te ayudaría.'), '„dirías“ ist Konditional. Nach si steht der Subjuntivo: si me lo dijeras.');
+  assert.match(esCondWhy('Si habría sabido, no habría venido', 'Si hubiera sabido, no habría venido.'), /„habría“ ist Konditional\. Nach si steht der Subjuntivo: si hubiera/);
+  // Keine Behauptung: anderes Verb, fuera schon im si-Satz, quería ist Imperfecto, hubiera und pudiera gehen im Hauptsatz,
+  // habría neben der Fassung mit hubiera, Satz ohne si
+  for (const [a, b] of [['Si no lloviera, diéramos un paseo', 'Si no lloviera, saldríamos a pasear.'], ['Si fuera rico, estaría feliz', 'Si fuera rico, sería feliz.'],
+    ['Si quería, podría', 'Si quisiera, podría.'], ['Si tuviera dinero, hubiera comprado la casa', 'Si tuviera dinero, habría comprado la casa.'],
+    ['Si pudiera, pudiera ayudarte', 'Si pudiera, podría ayudarte.'], ['Si me hubiera levantado antes, habría cogido el tren', 'Si me hubiera levantado antes, hubiera cogido el tren.'],
+    ['Dijo que viniera', 'Dijo que vendría.']]) assert.equal(esCondWhy(a, b), '', a);
+});
+test('Keine richtige Fassung der Satzbank löst den Hinweis aus', () => {
+  for (const it of BANK.es) { const all = [it.target].concat(it.alts); for (const a of all) for (const b of all) assert.equal(esCondWhy(a, b), '', `${a} / ${b}`); }
+});
+test('Satz „Wenn es nicht regnen würde“: dar un paseo und ir a pasear gelten, diéramos ist falsch und benannt', () => {
+  const it = BANK.es.find(i => i.target === 'Si no lloviera, saldríamos a pasear.');
+  const answers = [it.target].concat(it.alts);
+  for (const a of ['Si no lloviera daríamos un paseo', 'Si no lloviese, iríamos a dar un paseo', 'Si no lloviera, pasearíamos', 'Si no lloviese, saldríamos a caminar'])
+    assert.equal(judgeX(a, answers, 'es').res, 'ok', a);
+  const r = show({ type:'free', id:it.id }, { input:'Si no lloviera diéramos un paseo', check:true });
+  assert.equal(r.result, 'bad');
+  assert.match(r.fb, /„diéramos“ ist Subjuntivo\s*, hier steht der Konditional\s*: daríamos\./);
+  // Kein Wortschatzfehler: „Die Grammatik passt“ stimmte hier nicht, und das Thema zählt den Fehler
+  assert.doesNotMatch(r.fb, /Die Grammatik passt/);
+  assert.equal(app.run('S.run.cur.kind'), 'word');
+  // Die gezeigte Lösung ist die nächste Fassung (dar un paseo), nicht salir a pasear
+  assert.match(r.fb, /Si no lloviera, daríamos un paseo\./);
+  // Lücke: iríamos gilt, saliéramos ist falsch und benannt
+  assert.equal(show({ type:'cloze', id:it.id }, { input:'iríamos', check:true }).result, 'ok');
+  const g = show({ type:'cloze', id:it.id }, { input:'saliéramos', check:true });
+  assert.equal(g.result, 'bad');
+  assert.match(g.fb, /„saliéramos“ ist Subjuntivo\s*, hier steht der Konditional\s*: saldríamos\./);
+});
+test('„se me hace difícil“: Regel und Erklärung passen zusammen, me resulta gilt auch', () => {
+  const it = BANK.es.find(i => i.target === 'Cada vez se me hace más difícil madrugar.');
+  assert.match(it.note, /^hacerse für eine allmähliche Entwicklung; mit me sagt es, wie es dir vorkommt/);
+  const tr = app.run("TRAPS.es.find(t => t.id === 'cambio')");
+  assert.deepEqual(JSON.parse(JSON.stringify(tr.table.find(r => r[0] === 'hacerse'))), ['hacerse', 'allmählich, oft mit eigenem Zutun: Beruf, Zeit', 'se hizo médico, se hace tarde']);
+  assert.match(tr.rule, /se me hace difícil \(es fällt mir schwer\)/);
+  for (const g of ['me resulta', 'me es']) assert.equal(show({ type:'cloze', id:it.id }, { input:g, check:true }).result, 'ok', g);
+  assert.equal(judgeX('Cada vez me resulta más difícil madrugar', [it.target].concat(it.alts), 'es').res, 'ok');
+});

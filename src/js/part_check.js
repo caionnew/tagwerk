@@ -146,6 +146,66 @@ function esReflexWhy(input, solution){
   }
   return '';
 }
+// Spanisch, si-Satz: Subjuntivo und Konditional am falschen Platz (si no lloviera, diéramos un paseo; si tendría tiempo).
+// Nur dasselbe Verb wie in der Lösung, in derselben Person, sonst keine Behauptung. Formen ohne Akzente je Person
+// [yo, tú, él, nosotros, vosotros, ellos]. Konditional: Futurstamm + ía, erkannt an der Form selbst (quería ist Imperfecto, querría
+// Konditional). Subjuntivo: 3. Person Plural Indefinido ohne -ron, dann -ra oder -se (dieron → diera, diese).
+// hubiera, quisiera, pudiera, debiera gehen im Hauptsatz auch: dort kein Hinweis.
+const ES_FUT_STEM = { tener:'tendr', poner:'pondr', venir:'vendr', salir:'saldr', valer:'valdr', hacer:'har', decir:'dir', saber:'sabr', caber:'cabr', querer:'querr', poder:'podr', haber:'habr' };
+// Indefinido (3. Person Plural ohne -ron) für unregelmäßige Verben, die conjugate nicht kennt
+const ES_PRET_BASE = { haber:'hubie', andar:'anduvie', caber:'cupie', sentir:'sintie', preferir:'prefirie', servir:'sirvie', seguir:'siguie', conseguir:'consiguie',
+  morir:'murie', repetir:'repitie', mentir:'mintie', elegir:'eligie', sugerir:'sugirie', divertir:'divirtie', convertir:'convirtie', caer:'caye', creer:'creye',
+  construir:'construye', conducir:'conduje', traducir:'traduje', producir:'produje' };
+const ES_COND_END = ['ia', 'ias', 'ia', 'iamos', 'iais', 'ian'];
+function esCondForms(inf){
+  // Zusammensetzungen mit langem Stamm (mantener → mantendría), kurze Stämme nur allein (echar ist nicht ec + hacer)
+  const k = Object.keys(ES_FUT_STEM).find(x => inf === x || (ES_FUT_STEM[x].length >= 5 && inf.endsWith(x)));
+  const stem = deacc(k ? inf.slice(0, inf.length - k.length) + ES_FUT_STEM[k] : inf);
+  return ES_COND_END.map(e => stem + e);
+}
+function esCondParse(w){
+  const dw = deacc(w), m = dw.match(/^(.+?)(iamos|iais|ias|ian|ia)$/);
+  if (!m) return null;
+  const st = m[1], k = Object.keys(ES_FUT_STEM).find(x => st === ES_FUT_STEM[x] || (ES_FUT_STEM[x].length >= 5 && st.endsWith(ES_FUT_STEM[x])));
+  const inf = k ? st.slice(0, st.length - ES_FUT_STEM[k].length) + k : /^[a-zñ]+(ar|er|ir)$/.test(st) ? st : '';
+  const p = ES_COND_END.indexOf(m[2]);
+  return inf && esCondForms(inf)[p] === dw ? { inf, p } : null;
+}
+function esPastSubjForms(inf){
+  let b = ES_PRET_BASE[inf];
+  if (!b) {
+    const k = Object.keys(IRR_ES).find(x => x.length >= 5 && x !== inf && inf.endsWith(x));
+    const p3 = k ? inf.slice(0, inf.length - k.length) + conjugate(k, 'indef', 4) : /^[a-zñ]+(ar|er|ir)$/.test(inf) ? conjugate(inf, 'indef', 4) : '';
+    if (!p3 || !/ron$/.test(p3)) return [];
+    b = p3.slice(0, -3);
+  }
+  b = deacc(b);
+  return ['ra', 'ras', 'ra', 'ramos', 'rais', 'ran', 'se', 'ses', 'se', 'semos', 'seis', 'sen'].map(e => b + e);
+}
+function esCondWhy(input, solution){
+  const s = norm(solution, 'es').split(' '), t = norm(input, 'es').split(' '), S = s.map(deacc), T = t.map(deacc);
+  const si = S.indexOf('si');
+  if (si < 0) return '';
+  // Zählt, nicht nur „kommt vor“: In „Si fuera rico, fuera feliz“ steht fuera einmal zu viel; in „Si fuera rico, estaría feliz“ nicht
+  const more = (x, A, B) => A.filter(y => y === x).length > B.filter(y => y === x).length;
+  // In der Lösung Konditional, bei dir dasselbe Verb auf -ra oder -se
+  for (const w of s) {
+    const c = esCondParse(w);
+    if (!c || !more(deacc(w), S, T) || ['haber', 'querer', 'poder', 'deber'].includes(c.inf)) continue;
+    const f = esPastSubjForms(c.inf), k = T.findIndex(x => (x === f[c.p] || x === f[c.p + 6]) && more(x, T, S));
+    if (k >= 0) return `„${t[k]}“ ist Subjuntivo, hier steht der Konditional: ${w}. Die Form auf -ra statt des Konditionals ist nur regional üblich (allgemein nur hubiera, quisiera, debiera).`;
+  }
+  // Bei dir Konditional, in der Lösung dasselbe Verb im Subjuntivo, beide im si-Satz selbst (höchstens zwei Wörter nach si: si no lloviera,
+  // si me lo dijeras). Sonst wäre „habría cogido“ neben der Fassung „hubiera cogido“ ein Fehler.
+  const tsi = T.indexOf('si');
+  for (let k = tsi + 1; tsi >= 0 && k <= tsi + 3 && k < t.length; k++) {
+    const u = t[k], c = esCondParse(u);
+    if (!c || !more(deacc(u), T, S)) continue;
+    const f = esPastSubjForms(c.inf), i = S.findIndex((x, j) => j > si && j - si <= 3 && (x === f[c.p] || x === f[c.p + 6]) && more(x, S, T));
+    if (i >= 0) return `„${u}“ ist Konditional. Nach si steht der Subjuntivo: ${s.slice(si, i + 1).join(' ')}.`;
+  }
+  return '';
+}
 function judgeX(input, answers, lang, opt){
   const o = Object.assign({ equiv:true, typo:true, protect:[] }, opt || {});
   const n = norm(input, lang);
@@ -262,14 +322,26 @@ function check(){
       if (ex.type === 'gen' && ex.data.key) c.keyOk = ex.data.key.every(k => toks.includes(' ' + norm(k, r.lang) + ' ')) ? ex.data.keyLabel : '';
       if (ex.type === 'gen' && ex.data.pos && seqIn(toks.trim().split(' '), ex.data.pos.map(w => (w === '*' ? w : norm(w, r.lang))))) { c.keyOk = ex.data.posLabel; c.posOk = true; }
       if (ex.type === 'free') { const item = itemById(ex.id); const g = item.gapAlts.find(x => toks.includes(' ' + norm(x, r.lang) + ' ')); if (g) c.keyOk = `Der knifflige Teil stimmt: „${g}“`; }
-      // Ganzer Satz getippt: fehlt nur ein Reflexivpronomen, sagt der Hinweis, was das Verb ohne es bedeutet
-      if (res === 'bad' && r.lang === 'es' && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) c.refl = esReflexWhy(c.input, best);
+      // Ganzer Satz getippt: fehlt nur ein Reflexivpronomen, sagt der Hinweis, was das Verb ohne es bedeutet; steht im si-Satz
+      // Subjuntivo statt Konditional (oder umgekehrt), nennt er das. c.refl heißt aus alten Ständen so: der konkrete, benannte Fehler.
+      if (res === 'bad' && r.lang === 'es' && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap)) {
+        const cw = esCondWhy(c.input, best);
+        c.refl = esReflexWhy(c.input, best) || cw; c.cond = !!cw && c.refl === cw;
+      }
+      // Lücke: dieselbe Prüfung im ganzen Satz, mit deiner Antwort an der Stelle der Lücke
+      if (res === 'bad' && r.lang === 'es' && ex.type === 'cloze') {
+        const item = itemById(ex.id), at = gapPos(item.target, item.gap);
+        if (at >= 0) c.refl = esCondWhy(item.target.slice(0, at) + c.input.trim() + item.target.slice(at + item.gap.length), item.target);
+      }
     }
     // Lücke mit einem Wort: dieselbe Form-Erklärung („stor“ ist die Grundform, hier braucht es „stort“)
     if (res === 'bad' && (ex.type === 'cloze' || (ex.type === 'gen' && ex.data.gap)) && c.best && !/\s/.test(c.input.trim()) && !/\s/.test(c.best.trim())) c.form = formWhy(r.lang, [[c.input.trim(), c.best.trim()]]);
     if (res === 'bad' && ex.type !== 'cloze') {
       const m = mistakeFor(ex, c.input, r.lang);
       c.kind = m ? m.kind : null;
+      // Benannter Grammatikfehler (diéramos statt daríamos): eine falsche Form, kein anderes Wort. Das Wörterbuch kennt diéramos nicht,
+      // darum hielt die Einteilung es für Wortschatz („Die Grammatik passt …“), und das Thema bekam den Fehler nicht.
+      if (c.cond && c.kind === 'vocab') c.kind = 'word';
       if (c.kind === 'word') c.form = formWhy(r.lang, (m.pairs || []).map(([x, w]) => [x, ownWords(r.lang, c.input, w)]));
       if (c.kind === 'vocab') {
         c.vocabTopic = !!m.topic;

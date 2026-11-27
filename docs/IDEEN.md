@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 27. November 2026 (nach 24.84.0)
+Stand: 28. November 2026 (nach 24.84.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -11,12 +11,32 @@ Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im A
 - **Inhalte:** 529 schwedische und 719 spanische Sätze, davon 324 bzw. 444 auf B2, in 16 bzw. 20 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
 - **Übungen:** fast alles da. „Fehler finden“ ist seit 24.45 bis 24.48 eine echte Prüfaufgabe: Richtige Sätze sind dabei, Formfehler werden verbessert, es gibt sieben Fehlerarten je Sprache, und welche kommt, richtet sich nach deinen Fehlern.
 - **Prüfqualität bleibt das Wichtigste.** Jede falsche „Falsch“-Wertung kostet Zeit und Vertrauen. Generatoren (24.37) und Satzbank (24.38) sind durchgesehen; falsch bewertete Antworten meldest du direkt.
-- **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen.
+- **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen. Schwedisch ist zuerst so weit: bei „Normal“ und einem Tagwerk am Tag rechnerisch Ende März 2027 (389 Sätze auf B1/B2, etwa 3 neue je Sprache und Tag), Spanisch Mitte Mai (545).
 - **Browser-Tests** laufen in Chromium und Firefox, beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 
 ## Fahrplan
 
-Die Arbeit geht in die Inhalte. Daneben räumt die App in drei Schritten auf, was beim Wachsen nicht mehr zusammenpasst.
+Die Arbeit geht in die Inhalte, Schwedisch zuerst. Daneben die Punkte der Durchsicht vom 28.11.
+
+### Durchsicht vom 28.11.
+
+Befund: kein Umbau nötig. Gewachsen sind Spanisch und die Prüfung; Schwedisch, das Wörterbuch und ein paar Hilfsfunktionen sind nicht mitgekommen. Gemessen am Code und an Bildschirmfotos aller Ansichten (Testprofile, 390 px, dunkel).
+
+| Punkt | Note | Stand |
+|---|---|---|
+| **Schwedisches Satzpaket vor den Kollokationen.** Schwedisch hat seit Paket 4 (24.59) keine neuen Sätze bekommen und geht zuerst die Sätze aus (siehe Lagebild). | A− | Paket 7 |
+| **Wörterbuch leitet Verbformen ab, der Test prüft auch die Alternativen.** Erzeugt wurden Formen nur für 48 Verben in vier Zeiten, ohne Futur, Konditional und Subjuntivo auf -ra/-se; alles andere stand von Hand da. 170 schwedische und 209 spanische Wörter aus Alternativen und erzeugten Fassungen ließen sich nicht nachschlagen, obwohl sie in der Lösung erscheinen. | B+ | |
+| **Satzzeichen an einer Stelle.** Ein Dutzend leicht verschiedene Zeichenlisten in norm, tokens, altKey, wTokens und anderen; Gleiches wurde an verschiedenen Stellen verschieden behandelt. | B− | |
+| **Benannte Verwechslungen im Schwedischen** (en/ett-Endung, sin/hans, Verb an zweiter Stelle). Spanisch hat seit 24.62 sechs Erkennungen dazubekommen, Schwedisch keine. | B | Idee 4 |
+| **IDEEN.md teilen:** Fahrplan und Lohnendes kurz, „Geprüft und zurückgestellt“ und „Bewusst nicht“ in eine eigene Datei. 45 KB, vor jeder Arbeit gelesen. | B | |
+| **Hinweis „Meine ist auch richtig“ nur dreimal.** Er steht unter jeder falschen Übersetzung, bis der Knopf einmal benutzt wurde, und du meldest Fälle lieber direkt. | B | |
+| **Eigennamen an einer Stelle.** `NAMES` (22) entscheidet bei Wortkästchen und Bonus, daneben stehen 60 Namen im Wörterbuch und zwei Faustregeln; Johan, Lena, Marta und Lucía fehlen in `NAMES`. | B− | |
+| **Tagwerk-Ende kürzen.** Mit aufgeklapptem Thema bis 3,2 Bildschirme; dasselbe Thema steht oben unter „Jetzt klar über Schnitt“ und unten unter „Themen dieser Runde“, beide Male mit Streifen und Legende. | B− | |
+| **LanguageTool beim Übersetzen.** Findet deine typischen Fehler nicht (geprüft am 28.11.): im Spanischen nichts bei „Quiero que vienes conmigo“, „Ayer he perdido el bus“, „La reunión se puso tenso“, wohl aber Übereinstimmung in einer Wortgruppe („yo tiene“, „un problemas“); im Schwedischen nur „ett stor hus“, nicht „Igår jag gick“, „att han kommer inte“ oder hans statt sin. Die Anbindung funktioniert. Knopf beim Übersetzen weglassen oder „nichts gefunden“ knapper; beim Schreiben bleibt er (Rechtschreibung). | B− | deine Entscheidung |
+| **Vorgaben für alle Speicherfelder in `freshDB`.** 11 neuere Felder fehlen dort, gut 30 Stellen prüfen, ob es sie gibt. Format bleibt gleich. | C+ | |
+| **Zeilenformat der Satzbank.** Im Schnitt 307 Zeichen je Zeile, 50 über 600; Norm, Ausschlüsse, wörtliches Bild und Herkunft stehen als Marker im Text. Erst vor einem großen Inhaltsschub. | C+ | |
+| **Lange Vorlagenzeilen in `part_views.js`** (106 über 250 Zeichen). Nur beim Anfassen umbrechen. | C+ | |
+| **Bewusst nicht:** Framework oder Module (siehe unten), IndexedDB (Testprofile 20 bis 24 KB, die App warnt ab 3 MB), überflüssige Alternativen aufräumen (seit den Kombinationen 105 von 2.466). Eine Statistik für die ganze App steht unter „Geprüft und zurückgestellt“ (B). | C/D | |
 
 ### Aufräumen nach der Durchsicht vom 22.11.
 
@@ -32,8 +52,9 @@ Befund vom 19.11. (`tools/vielfalt.js`, Häufigkeitslisten): Die Satzbank übt G
 
 | Paket | Inhalt | Note | Stand |
 |---|---|---|---|
-| 7 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | als Nächstes |
-| 8 | Relativsätze (lo que, el que, cuyo; vars, vilket) | B+ / B | |
+| 7 | Schwedisch: neue B2-Sätze in sechs Themen, damit Schwedisch nicht vor Spanisch leerläuft (Durchsicht vom 28.11.) | A− | als Nächstes |
+| 8 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | |
+| 9 | Relativsätze (lo que, el que, cuyo; vars, vilket) | B+ / B | |
 
 So entsteht ein Paket:
 - **Wortschatz steuern:** Zielwörter aus Häufigkeitslisten (wordfreq, OpenSubtitles), Rang 1500 bis 8000, die der Satzbank fehlen, quer durch Arbeit, Gesellschaft, Gesundheit, Medien, Gefühle, Argumentieren. Die Listen dienen nur der Auswahl, in die App kommt nichts davon.

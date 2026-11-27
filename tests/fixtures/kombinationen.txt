@@ -731,6 +731,422 @@ Si el tren no hubiese tenido retraso, ya estaríamos en casa.
 Tendrías que revisar el presupuesto antes de presentárselo a la junta.
 # es condicional | Sin la ayuda de los voluntarios, la limpieza de la playa habría durado semanas.
 Sin la ayuda de los voluntarios, la limpieza de la playa hubiese durado semanas.
+# es conjetura | No ha comido nada desde ayer; tendrá hambre.
+Lleva sin comer desde ayer; debe de tener hambre.
+Lleva sin comer desde ayer; probablemente tiene hambre.
+# es conjetura | No contesta al teléfono; ya estará durmiendo.
+No contesta el teléfono; estará durmiendo ya.
+No contesta el teléfono; ya estará dormida.
+No contesta el teléfono; ya se habrá dormido.
+No contesta el teléfono; ya debe de estar durmiendo.
+No contesta el teléfono; probablemente ya está durmiendo.
+No coge el teléfono; estará durmiendo ya.
+No coge el teléfono; ya estará dormida.
+No coge el teléfono; ya se habrá dormido.
+No coge el teléfono; ya debe de estar durmiendo.
+No coge el teléfono; probablemente ya está durmiendo.
+# es conjetura | Estarás agotado después de un vuelo tan largo.
+Debes de estar agotado tras un vuelo tan largo.
+Probablemente estás agotado tras un vuelo tan largo.
+# es conjetura | Tendrá unos cuarenta años.
+Debe de tener unos 40 años.
+Debe tener unos 40 años.
+# es conjetura | Ana ha aprobado el examen; estará contenta.
+Ana aprobó el examen; estará feliz.
+Ana aprobó el examen; debe de estar contenta.
+Ana aprobó el examen; probablemente está contenta.
+# es conjetura | ¿Quién llamará a estas horas?
+¿Quién nos llamará tan tarde?
+# es conjetura | El ayuntamiento habrá tenido sus motivos para talar los árboles, pero nadie nos los ha explicado.
+El ayuntamiento tendría sus razones para talar los árboles, pero nadie nos las ha explicado.
+El ayuntamiento tendría sus razones para cortar los árboles, pero nadie nos las ha explicado.
+El ayuntamiento tendría sus motivos para talar los árboles, pero nadie nos los explicó.
+El ayuntamiento tendría sus motivos para cortar los árboles, pero nadie nos los explicó.
+El ayuntamiento tendría sus motivos para cortar los árboles, pero nadie nos los ha explicado.
+El ayuntamiento habrá tenido sus razones para cortar los árboles, pero nadie nos las ha explicado.
+La municipalidad habrá tenido sus razones para cortar los árboles, pero nadie nos las ha explicado.
+El ayuntamiento debe de haber tenido sus razones para cortar los árboles, pero nadie nos las ha explicado.
+La municipalidad habrá tenido sus razones para talar los árboles, pero nadie nos las ha explicado.
+El ayuntamiento debe de haber tenido sus razones para talar los árboles, pero nadie nos las ha explicado.
+El ayuntamiento habrá tenido sus motivos para cortar los árboles, pero nadie nos los explicó.
+La municipalidad habrá tenido sus motivos para cortar los árboles, pero nadie nos los explicó.
+El ayuntamiento debe de haber tenido sus motivos para cortar los árboles, pero nadie nos los explicó.
+La municipalidad habrá tenido sus motivos para talar los árboles, pero nadie nos los explicó.
+El ayuntamiento debe de haber tenido sus motivos para talar los árboles, pero nadie nos los explicó.
+La municipalidad habrá tenido sus motivos para cortar los árboles, pero nadie nos los ha explicado.
+El ayuntamiento debe de haber tenido sus motivos para cortar los árboles, pero nadie nos los ha explicado.
+# es conjetura | Cuando sonó la alarma, serían más o menos las cuatro de la madrugada.
+Cuando saltó la alarma, serían alrededor de las cuatro de la madrugada.
+Cuando saltó la alarma, serían alrededor de las cuatro de la mañana.
+Cuando sonó la alarma, serían alrededor de las cuatro de la mañana.
+Cuando saltó la alarma, serían las cuatro de la madrugada, más o menos.
+Cuando saltó la alarma, serían más o menos las cuatro de la mañana.
+Cuando saltó la alarma, debían de ser más o menos las cuatro de la mañana.
+Cuando saltó la alarma, probablemente eran más o menos las cuatro de la mañana.
+Cuando saltó la alarma, debían de ser más o menos las cuatro de la madrugada.
+Cuando saltó la alarma, probablemente eran más o menos las cuatro de la madrugada.
+Cuando sonó la alarma, debían de ser más o menos las cuatro de la mañana.
+Cuando sonó la alarma, probablemente eran más o menos las cuatro de la mañana.
+# es conjetura | Mi cuñado se ha comprado una casa con piscina; le habrá tocado la lotería.
+Mi cuñado se compró una casa con piscina; habrá ganado la lotería.
+Mi cuñado se compró una casa con piscina; le debe de haber tocado la lotería.
+Mi cuñado se compró una casa con piscina; probablemente le ha tocado la lotería.
+Mi cuñado se compró una casa con alberca; le debe de haber tocado la lotería.
+# es conjetura | La constructora tendrá problemas de liquidez; si no, no despediría a media plantilla.
+La constructora tendrá problemas de liquidez; de lo contrario, no despediría a la mitad de la plantilla.
+La constructora tendrá problemas de liquidez; de lo contrario, no estaría despidiendo a la mitad de la plantilla.
+La constructora debe de tener problemas de liquidez; de lo contrario, no estaría despidiendo a la mitad de la plantilla.
+Probablemente la constructora tiene problemas de liquidez; de lo contrario, no estaría despidiendo a la mitad de la plantilla.
+La constructora debe de tener problemas de liquidez; de lo contrario, no despediría a la mitad de la plantilla.
+Probablemente la constructora tiene problemas de liquidez; de lo contrario, no despediría a la mitad de la plantilla.
+La constructora tendrá problemas de liquidez; de lo contrario, no despediría a la mitad del personal.
+La constructora tendrá problemas de liquidez; de lo contrario, no estaría despidiendo a la mitad del personal.
+La constructora debe de tener problemas de liquidez; de lo contrario, no estaría despidiendo a la mitad del personal.
+Probablemente la constructora tiene problemas de liquidez; de lo contrario, no estaría despidiendo a la mitad del personal.
+La constructora debe de tener problemas de liquidez; de lo contrario, no despediría a la mitad del personal.
+Probablemente la constructora tiene problemas de liquidez; de lo contrario, no despediría a la mitad del personal.
+La constructora tendrá problemas de liquidez; de lo contrario, no estaría despidiendo a media plantilla.
+La constructora debe de tener problemas de liquidez; de lo contrario, no estaría despidiendo a media plantilla.
+Probablemente la constructora tiene problemas de liquidez; de lo contrario, no estaría despidiendo a media plantilla.
+La constructora debe de tener problemas de liquidez; de lo contrario, no despediría a media plantilla.
+Probablemente la constructora tiene problemas de liquidez; de lo contrario, no despediría a media plantilla.
+La constructora tendrá problemas de liquidez; si no, no estaría despidiendo a la mitad de la plantilla.
+La constructora debe de tener problemas de liquidez; si no, no estaría despidiendo a la mitad de la plantilla.
+Probablemente la constructora tiene problemas de liquidez; si no, no estaría despidiendo a la mitad de la plantilla.
+La constructora debe de tener problemas de liquidez; si no, no despediría a la mitad de la plantilla.
+Probablemente la constructora tiene problemas de liquidez; si no, no despediría a la mitad de la plantilla.
+La constructora tendrá problemas de liquidez; si no, no estaría despidiendo a la mitad del personal.
+La constructora debe de tener problemas de liquidez; si no, no estaría despidiendo a la mitad del personal.
+Probablemente la constructora tiene problemas de liquidez; si no, no estaría despidiendo a la mitad del personal.
+La constructora debe de tener problemas de liquidez; si no, no despediría a la mitad del personal.
+Probablemente la constructora tiene problemas de liquidez; si no, no despediría a la mitad del personal.
+La constructora debe de tener problemas de liquidez; si no, no estaría despidiendo a media plantilla.
+Probablemente la constructora tiene problemas de liquidez; si no, no estaría despidiendo a media plantilla.
+# es conjetura | Tiene fiebre y le duele la garganta. ¿No tendrá la gripe?
+Tiene fiebre y dolor de garganta. ¿No tendrá gripe?
+# es conjetura | No encuentro el cargador; lo habré dejado enchufado en la oficina.
+No encuentro mi cargador; me lo habré dejado enchufado en la oficina.
+No encuentro mi cargador; me lo habré dejado conectado en la oficina.
+No encuentro mi cargador; me lo habré dejado conectado en el trabajo.
+No encuentro mi cargador; me lo debo de haber dejado conectado en el trabajo.
+No encuentro mi cargador; me lo debo de haber dejado conectado en la oficina.
+No encuentro mi cargador; me lo habré dejado enchufado en el trabajo.
+No encuentro mi cargador; me lo debo de haber dejado enchufado en el trabajo.
+No encuentro mi cargador; me lo debo de haber dejado enchufado en la oficina.
+No encuentro mi cargador; lo habré dejado conectado en la oficina.
+No encuentro mi cargador; lo habré dejado conectado en el trabajo.
+No encuentro mi cargador; lo debo de haber dejado conectado en el trabajo.
+No encuentro mi cargador; probablemente lo he dejado conectado en el trabajo.
+No encuentro mi cargador; lo debo de haber dejado conectado en la oficina.
+No encuentro mi cargador; probablemente lo he dejado conectado en la oficina.
+No encuentro mi cargador; lo habré dejado enchufado en el trabajo.
+No encuentro mi cargador; lo debo de haber dejado enchufado en el trabajo.
+No encuentro mi cargador; probablemente lo he dejado enchufado en el trabajo.
+No encuentro mi cargador; lo debo de haber dejado enchufado en la oficina.
+No encuentro mi cargador; probablemente lo he dejado enchufado en la oficina.
+No encuentro el cargador; me lo habré dejado conectado en la oficina.
+No encuentro el cargador; me lo habré dejado conectado en el trabajo.
+No encuentro el cargador; me lo debo de haber dejado conectado en el trabajo.
+No encuentro el cargador; me lo debo de haber dejado conectado en la oficina.
+No encuentro el cargador; me lo habré dejado enchufado en el trabajo.
+No encuentro el cargador; me lo debo de haber dejado enchufado en el trabajo.
+No encuentro el cargador; me lo debo de haber dejado enchufado en la oficina.
+No encuentro el cargador; lo habré dejado conectado en el trabajo.
+No encuentro el cargador; lo debo de haber dejado conectado en el trabajo.
+No encuentro el cargador; probablemente lo he dejado conectado en el trabajo.
+No encuentro el cargador; lo debo de haber dejado conectado en la oficina.
+No encuentro el cargador; probablemente lo he dejado conectado en la oficina.
+No encuentro el cargador; lo debo de haber dejado enchufado en el trabajo.
+No encuentro el cargador; probablemente lo he dejado enchufado en el trabajo.
+# es conjetura | ¡Lo que habrá costado restaurar este palacio!
+¡Cuánto habrá costado la restauración de este palacio!
+# es conjetura | La testigo estaría muy nerviosa, porque se contradijo varias veces ante el juez.
+La testigo debía de estar muy nerviosa, porque se contradijo varias veces delante del juez.
+Probablemente la testigo estaba muy nerviosa, porque se contradijo varias veces delante del juez.
+La testigo debía de estar muy nerviosa, porque se contradijo varias veces frente al juez.
+Probablemente la testigo estaba muy nerviosa, porque se contradijo varias veces frente al juez.
+# es conjetura | Por aquel entonces no tendría dinero para la matrícula, por eso dejó la carrera.
+En aquella época no tendría dinero para pagar la matrícula, por eso dejó la carrera.
+En aquella época no tendría dinero para pagar la matrícula, por eso abandonó los estudios.
+En aquella época no debía de tener dinero para pagar la matrícula, por eso abandonó los estudios.
+En aquella época no tendría dinero para pagar la matrícula, por eso dejó los estudios.
+En aquella época no debía de tener dinero para pagar la matrícula, por eso dejó los estudios.
+En aquella época no debía de tener dinero para pagar la matrícula, por eso dejó la carrera.
+En aquella época no tendría dinero para la matrícula, por eso abandonó los estudios.
+En aquella época no debía de tener dinero para la matrícula, por eso abandonó los estudios.
+En aquella época no tendría dinero para la matrícula, por eso dejó los estudios.
+En aquella época no debía de tener dinero para la matrícula, por eso dejó los estudios.
+En aquella época no debía de tener dinero para la matrícula, por eso dejó la carrera.
+Por aquel entonces no tendría dinero para pagar la matrícula, por eso abandonó los estudios.
+Por aquel entonces no debía de tener dinero para pagar la matrícula, por eso abandonó los estudios.
+Por aquel entonces probablemente no tenía dinero para pagar la matrícula, por eso abandonó los estudios.
+Por aquel entonces no tendría dinero para pagar la matrícula, por eso dejó los estudios.
+Por aquel entonces no debía de tener dinero para pagar la matrícula, por eso dejó los estudios.
+Por aquel entonces probablemente no tenía dinero para pagar la matrícula, por eso dejó los estudios.
+Por aquel entonces no debía de tener dinero para pagar la matrícula, por eso dejó la carrera.
+Por aquel entonces probablemente no tenía dinero para pagar la matrícula, por eso dejó la carrera.
+Por aquel entonces no debía de tener dinero para la matrícula, por eso abandonó los estudios.
+Por aquel entonces probablemente no tenía dinero para la matrícula, por eso abandonó los estudios.
+Por aquel entonces no debía de tener dinero para la matrícula, por eso dejó los estudios.
+Por aquel entonces probablemente no tenía dinero para la matrícula, por eso dejó los estudios.
+# es conjetura | En la concentración frente al Parlamento habría unas doscientas personas.
+En la concentración ante el Parlamento habría alrededor de doscientas personas.
+En la concentración ante el Parlamento habría unas 200 personas.
+En la concentración ante el Parlamento debía de haber unas 200 personas.
+En la concentración ante el Parlamento probablemente había unas 200 personas.
+Habría unas doscientas personas en la concentración ante el Parlamento.
+En la concentración ante el Parlamento debía de haber unas doscientas personas.
+En la concentración ante el Parlamento probablemente había unas doscientas personas.
+En la concentración delante del Parlamento habría alrededor de doscientas personas.
+En la concentración delante del Parlamento habría unas 200 personas.
+En la concentración delante del Parlamento debía de haber unas 200 personas.
+En la concentración delante del Parlamento probablemente había unas 200 personas.
+Habría unas doscientas personas en la concentración delante del Parlamento.
+En la concentración delante del Parlamento debía de haber unas doscientas personas.
+En la concentración delante del Parlamento probablemente había unas doscientas personas.
+En la manifestación frente al Parlamento habría alrededor de doscientas personas.
+En la manifestación frente al Parlamento habría unas 200 personas.
+En la manifestación frente al Parlamento debía de haber unas 200 personas.
+En la manifestación frente al Parlamento probablemente había unas 200 personas.
+Habría unas doscientas personas en la manifestación frente al Parlamento.
+En la manifestación frente al Parlamento debía de haber unas doscientas personas.
+En la manifestación frente al Parlamento probablemente había unas doscientas personas.
+En la concentración frente al Parlamento debía de haber unas 200 personas.
+En la concentración frente al Parlamento probablemente había unas 200 personas.
+# es conjetura | Hay un atasco enorme en la autopista; habrá habido algún accidente.
+Hay un atasco tremendo en la autopista; habrá habido un accidente.
+Hay un atasco tremendo en la autopista; debe de haber habido un accidente.
+Hay un atasco tremendo en la autopista; probablemente ha habido un accidente.
+Hay un embotellamiento enorme en la autopista; habrá habido un accidente.
+En la autopista hay un embotellamiento enorme; habrá habido un accidente.
+Hay un embotellamiento enorme en la autopista; debe de haber habido un accidente.
+Hay un embotellamiento enorme en la autopista; probablemente ha habido un accidente.
+En la autopista hay un atasco enorme; habrá habido un accidente.
+Hay un atasco enorme en la autopista; debe de haber habido un accidente.
+Hay un atasco enorme en la autopista; probablemente ha habido un accidente.
+Hay un atasco tremendo en la autopista; debe de haber habido algún accidente.
+Hay un atasco tremendo en la autopista; probablemente ha habido algún accidente.
+En la autopista hay un embotellamiento enorme; habrá habido algún accidente.
+Hay un embotellamiento enorme en la autopista; debe de haber habido algún accidente.
+Hay un embotellamiento enorme en la autopista; probablemente ha habido algún accidente.
+# es conjetura | Cuida de su suegra enferma y hace turnos de noche; apenas tendrá tiempo para descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; apenas tendrá tiempo para descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; apenas tendrá tiempo de descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; casi no tendrá tiempo de descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; no tendrá apenas tiempo de descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; probablemente apenas tiene tiempo de descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; casi no tendrá tiempo para descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; no tendrá apenas tiempo para descansar.
+Cuida a su suegra enferma y trabaja en el turno de noche; probablemente apenas tiene tiempo para descansar.
+Cuida a su suegra enferma y hace turnos de noche; apenas tendrá tiempo de descansar.
+Cuida a su suegra enferma y hace turnos de noche; casi no tendrá tiempo de descansar.
+Cuida a su suegra enferma y hace turnos de noche; no tendrá apenas tiempo de descansar.
+Cuida a su suegra enferma y hace turnos de noche; probablemente apenas tiene tiempo de descansar.
+Cuida a su suegra enferma y hace turnos de noche; casi no tendrá tiempo para descansar.
+Cuida a su suegra enferma y hace turnos de noche; no tendrá apenas tiempo para descansar.
+Cuida a su suegra enferma y hace turnos de noche; probablemente apenas tiene tiempo para descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; apenas tendrá tiempo de descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; casi no tendrá tiempo de descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; no tendrá apenas tiempo de descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; probablemente apenas tiene tiempo de descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; casi no tendrá tiempo para descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; no tendrá apenas tiempo para descansar.
+Cuida de su suegra enferma y trabaja en el turno de noche; probablemente apenas tiene tiempo para descansar.
+Cuida de su suegra enferma y hace turnos de noche; casi no tendrá tiempo de descansar.
+Cuida de su suegra enferma y hace turnos de noche; no tendrá apenas tiempo de descansar.
+Cuida de su suegra enferma y hace turnos de noche; probablemente apenas tiene tiempo de descansar.
+# es conjetura | Será verdad lo que dice el informe, pero las cifras no me convencen.
+Será cierto lo que dice el informe, pero los números no me convencen.
+Lo que dice el informe será verdad, pero los números no me convencen.
+Puede que sea verdad lo que dice el informe, pero los números no me convencen.
+# es conjetura | Será brillante en su campo, pero como jefe es un desastre.
+Será brillante en su especialidad, pero como jefe es una catástrofe.
+Puede que sea brillante en su especialidad, pero como jefe es una catástrofe.
+Puede que sea brillante en su especialidad, pero como jefe es un desastre.
+Será brillante en lo suyo, pero como jefe es una catástrofe.
+Puede que sea brillante en lo suyo, pero como jefe es una catástrofe.
+Puede que sea brillante en lo suyo, pero como jefe es un desastre.
+Puede que sea brillante en su campo, pero como jefe es una catástrofe.
+# es conjetura | ¿Dónde se habrá metido el gato? No ha tocado el pienso desde anoche.
+¿Dónde se habrá metido la gata? No ha tocado la comida desde anoche.
+¿Adónde habrá ido el gato? No ha tocado la comida desde anoche.
+¿Adónde habrá ido el gato? Desde anoche no ha tocado el pienso.
+¿Dónde estará el gato? No ha tocado la comida desde anoche.
+¿Dónde estará el gato? Desde anoche no ha tocado el pienso.
+# es conjetura | Las persianas llevan una semana bajadas; los inquilinos de enfrente se habrán ido de vacaciones.
+Las persianas están bajadas desde hace una semana; los inquilinos de enfrente se habrán marchado de vacaciones.
+Hace una semana que las persianas están bajadas; los inquilinos de enfrente se habrán marchado de vacaciones.
+Las persianas están bajadas desde hace una semana; los inquilinos de enfrente deben de haberse ido de vacaciones.
+Hace una semana que las persianas están bajadas; los inquilinos de enfrente deben de haberse ido de vacaciones.
+Hace una semana que las persianas están bajadas; probablemente los inquilinos de enfrente se han ido de vacaciones.
+# es conjetura | Cuando llegó la grúa, el conductor ya se habría marchado, porque el coche estaba vacío.
+Cuando llegó la grúa, el conductor ya se habría ido, porque el carro estaba vacío.
+Cuando llegó la grúa, el conductor ya se habría ido, porque el auto estaba vacío.
+Cuando llegó la grúa, el conductor se habría marchado ya, porque el carro estaba vacío.
+Cuando llegó la grúa, el conductor se habría marchado ya, porque el auto estaba vacío.
+Cuando llegó la grúa, el conductor ya se habría marchado, pues el carro estaba vacío.
+Cuando llegó la grúa, el conductor ya debía de haberse marchado, pues el carro estaba vacío.
+Cuando llegó la grúa, el conductor probablemente ya se había marchado, pues el carro estaba vacío.
+Cuando llegó la grúa, el conductor ya debía de haberse marchado, porque el carro estaba vacío.
+Cuando llegó la grúa, el conductor probablemente ya se había marchado, porque el carro estaba vacío.
+Cuando llegó la grúa, el conductor ya se habría marchado, pues el auto estaba vacío.
+Cuando llegó la grúa, el conductor ya debía de haberse marchado, pues el auto estaba vacío.
+Cuando llegó la grúa, el conductor probablemente ya se había marchado, pues el auto estaba vacío.
+Cuando llegó la grúa, el conductor ya debía de haberse marchado, porque el auto estaba vacío.
+Cuando llegó la grúa, el conductor probablemente ya se había marchado, porque el auto estaba vacío.
+Cuando llegó la grúa, el conductor ya debía de haberse marchado, pues el coche estaba vacío.
+Cuando llegó la grúa, el conductor probablemente ya se había marchado, pues el coche estaba vacío.
+# es conjetura | Si no ha contestado, todavía no habrá leído el correo de la gestoría.
+Si no ha contestado, aún no habrá leído el email de la gestoría.
+Si no ha contestado, aún no habrá leído el email de la asesoría.
+Si no ha contestado, aún no debe de haber leído el email de la asesoría.
+Si no ha contestado, aún no debe de haber leído el email de la gestoría.
+Si no ha contestado, aún no habrá leído el mail de la gestoría.
+Si no ha contestado, aún no habrá leído el mail de la asesoría.
+Si no ha contestado, aún no debe de haber leído el mail de la asesoría.
+Si no ha contestado, aún no debe de haber leído el mail de la gestoría.
+Si no ha contestado, aún no habrá leído el correo de la asesoría.
+Si no ha contestado, aún no debe de haber leído el correo de la asesoría.
+Si no ha contestado, aún no debe de haber leído el correo de la gestoría.
+Si no ha respondido, todavía no habrá leído el email de la gestoría.
+Si no ha respondido, todavía no habrá leído el email de la asesoría.
+Si no ha respondido, todavía no debe de haber leído el email de la asesoría.
+Si no ha respondido, todavía no debe de haber leído el email de la gestoría.
+Si no ha respondido, todavía no habrá leído el mail de la gestoría.
+Si no ha respondido, todavía no habrá leído el mail de la asesoría.
+Si no ha respondido, todavía no debe de haber leído el mail de la asesoría.
+Si no ha respondido, todavía no debe de haber leído el mail de la gestoría.
+Si no ha respondido, todavía no habrá leído el correo de la asesoría.
+Si no ha respondido, todavía no debe de haber leído el correo de la asesoría.
+Si no ha respondido, todavía no debe de haber leído el correo de la gestoría.
+Si no contestó, todavía no habrá leído el email de la gestoría.
+Si no contestó, todavía no habrá leído el email de la asesoría.
+Si no contestó, todavía no debe de haber leído el email de la asesoría.
+Si no contestó, todavía no debe de haber leído el email de la gestoría.
+Si no contestó, todavía no habrá leído el mail de la gestoría.
+Si no contestó, todavía no habrá leído el mail de la asesoría.
+Si no contestó, todavía no debe de haber leído el mail de la asesoría.
+Si no contestó, todavía no debe de haber leído el mail de la gestoría.
+Si no contestó, todavía no habrá leído el correo de la asesoría.
+Si no contestó, todavía no debe de haber leído el correo de la asesoría.
+Si no contestó, todavía no debe de haber leído el correo de la gestoría.
+Si no ha contestado, no habrá leído todavía el email de la gestoría.
+Si no ha contestado, no habrá leído todavía el email de la asesoría.
+Si no ha contestado, no debe de haber leído todavía el email de la asesoría.
+Si no ha contestado, no debe de haber leído todavía el email de la gestoría.
+Si no ha contestado, no habrá leído todavía el mail de la gestoría.
+Si no ha contestado, no habrá leído todavía el mail de la asesoría.
+Si no ha contestado, no debe de haber leído todavía el mail de la asesoría.
+Si no ha contestado, no debe de haber leído todavía el mail de la gestoría.
+Si no ha contestado, no habrá leído todavía el correo de la asesoría.
+Si no ha contestado, no debe de haber leído todavía el correo de la asesoría.
+Si no ha contestado, no debe de haber leído todavía el correo de la gestoría.
+Si no ha contestado, todavía no habrá leído el email de la asesoría.
+Si no ha contestado, todavía no debe de haber leído el email de la asesoría.
+Si no ha contestado, probablemente todavía no ha leído el email de la asesoría.
+Si no ha contestado, será que todavía no ha leído el email de la asesoría.
+Si no ha contestado, todavía no debe de haber leído el email de la gestoría.
+Si no ha contestado, probablemente todavía no ha leído el email de la gestoría.
+Si no ha contestado, será que todavía no ha leído el email de la gestoría.
+Si no ha contestado, todavía no habrá leído el mail de la asesoría.
+Si no ha contestado, todavía no debe de haber leído el mail de la asesoría.
+Si no ha contestado, probablemente todavía no ha leído el mail de la asesoría.
+Si no ha contestado, será que todavía no ha leído el mail de la asesoría.
+Si no ha contestado, todavía no debe de haber leído el mail de la gestoría.
+Si no ha contestado, probablemente todavía no ha leído el mail de la gestoría.
+Si no ha contestado, será que todavía no ha leído el mail de la gestoría.
+Si no ha contestado, todavía no debe de haber leído el correo de la asesoría.
+Si no ha contestado, probablemente todavía no ha leído el correo de la asesoría.
+Si no ha contestado, será que todavía no ha leído el correo de la asesoría.
+# es conjetura | El alcalde sabría lo de las irregularidades contables, aunque ahora lo niegue.
+El alcalde sabría de las irregularidades contables, aunque ahora lo niega.
+El alcalde estaría al tanto de las irregularidades contables, aunque ahora lo niega.
+El alcalde conocería las irregularidades contables, aunque ahora lo niega.
+El alcalde debía de saber lo de las irregularidades contables, aunque ahora lo niega.
+Probablemente el alcalde sabía lo de las irregularidades contables, aunque ahora lo niega.
+# es conjetura | Habla alemán sin acento; habrá vivido muchos años en Viena.
+Habla alemán sin ningún acento; habrá vivido en Viena muchos años.
+Habla alemán sin ningún acento; debe de haber vivido en Viena muchos años.
+Habla alemán sin ningún acento; probablemente ha vivido en Viena muchos años.
+Habla alemán sin ningún acento; habrá pasado muchos años en Viena.
+Habla alemán sin ningún acento; debe de haber vivido muchos años en Viena.
+Habla alemán sin ningún acento; probablemente ha vivido muchos años en Viena.
+Habla alemán sin acento; debe de haber vivido en Viena muchos años.
+Habla alemán sin acento; probablemente ha vivido en Viena muchos años.
+# es conjetura | En este valle habría antes un lago; todavía se distingue la antigua orilla.
+En este valle antes habría un lago; aún se distingue la antigua orilla.
+En este valle antes habría un lago; aún se reconoce la antigua orilla.
+En este valle antes habría un lago; aún se ve la antigua orilla.
+En este valle antes habría un lago; todavía se reconoce la antigua orilla.
+En este valle antes habría un lago; todavía se ve la antigua orilla.
+Antes habría un lago en este valle; todavía se reconoce la antigua orilla.
+Antes habría un lago en este valle; todavía se ve la antigua orilla.
+En este valle habría antes un lago; aún se reconoce la antigua orilla.
+En este valle debía de haber antes un lago; aún se reconoce la antigua orilla.
+En este valle probablemente había antes un lago; aún se reconoce la antigua orilla.
+En este valle habría antes un lago; aún se ve la antigua orilla.
+En este valle debía de haber antes un lago; aún se ve la antigua orilla.
+En este valle probablemente había antes un lago; aún se ve la antigua orilla.
+En este valle debía de haber antes un lago; aún se distingue la antigua orilla.
+En este valle probablemente había antes un lago; aún se distingue la antigua orilla.
+En este valle debía de haber antes un lago; todavía se reconoce la antigua orilla.
+En este valle probablemente había antes un lago; todavía se reconoce la antigua orilla.
+En este valle debía de haber antes un lago; todavía se ve la antigua orilla.
+En este valle probablemente había antes un lago; todavía se ve la antigua orilla.
+# es conjetura | Se han congelado las tuberías; estaremos a diez grados bajo cero.
+Se han helado las tuberías; estaremos a diez bajo cero.
+Se han helado las tuberías; hará diez bajo cero.
+Las tuberías se han congelado; estaremos a diez bajo cero.
+Se congelaron las tuberías; estaremos a diez bajo cero.
+Se congelaron las tuberías; hará diez bajo cero.
+Se han congelado las tuberías; hará diez bajo cero.
+Se han helado las tuberías; hará diez grados bajo cero.
+Se han helado las tuberías; estaremos a menos diez grados.
+Las tuberías se han congelado; estaremos a menos diez grados.
+Se congelaron las tuberías; hará diez grados bajo cero.
+Se congelaron las tuberías; estaremos a menos diez grados.
+# es conjetura | El examen de acceso habrá sido durísimo, porque solo lo han aprobado tres candidatos.
+El examen de acceso habrá sido muy difícil, porque solo lo aprobaron tres candidatos.
+El examen de acceso habrá sido muy difícil, porque solo lo aprobaron tres aspirantes.
+El examen de ingreso habrá sido muy difícil, porque solo lo aprobaron tres aspirantes.
+El examen de acceso debe de haber sido muy difícil, porque solo lo aprobaron tres aspirantes.
+Probablemente el examen de acceso ha sido muy difícil, porque solo lo aprobaron tres aspirantes.
+El examen de ingreso habrá sido muy difícil, porque solo lo aprobaron tres candidatos.
+El examen de acceso debe de haber sido muy difícil, porque solo lo aprobaron tres candidatos.
+Probablemente el examen de acceso ha sido muy difícil, porque solo lo aprobaron tres candidatos.
+El examen de acceso habrá sido dificilísimo, porque solo lo aprobaron tres candidatos.
+El examen de acceso habrá sido dificilísimo, porque solo lo aprobaron tres aspirantes.
+El examen de ingreso habrá sido dificilísimo, porque solo lo aprobaron tres aspirantes.
+El examen de acceso debe de haber sido dificilísimo, porque solo lo aprobaron tres aspirantes.
+Probablemente el examen de acceso ha sido dificilísimo, porque solo lo aprobaron tres aspirantes.
+El examen de ingreso habrá sido dificilísimo, porque solo lo aprobaron tres candidatos.
+El examen de acceso debe de haber sido dificilísimo, porque solo lo aprobaron tres candidatos.
+Probablemente el examen de acceso ha sido dificilísimo, porque solo lo aprobaron tres candidatos.
+El examen de acceso habrá sido durísimo, porque solo lo aprobaron tres aspirantes.
+El examen de ingreso habrá sido durísimo, porque solo lo aprobaron tres aspirantes.
+El examen de acceso debe de haber sido durísimo, porque solo lo aprobaron tres aspirantes.
+Probablemente el examen de acceso ha sido durísimo, porque solo lo aprobaron tres aspirantes.
+El examen de ingreso habrá sido durísimo, porque solo lo aprobaron tres candidatos.
+El examen de acceso debe de haber sido durísimo, porque solo lo aprobaron tres candidatos.
+Probablemente el examen de acceso ha sido durísimo, porque solo lo aprobaron tres candidatos.
+El examen de acceso sería durísimo, porque solo lo aprobaron tres aspirantes.
+El examen de acceso habrá sido muy difícil, porque solo lo han aprobado tres aspirantes.
+El examen de ingreso habrá sido muy difícil, porque solo lo han aprobado tres aspirantes.
+El examen de acceso debe de haber sido muy difícil, porque solo lo han aprobado tres aspirantes.
+Probablemente el examen de acceso ha sido muy difícil, porque solo lo han aprobado tres aspirantes.
+El examen de ingreso habrá sido muy difícil, porque solo lo han aprobado tres candidatos.
+El examen de acceso debe de haber sido muy difícil, porque solo lo han aprobado tres candidatos.
+Probablemente el examen de acceso ha sido muy difícil, porque solo lo han aprobado tres candidatos.
+El examen de acceso habrá sido dificilísimo, porque solo lo han aprobado tres aspirantes.
+El examen de ingreso habrá sido dificilísimo, porque solo lo han aprobado tres aspirantes.
+El examen de acceso debe de haber sido dificilísimo, porque solo lo han aprobado tres aspirantes.
+Probablemente el examen de acceso ha sido dificilísimo, porque solo lo han aprobado tres aspirantes.
+El examen de ingreso habrá sido dificilísimo, porque solo lo han aprobado tres candidatos.
+El examen de acceso debe de haber sido dificilísimo, porque solo lo han aprobado tres candidatos.
+Probablemente el examen de acceso ha sido dificilísimo, porque solo lo han aprobado tres candidatos.
+El examen de ingreso habrá sido durísimo, porque solo lo han aprobado tres aspirantes.
+El examen de acceso debe de haber sido durísimo, porque solo lo han aprobado tres aspirantes.
+Probablemente el examen de acceso ha sido durísimo, porque solo lo han aprobado tres aspirantes.
 # es reflexivo | Se lesionó jugando al fútbol.
 Se hizo daño jugando fútbol.
 Se ha lesionado jugando fútbol.

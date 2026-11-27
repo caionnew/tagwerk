@@ -21,6 +21,8 @@ function equiv(t, lang){
     x = x.replace(/\barbet(a|ar|ade|at)\b/g, 'jobb$1').replace(/\b(m|d|s)ej\b/g, '$1ig').replace(/\bmail(et|en|a|ar|ade|at)?\b/g, 'mejl$1')
       .replace(/\bsen dess\b/g, 'sedan dess').replace(/\b(för \S+ \S+) sen\b/g, '$1 sedan').replace(/^sen /, 'sedan ');
   }
+  // „wohl“, „wahrscheinlich“: seguramente gilt wie probablemente
+  if (lang === 'es') x = x.replace(/\bseguramente\b/g, 'probablemente');
   return x;
 }
 // Gleichwertige Wörter in der Lösung so, wie du sie geschrieben hast: Mit „arbeta“ steht „arbetar“ da, nicht „jobbar“. Die Korrektur
@@ -32,6 +34,8 @@ const OWN_WORDS = { sv:[
   ['\\bmejl(?=(?:et|en|a|ar|ade|at)?\\b)', '\\bmail', 'mail'],
   // „Kleider“ heißt auch Kleidung: Wer kläder schreibt, sieht die Lösung mit kläder (de billiga kläderna)
   ['\\bklänningar(?=(?:na)?\\b)', '\\bkläder', 'kläder']
+], es:[
+  ['\\bprobablemente\\b', '\\bseguramente\\b', 'seguramente']
 ] };
 function ownWords(lang, input, text){
   let out = String(text);

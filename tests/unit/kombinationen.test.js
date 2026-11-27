@@ -41,6 +41,8 @@ test('Kombination: Großschreibung und Satzzeichen wie in einem geschriebenen Sa
   assert.ok(item('es', '¿Las llaves? Me las dejé en casa.').made.includes('¿Las llaves? Las he dejado en casa.'));
   assert.ok(item('es', '¿Lo de agosto? Se lo comenté a la jefa esta mañana y no puso pegas.').made.includes('¿Lo de agosto? Esta mañana se lo dije a la jefa y no puso pegas.'));
   assert.ok(item('sv', 'Jag studerade i Göteborg i tre år, sedan flyttade jag till Stockholm.').made.includes('Jag pluggade i tre år i Göteborg, sedan flyttade jag till Stockholm.'));
+  // Das Komma vor einer angehängten Stelle bleibt (… la madrugada, más o menos)
+  assert.ok(item('es', 'Cuando sonó la alarma, serían más o menos las cuatro de la madrugada.').made.includes('Cuando saltó la alarma, serían las cuatro de la madrugada, más o menos.'));
   for (const lang of ['sv', 'es']) for (const it of BANK[lang]) for (const s of it.made || []) {
     assert.match(s, /^[¿¡"„«]*\p{Lu}/u, s);
     assert.doesNotMatch(s, /[,;:][.!?]$|\s[,.;:!?]|[,;:]{2}/, s);

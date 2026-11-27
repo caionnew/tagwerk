@@ -2999,7 +2999,7 @@ enfadado||verärgert, wütend (Spanien; Lateinamerika: enojado)
 entró|entrar|kam herein, trat ein (Indefinido)
 escucharan|escuchar|(wenn) sie zuhören würden (Imperfecto de subjuntivo)
 esperábamos|esperar|wir erwarteten, warteten (Imperfecto)
-estará|estar|wird sein (Futur)
+estará|estar|wird sein (Futur); Vermutung: ist wohl
 estaría|estar|wäre, würde sein (Konditional)
 estaríamos|estar|wir wären (Konditional)
 explicaba|explicar|erklärte (Imperfecto)
@@ -3219,7 +3219,7 @@ evidente||offensichtlich
 proyecto||Projekt
 propuesta||Vorschlag
 planificado|planificar|geplant
-será|ser|wird sein; findet statt (bei Ereignissen)
+será|ser|wird sein; findet statt (bei Ereignissen); Vermutung: ist wohl
 sala||Saal, Raum
 reservada|reservar|reserviert
 harto||satt; estar harto de = es satthaben
@@ -3618,7 +3618,7 @@ pequeño||klein
 perdido|perder|verloren
 perdí|perder|ich verlor
 perú||Peru
-pienso|pensar|ich denke
+pienso|pensar|ich denke; auch: das Tierfutter (el pienso)
 pies|pie|Füße
 piso||Wohnung (Spanien); Stockwerk
 playa||Strand
@@ -3886,7 +3886,7 @@ vestido|vestido|Kleid
 llevaba|llevar|trug (Imperfecto)
 seda|seda|Seide
 pura|puro|rein (weiblich)
-dirección|dirección|Adresse; Richtung
+dirección|dirección|Adresse; Richtung; Leitung (einer Firma)
 correcta|correcto|richtig (weiblich)
 resultados|resultado|Ergebnisse
 serán|ser|werden sein (Futur)
@@ -4228,7 +4228,7 @@ término||Begriff, Ausdruck; Ende
 casual||zufällig
 sugiere|sugerir|nahelegen, andeuten (Präsens)
 sugerir||nahelegen, vorschlagen
-campo||Land (im Gegensatz zur Stadt); Feld
+campo||Land (im Gegensatz zur Stadt); Feld; Fachgebiet
 quedado|quedar|bleiben (Partizip); quedarse vacío = leer werden
 quedarse||bleiben; quedarse vacío = leer werden
 vacío||leer
@@ -4530,7 +4530,7 @@ europeo||europäisch; Europäer
 raíces|raíz|Wurzeln
 raíz||Wurzel
 jornadas|jornada|Arbeitstage
-jornada||Arbeitstag; jornada partida = geteilter Arbeitstag mit langer Mittagspause
+jornada||Arbeitstag; jornada partida = geteilter Arbeitstag mit langer Mittagspause; a jornada completa = Vollzeit
 posguerra||Nachkriegszeit
 propuesto|proponer|vorschlagen (Partizip)
 proponer||vorschlagen
@@ -4877,7 +4877,7 @@ traficantes|traficante|Händler (Drogen)
 traficante||Händler (illegal)
 plurinacional||plurinational, mehrere Nationen umfassend
 bolivia||Bolivien
-aprobado||verabschiedet, genehmigt
+aprobado|aprobar|bestanden (Prüfung); verabschiedet, genehmigt (Partizip)
 referéndum||Volksabstimmung, Referendum
 evo||Evo (Vorname)
 morales||Morales (Evo Morales, Präsident Boliviens 2006–2019); moralisch (Plural)
@@ -5044,7 +5044,7 @@ preparado||vorbereitet, bereit
 campanada||Glockenschlag
 campanadas|campanada|Glockenschläge
 comerse||aufessen, verspeisen
-tendrá|tener|haben (Futur)
+tendrá|tener|wird haben (Futur); Vermutung: hat wohl
 inaugurado||eingeweiht, eröffnet
 real||königlich; wirklich; Real Casa de Correos = Königliches Posthaus (Madrid)
 convertido|convertir|verwandeln (Partizip); convertirse en = werden zu
@@ -5386,7 +5386,7 @@ argentina||Argentinien
 termo||Thermoskanne
 brazo||Arm
 recipiente||Gefäß, Behälter
-equipo||Ausrüstung; Mannschaft
+equipo||Ausrüstung; Mannschaft, Team; en equipo = im Team
 infusión||Aufguss, Tee
 prepara|preparar|zubereiten (Präsens); prepararse = zubereitet werden
 yerba||Kraut; yerba mate = Mate (getrocknete Blätter)
@@ -5830,6 +5830,113 @@ volar||fliegen
 salido|salir|hinausgegangen (Partizip); ha salido el sol = die Sonne ist herausgekommen
 empatamos|empatar|spielten unentschieden (Indefinido; auch Präsens)
 empatar||unentschieden spielen
+cartero||Briefträger, Postbote
+marta||Marta (Name)
+habrá|haber|wird haben (Futur, Hilfsverb); es wird geben; Vermutung: habrá llovido = es hat wohl geregnet
+habré|haber|werde haben (Futur, Hilfsverb); Vermutung: las habré dejado = ich habe sie wohl liegen lassen
+habrán|haber|werden haben (Futur, Hilfsverb); Vermutung: se habrán ido = sie sind wohl gefahren
+estarán|estar|werden sein (Futur); Vermutung: sind wohl
+estaremos|estar|werden sein (Futur); estar a diez bajo cero = minus zehn Grad haben
+llamará|llamar|wird anrufen (Futur); Vermutung: ruft wohl an
+festivo||Feiertag; día festivo = Feiertag
+feriado||Feiertag (Lateinamerika)
+motivos|motivo|Gründe, Beweggründe
+razones|razón|Gründe
+tendría|tener|hätte, würde haben (Konditional); Vermutung: hatte wohl
+sabría|saber|würde wissen (Konditional); Vermutung: wusste wohl
+tocado|tocar|berührt; gespielt (Partizip); le ha tocado la lotería = er hat im Lotto gewonnen
+despediría|despedir|würde entlassen (Konditional)
+despidiendo|despedir|entlassend (Gerundium)
+costado|costar|gekostet (Partizip)
+aspirante||Bewerber, Bewerberin
+manifestación||Demonstration, Kundgebung
+doscientas|doscientos|zweihundert
+habido|haber|gegeben (Partizip von hay); ha habido = es hat gegeben
+metido|meterse|hineingesteckt (Partizip); ¿dónde se habrá metido? = wo er wohl abgeblieben ist?
+niegue|negar|bestreite, leugne (Subjuntivo)
+niega|negar|bestreitet, leugnet (Präsens)
+alemán||Deutsch (Sprache); deutsch
+cabrá|caber|wird hineinpassen (Futur); Vermutung: passt wohl hinein
+cabrán|caber|werden hineinpassen (Futur)
+grados|grado|Grad
+suena|sonar|klingelt, klingt (Präsens)
+seguirá|seguir|wird weitermachen (Futur); seguirá en la oficina = ist wohl noch im Büro
+coge|coger|nimmt (Präsens, Spanien); no coge el teléfono = geht nicht ans Telefon
+rondará|rondar|wird ungefähr betragen (Futur); rondará los cuarenta = dürfte um die vierzig sein
+llamando|llamar|anrufend (Gerundium)
+explicó|explicar|erklärte (Indefinido)
+debían|deber|mussten (Imperfecto); debían de ser = es war wohl
+debía|deber|musste (Imperfecto); debía de estar = war wohl
+debo|deber|muss (Präsens); debo de haber = ich habe wohl
+contrario||Gegenteil; gegenteilig; de lo contrario = sonst
+abandonó|abandonar|verließ, gab auf (Indefinido)
+cierto||wahr; gewiss
+adónde||wohin
+marchado|marcharse|weggegangen (Partizip)
+haberse|haber|sich … haben; deben de haberse ido = sie sind wohl gefahren
+charcos|charco|Pfützen
+agotado||erschöpft
+rendido|rendir|erschöpft, todmüde (Partizip)
+talar||fällen (Bäume)
+cortar||schneiden; fällen
+municipalidad||Stadtverwaltung (Lateinamerika)
+alarma||Alarm, Alarmanlage
+saltó|saltar|sprang; saltó la alarma = der Alarm ging los
+cuñado||Schwager
+alberca||Schwimmbecken (Mexiko)
+constructora||Baufirma
+liquidez||Liquidität
+fiebre||Fieber
+gripe||Grippe
+dolor||Schmerz; dolor de garganta = Halsschmerzen
+cargador||Ladegerät
+enchufado|enchufar|eingesteckt, an der Steckdose (Partizip)
+conectado|conectar|angeschlossen, verbunden (Partizip)
+restauración||Restaurierung
+testigo||Zeuge, Zeugin
+contradijo|contradecir|widersprach (Indefinido); se contradijo = widersprach sich
+juez||Richter, Richterin
+matrícula||Einschreibung, Studiengebühr; Kennzeichen
+concentración||Kundgebung; Konzentration
+parlamento||Parlament
+atasco||Stau
+embotellamiento||Stau (Lateinamerika)
+enorme||riesig, enorm
+tremendo||gewaltig, enorm
+turnos|turno|Schichten; turnos de noche = Nachtschichten
+turno||Schicht; turno de noche = Nachtschicht
+descansar||sich ausruhen
+cifras|cifra|Zahlen, Ziffern
+convencen|convencer|überzeugen (Präsens, ellos, ellas)
+brillante||brillant, glänzend
+especialidad||Fachgebiet
+suyo||sein, ihr (betont); en lo suyo = in seinem Fach
+persianas|persiana|Rollläden, Jalousien
+inquilinos|inquilino|Mieter
+enfrente||gegenüber; de enfrente = von gegenüber
+gestoría||Agentur für Steuer- und Behördensachen (Spanien)
+asesoría||Beratungsbüro; asesoría fiscal = Steuerberatung
+irregularidades|irregularidad|Unregelmäßigkeiten
+contables|contable|buchhalterisch; Buchhalter
+conocería|conocer|würde kennen (Konditional); Vermutung: kannte wohl
+viena||Wien
+lago||See
+distingue|distinguir|unterscheidet, erkennt (Präsens); se distingue = man erkennt
+orilla||Ufer
+espectadores|espectador|Zuschauer
+entrarán|entrar|werden hineingehen; werden hineinpassen (Futur)
+congelado|congelar|gefroren, eingefroren (Partizip)
+congelaron|congelar|froren ein (Indefinido)
+tuberías|tubería|Rohre, Leitungen
+acceso||Zugang; examen de acceso = Aufnahmeprüfung
+durísimo|duro|sehr hart, sehr schwer
+dificilísimo|difícil|äußerst schwierig
+candidato||Bewerber, Kandidat
+candidatos|candidato|Bewerber, Kandidaten
+pues||denn; also
+respondido|responder|geantwortet (Partizip)
+contestó|contestar|antwortete (Indefinido)
+mail||E-Mail
 `
 };
 

@@ -47,6 +47,9 @@ const TRAPS = {
     { id:'pronombres', label:'Objektpronomen', kind:'order', short:'Pronomen vor das konjugierte Verb oder an Infinitiv, Gerundium und bejahten Imperativ hängen.', rule:'te lo doy, ¿puedes explicármelo?, dámelo. le/les + lo/la wird zu se lo/se la.' },
     { id:'gustar', label:'gustar & Co.', kind:'form', short:'Das Verb richtet sich nach dem, was gefällt: me gustan los libros.', rule:'Genauso encantar, interesar, doler, faltar, parecer, quedar, molestar.' },
     { id:'condicional', label:'Konditional & si-Sätze', kind:'form', short:'Irreal: si + tuviera, dann Konditional (viajaría).', rule:'Realer Fall: si + Präsens (si llueve, nos quedamos). Höflich: me gustaría, podrías, deberías.' },
+    { id:'conjetura', label:'„wohl“: Futur der Vermutung', kind:'form', short:'Was man nur vermutet, steht im Futur: estará en casa (er ist wohl zu Hause), für früher im Konditional.',
+      table:[['Futur', 'Vermutung über jetzt', 'estará en casa'], ['habrá + Partizip', 'über eben, heute, bis jetzt', 'habrá llovido'], ['Konditional', 'über früher', 'serían las diez'], ['habría + Partizip', 'über noch früher', 'ya habría salido'], ['deber de', 'ziemlich sicher, für jede Zeit', 'debe de estar cansado']],
+      rule:'Offene Fragen: ¿Qué hora será? (Wie spät es wohl ist?). Zum Einräumen: Será verdad, pero … (Das mag ja stimmen, aber …). Beim Übersetzen gilt auch probablemente mit Präsens.' },
     { id:'reflexivo', label:'Reflexivverben & „se“', kind:'form', short:'Reflexives Verb: Das Pronomen gehört dazu.', rule:'levantarse, acordarse de, quedarse, irse. se me olvidó, se me cayó: Es ist mir passiert. se habla: man spricht.' },
     { id:'cambio', label:'„werden“: ponerse & Co.', kind:'form', short:'Für „werden“ gibt es fünf Verben. Welches passt, hängt von der Art der Veränderung ab.',
       table:[['ponerse', 'kurz: Gefühl, Aussehen', 'se puso rojo'], ['volverse', 'bleibend: Charakter', 'se volvió desconfiado'], ['hacerse', 'allmählich, oft mit eigenem Zutun: Beruf, Zeit', 'se hizo médico, se hace tarde'], ['quedarse', 'Folge, oft ein Verlust', 'se quedó ciego, sin trabajo'], ['convertirse en', 'vor einem Nomen', 'se convirtió en un problema']],
@@ -179,7 +182,7 @@ function altCombos(target, alts){
     const words = T.map((w, k) => word(T, k));
     set.flatMap(x => x.e.map(r => ({ r, b:x.b }))).sort((p, q) => q.r.a0 - p.r.a0).forEach(({ r, b }) => {
       // Das Wort vor der Änderung trägt die Satzzeichen der Alternative (år, i Göteborg → år i Göteborg,)
-      if (r.a0 > 0 && r.b0 > 0) words[r.a0 - 1].w = bare(words[r.a0 - 1].w) + trail(b[r.b0 - 1]);
+      if (r.a0 > 0 && r.b0 > 0) Object.assign(words[r.a0 - 1], { w:bare(words[r.a0 - 1].w) + trail(b[r.b0 - 1]), last:r.b0 === b.length });
       words.splice(r.a0, r.a1 - r.a0, ...b.slice(r.b0, r.b1).map((w, k) => word(b, r.b0 + k)));
     });
     const ws = [];

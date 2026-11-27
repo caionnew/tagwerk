@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.84.0
+**Paket 6: neues Thema Spanisch „wohl“: Futur der Vermutung, 36 Sätze (12 B1, 24 B2).**
+- **Warum:** Deutsches „wohl“ und „dürfte“ heißt im Spanischen oft Futur oder Konditional: Será el cartero (das wird wohl der Postbote sein), serían las cuatro (es war wohl vier). Bisher gab es dazu zwei Sätze. Im Schwedischen sind nog, väl und lär mit 17 Sätzen schon gut abgedeckt; darum nur Spanisch.
+- **Was geübt wird:** Vermutung über jetzt im Futur (estará en la oficina, tendrá unos cuarenta años, estarán jugando), über gerade Geschehenes mit habrá + Partizip (habrá llovido, le habrá tocado la lotería, se habrán ido de vacaciones), über früher im Konditional (serían las cuatro, estaría nerviosa, sabría lo de …) und noch früher mit habría + Partizip (ya se habría marchado). Dazu offene Fragen (¿Qué hora será?, ¿Dónde se habrá metido?, ¡Lo que habrá costado!), die Sorge (¿No tendrá la gripe?), das Futur zum Einräumen (Será verdad, pero …) und unregelmäßige Formen (cabrán).
+- **Beim Übersetzen gilt auch:** deber de mit Infinitiv (debe de ser, debía de estar) und probablemente mit Präsens; seguramente gilt überall wie probablemente. Das bloße Präsens bleibt falsch, weil der deutsche Satz „wohl“ sagt. Varianten aus Lateinamerika, wo sie üblich sind (feriado, alberca, embotellamiento, municipalidad).
+- **Themenblatt** mit Übersicht in fünf Zeilen (Futur, habrá + Partizip, Konditional, habría + Partizip, deber de), Kachel unter „Fortschritt“, eigene Runde, Suchmuster für den Nachschub (¿qué hora será?, se habrá olvidado, serían las …). Kein „Fehler finden“: Das Präsens statt des Futurs ist richtiges Spanisch, nur ohne Vermutung.
+- **Abwechslung** (`tools/vielfalt.js`): 33 % neue Inhaltswörter, die B2-Sätze 39 %, im Schnitt 10,4 Wörter (Paket 3, auch ein neues Thema: 32 %). Wortschatz aus Verwaltung, Arbeit, Gesundheit, Verkehr und Natur (talar, liquidez, matrícula, gestoría, atasco, tuberías, orilla …). Der erste Entwurf lag bei 15 %; die B2-Sätze sind darum neu geschrieben.
+- **Erzeugte Fassungen:** 387 aus den neuen Alternativen, alle gelesen, keine falsch. Dabei fiel ein Fehler im Kombinieren auf: Ein Komma vor einer angehängten Stelle ging verloren („… la madrugada más o menos“). Behoben; in den Fassungen aus 24.83.0 kam der Fall nicht vor.
+- Wörterbuch: 107 neue Einträge; aprobado heißt jetzt auch „bestanden“, dirección auch „Leitung“, campo auch „Fachgebiet“, pienso auch „Tierfutter“; será, estará, tendrá mit der Bedeutung als Vermutung.
+- Doku: CONTENT.md (Regeln für das Thema), ARCHITECTURE.md, IDEEN.md (Paket 6 erledigt, als Nächstes Paket 7).
+- Tests: Thema mit 36 Sätzen und Übersicht, jede Lücke eine Form der Vermutung, deber de, probablemente und seguramente gelten, das Präsens nicht, Lückenfüllungen aus den Alternativen; Komma vor angehängter Stelle.
+- Speicherstand unverändert.
+
 ## 24.83.0
 **Kombinationen von Alternativen gelten von selbst, -se wie -ra, ESLint 10.**
 - **Kombinationen:** Bisher musste jede Kombination von Alternativen einzeln dastehen. „Det var hans idé att lyfta frågan under mötet“ war falsch, obwohl „lyfta frågan på mötet“ und „ta upp frågan under mötet“ galten. Jetzt liest die App jede Alternative als Änderung am Zielsatz und lässt Alternativen, die verschiedene Stellen ändern, auch zusammen gelten. Was eine Alternative zusammen ändert, bleibt zusammen (la sesión … tensa); Stellen, die sich berühren, und Alternativen mit mehr als zwei geänderten Stellen kombiniert sie nicht. Schwedisch: 242 neue Fassungen in 137 Sätzen.

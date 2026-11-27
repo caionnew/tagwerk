@@ -275,11 +275,14 @@ function testedPart(ex){
 // Norm einer Aufgabe bei Sätzen mit markierten Formen (Perfecto/Indefinido): 'es' = wie in Spanien, 'la' = wie in Lateinamerika.
 // Je Aufgabe ausgelost, sobald sie dran ist (prepCur), und mit der Aufgabe gespeichert; die Wiederholung übernimmt sie.
 // Nur Übersetzen und Lücke: Diktat und Nachsprechen prüfen den gehörten Satz.
+// Sätze, in denen Lateinamerika beides zulässt (Erfahrung, Andauerndes: nur LA-Formen markiert), fragen immer „wie in Spanien“:
+// Dort änderte „wie in Lateinamerika“ nichts, und ein Hinweis, der oft folgenlos bleibt, wird überlesen (Bewertung vom 27.11.).
 function exNorm(ex){
   if (!ex || !ex.id || !['free', 'cloze'].includes(ex.type)) return '';
   const item = itemById(ex.id);
   if (!item || !item.norms) return '';
-  if (ex.norm !== 'es' && ex.norm !== 'la') ex.norm = Math.random() < 0.5 ? 'es' : 'la';
+  if (!Object.values(item.norms).includes('es')) ex.norm = 'es';
+  else if (ex.norm !== 'es' && ex.norm !== 'la') ex.norm = Math.random() < 0.5 ? 'es' : 'la';
   return ex.norm;
 }
 const otherNorm = ex => ({ es:'la', la:'es' })[exNorm(ex)] || '';
@@ -292,17 +295,19 @@ function normOf(item, text){
 // Lückensatz: bei „wie in Lateinamerika“ und einem Zielsatz in spanischer Form der erste Satz dieser Norm mit seiner Form als Lücke,
 // damit der Rest des Satzes passt (Hoy ___ con mi socio y cancelé dos reuniones, nicht „… y he cancelado“).
 // ok: Lückenformen, die gelten; other: die Formen der anderen Norm (fast richtig).
+// pos: Stelle der Lücke. Im Satz der anderen Norm dort, wo sie im Zielsatz steht (gleicher Anfang), sonst das erste Vorkommen.
 function clozeOf(ex){
   const item = itemById(ex.id), n = exNorm(ex), o = otherNorm(ex);
-  let target = item.target, gap = item.gap;
+  let target = item.target, gap = item.gap, pos = gapPos(target, gap);
   if (n && normOf(item, target) === o) {
+    const pre = pos >= 0 ? item.target.slice(0, pos) : null;
     for (const a of item.alts) {
       const g = normOf(item, a) === n && item.gapAlts.find(x => normOf(item, x) === n && gapPos(a, x) >= 0);
-      if (g) { target = a; gap = g; break; }
+      if (g) { target = a; gap = g; pos = pre != null && a.startsWith(pre + g) ? pre.length : gapPos(a, g); break; }
     }
   }
   const forms = [gap].concat(item.gapAlts.filter(x => x !== gap));
-  return { target, gap, ok:forms.filter(x => !o || normOf(item, x) !== o), other:o ? forms.filter(x => normOf(item, x) === o) : [] };
+  return { target, gap, pos, ok:forms.filter(x => !o || normOf(item, x) !== o), other:o ? forms.filter(x => normOf(item, x) === o) : [] };
 }
 function answersFor(ex){
   if (ex.type === 'gen') return ex.data.answers;
@@ -319,15 +324,37 @@ function otherAnswers(ex){
   return ex.type === 'cloze' ? clozeOf(ex).other : [item.target].concat(item.alts).filter(x => normOf(item, x) === o);
 }
 // Rückmeldung, wenn die Form der anderen Norm kam
-// (bei der Lücke mit deiner Form vorn: „vi“ ist die Form aus Lateinamerika.)
+// (bei der Lücke mit deiner Form vorn: „vi“ ist die Form aus Lateinamerika.) Mit dem Signalwort aus dem Satz, das der Lücke am nächsten
+// steht, davor bevorzugt: Gelernt wird, was man am Satz bemerkt, nicht die allgemeine Regel.
+const NORM_CUES = [
+  ['gehört zu heute', ['hoy', 'esta mañana', 'esta tarde', 'esta noche', 'este mediodía', 'hace un rato', 'hace un momento', 'hace una hora', 'hace media hora', 'hace unos minutos']],
+  ['läuft noch', ['esta semana', 'este mes', 'este año', 'este verano', 'este invierno', 'este trimestre', 'últimamente']],
+  ['reicht bis jetzt', ['ya', 'todavía no', 'aún no', 'nunca', 'jamás', 'alguna vez', 'en toda mi vida', 'en mi vida', 'desde que', 'cuántas veces']]
+];
+function normCue(sentence, forms){
+  const s = String(sentence || ''), low = s.toLowerCase(), L = 'a-zà-öø-ÿ';
+  const at = forms.map(f => gapPos(s, f)).filter(i => i >= 0).sort((a, b) => a - b)[0];
+  if (at == null) return null;
+  let best = null;
+  NORM_CUES.forEach(([why, cues]) => cues.forEach(cue => {
+    const re = new RegExp(`(?<![${L}])${cue}(?![${L}])`, 'g');
+    for (let m; (m = re.exec(low));) {
+      const d = m.index < at ? at - (m.index + cue.length) : m.index - at + 10;
+      if (!best || d < best.d) best = { d, cue:s.slice(m.index, m.index + cue.length), why };
+    }
+  }));
+  return best;
+}
 const NORM_WHY = {
-  es:['Lateinamerika', 'In Spanien steht hier Perfecto, weil der Zeitraum bis jetzt reicht (heute, diese Woche, schon, noch nie).'],
-  la:['Spanien', 'In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido, auch bei hoy und ya.']
+  es:['Lateinamerika', cue => `In Spanien steht hier Perfecto${cue ? `: „${cue.cue}“ ${cue.why}.` : ', weil der Zeitraum bis jetzt reicht (heute, diese Woche, schon, noch nie).'}`],
+  la:['Spanien', cue => `In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido, auch ${cue ? `mit „${cue.cue}“` : 'bei hoy und ya'}.`]
 };
 function normWhy(ex, c){
   const w = NORM_WHY[c.why.norm];
   if (!w) return '';
-  return (ex.type === 'cloze' && String(c.input || '').trim() ? `„${String(c.input).trim()}“ ist die Form aus ${w[0]}.` : `So sagt man es in ${w[0]}.`) + ' ' + w[1];
+  const item = itemById(ex.id), cz = ex.type === 'cloze' ? clozeOf(ex) : null;
+  const cue = cz ? normCue(cz.target, [cz.gap]) : normCue(c.best || item.target, item.gapAlts);
+  return (ex.type === 'cloze' && String(c.input || '').trim() ? `„${String(c.input).trim()}“ ist die Form aus ${w[0]}.` : `So sagt man es in ${w[0]}.`) + ' ' + w[1](cue);
 }
 const NORM_LABEL = { es:'wie in Spanien', la:'wie in Lateinamerika' };
 function check(){
@@ -383,7 +410,7 @@ function check(){
       }
       // Lücke: dieselbe Prüfung im ganzen Satz, mit deiner Antwort an der Stelle der Lücke
       if (res === 'bad' && r.lang === 'es' && ex.type === 'cloze') {
-        const cz = clozeOf(ex), at = gapPos(cz.target, cz.gap);
+        const cz = clozeOf(ex), at = cz.pos;
         if (at >= 0) c.refl = esCondWhy(cz.target.slice(0, at) + c.input.trim() + cz.target.slice(at + cz.gap.length), cz.target);
       }
     }
@@ -553,7 +580,8 @@ function next(){
         const item = itemById(ex.id);
         // Zweiter Versuch: meist die Lücke. Stimmte sie beim Übersetzen schon („Der knifflige Teil stimmt“), lag der Fehler woanders;
         // die Lücke prüfte dann nichts, und der verbesserte Rest stünde schon da. Dann noch einmal der ganze Satz.
-        if (!good) r.queue.push(Object.assign({ type:item.kind === 'order' ? 'tiles' : ex.type === 'free' && c.keyOk && !c.gaveUp ? 'free' : 'cloze', id:ex.id, requeue:true }, ex.norm ? { norm:ex.norm } : {}));
+        // Form der anderen Norm: auch gleich noch einmal, als Lücke mit derselben Norm. Erst der zweite Abruf nach der Korrektur setzt sie fest.
+        if (!good || (c.why && c.why.kind === 'norm')) r.queue.push(Object.assign({ type:item.kind === 'order' ? 'tiles' : ex.type === 'free' && c.keyOk && !c.gaveUp ? 'free' : 'cloze', id:ex.id, requeue:true }, ex.norm ? { norm:ex.norm } : {}));
       }
     }
     if (ex.type === 'gen' && good && ex.data.looked) lookedDone(ex.data.looked);

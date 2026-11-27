@@ -2,6 +2,18 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.81.0
+**Perfecto/Indefinido nach der lerntheoretischen Prüfung überarbeitet: jede Normangabe zählt, das Signalwort steht in der Erklärung, zweiter Versuch nach der falschen Norm, 24 Sätze mit zwei Zeitrahmen.**
+- **Normangabe nur, wo sie etwas ändert.** In 20 Erfahrungssätzen (nunca, alguna vez, todavía no) gilt in Lateinamerika beides; dort änderte „wie in Lateinamerika“ nichts. Das waren 32 % aller Normangaben, und ein Hinweis, der oft folgenlos bleibt, wird überlesen. Diese Sätze fragen jetzt immer „wie in Spanien“ ab, „wie in Lateinamerika“ kommt nur noch bei Sätzen mit klarem Gegensatz. Gespeicherte Aufgaben aus 24.80.0 werden beim Laden umgestellt.
+- **Signalwort statt allgemeiner Regel:** „„perdí“ ist die Form aus Lateinamerika. In Spanien steht hier Perfecto: „Esta mañana“ gehört zu heute.“ Ebenso „„Este verano“ läuft noch“, „„nunca“ reicht bis jetzt“ und für Lateinamerika „auch mit „esta tarde““. Genommen wird das Signalwort, das der Lücke am nächsten steht, davor bevorzugt.
+- **Zweiter Versuch:** Eine Antwort der anderen Norm kommt wie eine falsche gleich noch einmal, als Lücke mit derselben Norm („gleich noch einmal, dann morgen wieder“). Erst der Abruf nach der Korrektur setzt sie fest. Sie bleibt „fast richtig“, für die Wiederholung „knapp“.
+- **24 neue Sätze mit zwei Zeitrahmen** (12 B1, 12 B2): eine Hälfte abgeschlossen (ayer, el lunes, en 2015), die andere bis jetzt (hoy, esta mañana, hace un rato, nunca). Ayer llovió todo el día, pero hoy por fin ha salido el sol; Esta mañana Lucía ha dado la presentación que preparó la semana pasada. 19 mit klarem Gegensatz, 5 mit Erfahrung. Der Gegensatz steckt in einer Aufgabe: Wer nur eine Zeit kennt, kommt nicht durch. Bei „wie in Lateinamerika“ kommt die Lücke im Satz dieser Norm, an derselben Stelle. Die Wörter heißen in Spanien und Lateinamerika gleich; darum nur 13 % neue Inhaltswörter (`tools/vielfalt.js` will 40 %, hier mit Absicht).
+- Wörterbuch: 25 neue Einträge (sonado, acostamos, sucursales, maratón, comprometido, empatamos …); pasó, pasado und encuentra mit der Bedeutung aus den neuen Sätzen (verbringen, se encuentra mejor), salido mit „ha salido el sol“.
+- Stand des Themas: 93 Sätze, 30 mit klarem Gegensatz, 25 mit Erfahrung, 31 mit abgeschlossener Zeit, 7 ohne Norm.
+- Lerntheoretische Bewertung und nächster Schritt (Fehler der anderen Norm getrennt zählen, B) in IDEEN.md.
+- Doku: CONTENT.md (Regeln für Sätze mit zwei Zeitrahmen), ARCHITECTURE.md, IDEEN.md.
+- Tests: Erfahrungssätze nur „wie in Spanien“, auch aus gespeicherten Aufgaben; Signalwort für Spanien und Lateinamerika, das nähere gewinnt; zweiter Versuch mit derselben Norm, keiner bei richtiger Antwort; Lückensatz der Norm bei zwei Zeitrahmen; keine Fassung mit Formen beider Normen.
+
 ## 24.80.0
 **Perfecto/Indefinido: beide Normen lernen. Jede Aufgabe sagt, ob „wie in Spanien“ oder „wie in Lateinamerika“ gefragt ist.**
 - Vorher galt überall beides, und wer immer Indefinido schrieb, hatte 67 von 69 Sätzen richtig; geübt wurde nur „kein Perfecto bei ayer“. Du wolltest dich nicht auf eine Norm festlegen. Jetzt fragt jede Übersetzungs- und Lückenaufgabe aus 31 Sätzen eine der beiden ab, ausgelost, neben der Anweisung sichtbar.

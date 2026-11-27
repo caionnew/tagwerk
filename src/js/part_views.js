@@ -304,7 +304,7 @@ function viewRun(){
       ${done ? '' : `<div class="tiles-pool">${pool}</div>`}</div>`;
   } else if (ex.type === 'cloze') {
     const item = itemById(ex.id), cz = clozeOf(ex);
-    const pos = gapPos(cz.target, cz.gap);
+    const pos = cz.pos;
     const cls = done ? (c.result === 'ok' ? ' ok' : c.result === 'near' ? ' near' : ' bad') : '';
     const field = done ? gapDone(c, cz.gap, lang) : `<input type="text" id="answer" class="gapin${cls}" lang="${lang}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" value="${esc(c.input)}" aria-label="Lücke">`;
     const h = item.hint.replace(/[()]/g, '').trim();
@@ -410,7 +410,8 @@ function feedbackHtml(r, ex, c){
   const lang = r.lang;
   const near = lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
   const pill = c.result === 'ok' ? '<span class="verdict v-ok">Richtig</span>' : c.result === 'near' ? '<span class="verdict v-mid">Fast richtig</span>' : c.gaveUp ? '<span class="verdict v-bad">Lösung</span>' : '<span class="verdict v-bad">Falsch</span>';
-  const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : ivlText(c.nextIvl)}</span>` : '';
+  const normNear = c.why && c.why.kind === 'norm' && !ex.requeue;
+  const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : normNear ? `gleich noch einmal, dann ${ivlText(c.nextIvl)}` : ivlText(c.nextIvl)}</span>` : '';
   const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${c.combo} in Folge</span>` : '';
   // Bei Lücken steht rechts der Knopf zum Vorlesen; Urteil und „wann wieder“ brechen links davon um
   const vrow = extra => `<div class="vrow"><div class="vrow-l">${pill}${combo}${next}</div>${extra}</div>`;
@@ -460,7 +461,7 @@ function feedbackHtml(r, ex, c){
   // darunter als „Auch richtig“. Beim Übersetzen steht die Hauptlösung ohnehin als Lösungssatz da.
   const cz = ex.type === 'cloze' && item ? clozeOf(ex) : null;
   const altGap = cz && c.result === 'ok' && cz.gap && String(c.input || '').trim() && norm(c.input, lang) !== norm(cz.gap, lang);
-  const pos = altGap ? gapPos(cz.target, cz.gap) : -1;
+  const pos = altGap ? cz.pos : -1;
   const spoken = pos >= 0 ? cz.target.slice(0, pos) + c.input.trim() + cz.target.slice(pos + cz.gap.length) : sol;
   const sBtn = item && item.tat && item.tat.audio && sol === item.target ? speakItemBtn(item) : speakBtn(spoken, lang);
   // Lücke: Der Satz steht oben schon ganz da, mit der Lösung an ihrem Platz. Hier nicht noch einmal, nur der Knopf zum Vorlesen.

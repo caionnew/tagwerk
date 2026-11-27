@@ -3609,7 +3609,7 @@ paella||Paella
 para||für; um zu; para que = damit
 parece|parecer|scheint; qué te parece = was hältst du davon
 parque||Park
-pasado||vergangen; el año pasado = letztes Jahr
+pasado||vergangen; el año pasado = letztes Jahr; hemos pasado = wir haben verbracht (pasar)
 paseamos|pasear|wir spazierten
 película||Film
 pensión||Rente
@@ -5100,7 +5100,7 @@ comunicaban|comunicarse|sich verständigen (Imperfecto)
 comunicarse||sich verständigen, kommunizieren
 silbando|silbar|pfeifen (Gerundio)
 silbar||pfeifen
-pasó|pasar|vorbeigehen; geschehen; übergehen (Indefinido)
+pasó|pasar|vorbeigehen; geschehen; übergehen; verbringen (Zeit) (Indefinido)
 reproducir||wiedergeben, nachbilden
 silbador||Pfeifer
 oye|oír|hören (Präsens); oírse = zu hören sein
@@ -5649,7 +5649,7 @@ vista||Blick, Sicht; hacer la vista gorda = ein Auge zudrücken
 tía||Tante
 hija||Tochter
 cocina||Küche (auch: kocht)
-encuentra|encontrar|findet (er, sie, Sie)
+encuentra|encontrar|findet (er, sie, Sie); se encuentra mejor = es geht ihm besser
 repite|repetir|wiederholt, erzählt immer wieder
 sorprenden|sorprender|überraschen
 preocupan|preocupar|beunruhigen
@@ -5805,6 +5805,31 @@ vuestro||euer; el vuestro = eurer
 vídeo||Video
 zorro||Fuchs
 águila||Adler
+acostamos|acostarse|gingen ins Bett (Indefinido; auch Präsens)
+acostarse||ins Bett gehen
+anunciado|anunciar|angekündigt
+aumento||Erhöhung, Anstieg; aumento de sueldo = Gehaltserhöhung
+bogotá||Bogotá
+comprometerse||sich verloben; sich verpflichten
+comprometido|comprometerse|verlobt; verpflichtet
+confirmado|confirmar|bestätigt
+esquiar||Ski fahren
+lima||Lima
+maratón||Marathon (el maratón oder la maratón)
+nevado|nevar|geschneit
+presentación||Präsentation, Vortrag
+regalar||schenken
+regalaste|regalar|schenktest (Indefinido)
+sonado|sonar|geklingelt
+sonar||klingeln, läuten
+sucursal||Filiale, Zweigstelle
+sucursales|sucursal|Filialen (Plural)
+sueldo||Gehalt, Lohn
+volado|volar|geflogen
+volar||fliegen
+salido|salir|hinausgegangen (Partizip); ha salido el sol = die Sonne ist herausgekommen
+empatamos|empatar|spielten unentschieden (Indefinido; auch Präsens)
+empatar||unentschieden spielen
 `
 };
 

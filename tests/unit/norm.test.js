@@ -24,11 +24,16 @@ function show(ex, { input = '', check = false, next = false } = {}){
       queue:S.run.queue.map(q => ({ type:q.type, norm:q.norm || null, requeue:!!q.requeue })) }; })()`);
 }
 
-test('31 Sätze haben Normformen, 11 davon mit spanischer Form als Zielsatz; jede Form steht in der Lücke', () => {
+test('55 Sätze haben Normformen (24 mit zwei Zeitrahmen), 30 davon mit spanischer Form als Zielsatz; jede Form steht in der Lücke', () => {
   const items = BANK.es.filter(i => i.norms);
-  assert.equal(items.length, 31);
+  assert.equal(items.length, 55);
   assert.ok(items.every(i => i.trap === 'perfecto'));
-  assert.equal(items.filter(i => normOf(i, i.target) === 'es').length, 11);
+  assert.equal(items.filter(i => normOf(i, i.target) === 'es').length, 30);
+  // Jede Fassung hat höchstens eine Norm: Eine markierte Form steht nicht noch einmal in der anderen Satzhälfte (sonst „beide“)
+  for (const it of items) for (const v of [it.target].concat(it.alts)) {
+    const t = ' ' + norm(v, 'es') + ' ', hits = Object.keys(it.norms).filter(k => t.includes(' ' + k + ' '));
+    assert.ok(hits.length <= 1 || new Set(hits.map(k => it.norms[k])).size === 1, v);
+  }
   // Satz mit Erfahrung: Perfecto gilt in beiden Normen
   assert.equal(normOf(item('Nunca he estado en México.'), 'Nunca he estado en México.'), '');
   for (const it of items) for (const k of Object.keys(it.norms)) assert.ok(it.gapAlts.some(g => norm(g, 'es') === k), `${k}: ${it.target}`);
@@ -37,7 +42,8 @@ test('31 Sätze haben Normformen, 11 davon mit spanischer Form als Zielsatz; jed
 });
 test('Jede Fassung jedes markierten Satzes: in ihrer Norm richtig, in der anderen fast richtig, sonst in beiden richtig', () => {
   const problems = [];
-  for (const it of BANK.es.filter(i => i.norms)) for (const n of ['es', 'la']) for (const type of ['free', 'cloze']) {
+  // Sätze ohne spanische Form (Erfahrung) fragen nur „wie in Spanien“
+  for (const it of BANK.es.filter(i => i.norms)) for (const n of Object.values(it.norms).includes('es') ? ['es', 'la'] : ['es']) for (const type of ['free', 'cloze']) {
     const ex = { type, id:it.id, norm:n }, ok = answersFor(ex), other = otherAnswers(ex);
     if (type === 'cloze') { const cz = clozeOf(ex); if (gapPos(cz.target, cz.gap) < 0) problems.push(`Lücke nicht im Satz: ${cz.target}`); }
     for (const v of type === 'free' ? [it.target].concat(it.alts) : it.gapAlts) {
@@ -77,11 +83,37 @@ test('„wie in Lateinamerika“: Lücke im Satz dieser Norm, he discutido ist f
   assert.equal(show({ type:'cloze', id:it.id, norm:'es' }).cloze, 'Hoy ___ con mi socio y he cancelado dos reuniones.');
   assert.equal(show({ type:'cloze', id:it.id, norm:'es' }, { input:'discutí', check:true }).result, 'near');
 });
-test('Erfahrung: in Lateinamerika gilt beides, in Spanien ist estuve fast richtig', () => {
+test('Erfahrung: immer „wie in Spanien“ (in Lateinamerika ginge beides, die Abfrage prüfte nichts), estuve fast richtig', () => {
   const it = item('Nunca he estado en México.');
-  for (const a of ['Nunca he estado en México', 'Nunca estuve en México']) assert.equal(show({ type:'free', id:it.id, norm:'la' }, { input:a, check:true }).result, 'ok', a);
-  assert.equal(show({ type:'free', id:it.id, norm:'es' }, { input:'Nunca estuve en México', check:true }).result, 'near');
-  assert.equal(show({ type:'cloze', id:it.id, norm:'es' }, { input:'he estado', check:true }).result, 'ok');
+  assert.deepEqual([...new Set(Array.from({ length:20 }, () => show({ type:'free', id:it.id }).norm))], ['es']);
+  // Auch eine gespeicherte Aufgabe mit „wie in Lateinamerika“ (aus 24.80.0) fragt jetzt Spanien ab
+  const r = show({ type:'free', id:it.id, norm:'la' }, { input:'Nunca estuve en México', check:true });
+  assert.equal(r.norm, 'es');
+  assert.equal(r.result, 'near');
+  assert.match(r.fb, /In Spanien steht hier Perfecto\s*: „Nunca“ reicht bis jetzt\./);
+  assert.equal(show({ type:'cloze', id:it.id }, { input:'he estado', check:true }).result, 'ok');
+});
+test('Rückmeldung nennt das Signalwort am Satz, das der Lücke am nächsten steht', () => {
+  const morning = show({ type:'cloze', id:item('Esta mañana he perdido el autobús.').id, norm:'es' }, { input:'perdí', check:true });
+  assert.match(morning.fb, /„perdí“ ist die Form aus Lateinamerika\. In Spanien steht hier Perfecto\s*: „Esta mañana“ gehört zu heute\./);
+  const year = show({ type:'cloze', id:item('Este verano apenas ha llovido.').id }, { input:'llovió', check:true });
+  assert.match(year.fb, /„Este verano“ läuft noch\./);
+  // „ya“ steht näher an der Lücke als „hoy“
+  const ya = show({ type:'free', id:item('Ayer no me llamó nadie, pero hoy el teléfono ya ha sonado cinco veces.').id, norm:'es' }, { input:'Ayer no me llamó nadie, pero hoy el teléfono ya sonó cinco veces', check:true });
+  assert.match(ya.fb, /In Spanien steht hier Perfecto\s*: „ya“ reicht bis jetzt\./);
+  const la = show({ type:'cloze', id:item('Hace un mes se conocieron y hoy se han comprometido.').id, norm:'la' }, { input:'se han comprometido', check:true });
+  assert.match(la.fb, /In Lateinamerika steht für ein abgeschlossenes Ereignis meist Indefinido\s*, auch mit „hoy“\./);
+});
+test('Form der anderen Norm: gleich noch einmal als Lücke mit derselben Norm', () => {
+  const it = item('El lunes empezó el curso y hoy ya hemos hecho el primer examen.');
+  const r = show({ type:'free', id:it.id, norm:'la' }, { input:'El lunes empezó el curso y hoy ya hemos hecho el primer examen', check:true, next:true });
+  assert.equal(r.result, 'near');
+  assert.match(r.fb, /gleich noch einmal, dann morgen wieder/);
+  assert.deepEqual(r.queue[1], { type:'cloze', norm:'la', requeue:true });
+  // Die Lücke kommt im Satz dieser Norm, die erste Satzhälfte bleibt
+  assert.equal(show({ type:'cloze', id:it.id, norm:'la' }).cloze, 'El lunes empezó el curso y hoy ya ___ el primer examen.');
+  // Richtig in der gefragten Norm: keine Wiederholung
+  assert.equal(show({ type:'free', id:it.id, norm:'la' }, { input:'El lunes empezó el curso y hoy ya hicimos el primer examen', check:true, next:true }).queue.length, 1);
 });
 test('Norm: ausgelost, sobald die Aufgabe dran ist, nur bei Übersetzen und Lücke; die Wiederholung behält sie', () => {
   const it = item('Esta mañana he perdido el autobús.');

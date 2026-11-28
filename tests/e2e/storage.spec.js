@@ -20,7 +20,7 @@ test('Einstellungen zeigen die Belegung, fremde Daten und ob der Browser die Dat
   await expect(row.locator('.rd')).toContainText('Der Browser darf die Daten bei Platzmangel löschen.');
   await row.locator('[data-a=persist]').click();
   await expect(page.locator('.notice')).toHaveText('Der Browser behält deine Daten jetzt dauerhaft.');
-  await expect(row.locator('.rd')).toContainText('Der Browser behält die Daten dauerhaft.');
+  await expect(row.locator('.rd')).not.toContainText('Platzmangel');
   await expect(row.locator('[data-a=persist]')).toHaveCount(0);
 });
 test('Ab 3 MB warnt „Heute“ und führt zu den Einstellungen', async ({ page }) => {

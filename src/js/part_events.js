@@ -8,7 +8,6 @@ function nextPrompt(){
 }
 // Tag antippen (Lernminuten, Kalender): Das erste Mal merken, danach fällt der Hinweis „Tipp auf einen Tag“ weg.
 // Die Karte ganz ins Bild holen, falls sie unter der Leiste verschwindet; die Säulen bleiben dabei möglichst sichtbar.
-function dayTapped(){ DB.used = DB.used || {}; if (!DB.used.dayTap) { DB.used.dayTap = true; save(); } }
 const dayHost = where => (where === 'cal' ? (document.querySelector('.calwrap') || {}).parentElement : document.querySelector('.chart.mins'));
 function cardIntoView(open, where){
   if (!open) return;
@@ -111,7 +110,7 @@ document.addEventListener('click', e => {
     case 'again': if (r) { S.lang = r.lang; startRun(r.kind, { trap:r.trap, gen:r.gen, text:r.text, body:r.wiki && r.wiki.body, title:r.wiki && r.wiki.title }); } break;
     case 'check': check(); break;
     case 'giveup': giveUp(); setTimeout(() => { DB.used = DB.used || {}; DB.used.gaveup = true; save(); }, 0); break;
-    case 'accept': DB.used = DB.used || {}; DB.used.accept = true; selfAccept(); break;
+    case 'accept': selfAccept(); break;
     case 'next': next(); break;
     case 'endrun': if (r) { r.ended = true; if (r.cur && r.cur.state === 'done') { r.endless = false; r.queue = r.queue.slice(0, r.idx + 1); next(); } else finishRun(); } break;
     case 'quit': {
@@ -239,7 +238,7 @@ document.addEventListener('click', e => {
       });
       if (DB.tat[t.lang].length > 400) DB.tat[t.lang] = DB.tat[t.lang].slice(-400);
       save(); buildBank();
-      note(n === 1 ? '1 Satz übernommen. Er kommt in einem der nächsten Tagwerke als neuer Satz dran.' : `${n} Sätze übernommen. Sie kommen in den nächsten Tagwerken als neue Sätze dran.`, 'ok');
+      note(n === 1 ? '1 Satz übernommen.' : `${n} Sätze übernommen.`, 'ok');
       t.status = 'idle'; t.results = []; t.picked = {}; render(); window.scrollTo(0, 0); break;
     }
     case 'own': S.notice = null; if (!S.own || S.own.lang !== S.lang) S.own = { lang:S.lang, de:'', t:'' }; goView('own'); break;
@@ -248,7 +247,7 @@ document.addEventListener('click', e => {
       if (!de || !t) { S.own.de = de; S.own.t = t; note('Bitte beide Felder ausfüllen.', 'warn'); render(); break; }
       const id = S.own.lang + ':own:' + hash(t);
       if (!DB.own[S.own.lang].some(o => o.id === id)) DB.own[S.own.lang].push({ id, de, target:t, created:today() });
-      save(); buildBank(); note('Gespeichert. Der Satz kommt im nächsten Tagwerk als neuer Satz dran.', 'ok'); S.own = { lang:S.own.lang, de:'', t:'' }; render(); break;
+      save(); buildBank(); note('Gespeichert.', 'ok'); S.own = { lang:S.own.lang, de:'', t:'' }; render(); break;
     }
     case 'coldel': {
       const id = b.dataset.id;
@@ -279,7 +278,7 @@ document.addEventListener('click', e => {
       if (bo.res.ok && !bo.logged) { bo.logged = true; logAct(r.lang); save(); }
       // Eigener Satz: gleich mit LanguageTool prüfen (Grammatik, Rechtschreibung), nicht erst auf Nachfrage
       if (bo.res.own) {
-        if (navigator.onLine === false) bo.lt = 'Ohne Internet nur diese Grundprüfung. Grammatik und Rechtschreibung prüft LanguageTool, sobald du online bist.';
+        if (navigator.onLine === false) bo.lt = 'Ohne Internet nur die Grundprüfung.';
         else {
           // Nur die neueste Prüfung zählt. Wurde inzwischen weitergetippt, fällt die Antwort weg (kein „Wird geprüft“, das hängen bleibt)
           const text = bo.text, req = bo.req = (bo.req || 0) + 1; bo.lt = 'loading';
@@ -354,7 +353,6 @@ document.addEventListener('click', e => {
       const lang = (S.view === 'run' && S.run && S.run.lang) || (S.view === 'write' && S.write && S.write.lang) || (S.view === 'text' && S.text && S.text.lang) || (S.view === 'shadow' && S.shadow && S.shadow.lang) || S.lang;
       const sent = S.view === 'text' && b.closest('.rs-s[data-i]');
       if (S.view === 'text' && S.text && S.text.looked && !S.text.looked.includes(w)) { S.text.looked.push(w); setTimeout(render, 0); }
-      DB.used = DB.used || {}; DB.used.lookup = true;
       // Für Lesetext-Lücken merken (nur eingebaute Texte, Wikipedia-Fundstücke haben keine feste Kennung)
       if (S.view === 'text' && S.text && S.text.id) rememberLooked(lang, S.text.id, w);
       save();
@@ -380,8 +378,8 @@ document.addEventListener('click', e => {
       break;
     }
     case 'autoplay': DB.settings.autoplay = !DB.settings.autoplay; save(); render(); break;
-    case 'calday': { const was = S.calDay; S.calDay = was === b.dataset.d ? null : b.dataset.d; dayTapped(); render(); dayAnim(S.calDay, 'cal', !!was); cardIntoView(S.calDay, 'cal'); break; }
-    case 'mpick': { const was = S.minDay; S.minDay = was === b.dataset.k ? null : b.dataset.k; dayTapped(); render(); dayAnim(S.minDay, 'mins', !!was); cardIntoView(S.minDay, 'mins'); break; }
+    case 'calday': { const was = S.calDay; S.calDay = was === b.dataset.d ? null : b.dataset.d; render(); dayAnim(S.calDay, 'cal', !!was); cardIntoView(S.calDay, 'cal'); break; }
+    case 'mpick': { const was = S.minDay; S.minDay = was === b.dataset.k ? null : b.dataset.k; render(); dayAnim(S.minDay, 'mins', !!was); cardIntoView(S.minDay, 'mins'); break; }
     case 'toSettings': case 'settings': S.notice = null; S.settingsFrom = ['home', 'extra', 'progress'].includes(S.view) ? S.view : 'home'; goView('settings'); break;
     case 'colall': S.colAll = !S.colAll; render(); break;
     case 'findopen': S.findOpen = b.dataset.id; render(); break;

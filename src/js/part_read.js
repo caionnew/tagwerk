@@ -106,7 +106,6 @@ function viewTexts(){
     return `<button type="button" class="tcard" data-a="textopen" data-id="${t.id}"><span class="tchips"><span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>${state}</span><span class="ttitle" lang="${lang}">${esc(t.title)}</span><span class="tteaser" lang="${lang}">${esc(textSentences(t.body)[0][0])}</span></button>`; }).join('');
   return backBar('Lesen und Hören') + `
     <div class="seg2 tmode" role="radiogroup" aria-label="Wie möchtest du die Texte?">${[['read', 'Lesen und hören'], ['listen', 'Nur hören']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${textMode() === k}" data-a="tdefmode" data-v="${k}">${l}</button>`).join('')}</div>
-    <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verdeckt, bis die drei Fragen beantwortet sind.' : 'Lesen, auf Wunsch mit Vorlesen, danach drei Fragen.'}</p>
     ${seriesCards(lang)}<div class="tgrid2">${cards}</div>
     <h2 class="grp">Frischer Lesestoff</h2>
     <div class="rows">${row('wiki', 'Wikipedia-Fundstück', navigator.onLine === false ? 'Braucht eine Internetverbindung' : 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land', '')}</div>`;
@@ -138,7 +137,7 @@ function viewText(){
       ${t && t.series ? seriesHero(t, T) : `<div class="tchips">${W ? `<span class="tag">Wikipedia</span>${W.label ? `<span class="tag">${esc(W.label)}</span>` : ''}` : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>`}
       <h1 class="rtitle" lang="${lang}">${hangLead(esc(W ? W.title : t.title))}</h1>${t && t.series ? seriesDate(t) : ''}
       <div class="rprog" aria-hidden="true"><i style="width:${Math.round(100 * Math.min(heard, list.length) / Math.max(1, list.length))}%"></i></div>
-      ${veil ? `<p class="rhint">${fold ? 'Der Text bleibt bis nach den Fragen verdeckt.' : 'Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn. Nach dem letzten Satz kommen die Fragen.'}</p>` : ''}
+      ${veil && !fold ? '<p class="rhint">Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn.</p>' : ''}
     </header>`;
   const answered = !W && T.quiz && !finished && T.picks[Math.min(T.qi, t.q.length - 1)] != null;
   const nextBtn = answered ? `<button type="button" class="primary pnext" data-a="tqnext">${T.qi + 1 < t.q.length ? 'Nächste Frage' : 'Ergebnis'}</button>` : '';
@@ -157,7 +156,7 @@ function viewText(){
   }
   // Fragen erst nach dem Text: beim Lesen auf Knopfdruck, beim Hören von selbst nach dem letzten Satz
   const gate = !T.quiz ? `<div class="tgate">${T.hidden
-      ? `<p class="hint m0 mb-12">Die Fragen kommen, sobald der Text zu Ende ist.</p><button type="button" class="ghost" data-a="tquiz">Fragen jetzt</button>`
+      ? `<button type="button" class="ghost" data-a="tquiz">Fragen jetzt</button>`
       : `<button type="button" class="primary" data-a="tquiz">Gelesen, zu den Fragen</button>`}</div>` : '';
   const score = Object.values(T.picks).filter(i => i === 0).length;
   const qi = Math.min(T.qi, t.q.length - 1), src = t.q[qi][2], picked = T.picks[qi], { q, opts, tl:qtl } = seriesQ(t, t.q[qi]);
@@ -173,8 +172,7 @@ function viewText(){
   const own = new Set((DB.own[lang] || []).map(o => o.id));
   const after = finished ? `<section class="tdone${enter}">
       <p class="tdone-h">${score === t.q.length ? 'Alles verstanden.' : `${score} von ${t.q.length} richtig.`}</p>
-      <p class="hint mt-4">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
-      <p class="keep-h">„Ins Tagwerk“ nimmt den Satz in deine nächsten Tagwerke auf.</p>
+      <p class="keep-h">Zum Merken</p>
       <div class="rows mt-8">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span>${has ? '<span class="kadd on">✓ Im Tagwerk</span>' : `<button type="button" class="kadd" data-a="tkeep" data-k="${i}" aria-label="Satz ins Tagwerk übernehmen">Ins Tagwerk</button>`}</div>`; }).join('')}</div>
       ${t.series ? '' : `<div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>`}
     </section>${t.series ? seriesEnd(t, lang) : ''}` : '';

@@ -115,7 +115,7 @@ test('Thema aufklappen: falsche zuerst mit deiner Antwort und Lösung, richtige 
   // Richtig: kurz mit Haken-Klasse
   assert.match(det, /<li class="rk ok"><span class="rk-q">/);
   assert.match(det, /data-a="topic" data-t="tempus">Regel und Beispiele<\/button><button type="button" class="link" data-a="trapgo" data-t="tempus">Thema üben/);
-  assert.match(h, /Falsche Sätze kommen morgen wieder\./);
+  assert.doesNotMatch(h, /kommen morgen wieder/);
   // Rundenende: keine eigene Fehlerliste mehr, alles steht bei den Themen
   app.run(`S.view = 'runDone'; S.run.stamped = true;`);
   const done = run('viewRunDone()');

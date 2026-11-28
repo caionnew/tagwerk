@@ -53,7 +53,7 @@ test('Ein Name je Sache: „Höchste Fehlerquoten“ auf Heute, „Themen“ und
   // Reiter „Thema“) und die Karte „Wie du Fehler machst“
   assert.equal((all.match(/<h2 class="grp">Höchste Fehlerquoten<\/h2>/g) || []).length, 1);
   assert.equal((all.match(/<h2 class="grp">Themen<\/h2>/g) || []).length, 1);
-  assert.equal((all.match(/<h2 class="grp">Wie du Fehler machst<\/h2>/g) || []).length, 1);
+  assert.ok((all.match(/<h2 class="grp">Wie du Fehler machst<\/h2>/g) || []).length <= 1, 'ohne genug Daten fehlt die Karte, sonst einmal');
   assert.doesNotMatch(all, /<h2 class="grp">Fehler<\/h2>|class="tgrid"/);
   assert.doesNotMatch(all, /Fehlerquelle/);
 });

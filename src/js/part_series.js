@@ -59,10 +59,13 @@ function viewSeries(){
   const st = seriesState(lang, s), N = s.parts.length, reach = seriesReach(st);
   const rail = s.parts.map((p, i) => {
     const open = partOpen(st, i), cls = st.read[i] ? 'done' : i === st.next ? 'now' : 'next';
-    const inner = `${open ? `<span class="mr-t" lang="${lang}">${esc(p.title)}</span>` : `<span class="mr-t">Teil ${i + 1}</span>`}${open ? `<span class="mr-d">${esc(p.when || '')}</span>` : ''}`;
+    // Gesperrt: statt Titel „Teil n“, statt Zeitangabe ein geschwärzter Balken, damit man sieht, dass dort etwas kommt
+    const inner = open ? `<span class="mr-t" lang="${lang}">${esc(p.title)}</span><span class="mr-d">${esc(p.when || '')}</span>`
+      : `<span class="mr-t">Teil ${i + 1}</span><span class="mr-d mr-hid" aria-hidden="true"></span>`;
     return `<li class="mr ${cls}"><i></i>${open ? `<button type="button" class="mr-b" data-a="spart" data-s="${s.id}" data-i="${i}" aria-label="Teil ${i + 1}: ${esc(p.title)}${st.read[i] ? ', gelesen, noch einmal lesen' : ''}">${inner}</button>` : `<span class="mr-b">${inner}</span>`}</li>`;
   }).join('');
-  const cast = (s.cast || []).filter(c => (c[2] || 1) <= reach);
+  // Personen erst nach dem Teil, in dem sie vorkommen; Wörter schon vor Teil 1, zum Vorbereiten
+  const cast = (s.cast || []).filter(c => (c[2] || 1) <= st.n);
   const words = (s.words || []).filter(w => (w[1] || 1) <= reach);
   const go = st.all ? [0, 'Von vorn lesen'] : [st.next, st.n ? `Weiter mit Teil ${st.next + 1}` : 'Beginnen'];
   return backBar('Lesen und Hören', 'texts') + `<header class="rhero">
@@ -71,7 +74,7 @@ function viewSeries(){
       ${tlOrDe(s.intro, lang, 'shook', P.de)}${niveau() !== 'grund' && !P.de ? '<p class="vocab"><button type="button" class="link dim" data-a="sde">Auf Deutsch</button></p>' : ''}
     </header>
     ${s.real ? `<div class="sreal"><b>Was ist echt?</b> ${esc(s.real)}</div>` : ''}
-    <h2 class="grp">Teile</h2><section class="mile srail"><ol class="mrail rl-${lang}">${rail}</ol>${st.next + 1 < N ? '<p class="legend">Titel und Personen erscheinen, wenn du so weit bist.</p>' : ''}</section>
+    <h2 class="grp">Teile</h2><section class="mile srail"><ol class="mrail rl-${lang}">${rail}</ol></section>
     ${cast.length ? `<h2 class="grp">${st.all ? 'Personen' : 'Personen bisher'}</h2><div class="rows">${cast.map(([n, d]) => `<div class="row static"><span class="txt"><span class="rt">${esc(n)}</span><span class="rd">${esc(d)}</span></span></div>`).join('')}</div>` : ''}
     ${words.length ? `<h2 class="grp">Wörter der Reihe</h2><div class="wtray">${words.map(([w]) => { const e = lookupWord(lang, w); return `<button type="button" class="wchip" data-a="lookup" data-w="${esc(w)}"><b lang="${lang}">${esc(w)}</b>${e ? `<span>${esc(e.de.split(/[;(]/)[0].trim())}</span>` : ''}</button>`; }).join('')}</div>` : ''}
     <div class="actionbar"><div class="in"><button type="button" class="primary" data-a="spart" data-s="${s.id}" data-i="${go[0]}">${go[1]}</button></div></div>`;

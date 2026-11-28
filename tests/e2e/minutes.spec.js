@@ -1,5 +1,5 @@
 // Lernminuten: Tag antippen zeigt die Karte, nochmal schließt sie, Thema aus der Karte öffnet in der richtigen Sprache, Kalender nutzt dieselbe Karte.
-const { test, expect, APP, seed, freshDB, bankIds, stored } = require('./helpers');
+const { test, expect, APP, seed, freshDB, bankIds } = require('./helpers');
 const pad = n => String(n).padStart(2, '0'), now = new Date();
 const ds = k => { const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
 function db(){
@@ -21,7 +21,7 @@ test('Lernminuten: Tag antippen öffnet, nochmal schließt (wie im Kalender), Th
   await page.click('[data-a=tab][data-v=progress]');
   const mins = page.locator('.chart.mins'), card = mins.locator('.dcard');
   await expect(card).toHaveCount(0);
-  await expect(mins).toContainText('Tipp auf einen Tag für Details.');
+  await expect(mins).not.toContainText('Tipp auf einen Tag');
   await expect(page.locator('.mchart .mc[aria-pressed=true]')).toHaveCount(0);
   // Vorgestern antippen: Karte; nochmal: zu
   const bar = page.locator(`.mchart .mc[data-k="${ds(2)}"]`);
@@ -33,9 +33,6 @@ test('Lernminuten: Tag antippen öffnet, nochmal schließt (wie im Kalender), Th
   await bar.click();
   await expect(card).toHaveCount(0);
   await expect(bar).toHaveAttribute('aria-pressed', 'false');
-  // Nach dem ersten Antippen ist der Hinweis überflüssig, auch nach einem Neustart
-  await expect(mins).not.toContainText('Tipp auf einen Tag');
-  await expect.poll(async () => ((await stored(page)).used || {}).dayTap).toBe(true);
   await expect(page.locator('[data-a=mrange]')).toHaveCount(0);
   // Kalender: Tag antippen zeigt dieselbe Karte, nochmal antippen schließt sie
   const calChart = page.locator('.calwrap').locator('xpath=..');

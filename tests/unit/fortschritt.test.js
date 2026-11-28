@@ -33,7 +33,8 @@ test('Themenblatt „Deine Zahlen“: Stand nennt Sätze, geübt und gefestigt (
   assert.match(text(run(`topicNumbersHtml('sv', 'inversion')`)), new RegExp(`Stand ${n} Sätze im Thema, 3 geübt, 1 gefestigt ?\\.`));
   // Ohne Schätzungen führt die Themenliste zu Regel und Beispielen aller Themen; kein Raster mehr
   const list = run(`topicListHtml('sv')`);
-  assert.match(text(list), /^Themen Schätzungen erscheinen, sobald drei Themen genug Aufgaben haben\. Regel und Beispiele: /);
+  assert.match(text(list), /^Themen Regel und Beispiele: /);
+  assert.doesNotMatch(list, /erscheinen, sobald/);
   assert.match(list, /<button type="button" class="link inl" data-a="topic" data-t="bisats">/);
   assert.doesNotMatch(list, /tgrid|gefestigt/);
 });
@@ -94,9 +95,9 @@ test('Themenliste: Schätzung aus dem Fehlermodell, Streifen mit Bereich, Achse,
   assert.equal((html.match(/class="mrow mlast"/g) || []).length, 1);
   // Vorlesen: was die Grafik zeigt, als Satz
   assert.match(html, /aria-label="Adjektivendungen &amp; bestimmte Form: geschätzt \d+\u00a0% falsch, wahrscheinlich \d+\u00a0% bis \d+\u00a0%/);
-  // Ohne acht Wochen Protokoll noch keine Pfeile, nur der Hinweis, ab wann
+  // Ohne acht Wochen Protokoll noch keine Pfeile und kein Hinweis, ab wann
   assert.doesNotMatch(html, /class="aslot"|class="arw/);
-  assert.match(text(html), /Ab \d+\. \S+ zeigen Pfeile, ob ein Thema besser oder schlechter läuft als in den vier Wochen davor\./);
+  assert.doesNotMatch(text(html), /zeigen Pfeile/);
 });
 
 test('Themennamen brechen nicht am Bindestrich um: „si‑Sätze“, „s‑Passiv“ mit geschütztem Bindestrich', () => {
@@ -122,7 +123,7 @@ test('Thema üben: Schätzung je Thema; oben dieselben drei höchsten Fehlerquot
   assert.equal((sents.match(/class="bar"/g) || []).length, sentRows);
   assert.equal((gens.match(/class="bar/g) || []).length, 0, 'erzeugte Themen ohne Balken (kein „Anteil richtig“ mehr)');
   assert.equal((gens.match(/data-a="trapgo"/g) || []).length, genRows);
-  assert.match(text(sents), /Der Balken zeigt, wie viele Sätze im Thema du schon geübt hast/);
+  assert.doesNotMatch(text(html), /Der Balken zeigt|10 Aufgaben zu einem Thema/);
   assert.doesNotMatch(text(html), /richtig|grüne Balken|Höchste Fehlerquoten|klar über/, 'ohne Daten keine Liste oben, keine Generator-Quote');
   const row = (h, t) => text(h.split(`data-t="${t}"`)[1].split('</button>')[0].replace(/^[^>]*>/, ''));
   assert.match(row(gens, 'prep'), /^Verben mit Präposition Noch zu wenige Aufgaben für eine Schätzung$/);
@@ -238,7 +239,7 @@ test('Themenliste und Karte „Wie du Fehler machst“: Legende unter der Grafik
   let html = run(`topicListHtml('sv')`);
   const legendAt = html.indexOf('<span class="mkey">'), axisAt = html.indexOf('class="maxis"');
   assert.ok(axisAt > 0 && legendAt > axisAt, 'Legende unter Streifen und Achse');
-  assert.match(text(html), /Tipp auf ein Thema für deine Zahlen und die Regel\./);
+  assert.doesNotMatch(text(html), /Tipp auf ein Thema/);
   assert.match(html, /<button type="button" data-a="form" data-g="time_sv" class="mrow[^"]*" aria-label="Uhrzeiten: geschätzt/);
   // Themen mit Themenblatt öffnen auf „Deine Zahlen“
   assert.match(html, /<button type="button" data-a="topic" data-t="species" data-z="1" class="mrow/);
@@ -253,9 +254,9 @@ test('Themenliste und Karte „Wie du Fehler machst“: Legende unter der Grafik
   assert.ok(html.includes('aria-checked="true" data-a="errtab" data-t="t"'));
   assert.deepEqual([...html.matchAll(/data-a="errtab" data-t="(\w)"/g)].map(m => m[1]), ['t', 'e', 's']);
   assert.ok(html.indexOf('class="maxis"') < html.indexOf('<span class="mkey">'));
-  // Ohne Daten: ein Satz statt Reiter
+  // Ohne Daten: keine Karte
   run(`DB.tlog = {}`);
-  assert.equal(text(run(`errorWaysHtml('sv')`)), 'Wie du Fehler machst Erscheint, sobald drei Übungsarten genug Aufgaben haben.');
+  assert.equal(run(`errorWaysHtml('sv')`), '');
   run(`S.errTab = null`);
 });
 
@@ -350,5 +351,7 @@ test('Erklärung „Schätzung“: klar über Schnitt (90/60), Pfeile, Unterschi
   const all = run(`JSON.stringify(TERMS)`);
   assert.doesNotMatch(all, /Fehlerquelle/);
   run(`DB = freshDB(); DB.settings.niveau = 'fort'; S.view = 'settings'`);
-  assert.match(text(run('viewSettings()')), /Einfache nur in Themen klar über deinem Schnitt\./);
+  const st = text(run('viewSettings()'));
+  assert.match(st, /Lange und anspruchsvolle Sätze zuerst\./);
+  assert.doesNotMatch(st, /Einfache nur in Themen|FSRS|Gilt ab dem nächsten Tagwerk/);
 });

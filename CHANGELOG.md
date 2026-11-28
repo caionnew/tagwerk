@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.104.0
+**Weniger Text: Hinweise und Erklärungen, die niemand braucht, sind raus.**
+- **Reihen:** Personen erscheinen erst nach dem Teil, in dem sie vorkommen; vor Teil 1 gibt es den Abschnitt nicht. Gesperrte Teile haben statt der Zeitangabe einen grauen Balken, ohne Legende.
+- **Bedienhinweise entfernt:** „Tipp auf einen Tag“, „Tipp auf ein Thema“, „Tipp auf ein Wort der Lösung“, „Meine ist auch richtig“, „Tipp an, was du übernehmen möchtest“, Mikrofon-Tipp, Hinweise beim Nachsprechen und in der Hörrunde.
+- **Ankündigungen entfernt:** Statt „Erscheint, sobald …“ fehlt eine Karte, bis sie etwas zeigt (Verlauf, Themen, Wie du Fehler machst, Schreiben); kein „Ab … zeigen Pfeile“.
+- **Implementierungsdetails entfernt:** FSRS und Zeitmessung unter „Über Tagwerk“, „Höchstens … je Tagwerk“, „Falsche Sätze kommen morgen wieder“, „werden seit … erfasst“, „Zählt nicht für den Wiederholungsplan“, Erklärungen unter Einstellungen, Nachschlagen und „Thema üben“; Meldungen nach dem Übernehmen kurz („Gespeichert.“).
+- Bleiben: Fehler, Warnungen zu Backup und Speicher, Datenschutz (LanguageTool, Aufnahmen), Lizenzangaben, Legenden zu Grafiken. Regel dazu in CLAUDE.md.
+- Tests angepasst. Speicherstand unverändert.
+
 ## 24.103.0
 **Zwei neue Reihen: „Från hvad till hen“ (Schwedisch, B1, vier Teile) und „La guerra en casa“ (Spanisch, B2, fünf Teile). Die Erzählform bleibt intern.**
 - **Från hvad till hen:** hundert Jahre schwedische Sprachgeschichte an einer Familie aus Småland. Familie erfunden, Reformen, Gesetze und Daten belegt.

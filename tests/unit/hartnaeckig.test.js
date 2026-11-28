@@ -38,10 +38,8 @@ for (const lang of ['sv', 'es']) {
   });
 }
 
-test('Ohne Daten und ohne hartnäckige Sätze bleibt der Hinweis, keine Reiter', () => {
+test('Ohne Daten und ohne hartnäckige Sätze keine Karte', () => {
   app.run(`DB.st = {}; DB.tlog = {}; S.errTab = null;`);
   const html = app.run(`errorWaysHtml('es')`);
-  assert.ok(html.includes('Erscheint, sobald drei Übungsarten genug Aufgaben haben.'));
-  assert.ok(html.includes('<h2 class="grp">Wie du Fehler machst</h2>'));
-  assert.ok(!html.includes('errseg'));
+  assert.equal(html, '');
 });

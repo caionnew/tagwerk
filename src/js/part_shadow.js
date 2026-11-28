@@ -539,12 +539,12 @@ function shPatch(){
   const tip = document.getElementById('shtip'); if (tip) tip.innerHTML = shTip(sh);
 }
 function shTip(sh){
-  if (sh.playing === 'along') return `Jetzt mitsprechen, halblaut und gleichzeitig.${sh.rep > 1 ? ` Durchgang ${sh.rep}.` : ''} Es wiederholt sich, bis du stoppst.`;
+  if (sh.playing === 'along') return `Jetzt mitsprechen, halblaut und gleichzeitig.${sh.rep > 1 ? ` Durchgang ${sh.rep}.` : ''}`;
   if (sh.phase === 'done' && sh.doneTip) return sh.doneTip;
   if (sh.playing === 'hear') return 'Hör auf Melodie und Betonung.';
   if (!sh.heard) return 'Erst nur zuhören.';
-  if (!sh.along) return 'Dann gleichzeitig mitsprechen, halblaut. Halt mit der Stimme Schritt.';
-  if (canRecord()) return 'Jetzt allein, im selben Tempo. Die Aufnahme stoppt von selbst, wenn du fertig bist.';
+  if (!sh.along) return 'Dann gleichzeitig mitsprechen, halblaut.';
+  if (canRecord()) return 'Jetzt allein, im selben Tempo.';
   return canListen() ? 'Jetzt allein sprechen und von der Spracherkennung prüfen lassen.' : 'Aufnehmen geht in diesem Browser nicht.';
 }
 function shStepsHtml(sh){
@@ -558,7 +558,7 @@ function shPronHtml(sh){
   if (sh.listening) return '<p class="shmsg"><span class="dots">Sprich den Satz noch einmal. Verstandene Wörter werden grün</span></p>';
   if (!sh.pron) return '';
   if (sh.pron.err) return `<p class="shmsg warn">${esc(sh.pron.err)}</p>`;
-  return `<p class="shmsg"><b>${sh.pron.n} von ${sh.pron.of} Wörtern verstanden.</b> Gehört: „${esc(sh.pron.heard)}“. Rot markierte Wörter lohnen einen zweiten Versuch. Die Erkennung ist ein Anhaltspunkt, kein Urteil über den Akzent.</p>`;
+  return `<p class="shmsg"><b>${sh.pron.n} von ${sh.pron.of} Wörtern verstanden.</b> Gehört: „${esc(sh.pron.heard)}“.</p>`;
 }
 const SH_TEMPO = { same:['ok', 'wie das Original'], slow:['warn', 'etwas langsamer'], vslow:['warn', 'deutlich langsamer'], fast:['warn', 'schneller'] };
 function shResultHtml(sh){
@@ -593,7 +593,7 @@ function shResultHtml(sh){
     if (tp && pt && Math.abs(Math.log(tp.ratio)) < Math.abs(Math.log(pt.ratio)) - 0.08) cmp.push('Tempo näher am Original als eben');
     if (an.extra < prev.extra) cmp.push('weniger Stockungen als eben');
   }
-  sh.doneTip = `Versuch ${tk.n}${cmp.length ? `: ${cmp.join(', ')}.` : '.'} Tipp auf deine Spur, um ab der Stelle zu hören.`;
+  sh.doneTip = `Versuch ${tk.n}${cmp.length ? `: ${cmp.join(', ')}.` : '.'}`;
   return `${lanes}
     <div class="shtiles">${tiles.map(([c, l, v, s]) => `<div class="sht ${c}"><span class="shtl">${l}</span><b>${v}</b><span class="shts">${s}</span></div>`).join('')}</div>
     ${level ? `<p class="shmsg warn">${level}</p>` : ''}
@@ -648,7 +648,7 @@ function viewShadow(){
 function shSummaryHtml(){
   const sh = S.shadow, lang = sh.lang, rows = sh.log.map((l, i) => l && Object.assign({ i }, l)).filter(Boolean);
   const bar = '<div class="actionbar"><div class="in"><button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="shadow">Neue Runde</button></div></div>';
-  if (!rows.length) return backBar('Nachsprechen') + '<p class="lead">Runde beendet.</p><p class="hint">Diesmal ohne Aufnahme. Beim nächsten Mal: anhören, mitsprechen, dann allein aufnehmen und vergleichen.</p>' + bar;
+  if (!rows.length) return backBar('Nachsprechen') + '<p class="lead">Runde beendet.</p>' + bar;
   const takes = sh.nTake, tps = rows.map(r => r.orig && !r.orig.approx ? shTempo(r.take.an.speech, r.orig.dur) : null).filter(Boolean);
   const gm = tps.length ? Math.exp(tps.reduce((s, t) => s + Math.log(t.ratio), 0) / tps.length) : 0;
   const stock = rows.reduce((s, r) => s + r.take.an.extra, 0);
@@ -663,7 +663,6 @@ function shSummaryHtml(){
     <h2 class="grp">Deine Aufnahmen</h2>
     <div class="shall"><button type="button" class="pchip" data-a="shall" data-sh="all" aria-pressed="${sh.playing === 'all'}">${SHI.ab}<span>Alle im Wechsel</span></button><button type="button" class="pchip" data-a="shmine" data-sh="mine" aria-pressed="${sh.playing === 'mine'}">${PICO.play}<span>Nur meine</span></button></div>
     <div class="rows">${list}</div>
-    <p class="hint">Tipp: Hör dir zum Schluss nur deine Aufnahmen hintereinander an. Dabei fällt die Satzmelodie am deutlichsten auf.</p>
     <p class="src">Die Aufnahmen bleiben auf diesem Gerät und nur, bis du die Seite verlässt.</p>` + bar;
 }
 

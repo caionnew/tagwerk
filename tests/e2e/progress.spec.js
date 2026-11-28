@@ -130,5 +130,5 @@ test('Heute „Höchste Fehlerquoten“ mit Schätzung und Bereich; „Thema üb
   await page.click('.grp-lead [data-a=term][data-k=schaetzung]');
   await expect(page.locator('.pop')).toContainText('Klar über Schnitt');
   await page.click('.pop [data-a=popclose] >> nth=-1');
-  await expect(page.locator('.grp-lead', { hasText:'wie viele Sätze im Thema du schon geübt hast' })).toHaveCount(1);
+  await expect(page.locator('.grp-lead', { hasText:'Der Balken zeigt' })).toHaveCount(0);
 });

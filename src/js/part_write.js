@@ -211,27 +211,27 @@ function saveText(w, a){
   save();
 }
 function profileHtml(lang, a, extraK){
-  if (a.words < 8) return '<p class="hint">Für eine Auswertung braucht es ein paar Sätze mehr.</p>';
+  if (a.words < 8) return '<p class="hint">Zu kurz für eine Auswertung.</p>';
   const ex = W_EXTRA[lang].find(x => x.k === extraK);
   const lixWord = a.lix < 25 ? 'sehr leicht' : a.lix < 35 ? 'leicht' : a.lix < 45 ? 'mittel' : a.lix < 55 ? 'anspruchsvoll' : 'schwer';
   return `<div class="wprof">
     <p class="wp-sum">${a.words} Wörter · ${a.sents} ${a.sents === 1 ? 'Satz' : 'Sätze'} · Ø ${String(a.avg).replace('.', ',')} Wörter pro Satz · <button type="button" class="term" data-a="term" data-k="lix">LIX</button> ${a.lix} <span class="dim">(${lixWord})</span></p>
     ${ex ? `<p class="wp-extra${ex.ok(a) ? ' ok' : ''}">${ex.ok(a) ? '✓' : '○'} Extra: ${esc(ex.t)}</p>` : ''}
     <ul class="wblocks">${blocksOf(lang, a).map(b => `<li class="${b.ok ? 'ok' : ''}"><span class="wb-i" aria-hidden="true">${b.ok ? '✓' : '○'}</span><span class="wb-t">${b.t}</span><span class="wb-d">${esc(b.d)}</span></li>`).join('')}</ul>
-    ${a.hints.length ? `<p class="pop-sub">Prüf mal</p><ul class="whints">${a.hints.map(h => `<li><span class="wh-at" lang="${lang}">${esc(h.at)}</span><span class="wh-m">${termify(h.msg)}</span>${trapMeta(lang, h.topic) ? `<button type="button" class="link" data-a="topic" data-t="${h.topic}">Regel ansehen</button>` : ''}</li>`).join('')}</ul>` : `<p class="hint">Keine Auffälligkeiten bei den Regeln, die Tagwerk offline prüft. Rechtschreibung und alles Weitere prüft die Online-Prüfung.</p>`}
-    ${a.unknown.length ? `<p class="hint">Kennt Tagwerk nicht: <span lang="${lang}">${esc(a.unknown.join(', '))}</span>. Eigene Wörter oder Tippfehler?</p>` : ''}
+    ${a.hints.length ? `<p class="pop-sub">Prüf mal</p><ul class="whints">${a.hints.map(h => `<li><span class="wh-at" lang="${lang}">${esc(h.at)}</span><span class="wh-m">${termify(h.msg)}</span>${trapMeta(lang, h.topic) ? `<button type="button" class="link" data-a="topic" data-t="${h.topic}">Regel ansehen</button>` : ''}</li>`).join('')}</ul>` : `<p class="hint">Keine Auffälligkeiten.</p>`}
+    ${a.unknown.length ? `<p class="hint">Unbekannt: <span lang="${lang}">${esc(a.unknown.join(', '))}</span>.</p>` : ''}
   </div>`;
 }
 // Langfristig: Wie verändern sich deine Texte? Vergleich der ersten mit den letzten Texten
 function writingTrendHtml(lang){
   const list = (DB.texts || []).filter(x => x.lang === lang && x.m && x.m.words >= 20);
-  if (list.length < 2) return list.length ? `<h2 class="grp">Schreiben</h2><div class="chart"><p class="legend m0">1 Text bisher. Ab dem zweiten zeigt sich hier, wie sich deine Texte verändern.</p></div>` : '';
+  if (list.length < 2) return '';
   const k = Math.min(3, Math.floor(list.length / 2)), first = list.slice(0, k), last = list.slice(-k);
   const avg = (arr, f) => arr.reduce((s, x) => s + f(x), 0) / arr.length;
   const rows = [['Wörter pro Satz', x => x.m.avg, 1], ['Zeitformen pro Text', x => x.m.tenses.length, 1], ['Nebensätze pro Text', x => x.m.subs, 1], ['LIX', x => x.m.lix, 0]]
     .map(([l, f, dec]) => { const a = avg(first, f), b = avg(last, f); return `<div><b>${b.toFixed(dec).replace('.', ',')}</b><span>${l}</span><span class="${b > a + 0.05 ? 'up' : 'dim'}">anfangs ${a.toFixed(dec).replace('.', ',')}</span></div>`; }).join('');
   const total = list.reduce((s, x) => s + x.m.words, 0);
-  return `<h2 class="grp">Schreiben</h2><div class="chart"><div class="kpis k4">${rows}</div><p class="legend">${list.length} Texte, zusammen ${total.toLocaleString('de-DE')} Wörter. Verglichen ${k === 1 ? 'wird dein erster mit deinem letzten Text' : `werden deine ersten ${k} mit den letzten ${k} Texten`}. Längere Sätze, mehr Zeitformen und Nebensätze zeigen, dass du mehr wagst.</p></div>`;
+  return `<h2 class="grp">Schreiben</h2><div class="chart"><div class="kpis k4">${rows}</div><p class="legend">${list.length} Texte, zusammen ${total.toLocaleString('de-DE')} Wörter.</p></div>`;
 }
 function archiveHtml(lang){
   const list = (DB.texts || []).filter(x => x.lang === lang).slice().reverse();

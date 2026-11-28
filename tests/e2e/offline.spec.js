@@ -19,10 +19,10 @@ test('Übungsmenü: Online-Dienste sagen es, wenn keine Verbindung besteht, und 
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   const wiki = page.locator('.row[data-a=wiki] .rd');
-  await expect(wiki).toHaveText('Ein ausgezeichneter Artikel, gern mit Bezug zum Land');
+  await expect(wiki).toHaveText('Ein ausgezeichneter Artikel');
   await context.setOffline(true);
   await expect(wiki).toHaveText('Braucht eine Internetverbindung');
   await expect(page.locator('.row[data-a=tat] .rd')).toHaveText('Braucht eine Internetverbindung');
   await context.setOffline(false);
-  await expect(wiki).toHaveText('Ein ausgezeichneter Artikel, gern mit Bezug zum Land');
+  await expect(wiki).toHaveText('Ein ausgezeichneter Artikel');
 });

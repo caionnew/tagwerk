@@ -34,7 +34,7 @@ test('Tage: Kennzahlen, Vergleich mit den 14 Tagen davor, 14 Säulen, nichts vor
   assert.match(text(h), new RegExp(`^Lernminuten, letzte 14 Tage ${13 * 10 + 4 * 6} Minuten 13 von 14 Tagen geübt 11 Minuten pro Tag`));
   assert.match(text(h), /Die 14 Tage davor: \d+ Minuten\./);
   assert.doesNotMatch(h, /aria-pressed="true"/);
-  assert.match(text(h), /Tipp auf einen Tag für Details\./);
+  assert.doesNotMatch(text(h), /Tipp auf einen Tag/);
   assert.doesNotMatch(h, /class="dcard"/);
   assert.match(h, new RegExp(`class="mc fr[^"]*" data-a="mpick" data-k="${ds(3)}"[^>]*aria-label="[^"]*: Pausetag"`));
   assert.match(h, /class="mavg"/, 'Durchschnittslinie ab drei Übungstagen');
@@ -105,17 +105,15 @@ test('Vor dem ersten Übungstag: blasse Bahn, nichts zum Antippen, zählt nicht,
   assert.match(h, /class="mavg" style="left:calc\(9 \* \(100% \+ 3px\) \/ 14\);top:/);
   assert.match(text(h), /Schnitt pro Tag/);
 });
-test('Hinweis „Tipp auf einen Tag“ nur bis zum ersten Antippen, in Lernminuten und Kalender', () => {
+test('Kein Hinweis „Tipp auf einen Tag“, weder in Lernminuten noch im Kalender', () => {
   setup();
-  assert.match(text(run('minutesHtml()')), /Tipp auf einen Tag für Details\./);
-  run('DB.used = { dayTap:true }');
   const h = text(run('minutesHtml()'));
   assert.doesNotMatch(h, /Tipp auf einen Tag/);
   assert.match(h, /Schnitt pro Tag( Pausetag)?$/);
   run(`S.ptab = 'all'; S.view = 'progress'`);
   const p = text(run('viewProgress()'));
-  assert.match(p, /\d+ von \d+ Tagen geübt\.( Wischen für frühere Wochen\.)?/);
-  assert.doesNotMatch(p, /Tipp auf einen Tag/);
+  assert.match(p, /\d+ von \d+ Tagen geübt\./);
+  assert.doesNotMatch(p, /Tipp auf einen Tag|Wischen/);
 });
 
 test('Schnitt pro Tag: Ein Tag ohne Übung zählt mit (10 Min. täglich und ein Tag frei ergibt weniger als 10 Min. täglich und einmal 9)', () => {

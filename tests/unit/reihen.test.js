@@ -89,16 +89,17 @@ test('Karte in „Lesen und Hören“: Fortschritt, Beginnen und Weiter, keine E
   assert.doesNotMatch(h0, /Reihen/, 'ohne Reihen kein Abschnitt');
 });
 
-test('Übersicht: Einleitung je Niveau, Teile ohne Vorgriff, Personen und Wörter bis zum Gelesenen, gelesene Teile noch einmal lesbar', () => {
+test('Übersicht: Einleitung je Niveau, Teile ohne Vorgriff, Personen nach dem Lesen, Wörter ab Teil 1, gelesene Teile noch einmal lesbar', () => {
   reset(); run(`S.series = { lang:'sv', id:'test' }`);
   let h = run('viewSeries()');
   assert.match(h, /<p class="shook wordrow" lang="sv"><span data-a="lookup"/, 'Einleitung in der Zielsprache');
   assert.match(h, /data-a="sde">Auf Deutsch<\/button>/);
   assert.match(h, /<li class="mr now"><i><\/i><button type="button" class="mr-b" data-a="spart" data-s="test" data-i="0"/);
-  assert.match(h, /<li class="mr next"><i><\/i><span class="mr-b"><span class="mr-t">Teil 2<\/span><\/span><\/li>/, 'späterer Titel und Zeitangabe verdeckt');
+  assert.match(h, /<li class="mr next"><i><\/i><span class="mr-b"><span class="mr-t">Teil 2<\/span><span class="mr-d mr-hid" aria-hidden="true"><\/span><\/span><\/li>/, 'späterer Titel und Zeitangabe verdeckt, Balken statt Zeit');
   assert.doesNotMatch(h, /1 mars 1986|Wie es geschah/, 'keine Zeitangabe gesperrter Teile, keine Erzählform');
   assert.doesNotMatch(h, /Natten<|Morgonen|Ingvar Carlsson|sjukhus|regering/);
-  assert.match(h, /Lisbet Palme/); assert.match(h, /data-w="livvakt"/);
+  assert.doesNotMatch(h, /Lisbet Palme|<h2 class="grp">Personen/, 'vor dem ersten Teil noch keine Personen'); assert.match(h, /data-w="livvakt"/, 'Wörter von Teil 1 zum Vorbereiten');
+  assert.doesNotMatch(h, /class="legend"/, 'keine Erklärung unter der Schiene');
   assert.match(h, /<button type="button" class="primary" data-a="spart" data-s="test" data-i="0">Beginnen<\/button>/);
   run('S.series.de = true');
   assert.match(run('viewSeries()'), /<p class="tl-de" lang="de">Am 28\. Februar 1986/);
@@ -109,6 +110,7 @@ test('Übersicht: Einleitung je Niveau, Teile ohne Vorgriff, Personen und Wörte
   h = run('viewSeries()');
   assert.match(h, /<li class="mr done"><i><\/i><button type="button" class="mr-b" data-a="spart" data-s="test" data-i="0" aria-label="Teil 1: Fredag kväll, gelesen, noch einmal lesen">/);
   assert.match(h, /<li class="mr now"><i><\/i><button[^>]*data-i="2"/);
+  assert.match(h, /Lisbet Palme/, 'Person aus Teil 1 nach dem Lesen');
   assert.doesNotMatch(h, /Ingvar Carlsson/, 'Person aus Teil 3 erst, wenn Teil 3 gelesen ist');
   assert.match(h, /data-w="sjukhus"/, 'Wort aus Teil 2 nach dem Lesen von Teil 2');
   assert.match(h, /<h2 class="grp">Personen bisher<\/h2>/);

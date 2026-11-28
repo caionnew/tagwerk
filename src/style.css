@@ -862,6 +862,7 @@ button.mrow:active{ background:var(--accent-soft); }
 .srail .mr-b{ grid-column:2 / 4; display:flex; align-items:center; justify-content:space-between; gap:10px; background:none; border:0; padding:0; margin:0; font:inherit; color:inherit; text-align:left; }
 .srail button.mr-b .mr-t{ color:var(--accent-ink); }
 .srail .mr.now button.mr-b .mr-t{ color:var(--ink); }
+.mr-hid{ width:34px; height:8px; border-radius:var(--r-pill); background:color-mix(in srgb, var(--muted) 24%, transparent); }
 .rdate{ margin:4px 0 0; font-size:var(--fs-4); color:var(--muted); }
 .sbisher{ margin:16px 0 4px; padding:10px 12px; border-radius:var(--r-m); border:1px solid var(--line); background:var(--surface); }
 .sbisher-k{ margin:0 0 2px; font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--muted); }
@@ -1212,14 +1213,12 @@ button.row:not([disabled]):active, label.row:active, .langsum:active, .tq-b:not(
 .tdone .btnrow{ flex-wrap:nowrap; }
 /* Abstände aus den Vorlagen (statt style="margin…"), auf 4er-Raster; stehen am Ende, damit sie die Grundregel einer Klasse schlagen */
 .legend.below{ margin:8px 4px 0; }
-.legend.above{ margin:0 4px 8px; }
 .m0{ margin:0; }
 .mt0{ margin-top:0; }
 .mt-4{ margin-top:4px; }
 .mt-8{ margin-top:8px; }
 .mt-12{ margin-top:12px; }
 .mt-16{ margin-top:16px; }
-.mb-12{ margin-bottom:12px; }
 .mb-16{ margin-bottom:16px; }
 /* Rundenende: Aufgaben eines Themas, aufgeklappt unter seiner Zeile */
 .trow[aria-expanded]::after{ transition:transform var(--dur-2) var(--ease); }

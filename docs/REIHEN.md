@@ -12,7 +12,8 @@ Fragen mit Textstelle, „Ins Tagwerk“, Lückentext). Neu ist die Ebene darüb
   hineinlesen), sie steht nur in den Daten und in IDEEN.md. Tipp auf eine begonnene Reihe öffnet gleich
   den nächsten Teil, sonst die Übersicht.
 - **Übersicht:** Einleitung, „Was ist echt?“, die Teile als Schiene (wie „Dein Weg“), Personen und Wörter der Reihe. Titel und Zeitangaben
-  späterer Teile, Personen und Wörter erscheinen erst, wenn man so weit ist (kein Vorgriff). Gelesene Teile lassen sich jederzeit noch einmal
+  späterer Teile erscheinen erst, wenn man so weit ist (statt der Zeit ein geschwärzter Balken), Personen erst nach dem Teil, in dem
+  sie vorkommen, Wörter schon vor dem Teil (zum Vorbereiten); kein Vorgriff. Gelesene Teile lassen sich jederzeit noch einmal
   lesen, die Fragen noch einmal beantworten; das beste Ergebnis bleibt.
 - **Teil:** Datumszeile unter dem Titel, ab Teil 2 „Bisher“ (zwei Sätze), am Ende „Im nächsten Teil“ mit einem Satz Vorschau und die
   Quellen.

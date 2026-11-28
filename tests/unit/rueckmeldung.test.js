@@ -56,11 +56,11 @@ test('Zweiter Versuch: Stimmte die Lücke schon, kommt der ganze Satz noch einma
   assert.deepEqual(two, { n:2, res:1 });
 });
 
-test('LanguageTool ohne Fund: neutral statt grün, mit der Grenze der Prüfung', () => {
+test('LanguageTool ohne Fund: neutral statt grün, mit Quelle', () => {
   const fb = run(`(() => { DB = freshDB(); const ex = { type:'free', id:${JSON.stringify(SITZUNG.id)} }; S.run = { kind:'quick', lang:'es', queue:[ex], idx:0, ok:0, bad:0, res:[], combo:0, best:0 };
     S.run.cur = { input:'La sesión se puso tenso cuando surgió el tema de los sueldos', state:'answer' }; check(); S.run.cur.lt = []; return feedbackHtml(S.run, ex, S.run.cur); })()`);
   assert.doesNotMatch(fb, /lt-ok|Keine Fehler gefunden/);
-  assert.match(text(fb), /LanguageTool hat nichts gefunden\. Geprüft von LanguageTool\. Es findet nicht jeden Grammatikfehler und prüft nicht, ob die Bedeutung passt\./);
+  assert.match(text(fb), /LanguageTool hat nichts gefunden\. Geprüft von LanguageTool\./);
 });
 
 test('Lücke: Der Satz steht nach dem Prüfen nur oben (antippbar), in der Rückmeldung nur der Knopf zum Vorlesen', () => {

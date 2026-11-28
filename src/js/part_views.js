@@ -82,7 +82,7 @@ function findHtml(lang){
     const ago = f.ago < 14 ? `vor ${f.ago} Tagen` : f.ago < 60 ? `vor ${Math.round(f.ago / 7)} Wochen` : `vor ${Math.round(f.ago / 30)} Monaten`;
     return `<section class="find"><p class="find-k">Erinnerst du dich? · zuletzt ${ago} geübt</p>
       <p class="find-h find-de" lang="de">${esc(f.item.de)}</p>
-      ${open ? `<div class="find-p reveal"><span class="wordrow" lang="${lang}">${linkWords(f.item.target, lang)}</span>${speakBtn(f.item.target, lang)}</div><p class="find-g m0 mt-8">Zählt nicht für den Wiederholungsplan.</p>` : `<button type="button" class="link" data-a="findopen" data-id="${f.item.id}">Auflösen</button>`}</section>`;
+      ${open ? `<div class="find-p reveal"><span class="wordrow" lang="${lang}">${linkWords(f.item.target, lang)}</span>${speakBtn(f.item.target, lang)}</div>` : `<button type="button" class="link" data-a="findopen" data-id="${f.item.id}">Auflösen</button>`}</section>`;
   }
   if (f.kind === 'kultur') return `<section class="find"><p class="find-k">Land & Leute · ${KULTUR_CATS[f.e.cat]}</p>${kulturBody(f.e, lang, true)}<button type="button" class="link find-more" data-a="ref" data-r="kultur">Alle ${KULTUR[lang].length} ansehen</button></section>`;
   const ff = f.ff;
@@ -97,18 +97,18 @@ function backupHint(){
   const since = DB.lastBackup ? dayDiff(t, DB.lastBackup) : tot.dayCount;
   const nag = DB.used && DB.used.backupNag;
   if (since < 90 || (nag && dayDiff(t, nag) < 30)) return '';
-  return `<div class="notice ok"><span>${DB.lastBackup ? `Dein letztes Backup ist ${Math.round(since / 30)} Monate her.` : `Du übst seit ${tot.dayCount} Tagen und hast noch kein Backup.`} Der Fortschritt liegt nur auf diesem Gerät.</span><button type="button" class="link" data-a="export">Sichern</button><button type="button" class="link dim" data-a="nagoff">Später</button></div>`;
+  return `<div class="notice ok"><span>${DB.lastBackup ? `Dein letztes Backup ist ${Math.round(since / 30)} Monate her.` : `Du übst seit ${tot.dayCount} Tagen und hast noch kein Backup.`}</span><button type="button" class="link" data-a="export">Sichern</button><button type="button" class="link dim" data-a="nagoff">Später</button></div>`;
 }
 function viewHome(){
   const lang = S.lang;
   const od = openDaily();
   const running = od && od.lang === lang;
   const doneToday = doneIn(today(), lang), dayDone = !!DB.done[today()], doneOther = dayDone && !doneToday ? activeLangs().find(l => l !== lang && doneIn(today(), l)) : null;
-  const intro = !(DB.used && DB.used.intro) ? `<section class="intro"><p class="intro-h">So funktioniert Tagwerk</p><p>Einmal am Tag eine Runde von etwa 5 bis 10 Minuten: neue Sätze, Wiederholungen und kurzes Grammatik-Training. Jeder Satz kommt wieder, bevor du ihn vergessen würdest. Was du nicht wusstest, schon am nächsten Tag, was sitzt, erst nach Wochen.</p><button type="button" class="link" data-a="introok">Verstanden</button></section>` : '';
+  const intro = !(DB.used && DB.used.intro) ? `<section class="intro"><p class="intro-h">So funktioniert Tagwerk</p><p>Einmal am Tag eine Runde von 5 bis 10 Minuten. Jeder Satz kommt wieder, bevor du ihn vergessen würdest.</p><button type="button" class="link" data-a="introok">Verstanden</button></section>` : '';
   let card;
   if (running) {
     const left = od.queue.length - od.idx;
-    card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx), od.lang)} Minuten. Du machst dort weiter, wo du aufgehört hast.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
+    card = `<p class="eyebrow">Tagwerk läuft</p><p class="num">Noch ${plural(left, 'Aufgabe', 'Aufgaben')}</p><p class="breakdown">Etwa ${minutes(od.queue.slice(od.idx), od.lang)} Minuten.</p><button type="button" class="primary" data-a="daily">Fortsetzen</button>`;
   } else if (doneToday) {
     // Die andere Sprache erst hier, als Angebot: vorher wählt die App die Sprache des Tages nach Bedarf, und oben lässt sie sich wechseln
     const other = activeLangs().find(l => l !== lang), op = other && !doneIn(today(), other) ? dailyPlan(other) : null;
@@ -118,20 +118,20 @@ function viewHome(){
         ${otherRow}
         <button type="button" class="row" data-a="tab" data-v="extra"><span class="txt"><span class="rt">Weiter üben</span><span class="rd">Kurze Runden, Grammatik, Lesen, Schreiben</span></span></button>
         ${(() => { const avail = BANK[lang].filter(i => !stOf(i.id)).length; if (!avail) return ''; const opts = [3, 6, 10].filter(n => n <= avail); if (!opts.length) opts.push(avail);
-          return `<div class="row chiprow"><span class="txt"><span class="rt">Weitere neue Sätze lernen</span><span class="rd">Ab morgen in der Wiederholung</span></span><span class="chips" role="group" aria-label="Wie viele?">${opts.map(n => `<button type="button" class="chip" data-a="moreNew" data-n="${n}">${n}</button>`).join('')}</span></div>`; })()}
+          return `<div class="row chiprow"><span class="txt"><span class="rt">Weitere neue Sätze lernen</span></span><span class="chips" role="group" aria-label="Wie viele?">${opts.map(n => `<button type="button" class="chip" data-a="moreNew" data-n="${n}">${n}</button>`).join('')}</span></div>`; })()}
       </div>`;
   } else {
     const p = dailyPlan(lang);
     const parts = [];
-    if (p.due) parts.push(`<li><b>${p.due}</b> ${p.due === 1 ? 'Wiederholung' : 'Wiederholungen'}<span>Sätze, die heute wieder dran sind</span></li>`);
-    if (p.fresh) parts.push(`<li><b>${p.fresh}</b> ${p.fresh === 1 ? 'neuer Satz' : 'neue Sätze'}<span>gezielt zu typischen Fehlern</span></li>`);
+    if (p.due) parts.push(`<li><b>${p.due}</b> ${p.due === 1 ? 'Wiederholung' : 'Wiederholungen'}</li>`);
+    if (p.fresh) parts.push(`<li><b>${p.fresh}</b> ${p.fresh === 1 ? 'neuer Satz' : 'neue Sätze'}</li>`);
     if (p.genN) { const lab = p.genLabels; parts.push(`<li><b>${p.genN}</b> Grammatik-Aufgaben<span>${esc(lab.length > 2 ? `${lab.slice(0, 2).join(', ')} und ${lab.length - 2} weitere` : lab.join(' und '))}</span></li>`); }
     card = `<p class="eyebrow">${doneOther ? `Zusätzlich · ${LANG[lang].deName}-Tagwerk` : `Heute · ${LANG[lang].deName}-Tagwerk`}</p><p class="num">${plural(p.queue.length, 'Aufgabe', 'Aufgaben')}<span class="num-s">etwa ${minutes(p.queue, lang)} Min.</span></p>${doneOther ? `<p class="hint mt-4">Dein Tagwerk für heute ist mit ${LANG[doneOther].deName} erledigt. Dieses ist freiwillig.</p>` : ''}
       <ul class="plan2">${parts.join('')}</ul>
       ${(() => { const ft = focusTrap(lang); return ft ? `<p class="hint focusline"><button type="button" class="term" data-a="term" data-k="schwerpunkt">Schwerpunkt der Woche</button>: <b class="nobr">${esc(keepHyph(trapMeta(lang, ft).label))}</b> <button type="button" class="link" data-a="focusnext">Ändern</button></p>` : ''; })()}
       <button type="button" class="primary" data-a="daily">${LANG[lang].deName}-Tagwerk starten</button>
       <p class="hint lenlink">${size().label}, ${size().newPer} neue Sätze pro Tag <button type="button" class="link" data-a="toSettings">Länge ändern</button></p>`;
-    if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze vorrätig. Neue kommen automatisch von Tatoeba, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
+    if (!p.fresh) card += DB.settings.refill ? `<p class="hint">Gerade keine neuen Sätze, neue kommen, sobald du online bist.</p>` : `<p class="hint">Alle Sätze sind eingeführt. <button type="button" class="link" data-a="tat">Beispielsätze suchen</button></p>`;
   }
   const dnow = dateOf(today());
   const ws = weekStrip();
@@ -209,31 +209,31 @@ function viewExtra(){
   return `${topLine()}${noticeHtml()}
   ${noVoice && !(DB.used && DB.used.voiceWarn && dayDiff(today(), DB.used.voiceWarn) < 30) ? `<div class="notice warn"><span>Zum Vorlesen fehlt eine ${L.deName}-Stimme. Du kannst sie in den Android-Einstellungen unter „Sprachausgabe“ herunterladen.</span><button type="button" class="link dim" data-a="voiceoff">Ausblenden</button></div>` : ''}
   <h2 class="grp">Kurz zwischendurch</h2>
-  <div class="rows">${row('quick', 'Kurze Runde', seen < 3 ? '6 Grammatik-Aufgaben für den Anfang' : '6 Aufgaben aus bekannten Sätzen')}${g('genus', lang === 'sv' ? 'en oder ett?' : 'el oder la?', 'Das Genus in schnellen Runden', 'genus')}${g('time', 'Uhrzeiten & Zahlen', 'Für Bahnhof, Laden und Verabredung', 'time')}</div>
+  <div class="rows">${row('quick', 'Kurze Runde', seen < 3 ? '6 Grammatik-Aufgaben für den Anfang' : '6 Aufgaben aus bekannten Sätzen')}${g('genus', lang === 'sv' ? 'en oder ett?' : 'el oder la?', 'Das Genus in schnellen Runden', 'genus')}${g('time', 'Uhrzeiten & Zahlen', '', 'time')}</div>
   <h2 class="grp">Grammatik</h2>
-  <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', `Endlos neue Aufgaben, ${genIds(lang).length} Bereiche`)}${g('spot', 'Fehler finden', 'Richtig oder falsch? Fehler finden und verbessern', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
+  <div class="rows">${row('pickTopic', 'Thema üben', '10 Aufgaben zu einem Thema')}${row('forms', 'Grammatik-Training', `Endlos neue Aufgaben, ${genIds(lang).length} Bereiche`)}${g('spot', 'Fehler finden', 'Richtig oder falsch?', 'spot')}${g('trans', 'Umbauen', 'Sätze umformen, ganz ohne Deutsch', 'trans')}</div>
   <h2 class="grp">Lesen und Hören</h2>
-  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', net('Ein ausgezeichneter Artikel, gern mit Bezug zum Land'), '')}</div>
+  <div class="rows">${row('texts', 'Lesetexte', `${TEXTS[lang].length} kurze Texte zum Lesen oder Hören, mit Fragen`, '', 'book')}${row('wiki', 'Wikipedia-Fundstück', net('Ein ausgezeichneter Artikel'), '')}</div>
   <h2 class="grp">Hören und Sprechen</h2>
   <div class="rows">${row('dict', 'Hördiktat', !canHear ? noHear : seen < 3 ? later : 'Hören und aufschreiben', off)}${row('shadow', 'Nachsprechen', !canHear ? noHear : seen < 3 ? later : canRecord() ? 'Hören, mitsprechen, aufnehmen und vergleichen' : canListen() ? 'Mitsprechen und von der Spracherkennung prüfen lassen' : 'Hören und mitsprechen', off)}${row('radio', 'Hörrunde', !canSpeak() ? noHear : seen < 3 ? later : 'Geübte Sätze nebenbei hören, ohne Antippen', !canSpeak() || seen < 3 ? ' disabled' : '')}</div>
   <h2 class="grp">Schreiben und Sammeln</h2>
-  <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Auswertung')}${row('tat', 'Beispielsätze suchen', net('Echte Sätze aus Tatoeba'))}${row('own', 'Eigenen Satz eintragen', 'Aus Podcast, Gespräch oder Korrektur')}</div>
+  <div class="rows">${row('write', 'Text schreiben', 'Ein paar Sätze, mit Auswertung')}${row('tat', 'Beispielsätze suchen', net('Echte Sätze aus Tatoeba'))}${row('own', 'Eigenen Satz eintragen', '')}</div>
   <h2 class="grp">Nachschlagen</h2>
-  <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'rules')}${row('ref', 'Grammatik-Begriffe', `${termsFor(lang).length} Fachwörter wie ${lang === 'sv' ? 'Supinum und Inversion' : 'Subjuntivo und Gerundium'}, in Alltagssprache`, ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Sprache, Alltag und Gesellschaft`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste, nach Datum sortiert`, ' data-r="feasts"', 'feast')}</div>`;
+  <div class="rows">${row('ref', 'Grammatik kurz erklärt', 'Alle Regeln mit Beispielen', ' data-r="topics"', 'rules')}${row('ref', 'Grammatik-Begriffe', `${termsFor(lang).length} Fachwörter wie ${lang === 'sv' ? 'Supinum und Inversion' : 'Subjuntivo und Gerundium'}, in Alltagssprache`, ' data-r="terms"', 'terms')}${row('ref', 'Land & Leute', `${KULTUR[lang].length} Einblicke in Sprache, Alltag und Gesellschaft`, ' data-r="kultur"', 'globe')}${row('ref', 'Falsche Freunde', `${FALSE_FRIENDS[lang].length} Wörter, die anders gemeint sind`, ' data-r="friends"', 'friends')}${row('ref', lang === 'sv' ? 'Feste in Schweden' : 'Feste und Feiertage', `${EVENTS[lang].length} Feste`, ' data-r="feasts"', 'feast')}</div>`;
 }
 // Oben dieselben drei höchsten Fehlerquoten wie auf Heute, darunter die übrigen Themen in fester Reihenfolge, ohne Doppelung
 function viewPickTopic(){
   const lang = S.lang, rows = topicRows(lang), topIds = weakTopics(lang).map(x => x.id);
   const list = rs => `<div class="rows">${rs.map(r => `<button type="button" class="row bars" data-a="trapgo" data-t="${r.id}">${barRow(r)}</button>`).join('')}</div>`;
   const top = topIds.map(id => rows.find(r => r.id === id)).filter(Boolean), rest = rows.filter(r => !topIds.includes(r.id)), gens = rest.filter(r => r.gen);
-  return backBar('Thema üben') + `<p class="lead-s">10 Aufgaben zu einem Thema.</p>
+  return backBar('Thema üben') + `
     ${top.length ? `<h2 class="grp">Höchste Fehlerquoten</h2><p class="lead-s grp-lead"><button type="button" class="term" data-a="term" data-k="schaetzung">Geschätzt</button>, dein Schnitt ${pct(topicModel(lang).mu)}.${rows.some(r => r.clear && r.est) ? ' <span class="mpct cl kpill">%</span> klar über Schnitt.' : ''}</p>${list(top)}` : ''}
-    <h2 class="grp">Sätze</h2><p class="lead-s grp-lead">Der Balken zeigt, wie viele Sätze im Thema du schon geübt hast.</p>${list(rest.filter(r => !r.gen))}
+    <h2 class="grp">Sätze</h2>${list(rest.filter(r => !r.gen))}
     ${gens.length ? `<h2 class="grp">Immer neu erzeugt</h2>${list(gens)}` : ''}`;
 }
 function viewPickGen(){
   const lang = S.lang;
-  return backBar('Grammatik-Training') + `<p class="lead-s">Die Aufgaben werden nach festen Regeln immer neu erzeugt. Du kannst jederzeit aufhören.</p><div class="rows">${genIds(lang).map(g => row('gengo', GENS[g].label, genStatText(g), ` data-g="${g}"`)).join('')}</div>`;
+  return backBar('Grammatik-Training') + `<div class="rows">${genIds(lang).map(g => row('gengo', GENS[g].label, genStatText(g), ` data-g="${g}"`)).join('')}</div>`;
 }
 function runBar(r){
   const ex = r.queue[r.idx];
@@ -321,8 +321,7 @@ function viewRun(){
       ${done ? '' : charbar(lang)}</div>`;
   } else if (ex.type === 'free') {
     const item = itemById(ex.id);
-    const micTip = !done && !canListen() && (DB.used && DB.used.mic || 0) < 3 ? '<p class="src">Tipp: Mit dem Mikrofon deiner Tastatur kannst du die Antwort auch sprechen. Das übt nebenbei das Sprechen.</p>' : '';
-    body = `<p class="kicker">${kick(`Übersetze ${L.deAcc}`, lang, c)}${normChip(ex)}</p><p class="de" lang="de">${esc(item.de)}</p>${micTip}
+    body = `<p class="kicker">${kick(`Übersetze ${L.deAcc}`, lang, c)}${normChip(ex)}</p><p class="de" lang="de">${esc(item.de)}</p>
       <div class="ex-a">${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" placeholder="${esc(L.ph)}">${esc(c.input)}</textarea>`}
       ${done ? '' : `<div class="inrow">${charbar(lang)}${canListen() ? `<button type="button" class="micbtn${S.listening ? ' on' : ''}" data-a="dictate" aria-label="Antwort sprechen">${ICONS.mic}</button>` : ''}</div>`}</div>`;
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
@@ -502,18 +501,16 @@ function feedbackHtml(r, ex, c){
     else if (tr && (item.note || tr.short)) { out += `<p class="expl">${termify(noteOf(item) || tr.short)}</p>${originLine}${tr.id !== 'eigene' ? `<button type="button" class="link more-l" data-a="topic" data-t="${tr.id}">Regel und Beispiele</button>` : ''}`; originShown = true; }
     if (!originShown) { out += originLine; originShown = true; }
     if (ex.type === 'free' && !c.gaveUp && c.input) {
-      if (c.lt === undefined) out += `<p class="hint">Unsicher, ob deine Fassung auch stimmt? <button type="button" class="link" data-a="ltfree">Mit LanguageTool prüfen (online)</button></p>`;
+      if (c.lt === undefined) out += `<p class="hint"><button type="button" class="link" data-a="ltfree">Mit LanguageTool prüfen</button></p>`;
       else if (c.lt === 'loading') out += `<p class="hint"><span class="dots">Prüfe</span></p>`;
       else if (typeof c.lt === 'string') out += `<p class="hint">${esc(c.lt)}</p>`;
       // Nichts gefunden heißt nicht richtig (neben „Falsch“ las sich das grüne „Keine Fehler gefunden“ so): neutral, mit der Grenze dazu
-      else out += (c.lt.length ? ltHtml(c.input, c.lt, lang, false) : '<p class="hint lt-none">LanguageTool hat nichts gefunden.</p>') + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Es findet nicht jeden Grammatikfehler und prüft nicht, ob die Bedeutung passt.</p>`;
+      else out += (c.lt.length ? ltHtml(c.input, c.lt, lang, false) : '<p class="hint lt-none">LanguageTool hat nichts gefunden.</p>') + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>.</p>`;
     }
   }
   // Beim ersten Kontakt auch bei richtiger Antwort: Die Geschichte hinter dem Bild hilft beim Merken
   if (!originShown) out += originLine;
-  if (c.result === 'bad' && ex.type === 'free' && !c.gaveUp && c.input && !(DB.used && DB.used.accept)) out += `<p class="hint">Gibt es mehrere richtige Übersetzungen und deine ist eine davon, tipp auf „Meine ist auch richtig“. Die App merkt sich deine Fassung.</p>`;
   if (!(r.kind === 'trap' || r.kind === 'gen' || r.kind === 'form')) { const own = ex.type === 'gen' && ex.data.trap ? trapMeta(lang, ex.data.trap) : null; const tl = own ? own.label : ex.type === 'gen' ? GENS[ex.gen].label : (tr && tr.id !== 'eigene' ? tr.label : ''); if (tl) out += `<p class="src">Thema: ${esc(tl)}</p>`; }
-  if (!(DB.used && DB.used.lookup)) out += `<p class="src">Tipp auf ein Wort der Lösung, um es nachzuschlagen.</p>`;
   if (item && item.tat) out += `<p class="src">Quelle: Tatoeba${item.tat.owner ? ', ' + esc(item.tat.owner) : ''} (${esc(item.tat.license)})${item.tat.audio ? `. Aufnahme: ${item.tat.audio.attr ? `<a href="${esc(item.tat.audio.attr)}" target="_blank" rel="noopener">${esc(item.tat.audio.author)}</a>` : esc(item.tat.audio.author)}` : ''}</p>`;
   return out;
 }
@@ -604,7 +601,6 @@ function roundTasksHtml(list, lang){
   return `<ul class="rks">${list.slice().sort((a, b) => rank(a) - rank(b)).map(x => roundTaskHtml(x, lang)).join('')}</ul>`;
 }
 const topicGo = t => (t.trap && t.trap !== 'eigene' ? `data-a="trapgo" data-t="${t.trap}"` : t.gen ? `data-a="form" data-g="${t.gen}"` : '');
-const backLine = r => ((r.res || []).some(x => x.id && !x.good) ? '<p class="legend">Falsche Sätze kommen morgen wieder.</p>' : '');
 // Thema im Fehlermodell zu einem Thema der Runde: das eigene, bei Uhrzeiten und Genus das der Aufgaben (zeit, zahl, genus), wenn es nur eins ist
 function modelIdOf(t){
   const own = [...new Set(t.list.map(y => y.trap).filter(Boolean))];
@@ -651,7 +647,7 @@ function oneTopicHtml(r, t){
   const links = !off.length ? '' : (sheet ? `<button type="button" class="link" data-a="topic" data-t="${t.trap}">Regel und Beispiele</button>` : '')
     + (!['trap', 'form'].includes(r.kind) && topicGo(t) ? `<button type="button" class="link" ${topicGo(t)}>Thema üben</button>` : '');
   const det = off.length ? `<div class="tdet">${roundTasksHtml(off, lang)}${links ? `<p class="rk-links">${links}</p>` : ''}</div>` : '';
-  return `<h2 class="grp">Thema dieser Runde</h2>${lead}<div class="rows">${head}${det}</div>${backLine(r)}`;
+  return `<h2 class="grp">Thema dieser Runde</h2>${lead}<div class="rows">${head}${det}</div>`;
 }
 // Runden mit mehreren Themen (seit 24.78): Themen, die durch die Runde „klar über Schnitt“ wurden oder es nicht mehr sind, oben
 // mit Schätzung und Stand vor der Runde. Etwa zweimal im Monat; ein Wechsel ändert, was die App tut (Grundlagensätze bei
@@ -697,8 +693,7 @@ function topicsHtml(r){
   }).join('');
   S.topicEnter = false;
   const more = rest > 0 ? `<p class="t-more"><button type="button" class="link" data-a="topicsall" aria-expanded="${S.topicsAll ? 'true' : 'false'}">${S.topicsAll ? 'Weniger zeigen' : `und ${plural(rest, 'weiteres Thema', 'weitere Themen')} ohne Fehler`}</button></p>` : '';
-  const back = backLine(r);
-  return `${clearChangeHtml(r, tps)}<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}${back}`;
+  return `${clearChangeHtml(r, tps)}<h2 class="grp">Themen dieser Runde</h2>${bundle}<div class="rows">${rows}</div>${more}`;
 }
 // Bonus „Eigener Satz“: ein Ausdruck aus der Runde in einem selbst formulierten Satz. Bei Sätzen mit Lücke ist es die Lücke
 // (der Grammatikpunkt), sonst das Inhaltswort, das in der ganzen Satzbank am seltensten vorkommt (Alltagswörter fallen so weg).
@@ -750,7 +745,7 @@ function bonusHtml(r){
   const item = itemById(c.id), tr = trapMeta(lang, c.trap);
   const lt = b.lt === 'loading' ? '<p class="hint"><span class="dots">Wird geprüft</span></p>'
     : typeof b.lt === 'string' ? `<p class="hint">${esc(b.lt)}</p>`
-    : b.lt ? ltHtml(b.ltText || b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.${lang === 'sv' ? ' Für Schwedisch vor allem die Rechtschreibung.' : ''}</p>` : '';
+    : b.lt ? ltHtml(b.ltText || b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>.</p>` : '';
   const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>` : '';
   return `<h2 class="grp">Bonus: eigener Satz</h2><section class="chart bonus">
     <p class="bq">${kick('Schreib einen eigenen Satz mit', lang, b)} ${ex}</p>
@@ -816,7 +811,7 @@ function monthHtml(mo){
   return `<section class="month" aria-label="Rückblick ${MONTHS_FULL[M - 1]}"><p class="mile-eb">Dein ${MONTHS_FULL[M - 1]}</p>
     <div class="kpis month-kpis">${kp.map(([v, l]) => `<div><b>${esc(String(v))}</b><span>${l}</span></div>`).join('')}</div>
     <svg class="cal mcal" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${mo.days} Übungstage im ${MONTHS_FULL[M - 1]}">${out}</svg>
-    <p class="legend">${mo.days} von ${nDays} Tagen geübt. Gefüllt: Tagwerk, Rand: nur etwas geübt.</p>
+    <p class="legend">${mo.days} von ${nDays} Tagen geübt.</p>
     ${mo.year ? `<p class="recap"><b>Dein Jahr ${mo.year.y}:</b> an ${plural(mo.year.days, 'Tag', 'Tagen')} geübt, ${mo.year.n.toLocaleString('de-DE')} Aufgaben${mo.year.secs ? `, ${fmtMin(mo.year.secs)}` : ''}.</p>` : ''}</section>`;
 }
 // Stempel: an Etappentagen mit Siegelrand in der Sprachfarbe (B2); außerhalb des Tagwerks statt des Hakens der Punkt aus „Dein Weg“
@@ -920,7 +915,7 @@ function viewWrite(){
   const ex = w.extra && W_EXTRA[lang].find(x => x.k === w.extra);
   const ltBlock = w.lt === 'loading' ? '<p class="hint"><span class="dots">Wird geprüft</span></p>'
     : typeof w.lt === 'string' ? `<p class="hint">${esc(w.lt)}</p>`
-    : w.lt ? ltHtml(w.text, w.lt, lang, true) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Dein Text wurde dafür an LanguageTool gesendet.${lang === 'sv' ? ' Für Schwedisch prüft es vor allem die Rechtschreibung.' : ''}</p>` : '';
+    : w.lt ? ltHtml(w.text, w.lt, lang, true) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Dein Text wurde dafür an LanguageTool gesendet.</p>` : '';
   return backBar('Text schreiben') + `
     <p class="kicker">${w.restored ? 'Dein Entwurf von vorhin' : kick(`Schreib 4 bis 6 Sätze auf ${L.deName}`, lang, w)}</p>
     ${tlP ? `<p class="de wq wordrow" lang="${lang}">${hangLead(linkWords(tlP, lang))}</p>${w.kickDe ? `<p class="wq-de" lang="de">${esc(w.prompt)}</p>` : ''}` : `<p class="de" lang="de">${esc(w.prompt)}</p>`}
@@ -931,14 +926,14 @@ function viewWrite(){
     ${charbar(lang)}
     ${w.prof ? profileHtml(lang, w.prof, w.extra) : ''}
     ${ltBlock}
-    ${w.copied ? '<p class="hint">Kopiert. Muttersprachler korrigieren ihn etwa in HelloTalk oder Tandem.</p>' : `<p class="hint"><button type="button" class="link dim" data-a="wcopy">Kopieren, um ihn Muttersprachlern zu zeigen</button></p>`}
+    ${w.copied ? '<p class="hint">Kopiert.</p>' : `<p class="hint"><button type="button" class="link dim" data-a="wcopy">Kopieren, um ihn Muttersprachlern zu zeigen</button></p>`}
     ${archiveHtml(lang)}
     <div class="actionbar"><div class="in"><button type="button" class="ghost" data-a="wlt">Online prüfen</button><button type="button" class="primary" data-a="weval">Auswerten</button></div></div>`;
 }
 
 function viewOwn(){
   const o = S.own, lang = o.lang, L = LANG[lang];
-  return backBar('Eigenen Satz eintragen') + noticeHtml() + `<p class="lead-s">Der Satz kommt als neuer Satz in dein Tagwerk und wird wiederholt wie alle anderen. Trag nur Sätze ein, bei denen du sicher bist, dass sie stimmen.</p><section class="form">
+  return backBar('Eigenen Satz eintragen') + noticeHtml() + `<section class="form">
     <label>Auf Deutsch<input type="text" id="ownDe" value="${esc(o.de)}" placeholder="Ich habe den Zug verpasst."></label>
     <label>Auf ${L.deName}<input type="text" id="ownT" class="tw" lang="${lang}" value="${esc(o.t)}" placeholder="${esc(L.ph)}" autocorrect="off" spellcheck="false"></label>
     ${charbar(lang)}
@@ -954,16 +949,16 @@ function viewTat(){
   else if (t.status === 'error') res = `<p class="notice warn">${esc(t.err)}</p>`;
   else if (t.status === 'done') {
     res = t.results.length
-      ? `<p class="hint">Tipp an, was du übernehmen möchtest.</p><div class="rows picklist">${t.results.map((x, i) => `<div class="row pickrow${t.picked[i] ? ' on' : ''}"><button type="button" class="pickbtn" data-a="tatpick" data-i="${i}" aria-pressed="${!!t.picked[i]}"><span class="check" aria-hidden="true"></span><span class="txt"><span class="rt" lang="${lang}">${esc(x.target)}</span><span class="rd">${esc(x.de)}</span></span></button>${x.audio ? `<button type="button" class="speak native" data-a="tatplay" data-i="${i}" aria-label="Aufnahme abspielen">${ICON}</button>` : ''}</div>`).join('')}</div>
-        <p class="src">Aus <a href="https://tatoeba.org" target="_blank" rel="noopener">Tatoeba</a>, nur Sätze von Muttersprachlern (CC BY 2.0 FR). Der farbige Lautsprecher spielt eine echte Aufnahme.</p>`
-      : '<p class="hint">Nichts Neues gefunden. Probier ein anderes Thema oder eine andere Wortform.</p>';
+      ? `<div class="rows picklist">${t.results.map((x, i) => `<div class="row pickrow${t.picked[i] ? ' on' : ''}"><button type="button" class="pickbtn" data-a="tatpick" data-i="${i}" aria-pressed="${!!t.picked[i]}"><span class="check" aria-hidden="true"></span><span class="txt"><span class="rt" lang="${lang}">${esc(x.target)}</span><span class="rd">${esc(x.de)}</span></span></button>${x.audio ? `<button type="button" class="speak native" data-a="tatplay" data-i="${i}" aria-label="Aufnahme abspielen">${ICON}</button>` : ''}</div>`).join('')}</div>
+        <p class="src">Aus <a href="https://tatoeba.org" target="_blank" rel="noopener">Tatoeba</a>, nur Sätze von Muttersprachlern (CC BY 2.0 FR).</p>`
+      : `<p class="hint">Nichts Neues gefunden.${t.mode === 'word' ? ' Gesucht wird genau diese Form.' : ''}</p>`;
   }
   const bar = t.status === 'done' && t.results.length
     ? `<button type="button" class="ghost" data-a="tatgo">Neu suchen</button><button type="button" class="primary" data-a="tatadd"${picked ? '' : ' disabled'}>${picked ? `${plural(picked, 'Satz', 'Sätze')} übernehmen` : 'Nichts ausgewählt'}</button>`
     : `<button type="button" class="primary" data-a="tatgo">Suchen</button>`;
-  return backBar('Beispielsätze suchen') + noticeHtml() + `<p class="lead-s">Echte Sätze von Muttersprachlern mit deutscher Übersetzung, aus der freien Sammlung Tatoeba. Was du übernimmst, kommt als neue Sätze in dein Tagwerk.</p><section class="form">
+  return backBar('Beispielsätze suchen') + noticeHtml() + `<section class="form">
     <div class="seg2" role="radiogroup"><button type="button" role="radio" aria-checked="${t.mode === 'topic'}" data-a="tatmode" data-m="topic">Nach Thema</button><button type="button" role="radio" aria-checked="${t.mode === 'word'}" data-a="tatmode" data-m="word">Nach Wort</button></div>
-    ${t.mode === 'topic' ? `<select id="tatTrap" aria-label="Thema">${trapOpts}</select>` : `<input type="text" id="tatWord" class="tw" lang="${lang}" value="${esc(t.word)}" placeholder="z. B. ${lang === 'sv' ? 'orkar' : 'aprovechar'}" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Wort"><p class="hint">Gesucht wird genau die eingegebene Form, also zum Beispiel „orkar“ statt „orka“.</p>`}
+    ${t.mode === 'topic' ? `<select id="tatTrap" aria-label="Thema">${trapOpts}</select>` : `<input type="text" id="tatWord" class="tw" lang="${lang}" value="${esc(t.word)}" placeholder="z. B. ${lang === 'sv' ? 'orkar' : 'aprovechar'}" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Wort">`}
   </section>${res}<div class="actionbar"><div class="in">${bar}</div></div>`;
 }
 // Lernzeit als Kennzahl, Zahl groß, Einheit darunter: bis 10 Stunden in Minuten („81 Minuten“, nie „1 Stunden“),
@@ -1130,7 +1125,7 @@ function minutesHtml(){
     <div class="kpis mk">${kp.map(([v, lab]) => `<div><b>${v}</b><span>${lab}</span></div>`).join('')}</div>
     ${prevTxt ? `<p class="legend mprev">${prevTxt}</p>` : ''}
     ${ch}${key}${unm}
-    ${sel ? dayCard(sel) : none ? '<p class="legend mhint">In den letzten 14 Tagen nicht geübt.</p>' : DB.used && DB.used.dayTap ? '' : '<p class="legend mhint">Tipp auf einen Tag für Details.</p>'}
+    ${sel ? dayCard(sel) : none ? '<p class="legend mhint">In den letzten 14 Tagen nicht geübt.</p>' : ''}
   </div>`;
 }
 function forecast(lang){
@@ -1164,7 +1159,7 @@ function retTrend(lang){
   });
   g += `<line x1="${L}" x2="${W - R}" y1="${y(0.9)}" y2="${y(0.9)}" class="tgt"/>`;
   return `<svg viewBox="0 0 ${W} ${H}" class="rtsvg" role="img" aria-label="Behalten pro Woche, letzte acht Wochen">${g}</svg>
-  <p class="legend"><span class="tgtl"></span>Ziel 90\u00a0%. Prozent pro Woche ab dem genannten Montag, Wochen mit weniger als 10 Wiederholungen bleiben leer.</p>`;
+  <p class="legend"><span class="tgtl"></span>Ziel 90\u00a0%</p>`;
 }
 // Verlauf: geübte, geschätzt abrufbare und gefestigte Sätze über die Zeit
 function niceStep(max){ const raw = max / 4, p = Math.pow(10, Math.floor(Math.log10(raw || 1))); return [1, 2, 5, 10].map(m => m * p).find(v => v >= raw) || p * 10; }
@@ -1173,7 +1168,7 @@ function progressChart(lang){
   if (!days.length) return '';
   const t = today(), first = days[0], long = dayDiff(t, first) > 400, all = long && S.pcAll;
   const start = long && !all ? addDays(t, -365) : first, span = dayDiff(t, start);
-  if (span < 13) return `<h2 class="grp">Verlauf</h2><p class="legend above">Erscheint, sobald du zwei Wochen dabei bist.</p>`;
+  if (span < 13) return '';
   const step = span > 180 ? 7 : span > 70 ? 3 : 1;
   const pts = []; let cum = start > first ? days.filter(d => d < start).reduce((a, d) => a + (dayLog(d, lang).fresh || 0), 0) : 0, snapFrom = null;
   for (let k = 0; k <= span; k++) {
@@ -1205,12 +1200,10 @@ function progressChart(lang){
   const fmt = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}`; };
   const fmtAx = ds => { const x = dateOf(ds); return span > 300 ? `${MONTHS[x.getMonth()]} ${x.getFullYear()}` : fmt(ds); };
   [0, Math.floor((pts.length - 1) / 2), pts.length - 1].forEach((i, j) => { g += `<text x="${X(i)}" y="${H - 5}" class="xl" text-anchor="${j === 0 ? 'start' : j === 2 ? 'end' : 'middle'}">${fmtAx(pts[i].ds)}</text>`; });
-  const late = snapFrom && snapFrom !== start;
   const rangeSeg = long ? `<div class="seg2 pcr" role="radiogroup">${[[false, 'Letztes Jahr'], [true, 'Seit Beginn']].map(([v, l]) => `<button type="button" role="radio" aria-checked="${!!all === v}" data-a="pcrange" data-v="${v ? 1 : 0}">${l}</button>`).join('')}</div>` : '';
   return `<h2 class="grp">Verlauf</h2>${rangeSeg}<div class="chart">
     <svg viewBox="0 0 ${W} ${H}" class="pcsvg" role="img" aria-label="Verlauf der geübten, abrufbaren und gefestigten Sätze">${g}</svg>
     <p class="legend calleg"><span><i class="lk ln-n"></i>geübt</span><span><i class="lk ln-k"></i>geschätzt abrufbar</span><span><i class="lk ln-m"></i>gefestigt</span></p>
-    ${late ? `<p class="legend">Abrufbar und gefestigt werden seit dem ${fmt(snapFrom)} erfasst.</p>` : !snapFrom ? '<p class="legend">Abrufbar und gefestigt werden ab heute erfasst.</p>' : ''}
   </div>`;
 }
 function viewProgress(){
@@ -1225,7 +1218,7 @@ function viewProgress(){
   const known = Math.round(knownEstimate(lang));
   const secs14 = sumLog(lang, 14, 'secs');
   const rev30 = sumLog(lang, 30, 'rev'), revOk30 = sumLog(lang, 30, 'revOk'), revM30 = sumLog(lang, 30, 'revM'), revMOk30 = sumLog(lang, 30, 'revMOk');
-  const fc = forecast(lang), fcMax = Math.max(1, ...fc.map(f => f.n)), cap = size().maxRev;
+  const fc = forecast(lang), fcMax = Math.max(1, ...fc.map(f => f.n));
   const dist = { anchored:0, mature:0, young:0, neu:0 };
   items.forEach(i => { const st = stOf(i.id); if (!st) dist.neu++; else if ((st.ivl || 0) >= ANCHORED) dist.anchored++; else if ((st.ivl || 0) >= MATURE) dist.mature++; else dist.young++; });
   const collected = DB.own[lang].map(o => ({ id:o.id, de:o.de, target:o.target })).concat(DB.tat[lang].filter(o => !o.auto).map(o => ({ id:o.id, de:o.de, target:o.target })));
@@ -1247,13 +1240,13 @@ function viewProgress(){
     return `<div class="topline"><h1 class="vt">Fortschritt</h1>${gearBtn()}</div>${noticeHtml()}${tabs}
   <section class="today">
     <p class="num">${plural(sd.current, 'Tag', 'Tage')} in Folge</p>
-    <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}. Ein Tagwerk am Tag, egal in welcher Sprache; ein Pausetag pro Woche hält die Serie.</p>
+    <p class="breakdown">Längste Serie: ${plural(sd.longest, 'Tag', 'Tage')}.</p>
     ${firstDate ? `<div class="kpis k4"><div><b>${tot.dayCount.toLocaleString('de-DE')}</b><span>${tot.dayCount === 1 ? 'Übungstag' : 'Übungstage'}</span></div><div><b>${tw.toLocaleString('de-DE')}</b><span>${tw === 1 ? 'Tagwerk' : 'Tagwerke'}</span></div><div><b>${tot.n.toLocaleString('de-DE')}</b><span>${tot.n === 1 ? 'Aufgabe' : 'Aufgaben'}</span></div><div><b>${bigTime(tot.secs)[0]}</b><span>${bigTime(tot.secs)[1]}</span></div></div>${activeLangs().length > 1 ? `<p class="kmeta"><span>Tagwerke:</span>${activeLangs().map(l => `<span class="kmi"><i class="sq rl-${l}-sq"></i>${LANG[l].deName} ${tagwerkCount(l).toLocaleString('de-DE')}</span>`).join('')}</p>` : ''}<p class="kmeta">seit ${firstDate.getDate()}. ${MONTHS[firstDate.getMonth()]} ${firstDate.getFullYear()}</p>` : ''}
   </section>
   <h2 class="grp">Übungstage</h2>
   <div class="chart">${cal.svg}
     <p class="legend calleg"><span><i class="sq ds"></i>Tagwerk Schwedisch</span><span><i class="sq de"></i>Tagwerk Spanisch</span><span><i class="sq db"></i>beide Sprachen</span><span><i class="sq pb"></i>nur etwas geübt</span><span><i class="sq c0 fr"></i>Pausetag, Serie hält</span></p>
-    ${S.calDay ? dayCard(S.calDay) : `<p class="legend chint">${cal.first ? `${cal.active} von ${cal.total} Tagen geübt.${DB.used && DB.used.dayTap ? (cal.scrollable ? ' Wischen für frühere Wochen.' : '') : ` Tipp auf einen Tag für Details${cal.scrollable ? ', wischen für frühere Wochen' : ''}.`}` : 'Noch keine Übungstage.'}</p>`}</div>
+    ${S.calDay ? dayCard(S.calDay) : `<p class="legend chint">${cal.first ? `${cal.active} von ${cal.total} Tagen geübt.` : 'Noch keine Übungstage.'}</p>`}</div>
   ${minutesHtml()}
   ${hoursHtml()}
 
@@ -1275,16 +1268,16 @@ function viewProgress(){
   </section>
   ${progressChart(lang)}
   <h2 class="grp">Behalten, letzte 30 Tage</h2>
-  <div class="chart"><p class="stat">${ret != null ? `<b>${pct(ret)}</b> Von ${rev30} fälligen Sätzen wusstest du ${revOk30} beim ersten Versuch noch.` : rev30 ? `Erst ${plural(rev30, 'Wiederholung', 'Wiederholungen')}. Ab 10 gibt es hier eine Quote.` : 'Noch keine Wiederholungen. Sätze kommen ab dem Tag nach dem ersten Üben wieder.'}</p>
+  <div class="chart"><p class="stat">${ret != null ? `<b>${pct(ret)}</b> Von ${rev30} fälligen Sätzen wusstest du ${revOk30} beim ersten Versuch noch.` : rev30 ? `Erst ${plural(rev30, 'Wiederholung', 'Wiederholungen')}. Ab 10 gibt es hier eine Quote.` : 'Noch keine Wiederholungen.'}</p>
   ${retTrend(lang)}
   ${revM30 >= 10 ? `<p class="legend">Bei gefestigten Sätzen: ${pct(revMOk30 / revM30)} (${revMOk30} von ${revM30}).</p>` : ''}
-  ${ret != null ? `<p class="legend">Die Wiederholungen sind so geplant, dass du etwa 90 % noch weißt. ${ret < 0.8 && retSure ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 && retSure ? ((DB.settings.niveau || 'mittel') === 'fort' ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst deutlich darüber. Wenn dir die Sätze leicht fallen: Das Niveau <button type="button" class="link inl" data-a="settings">„Fortgeschritten“</button> bringt längere und schwerere.') : ret < 0.8 || ret > 0.95 ? `Für ein sicheres Urteil sind ${rev30} Wiederholungen noch zu wenige.` : 'Du liegst im Plan.'}</p>` : ''}</div>
+  ${ret != null ? `<p class="legend">Ziel: etwa 90 %. ${ret < 0.8 && retSure ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 && retSure ? ((DB.settings.niveau || 'mittel') === 'fort' ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst deutlich darüber. Wenn dir die Sätze leicht fallen: Das Niveau <button type="button" class="link inl" data-a="settings">„Fortgeschritten“</button> bringt längere und schwerere.') : ret < 0.8 || ret > 0.95 ? `Für ein sicheres Urteil sind ${rev30} Wiederholungen noch zu wenige.` : 'Du liegst im Plan.'}</p>` : ''}</div>
   <h2 class="grp">Stand der Sätze</h2>
   <div class="chart"><div class="stack" aria-hidden="true">${['anchored', 'mature', 'young', 'neu'].map(k => dist[k] ? `<span class="s-${k}" style="flex:${dist[k]}"></span>` : '').join('')}</div>
   <p class="legend distline"><span><span class="sq s-anchored"></span>${dist.anchored} <button type="button" class="term" data-a="term" data-k="verankert">verankert</button></span><span><span class="sq s-mature"></span>${dist.mature} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button></span><span><span class="sq s-young"></span>${dist.young} im Aufbau</span><span><span class="sq s-neu"></span>${dist.neu} neu</span></p></div>
   <h2 class="grp">Wiederholungen der nächsten Tage</h2>
   <div class="chart">${fc.every(f => !f.n) ? '<p class="stat">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
-  ${fc.some(f => f.n > cap) ? `<p class="legend">Höchstens ${cap} je Tagwerk, der Rest kommt am Tag darauf.</p>` : ''}</div>
+  </div>
   ${topicListHtml(lang)}
   ${errorWaysHtml(lang)}
   ${writingTrendHtml(lang)}
@@ -1322,7 +1315,7 @@ function storeRow(){
   if (!STORE.own) STORE.own = JSON.stringify(DB).length;
   const warn = storeUsed() >= STORE_WARN;
   const other = STORE.other >= 10240 ? ` Davon ${fmtMB(STORE.other)} von anderen Seiten unter ${esc(location.host || 'dieser Adresse')}.` : '';
-  const pers = STORE.persisted === true ? ' Der Browser behält die Daten dauerhaft.' : STORE.persisted === false ? ' Der Browser darf die Daten bei Platzmangel löschen.' : '';
+  const pers = STORE.persisted === false ? ' Der Browser darf die Daten bei Platzmangel löschen.' : '';
   const text = ((warn ? 'Der Speicher wird knapp. Exportier bitte ein Backup.' : '') + other + pers).trim();
   return `<div class="row static store${warn ? ' warn' : ''}"><span class="txt"><span class="rt">Gespeichert: ${fmtMB(storeUsed())} von etwa 5\u00a0MB</span><span class="mbar" role="img" aria-label="${storePct()} % belegt"><span style="width:${Math.max(2, storePct())}%"></span></span>${text ? `<span class="rd">${text}</span>` : ''}${STORE.persisted === false ? '<button type="button" class="link" data-a="persist">Dauerhaft speichern</button>' : ''}</span></div>`;
 }
@@ -1332,37 +1325,35 @@ function viewSettings(){
   const autoN = DB.tat[S.lang].filter(o => o.auto).length;
   return backBar('Einstellungen', S.settingsFrom || 'home') + noticeHtml() + `
   <h2 class="grp">Länge des Tagwerks</h2>
-  <p class="setl-n">Gilt ab dem nächsten Tagwerk.</p>
   <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>${v.newPer} neue Sätze, höchstens ${v.maxRev} Wiederholungen</span></button>`).join('')}</div>
   <h2 class="grp">Sprache beim Start</h2>
   <div class="seg2" role="radiogroup">${[['auto', 'Nach Bedarf'], ['last', 'Zuletzt gewählte']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.langMode || 'auto') === k}" data-a="langmode" data-v="${k}">${l}</button>`).join('')}</div>
-  <p class="setl-n">${(DB.settings.langMode || 'auto') === 'auto' ? 'Die App nimmt die Sprache, in der mehr fällig ist oder die länger nicht dran war. Ein Wechsel oben auf „Heute“ gilt bis morgen.' : 'Die App öffnet in der zuletzt gewählten Sprache.'}</p>
+  ${(DB.settings.langMode || 'auto') === 'auto' ? '<p class="setl-n">Die Sprache, in der mehr fällig ist.</p>' : ''}
   <h2 class="grp">Mein Niveau</h2>
   <div class="seg3" role="radiogroup">${[['grund', 'Grundlagen'], ['mittel', 'Mittel'], ['fort', 'Fortgeschritten']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.niveau || 'mittel') === k}" data-a="niveau" data-v="${k}">${l}</button>`).join('')}</div>
-  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst. Einfache nur in Themen klar über deinem Schnitt. Sichere Grammatik-Übungen kommen seltener, Lesetexte sind nach Schwierigkeit sortiert.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze ab Mittelstufe reichen für etwa zwei Wochen. Schalte unten „Neue Sätze automatisch von Tatoeba holen“ ein, dann kommen danach lange Sätze passend zu den Themen nach.' : ''}</p>
+  <p class="setl-n">${{ grund:'Kurze, einfache Sätze zuerst.', mittel:'Neue Sätze aus allen Stufen, gemischt.', fort:'Lange und anspruchsvolle Sätze zuerst.' }[DB.settings.niveau || 'mittel']}${DB.settings.niveau === 'fort' && !DB.settings.refill ? ' Die eingebauten Sätze reichen dafür etwa zwei Wochen, danach hilft „Neue Sätze automatisch von Tatoeba holen“.' : ''}</p>
   <h2 class="grp">Vorlesen</h2>
   <div class="rows">
-    <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.autoplay}" data-a="autoplay"><span class="txt"><span class="rt">Lösung nach dem Prüfen vorlesen</span><span class="rd">Verbindet Schriftbild und Aussprache. Unterwegs ohne Kopfhörer besser aus.</span></span><span class="sw" aria-hidden="true"></span></button>
+    <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.autoplay}" data-a="autoplay"><span class="txt"><span class="rt">Lösung nach dem Prüfen vorlesen</span></span><span class="sw" aria-hidden="true"></span></button>
   </div>
   ${navigator.vibrate ? `<h2 class="grp">Vibration</h2>
   <div class="rows">
-    <button type="button" class="row toggle" role="switch" aria-checked="${DB.settings.haptics !== false}" data-a="haptics"><span class="txt"><span class="rt">Kurz vibrieren nach dem Prüfen</span><span class="rd">Einmal bei richtig, zweimal bei falsch</span></span><span class="sw" aria-hidden="true"></span></button>
+    <button type="button" class="row toggle" role="switch" aria-checked="${DB.settings.haptics !== false}" data-a="haptics"><span class="txt"><span class="rt">Kurz vibrieren nach dem Prüfen</span></span><span class="sw" aria-hidden="true"></span></button>
   </div>` : ''}
   <h2 class="grp">Nachschub</h2>
   <div class="rows">
-    <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.refill}" data-a="refill"><span class="txt"><span class="rt">Neue Sätze automatisch von Tatoeba holen</span><span class="rd">Sobald die eingebauten Sätze zur Neige gehen und du online bist. Mit deinem Fortschritt werden die Sätze länger.${autoN ? ` Bisher ${autoN} Sätze für ${L.deName}.` : ''}</span></span><span class="sw" aria-hidden="true"></span></button>
+    <button type="button" class="row toggle" role="switch" aria-checked="${!!DB.settings.refill}" data-a="refill"><span class="txt"><span class="rt">Neue Sätze automatisch von Tatoeba holen</span>${autoN ? `<span class="rd">Bisher ${autoN} Sätze für ${L.deName}.</span>` : ''}</span><span class="sw" aria-hidden="true"></span></button>
   </div>
   <h2 class="grp">Daten</h2>
   <div class="rows">
     ${storeRow()}
     <button type="button" class="row" data-a="export"><span class="txt"><span class="rt">Backup exportieren</span><span class="rd">Dein Fortschritt liegt nur auf diesem Gerät. ${DB.lastBackup ? `Letztes Backup am ${dateOf(DB.lastBackup).getDate()}. ${MONTHS_FULL[dateOf(DB.lastBackup).getMonth()]} ${dateOf(DB.lastBackup).getFullYear()}.` : 'Noch kein Backup gemacht.'}</span></span></button>
-    ${canShareBackup() ? '<button type="button" class="row" data-a="shareBackup"><span class="txt"><span class="rt">Backup teilen</span><span class="rd">Etwa in Google Drive oder per Mail sichern</span></span></button>' : ''}
+    ${canShareBackup() ? '<button type="button" class="row" data-a="shareBackup"><span class="txt"><span class="rt">Backup teilen</span></span></button>' : ''}
     <label class="row"><span class="txt"><span class="rt">Backup einspielen</span><span class="rd">Ersetzt den aktuellen Stand. Danach lässt es sich rückgängig machen.</span></span><input type="file" id="importFile" hidden></label>
     ${['sv', 'es'].map(l => `<button type="button" class="row danger${S.armed === 'reset:' + l ? ' armed' : ''}" data-a="reset" data-l="${l}"><span class="txt"><span class="rt">${S.armed === 'reset:' + l ? 'Wirklich zurücksetzen?' : `${LANG[l].deName} zurücksetzen`}</span><span class="rd">${S.armed === 'reset:' + l ? 'Löscht Fortschritt, Statistik und gesammelte Sätze dieser Sprache. Nicht rückgängig zu machen.' : 'Löscht Fortschritt und gesammelte Sätze dieser Sprache'}</span></span></button>`).join('')}
   </div>
   <h2 class="grp">Über Tagwerk</h2>
-  <p class="src mt0">Die Wiederholungen plant FSRS-6, dasselbe Verfahren wie in Anki. Lernminuten werden pro Aufgabe gemessen, Pausen über zwei Minuten zählen nicht. Internet brauchen nur die Beispielsätze von Tatoeba, die Textprüfung mit LanguageTool und das Wörterbuch.</p>
-  <p class="src">Version ${esc(APP_VERSION)}</p>`;
+  <p class="src mt0">Version ${esc(APP_VERSION)}</p>`;
 }
 function render(){
   if (S.view !== 'radio' && S.radio) stopRadio();

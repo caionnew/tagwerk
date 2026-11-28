@@ -310,15 +310,15 @@ function topicListHtml(lang){
   const est = M.fitted ? M.topics.filter(x => x.n >= MODEL.MIN_N) : [], known = new Set(est.map(x => x.id));
   const rest = topicIds(lang).filter(id => !known.has(id) && trapMeta(lang, id));
   const restLine = rest.length ? `<p class="legend">${est.length ? 'Noch ohne Schätzung' : 'Regel und Beispiele'}: ${rest.map((id, i) => nobr(`<button type="button" class="link inl" data-a="topic" data-t="${id}">${esc(keepHyph(trapLabel(lang, id)))}</button>${i < rest.length - 1 ? ',' : '.'}`)).join(' ')}</p>` : '';
-  if (!est.length) return `${head}<div class="chart"><p class="legend m0">Schätzungen erscheinen, sobald drei Themen genug Aufgaben haben.</p>${restLine}</div>`;
+  if (!est.length) return restLine ? `${head}<div class="chart">${restLine.replace('class="legend"', 'class="legend m0"')}</div>` : '';
   const max = modelScale(est, M.mu), arrows = C.ready;
   const rows = est.map((x, i) => {
     const c = C.topics[x.id], label = trapLabel(lang, x.id), open = topicOpen(lang, x.id, true), clear = cl.has(x.id);
     const aria = modelAria(label, x) + (clear ? ', klar über Schnitt' : '') + (arrows && c && c.lvl ? `, ${changeWord(c)}` : '');
     return `<${open || 'div'} class="mrow${i === est.length - 1 ? ' mlast' : ''}" aria-label="${esc(aria)}">${mLine(esc(keepHyph(label)), (arrows ? changeSlot(c) : '') + `<span class="mval">${pctPill(x.mean, clear)}</span>`)}${modelStripHtml(x, M.mu, max)}</${open ? 'button' : 'div'}>`;
   }).join('');
-  const change = arrows ? changeKeyHtml() : C.from ? `<p class="legend">Ab ${fmtDayShort(C.from)} zeigen Pfeile, ob ein Thema besser oder schlechter läuft als in den vier Wochen davor.</p>` : '';
-  return `${head}<div class="chart"><div class="erows">${rows}${modelAxisHtml(max)}</div><p class="legend">${modelKeyHtml(M.mu, { clear:true })}</p>${change}<p class="legend">Tipp auf ein Thema für deine Zahlen und die Regel.</p>${restLine}</div>`;
+  const change = arrows ? changeKeyHtml() : '';
+  return `${head}<div class="chart"><div class="erows">${rows}${modelAxisHtml(max)}</div><p class="legend">${modelKeyHtml(M.mu, { clear:true })}</p>${change}${restLine}</div>`;
 }
 // Karte „Wie du Fehler machst“ im Sprach-Tab (bis 24.74 „Fehler“ mit dem Reiter „Thema“, der jetzt die Themenliste ist).
 // Übungsart: Fehlerquote mit demselben Modell wie die Themen (Vergessen, Schnitt der Übungsarten, rot wie jede Fehlerquote).
@@ -328,7 +328,7 @@ function errorWaysHtml(lang){
   const s = errStats(lang, 30), hard = hardSentences(lang), T = typeModel(lang), tot = Object.values(s.e).reduce((a, x) => a + x, 0);
   const types = T.fitted ? T.topics.filter(x => x.n >= MODEL.MIN_N && ERR_TYPES[x.id]) : [];
   const head = '<h2 class="grp">Wie du Fehler machst</h2>';
-  if (!types.length && tot < 5 && !hard.length) return `${head}<div class="chart"><p class="legend m0">Erscheint, sobald drei Übungsarten genug Aufgaben haben.</p></div>`;
+  if (!types.length && tot < 5 && !hard.length) return '';
   const tab = ['t', 'e', 's'].includes(S.errTab) ? S.errTab : types.length ? 't' : hard.length ? 's' : 'e';
   const seg = `<div class="minseg errseg" role="radiogroup">${[['t', 'Übungsart'], ['e', 'Fehlerart'], ['s', 'Sätze']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${tab === k}" data-a="errtab" data-t="${k}">${l}</button>`).join('')}</div>`;
   let body = '', note = '';
@@ -338,15 +338,14 @@ function errorWaysHtml(lang){
       return `<${tap ? `button type="button" data-a="topic" data-t="${i.trap}"` : 'div'} class="mrow msent${last(j, hard.length)}">${mLine(`<span lang="${lang}">${esc(i.target)}</span>`, `<span class="mpct">${st.lapses}×</span>`, esc(i.de))}${tap ? `<span class="msub stp">${esc(keepHyph(trapLabel(lang, i.trap)))}</span>` : ''}</${tag}>`; }).join('')}</div>`;
     const pat = hardPattern(lang, hard);
     note = !hard.length ? 'Gerade kein Satz, den du bei Wiederholungen mehrmals nicht wusstest.'
-      : `${pat ? `<b>${esc(keepHyph(trapLabel(lang, pat.trap)))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst, das Tagwerk bringt sie öfter. Tipp auf einen Satz für die Regel dazu.`;
+      : `${pat ? `<b>${esc(keepHyph(trapLabel(lang, pat.trap)))}</b> steckt in ${pat.n} von ${hard.length} Sätzen. ` : ''}Mindestens zweimal nicht gewusst.`;
   } else if (tab === 't') {
-    if (!types.length) note = 'Erscheint, sobald drei Übungsarten genug Aufgaben haben.';
+    if (!types.length) note = 'Noch zu wenige Aufgaben.';
     else {
       const max = modelScale(types, T.mu);
       body = `<div class="erows">${types.map((x, i) => `<div class="mrow${last(i, types.length)}" aria-label="${esc(modelAria(ERR_TYPES[x.id], x))}">${mLine(esc(ERR_TYPES[x.id]), `<span class="mval">${pctPill(x.mean)}</span>`)}${modelStripHtml(x, T.mu, max)}</div>`).join('')}${modelAxisHtml(max)}</div><p class="legend">${modelKeyHtml(T.mu, { mu:'Schnitt der Übungsarten' })}</p>`;
-      note = 'Freies Schreiben ist schwerer als Antippen, das ist normal.';
     }
-  } else if (tot < 5) note = 'Zählt nur getippte Antworten. Noch zu wenige für eine Aufteilung.';
+  } else if (tot < 5) note = 'Noch zu wenige getippte Fehler.';
   else {
     // Aufteilung der Fehler, keine Fehlerquote: grau gestapelt, Anzahlen statt Prozent, damit „94 %“ nicht wie „94 % falsch“ aussieht
     const ks = Object.keys(ERR_KINDS).filter(k => s.e[k]).sort((a, b) => s.e[b] - s.e[a]);
@@ -354,10 +353,10 @@ function errorWaysHtml(lang){
       <div class="erows">${ks.map((k, i) => `<div class="mrow${last(i, ks.length)}">${mLine(`<i class="sq ${KIND_CLS[i]}"></i>${ERR_KINDS[k][0]}`, `<span class="mpct">${s.e[k]}</span>`, ERR_KINDS[k][1])}</div>`).join('')}</div>`;
     const top = ks[0];
     note = top === 'order' && lang === 'sv' ? 'Bei der Wortstellung helfen die Themen <button type="button" class="link inl" data-a="topic" data-t="inversion">Inversion</button> und ' + nobr('<button type="button" class="link inl" data-a="topic" data-t="bisats">Nebensatz</button>.')
-      : top === 'spell' ? 'Meist Tippfehler. Das Wissen sitzt, es hapert an der Schreibung.'
+      : top === 'spell' ? 'Meist Tippfehler.'
       : 'Wie oft du je Übung falsch liegst, zeigt ' + nobr('<button type="button" class="link inl" data-a="errtab" data-t="t">Übungsart</button>.');
   }
-  return `${head}<div class="chart">${seg}${body}<p class="legend">${note}</p></div>`;
+  return `${head}<div class="chart">${seg}${body}${note ? `<p class="legend">${note}</p>` : ''}</div>`;
 }
 // Wann wird geübt? Aufgaben pro Stunde, letzte 60 Tage: die Verteilung über den Tag und die zwei häufigsten Stunden
 function hoursHtml(){

@@ -236,7 +236,7 @@ function handleLaunch(){
     S.lang = lang; DB.settings.lang = lang;
     S.own = { lang, de:'', t:shared.slice(0, 240) };
     S.view = 'own';
-    S.notice = { text:`Geteilter Text übernommen (${LANG[lang].deName}). Kürze ihn bei Bedarf auf einen Satz und ergänze die Übersetzung.`, kind:'ok' };
+    S.notice = { text:`Geteilter Text übernommen (${LANG[lang].deName}).`, kind:'ok' };
     return true;
   }
   if (go === 'daily') { startRun('daily'); return true; }

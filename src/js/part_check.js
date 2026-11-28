@@ -471,7 +471,6 @@ function finishAnswer(r, ex, c){
     const g = c.result === 'ok' ? 3 : c.result === 'near' ? 2 : 1;
     c.nextIvl = FSRS.review(DB.st[ex.id] || {}, g, today(), true).ivl;
   }
-  if (ex.type === 'free') { DB.used = DB.used || {}; DB.used.mic = (DB.used.mic || 0) + 1; }
   answered(r, c); render(); scrollFb(); autoSpeak(r, ex);
 }
 // Nach der Antwort: Bedenkzeit merken und das Tagwerk mit der Rückmeldung speichern (Pause oder Neustart verlieren sie nicht)

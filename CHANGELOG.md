@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.101.0
+**Zwei neue Reihen, jede in einer eigenen Form: „La noche de los transistores“ (Spanisch, B2) und „Två mammor“ (Schwedisch, B1).**
+- **La noche de los transistores (23-F, „Du entscheidest“, fünf Teile):** der Putschversuch vom 23. Februar 1981, von 18.23 Uhr bis zum „pacto del capó“ am Mittag danach, den Demonstrationen vom 27. Februar und der Freigabe der Geheimdokumente am 25. Februar 2026, dem Todestag Tejeros. Jeder Teil endet an einer echten Entscheidung („¿Qué haces tú?“: am Boden oder sitzen bleiben, weitersenden oder abschalten, im Fernsehen sprechen oder abwarten, bei Tejero bleiben oder gehen), der nächste erzählt, was geschah. Keine erfundenen Figuren.
+- **Två mammor (finnische Kriegskinder, „Briefe und Dokumente“, fünf Teile):** Briefe zwischen Aili in Helsinki, die nur Finnisch kann und schreiben lässt, und Greta auf einem Hof bei Mora, 1942 bis 1946: Zug über Haparanda mit dem Zettel um den Hals, die ersten schwedischen Wörter, Aino schreibt selbst und vergisst ihr Finnisch, Bomben auf Helsinki im Februar 1944, Waffenstillstand, Heimkehr zu einer Mutter, mit der sie nicht mehr sprechen kann. Familien und Briefe erfunden, Zahlen, Wege und Daten belegt (rund 70 000 Kinder, etwa 7 000 blieben).
+- **Formen abgewogen**, je drei mit Noten, in IDEEN.md; die Reihen unterscheiden sich jetzt alle in der Form.
+- **Wörterbuch:** 103 neue spanische Einträge (Putsch, Militär, Radio: golpista, capitán general, emisora, todoterreno …), 81 schwedische (Krieg und Briefe: lapp, karantän, vapenstillestånd, hälsningar …), neue Verben mit geprüften Formen (ocupar, detener, obedecer, gömma, tystna …). Genauer: suelo, estado, fuera, duda, firma und juzgados im Kontext (Boden, Staat, draußen, Zweifel, unterschreibt, vor Gericht gestellt), sätt als „Art, Weise“, åt auch als „für“, andra auch „zweite“.
+- Tests: Beide Reihen halten alle Regeln aus docs/REIHEN.md ein. Speicherstand unverändert.
+
 ## 24.100.0
 **„Was ist echt?“ kürzer.**
 - Bei beiden Reihen höchstens zwei Sätze: was erfunden ist, dass der Rest belegt ist (Quellen unter jedem Teil), wie Gesagtes wiedergegeben wird. Los 33 von 347 auf 170 Zeichen, Natten på Sveavägen von 211 auf 112.

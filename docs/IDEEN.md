@@ -63,7 +63,7 @@ So entsteht ein Paket:
 
 1. **Neue Sätze beim ersten Mal richtig, je Thema und Monat (B+, Anzeige ab Januar):** „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30.“ Misst, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für bekannte Sätze und wächst vor allem mit der Zeit. Gezählt wird seit 24.61.0 (`DB.first`, unsichtbar), immer in derselben Übungsform und getrennt nach Stufe. Anzeige gestalten, wenn zwei Monate Daten da sind, mit echtem Backup: nur gleiche Stufe im Vergleich (bei „Fortgeschritten“ B2), Anzahlen statt Prozent bei kleinen Mengen. Ersetzt die Wochenbilanz zum Schwerpunkt, die an wechselnden Übungsarten und Niveaus gescheitert wäre.
 
-2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, Los 33 seit 24.99.0. Weitere Pakete auf Wunsch, je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
+2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, Los 33 seit 24.99.0, La noche de los transistores und Två mammor seit 24.101.0. Weitere Pakete auf Wunsch, je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
 
 Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
@@ -145,7 +145,15 @@ du entscheidest, erst „Was würdest du tun?“, dann was geschah (B); Reisetag
 **Form je Geschichte (entschieden 28.11.):** kreative Entscheidung pro Reihe, kein Standard, und die Reihen sollen sich
 unterscheiden: möglichst jede in einer Form, die noch keine hat, nie zweimal dieselbe hintereinander. Mit Figur, ohne Figur, viele
 Stimmen, Briefe, ein Gegenstand, je nachdem, was der Stoff trägt; bei jedem Thema unten steht die gewählte Form mit Grund. Vergeben:
-Wie es geschah (Palme), erfundene Figur (Los 33).
+Wie es geschah (Palme), erfundene Figur (Los 33), du entscheidest (23-F), Briefe (Två mammor).
+
+**Abwägung Paket 3 (28.11.):**
+- 23-F: du entscheidest (A, gewählt: Die Nacht hing an Entscheidungen weniger Menschen, die Frage am Ende jedes Teils macht die
+  Ungewissheit spürbar, die der nächste Teil auflöst); ein Gegenstand erzählt, das Kofferradio (B+: passt zum Titel, hört aber nur
+  und sieht nichts); viele Stimmen, erfundener Abgeordneter, Soldat, Reporterin (A−: Stimmen sind für Beredskap gedacht).
+- Kriegskinder: Briefe (A, gewählt: Der Sprachverlust steht in den Briefen selbst, eine Nachbarin schreibt für die Mutter, das Kind
+  schreibt bald nur noch Schwedisch); das Namensschild erzählt (B+: hängt nur auf den Reisen am Hals, dazwischen sieht es nichts);
+  erfundene Ich-Erzählerin Aino (A−: dieselbe Form wie Los 33, ein Kind als Erzählerin auf B1 schwer glaubhaft).
 
 **Lernfunktionen:** dasselbe Thema über viele Texte, Schlüsselwörter kehren wieder (A, der eigentliche Gewinn); „Bisher“ (A);
 Cliffhanger und Vorschau (A−); Personen und Wörter der Reihe, ohne Vorgriff (A−); „Erinnerst du dich?“, eine Frage zu einem früheren
@@ -160,7 +168,7 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
 **Themen Schwedisch** (Fakten vor dem Schreiben an Quellen prüfen):
 - **Natten på Sveavägen (umgesetzt in 24.98.0):** Palme-Mord, Wie es geschah, 6 Teile, B2: die Nacht, der „33-Jährige“, die
   PKK-Spur, Christer Pettersson, Engström benannt (10.6.2020) und wieder nicht (18.12.2025).
-- **Krigsbarnen (A−):** ein Gegenstand erzählt: das Namensschild, das die Kinder um den Hals trugen, 5 Teile, B1. Eines von rund
+- **Krigsbarnen (A, umgesetzt in 24.101.0 als „Två mammor“, Briefe):** zwei Mütter schreiben sich, 5 Teile, B1. Eines von rund
   70 000 finnischen Kriegskindern in Schweden (1939–45): Abschied, Haparanda, Pflegefamilie, die Sprache vergessen, Rückkehr zu
   einer Mutter, die das Kind nicht mehr versteht. Das Schild sieht alles und versteht keine der beiden Sprachen ganz.
 - **Tre generationer (A):** Familienchronik, weil Sprachwandel an einer Familie greifbar wird, 4 Teile, B1: Rechtschreibreform
@@ -168,7 +176,7 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
 - **Beredskap (A):** viele Stimmen, weil jede eine andere Haltung zur Neutralität zeigt, 6 Teile, B2: Rekrut an der norwegischen
   Grenze, Eisenbahner an den deutschen Urlauberzügen, Journalistin unter Zensur, dänische Juden über den Öresund 1943, die Weißen
   Busse 1945.
-- **Mot Amerika (A−):** Briefe (erst nach La guerra en casa und nicht direkt danach), erfundene Familie aus Småland, Hungerjahre um 1867, Überfahrt, Minnesota, 5 Teile, B1.
+- **Mot Amerika (A−):** Form neu abwägen (Briefe hat Två mammor), erfundene Familie aus Småland, Hungerjahre um 1867, Überfahrt, Minnesota, 5 Teile, B1.
 - **Sverige på tio dagar (A−):** zehn Tage von 1520 bis zum NATO-Beitritt 2024.
 - **Ålandsfrågan 1917–21 (B+)** und **Unionen 1905 (B+):** zwei Unabhängigkeitsfragen, beide ohne Krieg gelöst.
 - **Spanienfrivilliga (B+):** erfundener Waldarbeiter aus Norrland unter den gut 500 schwedischen Freiwilligen; Schwedisch über
@@ -179,11 +187,11 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
 - **B:** Raoul Wallenberg, Dag Hammarskjöld (Absturz 1961), IFK Göteborg 1982, Hammarby und seine Fans über drei Generationen.
 
 **Themen Spanisch:**
-- **La noche de los transistores (A):** 23-F, du entscheidest, 5 Teile, B2: jeder Teil endet an einer echten Entscheidung („¿Qué
+- **La noche de los transistores (A, umgesetzt in 24.101.0):** 23-F, du entscheidest, 5 Teile, B2: jeder Teil endet an einer echten Entscheidung („¿Qué
   harías tú?“: der König vor der Fernsehrede, der Rundfunk, der weitersendet, die Abgeordneten am Boden), der nächste erzählt, was
   geschah. Nicht „Wie es geschah“, das hat schon Palme.
-- **La guerra en casa (A):** Bürgerkrieg, Briefe einer erfundenen Familie über die Front hinweg (der Titel), 6 bis 7 Teile,
-  B2–C1: Madrid belagert, Guernica, Kinder ins Ausland, Exil 1939. Beide Seiten schreiben, die Ereignisse sind belegt.
+- **La guerra en casa (A):** Bürgerkrieg, 6 bis 7 Teile, B2–C1: Madrid belagert, Guernica, Kinder ins Ausland, Exil 1939.
+  Form neu abwägen, Briefe hat jetzt Två mammor; Kandidat: ein Gegenstand erzählt (ein Haus in Madrid, in dem beide Seiten wohnen).
 - **Los 33 (A, umgesetzt in 24.99.0):** Chile 2010, erfundene Reporterin im Campamento Esperanza, 5 Teile, B1, geht gut aus.
 - **El crimen de Cuenca (A−):** Ermittlung ohne Figur, die Wendung trägt allein, 4 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
   verurteilt, 1926 taucht er lebend auf.

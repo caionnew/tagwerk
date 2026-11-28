@@ -126,6 +126,142 @@ Nästan fyrtio år efter natten på Sveavägen finns det alltså inget svar. Vem
          ['Was entscheidet Lennart Guné im Dezember 2025?', ['Es war falsch, Engström zu benennen', 'Die Ermittlung wird neu eröffnet', 'Engström war sicher der Täter'], 'Utredningen ska inte öppnas igen, säger han, men det var fel att peka ut Engström.', 'Vad beslutar Lennart Guné i december 2025?', ['Det var fel att peka ut Engström', 'Utredningen öppnas igen', 'Engström var säkert gärningsmannen']]],
       keep:[['Många är inte övertygade.', 'Viele sind nicht überzeugt.'], ['Frågan lever kvar.', 'Die Frage bleibt.']],
       src:['Polisen, „Palmeutredningen – polisens arbete“ (Beschlüsse vom 10. Juni 2020 und 18. Dezember 2025)', 'SVT, „Världens största mordutredning: beskedet om mordet på Olof Palme“ (2020)'] }
+  ] },
+// Paket 3 (24.101.0): finnische Kriegskinder, „Briefe und Dokumente“. Familien und Briefe erfunden; Zahlen, Wege und Daten geprüft
+// am 28.11.2026 an den Quellen je Teil.
+{ id:'tvamammor', title:'Två mammor', topic:'Geschichte', level:'B1', form:'briefe',
+  teaser:'En flicka från Helsingfors, två mammor och fyra år av brev.',
+  intro:['Under andra världskriget skickas ungefär 70 000 barn från Finland till Sverige för att komma bort från kriget. En av dem är Aino, sex år, som får två mammor: en i Helsingfors och en i Dalarna.',
+    'Im Zweiten Weltkrieg werden rund 70 000 Kinder aus Finnland nach Schweden geschickt, weg vom Krieg. Eines davon ist Aino, sechs Jahre alt, die zwei Mütter bekommt: eine in Helsinki und eine in Dalarna.'],
+  real:'Die Familien und ihre Briefe sind erfunden. Belegt sind die Geschichte der rund 70 000 Kriegskinder, ihre Wege und die Daten des Krieges; Quellen unter jedem Teil.',
+  cast:[['Aili Virtanen', 'erfunden: Mutter in Helsinki, spricht nur Finnisch', 1], ['Aino', 'erfunden: ihre Tochter, sechs Jahre alt', 1],
+    ['fröken Holm', 'erfunden: Nachbarin, Finnlandschwedin, schreibt und liest die Briefe für Aili', 1], ['Veikko', 'erfunden: Ainos Vater, an der Front', 1],
+    ['Greta Lindqvist', 'erfunden: Pflegemutter auf einem Hof bei Mora', 2], ['Erik', 'erfunden: ihr Mann', 2], ['Nils', 'erfunden: ihr Sohn', 3]],
+  words:[['krig', 1], ['front', 1], ['gräns', 1], ['lapp', 1], ['glömma', 1], ['karantän', 2], ['förstå', 2], ['saknad', 3], ['bomb', 3], ['vapenstillestånd', 4], ['adoptera', 4], ['hemma', 5]],
+  parts:[
+    { title:'Kära okända familj', when:'sep 1942', date:'Helsingfors, 14 september 1942',
+      body:`Kära okända familj i Sverige!
+
+Jag vet inte vem ni är, men i morgon reser min dotter Aino till er. Min granne, fröken Holm, skriver det här brevet åt mig på svenska. Själv kan jag bara finska.
+
+Aino är sex år. Hon har ljust hår och är rädd för hundar, men hon älskar katter och sjunger hela dagarna. Hon kan inte ett enda ord svenska.
+
+Varför skickar jag bort henne? Det är krig igen. Hennes pappa Veikko har varit vid fronten sedan förra sommaren, och vi har nästan ingen mat. Många mammor här gör samma sak. Vi tror att barnen får det bättre hos er.
+
+Tåget går norrut till Torneå. Där går barnen över gränsen till Haparanda, och svenska lottor tar emot dem. Det sägs att resan över havet är farlig på grund av minorna. Alla barn får en lapp om halsen med namn och nummer, så att ingen kommer bort.
+
+I kväll har jag packat hennes lilla väska: två klänningar, ett par strumpor och en docka. Jag har också lagt ner ett fotografi av oss tre.
+
+Var snälla mot henne. Hon gråter ofta på kvällen, men en sång brukar hjälpa. Och skriv till mig, jag ber er. Låt henne inte glömma oss.
+
+Många hälsningar från Aili Virtanen.`,
+      q:[['Warum kann Aili nicht selbst auf Schwedisch schreiben?', ['Sie kann nur Finnisch', 'Sie hat keine Zeit', 'Sie ist krank'], 'Själv kan jag bara finska.', 'Varför skriver inte Aili själv på svenska?', ['Hon kan bara finska', 'Hon har inte tid', 'Hon är sjuk']],
+         ['Wo ist Ainos Vater?', ['An der Front', 'In Schweden', 'Im Krankenhaus'], 'Hennes pappa Veikko har varit vid fronten sedan förra sommaren', 'Var är Ainos pappa?', ['Vid fronten', 'I Sverige', 'På sjukhuset']],
+         ['Wozu haben die Kinder einen Zettel um den Hals?', ['Damit niemand verloren geht', 'Damit sie Essen bekommen', 'Damit sie Schwedisch lernen'], 'Alla barn får en lapp om halsen med namn och nummer, så att ingen kommer bort.', 'Varför har barnen en lapp om halsen?', ['Så att ingen kommer bort', 'Så att de får mat', 'Så att de lär sig svenska']]],
+      keep:[['Hon kan inte ett enda ord svenska.', 'Sie kann kein einziges Wort Schwedisch.'], ['Låt henne inte glömma oss.', 'Lasst sie uns nicht vergessen.']],
+      src:['Riksarkivet, „Finska krigsbarn“ (rund 70 000 Kinder, Wege per Schiff, Flugzeug und Bahn über Haparanda)', 'Norwegian SciTech News, „Norway’s history has forgotten the 80 000 Finnish war children“ (Namensschilder um den Hals, Bahn über Haparanda)', 'Yle, „Om de stumma krigsbarnen“ (Bahn über Torneå wegen der Minen auf See)', 'Arvidsjaur kommun, „Krigsbarn från Finland“ (Lottor holen 1942 Kinder in Haparanda ab)'] },
+    { title:'Ett svar från Dalarna', when:'okt 1942', date:'Mora, 10 oktober 1942',
+      hook:'Ett brev kommer tillbaka från Sverige.',
+      recap:['September 1942: Aili Virtanen i Helsingfors skickar sin dotter Aino, sex år, med tåg till Sverige. Hon ber den okända familjen att skriva och att inte låta Aino glömma dem.',
+        'September 1942: Aili Virtanen in Helsinki schickt ihre sechsjährige Tochter Aino mit dem Zug nach Schweden. Sie bittet die unbekannte Familie, zu schreiben und Aino ihre Familie nicht vergessen zu lassen.'],
+      body:`Kära fru Virtanen!
+
+Nu är Aino hos oss, och hon mår bra. Jag heter Greta Lindqvist, och min man Erik och jag har en gård utanför Mora i Dalarna. Vi har två söner, Nils och Olle.
+
+Resan var lång. Efter några dagar i karantän fick Aino åka tåg söderut, och Erik hämtade henne på stationen. Hon hade lappen om halsen och sin lilla väska i handen. Hon sa inte ett ord på hela vägen hem.
+
+De första dagarna åt hon nästan ingenting. På kvällen grät hon och ropade ”äiti”. Vi förstod inte vad hon sa, men vi förstod ändå. Då sjöng jag för henne, fast jag inte kan några finska sånger.
+
+Nu går det bättre. Vi pratar med händerna, och hon har redan lärt sig några ord: mjölk, katt och god natt. Vår katt Missan sover i hennes säng varje natt. Hundar har vi inga, så det behöver ni inte oroa er för.
+
+Fotografiet står på bordet bredvid hennes säng. Varje kväll pekar hon på er och säger era namn.
+
+Jag lovar att vi tar hand om henne som om hon vore vår egen. Fröken Holm får gärna läsa det här brevet för er. Skriv snart, så läser jag era ord för Aino.
+
+Hälsningar från Greta Lindqvist.`,
+      q:[['Wo lebt die Familie Lindqvist?', ['Auf einem Hof bei Mora in Dalarna', 'In Stockholm', 'In Haparanda'], 'min man Erik och jag har en gård utanför Mora i Dalarna', 'Var bor familjen Lindqvist?', ['På en gård utanför Mora i Dalarna', 'I Stockholm', 'I Haparanda']],
+         ['Was ruft Aino abends?', ['„äiti“, das finnische Wort für Mama', 'Den Namen der Katze', '„god natt“'], 'På kvällen grät hon och ropade ”äiti”.', 'Vad ropar Aino på kvällen?', ['”äiti”, det finska ordet för mamma', 'Kattens namn', '”god natt”']],
+         ['Wie verständigen sie sich am Anfang?', ['Mit den Händen', 'Mit einem Wörterbuch', 'Mit Hilfe der Söhne, die Finnisch können'], 'Vi pratar med händerna', 'Hur pratar de med varandra i början?', ['Med händerna', 'Med ett lexikon', 'Med hjälp av sönerna, som kan finska']]],
+      keep:[['Vi förstod inte vad hon sa, men vi förstod ändå.', 'Wir verstanden nicht, was sie sagte, aber wir verstanden trotzdem.'], ['Nu går det bättre.', 'Jetzt geht es besser.']],
+      src:['Norwegian SciTech News (Namensschilder, Ankunft über Haparanda)', 'Malin Ekebom, „Bästa föreståndarinna!“, Helsingfors universitet (Quarantäne nach der Ankunft)', 'Johanna Sköld und Ingrid Söderlind, „Finska barn i svenska hem“, Scandia (Pflegefamilien in ganz Schweden)', 'Siirtolaisuus-Migration, Erinnerungen eines Kriegskindes (keine gemeinsame Sprache, Gesten)'] },
+    { title:'Kära mamma', when:'mars 1944', date:'Mora, 12 mars 1944',
+      hook:'Aino skriver ett brev, alldeles själv.',
+      recap:['Aino har kommit till familjen Lindqvist i Dalarna. I början förstår de inte varandra, men hon lär sig snabbt de första svenska orden.',
+        'Aino ist bei Familie Lindqvist in Dalarna angekommen. Anfangs verstehen sie sich nicht, aber sie lernt schnell die ersten schwedischen Wörter.'],
+      body:`Kära mamma!
+
+Nu kan jag skriva själv. Jag går i skolan, och fröken säger att jag läser bäst i klassen. Vi har så mycket snö att den går upp till fönstret. Nils har lärt mig åka skidor, och jag ramlar nästan aldrig.
+
+Missan har fått fyra ungar. En är grå, och den får jag ha. Jag har kallat den Veikko, som pappa.
+
+Erik har läst i tidningen att det har fallit bomber på Helsingfors. Har det fallit bomber på vårt hus? Är du rädd? Du kan komma hit, det finns plats. Greta säger att du kan sova i mitt rum.
+
+Kram från din Aino!
+
+PS. Kära fru Virtanen, Aino ville skriva alldeles själv, så jag har inte ändrat något. Hon pratar nästan bara svenska nu. I går frågade hon mig hur man säger god natt på finska. Hon hade glömt det, och hon blev så ledsen att hon grät länge. Jag vet inte vad jag ska göra. Kan ni skriva ner några finska ord åt henne?
+
+Vi läste om de tre stora bombnätterna i februari, och vi har tänkt på er varje dag. Saknaden efter er finns här också, även om Aino inte alltid kan säga det.
+
+Hälsningar från Greta.`,
+      q:[['Wer hat Aino das Skifahren beigebracht?', ['Nils', 'Die Lehrerin', 'Erik'], 'Nils har lärt mig åka skidor', 'Vem har lärt Aino åka skidor?', ['Nils', 'Fröken i skolan', 'Erik']],
+         ['Was hat Erik in der Zeitung gelesen?', ['Dass Bomben auf Helsinki gefallen sind', 'Dass der Krieg vorbei ist', 'Dass die Kinder nach Hause fahren'], 'Erik har läst i tidningen att det har fallit bomber på Helsingfors.', 'Vad har Erik läst i tidningen?', ['Att det har fallit bomber på Helsingfors', 'Att kriget är slut', 'Att barnen ska resa hem']],
+         ['Warum ist Aino so traurig?', ['Sie hat vergessen, wie man „gute Nacht“ auf Finnisch sagt', 'Die Katze ist weggelaufen', 'Sie mag die Schule nicht'], 'Hon hade glömt det, och hon blev så ledsen att hon grät länge.', 'Varför blir Aino så ledsen?', ['Hon har glömt hur man säger god natt på finska', 'Katten har sprungit bort', 'Hon tycker inte om skolan']]],
+      keep:[['Nu kan jag skriva själv.', 'Jetzt kann ich selbst schreiben.'], ['Hon pratar nästan bara svenska nu.', 'Sie spricht jetzt fast nur noch Schwedisch.']],
+      src:['Stadt Helsinki, „The great raids against Helsinki 1944“ (die Nächte 6./7., 16./17. und 26./27. Februar)', 'Yle, „Om de stumma krigsbarnen“ (die Kinder vergessen ihr Finnisch)', 'Jyväskylä universitet, Urpelainen, „Språklig och nationell identitet: Finska krigsbarn i Sverige“'] },
+    { title:'Veikko lever', when:'okt 1944', date:'Helsingfors, 2 oktober 1944, och Mora, 20 oktober 1944',
+      hook:'Vapnen tystnar, och någon måste bestämma var Aino hör hemma.',
+      recap:['Aino går i skolan i Dalarna och pratar nästan bara svenska. När hon glömmer hur man säger god natt på finska, ber Greta mamman om hjälp.',
+        'Aino geht in Dalarna zur Schule und spricht fast nur noch Schwedisch. Als sie vergisst, wie man auf Finnisch „gute Nacht“ sagt, bittet Greta die Mutter um Hilfe.'],
+      body:`Kära fru Lindqvist!
+
+Kriget mot Sovjetunionen är slut. I början av september tystnade vapnen vid fronten, och den 19 september skrev Finland under vapenstilleståndet i Moskva. Veikko lever. Han kom hem i förra veckan, mager och tyst, men han lever.
+
+Nu vill vi ha hem vår dotter. Jag vet att det inte går i morgon, men så snart det går. Jag har skrivit ner tjugo finska ord åt henne. Läs dem för henne, är ni snäll.
+
+Tack för allt ni har gjort.
+
+Många hälsningar från Aili Virtanen.
+
+Kära fru Virtanen!
+
+Vilken glädje att er man har kommit hem! Vi har gråtit av lycka här i köket.
+
+Men jag måste vara ärlig mot er. När jag berättade för Aino att hon skulle åka hem, sprang hon ut och gömde sig i ladan. Hon säger att hon vill stanna. Hon minns er, men hon minns inte Finland.
+
+Erik och jag har pratat länge. Vi skulle gärna adoptera henne, om ni gick med på det. Men hon är er dotter, inte vår. Om ni vill ha hem henne, så ska hon komma hem. Det lovar jag.
+
+Era tjugo ord sitter på väggen i hennes rum. Hon kan redan fem.
+
+Hälsningar från Greta Lindqvist.`,
+      q:[['Wann hat Finnland den Waffenstillstand unterschrieben?', ['Am 19. September 1944', 'Anfang August 1944', 'Im Februar 1944'], 'den 19 september skrev Finland under vapenstilleståndet i Moskva', 'När skrev Finland under vapenstilleståndet?', ['Den 19 september 1944', 'I början av augusti 1944', 'I februari 1944']],
+         ['Was macht Aino, als sie hört, dass sie nach Hause soll?', ['Sie versteckt sich in der Scheune', 'Sie packt ihren Koffer', 'Sie schreibt ihrer Mutter'], 'sprang hon ut och gömde sig i ladan', 'Vad gör Aino när hon hör att hon ska åka hem?', ['Hon gömmer sig i ladan', 'Hon packar sin väska', 'Hon skriver till sin mamma']],
+         ['Was verspricht Greta?', ['Wenn die Eltern es wollen, kommt Aino nach Hause', 'Aino bleibt auf jeden Fall in Schweden', 'Sie bringt Aino sofort zurück'], 'Om ni vill ha hem henne, så ska hon komma hem.', 'Vad lovar Greta?', ['Om föräldrarna vill, ska Aino komma hem', 'Aino stannar i Sverige vad som än händer', 'Hon kör hem Aino genast']]],
+      keep:[['Veikko lever.', 'Veikko lebt.'], ['Hon minns er, men hon minns inte Finland.', 'Sie erinnert sich an Sie, aber nicht an Finnland.']],
+      src:['finland100.fi, „Important dates 1944“ (Waffenruhe am 4.9.1944 um 7 Uhr)', 'Wikipedia (englisch), „Continuation War“ (Waffenstillstand von Moskau am 19.9.1944)', 'Doria, „Att få ett gott hem…“: finska krigsbarnsadoptioner i Stockholm 1946–1947 (Pflegeeltern adoptieren)', 'Yle, „Om de stumma krigsbarnen“ (Adoptionen durch die schwedischen Familien)'] },
+    { title:'Hemma', when:'juni 1946', date:'Helsingfors, 8 juni 1946',
+      hook:'Aino kommer hem till en mamma som hon inte kan prata med.',
+      recap:['Kriget mot Sovjetunionen är slut, och Aili vill ha hem sin dotter. Aino vill stanna i Sverige, men Greta lovar att hon ska komma hem om föräldrarna vill det.',
+        'Der Krieg gegen die Sowjetunion ist aus, und Aili will ihre Tochter zurück. Aino will in Schweden bleiben, aber Greta verspricht, dass sie heimkommt, wenn die Eltern es wollen.'],
+      body:`Kära Greta!
+
+Får jag kalla dig Greta nu? Jag tycker att vi är släkt på något sätt.
+
+Aino kom hem i maj. Jag stod på kajen när båten från Stockholm kom in, och jag kände igen henne direkt. Hon var lång nu, och hon hade en lapp om halsen igen. Men hon kände inte igen mig. Hon tog min hand som man tar en främlings hand.
+
+Nu är hon hemma, men hemma betyder inte samma sak för henne som för mig. De första veckorna var svåra. Hon pratade svenska, och jag pratade finska. Fröken Holm fick komma över varje kväll och översätta mellan mor och dotter. Tänk dig det. På natten pratar Aino svenska i sömnen, och ibland ropar hon på dig.
+
+Men nu händer något. I går sa hon ”hyvää yötä” till mig, god natt, utan att jag bad om det. Jag var tvungen att gå ut i köket så att hon inte skulle se mig gråta.
+
+Fröken Holm säger att ungefär 70 000 finska barn har varit i Sverige. Några tusen av dem kommer aldrig tillbaka. Jag förstår deras svenska föräldrar bättre nu.
+
+Tack för att du gav henne ett hem när vi inte kunde. Du är också hennes mamma. Skriv till henne. Dina brev kan hon läsa själv. Mina kan hon inte läsa än.
+
+Hälsningar från Aili.`,
+      q:[['Wie kam Aino nach Hause?', ['Mit dem Schiff aus Stockholm', 'Mit dem Zug über Haparanda', 'Mit dem Flugzeug'], 'Jag stod på kajen när båten från Stockholm kom in', 'Hur kom Aino hem?', ['Med båten från Stockholm', 'Med tåget över Haparanda', 'Med flyg']],
+         ['Wer übersetzt zwischen Mutter und Tochter?', ['Fräulein Holm', 'Veikko', 'Greta'], 'Fröken Holm fick komma över varje kväll och översätta mellan mor och dotter.', 'Vem översätter mellan mor och dotter?', ['Fröken Holm', 'Veikko', 'Greta']],
+         ['Warum geht Aili in die Küche?', ['Damit Aino sie nicht weinen sieht', 'Um Essen zu kochen', 'Um einen Brief zu schreiben'], 'Jag var tvungen att gå ut i köket så att hon inte skulle se mig gråta.', 'Varför går Aili ut i köket?', ['Så att Aino inte ska se henne gråta', 'För att laga mat', 'För att skriva ett brev']]],
+      keep:[['De första veckorna var svåra.', 'Die ersten Wochen waren schwer.'], ['Du är också hennes mamma.', 'Du bist auch ihre Mutter.']],
+      src:['Riksarkivet, „Finska krigsbarn“ (rund 70 000 Kinder, etwa 7 000 blieben in Schweden)', 'Doria, „Att få ett gott hem…“ (Transporte bis 1. Oktober 1948, 1949 noch über 15 000 Kinder in Schweden)', 'Yle, „Om de stumma krigsbarnen“ (Mutter und Kind ohne gemeinsame Sprache)'] }
   ] }
 ],
 es:[
@@ -232,6 +368,106 @@ Abajo, los rescatistas levantan un cartel: «Misión cumplida Chile». Mañana, 
          ['Was verschenkt Mario Sepúlveda?', ['Steine aus der Mine', 'Blumen', 'Briefe'], 'que reparte abrazos y piedras de la mina como regalo', '¿Qué regala Mario Sepúlveda?', ['Piedras de la mina', 'Flores', 'Cartas']]],
       keep:[['Hace frío, pero nadie se va.', 'Es ist kalt, aber niemand geht.'], ['Han pasado 69 días.', '69 Tage sind vergangen.']],
       src:['Wikipedia (englisch), „2010 Copiapó mining accident“ (Uhrzeiten der Rettung, Banner „Misión cumplida Chile“)', 'El Litoral, Chronologie der Rettung (González, Ávalos und Byron, Sepúlveda)', 'RPP, „Minero Florencio Ávalos volvió a nacer“ (dunkle Brille, 15 Minuten)', 'Vanguardia, „Sebastián Piñera y el histórico rescate de los 33 mineros chilenos“ (Urzúa, 54)'] }
+  ] },
+// Paket 3 (24.101.0): 23-F, „Du entscheidest“. Fakten geprüft am 28.11.2026 an den Quellen je Teil; Stand nach der Freigabe der
+// Geheimdokumente am 25.2.2026.
+{ id:'transistores', title:'La noche de los transistores', topic:'Geschichte', level:'B2', form:'wahl',
+  teaser:'El 23 de febrero de 1981, un golpe de Estado contado en decisiones: ¿qué habrías hecho tú?',
+  intro:['El 23 de febrero de 1981, guardias civiles armados asaltan el Congreso de los Diputados en Madrid. Durante unas dieciocho horas, la joven democracia española depende de lo que deciden unas pocas personas.',
+    'Am 23. Februar 1981 stürmen bewaffnete Guardias Civiles das spanische Parlament in Madrid. Etwa achtzehn Stunden lang hängt die junge Demokratie davon ab, was wenige Menschen entscheiden.'],
+  real:'Keine erfundenen Figuren; die Frage am Ende jedes Teils geht an dich. Tejeros Ruf steht im Original, sonst Gesagtes sinngemäß; Quellen unter jedem Teil.',
+  cast:[['Antonio Tejero', 'Oberstleutnant der Guardia Civil, stürmt das Parlament', 1], ['Manuel Gutiérrez Mellado', 'General, stellvertretender Regierungschef', 1],
+    ['Adolfo Suárez', 'scheidender Regierungschef', 1], ['Leopoldo Calvo-Sotelo', 'soll an diesem Tag Regierungschef werden', 1],
+    ['Santiago Carrillo', 'Chef der Kommunisten', 2], ['Emilio Olabarrieta', 'Techniker der Cadena SER', 2], ['Jaime Milans del Bosch', 'Generalkapitän in Valencia', 2],
+    ['José María García', 'Sportreporter, berichtet in der Nacht live', 3], ['Francisco Laína', 'leitet die Übergangsregierung', 3], ['Juan Carlos I', 'König', 3],
+    ['Alfonso Armada', 'General, dem König nahe', 3]],
+  words:[['diputado', 1], ['escaño', 1], ['guardia', 1], ['disparo', 1], ['golpe', 2], ['tanque', 2], ['emisora', 2], ['ocupar', 2], ['golpista', 3], ['mensaje', 4], ['rendirse', 4], ['manifestación', 5]],
+  parts:[
+    { title:'Las seis y veintitrés', when:'23 feb 1981', date:'Madrid, lunes 23 de febrero de 1981, por la tarde',
+      body:`Es lunes por la tarde y el Congreso de los Diputados está lleno. Hace casi un mes que Adolfo Suárez anunció su dimisión como presidente del Gobierno, y hoy los diputados votan si Leopoldo Calvo-Sotelo será su sucesor. España vive tiempos difíciles: hay crisis económica, los atentados de ETA son constantes y en los cuarteles hay militares que no aceptan la democracia. Franco murió hace poco más de cinco años.
+
+En el salón hay periodistas, fotógrafos y cámaras de Televisión Española. La radio retransmite la sesión en directo.
+
+A las seis y veintitrés de la tarde se oyen ruidos en la puerta. Entra un teniente coronel de la Guardia Civil con una pistola en la mano: Antonio Tejero. Con él entran varios guardias con metralletas. En total, más de un centenar de guardias civiles ocupan el edificio. Tejero sube a la tribuna.
+
+El vicepresidente del Gobierno, el general Manuel Gutiérrez Mellado, de 68 años, se levanta de su escaño y le ordena que se detenga. Los guardias intentan tirarlo al suelo. Entonces Tejero grita: «¡Quieto todo el mundo!». Y empiezan los disparos contra el techo.
+
+Imagina que estás allí, en tu escaño. Las balas pasan por encima de tu cabeza, el ruido es terrible y no sabes qué va a pasar. ¿Qué haces: te tiras al suelo o te quedas sentado?`,
+      q:[['Worüber stimmen die Abgeordneten an diesem Nachmittag ab?', ['Ob Leopoldo Calvo-Sotelo Regierungschef wird', 'Über eine neue Verfassung', 'Ob Adolfo Suárez weitermachen darf'], 'hoy los diputados votan si Leopoldo Calvo-Sotelo será su sucesor', '¿Qué votan los diputados esa tarde?', ['Si Leopoldo Calvo-Sotelo será presidente del Gobierno', 'Una nueva Constitución', 'Si Adolfo Suárez puede seguir']],
+         ['Wer steht auf und stellt sich Tejero entgegen?', ['General Manuel Gutiérrez Mellado', 'Ein Fotograf', 'Leopoldo Calvo-Sotelo'], 'el general Manuel Gutiérrez Mellado, de 68 años, se levanta de su escaño', '¿Quién se levanta y se enfrenta a Tejero?', ['El general Manuel Gutiérrez Mellado', 'Un fotógrafo', 'Leopoldo Calvo-Sotelo']],
+         ['Wie können viele Spanier die Sitzung verfolgen?', ['Das Radio überträgt sie live', 'Erst am nächsten Tag in der Zeitung', 'Per Telefon'], 'La radio retransmite la sesión en directo.', '¿Cómo pueden seguir muchos españoles la sesión?', ['La radio la retransmite en directo', 'En el periódico del día siguiente', 'Por teléfono']]],
+      keep:[['Tejero sube a la tribuna.', 'Tejero steigt ans Rednerpult.'], ['Y empiezan los disparos contra el techo.', 'Und die Schüsse in die Decke beginnen.']],
+      src:['Wikipedia (spanisch), „Golpe de Estado en España de 1981“ (18.23 Uhr, Abstimmung über Calvo-Sotelo)', 'Ara, „¡Quieto todo el mundo!: el 23-F, en 8 instantes“ (Gutiérrez Mellado, Schüsse, Ruf)', 'Fundación Juan March, Zeitungsarchiv 1981 (Radio überträgt die Abstimmung live)'] },
+    { title:'Tres hombres sentados', when:'23 feb 1981', date:'Madrid y Valencia, lunes 23 de febrero de 1981, por la tarde',
+      hook:'Lo que hicieron de verdad los diputados, y lo que pasa mientras tanto en Valencia.',
+      recap:['Lunes 23 de febrero de 1981: mientras el Congreso vota al nuevo presidente del Gobierno, el teniente coronel Antonio Tejero entra con guardias civiles armados. Hay disparos contra el techo.',
+        'Montag, 23. Februar 1981: Während das Parlament über den neuen Regierungschef abstimmt, dringt Oberstleutnant Antonio Tejero mit bewaffneten Guardias Civiles ein. Es fallen Schüsse in die Decke.'],
+      body:`Casi todos hacen lo mismo: se tiran al suelo y se esconden detrás de los escaños. Solo tres hombres no lo hacen. Gutiérrez Mellado sigue de pie frente a los guardias, con los brazos en jarras. Adolfo Suárez, que se había levantado para ayudarlo, vuelve a sentarse en su escaño. Y el líder comunista Santiago Carrillo se queda sentado, inmóvil.
+
+Pronto se sabe algo más: la radio sigue en el aire. Un técnico de la Cadena SER, Emilio Olabarrieta, ha dejado un micrófono abierto sin que los guardias lo noten, y muchos españoles oyen en directo los gritos y las metralletas. La cámara de Televisión Española apunta al techo, pero sigue grabando.
+
+Un capitán anuncia a los diputados que pronto llegará una autoridad militar. Nadie sabe quién es.
+
+Mientras tanto, en Valencia, el capitán general Jaime Milans del Bosch declara el estado de excepción, y decenas de tanques salen a las calles. Ya no hay duda: es un golpe de Estado. A las ocho menos cuarto, soldados ocupan también los estudios de Televisión Española en Madrid.
+
+Ahora imagina que trabajas en una emisora de radio de Madrid. La televisión está ocupada, y nadie sabe si los soldados vendrán también a por vosotros. ¿Sigues contando lo que pasa o apagas los micrófonos?`,
+      q:[['Wie viele Männer werfen sich nicht zu Boden?', ['Drei', 'Keiner', 'Etwa hundert'], 'Solo tres hombres no lo hacen.', '¿Cuántos hombres no se tiran al suelo?', ['Tres', 'Ninguno', 'Unos cien']],
+         ['Wie hören viele Menschen, was im Parlament geschieht?', ['Über ein Mikrofon der Cadena SER, das offen bleibt', 'Über das Telefon eines Abgeordneten', 'Über eine Liveübertragung im Fernsehen'], 'ha dejado un micrófono abierto sin que los guardias lo noten', '¿Cómo oye mucha gente lo que pasa en el Congreso?', ['Por un micrófono de la Cadena SER que sigue abierto', 'Por el teléfono de un diputado', 'Por la televisión en directo']],
+         ['Was geschieht in Valencia?', ['Der Generalkapitän ruft den Ausnahmezustand aus, Panzer fahren auf die Straßen', 'Es gibt eine große Demonstration für die Demokratie', 'Die Soldaten bleiben in den Kasernen'], 'el capitán general Jaime Milans del Bosch declara el estado de excepción', '¿Qué pasa en Valencia?', ['El capitán general declara el estado de excepción y salen los tanques', 'Hay una gran manifestación por la democracia', 'Los soldados se quedan en los cuarteles']]],
+      keep:[['Solo tres hombres no lo hacen.', 'Nur drei Männer tun es nicht.'], ['Nadie sabe quién es.', 'Niemand weiß, wer das ist.']],
+      src:['Ara, „¡Quieto todo el mundo!: el 23-F, en 8 instantes“ (die drei auf ihren Plätzen, SER und TVE)', 'The Objective, „23F: la improvisación que salvó a España“ und „Cien años de radio en España“ (Olabarrieta, offenes Mikrofon)', 'Wikipedia (spanisch), „Golpe de Estado en España de 1981“ (Valencia)', 'Diario de León, 25.2.2026 (TVE in Prado del Rey besetzt gegen 19.45 Uhr)'] },
+    { title:'La noche de los transistores', when:'23 feb 1981', date:'España, noche del lunes 23 de febrero de 1981',
+      hook:'Toda España con la radio pegada a la oreja, y un rey que tiene que decidir.',
+      recap:['Casi todos los diputados se tiran al suelo; solo Gutiérrez Mellado, Suárez y Carrillo siguen en sus escaños. En Valencia salen los tanques, y en Madrid los soldados ocupan la televisión.',
+        'Fast alle Abgeordneten werfen sich zu Boden; nur Gutiérrez Mellado, Suárez und Carrillo bleiben auf ihren Plätzen. In Valencia fahren Panzer auf, in Madrid besetzen Soldaten das Fernsehen.'],
+      body:`Las radios siguen emitiendo. La Cadena SER, Radio Intercontinental y otras emisoras informan toda la noche, aunque los periodistas tienen miedo. A las diez y media, el periodista deportivo José María García se sube a una unidad móvil de la SER junto al Congreso y empieza a contar en directo lo que ve. En millones de casas nadie se acuesta: la gente escucha el transistor en la cocina, en el coche o en la cama. Por eso aquella noche se llama «la noche de los transistores». Dentro del Congreso, algunos diputados también tienen una pequeña radio y escuchan a escondidas lo que pasa fuera.
+
+Como todo el Gobierno está secuestrado, los secretarios de Estado y los subsecretarios forman un gobierno provisional, dirigido por Francisco Laína, director de la Seguridad del Estado.
+
+En el Palacio de la Zarzuela, el rey Juan Carlos pasa la noche al teléfono con los militares. Hacia las siete de la tarde ha decidido que el general Alfonso Armada, un hombre muy cercano a él, no entre en el palacio. A las diez y veinticinco envía un télex a todos los capitanes generales: quiere que se mantenga el orden constitucional. Pero los golpistas dicen que actúan en su nombre.
+
+Ahora eres el rey. Un equipo de televisión puede venir a grabar un mensaje. Si hablas y los capitanes generales no te obedecen, lo pierdes todo. ¿Sales en televisión o esperas a saber quién está contigo?`,
+      q:[['Was macht José María García um halb elf?', ['Er berichtet live aus einem Übertragungswagen am Parlament', 'Er geht ins Parlament hinein', 'Er überträgt ein Fußballspiel'], 'se sube a una unidad móvil de la SER junto al Congreso y empieza a contar en directo lo que ve', '¿Qué hace José María García a las diez y media?', ['Cuenta en directo desde una unidad móvil junto al Congreso', 'Entra en el Congreso', 'Retransmite un partido de fútbol']],
+         ['Wer leitet die Übergangsregierung?', ['Francisco Laína, Leiter der Staatssicherheit', 'General Armada', 'Adolfo Suárez'], 'dirigido por Francisco Laína, director de la Seguridad del Estado', '¿Quién dirige el gobierno provisional?', ['Francisco Laína, director de la Seguridad del Estado', 'El general Armada', 'Adolfo Suárez']],
+         ['Was schickt der König um 22.25 Uhr an die Generalkapitäne?', ['Ein Fernschreiben: Die verfassungsmäßige Ordnung soll bleiben', 'Den Befehl, die Abgeordneten festzunehmen', 'Eine Botschaft im Radio'], 'A las diez y veinticinco envía un télex a todos los capitanes generales', '¿Qué envía el rey a los capitanes generales a las diez y veinticinco?', ['Un télex: quiere que se mantenga el orden constitucional', 'Una orden de detener a los diputados', 'Un mensaje por la radio']]],
+      keep:[['Las radios siguen emitiendo.', 'Die Radiosender senden weiter.'], ['Pero los golpistas dicen que actúan en su nombre.', 'Aber die Putschisten sagen, sie handelten in seinem Namen.']],
+      src:['The Objective, „Cien años de radio en España“ (die Sender der Nacht)', 'Fundación Juan March, Zeitungsarchiv 1981 („La noche de los transistores“: García um 22.30 Uhr, Radios im Saal)', 'Público, „¿Quién es quién en el 23-F?“ (Laína und die Kommission der Staatssekretäre)', 'El Español, 26.2.2026, nach den freigegebenen Dokumenten (Armada nicht in die Zarzuela, Fernschreiben um 22.25 Uhr)'] },
+    { title:'La una y catorce', when:'24 feb 1981', date:'Madrid, madrugada del martes 24 de febrero de 1981',
+      hook:'Un mensaje grabado en el palacio, y un general en el Congreso.',
+      recap:['Durante la noche, toda España escucha la radio. El rey Juan Carlos pasa horas al teléfono con los militares, mientras los golpistas dicen que actúan en su nombre.',
+        'In der Nacht hört ganz Spanien Radio. König Juan Carlos telefoniert stundenlang mit den Militärs, während die Putschisten behaupten, in seinem Namen zu handeln.'],
+      body:`El rey decide hablar. A las once y media de la noche, un equipo de Televisión Española llega por fin a la Zarzuela. Graba el mensaje del rey, que lleva el uniforme de capitán general del Ejército, y una hora después sale del palacio con la cinta.
+
+Mientras tanto, el general Alfonso Armada ha ido al Congreso. Habla a solas con Tejero y le propone una salida: un gobierno presidido por el propio Armada, con políticos de casi todos los partidos. Tejero la rechaza. En ese gobierno habría socialistas y comunistas, y él no ha asaltado el Congreso para eso.
+
+A la una y catorce, el rey aparece en las pantallas. Dice que la Corona no tolerará a quienes quieran interrumpir por la fuerza el proceso democrático. Catorce minutos después, Armada sale del Congreso sin nada. Poco después, Milans del Bosch ordena que los tanques vuelvan a los cuarteles de Valencia.
+
+Pero Tejero no se rinde. Dentro, los diputados siguen en sus escaños, cansados y en silencio. Llevan más de siete horas allí.
+
+Imagina que eres uno de los guardias civiles del Congreso. Te dijeron que todo se hacía en nombre del rey, y acabas de oír lo contrario por la radio. ¿Te quedas con Tejero o te vas?`,
+      q:[['Was trägt der König in seiner Botschaft?', ['Die Uniform eines Generalkapitäns des Heeres', 'Einen dunklen Anzug', 'Freizeitkleidung'], 'que lleva el uniforme de capitán general del Ejército', '¿Qué lleva el rey en el mensaje?', ['El uniforme de capitán general del Ejército', 'Un traje oscuro', 'Ropa de calle']],
+         ['Was schlägt Armada Tejero vor?', ['Eine Regierung unter Armada, mit Politikern fast aller Parteien', 'Sich bedingungslos zu ergeben', 'Ins Ausland zu fliehen'], 'un gobierno presidido por el propio Armada, con políticos de casi todos los partidos', '¿Qué le propone Armada a Tejero?', ['Un gobierno presidido por Armada, con políticos de casi todos los partidos', 'Rendirse sin condiciones', 'Huir al extranjero']],
+         ['Was geschieht in Valencia nach der Botschaft?', ['Milans del Bosch schickt die Panzer in die Kasernen zurück', 'Noch mehr Panzer fahren auf', 'Milans del Bosch fährt nach Madrid'], 'Milans del Bosch ordena que los tanques vuelvan a los cuarteles de Valencia', '¿Qué pasa en Valencia después del mensaje?', ['Milans del Bosch ordena que los tanques vuelvan a los cuarteles', 'Salen más tanques a la calle', 'Milans del Bosch viaja a Madrid']]],
+      keep:[['El rey decide hablar.', 'Der König entscheidet sich zu sprechen.'], ['Pero Tejero no se rinde.', 'Aber Tejero gibt nicht auf.']],
+      src:['El Independiente, 25.2.2026, nach dem „Sucinto relato“ des Cesid (TVE in der Zarzuela um 23.30 Uhr, Uniform)', 'Wikipedia (spanisch), „Golpe de Estado en España de 1981“ (Armada bei Tejero, „chapuza“; Botschaft um 1.14 Uhr)', 'Diari de Tarragona, „Guía para no perderse en los papeles del 23-F“ (Armada geht 14 Minuten später, Rückzug in Valencia)', 'ABC, 24.2.1981 (Wortlaut der Botschaft)'] },
+    { title:'Las doce del mediodía', when:'24 feb 1981', date:'Madrid, 24 y 27 de febrero de 1981; 25 de febrero de 2026',
+      hook:'Una mañana fría y, cuarenta y cinco años después, unos papeles.',
+      recap:['A la una y catorce, el rey defiende la Constitución en televisión. Milans del Bosch retira los tanques de Valencia, pero Tejero sigue en el Congreso con sus guardias.',
+        'Um 1.14 Uhr verteidigt der König im Fernsehen die Verfassung. Milans del Bosch zieht die Panzer aus Valencia ab, aber Tejero bleibt mit seinen Guardias im Parlament.'],
+      body:`Por la mañana, muchos guardias deciden por su cuenta: salen del Congreso por una ventana y se entregan. Tejero se queda cada vez más solo. A las once y veinticinco firma su rendición sobre el capó de un todoterreno, junto al edificio; por eso se habla del «pacto del capó». Los guardias de rango más bajo no serán juzgados. Hacia las doce salen los diputados, cansados, a una mañana fría. Han pasado unas dieciocho horas.
+
+Tres días después, el viernes 27 de febrero, un millón y medio de personas llenan las calles de Madrid bajo el lema «Por la libertad, la democracia y la Constitución». Hay manifestaciones en toda España.
+
+Un año después empieza el juicio. Al final, Tejero, Milans del Bosch y Armada son condenados a treinta años de cárcel.
+
+El 25 de febrero de 2026, cuarenta y cinco años después, el Gobierno publica los documentos secretos del golpe. Confirman en lo esencial lo que ya se sabía. Ese mismo día muere Antonio Tejero, a los 93 años.
+
+Ahora conoces el final. Pero piensa en aquella noche, cuando nadie sabía cómo iba a terminar. ¿Qué habrías hecho tú?`,
+      q:[['Wo unterschreibt Tejero seine Kapitulation?', ['Auf der Motorhaube eines Geländewagens beim Parlament', 'Im Palast der Zarzuela', 'In einer Kaserne in Valencia'], 'firma su rendición sobre el capó de un todoterreno', '¿Dónde firma Tejero su rendición?', ['Sobre el capó de un todoterreno, junto al Congreso', 'En el Palacio de la Zarzuela', 'En un cuartel de Valencia']],
+         ['Wie viele Menschen demonstrieren am 27. Februar in Madrid?', ['Anderthalb Millionen', 'Etwa fünfzigtausend', 'Zehn Millionen'], 'un millón y medio de personas llenan las calles de Madrid', '¿Cuántas personas se manifiestan en Madrid el 27 de febrero?', ['Un millón y medio', 'Unas cincuenta mil', 'Diez millones']],
+         ['Was geschieht am 25. Februar 2026?', ['Die Regierung veröffentlicht die Geheimdokumente, und Tejero stirbt', 'Ein neuer Prozess beginnt', 'Der König hält wieder eine Rede'], 'el Gobierno publica los documentos secretos del golpe', '¿Qué pasa el 25 de febrero de 2026?', ['El Gobierno publica los documentos secretos y muere Tejero', 'Empieza un nuevo juicio', 'El rey da otro mensaje']]],
+      keep:[['Tejero se queda cada vez más solo.', 'Tejero ist immer mehr allein.'], ['Han pasado unas dieciocho horas.', 'Etwa achtzehn Stunden sind vergangen.']],
+      src:['Ara, „¡Quieto todo el mundo!“ (Guardias gehen am Morgen durchs Fenster); Economist & Jurist, „1982: los responsables del 23-F responden ante la Justicia“ (Pakt auf der Motorhaube)', 'Wikipedia (spanisch), „Golpe de Estado en España de 1981“ (11.25 Uhr, Urteile)', 'BOE, 19.2.2026, Ort der demokratischen Erinnerung (Demonstrationen vom 27.2.1981)', 'Ara, 25.2.2026 (Freigabe der Dokumente, Tod Tejeros)'] }
   ] }
 ]
 };

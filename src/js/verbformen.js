@@ -182,7 +182,7 @@ const SV_STRONG = {
   kallas:'kallas kallades kallats -', trivas:'trivs trivdes trivts -', minnas:'minns mindes mints -', finnas:'finns fanns funnits -', synas:'syns syntes synts -',
   hämnas:'hämnas hämnades hämnats -', kännas:'känns kändes känts -', skämmas:'skäms skämdes skämts -', födas:'föds föddes fötts -', ses:'ses sågs setts -', umgås:'umgås umgicks umgåtts -'
 };
-const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa begrava släppa misstänka döma räcka utlysa'.split(' '));
+const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa begrava släppa misstänka döma räcka utlysa gömma'.split(' '));
 const SV_INTRANS = new Set(('vakna regna ösregna spöregna ramla trilla pendla emigrera invandra härstamma hamna skratta funka köa tälta forsa rusa protestera ' +
   'improvisera samarbeta förvärvsarbeta jobba vandra dröja gälla lysa betyda bo ske bry snöa rasa').split(' '));
 const SV_G3 = new Set('bo tro nå ske fly må gro sy klä spå bry bete'.split(' '));

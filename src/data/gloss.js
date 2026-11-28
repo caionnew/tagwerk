@@ -196,7 +196,7 @@ levereras|leverera|wird geliefert (leverera = liefern)
 räkningen|räkning|die Rechnung
 betalas|betala|wird bezahlt (betala = bezahlen)
 bryr|bry|kümmert; bry sig om = sich kümmern um
-andra|annan|andere
+andra|annan|andere; zweite (andra världskriget = der Zweite Weltkrieg)
 arg||wütend; arg på = wütend auf
 orolig||besorgt; orolig för = besorgt um
 längtar|längta|sehnt sich; längta efter = sich sehnen nach
@@ -591,7 +591,7 @@ syster||Schwester
 säg|säga|sag!; säg till = sag Bescheid
 säger|säga|sagt
 säljer|sälja|verkauft
-sätt|sätta|setz!; sätt på = schalte ein
+sätt||Art, Weise (ett-Wort); på något sätt = irgendwie; auch: setz! (sätta)
 ta||nehmen; ta med = mitbringen
 tack||danke
 tackade|tacka|dankte; tackade nej = lehnte ab
@@ -3693,6 +3693,87 @@ justitieminister||Justizminister, Justizministerin (en-Wort)
 justitieministern|justitieminister|die Justizministerin, der Justizminister (bestimmte Form)
 anna-greta||Anna-Greta (Vorname)
 leijon||Leijon (Familienname)
+aino||Aino (finnischer Vorname)
+kära|kär|liebe, lieber (Anrede im Brief: Kära …)
+er||Sie (höflich), ihr, euch; Ihr, euer
+era|er|Ihre, eure (Plural)
+okända|okänd|unbekannte (bestimmte Form, Plural)
+fröken||Fräulein; in der Schule: Lehrerin
+holm||Holm (Nachname)
+ljust||hell (ett-Form von ljus = hell)
+katter|katt|Katzen
+veikko||Veikko (finnischer Vorname)
+front||Front (en-Wort)
+fronten|front|die Front
+norrut||nach Norden
+torneå||Torneå (finnisch Tornio, Grenzstadt in Finnland)
+haparanda||Haparanda (Grenzstadt in Schweden)
+lotta||Lotta, Mitglied der Lottakåren (freiwilliges Frauenkorps)
+lottor|lotta|Lottas (Frauen der Lottakåren)
+farlig||gefährlich
+minorna||die Minen (Seeminen)
+lapp||Zettel (en-Wort)
+lappen|lapp|der Zettel
+hals||Hals (en-Wort); om halsen = um den Hals
+halsen|hals|der Hals; om halsen = um den Hals
+nummer||Nummer (ett-Wort)
+strumpa||Strumpf (en-Wort)
+strumpor|strumpa|Strümpfe
+docka||Puppe (en-Wort)
+fotografi||Foto, Fotografie (ett-Wort)
+fotografiet|fotografi|das Foto
+snälla|snäll|nette (Plural); als Bitte: bitte
+sång||Lied, Gesang (en-Wort)
+sånger|sång|Lieder
+hälsning||Gruß (en-Wort)
+hälsningar|hälsning|Grüße; många hälsningar = viele Grüße
+aili||Aili (finnischer Vorname)
+virtanen||Virtanen (finnischer Nachname)
+greta||Greta (Vorname)
+lindqvist||Lindqvist (Nachname)
+olle||Olle (Vorname)
+karantän||Quarantäne (en-Wort)
+äiti||finnisch: Mama
+mjölk||Milch (en-Wort)
+missan||Missan (Name einer Katze)
+lova||versprechen
+låta||lassen
+ungar||Junge (von Tieren), Kinder; unge = Kind, Junges
+bomb||Bombe (en-Wort)
+bomber|bomb|Bomben
+kram||Umarmung (en-Wort); kram från … = Umarmung von … (Briefschluss)
+ps||PS (Nachschrift im Brief)
+bombnätterna||die Bombennächte (bombnatt = Bombennacht)
+saknad||Sehnsucht, Vermissen (en-Wort); auch: vermisst (sakna)
+saknaden|saknad|die Sehnsucht, das Vermissen
+orden|ord|die Wörter
+tystna||verstummen, still werden
+vapnen|vapen|die Waffen
+vapenstillestånd||Waffenstillstand (ett-Wort)
+vapenstilleståndet|vapenstillestånd|der Waffenstillstand
+moskva||Moskau
+mager||mager, dünn
+glädje||Freude (en-Wort)
+ärlig||ehrlich
+gömma||verstecken; gömma sig = sich verstecken
+lada||Scheune (en-Wort)
+ladan|lada|die Scheune
+adoptera||adoptieren
+vägg||Wand (en-Wort)
+väggen|vägg|die Wand
+mamman|mamma|die Mama, die Mutter
+kaj||Kai (en-Wort)
+kajen|kaj|der Kai
+båten|båt|das Boot, das Schiff
+främling||Fremder (en-Wort)
+främlings|främling|eines Fremden
+svåra|svår|schwierige (bestimmte Form, Plural)
+sömnen|sömn|der Schlaf; i sömnen = im Schlaf
+hyvää||finnisch: hyvää yötä = gute Nacht
+yötä||finnisch: hyvää yötä = gute Nacht
+gräns||Grenze (en-Wort)
+åt||für, zu (skriva åt någon = für jemanden schreiben); auch: aß (äta)
+lärt|lära|gelernt (har lärt sig), gelehrt (Supinum, mit har)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -4062,7 +4143,7 @@ cancelado|cancelar|gestrichen, abgesagt
 sentaba|sentarse|setzte mich (Imperfecto)
 planteado|plantearse|überlegt; plantearse algo = über etwas nachdenken
 extranjero||Ausland; en el extranjero = im Ausland
-mensaje||Nachricht
+mensaje||Nachricht; Botschaft (Ansprache)
 obra||Bauarbeiten, Baustelle; auch: Werk
 ni||nicht einmal; ni una noche = keine einzige Nacht
 aunque||obwohl, auch wenn
@@ -4251,7 +4332,7 @@ contestar||antworten
 correo||Post; correo electrónico = E-Mail
 creo|creer|ich glaube
 cuando||wenn, als
-cuenta||Rechnung; Konto; darse cuenta = merken; erzählt, zählt (contar); ¡cuenta! = erzähl!
+cuenta||Rechnung; Konto; darse cuenta = merken; por su cuenta = auf eigene Faust; erzählt, zählt (contar); ¡cuenta! = erzähl!
 cómo||wie
 de||von, aus
 deberías|deber|du solltest
@@ -4295,15 +4376,15 @@ escribiste|escribir|du schriebst
 escrito|escribir|geschrieben
 eso||das
 españa||Spanien
-español||Spanisch
+español||Spanisch; spanisch; Spanier
 espero|esperar|ich hoffe; ich warte
 esta|este|diese
 estaba|estar|war (Imperfecto)
-estado|estar|gewesen
+estado||Staat; Zustand; golpe de Estado = Putsch (auch: gewesen, von estar)
 estamos|estar|wir sind
 estar||sein (Zustand, Ort)
 estoy|estar|ich bin
-estudio||Studie; Studium; Arbeitszimmer; (yo) estudio = ich lerne, studiere (estudiar)
+estudio||Studie; Studium; Studio (Fernsehen, Radio); Arbeitszimmer; (yo) estudio = ich lerne, studiere (estudiar)
 estudios|estudio|Studium
 estuvo|estar|war (Indefinido)
 está|estar|ist (Zustand, Ort)
@@ -4317,13 +4398,13 @@ faltan|faltar|fehlen
 favor||Gefallen; por favor = bitte
 fiesta||Party, Fest
 fin||Ende; fin de semana = Wochenende; por fin = endlich
-firma|firmar|Unterschrift; firma = unterschreib!
+firma||Unterschrift (auch: unterschreibt, unterschreib!, von firmar)
 flores|flor|Blumen
 folleto||Prospekt, Broschüre
 fotos|foto|Fotos
 fría|frío|kalt
 frío||kalt; hace frío = es ist kalt
-fuera|ser|wäre (si fuera = wenn ich wäre)
+fuera||draußen; fuera de = außerhalb; si fuera = wenn ich wäre (ser)
 fuimos|ir|wir gingen, fuhren
 fútbol||Fußball
 gimnasio||Fitnessstudio
@@ -4413,7 +4494,7 @@ más||mehr
 médico||Arzt
 méxico||Mexiko
 mí||mir, mich (nach Präposition)
-móvil||Handy (Spanien)
+móvil||Handy (Spanien); beweglich, mobil
 música||Musik
 niña||Mädchen
 niño||Kind, Junge
@@ -4839,7 +4920,7 @@ insiste|insistir|besteht darauf
 consta|constar|besteht (aus); constar de = bestehen aus
 plantas|planta|Stockwerke; Pflanzen
 contar|contar|zählen, erzählen; contar con = sich verlassen auf
-propio|propio|eigen
+propio|propio|eigen; el propio Armada = Armada selbst
 supermercado|supermercado|Supermarkt
 enteré|enterarse|ich erfuhr (Indefinido)
 amigo|amigo|Freund
@@ -5090,7 +5171,7 @@ transmitirlas|transmitir|sie weitergeben (Infinitiv mit Pronomen)
 transmitir||weitergeben, übertragen
 enseñan|enseñar|unterrichten, lehren (Präsens)
 enseñar||lehren, unterrichten; zeigen
-santiago||Santiago (de Compostela); Jakobus
+santiago||Santiago (Vorname; Santiago de Compostela); Jakobus
 habitual||üblich
 carteles|cartel|Schilder, Plakate
 cartel||Schild, Plakat
@@ -5824,7 +5905,7 @@ viral||viral
 catástrofe||Katastrophe
 resultó|resultar|sich erweisen als (Indefinido)
 resultar||sich erweisen als, ergeben
-golpe||Schlag; golpe de suerte = Glücksfall
+golpe||Schlag; golpe de Estado = Staatsstreich, Putsch; golpe de suerte = Glücksfall
 suerte||Glück
 curiosos|curioso|Neugierige
 curioso||neugierig; Neugieriger
@@ -6136,7 +6217,7 @@ congreso||Kongress; el Congreso = das spanische Parlament (Abgeordnetenhaus)
 sufragio||Wahlrecht; sufragio femenino = Frauenwahlrecht
 votos|voto|Stimmen
 votaron|votar|wählen (Indefinido)
-general||allgemein; elecciones generales = Parlamentswahlen
+general||allgemein; General (Militär); elecciones generales = Parlamentswahlen
 ganó|ganar|gewinnen (Indefinido)
 perdió|perder|verlieren (Indefinido)
 quedó|quedar|bleiben (Indefinido); quedarse aislado = isoliert dastehen
@@ -6430,7 +6511,7 @@ sacos|saco|Säcke; sacos de dormir = Schlafsäcke
 saludó|saludar|grüßte (Indefinido)
 salón||Saal, Wohnzimmer; salón de actos = Aula
 sartén||Pfanne
-secreto||Geheimnis
+secreto||Geheimnis; geheim
 sendero||Wanderweg, Pfad
 sentarnos|sentarse|uns setzen
 servido|servir|serviert (Partizip)
@@ -6510,7 +6591,7 @@ comentado|comentar|erwähnt (Partizip)
 encontramos|encontrarse|nos encontramos = wir treffen uns (ohne nos: wir finden)
 acordarme|acordarse|mich erinnern; acordarse de = sich erinnern an
 aceite||Öl
-aire||Luft
+aire||Luft; en el aire = auf Sendung (Radio)
 alfombra||Teppich
 aparcamiento||Parkplatz
 aplicación||App, Anwendung
@@ -7148,6 +7229,109 @@ vive|vivir|lebt, wohnt; erlebt (Präsens, él, ella, usted)
 llaman|llamar|rufen an, nennen (Präsens, ellos, ellas); se llaman = heißen
 finales|final|Ende (Plural); a finales de agosto = Ende August
 pie||der Fuß (el pie); de pie = stehend
+transistor||Transistorradio, Kofferradio; Transistor
+guardia||Wache; guardia civil = Angehöriger der Guardia Civil (spanische Gendarmerie)
+armado||bewaffnet
+asaltar||stürmen, überfallen
+democracia||Demokratie
+adolfo||Adolfo (Vorname)
+suárez||Suárez (Adolfo Suárez, spanischer Regierungschef 1976–1981)
+leopoldo||Leopoldo (Vorname)
+calvo-sotelo||Calvo-Sotelo (Leopoldo Calvo-Sotelo, spanischer Regierungschef 1981–1982)
+sucesor||Nachfolger
+económico||wirtschaftlich
+atentado||Anschlag, Attentat
+eta||ETA (baskische Terrororganisation, 1959–2018)
+constante||ständig, beständig
+cuartel||Kaserne
+militar||Soldat, Militär; militärisch
+fotógrafo||Fotograf
+teniente||Leutnant; teniente coronel = Oberstleutnant
+coronel||Oberst
+antonio||Antonio (Vorname)
+tejero||Tejero (Antonio Tejero, Oberstleutnant der Guardia Civil, 1932–2026)
+metralleta||Maschinenpistole
+total||gesamt; en total = insgesamt
+centenar||Hundert (etwa hundert); más de un centenar = über hundert
+ocupar||besetzen; einnehmen
+tribuna||Rednerpult, Tribüne
+vicepresidente||Vizepräsident; stellvertretender Regierungschef
+gutiérrez||Gutiérrez (Nachname)
+mellado||Mellado (Nachname)
+ordenar||befehlen; ordnen
+detener||anhalten, festnehmen; detenerse = stehen bleiben
+quieto||still, ruhig; ¡quieto! = keine Bewegung!
+disparo||Schuss
+techo||Decke, Dach
+imaginar||sich vorstellen; ¡imagina! = stell dir vor!
+bala||Kugel (Geschoss)
+terrible||schrecklich
+esconder||verstecken; esconderse = sich verstecken
+jarra||Krug; con los brazos en jarras = die Hände in die Hüften gestemmt
+líder||Anführer, Chef
+comunista||kommunistisch; Kommunist
+carrillo||Carrillo (Santiago Carrillo, Chef der Kommunisten)
+inmóvil||reglos, unbeweglich
+cadena||Kette; Senderkette (Cadena SER = Radiosender)
+emilio||Emilio (Vorname)
+olabarrieta||Olabarrieta (Nachname)
+grito||Schrei
+grabar||aufnehmen, aufzeichnen
+capitán||Hauptmann; capitán general = Generalkapitän (oberster General einer Militärregion)
+jaime||Jaime (Vorname)
+milans||Milans del Bosch (Jaime Milans del Bosch, Generalkapitän in Valencia)
+bosch||Milans del Bosch (Nachname)
+excepción||Ausnahme; estado de excepción = Ausnahmezustand
+tanque||Panzer
+emisora||Radiosender
+emitir||senden, ausstrahlen
+intercontinental||interkontinental; Radio Intercontinental = Radiosender in Madrid
+informar||informieren, berichten
+unidad||Einheit; unidad móvil = Übertragungswagen
+escondidas||a escondidas = heimlich
+secuestrar||entführen, als Geiseln festhalten
+secretario||Sekretär; secretario de Estado = Staatssekretär
+subsecretario||Unterstaatssekretär
+provisional||vorläufig
+dirigir||leiten, lenken
+laína||Laína (Francisco Laína, Leiter der Staatssicherheit 1981)
+seguridad||Sicherheit
+zarzuela||Zarzuela (Palast des Königs bei Madrid); spanisches Singspiel
+télex||Fernschreiben
+orden||Befehl; Ordnung; orden constitucional = verfassungsmäßige Ordnung
+golpista||Putschist
+actuar||handeln
+obedecer||gehorchen
+contigo||mit dir
+pegado||geklebt; pegado a la oreja = ans Ohr gedrückt
+oreja||Ohr
+uniforme||Uniform
+ejército||Armee, Heer
+cinta||Band; Tonband, Videoband
+presidir||vorsitzen, leiten
+corona||Krone
+tolerar||dulden, tolerieren
+interrumpir||unterbrechen
+fuerza||Kraft; Gewalt; por la fuerza = mit Gewalt
+rendición||Kapitulation, Übergabe
+capó||Motorhaube
+todoterreno||Geländewagen
+rango||Rang
+llenar||füllen
+libertad||Freiheit
+condenar||verurteilen
+cárcel||Gefängnis
+publicar||veröffentlichen
+esencial||wesentlich; en lo esencial = im Wesentlichen
+retirar||zurückziehen, abziehen
+decisiones|decisión|Entscheidungen
+manifestaciones|manifestación|Demonstrationen, Kundgebungen
+capitanes|capitán|Hauptleute; capitanes generales = Generalkapitäne
+juzgados|juzgar|vor Gericht gestellt (Partizip, Plural); los juzgados = die Gerichte
+apagar||ausschalten, löschen
+sentado||sitzend (Partizip von sentar)
+ocupado||besetzt; beschäftigt (Partizip von ocupar)
+duda||Zweifel; sin duda = zweifellos
 `
 };
 

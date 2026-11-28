@@ -142,6 +142,11 @@ gekennzeichnet (A); viele Stimmen, jeder Teil eine andere Perspektive (A); Famil
 änderte, Landesgeschichte in Stationen (A−); Briefe und Dokumente (B+); Ermittlung, Spur für Spur (B+); ein Gegenstand erzählt (B);
 du entscheidest, erst „Was würdest du tun?“, dann was geschah (B); Reisetagebuch (B).
 
+**Form je Geschichte (entschieden 28.11.):** kreative Entscheidung pro Reihe, kein Standard, und die Reihen sollen sich
+unterscheiden: möglichst jede in einer Form, die noch keine hat, nie zweimal dieselbe hintereinander. Mit Figur, ohne Figur, viele
+Stimmen, Briefe, ein Gegenstand, je nachdem, was der Stoff trägt; bei jedem Thema unten steht die gewählte Form mit Grund. Vergeben:
+Wie es geschah (Palme), erfundene Figur (Los 33).
+
 **Lernfunktionen:** dasselbe Thema über viele Texte, Schlüsselwörter kehren wieder (A, der eigentliche Gewinn); „Bisher“ (A);
 Cliffhanger und Vorschau (A−); Personen und Wörter der Reihe, ohne Vorgriff (A−); „Erinnerst du dich?“, eine Frage zu einem früheren
 Teil (B+, braucht Textstellen aus früheren Teilen in der Prüfung); Fragen in beiden Sprachen, bei „Fortgeschritten“ zielsprachig (B+,
@@ -155,13 +160,15 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
 **Themen Schwedisch** (Fakten vor dem Schreiben an Quellen prüfen):
 - **Natten på Sveavägen (umgesetzt in 24.98.0):** Palme-Mord, Wie es geschah, 6 Teile, B2: die Nacht, der „33-Jährige“, die
   PKK-Spur, Christer Pettersson, Engström benannt (10.6.2020) und wieder nicht (18.12.2025).
-- **Krigsbarnen (A):** erfundene Figur, 5 Teile, B1: Aino, sieben, eines von rund 70 000 finnischen Kriegskindern in Schweden
-  (1939–45): Abschied, Haparanda, Pflegefamilie, die Sprache vergessen, Rückkehr zu einer Mutter, die sie nicht mehr versteht.
-- **Tre generationer (A):** Familienchronik, 4 Teile, B1: Rechtschreibreform 1906 (hvad → vad), du-Reform (Bror Rexed, 3. Juli
-  1967), „hen“ (SAOL 2015). Sprachwandel an der eigenen Zielsprache.
-- **Beredskap (A):** viele Stimmen, 6 Teile, B2: Rekrut an der norwegischen Grenze, Eisenbahner an den deutschen Urlauberzügen,
-  Journalistin unter Zensur, dänische Juden über den Öresund 1943, die Weißen Busse 1945.
-- **Mot Amerika (A−):** Briefe einer erfundenen Familie aus Småland, Hungerjahre um 1867, Überfahrt, Minnesota, 5 Teile, B1.
+- **Krigsbarnen (A−):** ein Gegenstand erzählt: das Namensschild, das die Kinder um den Hals trugen, 5 Teile, B1. Eines von rund
+  70 000 finnischen Kriegskindern in Schweden (1939–45): Abschied, Haparanda, Pflegefamilie, die Sprache vergessen, Rückkehr zu
+  einer Mutter, die das Kind nicht mehr versteht. Das Schild sieht alles und versteht keine der beiden Sprachen ganz.
+- **Tre generationer (A):** Familienchronik, weil Sprachwandel an einer Familie greifbar wird, 4 Teile, B1: Rechtschreibreform
+  1906 (hvad → vad), du-Reform 1967, „hen“ (SAOL 2015). Sprachwandel an der eigenen Zielsprache.
+- **Beredskap (A):** viele Stimmen, weil jede eine andere Haltung zur Neutralität zeigt, 6 Teile, B2: Rekrut an der norwegischen
+  Grenze, Eisenbahner an den deutschen Urlauberzügen, Journalistin unter Zensur, dänische Juden über den Öresund 1943, die Weißen
+  Busse 1945.
+- **Mot Amerika (A−):** Briefe (erst nach La guerra en casa und nicht direkt danach), erfundene Familie aus Småland, Hungerjahre um 1867, Überfahrt, Minnesota, 5 Teile, B1.
 - **Sverige på tio dagar (A−):** zehn Tage von 1520 bis zum NATO-Beitritt 2024.
 - **Ålandsfrågan 1917–21 (B+)** und **Unionen 1905 (B+):** zwei Unabhängigkeitsfragen, beide ohne Krieg gelöst.
 - **Spanienfrivilliga (B+):** erfundener Waldarbeiter aus Norrland unter den gut 500 schwedischen Freiwilligen; Schwedisch über
@@ -172,11 +179,13 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
 - **B:** Raoul Wallenberg, Dag Hammarskjöld (Absturz 1961), IFK Göteborg 1982, Hammarby und seine Fans über drei Generationen.
 
 **Themen Spanisch:**
-- **La noche de los transistores (A):** 23-F, Wie es geschah, Stunde für Stunde, 5 Teile, B2.
-- **La guerra en casa (A):** Bürgerkrieg, eine Familie auf beiden Seiten, viele Stimmen, 6 bis 7 Teile, B2–C1: Madrid belagert,
-  Guernica, Kinder ins Ausland, Exil 1939.
+- **La noche de los transistores (A):** 23-F, du entscheidest, 5 Teile, B2: jeder Teil endet an einer echten Entscheidung („¿Qué
+  harías tú?“: der König vor der Fernsehrede, der Rundfunk, der weitersendet, die Abgeordneten am Boden), der nächste erzählt, was
+  geschah. Nicht „Wie es geschah“, das hat schon Palme.
+- **La guerra en casa (A):** Bürgerkrieg, Briefe einer erfundenen Familie über die Front hinweg (der Titel), 6 bis 7 Teile,
+  B2–C1: Madrid belagert, Guernica, Kinder ins Ausland, Exil 1939. Beide Seiten schreiben, die Ereignisse sind belegt.
 - **Los 33 (A, umgesetzt in 24.99.0):** Chile 2010, erfundene Reporterin im Campamento Esperanza, 5 Teile, B1, geht gut aus.
-- **El crimen de Cuenca (A−):** Ermittlung, 4 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
+- **El crimen de Cuenca (A−):** Ermittlung ohne Figur, die Wendung trägt allein, 4 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
   verurteilt, 1926 taucht er lebend auf.
 - **España en diez días (A−):** zehn Tage von 711 bis heute.
 - **El Oviedo de todos (B+):** 2012 kaufen Fans aus aller Welt Aktien, am letzten Tag steigt Carlos Slim ein.

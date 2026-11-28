@@ -57,6 +57,8 @@ Dokumente), spuren (Ermittlung), ding (Ein Gegenstand erzählt), wahl (Du entsch
 
 - **Länge:** 200 bis 300 Wörter je Teil (zwei bis drei Minuten), 4 bis 7 Teile, eine Reihe auf einem Niveau.
 - **Spannend, nicht lexikalisch:** jede Reihe in einer Erzählform; Teile enden mit einer offenen Frage oder einem Wendepunkt.
+  Die Form ist eine kreative Entscheidung je Reihe, kein Standard: mit oder ohne Figur, Stimmen, Dokumente, was der Stoff trägt.
+  Die Reihen sollen sich unterscheiden: möglichst jede in einer Form, die noch keine hat, nie zweimal dieselbe hintereinander.
   „Wie es geschah“: Präsens, jeder Teil kennt nur den Stand seines Tages. Das sagt die Form, nicht die Einleitung.
 - **Was ist echt:** Kurz, höchstens 200 Zeichen: was erfunden ist, dass der Rest belegt ist (Quellen je Teil), wie Gesagtes
   wiedergegeben wird. Jede erfundene Figur wird in „Was ist echt?“ genannt. Echte Personen bekommen keine erfundenen Zitate, nur

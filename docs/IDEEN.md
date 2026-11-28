@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 28. November 2026 (nach 24.97.0, Durchsicht vom 28.11.)
+Stand: 28. November 2026 (nach 24.98.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -63,7 +63,7 @@ So entsteht ein Paket:
 
 1. **Neue Sätze beim ersten Mal richtig, je Thema und Monat (B+, Anzeige ab Januar):** „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30.“ Misst, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für bekannte Sätze und wächst vor allem mit der Zeit. Gezählt wird seit 24.61.0 (`DB.first`, unsichtbar), immer in derselben Übungsform und getrennt nach Stufe. Anzeige gestalten, wenn zwei Monate Daten da sind, mit echtem Backup: nur gleiche Stufe im Vergleich (bei „Fortgeschritten“ B2), Anzahlen statt Prozent bei kleinen Mengen. Ersetzt die Wochenbilanz zum Schwerpunkt, die an wechselnden Übungsarten und Niveaus gescheitert wäre.
 
-2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; zuerst Natten på Sveavägen und Los 33, dann je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
+2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, als Nächstes Los 33, dann je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
 
 Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
@@ -153,8 +153,8 @@ sagt, worum es geht, nicht wie erzählt wird; das zeigt das Etikett der Erzählf
 statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättelsen om natten, spåren och frågan som Sverige levde med i 34 år.“
 
 **Themen Schwedisch** (Fakten vor dem Schreiben an Quellen prüfen):
-- **Natten på Sveavägen (A):** Palme-Mord, Wie es geschah, 6 Teile, B2: die Nacht, der „33-Jährige“, die PKK-Spur, Christer
-  Pettersson, die Antwort der Staatsanwaltschaft am 10. Juni 2020.
+- **Natten på Sveavägen (umgesetzt in 24.98.0):** Palme-Mord, Wie es geschah, 6 Teile, B2: die Nacht, der „33-Jährige“, die
+  PKK-Spur, Christer Pettersson, Engström benannt (10.6.2020) und wieder nicht (18.12.2025).
 - **Krigsbarnen (A):** erfundene Figur, 5 Teile, B1: Aino, sieben, eines von rund 70 000 finnischen Kriegskindern in Schweden
   (1939–45): Abschied, Haparanda, Pflegefamilie, die Sprache vergessen, Rückkehr zu einer Mutter, die sie nicht mehr versteht.
 - **Tre generationer (A):** Familienchronik, 4 Teile, B1: Rechtschreibreform 1906 (hvad → vad), du-Reform (Bror Rexed, 3. Juli

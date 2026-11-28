@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.98.0
+**Erste Reihe: „Natten på Sveavägen“ (Schwedisch, B2, sechs Teile).**
+- **Der Mord an Olof Palme, erzählt wie es geschah:** Fredag kväll (28.2.1986), Natten, 33-åringen, Spåret (die PKK-Spur unter Hans Holmér), Rättegången (Christer Pettersson, verurteilt und freigesprochen 1989), Ett namn (Stig Engström, benannt am 10. Juni 2020). Je Teil 180 bis 205 Wörter, Präsens, Datumszeile, „Bisher“, Vorschau auf den nächsten Teil, drei Fragen auf Deutsch und Schwedisch, zwei Sätze zum Übernehmen, Quellen.
+- **Stand von heute:** Am 18. Dezember 2025 hat Oberstaatsanwalt Lennart Guné entschieden, dass die Beweise nicht reichen, um Engström als Täter zu benennen; die Ermittlung bleibt eingestellt. Der letzte Teil endet damit: Der Mord ist ungeklärt.
+- **Fakten geprüft** an Polizei (Palmeutredningen), Wikipedia (Zeitleiste der Nacht nach dem Bericht der Juristenkommission), SVT, Sveriges Radio und Göteborgs universitet; keine erfundenen Figuren, keine erfundenen Zitate.
+- **Wörterbuch:** 212 neue Einträge (Straßen und Namen, Recht und Ermittlung: åklagare, tingsrätt, hovrätt, häkte, vittneskonfrontation …); neue Verben mit geprüften Formen (döma, släppa, misstänka, begrava, räcka, utlysa in Gruppe 2; frikänna; hämnas).
+- Personen und Wörter der Reihe erscheinen Teil für Teil; Titel späterer Teile bleiben bis dahin verdeckt.
+- Tests: Die Reihe hält alle Regeln aus docs/REIHEN.md ein; Browsertest mit Testreihe neben der echten. Speicherstand unverändert.
+
 ## 24.97.0
 **Rahmen für Reihen: Lesetexte in Fortsetzungen. Inhalte kommen in Paketen.**
 - **Reihen in „Lesen und Hören“:** über den Einzeltexten, je Reihe eine Karte mit Thema, Niveau, Erzählform („Wie es geschah“, „Mit erfundener Figur“ …) und Fortschritt als Striche. Tipp auf eine begonnene Reihe öffnet gleich den nächsten Teil, sonst die Übersicht.

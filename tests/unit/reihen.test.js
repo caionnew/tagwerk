@@ -69,7 +69,8 @@ const readPart = (k, day = 'today()') => `DB.used.texts = DB.used.texts || {}; D
 test('Karte in „Lesen und Hören“: Erzählform, Fortschritt, Beginnen und Weiter; Einzeltexte darunter', () => {
   reset();
   let h = run('viewTexts()');
-  assert.match(h, /<h2 class="grp">Reihen<\/h2><div class="tgrid2"><button type="button" class="tcard scard" data-a="sopen" data-s="test">/);
+  assert.match(h, /<h2 class="grp">Reihen<\/h2><div class="tgrid2"><button type="button" class="tcard scard" data-a="sopen" data-s="/);
+  h = h.slice(h.indexOf('data-s="test"'));
   assert.match(h, /<span class="tag form">Wie es geschah<\/span>/);
   assert.match(h, /<span class="sdash" aria-label="0 von 3 Teilen gelesen"><i><\/i><i><\/i><i><\/i><\/span><span class="scta">Beginnen ›<\/span>/);
   assert.match(h, /<h2 class="grp">Einzelne Texte<\/h2><div class="tgrid2"><button type="button" class="tcard" data-a="textopen"/);

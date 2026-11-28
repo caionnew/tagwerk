@@ -1,13 +1,12 @@
-// Reihen (24.97.0) im Browser, mit der Testreihe aus tests/fixtures/reihe.js: Sie wird beim Laden in die App gesetzt (die App selbst
-// hat noch keine Inhalte). Weg: Karte, Übersicht, Teil 1 lesen, Fragen, weiter mit Teil 2, zurück, Teil 1 noch einmal; Fortsetzung auf „Heute“.
+// Reihen (24.97.0) im Browser, mit der Testreihe aus tests/fixtures/reihe.js: Sie wird beim Laden vor die Reihen der App gesetzt. Weg: Karte, Übersicht, Teil 1 lesen, Fragen, weiter mit Teil 2, zurück, Teil 1 noch einmal; Fortsetzung auf „Heute“.
 const { test, expect, APP, seed, freshDB, stored } = require('./helpers');
 const FIX = require('../fixtures/reihe.js');
 const pad = n => String(n).padStart(2, '0');
 const day = k => { const t = new Date(), d = new Date(t.getFullYear(), t.getMonth(), t.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
 const inject = page => page.route(APP, async r => {
-  const res = await r.fetch(), html = await res.text(), empty = 'const SERIES = {\nsv:[],\nes:[]\n};';
-  if (!html.includes(empty)) throw new Error('SERIES-Platzhalter nicht gefunden');
-  await r.fulfill({ response:res, body:html.replace(empty, `const SERIES = { sv:[${JSON.stringify(FIX)}], es:[] };`) });
+  const res = await r.fetch(), html = await res.text(), start = 'const SERIES = {\nsv:[\n';
+  if (!html.includes(start)) throw new Error('Anfang von SERIES nicht gefunden');
+  await r.fulfill({ response:res, body:html.replace(start, `${start}${JSON.stringify(FIX)},\n`) });
 });
 test('Reihe: Karte, Übersicht ohne Vorgriff, Teil 1 mit Fragen, weiter mit Teil 2, gelesener Teil noch einmal', async ({ page }) => {
   await inject(page);
@@ -15,8 +14,8 @@ test('Reihe: Karte, Übersicht ohne Vorgriff, Teil 1 mit Fragen, weiter mit Teil
   await page.goto(APP);
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=texts]');
-  await expect(page.locator('.scard .scta')).toHaveText('Beginnen ›');
-  await page.click('.scard');
+  await expect(page.locator('.scard[data-s=test] .scta')).toHaveText('Beginnen ›');
+  await page.click('.scard[data-s=test]');
   await expect(page.locator('.srail .mr.next .mr-t').first()).toHaveText('Teil 2');
   await expect(page.locator('.srail')).not.toContainText('Natten');
   await page.click('.actionbar [data-a=spart]');

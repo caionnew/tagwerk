@@ -176,12 +176,13 @@ const SV_STRONG = {
   sälja:'säljer sålde sålt såld', välja:'väljer valde valt vald', dölja:'döljer dolde dolt dold', heta:'heter hette hetat -', känna:'känner kände känt känd',
   försvinna:'försvinner försvann försvunnit -', glömma:'glömmer glömde glömt glömd', kliva:'kliver klev klivit -', tåla:'tål tålde tålt -', dyka:'dyker dök/dykte dykt -', sprida:'sprider spred/spridde spritt spridd',
   skilja:'skiljer skilde skilt skild', glädja:'gläder gladde glatt -', stödja:'stöder stödde stött stödd', svälja:'sväljer svalde svalt -', vänja:'vänjer vande vant van',
+  frikänna:'frikänner frikände frikänt frikänd',
   // Deponens: nur Aktivformen auf -s
   lyckas:'lyckas lyckades lyckats -', hoppas:'hoppas hoppades hoppats -', låtsas:'låtsas låtsades låtsats -', andas:'andas andades andats -',
   kallas:'kallas kallades kallats -', trivas:'trivs trivdes trivts -', minnas:'minns mindes mints -', finnas:'finns fanns funnits -', synas:'syns syntes synts -',
-  kännas:'känns kändes känts -', skämmas:'skäms skämdes skämts -', födas:'föds föddes fötts -', ses:'ses sågs setts -', umgås:'umgås umgicks umgåtts -'
+  hämnas:'hämnas hämnades hämnats -', kännas:'känns kändes känts -', skämmas:'skäms skämdes skämts -', födas:'föds föddes fötts -', ses:'ses sågs setts -', umgås:'umgås umgicks umgåtts -'
 };
-const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa'.split(' '));
+const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa begrava släppa misstänka döma räcka utlysa'.split(' '));
 const SV_INTRANS = new Set(('vakna regna ösregna spöregna ramla trilla pendla emigrera invandra härstamma hamna skratta funka köa tälta forsa rusa protestera ' +
   'improvisera samarbeta förvärvsarbeta jobba vandra dröja gälla lysa betyda bo ske bry snöa rasa').split(' '));
 const SV_G3 = new Set('bo tro nå ske fly må gro sy klä spå bry bete'.split(' '));

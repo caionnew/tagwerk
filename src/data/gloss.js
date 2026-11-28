@@ -3481,6 +3481,218 @@ packa||packen
 årstid||Jahreszeit (en-Wort)
 bäst|bra|am besten; tycka bäst om = am liebsten mögen
 recension||Rezension, Besprechung (en-Wort)
+sveavägen||Sveavägen (Hauptstraße in Stockholm)
+tunnelgatan||Tunnelgatan (Straße in Stockholm)
+malmskillnadsgatan||Malmskillnadsgatan (Straße in Stockholm)
+rådmansgatan||Rådmansgatan (Straße und U-Bahn-Station in Stockholm)
+hötorget||Hötorget (Platz und U-Bahn-Station in Stockholm)
+rosenbad||Rosenbad (Sitz der schwedischen Regierung in Stockholm)
+sabbatsberg||Sabbatsberg (Stadtteil in Stockholm, früher Krankenhaus)
+sabbatsbergs|sabbatsberg|Sabbatsbergs (Genitiv); Sabbatsbergs sjukhus = Krankenhaus Sabbatsberg
+stockholms|stockholm|Stockholms (Genitiv); Stockholms stadshus = Stockholmer Rathaus
+fredrik||Fredrik (Vorname)
+fredriks|fredrik|Fredriks (Genitiv); Adolf Fredriks kyrka = Adolf-Fredrik-Kirche
+grand||Grand (Name eines Kinos)
+mozart||Mozart (Komponist)
+lisbet||Lisbet (Vorname)
+mårten||Mårten (Vorname)
+ingvar||Ingvar (Vorname)
+carlsson||Carlsson (Familienname)
+holmér||Holmér (Familienname)
+christer||Christer (Vorname)
+pettersson||Pettersson (Familienname)
+krister||Krister (Vorname)
+petersson||Petersson (Familienname)
+engström||Engström (Familienname)
+lennart||Lennart (Vorname)
+guné||Guné (Familienname)
+skandia||Skandia (Versicherungsgesellschaft)
+skandiamannen||der „Skandia-Mann“ (Beiname von Stig Engström)
+pkk||PKK (kurdische Arbeiterpartei)
+pkk-spåret||die PKK-Spur
+33-åringen||der 33-Jährige (so nannten die Zeitungen den ersten Verdächtigen)
+33-årig||33-jährig
+statsminister||Ministerpräsident, Regierungschef (en-Wort)
+statsministern|statsminister|der Ministerpräsident (bestimmte Form)
+statsministerns|statsminister|des Ministerpräsidenten (Genitiv)
+ihjäl||zu Tode; skjuta ihjäl = erschießen
+skott||Schuss (ett-Wort)
+skotten|skott|die Schüsse (bestimmte Form Plural)
+spåret|spår|die Spur (bestimmte Form)
+spåren|spår|die Spuren (bestimmte Form Plural)
+fredagskväll||Freitagabend (en-Wort)
+fredagskvällen|fredagskväll|der Freitagabend (bestimmte Form)
+flickvän||Freundin, Partnerin (en-Wort)
+biograf||Kino (en-Wort); gå på bio = ins Kino gehen
+biografen|biograf|das Kino (bestimmte Form)
+livvakt||Leibwächter (en-Wort)
+livvakter|livvakt|Leibwächter (Plural)
+skydd||Schutz (ett-Wort)
+strax||gleich, kurz; strax efter = kurz nach
+tunnelbana||U-Bahn (en-Wort)
+tunnelbanan|tunnelbana|die U-Bahn (bestimmte Form)
+sonen|son|der Sohn (bestimmte Form)
+kassa||Kasse (en-Wort)
+kassan|kassa|die Kasse (bestimmte Form)
+regissör||Regisseur (en-Wort)
+opera||Oper (en-Wort)
+stund||Weile, Moment (en-Wort); en stund = eine Weile
+söderut||nach Süden
+skyltfönster||Schaufenster (ett-Wort)
+östra||östlich, Ost-; den östra sidan = die Ostseite
+gående|gå|gehend; komma gående = herangegangen kommen
+mannen|man|der Mann (bestimmte Form)
+revolver||Revolver (en-Wort)
+rygg||Rücken (en-Wort)
+ryggen|rygg|der Rücken (bestimmte Form); i ryggen = in den Rücken
+kula||Kugel (en-Wort)
+kulan|kula|die Kugel (bestimmte Form)
+uppför||hinauf; uppför trapporna = die Treppe hinauf
+trapporna|trappa|die Treppen (bestimmte Form Plural)
+sekund||Sekunde (en-Wort)
+sekunder|sekund|Sekunden (Plural)
+taxichaufför||Taxifahrer (en-Wort)
+ropa||rufen; ropa ut = ausrufen, durchgeben
+taxiradio||Taxifunk (en-Wort)
+taxiradion|taxiradio|der Taxifunk (bestimmte Form)
+närhet||Nähe (en-Wort)
+närheten|närhet|die Nähe (bestimmte Form); i närheten = in der Nähe
+hjälpa||helfen
+polisbil||Polizeiauto (en-Wort)
+ambulans||Krankenwagen (en-Wort)
+råka||geraten; råka göra något = zufällig etwas tun
+rädda||retten
+lördagen|lördag|der Samstag (bestimmte Form); natten till lördagen = die Nacht zum Samstag
+förklara||erklären; förklaras död = für tot erklärt werden
+död||tot; Tod (en-Wort)
+dö||sterben
+vice||stellvertretend, Vize-; vice statsminister = stellvertretender Ministerpräsident
+regeringskansli||Regierungskanzlei (ett-Wort)
+regeringskansliet|regeringskansli|die Regierungskanzlei (bestimmte Form)
+nyhet||Nachricht, Neuigkeit (en-Wort)
+nyheten|nyhet|die Nachricht (bestimmte Form)
+presskonferens||Pressekonferenz (en-Wort)
+gråta||weinen
+länspolismästare||Polizeichef einer Provinz (en-Wort)
+länspolismästaren|länspolismästare|der Polizeichef (bestimmte Form)
+hundratals||Hunderte; hundratals poliser = Hunderte von Polizisten
+poliser|polis|Polizisten (Plural)
+fallet|fall|der Fall (bestimmte Form)
+tips||Tipp, Hinweis (ett-Wort, Plural tips)
+fantombild||Phantombild (en-Wort)
+vittne||Zeuge, Zeugin (ett-Wort)
+vittnet|vittne|der Zeuge (bestimmte Form)
+mördare||Mörder (en-Wort)
+mördaren|mördare|der Mörder (bestimmte Form)
+högerextrem||rechtsextrem
+högerextrema|högerextrem|rechtsextrem (Plural, bestimmte Form); i högerextrema kretsar = in rechtsextremen Kreisen
+krets||Kreis (en-Wort)
+kretsar|krets|Kreise (Plural)
+fientlig||feindselig; fientlig mot någon = jemandem feindlich gesinnt
+kalla||nennen; rufen
+tidningarna|tidning|die Zeitungen (bestimmte Form Plural)
+minnesceremoni||Gedenkfeier (en-Wort)
+sorgetåg||Trauerzug (ett-Wort)
+sorgetåget|sorgetåg|der Trauerzug (bestimmte Form)
+begrava||begraben
+kyrkogård||Friedhof, Kirchhof (en-Wort)
+platsen|plats|der Ort, die Stelle (bestimmte Form)
+släppa||loslassen; släppa fri = freilassen
+bevis||Beweis (ett-Wort)
+bevisen|bevis|die Beweise (bestimmte Form Plural)
+bevisning||Beweislage, Beweise (en-Wort)
+bevisningen|bevisning|die Beweislage (bestimmte Form)
+svag||schwach
+svaga|svag|schwach (Plural, bestimmte Form)
+åklagare||Staatsanwalt, Staatsanwältin (en-Wort)
+åklagaren|åklagare|der Staatsanwalt (bestimmte Form)
+åklagarna|åklagare|die Staatsanwälte (bestimmte Form Plural)
+chefsåklagare||Chefankläger (en-Wort)
+överåklagare||Oberstaatsanwalt (en-Wort)
+okänd||unbekannt
+misstänka||verdächtigen
+planera||planen
+kurdisk||kurdisch
+terroristisk||terroristisch
+stämpla||abstempeln; stämpla som = brandmarken als
+teori||Theorie (en-Wort)
+hämnas||sich rächen
+terroriststämpel||Terroristenstempel, Einstufung als Terrororganisation (en-Wort)
+terroriststämpeln|terroriststämpel|die Einstufung als Terrororganisation (bestimmte Form)
+övertygad||überzeugt
+övertygade|övertygad|überzeugt (Plural)
+tunn||dünn
+tunna|tunn|dünn (Plural); tunna bevis = dünne Beweise
+tjugotal||etwa zwanzig; ett tjugotal = rund zwanzig
+kurd||Kurde, Kurdin (en-Wort)
+kurder|kurd|Kurden (Plural)
+razzia||Razzia (en-Wort)
+rubrik||Schlagzeile, Überschrift (en-Wort)
+rubriker|rubrik|Schlagzeilen (Plural)
+förhör||Verhör (ett-Wort)
+förhören|förhör|die Verhöre (bestimmte Form Plural)
+konflikten|konflikt|der Konflikt (bestimmte Form)
+medla||vermitteln
+kontrollera||kontrollieren, prüfen
+polischef||Polizeichef (en-Wort)
+polischefen|polischef|der Polizeichef (bestimmte Form)
+rättegång||Gerichtsverfahren, Prozess (en-Wort)
+rättegången|rättegång|der Prozess (bestimmte Form)
+rikta||richten; rikta in sig på = sich konzentrieren auf
+droger|drog|Drogen (Plural)
+döma||verurteilen
+dråp||Totschlag (ett-Wort)
+bekant||bekannt; Bekannte(r) (en-Wort)
+bekanta|bekant|Bekannte (Plural)
+vittneskonfrontation||Gegenüberstellung (en-Wort)
+oskyldig||unschuldig
+vapen||Waffe (ett-Wort)
+tingsrätt||Amtsgericht, erste Instanz (en-Wort)
+livstid||Lebenszeit (en-Wort); livstids fängelse = lebenslange Haft
+livstids|livstid|lebenslang (Genitiv); livstids fängelse = lebenslange Haft
+fängelse||Gefängnis (ett-Wort)
+överklaga||Berufung einlegen
+hovrätt||Berufungsgericht, zweite Instanz (en-Wort)
+hovrätten|hovrätt|das Berufungsgericht (bestimmte Form)
+mordvapen||Tatwaffe, Mordwaffe (ett-Wort)
+mordvapnet|mordvapen|die Tatwaffe (bestimmte Form)
+motiv||Motiv (ett-Wort)
+saker|sak|Sachen, Dinge (Plural)
+lita||vertrauen; lita på någon = jemandem vertrauen
+vittnesmål||Zeugenaussage (ett-Wort)
+frikänna||freisprechen
+skadestånd||Schadenersatz, Entschädigung (ett-Wort)
+häkte||Untersuchungshaft (ett-Wort)
+häktet|häkte|die Untersuchungshaft (bestimmte Form)
+ingenstans||nirgends, nirgendwo
+mordutredning||Mordermittlung (en-Wort)
+mordutredningen|mordutredning|die Mordermittlung (bestimmte Form)
+kontor||Büro (ett-Wort)
+åtala||anklagen
+direkta|direkt|direkt (Plural)
+erkännande||Geständnis (ett-Wort)
+granska||prüfen, untersuchen
+gärningsman||Täter (en-Wort)
+utredning||Ermittlung, Untersuchung (en-Wort)
+hörn||Ecke (ett-Wort)
+räcka||reichen; genügen
+undra||sich fragen
+försäkringsbolag||Versicherungsgesellschaft (ett-Wort)
+portugal||Portugal
+utlysa||ausrufen, ausschreiben; utlysa landssorg = Staatstrauer ausrufen
+landssorg||Staatstrauer (en-Wort)
+gäster|gäst|Gäste (Plural)
+synas||zu sehen sein, sich zeigen
+skaka||schütteln, erschüttern
+skandal||Skandal (en-Wort)
+förläggare||Verleger (en-Wort)
+förläggaren|förläggare|der Verleger (bestimmte Form)
+ebbe||Ebbe (Vorname)
+hemlig||geheim
+justitieminister||Justizminister, Justizministerin (en-Wort)
+justitieministern|justitieminister|die Justizministerin, der Justizminister (bestimmte Form)
+anna-greta||Anna-Greta (Vorname)
+leijon||Leijon (Familienname)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)

@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.96.0
+**Kopf am Rundenende: Abstände neu gemessen.**
+- **Titel und Zuruf:** „Tagwerk erledigt“ steht enger am Zuruf (7 statt 13 px von der Grundlinie zur Versalhöhe), es gehört zu ihm und schwebte vorher. Das Ergebnis bleibt etwas weiter weg (14 px), dort brauchen die Unterlängen des Zurufs (p, g, y) Luft. Der Textblock ist damit 63 statt 70 px hoch und steht mittig zum Stempel.
+- **Leiste je Aufgabe:** gehört zum Ergebnis und steht jetzt näher am Kopf (16 px) als an der Etappe darunter (22 px). Vorher klebte die Etappe mit 12 px an der Leiste.
+- **Siegel:** Der Text steht 18 px von den Zacken (vorher 14). Ein hängendes ¡ hat so 9 statt 5 px Luft.
+- Größen bleiben: Titel 14 px grau, Zuruf 28 px, Ergebnis 16 px dunkel. Geprüft auch mit 15 und 14 px in Grau: eleganter, aber das Ergebnis tritt zu weit zurück.
+- Test: Leiste näher am Kopf als an der Etappe, Titel enger am Zuruf als das Ergebnis. Speicherstand unverändert.
+
 ## 24.95.0
 **Bei „Fortgeschritten“ die ganze Aufgabe in der Zielsprache; Ergebnis im Kopf des Rundenendes.**
 - **Ergebnis am Rundenende:** „7 von 12 auf Anhieb richtig.“ steht jetzt im Kopf unter dem Zuruf, in derselben Textspalte wie „Tagwerk erledigt“, und nicht mehr unter der Etappe an der Seitenkante. Der Zuruf antwortet auf genau diese Zahl. Danach folgen die Leiste je Aufgabe und die Etappe. Ohne beantwortete Aufgabe bleibt es beim großen Titel.

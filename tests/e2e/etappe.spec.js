@@ -25,6 +25,11 @@ test('Tagwerk mit Etappe: Siegel, Ausschnitt unter dem Titel, Link zu „Dein We
   expect(o.after).toBe('mile');
   expect(o.res).toMatch(/^\d+ von \d+ auf Anhieb richtig\.$/);
   expect(Math.abs(o.col[0] - o.col[1])).toBeLessThan(1);
+  // Seit 24.96.0: Die Leiste gehört zum Ergebnis, sie steht näher am Kopf als an der Etappe; der Titel enger am Zuruf als das Ergebnis
+  const g = await page.evaluate(() => { const r = s => document.querySelector(s).getBoundingClientRect(), t = r('.done-st'), z = r('.done-z'), e = r('.done-r'), h = r('.done-top'), s = r('.rstrip'), m = r('.mile');
+    return { tz:z.top - t.bottom, ze:e.top - z.bottom, hs:s.top - h.bottom, sm:m.top - s.bottom }; });
+  expect(g.tz).toBeLessThan(g.ze);
+  expect(g.hs).toBeLessThan(g.sm);
   await expect(page.locator('.mile .mr.now')).toContainText('500 Aufgaben');
   await expect(page.locator('.mile .mr.done')).toContainText('100 Aufgaben');
   await expect(page.locator('.mile .mr.next')).toContainText('1.000 Aufgaben');

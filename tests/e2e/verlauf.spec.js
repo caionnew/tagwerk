@@ -61,3 +61,20 @@ test('Verlauf: Antippen auf dem Handy zeigt einen Tag, senkrechtes Wischen scrol
   await expect(chart.locator('.pcdate')).not.toHaveText('Heute');
   await ctx.close();
 });
+
+test('Themen: Fehlerquote über die Zeit, Ziehen zeigt eine frühere Schätzung', async ({ page }) => {
+  const { longDB } = require('./helpers');
+  await seed(page, longDB('sv'));
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=progress]');
+  await page.click('[data-a=ptab][data-t=sv]');
+  const card = page.locator('.erchart');
+  await card.scrollIntoViewIfNeeded();
+  await expect(card.locator('.pcstat')).toContainText(/\d+\s% Fehlerquote, vor 4 Wochen \d+\s%/);
+  await expect(card.locator('.pcdate')).toHaveText('Heute');
+  const r = await card.locator('#ercsvg').boundingBox();
+  await page.mouse.move(r.x + r.width * 0.3, r.y + r.height / 2);
+  await expect(card.locator('.pcdate')).not.toHaveText('Heute');
+  // Der Verlauf weiter oben bleibt davon unberührt
+  await expect(page.locator('.pcchart .pcdate')).toHaveText('Heute');
+});

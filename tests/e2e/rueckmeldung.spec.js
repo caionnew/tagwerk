@@ -49,11 +49,16 @@ test('Rückmeldung: Urteil und „wann wieder“ auf einer Höhe; Lücke ohne wi
   // In einem Schritt messen, nachdem die Karte eingeblendet ist: Sie gleitet 8 px herauf (fbIn). Bis 24.78.1 maß der Test in drei
   // Schritten; in Firefox lag dazwischen ein Stück Bewegung (1,9 px statt höchstens 1,5, CI am 25. und 26.11.).
   await page.waitForFunction(() => document.getAnimations().every(a => a.playState !== 'running'));
-  const [pill, hint, btn] = await page.evaluate(() => ['#fb .verdict', '#fb .nexthint', '#fb .vrow > [data-a=speak]'].map(s => document.querySelector(s).getBoundingClientRect().toJSON()));
-  // Vorher saß die Pille 5 px über der Mitte des Texts daneben
-  expect(Math.abs((pill.top + pill.height / 2) - (hint.top + hint.height / 2))).toBeLessThan(1.5);
+  const [pill, btn, fb, word] = await page.evaluate(() => {
+    const r = s => document.querySelector(s).getBoundingClientRect().toJSON(), rg = document.createRange();
+    rg.selectNodeContents(document.querySelector('#fb .verdict'));
+    return [r('#fb .verdict'), r('#fb .vrow > [data-a=speak]'), r('#fb'), rg.getBoundingClientRect().toJSON()];
+  });
   expect(Math.abs((pill.top + pill.height / 2) - (btn.top + btn.height / 2))).toBeLessThan(1.5);
-  expect(btn.left).toBeGreaterThan(hint.right);
+  expect(btn.left).toBeGreaterThan(pill.right);
+  // Das Wort in der Pille fluchtet mit dem Text der Karte (Innenabstand 16 px und Rand), die Fläche hängt links heraus (24.107.0)
+  expect(Math.abs(word.left - (fb.left + 17))).toBeLessThan(1.5);
+  await expect(page.locator('#fb')).not.toContainText('wieder');
   await expect(page.locator('#fb .vrow > [data-a=speak]')).toHaveAttribute('data-text', 'Jag har inte sett dig på flera år!');
   // Oben ist der Satz jetzt die Lösung zum Nachschlagen
   await page.click('.cloze [data-a=lookup][data-w=sett]');

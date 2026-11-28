@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.107.0
+**Fehlerquote über die Zeit, ruhigere Rückmeldung, zwei Prüffehler behoben.**
+- **Themen:** oben eine Karte mit deiner Fehlerquote im Schnitt über die Zeit, rot mit 50-%-Bereich, darüber der Vergleich mit vor 4 Wochen. Dasselbe Modell wie die Themenliste (jedes Thema zählt gleich, der Schwerpunkt der Woche verschiebt nichts), der letzte Wert ist „dein Schnitt“. Kurze Verläufe zeigen jeden Tag, lange jede Woche oder alle vier Wochen; Antippen und Ziehen wie im Verlauf. Damit das über Monate trägt, wandern Tage, die nach 120 Tagen aus dem Fehlerprotokoll fallen, vorher in Wochensummen (etwa 20 KB im Jahr).
+- **Rückmeldung:** kein „übermorgen wieder“ oder „gleich noch einmal, dann morgen wieder“ mehr; „Thema: …“ nur noch bei falschen und fast richtigen Antworten. Das Wort in der Pille („Correcto“, „Incorrecto“) fluchtet jetzt mit dem Text darunter, die Fläche hängt links heraus.
+- **„wie in Lateinamerika“:** Nach einer richtigen Antwort stand die Lösung im Perfecto („Hoy he trabajado mucho.“); jetzt steht die Fassung der gefragten Norm da („Hoy trabajé mucho.“).
+- **Inhalt:** „Die Besprechung findet im großen Saal statt …“ nimmt jetzt auch tiene lugar, tendrá lugar, se celebra und se celebrará und „la gran sala“; „está en la sala“ bleibt falsch.
+- Tests: Verlauf der Fehlerquote (letzter Wert gleich dem Schnitt, Bereich, Stützstellen, Wochensummen ohne Verlust), Rückmeldung, Norm, Alternativen; im Browser Ziehen in der Karte und die Ausrichtung der Pille.
+
 ## 24.106.0
 **Verlauf mit drei Reitern: Sätze, Wörter, Gedächtnis.**
 - **Sätze:** Flächen statt Linien, von hell (im Aufbau) über die Sprachfarbe (gefestigt) bis dunkel (verankert, sobald es verankerte gibt), dazu gestrichelt „abrufbar“. Darüber der Zuwachs („+92 gefestigt, +124 geübt in 30 Tagen“, bei kürzerem Verlauf „seit …“). Ersetzt den Balken „Stand der Sätze“.

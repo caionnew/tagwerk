@@ -97,7 +97,7 @@ const pcDate = (ds, withYear) => { const x = dateOf(ds), d = dayDiff(today(), ds
 
 // Rahmen eines Diagramms: Gitter, Achsen, Zeichnung, Fadenkreuz. dots: je Reihe die y-Werte (Pixel) für die Punkte beim Antippen.
 const PC = { W:340, H:176, L:34, R:10, T:8, B:22 };
-function pcSvg(D, inner, grid, dots, label){
+function pcSvg(D, inner, grid, dots, label, id = 'pcsvg'){
   const { W, H, L, R, B } = PC, n = D.pts.length, X = i => L + (n === 1 ? 0 : i / (n - 1)) * (W - L - R);
   const lastI = n - 1, longAx = D.span > 300;
   let ax = '';
@@ -106,8 +106,8 @@ function pcSvg(D, inner, grid, dots, label){
     ax += `<text x="${X(i).toFixed(1)}" y="${H - 5}" class="xl" text-anchor="${anchor}">${longAx ? `${MONTHS[x.getMonth()]} ${x.getFullYear()}` : `${x.getDate()}. ${MONTHS[x.getMonth()]}`}</text>`;
   });
   const cross = `<g class="pcx" aria-hidden="true"><line x1="${X(lastI)}" x2="${X(lastI)}" y1="${PC.T}" y2="${H - B}"/>${dots.map((d, s) => (d.y[lastI] == null ? '' : `<circle data-s="${s}" class="${d.cls}" cx="${X(lastI).toFixed(1)}" cy="${d.y[lastI].toFixed(1)}" r="3.5"/>`)).join('')}</g>`;
-  const json = { w:W, x:D.pts.map((p, i) => +X(i).toFixed(1)), d:D.pts.map(p => pcDate(p.ds, longAx)), p:dots.map(d => d.y.map(y => (y == null ? null : +y.toFixed(1)))), v:D.cells.map(c => c.v) };
-  return `<svg viewBox="0 0 ${W} ${H}" class="pcsvg${S.pcEnter ? ' enter' : ''}" id="pcsvg" tabindex="0" role="img" aria-label="${esc(label)}" data-pc="${esc(JSON.stringify(json))}">${grid}<g class="pcd">${inner}</g>${ax}${cross}</svg>`;
+  const json = { w:W, x:D.pts.map((p, i) => +X(i).toFixed(1)), d:D.pts.map(p => p.label || pcDate(p.ds, longAx)), p:dots.map(d => d.y.map(y => (y == null ? null : +y.toFixed(1)))), v:D.cells.map(c => c.v) };
+  return `<svg viewBox="0 0 ${W} ${H}" class="pcsvg${S.pcEnter && id === 'pcsvg' ? ' enter' : ''}" id="${id}" tabindex="0" role="img" aria-label="${esc(label)}" data-pc="${esc(JSON.stringify(json))}">${grid}<g class="pcd">${inner}</g>${ax}${cross}</svg>`;
 }
 function linearGrid(max, Y){
   const st = niceStep(max), top = Math.ceil(max / st) * st;
@@ -118,7 +118,7 @@ function linearGrid(max, Y){
 // Werte unter dem Diagramm: Datum und je Reihe Zahl, Farbe und Name. Beim Antippen zeigen sie den gewählten Tag.
 function pcCells(D){
   const lastI = D.pts.length - 1;
-  return `<div class="pcvals" style="--n:${D.cells.length}"><p class="pcdate">${esc(pcDate(D.pts[lastI].ds))}</p>${D.cells.map((c, j) => `<div class="pcv"><b data-pv="${j}">${esc(c.v[lastI] == null ? '–' : c.v[lastI])}</b><span><i class="${c.key}" aria-hidden="true"></i>${c.label}</span></div>`).join('')}</div>`;
+  return `<div class="pcvals" style="--n:${D.cells.length}"><p class="pcdate">${esc(D.pts[lastI].label || pcDate(D.pts[lastI].ds))}</p>${D.cells.map((c, j) => `<div class="pcv"><b data-pv="${j}">${esc(c.v[lastI] == null ? '–' : c.v[lastI])}</b><span><i class="${c.key}" aria-hidden="true"></i>${c.label}</span></div>`).join('')}</div>`;
 }
 const termBtn = (k, t) => `<button type="button" class="term" data-a="term" data-k="${k}">${t}</button>`;
 // Veränderung: gegen den Punkt etwa 30 Tage zurück, bei kürzerem Verlauf gegen den Anfang
@@ -232,10 +232,10 @@ function progressChart(lang){
   return `<h2 class="grp">Verlauf</h2>${rangeSeg}<div class="chart pcchart">${seg}${body}</div>`;
 }
 
-// Antippen und Ziehen zeigt die Werte eines Tages; Pfeiltasten gehen Punkt für Punkt. Ohne neues Rendern: nur Fadenkreuz und Zahlen.
-function armVerlauf(){
-  const svg = document.getElementById('pcsvg');
-  if (!svg || svg.dataset.armed) return;
+// Antippen und Ziehen zeigt die Werte eines Tages (Verlauf und Fehlerquote im Sprach-Tab); Pfeiltasten gehen Punkt für Punkt. Ohne neues Rendern: nur Fadenkreuz und Zahlen.
+function armVerlauf(){ document.querySelectorAll('svg[data-pc]').forEach(armChart); }
+function armChart(svg){
+  if (svg.dataset.armed) return;
   let D; try { D = JSON.parse(svg.dataset.pc); } catch (e) { return; }
   svg.dataset.armed = '1';
   const box = svg.closest('.chart'), cells = box.querySelectorAll('[data-pv]'), date = box.querySelector('.pcdate'), cross = svg.querySelector('.pcx');

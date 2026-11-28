@@ -695,6 +695,12 @@ Många familjer i området var väldigt fattiga på den tiden.
 Sätt på dig kappan, det är minus tio grader ute.
 # sv falska | Affären på hörnet har öppet dygnet runt och säljer även frimärken.
 Butiken på hörnet har öppet dygnet runt och säljer också frimärken.
+# es serestar | La reunión será en la sala grande, que ya está reservada.
+La reunión es en la gran sala, que ya está reservada.
+La reunión tiene lugar en la gran sala, que ya está reservada.
+La reunión tendrá lugar en la gran sala, que ya está reservada.
+La reunión se celebra en la gran sala, que ya está reservada.
+La reunión se celebrará en la gran sala, que ya está reservada.
 # es serestar | ¿Estás seguro de que esta es la dirección correcta?
 ¿Estás segura de que es la dirección correcta?
 ¿Seguro que es la dirección correcta?

@@ -410,7 +410,8 @@ function solShown(lang, ex, c){
   if (ex.type === 'gen' && ['spot', 'genus', 'time'].includes(ex.data.kind)) return ex.data.full;
   const item = ex.id ? itemById(ex.id) : null;
   // Lücke: der Satz der gefragten Norm (bei „wie in Lateinamerika“ ggf. eine Alternative); ohne Norm ist es der Zielsatz
-  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : ex.type === 'cloze' ? clozeOf(ex).target : item.target;
+  // Übersetzen mit Norm: die erste Fassung der gefragten Norm (bei „wie in Lateinamerika“ nicht das Perfecto des Zielsatzes)
+  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : ex.type === 'cloze' ? clozeOf(ex).target : ex.type === 'free' && otherNorm(ex) && normOf(item, item.target) === otherNorm(ex) ? answersFor(ex)[0] : item.target;
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   // Andere Norm: die nächste Fassung der gefragten Norm, ohne Markierung (sie ist ja nicht falsch)
   if (c.why && c.why.kind === 'norm' && ex.type === 'free' && c.best) return c.best;
@@ -418,17 +419,15 @@ function solShown(lang, ex, c){
 }
 // Lösungssatz mit dem gesuchten Teil fett, wenn er darin vorkommt (Uhrzeit oder Preis in Worten)
 const boldIn = (full, part) => { const i = part ? full.toLowerCase().indexOf(part.toLowerCase()) : -1; return i < 0 ? esc(full) : `${esc(full.slice(0, i))}<b>${esc(full.slice(i, i + part.length))}</b>${esc(full.slice(i + part.length))}`; };
-const ivlText = n => (n <= 1 ? 'morgen wieder' : n === 2 ? 'übermorgen wieder' : n < 14 ? `in etwa ${n} Tagen wieder` : n < 60 ? `in etwa ${Math.round(n / 7)} Wochen wieder` : n < 540 ? `in etwa ${Math.round(n / 30)} Monaten wieder` : `in etwa ${Math.round(n / 365)} Jahr${Math.round(n / 365) > 1 ? 'en' : ''} wieder`);
 function feedbackHtml(r, ex, c){
   const lang = r.lang;
   const near = lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
   // Form der anderen Norm: richtiges Spanisch, nur nicht gefragt. „Fast richtig“ hieße, an der Form fehle etwas.
   const pill = c.result === 'ok' ? verdictPill('v-ok', 'Richtig', lang, c) : c.result === 'near' ? verdictPill('v-mid', c.why && c.why.kind === 'norm' ? 'Andere Norm' : 'Fast richtig', lang, c) : verdictPill('v-bad', c.gaveUp ? 'Lösung' : 'Falsch', lang, c);
-  const normNear = c.why && c.why.kind === 'norm' && !ex.requeue;
-  const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : normNear ? `gleich noch einmal, dann ${ivlText(c.nextIvl)}` : ivlText(c.nextIvl)}</span>` : '';
   const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${comboText(c.combo, lang, c)}</span>` : '';
-  // Bei Lücken steht rechts der Knopf zum Vorlesen; Urteil und „wann wieder“ brechen links davon um
-  const vrow = extra => `<div class="vrow"><div class="vrow-l">${pill}${combo}${next}</div>${extra}</div>`;
+  // Bei Lücken steht rechts der Knopf zum Vorlesen; Urteil und Serie brechen links davon um.
+  // Wann der Satz wiederkommt, steht nicht da (bis 24.106: „übermorgen wieder“): Planung, die beim Lernen nicht hilft.
+  const vrow = extra => `<div class="vrow"><div class="vrow-l">${pill}${combo}</div>${extra}</div>`;
   let out = vrow('');
   if (ex.type === 'gen' && ex.data.kind === 'spot') {
     const d = ex.data, fixed = d.full.split(' '), clean = d.wrong.length === 0;
@@ -510,7 +509,7 @@ function feedbackHtml(r, ex, c){
   }
   // Beim ersten Kontakt auch bei richtiger Antwort: Die Geschichte hinter dem Bild hilft beim Merken
   if (!originShown) out += originLine;
-  if (!(r.kind === 'trap' || r.kind === 'gen' || r.kind === 'form')) { const own = ex.type === 'gen' && ex.data.trap ? trapMeta(lang, ex.data.trap) : null; const tl = own ? own.label : ex.type === 'gen' ? GENS[ex.gen].label : (tr && tr.id !== 'eigene' ? tr.label : ''); if (tl) out += `<p class="src">Thema: ${esc(tl)}</p>`; }
+  if (!(r.kind === 'trap' || r.kind === 'gen' || r.kind === 'form')) { const own = ex.type === 'gen' && ex.data.trap ? trapMeta(lang, ex.data.trap) : null; const tl = own ? own.label : ex.type === 'gen' ? GENS[ex.gen].label : (tr && tr.id !== 'eigene' ? tr.label : ''); if (tl && c.result !== 'ok') out += `<p class="src">Thema: ${esc(tl)}</p>`; }
   if (item && item.tat) out += `<p class="src">Quelle: Tatoeba${item.tat.owner ? ', ' + esc(item.tat.owner) : ''} (${esc(item.tat.license)})${item.tat.audio ? `. Aufnahme: ${item.tat.audio.attr ? `<a href="${esc(item.tat.audio.attr)}" target="_blank" rel="noopener">${esc(item.tat.audio.author)}</a>` : esc(item.tat.audio.author)}` : ''}</p>`;
   return out;
 }

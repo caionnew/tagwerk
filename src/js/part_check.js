@@ -467,10 +467,6 @@ function finishAnswer(r, ex, c){
   c.state = 'done'; c.enter = true; buzz(c.result === 'bad' ? 'bad' : 'ok');
   // Serie in der Runde: zählt nur erste Versuche
   if (!ex.requeue) { r.combo = c.result === 'bad' ? 0 : (r.combo || 0) + 1; r.best = Math.max(r.best || 0, r.combo); c.combo = r.combo; }
-  if (ex.id && ex.type !== 'dict' && !ex.requeue && c.result) {
-    const g = c.result === 'ok' ? 3 : c.result === 'near' ? 2 : 1;
-    c.nextIvl = FSRS.review(DB.st[ex.id] || {}, g, today(), true).ivl;
-  }
   answered(r, c); render(); scrollFb(); autoSpeak(r, ex);
 }
 // Nach der Antwort: Bedenkzeit merken und das Tagwerk mit der Rückmeldung speichern (Pause oder Neustart verlieren sie nicht)

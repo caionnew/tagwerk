@@ -418,6 +418,7 @@ document.addEventListener('click', e => {
         if (DB.first) delete DB.first[lang];
         // Fehlerprotokoll und Themen-Etappen dieser Sprache (bis 24.62 blieb das Fehlerprotokoll beim Zurücksetzen stehen)
         if (DB.tlog) Object.values(DB.tlog).forEach(d => { delete d[lang]; });
+        if (DB.tweek) Object.values(DB.tweek).forEach(d => { delete d[lang]; });
         if (DB.tblk) delete DB.tblk[lang];
         if (Array.isArray(DB.etap)) DB.etap = DB.etap.filter(e => e.l !== lang);
         if (Array.isArray(DB.way)) DB.way = DB.way.filter(e => e.l !== lang);

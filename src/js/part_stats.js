@@ -148,10 +148,24 @@ function compactSnaps(){
     if (dt.getDay() !== 0 && !monthEnd) delete DB.snap[d];
   });
 }
+// Tage älter als 120 Tage fallen aus dem Fehlerprotokoll; ihre Zahlen je Thema und Übungsart wandern vorher in Wochensummen
+// (DB.tweek[Montag][Sprache], seit 24.107.0). Daraus kommt der Verlauf der Fehlerquote über Monate; etwa 20 KB im Jahr.
 function pruneTlog(){
   if (!DB.tlog) return;
   const t = today();
-  Object.keys(DB.tlog).forEach(d => { if (dayDiff(t, d) > 120) delete DB.tlog[d]; });
+  Object.keys(DB.tlog).forEach(d => {
+    if (dayDiff(t, d) <= 120) return;
+    const day = DB.tlog[d], mon = mondayOf(d);
+    ['sv', 'es'].forEach(l => {
+      const L = day && day[l]; if (!L) return;
+      Object.keys(L).forEach(k => {
+        if (!/^[pt]:/.test(k) || !Array.isArray(L[k])) return;
+        DB.tweek = DB.tweek || {}; const W = DB.tweek[mon] = DB.tweek[mon] || {}, X = W[l] = W[l] || {}, v = X[k] = X[k] || [0, 0];
+        v[0] += L[k][0]; v[1] += L[k][1];
+      });
+    });
+    delete DB.tlog[d];
+  });
 }
 function errStats(lang, days){
   const t = today(), out = { p:{}, t:{}, e:{}, n:0, bad:0 };
@@ -305,8 +319,35 @@ const topicOpen = (lang, id, num) => trapMeta(lang, id) ? `button type="button" 
 // Schätzung sortiert, je Zeile Quote, Streifen und Veränderungspfeil. Die Themen ohne Schätzung folgen als Verweise.
 // „Geübt“ und „gefestigt“ je Thema stehen im Themenblatt und in „Thema üben“: Sie sagen, was der Plan schon gebracht hat,
 // nicht, wo du Fehler machst.
+// Fehlerquote über Monate (seit 24.107.0): dein Schnitt an jeder Stützstelle (errHistory), 50-%-Bereich als Band, rot wie alle
+// Fehlerquoten. Darüber der Vergleich mit vor vier Wochen, bei kürzerem Verlauf mit der ersten Schätzung. Ab drei Schätzungen.
+function errTrendHtml(lang){
+  const H = errHistory(lang), i0 = H.pts.findIndex(p => p.mu != null);
+  if (i0 < 0) return '';
+  const pts = H.pts.slice(i0).map(p => Object.assign({ ds:p.end }, p));
+  if (pts.filter(p => p.mu != null).length < 3) return '';
+  const n = pts.length, lastI = n - 1, z = pts[lastI], X = i => PC.L + (n === 1 ? 0 : i / (n - 1)) * (PC.W - PC.L - PC.R);
+  const max = Math.max(0.05, ...pts.filter(p => p.hi != null).map(p => p.hi));
+  // Höchstens vier Abstände auf der Achse, in Stufen von 5, 10, 20 oder 25 Prozentpunkten
+  const st = [0.05, 0.1, 0.2, 0.25].find(x => Math.ceil(max * 1.1 / x) <= 4) || 0.25, top = Math.ceil(max * 1.1 / st) * st, Y = v => PC.T + (1 - v / top) * (PC.H - PC.T - PC.B);
+  let grid = '';
+  for (let v = 0; v <= top + 1e-9; v += st) grid += `<line x1="${PC.L}" x2="${PC.W - PC.R}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" class="gl"/><text x="${PC.L - 6}" y="${(Y(v) + 3).toFixed(1)}" class="yl">${Math.round(v * 100)}\u00a0%</text>`;
+  let inner = '';
+  runsOf(pts, p => p.mu != null).forEach(idx => {
+    const lv = stackLevels(pts, idx, [p => p.lo, p => p.hi - p.lo]);
+    inner += `<path d="${bandPath(idx, lv[1], lv[2], X, Y)}" class="pca a-bad"/><path d="${linePath(idx, idx.map(i => pts[i].mu), X, Y)}" class="pcl l-bad"/>`;
+  });
+  const cells = [{ v:pts.map(p => (p.mu == null ? null : pct(p.mu))), key:'lk l-bad', label:'Schnitt' },
+    { v:pts.map(p => (p.lo == null ? null : `${Math.round(p.lo * 100)}–${pct(p.hi)}`)), key:'sq k-bad', label:'50-%-Bereich' }];
+  const back = pts.findIndex(p => dayDiff(z.ds, p.ds) <= 28 && p.mu != null), a = back >= 0 && dayDiff(z.ds, pts[back].ds) >= 6 ? pts[back] : null;
+  const extra = a ? `, ${dayDiff(z.ds, a.ds) >= 27 ? 'vor 4 Wochen' : `am ${pcDate(a.ds)}`} ${pct(a.mu)}` : '';
+  const D = { pts, cells, span:dayDiff(z.ds, pts[0].ds) };
+  const dots = [{ y:pts.map(p => (p.mu == null ? null : Y(p.mu))), cls:'d-bad' }];
+  return `<div class="chart erchart"><p class="pcstat"><b>${pct(z.mu)}</b> ${termBtn('schaetzung', 'Fehlerquote')}${extra}</p>`
+    + pcSvg(D, inner, grid, dots, `Fehlerquote im Schnitt deiner Themen im Verlauf: jetzt ${pct(z.mu)}`, 'ercsvg') + pcCells(D) + '</div>';
+}
 function topicListHtml(lang){
-  const M = topicModel(lang), C = topicChange(lang), cl = clearSet(lang), head = '<h2 class="grp">Themen</h2>';
+  const M = topicModel(lang), C = topicChange(lang), cl = clearSet(lang), head = '<h2 class="grp">Themen</h2>' + errTrendHtml(lang);
   const est = M.fitted ? M.topics.filter(x => x.n >= MODEL.MIN_N) : [], known = new Set(est.map(x => x.id));
   const rest = topicIds(lang).filter(id => !known.has(id) && trapMeta(lang, id));
   const restLine = rest.length ? `<p class="legend">${est.length ? 'Noch ohne Schätzung' : 'Regel und Beispiele'}: ${rest.map((id, i) => nobr(`<button type="button" class="link inl" data-a="topic" data-t="${id}">${esc(keepHyph(trapLabel(lang, id)))}</button>${i < rest.length - 1 ? ',' : '.'}`)).join(' ')}</p>` : '';

@@ -120,7 +120,7 @@ test('Form der anderen Norm: gleich noch einmal als Lücke mit derselben Norm', 
   const it = item('El lunes empezó el curso y hoy ya hemos hecho el primer examen.');
   const r = show({ type:'free', id:it.id, norm:'la' }, { input:'El lunes empezó el curso y hoy ya hemos hecho el primer examen', check:true, next:true });
   assert.equal(r.result, 'near');
-  assert.match(r.fb, /gleich noch einmal, dann morgen wieder/);
+  assert.doesNotMatch(r.fb, /wieder|gleich noch einmal/, 'kein Hinweis auf die Planung (seit 24.107.0)');
   assert.deepEqual(r.queue[1], { type:'cloze', norm:'la', requeue:true });
   // Die Lücke kommt im Satz dieser Norm, die erste Satzhälfte bleibt
   assert.equal(show({ type:'cloze', id:it.id, norm:'la' }).cloze, 'El lunes empezó el curso y hoy ya ___ el primer examen.');

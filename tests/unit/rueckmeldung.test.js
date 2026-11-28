@@ -134,7 +134,7 @@ test('Lücke richtig mit einer Alternative: „Auch richtig“ mit der Hauptlös
   const a = answer(COSTUMBRE, 'cloze', 'te acostumbras', 'trap');
   assert.equal(a.result, 'ok');
   assert.match(a.task, /<span class="gapdone ok" lang="es">.*acostumbras/);
-  assert.match(text(a.fb), /^Richtig [^.]*wieder Auch richtig: te acostumbrarás( Tipp|$)/);
+  assert.match(text(a.fb), /^Richtig Auch richtig: te acostumbrarás$/);
   assert.match(a.fb, /<p class="legend also">Auch richtig: <span lang="es"><span data-a="lookup" data-w="te">te<\/span> <span data-a="lookup" data-w="acostumbrarás">acostumbrarás<\/span><\/span><\/p>/);
   assert.deepEqual(speakTexts(a.fb), ['Con el tiempo te acostumbras al ritmo de la ciudad.']);
   // Mit der Hauptlösung (auch klein oder mit Satzzeichen) keine Zeile, vorgelesen wird der Satz der Satzbank

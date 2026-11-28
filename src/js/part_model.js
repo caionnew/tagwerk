@@ -158,6 +158,57 @@ function rateModel(lang, pre, at){
   return v;
 }
 function topicModel(lang){ return rateModel(lang, 'p'); }
+
+/* ---------- Fehlerquote über Monate: dein Schnitt je Woche ---------- */
+// An jeder Stützstelle dasselbe Modell wie in der Themenliste: μ ist dein Schnitt, jedes Thema zählt gleich,
+// darum verschiebt der Schwerpunkt der Woche (mehr Aufgaben im schwächsten Thema) die Zahl nicht. Der letzte Wert ist genau
+// „dein Schnitt“ in „Thema üben“. Gewichte 2^(−Alter/14) wie dort, laufend fortgeschrieben statt je Woche neu summiert.
+// Bereich: 25 bis 75 % der Posterior von μ bei festem m (dessen Modus), auf 160 Punkten; die Hyperprior ist in μ flach.
+// Quellen: Fehlerprotokoll (120 Tage) und die Wochensummen davor, die als Donnerstag ihrer Woche zählen.
+function muBand(list, m){
+  const use = list.filter(x => x.n >= MODEL.MIN_N), G = 160, xs = [], ls = [];
+  for (let i = 0; i < G; i++) {
+    const mu = 0.005 + (0.95 - 0.005) * (i + 0.5) / G, a = mu * m, b = (1 - mu) * m, l0 = lbeta(a, b);
+    let s = 0; for (const x of use) s += lbeta(a + x.k, b + x.n - x.k) - l0;
+    xs.push(mu); ls.push(s);
+  }
+  const mx = Math.max(...ls), ws = ls.map(l => Math.exp(l - mx)), tot = ws.reduce((a, b) => a + b, 0);
+  const q = p => { let c = 0; for (let i = 0; i < G; i++) { c += ws[i] / tot; if (c >= p) return xs[i]; } return xs[G - 1]; };
+  return [q(0.25), q(0.75)];
+}
+// Stützstellen rückwärts ab heute im Abstand von 1, 2, 3, 7, 14 oder 28 Tagen, höchstens 20: Kurze Verläufe zeigen jeden Tag,
+// lange jede Woche oder alle vier Wochen. Vergangene Stellen ändern sich nicht mehr (das Protokoll wächst nur nach vorn) und bleiben
+// in der Sitzung gemerkt, neu gerechnet wird nur heute; eine Stelle kostet im Browser etwa 15 ms.
+const errMemo = {};
+function errHistory(lang){
+  const t = today(), ent = [];
+  Object.keys(DB.tweek || {}).forEach(mon => { const L = DB.tweek[mon][lang]; if (L) ent.push({ d:addDays(mon, 3), L }); });
+  Object.keys(DB.tlog || {}).forEach(d => { const L = DB.tlog[d] && DB.tlog[d][lang]; if (L && d <= t) ent.push({ d, L }); });
+  ent.sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : 0));
+  const keys = e => Object.keys(e.L).filter(k => k.startsWith('p:') && Array.isArray(e.L[k]));
+  const first = ent.find(e => keys(e).length);
+  if (!first) return { step:1, pts:[] };
+  const span = dayDiff(t, first.d), step = [1, 2, 3, 7, 14, 28].find(s => span / s <= 20) || 28;
+  const ends = []; for (let k = 0; k * step <= span; k++) ends.unshift(addDays(t, -k * step));
+  const acc = {}, pts = [];
+  let ref = null, ei = 0, cn = 0, ck = 0;
+  ends.forEach(end => {
+    if (ref) { const f = Math.pow(2, -dayDiff(end, ref) / MODEL.H); Object.values(acc).forEach(x => { x.n *= f; x.k *= f; }); }
+    ref = end;
+    while (ei < ent.length && ent[ei].d <= end) {
+      const e = ent[ei], w = Math.pow(2, -dayDiff(end, e.d) / MODEL.H);
+      keys(e).forEach(key => { const x = acc[key] = acc[key] || { id:key.slice(2), n:0, k:0 }; x.n += w * e.L[key][0]; x.k += w * e.L[key][1]; cn += e.L[key][0]; ck += e.L[key][1]; });
+      ei++;
+    }
+    const mk = `${lang}|${end}|${cn}|${ck}`;
+    if (!errMemo[mk]) {
+      const list = Object.values(acc), F = fitPrior(list), band = F.fitted ? muBand(list, F.m) : null;
+      errMemo[mk] = { mu:F.fitted ? F.mu : null, lo:band ? band[0] : null, hi:band ? band[1] : null };
+    }
+    pts.push(Object.assign({ end }, errMemo[mk]));
+  });
+  return { step, pts };
+}
 function typeModel(lang){ return rateModel(lang, 't'); }
 // Thompson-Sampling: je Thema ein θ aus der Posterior (ohne Daten: aus der Vorverteilung), absteigend sortiert.
 // Ein Thema steht so oft vorn, wie wahrscheinlich es das schwächste ist.

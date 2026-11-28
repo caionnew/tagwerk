@@ -166,6 +166,8 @@ input.tw[readonly], textarea[readonly]{ background:transparent; border-style:das
 .chars{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
 .ch{ min-width:42px; height:40px; border:1px solid var(--line); background:var(--surface); border-radius:var(--r-s); font-family:var(--serif); font-size:var(--fs-9); }
 .verdict{ display:inline-block; font-weight:var(--fw-bold); font-size:var(--fs-5); padding:3px 11px; border-radius:var(--r-pill); margin:0; }
+/* In der Rückmeldung fluchtet das Wort mit dem Text darunter, nicht die Fläche (seit 24.107.0): Die Pille hängt um ihren Innenabstand nach links */
+.vrow-l > .verdict:first-child{ margin-left:-11px; }
 .v-ok{ background:var(--ok-soft); color:var(--ok); }
 .v-mid{ background:var(--warn-soft); color:var(--warn); }
 .v-bad{ background:var(--bad-soft); color:var(--bad); }
@@ -410,6 +412,10 @@ body.has-pop, html:has(body.has-pop){ overscroll-behavior-y:none; }
 .pcsvg .l-top{ stroke:color-mix(in srgb, var(--accent) 55%, var(--surface)); stroke-width:1.5; }
 .pcsvg .l-k{ stroke:var(--ink); stroke-width:1.5; stroke-dasharray:4 3; opacity:.6; }
 .pcsvg .l-md{ stroke:var(--accent-ink); stroke-width:2.4; }
+.pcsvg .a-bad{ fill:color-mix(in srgb, var(--bad) 16%, var(--surface)); } .pcsvg .l-bad{ stroke:var(--bad); stroke-width:2.2; }
+.pcx .d-bad{ fill:var(--bad); }
+.pcv .k-bad{ background:color-mix(in srgb, var(--bad) 16%, var(--surface)); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--bad) 35%, var(--surface)); } .lk.l-bad{ border-top:2.5px solid var(--bad); }
+.erchart{ margin:0 0 10px; }
 .pcx line{ stroke:var(--ink); stroke-width:1; opacity:0; }
 .pcx.on line{ opacity:.35; }
 .pcx circle{ stroke:var(--surface); stroke-width:2; }
@@ -440,7 +446,6 @@ body.has-pop, html:has(body.has-pop){ overscroll-behavior-y:none; }
 .vrow:last-child{ margin-bottom:0; }
 .legend.also{ margin-top:2px; }
 .vrow-l{ flex:1; display:flex; align-items:center; gap:6px 10px; flex-wrap:wrap; }
-.nexthint{ font-size:var(--fs-4); color:var(--muted); }
 .wordrow{ font-family:var(--serif); }
 .wordrow [data-a="lookup"]{ cursor:pointer; }
 

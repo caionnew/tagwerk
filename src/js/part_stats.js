@@ -25,6 +25,7 @@ function sameWord(lang, a, b){
 // „samla“ (Infinitiv) statt „plockar“ (Präsens), „comer“ statt „bebo“. Zählt nur, was so im Wörterbuch steht
 // (nicht erschlossene Mehrzahl oder weibliche Formen). Schwedisch, Wort unbekannt: -a statt einer Präsensform auf -r.
 function formDiff(lang, x, m){
+  glossForms();
   const kind = w => { const g = GLOSS[lang][String(w).toLowerCase()]; return !g || g.multi ? null : g.l ? 'form' : 'base'; };
   const kx = kind(x), km = kind(m);
   if (kx && km) return kx !== km;

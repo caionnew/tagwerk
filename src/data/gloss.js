@@ -554,7 +554,7 @@ sedan||seit; dann; för … sedan = vor …
 semester||Urlaub
 sen||spät; umgangssprachlich für sedan
 senare|sen|später
-sent|sen|spät; för sent = zu spät
+sent|sen|spät; för sent = zu spät; sent uppe? = noch wach?
 serveras|servera|wird serviert
 sett|se|gesehen (Supinum)
 sex||sechs
@@ -699,7 +699,6 @@ halv|halv|halb; halv åtta = halb acht (7:30)
 kostar|kosta|kostet
 kronor|krona|Kronen
 skog||Wald
-sent||spät; Sent uppe? = Noch wach?
 uppe||auf, wach
 hej||hallo
 badade|bada|badete, schwamm
@@ -716,7 +715,7 @@ gås||Gans
 hämtas|hämta|abgeholt werden
 igen||wieder
 imorgon||morgen (Schreibweise von i morgon)
-klara|klar|fertig (Plural)
+klara||schaffen; klara sig = zurechtkommen; auch Plural von klar = fertig
 konserten|konsert|das Konzert
 kostym||Herrenanzug
 luktar|lukta|riecht
@@ -2869,6 +2868,161 @@ måndagen|måndag|der Montag (bestimmt); förra måndagen = letzten Montag
 iväg||los, weg; åka iväg = losfahren
 framme||angekommen, da; vara framme = ankommen
 uppehåll||die Pause; utan uppehåll = ununterbrochen
+prata||sprechen, reden
+fixa||hinkriegen, erledigen (umgangssprachlich)
+kolla||nachsehen, checken (umgangssprachlich)
+hävda||behaupten
+märka||merken, bemerken; det märks = man merkt es
+köa||Schlange stehen, anstehen
+funka||funktionieren, klappen (umgangssprachlich)
+fundera||nachdenken, überlegen; fundera på = nachdenken über
+passa||passen; passa sig = sich in Acht nehmen
+plugga||lernen, büffeln (umgangssprachlich)
+redovisa||darlegen, vorstellen
+släcka||löschen, ausmachen (Licht)
+slänga||wegwerfen
+studera||studieren
+trilla||hinfallen, purzeln
+tänka||denken; tänka på = denken an
+underteckna||unterschreiben
+upptäcka||entdecken
+ursäkta||entschuldigen; ursäkta! = Entschuldigung!; ursäkta sig = sich entschuldigen
+överraska||überraschen
+debattera||debattieren
+besvara||beantworten
+bruka||pflegen (etwas zu tun), gewöhnlich tun; jag brukade = ich habe früher immer
+erkänna||zugeben, gestehen
+finna||finden (gehoben); finna sig i = sich abfinden mit
+fråga||fragen; Frage (en-Wort)
+förvänta||erwarten; förvänta sig = erwarten
+grunda||gründen
+hugga||hauen, hacken; hugga ner = fällen
+hyra||mieten; Miete (en-Wort)
+intressera||interessieren; intressera sig för = sich interessieren für
+misslyckas||scheitern, misslingen
+minnas||sich erinnern
+möta||treffen, begegnen
+sopsortera||Müll trennen
+spöregna||in Strömen regnen
+ösa||schöpfen; det öser ner = es gießt in Strömen
+återuppbygga||wieder aufbauen
+avgå||abfahren (Zug); zurücktreten
+befara||befürchten
+begripa||begreifen, verstehen
+bry||sich kümmern; bry sig om = sich kümmern um, sich interessieren für
+framföra||vorbringen, äußern
+påstå||behaupten; det påstås = es heißt
+dua||duzen
+gripa||greifen; festnehmen
+stjäla||stehlen
+anta||annehmen; verabschieden (Gesetz)
+överlåta||überlassen, übertragen
+inställd||abgesagt, ausgefallen
+slutsåld||ausverkauft
+slutsålda|slutsåld|ausverkauft (Plural)
+tvungen||gezwungen; vara tvungen att = müssen
+tvungna|tvungen|gezwungen (Plural); vara tvungna att = müssen
+bortrest||verreist
+bortresta|bortrest|verreist (Plural)
+färdiga|färdig|fertig (Plural und bestimmte Form)
+lätta|lätt|leicht (Plural und bestimmte Form)
+halvt|halv|halb (bei ett-Wörtern)
+möjlig||möglich
+möjligt|möjlig|möglich (bei ett-Wörtern)
+sann||wahr
+sant|sann|wahr (bei ett-Wörtern)
+uppenbar||offensichtlich
+uppenbart|uppenbar|offensichtlich (bei ett-Wörtern)
+noggrann||gründlich, sorgfältig
+noggrant|noggrann|gründlich, sorgfältig (Adverb)
+rejäl||ordentlich, kräftig
+rejält|rejäl|ordentlich, kräftig (Adverb); sitta rejält i klistret = ganz schön in der Klemme sitzen
+begriplig||verständlich
+begripligt|begriplig|verständlich (bei ett-Wörtern)
+ansvaret|ansvar|die Verantwortung
+arbete||Arbeit (ett-Wort)
+arbetet|arbete|die Arbeit
+bion|bio|das Kino
+bostadskris||Wohnungskrise (en-Wort)
+bostadskrisen|bostadskris|die Wohnungskrise
+buller||Lärm (ett-Wort)
+bullret|buller|der Lärm
+city||Innenstadt (en-Wort)
+eftermiddan|eftermiddag|der Nachmittag (gesprochen für eftermiddagen)
+fjäll||Fjäll, Berg (ett-Wort, Plural gleich)
+fuktskada||Feuchtigkeitsschaden (en-Wort)
+fuktskadan|fuktskada|der Feuchtigkeitsschaden
+försäkring||Versicherung (en-Wort)
+försäkringen|försäkring|die Versicherung
+förövare||Täter (en-Wort)
+förövaren|förövare|der Täter
+godkännande||Zustimmung, Genehmigung (ett-Wort)
+gym||Fitnessstudio (ett-Wort)
+gårdar|gård|Höfe
+husse||Herrchen (en-Wort)
+husses|husse|des Herrchens
+hyrorna|hyra|die Mieten
+innergård||Innenhof (en-Wort)
+innergården|innergård|der Innenhof
+innerstan|innerstad|die Innenstadt (gesprochen für innerstaden)
+kappa||Mantel (en-Wort)
+kappan|kappa|der Mantel
+lärarbrist||Lehrermangel (en-Wort)
+lärarbristen|lärarbrist|der Lehrermangel
+medarbetare||Mitarbeiter (en-Wort)
+mening||Satz; Meinung (en-Wort); enligt min mening = meiner Meinung nach
+namnen|namn|die Namen
+norrskenet|norrsken|das Nordlicht
+oljan|olja|das Öl
+oväder||Unwetter (ett-Wort)
+ovädret|oväder|das Unwetter
+pappas|pappa|Papas (Genitiv)
+patient||Patient (en-Wort)
+patienterna|patient|die Patienten
+pensionär||Rentner (en-Wort)
+press||Presse; Druck (en-Wort)
+pressen|press|die Presse; der Druck
+resultaten|resultat|die Ergebnisse
+ränta||Zins (en-Wort)
+räntorna|ränta|die Zinsen
+styrelse||Vorstand (en-Wort)
+styrelsens|styrelse|des Vorstands
+syskonen|syskon|die Geschwister
+sömn||Schlaf (en-Wort)
+telefon||Telefon (en-Wort)
+telefonen|telefon|das Telefon
+trappa||Treppe (en-Wort); en trappa upp = ein Stockwerk höher
+val||Wahl (ett-Wort); Wal (en-Wort)
+åsikter|åsikt|Meinungen
+förmögenhet||Vermögen (en-Wort)
+1950-talet|1950-tal|die 1950er-Jahre
+adjö||auf Wiedersehen; säga adjö = sich verabschieden
+allteftersom||in dem Maße, wie; je mehr
+allting||alles
+allvarlig||ernst
+antagligen||wahrscheinlich
+därmed||damit
+endast||nur
+far||Vater (en-Wort)
+farväl||Lebewohl; ta farväl = Abschied nehmen
+förmodligen||vermutlich
+genast||sofort
+ifjol||letztes Jahr
+illa||schlecht; vara illa ute = schlimm dran sein
+ja||ja
+kl||Uhr (Abkürzung für klockan); kl. sex = um sechs Uhr
+kul||lustig; schön, toll
+lyckligtvis||glücklicherweise
+lydig||gehorsam
+möjligen||möglicherweise
+mor||Mutter (en-Wort)
+närvarande||anwesend; för närvarande = zurzeit
+någonting||etwas
+osäker||unsicher
+ständigt||ständig, dauernd
+varann||einander
+varsågod||bitte (beim Anbieten); varsågod och kom in = komm bitte herein
+vore||wäre (Konjunktiv von vara)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -3145,7 +3299,6 @@ perfecto||perfekt
 típico||typisch
 quejé|quejarse|ich beschwerte mich; quejarse de = sich beschweren über
 despedimos|despedirse|wir verabschiedeten uns; despedirse de = sich verabschieden von
-nuestros|nuestro|unsere
 amigos|amigo|Freunde
 encargo|encargarse|ich kümmere mich; encargarse de = sich kümmern um
 error||Fehler
@@ -3409,7 +3562,6 @@ carta||Brief
 casa||Haus; en casa = zu Hause
 casó|casarse|se casó con = heiratete
 cayó|caer|fiel (Indefinido); se me cayó = mir ist … heruntergefallen; me cayó bien = war mir sympathisch
-celular||Handy (Lateinamerika)
 centro||Zentrum
 chaqueta||Jacke
 chile||Chile
@@ -3727,10 +3879,7 @@ y||und
 ya||schon; jetzt
 yo||ich
 él||er; ihn (nach Präposition)
-ayer||gestern
-antes||früher; vorher
 siempre||immer
-importante||wichtig
 ellas||sie (Plural, weiblich)
 ellos||sie (Plural)
 usted||Sie (höflich)
@@ -3781,7 +3930,6 @@ ocho||acht
 cinco||fünf
 lista|listo|klug (ser); fertig (estar)
 normalmente||normalerweise
-antes||früher; vorher
 felices|feliz|glückliche, frohe; ¡Felices Reyes! = Schönen Dreikönigstag!
 reyes|rey|Könige; los Reyes Magos = die Heiligen Drei Könige
 procesiones|procesión|Prozessionen
@@ -3796,7 +3944,6 @@ nuevo||neu; Año Nuevo = Neujahr
 menos||weniger; bei Uhrzeiten: vor (las ocho menos cuarto = 7:45)
 cuarto||Viertel; Zimmer
 cuesta|costar|kostet; la cuesta = der Hang, die Steigung
-euros|euro|Euro
 paciencia||Geduld
 deberes||Hausaufgaben
 deporte||Sport
@@ -4005,7 +4152,7 @@ fecha|fecha|Datum, Termin
 quitó|quitarse|zog aus (Indefinido)
 porque|porque|weil
 concentrar|concentrarse|konzentrieren
-acordar|acordarse|erinnern
+acordar||vereinbaren, sich einigen auf
 quejó|quejarse|beschwerte sich (Indefinido)
 date|darse|gib dir; date prisa = beeil dich
 pregunto|preguntarse|ich frage (mich)
@@ -5937,24 +6084,138 @@ pues||denn; also
 respondido|responder|geantwortet (Partizip)
 contestó|contestar|antwortete (Indefinido)
 mail||E-Mail
+aclarar||klären, aufklären; quedan detalles por aclarar = es sind noch Einzelheiten zu klären
+acompañar||begleiten
+acordarse||sich erinnern; acordarse de = sich erinnern an
+acostar||ins Bett bringen; acostarse = schlafen gehen
+acostumbrarse||sich gewöhnen; acostumbrarse a = sich gewöhnen an
+adaptarse||sich anpassen, sich einleben
+advertir||warnen; darauf hinweisen
+afectar||betreffen; beeinträchtigen
+alegrarse||sich freuen; alegrarse de = sich freuen über
+apurarse||sich beeilen (Lateinamerika)
+arreglar||reparieren, in Ordnung bringen
+aumentar||steigen; erhöhen
+averiarse||kaputtgehen, eine Panne haben
+cancelar||absagen, stornieren
+ceder||nachgeben; abtreten
+comprobar||prüfen, nachprüfen
+concentrarse||sich konzentrieren
+concluir||abschließen, beenden
+constiparse||sich erkälten (Spanien)
+continuar||weitermachen, fortsetzen; continuar + Gerundium = immer noch tun
+dedicarse||sich widmen; dedicarse a = beruflich machen, sich beschäftigen mit
+derramar||verschütten; la gota que derramó el vaso = der Tropfen, der das Fass zum Überlaufen brachte
+diluviar||in Strömen regnen
+dimitir||zurücktreten
+diseñar||entwerfen
+empeorar||schlechter werden
+enfriarse||abkühlen, kalt werden; sich erkälten
+enojarse||sich ärgern (Lateinamerika)
+enojado||verärgert, sauer (Lateinamerika)
+enviar||schicken
+escoger||auswählen, aussuchen
+fingir||vortäuschen, so tun als ob
+garantizar||garantieren
+lesionarse||sich verletzen
+levantar||heben, hochheben
+levantarse||aufstehen
+lograr||schaffen, erreichen
+mudarse||umziehen
+notar||bemerken
+optar||sich entscheiden; optar por = sich entscheiden für
+perjudicar||schaden, benachteiligen
+plantearse||sich überlegen, in Erwägung ziehen
+practicar||üben; ausüben (Sport, Instrument)
+presentar||vorstellen; vorlegen
+quejarse||sich beschweren
+regresar||zurückkehren (Lateinamerika)
+rendirse||aufgeben; ¡no te rindas! = gib nicht auf!
+renunciar||zurücktreten; verzichten
+repetir||wiederholen
+resfriarse||sich erkälten
+sentar||setzen; sentar bien = gut stehen, gut bekommen
+sentarse||sich setzen
+sentir||fühlen; lo siento = es tut mir leid
+sentirse||sich fühlen
+solucionar||lösen
+sorprender||überraschen
+tocar||berühren; spielen (Instrument); anklopfen; me toca = ich bin dran
+adobo||Marinade; en adobo = mariniert
+afuera||draußen (Lateinamerika)
+apto||geeignet; no apta para niños = nicht für Kinder geeignet
+banana||Banane (Lateinamerika)
+bancarrota||Bankrott; declararse en bancarrota = Insolvenz anmelden
+boleto||Eintrittskarte, Fahrkarte (Lateinamerika)
+cabezota||Dickkopf; stur
+causa||Ursache, Grund; a causa de = wegen
+chamarra||Jacke (Mexiko)
+chollo||Schnäppchen (Spanien)
+colega||Kollege, Kollegin
+colorado||rot; ponerse colorado = rot werden
+compañía||Firma, Unternehmen; Gesellschaft
+conserje||Hausmeister, Pförtner
+desempleado||arbeitslos
+diario||Tageszeitung; täglich
+entrante||Vorspeise (Spanien); la semana entrante = nächste Woche
+estante||Regal
+estupendo||toll, großartig
+excompañero||ehemaliger Mitschüler, ehemaliger Kollege
+facilísimo|fácil|sehr leicht, kinderleicht
+fila||Reihe, Schlange; hacer fila = anstehen
+finalmente||schließlich, endlich
+fortuna||Vermögen; Glück; costar una fortuna = ein Vermögen kosten
+jamás||nie, niemals
+jubilación||Rente; Ruhestand
+juego||Spiel; Juegos Olímpicos = Olympische Spiele
+lentes||Brille (Lateinamerika)
+lástima||schade; ¡qué lástima! = wie schade
+lógico||logisch
+mesero||Kellner (Lateinamerika)
+modestamente||bescheiden
+obvio||offensichtlich
+onu||UNO, Vereinte Nationen (Organización de las Naciones Unidas)
+papá||Papa
+petición||Antrag, Bitte
+plomero||Klempner (Lateinamerika)
+propietario||Eigentümer
+quizá||vielleicht
+refrigerador||Kühlschrank (Lateinamerika)
+renovación||Renovierung; Erneuerung
+rodeo||Umweg; dar rodeos = um den heißen Brei herumreden
+rumbo||Richtung, Kurs; rumbo a = in Richtung
+salario||Gehalt, Lohn
+sur||Süden; América del Sur = Südamerika
 `
 };
 
 /* Aus den Generator-Daten erzeugte Einträge (Substantive, Adjektive, Verbformen) */
 const SV_VERB_DE = { äta:'essen', dricka:'trinken', skriva:'schreiben', läsa:'lesen', se:'sehen', gå:'gehen', komma:'kommen', göra:'machen', ta:'nehmen', köpa:'kaufen', träffa:'treffen', springa:'laufen, rennen', flyga:'fliegen', simma:'schwimmen', vinna:'gewinnen', glömma:'vergessen', ringa:'anrufen', hitta:'finden', sjunga:'singen', få:'bekommen; dürfen', sova:'schlafen', åka:'fahren' };
-let GLOSS = { sv:{}, es:{} };
+let GLOSS = { sv:{}, es:{} }, GLOSS_FORMS = null;
+// Verben, deren Formen glossForms erzeugt hat: sv [Infinitiv, Gruppe], es [Infinitiv, Grundform] (für tools/verbformen.js)
+let GLOSS_VERBS = { sv:[], es:[] };
+// v: gebeugte Verbform (nicht Partizip); über solche Einträge führt lookupWord keine Mehrzahl zurück (comes ist nicht come)
+function glossPut(lang, form, lemma, de, gen, v){
+  form = String(form || '').toLowerCase().trim();
+  if (!form) return;
+  const cur = GLOSS[lang][form];
+  if (!cur) { GLOSS[lang][form] = { l:lemma && lemma.toLowerCase() !== form ? lemma : '', de, gen:!!gen, v:!!v }; return; }
+  if (!(cur.gen && gen) || cur.de.includes(de)) return;
+  cur.v = cur.v && !!v;
+  if (lemma && cur.l && lemma !== cur.l) { cur.de = `${cur.l}: ${cur.de}; ${lemma}: ${de}`; cur.l = ''; cur.multi = true; return; }
+  if (cur.multi && lemma) { cur.de += `; ${lemma}: ${de}`; return; }
+  // Gleiche Bedeutung, andere Form: „sprechen (Subjuntivo, yo / Subjuntivo, él, ella, usted)“. In der Klammer kein Semikolon:
+  // Danach trennen Prüfung, Lückentext und Anzeige die Bedeutungen.
+  const x = cur.de.match(/^(.*) \(([^()]*)\)$/), y = de.match(/^(.*) \(([^()]*)\)$/);
+  if (!x || !y || x[1] !== y[1]) { cur.de += '; ' + de; return; }
+  const what = x[2].split(' / ');
+  y[2].split(' / ').forEach(w => { if (!what.includes(w)) what.push(w); });
+  cur.de = `${x[1]} (${what.join(' / ')})`;
+}
 function buildGloss(){
   GLOSS = { sv:{}, es:{} };
-  const put = (lang, form, lemma, de, gen) => {
-    form = String(form || '').toLowerCase().trim();
-    if (!form) return;
-    const cur = GLOSS[lang][form];
-    if (!cur) { GLOSS[lang][form] = { l:lemma && lemma.toLowerCase() !== form ? lemma : '', de, gen:!!gen }; return; }
-    if (!(cur.gen && gen) || cur.de.includes(de)) return;
-    if (lemma && cur.l && lemma !== cur.l) { cur.de = `${cur.l}: ${cur.de}; ${lemma}: ${de}`; cur.l = ''; cur.multi = true; }
-    else if (cur.multi && lemma) cur.de += `; ${lemma}: ${de}`;
-    else cur.de += '; ' + de;
-  };
+  GLOSS_FORMS = null;
+  const put = glossPut;
   ['sv', 'es'].forEach(lang => GLOSS_RAW[lang].split('\n').forEach(line => {
     const p = line.split('|');
     if (p.length === 3 && p[0].trim()) put(lang, p[0], p[1].trim(), p[2].trim());
@@ -5996,24 +6257,123 @@ function buildGloss(){
   Object.entries(ES_TEENS).forEach(([n, w]) => put('es', w, '', n, true)); ES_TENS.forEach((w, i) => { if (w) put('es', w, '', String(i * 10), true); }); ES_UNITS.forEach((w, i) => { if (w) put('es', w, '', String(i), true); });
   SV_H.forEach((w, i) => { if (i) put('sv', w, '', String(i), true); }); ES_H.forEach((w, i) => { if (i) put('es', w, '', String(i), true); });
   Object.entries(SV_PRES).forEach(([inf, pres]) => put('sv', pres, inf, `${SV_VERB_DE[inf] || ''} (Präsens)`, true));
-  const PERS_DE = ['yo', 'tú', 'él, ella, usted', 'nosotros', 'ellos, ellas'];
-  const TENSE_DE = { pres:'Präsens', indef:'Indefinido', imp:'Imperfecto', subj:'Subjuntivo' };
-  const verbs = Object.keys(IRR_ES).map(v => [v, IRR_ES[v][0]]).concat(REG_ES);
-  verbs.forEach(([inf, de]) => {
-    put('es', inf, '', de, true);
-    Object.keys(TENSE_DE).forEach(t => [0, 1, 2, 3, 4].forEach(i => put('es', conjugate(inf, t, i), inf, `${de} (${TENSE_DE[t]}, ${PERS_DE[i]})`, true)));
-    put('es', participle(inf), inf, `${de} (Partizip)`, true);
+}
+// Verbformen beider Sprachen erst beim ersten Nachschlagen (lookupWord, formWhy, Statistik): rund 20 000 Einträge, die den Start
+// sonst um gut 25 ms verzögern würden. Einträge von Hand und die übrigen erzeugten stehen schon da.
+function glossForms(){
+  if (GLOSS_FORMS === GLOSS) return;
+  GLOSS_FORMS = GLOSS;
+  GLOSS_VERBS = { sv:[], es:[] };
+  const put = glossPut;
+  // Schwedisch: Formen der Verben des Wörterbuchs (svConj, verbformen.js); die Gruppe aus den Formen, die schon dastehen (svGroup)
+  const svForms = new Map();
+  Object.entries(GLOSS.sv).forEach(([k, e]) => { if (!e.l) return; const l = e.l.toLowerCase(); if (!svForms.has(l)) svForms.set(l, new Set()); svForms.get(l).add(k); });
+  Object.entries(GLOSS.sv).forEach(([inf, e]) => {
+    // Verben der Übungsformen (SV_VERB_DE) mit ihrer ganzen Bedeutung, wie ihre Formen schon dastehen (fick = bekommen; dürfen)
+    const mean = e.l ? '' : e.gen ? (SV_VERB_DE[inf] && svVerbMeaning(inf, e.de) ? e.de : '') : svVerbMeaning(inf, e.de);
+    const g = mean ? svGroup(inf, svForms.get(inf) || new Set()) : -1, c = g >= 0 && svConj(inf, g);
+    if (!c) return;
+    GLOSS_VERBS.sv.push([inf, g]);
+    const acc = formAcc();
+    acc.add(c.pres, 'Präsens');
+    c.past.forEach(f => acc.add(f, 'Präteritum'));
+    (c.sups || [c.sup]).forEach(f => acc.add(f, 'Supinum, mit har'));
+    c.part.forEach(f => acc.add(f, 'Partizip', false));
+    c.pass.forEach(f => acc.add(f, 'Passiv'));
+    c.passPast.forEach(f => acc.add(f, 'Passiv, Präteritum'));
+    if (c.passSup) acc.add(c.passSup, 'Passiv, Supinum');
+    if (c.impv && c.impv !== inf) acc.add(c.impv, 'Imperativ');
+    acc.put('sv', inf, mean);
   });
+  // Spanisch: alle einfachen Formen (esConj, verbformen.js) der Verben aus den Übungsformen und aller Verben des Wörterbuchs.
+  // Rückbezügliche Verben (quejarse) nur, wenn das Verb ohne se fehlt; dann mit der Bedeutung und als Grundform die Form mit se.
+  const TENSE_DE = { pres:'Präsens', indef:'Indefinido', imp:'Imperfecto', subj:'Subjuntivo', fut:'Futur', cond:'Konditional', ra:'Imperfecto de subjuntivo', se:'Imperfecto de subjuntivo' };
+  const verbs = new Map();
+  Object.keys(IRR_ES).forEach(v => verbs.set(v, { lemma:v, de:IRR_ES[v][0], fix:true }));
+  REG_ES.forEach(([v, de]) => verbs.set(v, { lemma:v, de, fix:true }));
+  Object.entries(GLOSS.es).forEach(([k, e]) => {
+    if (e.gen || e.l || !esVerbEntry(k, e.de)) return;
+    const inf = k.replace(/(ar|er|ir|ír)se$/, '$1'), cur = verbs.get(inf);
+    if (inf === k ? !(cur && cur.fix) : !cur) verbs.set(inf, { lemma:k, de:e.de });
+  });
+  const first = de => de.split(';')[0].trim();
+  verbs.forEach(({ lemma, de }, inf) => {
+    GLOSS_VERBS.es.push([inf, lemma]);
+    const c = esConj(inf), refl = lemma !== inf, r = !refl && GLOSS.es[inf + 'se'];
+    // Bedeutet die Form mit se etwas anderes (llamar, llamarse), steht das dabei: „anrufen; llamarse = heißen (Präsens, yo)“
+    const other = r && !r.gen && !r.l && first(r.de).replace(/^sich /, '') !== first(de) ? `; ${inf}se = ${first(r.de)}` : '';
+    const mean = first(de) + other;
+    put('es', inf, refl ? lemma : '', refl ? `${mean} (Infinitiv)` : de, true);
+    const acc = formAcc();
+    ES_TENSES.forEach(t => c[t].forEach((f, p) => acc.add(f, `${TENSE_DE[t]}, ${ES_PERS6[p]}`)));
+    acc.add(c.part, 'Partizip', false);
+    acc.add(c.ger, 'Gerundium');
+    if (c.impv[0]) acc.add(c.impv[0], 'Imperativ, tú');
+    if (c.impv[1]) acc.add(c.impv[1], 'Imperativ, vosotros');
+    acc.put('es', lemma, mean);
+  });
+  // Formen eines Verbs erst sammeln, dann je Form ein Eintrag mit allen Angaben: „sprechen (Subjuntivo, yo / Subjuntivo, él …)“
+  function formAcc(){
+    const m = new Map();
+    return {
+      add(f, what, v = true){ if (!f) return; const x = m.get(f); if (x) { if (!x.what.includes(what)) x.what.push(what); x.v = x.v && v; } else m.set(f, { what:[what], v }); },
+      put(lang, lemma, mean){ m.forEach((x, f) => put(lang, f, lemma, `${mean} (${x.what.join(' / ')})`, true, x.v)); }
+    };
+  }
+}
+// Ein Eintrag auf -ar, -er, -ir ist ein Verb, wenn die Bedeutung eines ist: klein geschrieben (sprechen, sich beschweren) oder
+// eine Wendung auf -en (Ski fahren). Nomen schreibt das Deutsche groß (lugar = Ort, mar = das Meer), ayer heißt gestern.
+function esVerbEntry(k, de){
+  if (!/^[a-zñáéíóú]*(ar|er|ir|ír)(se)?$/.test(k) || k === 'ayer' || /^(der|die|das|ein|eine) /.test(de)) return false;
+  const first = String(de).split(/[;(]/)[0].trim();
+  return /^[a-zäöüß]/.test(first) || /\s\S+(en|ern|eln)$/.test(first);
+}
+// Verb mit angehängten Pronomen (explicártelo, dedicándose, échame, dígame, irme): davor steht ein Infinitiv, ein Gerundium oder
+// ein Imperativ. Bedeutung des Verbs, bei me/te/se/nos/os die der rückbezüglichen Form, wenn das Wörterbuch sie kennt.
+function esCliticWord(k){
+  const cl = [];
+  let r = k;
+  for (let n = 0; n < 2; n++) {
+    const m = r.match(/(nos|los|las|les|me|te|se|os|lo|la|le)$/);
+    if (!m || r.length - m[1].length < 2) return null;
+    r = r.slice(0, -m[1].length); cl.unshift(m[1]);
+    const d = deacc(r), e = GLOSS.es[r] || GLOSS.es[d];
+    if (!e || e.multi) continue;
+    let inf = '', kind = '';
+    const w = GLOSS.es[r] ? r : d;
+    if (!e.l && esVerbEntry(w, e.de)) { inf = w; kind = 'Infinitiv'; }
+    else if (e.l === w + 'se' || (e.l && /\(Infinitiv/.test(e.de))) { inf = e.l; kind = 'Infinitiv'; }
+    else if (e.l && /\(Gerundium/.test(e.de)) { inf = e.l; kind = 'Gerundium'; }
+    else if (e.l && /Imperativ, tú/.test(e.de)) { inf = e.l; kind = 'Imperativ'; }
+    else if (e.l && /Subjuntivo, (él|ellos)/.test(e.de) && d !== r) { inf = e.l; kind = 'Imperativ, usted'; }
+    if (!inf) continue;
+    const se = /se$/.test(inf) ? inf : inf + 'se', rs = /^(me|te|se|nos|os)$/.test(cl[0]) && GLOSS.es[se];
+    const lemma = rs ? se : inf, base = GLOSS.es[lemma];
+    if (!base) continue;
+    return { l:lemma, de:`${base.de.split(';')[0].trim()} (${kind} + ${cl.join(' + ')})`, gen:true };
+  }
+  return null;
 }
 function lookupWord(lang, w){
+  glossForms();
   // Auch ein Doppelpunkt am Ende („pocas:“), damit Mehrzahl und weibliche Formen gefunden werden
   const k = wordCore(String(w || '').toLowerCase());
   const hit = GLOSS[lang][k] || GLOSS[lang][k.replace(/:/g, '')];
-  if (hit || lang !== 'es') return hit || null;
-  // Spanisch: Mehrzahl und weibliche Formen auf die Grundform zurückführen (casas → casa, ciudades → ciudad, nuevas → nuevo)
-  for (const b of [k.replace(/s$/, ''), k.replace(/es$/, ''), k.replace(/as$/, 'o'), k.replace(/a$/, 'o')]) {
+  if (lang !== 'es') return hit || null;
+  const pl = esPluralBase(k);
+  // Abgeleitete Verbform, die zugleich Mehrzahl oder weibliche Form eines Wortes von Hand ist (unas: una, unir; bajas: bajo, bajar;
+  // cuentas: cuenta, contar): beide Lesarten, wie bei zwei Verben mit derselben Form. Nur Nomen und Adjektive, keine Verbform von Hand
+  // (llama ist nicht weiblich zu llamo), und weiblich nur zu Adjektiven (trabaja ist nicht weiblich zu trabajo = Arbeit).
+  const real = pl && !pl.gen && !/(ar|er|ir|ír)(se)?$/.test(pl.l) && (!pl.fem || /^[a-zäöüß]/.test(pl.de));
+  if (hit && hit.gen && hit.v && real) return { l:'', de:`${pl.l}: ${pl.de}; ${hit.l || k}: ${hit.de}`, gen:true, multi:true };
+  return hit || pl || esCliticWord(k);
+}
+// Spanisch: Mehrzahl und weibliche Formen auf die Grundform zurückführen (casas → casa, ciudades → ciudad, nuevas → nuevo).
+// Nicht über gebeugte Verbformen (comes ist nicht come), wohl über Partizipien (cerradas → cerrado). fem: weiblich auf männlich
+function esPluralBase(k){
+  for (const [b, fem] of [[k.replace(/s$/, ''), 0], [k.replace(/es$/, ''), 0], [k.replace(/as$/, 'o'), 1], [k.replace(/a$/, 'o'), 1]]) {
     const e = b !== k && GLOSS.es[b];
-    if (e) return Object.assign({}, e, { l:e.l || b });
+    if (e && !e.v) return Object.assign({}, e, { l:e.l || b, fem });
   }
   return null;
 }

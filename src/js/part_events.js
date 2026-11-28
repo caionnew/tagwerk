@@ -495,6 +495,8 @@ try { if (navigator.storage && navigator.storage.persist) navigator.storage.pers
 restoreRun();
 syncThemeColor();
 if (!handleLaunch()) render(); else if (S.view === 'own') render();
+// Verbformen des Wörterbuchs nach dem ersten Bild erzeugen, nicht davor (sonst beim ersten Nachschlagen)
+setTimeout(glossForms, 800);
 setTimeout(() => { refill('sv'); refill('es'); }, 1500);
 if (canSpeak()) { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = () => { if (S.view === 'extra') render(); }; }
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {

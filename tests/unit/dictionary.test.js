@@ -8,6 +8,10 @@ const missing = (lang, texts) => { const m = new Set(); texts.forEach(s => token
 test('Satzbank: jedes Wort ist nachschlagbar', () => {
   for (const lang of ['sv', 'es']) assert.deepEqual(missing(lang, BANK[lang].filter(i => !i.own && !i.tat).map(i => i.target)), [], lang);
 });
+// Auch Alternativen und erzeugte Fassungen (Kombinationen, -se): Sie erscheinen nach dem Prüfen als „Auch richtig“ und sind antippbar
+test('Satzbank: Alternativen und erzeugte Fassungen sind nachschlagbar', () => {
+  for (const lang of ['sv', 'es']) assert.deepEqual(missing(lang, BANK[lang].filter(i => !i.own && !i.tat).flatMap(i => [...i.alts])), [], lang);
+});
 test('erzeugte Aufgaben: jedes Wort ist nachschlagbar (300 je Generator; Lesetext-Lücken ausgenommen, Texte haben eigene Hilfen)', () => {
   for (const g of Object.keys(GENS).filter(k => !GENS[k].noGloss)) {
     const texts = [];

@@ -50,6 +50,7 @@ function ownWords(lang, input, text){
 // „arbetar“ (arbeitet). Paare [getippt, gesucht]; nur zwei Formen desselben Wortes (bei verschiedenen Wörtern sagt „Grundform“
 // nichts: „normalmente“ ist kein Verb), und nur, was im Wörterbuch steht; sonst ''.
 function formWhy(lang, pairs){
+  glossForms();
   const g = w => { const x = GLOSS[lang][String(w).toLowerCase()]; return x && !x.multi && x.de ? x : null; };
   // „arbeitet (arbeiten)“ → „arbeitet“, „groß (bei ett-Wörtern)“ → „groß, bei ett-Wörtern“; nach einem Semikolon nur Zusätze
   const mean = (w, base) => { const de = g(w).de.split(';')[0].trim(), m = de.match(/^(.*?) \(([^()]*)\)$/); return !m ? de : base && m[2] === base ? m[1] : `${m[1]}, ${m[2]}`; };
@@ -151,41 +152,9 @@ function esReflexWhy(input, solution){
   return '';
 }
 // Spanisch, si-Satz: Subjuntivo und Konditional am falschen Platz (si no lloviera, diéramos un paseo; si tendría tiempo).
-// Nur dasselbe Verb wie in der Lösung, in derselben Person, sonst keine Behauptung. Formen ohne Akzente je Person
-// [yo, tú, él, nosotros, vosotros, ellos]. Konditional: Futurstamm + ía, erkannt an der Form selbst (quería ist Imperfecto, querría
-// Konditional). Subjuntivo: 3. Person Plural Indefinido ohne -ron, dann -ra oder -se (dieron → diera, diese).
+// Nur dasselbe Verb wie in der Lösung, in derselben Person, sonst keine Behauptung. Formen ohne Akzente je Person aus
+// esCondForms, esCondParse und esPastSubjForms (verbformen.js); Konditional erkannt an der Form selbst (quería ist Imperfecto, querría Konditional).
 // hubiera, quisiera, pudiera, debiera gehen im Hauptsatz auch: dort kein Hinweis.
-const ES_FUT_STEM = { tener:'tendr', poner:'pondr', venir:'vendr', salir:'saldr', valer:'valdr', hacer:'har', decir:'dir', saber:'sabr', caber:'cabr', querer:'querr', poder:'podr', haber:'habr' };
-// Indefinido (3. Person Plural ohne -ron) für unregelmäßige Verben, die conjugate nicht kennt
-const ES_PRET_BASE = { haber:'hubie', andar:'anduvie', caber:'cupie', sentir:'sintie', preferir:'prefirie', servir:'sirvie', seguir:'siguie', conseguir:'consiguie',
-  morir:'murie', repetir:'repitie', mentir:'mintie', elegir:'eligie', sugerir:'sugirie', divertir:'divirtie', convertir:'convirtie', caer:'caye', creer:'creye',
-  construir:'construye', conducir:'conduje', traducir:'traduje', producir:'produje' };
-const ES_COND_END = ['ia', 'ias', 'ia', 'iamos', 'iais', 'ian'];
-function esCondForms(inf){
-  // Zusammensetzungen mit langem Stamm (mantener → mantendría), kurze Stämme nur allein (echar ist nicht ec + hacer)
-  const k = Object.keys(ES_FUT_STEM).find(x => inf === x || (ES_FUT_STEM[x].length >= 5 && inf.endsWith(x)));
-  const stem = deacc(k ? inf.slice(0, inf.length - k.length) + ES_FUT_STEM[k] : inf);
-  return ES_COND_END.map(e => stem + e);
-}
-function esCondParse(w){
-  const dw = deacc(w), m = dw.match(/^(.+?)(iamos|iais|ias|ian|ia)$/);
-  if (!m) return null;
-  const st = m[1], k = Object.keys(ES_FUT_STEM).find(x => st === ES_FUT_STEM[x] || (ES_FUT_STEM[x].length >= 5 && st.endsWith(ES_FUT_STEM[x])));
-  const inf = k ? st.slice(0, st.length - ES_FUT_STEM[k].length) + k : /^[a-zñ]+(ar|er|ir)$/.test(st) ? st : '';
-  const p = ES_COND_END.indexOf(m[2]);
-  return inf && esCondForms(inf)[p] === dw ? { inf, p } : null;
-}
-function esPastSubjForms(inf){
-  let b = ES_PRET_BASE[inf];
-  if (!b) {
-    const k = Object.keys(IRR_ES).find(x => x.length >= 5 && x !== inf && inf.endsWith(x));
-    const p3 = k ? inf.slice(0, inf.length - k.length) + conjugate(k, 'indef', 4) : /^[a-zñ]+(ar|er|ir)$/.test(inf) ? conjugate(inf, 'indef', 4) : '';
-    if (!p3 || !/ron$/.test(p3)) return [];
-    b = p3.slice(0, -3);
-  }
-  b = deacc(b);
-  return ['ra', 'ras', 'ra', 'ramos', 'rais', 'ran', 'se', 'ses', 'se', 'semos', 'seis', 'sen'].map(e => b + e);
-}
 function esCondWhy(input, solution){
   const s = norm(solution, 'es').split(' '), t = norm(input, 'es').split(' '), S = s.map(deacc), T = t.map(deacc);
   const si = S.indexOf('si');

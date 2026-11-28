@@ -191,14 +191,8 @@ function genTempus(){
 }
 
 /* Spanisch: Konjugation mit Kontext-Signal */
-// Personen: yo, tú, él/ella/usted, nosotros, ellos/ellas
+// Personen: yo, tú, él/ella/usted, nosotros, ellos/ellas. Die Formen bildet conjugate (verbformen.js)
 const PERS = [['yo',0], ['tú',1], ['él',2], ['ella',2], ['usted',2], ['nosotros',3], ['ellos',4], ['ellas',4]];
-const END = {
-  pres:{ ar:['o','as','a','amos','an'], er:['o','es','e','emos','en'], ir:['o','es','e','imos','en'] },
-  indef:{ ar:['é','aste','ó','amos','aron'], er:['í','iste','ió','imos','ieron'], ir:['í','iste','ió','imos','ieron'] },
-  imp:{ ar:['aba','abas','aba','ábamos','aban'], er:['ía','ías','ía','íamos','ían'], ir:['ía','ías','ía','íamos','ían'] },
-  subj:{ ar:['e','es','e','emos','en'], er:['a','as','a','amos','an'], ir:['a','as','a','amos','an'] }
-};
 const REG_ES = [['hablar','sprechen'],['llegar','ankommen'],['trabajar','arbeiten'],['comprar','kaufen'],['escuchar','hören'],['viajar','reisen'],['cocinar','kochen'],['bailar','tanzen'],['estudiar','lernen'],['llamar','anrufen'],['tomar','nehmen'],['cenar','zu Abend essen'],['ayudar','helfen'],['comer','essen'],['beber','trinken'],['aprender','lernen'],['vender','verkaufen'],['correr','rennen'],['comprender','verstehen'],['vivir','wohnen'],['escribir','schreiben'],['abrir','öffnen'],['recibir','bekommen'],['subir','hochgehen'],['decidir','entscheiden']];
 const IRR_ES = {
   ser:['sein', { pres:'soy eres es somos son', indef:'fui fuiste fue fuimos fueron', imp:'era eras era éramos eran', subj:'sea seas sea seamos sean' }],
@@ -244,16 +238,6 @@ const CONJ_COMP = {
   escribir:'a la abuela', abrir:'la ventana', recibir:'a los clientes', subir:'las escaleras', decidir:'rápido'
 };
 const conjComp = (inf, p, t) => { const c = CONJ_COMP[inf]; return typeof c === 'function' ? c(p, t) : c; };
-function conjugate(inf, tense, idx){
-  const irr = IRR_ES[inf];
-  if (irr && irr[1][tense]) return irr[1][tense].split(' ')[idx];
-  const cls = inf.slice(-2), stem = inf.slice(0, -2), end = END[tense][cls][idx];
-  // Rechtschreibung: buscar → busque, llegar → llegué, empezar → empiece, coger → cojo
-  let st = stem;
-  if (cls === 'ar' && /^[eé]/.test(end)) st = stem.replace(/c$/, 'qu').replace(/g$/, 'gu').replace(/z$/, 'c');
-  if ((cls === 'er' || cls === 'ir') && /^[oa]/.test(end)) st = stem.replace(/g$/, 'j');
-  return st + end;
-}
 function genConj(){
   const useIrr = Math.random() < 0.7;
   let inf, gloss;
@@ -638,7 +622,7 @@ const GAP_COMMON = {
     ser estar haber tener hacer poder decir ir ver dar saber querer llegar pasar deber poner parecer quedar creer hablar llevar dejar seguir encontrar llamar venir pensar salir volver tomar conocer vivir sentir mirar contar empezar esperar buscar entrar trabajar escribir perder entender pedir recibir recordar terminar comer beber dormir comprar gustar necesitar usar leer abrir cerrar jugar estudiar`.split(/\s+/))
 };
 const GAP_AUX = { sv:new Set('vara ha bli få kunna vilja ska skola måste finnas göra'.split(' ')), es:new Set('ser estar haber tener ir poder hacer'.split(' ')) };
-const GAP_VERBFORM = /\((Präteritum|Supinum|Präsens|Indefinido|Imperfecto|Subjuntivo|Partizip)/;
+const GAP_VERBFORM = /\((Präteritum|Supinum|Präsens|Indefinido|Imperfecto|Subjuntivo|Partizip|Futur|Konditional|Gerundium|Imperativ)/;
 // Vor einem Artikel, Begleiter oder einer Präposition steht kein gebeugtes Verb: Dort ist die Form ein Nomen
 // (el vino, la cocina, de lucha, nya lagar), und die Verbbedeutung aus dem Wörterbuch wäre falsch.
 const GAP_NOUNCUE = {

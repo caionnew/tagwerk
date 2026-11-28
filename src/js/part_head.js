@@ -212,6 +212,7 @@ function altCombos(target, alts){
 // des Wörterbuchs bildet: nicht ahora, para, era. Die Formen auf -ra aller Verben einmal je Wörterbuch.
 let RA_FORMS = null;
 function esRaForms(){
+  glossForms();
   if (RA_FORMS && RA_FORMS.g === GLOSS) return RA_FORMS.set;
   const set = new Set();
   new Set(Object.entries(GLOSS.es).map(([k, e]) => (e.l || k).replace(/(ar|er|ir)se$/, '$1')).filter(x => /^[a-zñ]+(ar|er|ir)$/.test(x)))

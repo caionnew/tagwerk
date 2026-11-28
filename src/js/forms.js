@@ -81,8 +81,6 @@ function spotSwapEs(gen, swap, trap){
 }
 // Spanisch: Subjuntivo und Indefinido aus der Satzbank
 const HABER = ['he', 'has', 'ha', 'hemos', 'han'];
-const PART_IRR = { hacer:'hecho', decir:'dicho', ver:'visto', escribir:'escrito', poner:'puesto', volver:'vuelto', abrir:'abierto', romper:'roto', morir:'muerto', leer:'leído', traer:'traído', caer:'caído', oír:'oído' };
-const participle = inf => PART_IRR[inf] || (inf.endsWith('ar') ? inf.slice(0, -2) + 'ado' : inf.slice(0, -2) + 'ido');
 // Warum hier Subjuntivo: nach dem Auslöser im Satz, sonst die Erklärung des Satzes oder die allgemeine Regel
 const SUBJ_WHY = [
   [/\bojalá\b/i, 'Nach ojalá (hoffentlich) steht immer der Subjuntivo'],
@@ -115,7 +113,10 @@ function bankSpotsEs(){
       const cands = [0, 1, 2, 3, 4].filter(k => conjugate(inf, 'subj', k) === it.gap);
       if (!cands.length) return;
       const p = cands.includes(2) && cands.includes(0) ? (/\b(dass|wenn|bevor|damit|ob) ich\b/.test(it.de) ? 0 : 2) : cands[0];
-      const ind = conjugate(inf, 'pres', p);
+      // Unpersönliches haber (para que no haya malentendidos): Indikativ hay, nicht ha; ha nur vor einem Partizip (haya llamado)
+      const nx = punctKey(toks[idx + 1] || '').toLowerCase(), e = lookupWord('es', nx);
+      const part = /(ado|ido|ído)$/.test(nx) || ES_PART_IRR.includes(nx) || (e && /\(Partizip/.test(e.de));
+      const ind = inf === 'haber' && p === 2 && !part ? 'hay' : conjugate(inf, 'pres', p);
       if (!ind || ind === it.gap) return;
       const why = SUBJ_WHY.find(([re]) => re.test(it.target));
       const note = it.note || (why ? `${why[1]}: ${it.gap}, nicht ${ind}.` : 'Hier verlangt der Satz den Subjuntivo, etwa nach querer que, es importante que, ojalá, para que oder cuando mit Zukunftsbezug.');

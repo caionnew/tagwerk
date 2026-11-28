@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.86.0
+**Das Wörterbuch leitet Verbformen ab, der Wörterbuch-Test prüft auch Alternativen und erzeugte Fassungen (Durchsicht vom 28.11.).**
+- **Vorher** bildete das Wörterbuch Formen nur für die 48 spanischen Verben der Übungsformen, in vier Zeiten, und für die 22 schwedischen Verben aus „Präteritum oder Perfekt“; alles andere stand von Hand da oder fehlte. 170 schwedische und 209 spanische Wörter aus Alternativen und erzeugten Fassungen ließen sich nicht nachschlagen, obwohl sie nach dem Prüfen unter „Auch richtig“ stehen.
+- **Jetzt** bildet es die Formen aller Verben, die es kennt: 330 spanische mit allen einfachen Zeiten in sechs Personen (auch Futur, Konditional, Subjuntivo auf -ra und -se, Gerundium, Imperativ, vosotros), mit Stammwechsel (sintió, durmamos), Rechtschreibung (busqué, conozco, sigo, construyo, envío) und Zusammensetzungen (mantuve, devuelto); 320 schwedische mit Präsens, Präteritum, Supinum, Partizip und Passiv, die Gruppe aus den Formen, die schon dastehen, starke Verben aus einer Liste, auch zusammengesetzt (förstod, översatte). Dazu Verben mit angehängten Pronomen (explicártelo, dígame, concentrarme). Neues Modul `src/js/verbformen.js`, das auch Prüfung und Übungsformen nutzen: Eine Konjugation statt drei.
+- **Neu von Hand:** 95 spanische und 154 schwedische Einträge, vor allem Grundformen (aclarar, enviar, sentir, prata, fixa, tänka), Nomen und Adverbien. Verbformen trägt man nicht mehr von Hand ein, nur die Grundform.
+- **Zwei Lesarten:** Ist eine abgeleitete Verbform zugleich Mehrzahl eines Wortes (unas: una oder unir; cuentas: cuenta oder contar), zeigt das Wörterbuch beide. Bedeutet die Form mit se etwas anderes, steht es dabei (llama: anrufen; llamarse = heißen).
+- **Nebenbei behoben:** Verben auf -estar galten als Zusammensetzung von estar (contestar → „contestuviera“), darum fehlte dort die Fassung auf -se. madrugar hatte „madrugé“. In „Finde den Fehler“ wurde aus „para que no haya malentendidos“ der Fehler „no ha“ statt „no hay“. Neun doppelte Wörterbuch-Schlüssel zusammengeführt (es galt stillschweigend nur der erste).
+- **Mehr Aufgaben:** „Finde den Fehler“ kennt jetzt auch Verben mit Stammwechsel (encuentre, consiga, resuelva, llueva, haya), sieben Aufgaben mehr; Lesetext-Lücken finden rund 30 Wörter mehr mit Bedeutung. Eine neue erzeugte Fassung (lo notase).
+- **Start:** Die rund 20 000 Formen entstehen kurz nach dem ersten Bild oder beim ersten Nachschlagen, nicht beim Start (sonst 25 ms mehr).
+- Tests: alle Wörter aus Alternativen und erzeugten Fassungen nachschlagbar; Formen aller Verben gelesen (`tests/fixtures/verbformen.txt`, `node tools/verbformen.js --write`); Stammwechsel, Rechtschreibung, Zusammensetzungen, schwedische Gruppen, angehängte Pronomen, keine doppelten Schlüssel.
+- Doku: ARCHITECTURE.md, CLAUDE.md (neues Modul, neuer Arbeitsschritt), IDEEN.md.
+- Speicherstand unverändert.
+
 ## 24.85.0
 **Satzzeichen und Wortgrenzen an einer Stelle (Durchsicht vom 28.11.).**
 - **Vorher** gab es rund zwanzig eigene Zeichenlisten in Prüfung, Wörterbuch, Wortkästchen, Kombinationen, Schreiben, Nachsprechen und Anzeige, jede etwas anders: Die eine nahm den Doppelpunkt mit, die andere den Gedankenstrich, eine dritte nur Punkt, Komma, Ausrufe- und Fragezeichen.

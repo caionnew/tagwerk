@@ -25,7 +25,7 @@ Befund: kein Umbau nötig. Gewachsen sind Spanisch und die Prüfung; Schwedisch,
 | Punkt | Note | Stand |
 |---|---|---|
 | **Schwedisches Satzpaket vor den Kollokationen.** Schwedisch hat seit Paket 4 (24.59) keine neuen Sätze bekommen und geht zuerst die Sätze aus (siehe Lagebild). | A− | Paket 7 |
-| **Wörterbuch leitet Verbformen ab, der Test prüft auch die Alternativen.** Erzeugt wurden Formen nur für 48 Verben in vier Zeiten, ohne Futur, Konditional und Subjuntivo auf -ra/-se; alles andere stand von Hand da. 170 schwedische und 209 spanische Wörter aus Alternativen und erzeugten Fassungen ließen sich nicht nachschlagen, obwohl sie in der Lösung erscheinen. | B+ | |
+| **Wörterbuch leitet Verbformen ab, der Test prüft auch die Alternativen.** Erzeugt wurden Formen nur für 48 Verben in vier Zeiten, ohne Futur, Konditional und Subjuntivo auf -ra/-se; alles andere stand von Hand da. 170 schwedische und 209 spanische Wörter aus Alternativen und erzeugten Fassungen ließen sich nicht nachschlagen, obwohl sie in der Lösung erscheinen. | B+ | erledigt, 24.86.0 |
 | **Satzzeichen an einer Stelle.** Ein Dutzend leicht verschiedene Zeichenlisten in norm, tokens, altKey, wTokens und anderen; Gleiches wurde an verschiedenen Stellen verschieden behandelt. | B− | erledigt, 24.85.0 |
 | **Benannte Verwechslungen im Schwedischen** (en/ett-Endung, sin/hans, Verb an zweiter Stelle). Spanisch hat seit 24.62 sechs Erkennungen dazubekommen, Schwedisch keine. | B | Idee 4 |
 | **IDEEN.md teilen:** Fahrplan und Lohnendes kurz, „Geprüft und zurückgestellt“ und „Bewusst nicht“ in eine eigene Datei. 45 KB, vor jeder Arbeit gelesen. | B | |

@@ -511,6 +511,8 @@ Me pidió que le ayudase.
 # es subjuntivo | Se fue sin que nadie se diera cuenta.
 Se marchó sin que nadie se diese cuenta.
 Se marchó sin que nadie lo notara.
+Se fue sin que nadie lo notase.
+Se marchó sin que nadie lo notase.
 # es subjuntivo | No es que no tenga ganas, pero estoy cansado.
 No es que no tenga ganas, es que estoy cansada.
 # es subjuntivo | Es probable que el Gobierno suba los impuestos el año que viene.

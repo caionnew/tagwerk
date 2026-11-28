@@ -123,14 +123,29 @@ function greetHtml(lang, now = new Date()){
   if (anim) S.greetAnim = t + lang;
   return `<p class="hello-g wordrow" lang="${lang}">${linkWords(g, lang)}${orn ? `<svg class="orn orn-${orn}${anim ? ' go' : ''}" viewBox="0 0 24 24" aria-hidden="true">${ORN[orn]}</svg>` : ''}</p>`;
 }
-// Der Gruß steht in einer Zeile neben der Woche. Wie breit er ist, hängt an der Schrift des Geräts (Noto Serif und Georgia laufen
-// gut ein Sechstel breiter als Times), darum gemessen statt gezählt: Bricht er um, eine Stufe kleiner, höchstens zwei.
+// Der Gruß steht in einer Zeile neben der Woche (CSS: nowrap). Wie breit er ist, hängt an der Schrift des Geräts: Noto Serif und
+// Georgia laufen gut ein Sechstel breiter als Times, DejaVu Serif (Linux ohne Noto, so in der CI) noch breiter. Darum gemessen statt
+// gezählt: Ist er breiter als seine Spalte, wird er im selben Verhältnis kleiner (bis 24.90 in zwei festen Stufen, die bei breiten
+// Schriften nicht reichten), nicht unter 12 px.
 function fitGreeting(){
   const g = $('#app .hello-g');
-  if (!g || !g.getBoundingClientRect || typeof getComputedStyle !== 'function') return;
-  const one = () => g.getBoundingClientRect().height < parseFloat(getComputedStyle(g).lineHeight) * 1.5;
-  for (const c of ['fit1', 'fit2']) { if (one()) return; g.classList.add(c); }
+  if (!g || typeof getComputedStyle !== 'function' || !g.clientWidth) return;
+  const w = g.clientWidth, sw = g.scrollWidth;
+  if (sw <= w) return;
+  g.style.fontSize = Math.max(12, Math.floor(parseFloat(getComputedStyle(g).fontSize) * w / sw * 10) / 10) + 'px';
 }
+// Datum im Kopf in der Zielsprache (seit 24.91.0), antippbar: „lördag 28 november“ (klein, ohne Komma und Punkt), „sábado, 28 de
+// noviembre“. So kommen Wochentage und Monate jeden Tag einmal vorbei.
+const DATE_WORDS = {
+  sv:{ d:['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'], m:['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december'] },
+  es:{ d:['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'], m:['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'] }
+};
+function dateIn(lang, dt){
+  const W = DATE_WORDS[lang], d = W.d[dt.getDay()], m = W.m[dt.getMonth()];
+  return lang === 'sv' ? `${d} ${dt.getDate()} ${m}` : `${d}, ${dt.getDate()} de ${m}`;
+}
+// Antippbar sind die Wörter, nicht die Zahl (das Wörterbuch kennt Zahlen als Wort)
+const dateHtml = (lang, dt) => dateIn(lang, dt).split(/( \d+ )/).map(x => (/^ \d+ $/.test(x) ? x : linkWords(x, lang))).join('');
 /* ---------- Start über Teilen oder App-Verknüpfung ---------- */
 function guessLang(text){
   const t = ' ' + text.toLowerCase() + ' ';

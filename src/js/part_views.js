@@ -131,7 +131,7 @@ function viewHome(){
   }
   const dnow = dateOf(today());
   const ws = weekStrip();
-  const hello = `<header class="hello">${greetHtml(lang)}${ws.strip}<p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p>${ws.count}</header>`;
+  const hello = `<header class="hello">${greetHtml(lang)}${ws.strip}<p class="hello-d" lang="${lang}">${dateHtml(lang, dnow)}</p>${ws.count}</header>`;
   return `${topLine()}${hello}${noticeHtml() || storeHint() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${weakHtml(lang)}${findHtml(lang)}`;
 }
 // Was heute in dieser Sprache passiert ist: Zeit, Neues, Wiederholungen, alles Üben des Tages zusammen

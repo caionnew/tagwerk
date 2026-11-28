@@ -118,6 +118,20 @@ test('Stempel: je Tag fest gedreht (−6° bis +6°); Funken nur nach fehlerfrei
   assert.doesNotMatch(run(`stampSvg({ stamped:true }, true, true, true)`), /class="bu"/, 'beim Wiederzeichnen nicht noch einmal');
 });
 
+test('Datum im Kopf in der Zielsprache, antippbar: „lördag 28 november“, „sábado, 28 de noviembre“', () => {
+  assert.equal(run(`dateIn('sv', new Date(2026, 10, 28))`), 'lördag 28 november');
+  assert.equal(run(`dateIn('es', new Date(2026, 10, 28))`), 'sábado, 28 de noviembre');
+  assert.equal(run(`dateIn('es', new Date(2027, 0, 6))`), 'miércoles, 6 de enero');
+  assert.equal(run(`dateIn('sv', new Date(2027, 4, 4))`), 'tisdag 4 maj');
+  for (const lang of ['sv', 'es']) {
+    const W = run(`DATE_WORDS.${lang}`);
+    for (const w of [...W.d, ...W.m]) assert.ok(lookupWord(lang, w), `${lang}: ${w}`);
+  }
+  const head = run(`(() => { DB = freshDB(); S.lang = 'es'; S.view = 'home'; return viewHome(); })()`);
+  assert.match(head, /<p class="hello-d" lang="es"><span data-a="lookup" data-w="[a-záéíóú]+">[a-záéíóú]+,<\/span> \d+ <span data-a="lookup" data-w="de">de<\/span> <span data-a="lookup" data-w="[a-z]+">[a-z]+<\/span><\/p>/);
+  assert.match(run(`dateHtml('sv', new Date(2026, 10, 28))`), /^<span data-a="lookup" data-w="lördag">lördag<\/span> 28 <span data-a="lookup" data-w="november">november<\/span>$/);
+});
+
 test('Heute, „Höchste Fehlerquoten“: Antippen öffnet das Themenblatt, von dort „10 Aufgaben üben“', () => {
   run(`(() => { DB = freshDB(); DB.tlog = { [today()]: { es: { 'p:condicional':[40, 16], 'p:prep':[24, 10], 'p:perfecto':[20, 9], 'p:porpara':[30, 1], 'p:serestar':[30, 1], 't:gap':[150, 37] } } }; })()`);
   const html = run(`weakHtml('es')`), ids = run(`weakTopics('es').map(x => x.id)`);

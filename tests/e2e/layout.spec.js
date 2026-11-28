@@ -42,18 +42,29 @@ test('Genus: auch nach richtiger Antwort erst mit „Weiter“, wie überall', a
   await expect(page.locator('#fb')).toBeVisible();
   await expect(page.locator('[data-a=next]')).toBeVisible();
 });
-// Feiertag (24.90.0): langer Gruß mit Zeichen bleibt auf schmalem Gerät in einer Zeile (fitGreeting misst in der Schrift des Geräts)
-test('Kopf am Heiligabend auf 360 px: „¡Feliz Nochebuena!“ mit Stern in einer Zeile neben der Woche', async ({ page }) => {
+// Feiertag (24.90.0): langer Gruß mit Zeichen bleibt auf schmalem Gerät in einer Zeile neben der Woche. fitGreeting misst in der
+// Schrift des Geräts; geprüft auch mit DejaVu Serif, die breiter läuft als alles auf Handys (in 24.90.0 brach er in der CI so um).
+for (const wide of [false, true]) test(`Kopf am Heiligabend auf 360 px${wide ? ', breite Schrift' : ''}: „¡Feliz Nochebuena!“ mit Stern in einer Zeile neben der Woche`, async ({ page }) => {
   await page.setViewportSize({ width:360, height:780 });
   await page.clock.setFixedTime(new Date('2026-12-24T10:30:00'));
   const db = richDB('es'); db.settings.lang = 'es';
   await seed(page, db);
+  // Vor dem ersten Zeichnen und stärker als :root der App, sonst misst fitGreeting noch die alte Schrift
+  if (wide) await page.addInitScript(() => {
+    const st = document.createElement('style'); st.textContent = 'html:root{ --serif:"DejaVu Serif", "Bitstream Vera Serif", serif; }';
+    new MutationObserver((_, o) => { if (document.head) { document.head.appendChild(st); o.disconnect(); } }).observe(document, { childList:true, subtree:true });
+  });
   await page.goto(APP);
   await expect(page.locator('.hello-g')).toHaveText('¡Feliz Nochebuena!');
   await expect(page.locator('.hello-g .orn-star')).toHaveCount(1);
-  const m = await page.evaluate(() => { const g = document.querySelector('.hello-g'); return { h:g.getBoundingClientRect().height, lh:parseFloat(getComputedStyle(g).lineHeight), right:g.getBoundingClientRect().right, strip:document.querySelector('.weekstrip').getBoundingClientRect().left }; });
-  expect(m.h).toBeLessThan(m.lh * 1.5);
+  const m = await page.evaluate(() => {
+    const g = document.querySelector('.hello-g'), rg = document.createRange(); rg.selectNodeContents(g);
+    const t = rg.getBoundingClientRect();
+    return { h:t.height, fs:parseFloat(getComputedStyle(g).fontSize), right:t.right, strip:document.querySelector('.weekstrip').getBoundingClientRect().left };
+  });
+  expect(m.h).toBeLessThan(m.fs * 1.8);
   expect(m.right).toBeLessThanOrEqual(m.strip);
+  expect(m.fs).toBeGreaterThanOrEqual(14);
 });
 // Auch im Spanischen: Bis 24.88 traf die Regel für den deutschen Satz (.de) die Felder mit spanischem Tagwerk (wk de), die Woche stand
 // dort 16 px über der Grundlinie des Grußes

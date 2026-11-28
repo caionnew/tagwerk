@@ -3446,6 +3446,10 @@ mårtensgås||Martinsgans (en-Wort)
 advent||Advent (en-Wort); trevlig advent! = schönen Advent!
 lillejulafton||23. Dezember, „kleiner Heiligabend“
 fortsättning||Fortsetzung (en-Wort); god fortsättning! = Gruß zwischen den Jahren: weiterhin schöne Feiertage!
+tisdag||Dienstag (en-Wort)
+onsdag||Mittwoch (en-Wort)
+januari||Januar
+april||April
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -6767,6 +6771,10 @@ nochebuena||Heiligabend
 fiarse||trauen, sich verlassen; ¡no te fíes! = trau dem nicht!
 fallas||Fallas: Fest in Valencia, große Figuren werden verbrannt; auch: du versagst (fallar)
 viva||es lebe!, hoch!; ¡Viva México! = Es lebe Mexiko!; auch Subjuntivo von vivir
+jueves||Donnerstag
+febrero||Februar
+abril||April
+mayo||Mai
 `
 };
 

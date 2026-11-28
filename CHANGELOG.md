@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.91.0
+**Datum im Kopf in der Zielsprache, Fenster nach unten wegziehen, Gruß passt auch in breiten Schriften.**
+- **Datum:** „lördag 28 november“ bzw. „sábado, 28 de noviembre“ statt „Samstag, 28. November“, Wochentag und Monat antippbar. Acht fehlende Namen im Wörterbuch ergänzt (tisdag, onsdag, januari, april; jueves, febrero, abril, mayo).
+- **Fenster wegziehen:** Wörterbuch, Themenblatt und die anderen Fenster folgen dem Finger nach unten und schließen ab 80 px oder bei schnellem Wischen; ein kurzer Zug federt zurück. Bisher lud der Browser dabei die Seite neu. Solange ein Fenster offen ist, gibt es kein Neuladen durch Herunterziehen, und Scrollen im Fenster läuft nicht auf die Seite darunter über.
+- **Behoben (CI rot nach 24.90.0):** „¡Feliz Nochebuena!“ mit Stern brach in der CI (Linux mit DejaVu Serif, deutlich breiter als die Schriften auf Handys) trotz zwei kleinerer Stufen um. Der Gruß bricht jetzt nie um und wird im Verhältnis kleiner, wenn er zu breit ist. Der Browser-Test prüft die tatsächliche Textbreite und läuft zusätzlich mit DejaVu Serif.
+- Vorschläge, was je nach Niveau noch in die Zielsprache kann, bewertet in IDEEN.md; dazu die Vorschau des Zurufs am Rundenende (drei Varianten), deine Wahl.
+- Doku: ARCHITECTURE.md, IDEEN.md. Tests: Datum je Sprache, alle Namen nachschlagbar, die Zahl nicht antippbar; Fenster wegziehen (kurz, lang, nach oben) im Browser.
+- Speicherstand unverändert.
+
 ## 24.90.0
 **Feiertagsgrüße je Sprache mit kleinem Zeichen, Stempel wie von Hand, Funken nach fehlerfreien Runden.**
 - **Feiertage:** 15 schwedische und 16 spanische Grüße, an manchen über mehrere Tage. Schwedisch: Semmeldags! (Fettisdagen), Våffeldags!, Glad påsk! (Påskafton bis Annandag), Glad valborg!, Glad nationaldag!, Glad midsommar!, Håll för näsan! (Surströmming), Kanelbulle?, Mårtensgås?, Trevlig advent! an allen vier Adventssonntagen, Glad lucia!, Lillejulafton!, God jul! (24. bis 26.), God fortsättning! (27. bis 30.), Gott nytt år! (31. bis 6. Januar). Spanisch: ¡Feliz Año Nuevo!, ¡Feliz año!, ¡Felices Reyes!, ¡Feliz Carnaval!, ¡Felices Fallas!, ¡Feliz Pascua!, ¡Feliz Sant Jordi!, ¡Feliz San Juan!, ¡Viva México!, ¡Viva Chile!, ¡Hoy es fiesta! (12. Oktober), ¡Feliz Nochebuena!, ¡Feliz Navidad!, ¡No te fíes hoy! (Inocentes), ¡Felices fiestas!, ¡Feliz Nochevieja!.

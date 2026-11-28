@@ -49,6 +49,41 @@ function flyFrom(from, sel){
 }
 function goView(v){ S.view = v; render(); window.scrollTo(0, 0); }
 document.addEventListener('pointerdown', e => { if (e.target.closest('[data-c]')) e.preventDefault(); });
+// Fenster nach unten wegziehen (seit 24.91.0): Steht sein Inhalt ganz oben, folgt das Fenster dem Finger nach unten; ab 80 px oder
+// bei schnellem Wischen schließt es, sonst federt es zurück. Solange es folgt, verhindert preventDefault, dass der Browser die Seite
+// durch Herunterziehen neu lädt; overscroll-behavior (style.css) hält das Scrollen im Fenster.
+let popDrag = null;
+document.addEventListener('touchstart', e => {
+  const p = e.target.closest && e.target.closest('.pop');
+  popDrag = p && e.touches.length === 1 ? { p, y0:e.touches[0].clientY, t0:e.timeStamp, dy:0, on:false } : null;
+}, { passive:true });
+document.addEventListener('touchmove', e => {
+  const d = popDrag;
+  if (!d) return;
+  const dy = e.touches[0].clientY - d.y0;
+  if (!d.on) {
+    if (dy < 0 || d.p.scrollTop > 0) { popDrag = null; return; }
+    if (dy < 6) return;
+    d.on = true; d.y0 += dy; d.t0 = e.timeStamp; d.p.style.transition = 'none';
+  }
+  e.preventDefault();
+  d.dy = Math.max(0, e.touches[0].clientY - d.y0);
+  d.p.style.transform = `translateY(${d.dy}px)`;
+  const ov = document.querySelector('.popov'); if (ov) ov.style.opacity = String(Math.max(0.2, 1 - d.dy / 400));
+}, { passive:false });
+document.addEventListener('touchend', e => {
+  const d = popDrag; popDrag = null;
+  if (!d || !d.on) return;
+  const fast = d.dy > 24 && d.dy / Math.max(1, e.timeStamp - d.t0) > 0.6;
+  if (d.dy > 80 || fast) {
+    if (calmMotion()) { S.pop = null; renderPopup(); return; }
+    d.p.style.transition = 'transform .18s ease-in'; d.p.style.transform = 'translateY(110%)';
+    setTimeout(() => { if (S.pop) { S.pop = null; renderPopup(); } }, 170);
+  } else {
+    d.p.style.transition = 'transform .2s var(--ease)'; d.p.style.transform = '';
+    const ov = document.querySelector('.popov'); if (ov) ov.style.opacity = '';
+  }
+});
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-a]');
   if (!b || b.disabled) return;

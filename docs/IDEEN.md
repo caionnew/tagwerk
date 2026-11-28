@@ -63,7 +63,7 @@ So entsteht ein Paket:
 
 1. **Neue Sätze beim ersten Mal richtig, je Thema und Monat (B+, Anzeige ab Januar):** „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30.“ Misst, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für bekannte Sätze und wächst vor allem mit der Zeit. Gezählt wird seit 24.61.0 (`DB.first`, unsichtbar), immer in derselben Übungsform und getrennt nach Stufe. Anzeige gestalten, wenn zwei Monate Daten da sind, mit echtem Backup: nur gleiche Stufe im Vergleich (bei „Fortgeschritten“ B2), Anzahlen statt Prozent bei kleinen Mengen. Ersetzt die Wochenbilanz zum Schwerpunkt, die an wechselnden Übungsarten und Niveaus gescheitert wäre.
 
-2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, Los 33 seit 24.99.0, La noche de los transistores und Två mammor seit 24.101.0. Weitere Pakete auf Wunsch, je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
+2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, Los 33 seit 24.99.0, La noche de los transistores und Två mammor seit 24.101.0, Beredskap und El crimen de Cuenca seit 24.102.0. Weitere Pakete auf Wunsch, je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
 
 Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
@@ -145,7 +145,7 @@ du entscheidest, erst „Was würdest du tun?“, dann was geschah (B); Reisetag
 **Form je Geschichte (entschieden 28.11.):** kreative Entscheidung pro Reihe, kein Standard, und die Reihen sollen sich
 unterscheiden: möglichst jede in einer Form, die noch keine hat, nie zweimal dieselbe hintereinander. Mit Figur, ohne Figur, viele
 Stimmen, Briefe, ein Gegenstand, je nachdem, was der Stoff trägt; bei jedem Thema unten steht die gewählte Form mit Grund. Vergeben:
-Wie es geschah (Palme), erfundene Figur (Los 33), du entscheidest (23-F), Briefe (Två mammor).
+Wie es geschah (Palme), erfundene Figur (Los 33), du entscheidest (23-F), Briefe (Två mammor), viele Stimmen (Beredskap), ein Gegenstand erzählt (Cuenca).
 
 **Abwägung Paket 3 (28.11.):**
 - 23-F: du entscheidest (A, gewählt: Die Nacht hing an Entscheidungen weniger Menschen, die Frage am Ende jedes Teils macht die
@@ -154,6 +154,13 @@ Wie es geschah (Palme), erfundene Figur (Los 33), du entscheidest (23-F), Briefe
 - Kriegskinder: Briefe (A, gewählt: Der Sprachverlust steht in den Briefen selbst, eine Nachbarin schreibt für die Mutter, das Kind
   schreibt bald nur noch Schwedisch); das Namensschild erzählt (B+: hängt nur auf den Reisen am Hals, dazwischen sieht es nichts);
   erfundene Ich-Erzählerin Aino (A−: dieselbe Form wie Los 33, ein Kind als Erzählerin auf B1 schwer glaubhaft).
+
+**Abwägung Paket 4 (28.11.):**
+- Beredskap: viele Stimmen (A, gewählt: Jede Stimme zeigt eine andere Haltung zur Neutralität, die erste kehrt am Ende wieder); ein
+  Tag, der alles änderte, sechs Tage als Stationen (A−: klar, aber distanzierter); Familienchronik (B+: zu nah an Två mammor).
+- El crimen de Cuenca: ein Gegenstand erzählt, die Gerichtsakte (A, gewählt: Sie weiß nur, was in ihr steht, und das passt zum
+  Fall); Ermittlung, Spur für Spur (A−: passt zum Genre, aber die Spuren würden die Leser in die Irre führen); viele Stimmen (B+:
+  im selben Paket schon vergeben).
 
 **Lernfunktionen:** dasselbe Thema über viele Texte, Schlüsselwörter kehren wieder (A, der eigentliche Gewinn); „Bisher“ (A);
 Cliffhanger und Vorschau (A−); Personen und Wörter der Reihe, ohne Vorgriff (A−); „Erinnerst du dich?“, eine Frage zu einem früheren
@@ -173,7 +180,7 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
   einer Mutter, die das Kind nicht mehr versteht. Das Schild sieht alles und versteht keine der beiden Sprachen ganz.
 - **Tre generationer (A):** Familienchronik, weil Sprachwandel an einer Familie greifbar wird, 4 Teile, B1: Rechtschreibreform
   1906 (hvad → vad), du-Reform 1967, „hen“ (SAOL 2015). Sprachwandel an der eigenen Zielsprache.
-- **Beredskap (A):** viele Stimmen, weil jede eine andere Haltung zur Neutralität zeigt, 6 Teile, B2: Rekrut an der norwegischen
+- **Beredskap (A, umgesetzt in 24.102.0):** viele Stimmen, weil jede eine andere Haltung zur Neutralität zeigt, 6 Teile, B2: Rekrut an der norwegischen
   Grenze, Eisenbahner an den deutschen Urlauberzügen, Journalistin unter Zensur, dänische Juden über den Öresund 1943, die Weißen
   Busse 1945.
 - **Mot Amerika (A−):** Form neu abwägen (Briefe hat Två mammor), erfundene Familie aus Småland, Hungerjahre um 1867, Überfahrt, Minnesota, 5 Teile, B1.
@@ -191,9 +198,9 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
   harías tú?“: der König vor der Fernsehrede, der Rundfunk, der weitersendet, die Abgeordneten am Boden), der nächste erzählt, was
   geschah. Nicht „Wie es geschah“, das hat schon Palme.
 - **La guerra en casa (A):** Bürgerkrieg, 6 bis 7 Teile, B2–C1: Madrid belagert, Guernica, Kinder ins Ausland, Exil 1939.
-  Form neu abwägen, Briefe hat jetzt Två mammor; Kandidat: ein Gegenstand erzählt (ein Haus in Madrid, in dem beide Seiten wohnen).
+  Form neu abwägen (Briefe, Stimmen und Gegenstand vergeben); Kandidaten: Familienchronik, ein Tag, der alles änderte.
 - **Los 33 (A, umgesetzt in 24.99.0):** Chile 2010, erfundene Reporterin im Campamento Esperanza, 5 Teile, B1, geht gut aus.
-- **El crimen de Cuenca (A−):** Ermittlung ohne Figur, die Wendung trägt allein, 4 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
+- **El crimen de Cuenca (A, umgesetzt in 24.102.0, die Akte erzählt):** 5 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
   verurteilt, 1926 taucht er lebend auf.
 - **España en diez días (A−):** zehn Tage von 711 bis heute.
 - **El Oviedo de todos (B+):** 2012 kaufen Fans aus aller Welt Aktien, am letzten Tag steigt Carlos Slim ein.

@@ -10,7 +10,7 @@ const ES_IE = new Set(('pensar empezar comenzar cerrar despertar sentar nevar at
   'merendar temblar tropezar confesar apretar quebrar entender perder querer defender extender encender tender atender descender ascender sentir preferir ' +
   'sugerir convertir divertir mentir advertir herir hervir referir consentir invertir arrepentir').split(' '));
 const ES_UE = new Set(('contar encontrar recordar acordar costar mostrar demostrar probar comprobar aprobar soñar volar sonar soltar acostar renovar repoblar ' +
-  'poblar apostar almorzar colgar rogar forzar esforzar tostar consolar rodar volver devolver envolver resolver disolver mover remover promover llover doler ' +
+  'poblar apostar almorzar colgar rogar forzar esforzar tostar consolar rodar volver devolver envolver resolver disolver absolver mover remover promover llover doler ' +
   'morder soler torcer cocer dormir morir').split(' '));
 const ES_EI = new Set('pedir despedir impedir medir repetir servir seguir conseguir perseguir vestir elegir corregir rendir competir gemir regir concebir'.split(' '));
 // -iar/-uar mit betontem i/u (envío, continúa); die übrigen ohne (cambio, estudio, averiguo)
@@ -170,7 +170,7 @@ const SV_STRONG = {
   sjunka:'sjunker sjönk sjunkit -', bjuda:'bjuder bjöd bjudit bjuden', skjuta:'skjuter sköt skjutit skjuten', frysa:'fryser frös frusit frusen',
   njuta:'njuter njöt njutit -', flyta:'flyter flöt flutit -', ljuga:'ljuger ljög ljugit -', stjäla:'stjäl stal stulit stulen', bära:'bär bar burit buren',
   skära:'skär skar skurit skuren', svära:'svär svor svurit -', sitta:'sitter satt suttit -', ligga:'ligger låg legat -', falla:'faller föll fallit -',
-  hålla:'håller höll hållit hållen', låta:'låter lät låtit -', gråta:'gråter grät gråtit -', slå:'slår slog slagit slagen', dra:'drar drog dragit dragen',
+  hålla:'håller höll hållit hållen', strida:'strider stred stridit -', låta:'låter lät låtit -', gråta:'gråter grät gråtit -', slå:'slår slog slagit slagen', dra:'drar drog dragit dragen',
   le:'ler log lett -', be:'ber bad bett -', slippa:'slipper slapp sluppit -', sticka:'sticker stack stuckit stucken', spricka:'spricker sprack spruckit -',
   hugga:'hugger högg huggit huggen', slita:'sliter slet slitit sliten', skrika:'skriker skrek skrikit -', fara:'far for farit -', växa:'växer växte vuxit/växt -', hända:'händer hände hänt -',
   sälja:'säljer sålde sålt såld', välja:'väljer valde valt vald', dölja:'döljer dolde dolt dold', heta:'heter hette hetat -', känna:'känner kände känt känd',
@@ -182,7 +182,7 @@ const SV_STRONG = {
   kallas:'kallas kallades kallats -', trivas:'trivs trivdes trivts -', minnas:'minns mindes mints -', finnas:'finns fanns funnits -', synas:'syns syntes synts -',
   hämnas:'hämnas hämnades hämnats -', kännas:'känns kändes känts -', skämmas:'skäms skämdes skämts -', födas:'föds föddes fötts -', ses:'ses sågs setts -', umgås:'umgås umgicks umgåtts -'
 };
-const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa begrava släppa misstänka döma räcka utlysa gömma'.split(' '));
+const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa begrava släppa misstänka döma räcka utlysa gömma överleva'.split(' '));
 const SV_INTRANS = new Set(('vakna regna ösregna spöregna ramla trilla pendla emigrera invandra härstamma hamna skratta funka köa tälta forsa rusa protestera ' +
   'improvisera samarbeta förvärvsarbeta jobba vandra dröja gälla lysa betyda bo ske bry snöa rasa').split(' '));
 const SV_G3 = new Set('bo tro nå ske fly må gro sy klä spå bry bete'.split(' '));
@@ -248,7 +248,7 @@ function svGroup(inf, forms){
 // Ein schwedischer Eintrag ist ein Verb, wenn eine seiner Bedeutungen (durch ; getrennt) eines ist: klein geschrieben und auf -en, -ern,
 // -eln (gehen, sich freuen), eine Wendung darauf (Müll trennen) oder tun, sein. Nicht: Artikel davor (der Nutzen), Wendungen mit = (ta reda på = herausfinden), Adverbien
 // (gern, inzwischen). Gibt die Bedeutung als Verb zurück (fråga = Frage; fragen → fragen), sonst ''.
-const DE_NOT_VERB = new Set('gern sofern inzwischen einzeln gestern morgen oben unten innen außen neben zwischen eben selten seitdem trotzdem ebenfalls zusammen'.split(' '));
+const DE_NOT_VERB = new Set('gern sofern inzwischen einzeln gestern morgen oben unten innen außen neben zwischen eben selten seitdem trotzdem ebenfalls zusammen verschieden'.split(' '));
 function svVerbMeaning(k, de){
   if (!/^[a-zåäö]+$/.test(k)) return '';
   const seg = String(de).split(';').map(x => x.split('(')[0].trim()).find(x => !x.includes('=') && !/^(der|die|das|ein|eine) /.test(x) &&

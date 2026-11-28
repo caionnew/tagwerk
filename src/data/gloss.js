@@ -1880,7 +1880,7 @@ balkong||Balkon (en-Wort)
 grönområden|grönområde|Grünflächen (Plural)
 grönområde||Grünfläche (ett-Wort)
 områden|område|Gebiete (Plural)
-rykte||Ruf (ett-Wort)
+rykte||Ruf; Gerücht (ett-Wort)
 vidare||weiter
 svårast|svår|am schwersten (Superlativ)
 annanstans||anderswo
@@ -2349,7 +2349,7 @@ loppets|lopp|des Rennens (Genitiv)
 motto||Motto (ett-Wort)
 fäders|fader|der Väter (Genitiv Plural, gehoben); i fäders spår = auf den Spuren der Väter
 fader||Vater (gehoben) (en-Wort)
-spår||Spur (ett-Wort)
+spår||Spur; Gleis (ett-Wort)
 framtids|framtid|der Zukunft (Genitiv); för framtids segrar = für künftige Siege
 segrar|seger|Siege (Plural)
 seger||Sieg (en-Wort)
@@ -2970,7 +2970,7 @@ kappan|kappa|der Mantel
 lärarbrist||Lehrermangel (en-Wort)
 lärarbristen|lärarbrist|der Lehrermangel
 medarbetare||Mitarbeiter (en-Wort)
-mening||Satz; Meinung (en-Wort); enligt min mening = meiner Meinung nach
+mening||Satz; Meinung; Sinn, Absicht (en-Wort); enligt min mening = meiner Meinung nach; det är meningen att = es ist beabsichtigt, dass
 namnen|namn|die Namen
 norrskenet|norrsken|das Nordlicht
 oljan|olja|das Öl
@@ -3774,6 +3774,187 @@ yötä||finnisch: hyvää yötä = gute Nacht
 gräns||Grenze (en-Wort)
 åt||für, zu (skriva åt någon = für jemanden schreiben); auch: aß (äta)
 lärt|lära|gelernt (har lärt sig), gelehrt (Supinum, mit har)
+beredskap||Bereitschaft (en-Wort); beredskapen 1939–1945 = die Kriegsbereitschaft Schwedens
+beredskapen|beredskap|die Bereitschaft
+oberörd||unberührt
+oberört|oberörd|unberührt (ett-Form)
+järnväg||Eisenbahn (en-Wort)
+järnvägen|järnväg|die Eisenbahn
+strand||Strand (en-Wort)
+stränderna|strand|die Strände
+stranden|strand|der Strand
+olika||verschieden, unterschiedlich
+sven||Sven (Vorname)
+kompani||Kompanie (ett-Wort)
+läger||Lager (ett-Wort)
+lägret|läger|das Lager
+lägren|läger|die Lager
+gran||Fichte (en-Wort)
+granarna|gran|die Fichten
+tisdagsmorgonen||der Dienstagmorgen
+tyskland||Deutschland
+strida||kämpfen
+inkallelseorder||Einberufungsbefehl (en-Wort)
+tält||Zelt (ett-Wort)
+aning||Ahnung (en-Wort); ingen aning = keine Ahnung
+vems||wessen
+flykting||Flüchtling (en-Wort)
+flyktingar|flykting|Flüchtlinge
+ryggsäck||Rucksack (en-Wort)
+norges||Norwegens (Genitiv von Norge)
+norrman||Norweger (en-Wort)
+norrmännen|norrman|die Norweger
+trötta|trött|müde (Plural, bestimmte Form)
+löjtnant||Leutnant (en-Wort)
+löjtnanten|löjtnant|der Leutnant
+beredd||bereit, vorbereitet
+beredda|beredd|bereit (Plural)
+berett|beredd|bereit (ett-Form)
+tysk||deutsch; Deutscher (en-Wort)
+tyskarna|tysk|die Deutschen
+biljett||Fahrkarte (en-Wort)
+biljetter|biljett|Fahrkarten
+fraktsedel||Frachtbrief (en-Wort)
+fraktsedlar|fraktsedel|Frachtbriefe
+tidtabell||Fahrplan (en-Wort)
+soldat||Soldat (en-Wort)
+soldater|soldat|Soldaten
+soldaterna|soldat|die Soldaten
+permission||Heimaturlaub (von Soldaten) (en-Wort)
+permittent||Soldat auf Heimaturlaub (en-Wort)
+permittenter|permittent|Soldaten auf Heimaturlaub
+vagn||Wagen, Waggon (en-Wort)
+vagnar|vagn|Wagen, Waggons
+division||Division (en-Wort)
+diskussioner|diskussion|Diskussionen
+vinka||winken
+tysta|tyst|still, schweigend (Plural)
+arm||Arm (en-Wort); med armarna i kors = mit verschränkten Armen
+armar|arm|Arme
+armarna|arm|die Arme
+kors||Kreuz (ett-Wort); i kors = verschränkt; Röda korset = das Rote Kreuz
+korset|kors|das Kreuz
+korsen|kors|die Kreuze
+korsets|kors|des Kreuzes; Röda korsets = des Roten Kreuzes
+biljettlucka||Fahrkartenschalter (en-Wort)
+biljettluckan|biljettlucka|der Fahrkartenschalter
+elsa||Elsa (Vorname)
+göteborgs||Göteborgs (Genitiv von Göteborg)
+handels-||Handels- (Göteborgs Handels- och Sjöfartstidning = Zeitung in Göteborg)
+sjöfartstidning||Schifffahrtszeitung (im Namen Göteborgs Handels- och Sjöfartstidning)
+chefredaktör||Chefredakteur (en-Wort)
+torgny||Torgny (Vorname)
+segerstedt||Segerstedt (Torgny Segerstedt, 1876–1945, Chefredakteur in Göteborg)
+segerstedts|segerstedt|Segerstedts
+hitler||Hitler
+herr||Herr
+förolämpning||Beleidigung (en-Wort)
+hermann||Hermann (Vorname)
+göring||Göring (Hermann Göring, NS-Politiker)
+rasande||rasend, wütend
+nazism||Nazismus (en-Wort)
+nazismen|nazism|der Nazismus
+reta||reizen, ärgern
+slott||Schloss (ett-Wort)
+slottet|slott|das Schloss
+censur||Zensur (en-Wort)
+ordet|ord|das Wort
+beslagta||beschlagnahmen
+transportförbud||Transportverbot (ett-Wort)
+redaktion||Redaktion (en-Wort)
+redaktionen|redaktion|die Redaktion
+diskutera||diskutieren
+spårvagn||Straßenbahn (en-Wort)
+spårvagnen|spårvagn|die Straßenbahn
+affisch||Plakat (en-Wort)
+affischen|affisch|das Plakat
+affischer|affisch|Plakate
+blågul||blau-gelb
+blågula|blågul|blau-gelbe (bestimmte Form)
+tiger||Tiger (en-Wort); auch: schweigt (tiga)
+tigern|tiger|der Tiger
+meningen|mening|der Sinn, die Absicht
+spion||Spion (en-Wort)
+spioner|spion|Spione
+rykten|rykte|Gerüchte
+jude||Jude (en-Wort)
+judar|jude|Juden
+judarna|jude|die Juden
+hemsk||schrecklich
+hemskt|hemsk|schrecklich (ett-Form)
+artikel||Artikel (en-Wort)
+sund||Sund, Meerenge (ett-Wort)
+sundet|sund|der Sund (hier: der Öresund)
+fiskare||Fischer (en-Wort)
+fiskeläge||Fischerdorf (ett-Wort)
+öresund||Öresund (Meerenge zwischen Schweden und Dänemark)
+ockuperad||besetzt (von einer fremden Macht)
+ockuperat|ockuperad|besetzt (ett-Form)
+båtarna|båt|die Boote
+fiskebåt||Fischerboot (en-Wort)
+fiskebåtar|fiskebåt|Fischerboote
+mammors|mamma|der Mütter (Genitiv Plural)
+filt||Decke (en-Wort)
+filtar|filt|Decken
+soppa||Suppe (en-Wort)
+förlora||verlieren
+märkvärdig||bemerkenswert
+märkvärdigt|märkvärdig|Besonderes (ett-Form); inget märkvärdigt = nichts Besonderes
+motor||Motor (en-Wort)
+motorer|motor|Motoren
+varning||Warnung (en-Wort)
+varningar|varning|Warnungen
+överallt||überall
+vitmålad||weiß gestrichen
+flagga||Fahne, Flagge (en-Wort)
+flaggan|flagga|die Fahne
+flygare||Flieger, Pilot (en-Wort)
+flygarna|flygare|die Flieger
+vilka|vilken|welche (Plural); vilka de är = wer sie sind
+norra||nördlich, Nord-
+vägarna|väg|die Straßen, die Wege
+trasiga|trasig|kaputte (Plural)
+greve||Graf (en-Wort)
+folke||Folke (Vorname)
+bernadotte||Bernadotte (Folke Bernadotte, 1895–1948, Schwedisches Rotes Kreuz)
+heinrich||Heinrich (Vorname)
+himmler||Himmler (Heinrich Himmler, Chef der SS)
+ss||SS (Schutzstaffel)
+fånge||Gefangener, Häftling (en-Wort)
+fångar|fånge|Gefangene, Häftlinge
+kvinnoläger||Frauenlager (ett-Wort)
+kvinnolägret|kvinnoläger|das Frauenlager
+ravensbrück||Ravensbrück (Konzentrationslager für Frauen nördlich von Berlin)
+magra|mager|magere (Plural)
+kolonn||Kolonne (en-Wort)
+kolonnerna|kolonn|die Kolonnen
+beskjuten||beschossen
+överleva||überleben
+färja||Fähre (en-Wort)
+färjan|färja|die Fähre
+köpenhamn||Kopenhagen
+sjuksköterska||Krankenschwester (en-Wort)
+sjuksköterskor|sjuksköterska|Krankenschwestern
+lakan||Laken, Bettlaken (ett-Wort)
+nicka||nicken
+hjälte||Held (en-Wort)
+ansikte||Gesicht (ett-Wort)
+ansiktena|ansikte|die Gesichter
+kapitulera||kapitulieren
+kungsgatan||Kungsgatan (Straße in Stockholm)
+konfetti||Konfetti (en-Wort)
+krama||umarmen
+kramas|krama|sich umarmen
+jubla||jubeln
+järnmalm||Eisenerz (en-Wort)
+tillräcklig||ausreichend
+tillräckligt|tillräcklig|genug, ausreichend (ett-Form)
+vifta||schwenken, winken
+bussarna|buss|die Busse
+sidorna|sida|die Seiten
+glada|glad|froh (Plural)
+satt|sitta|saß (Präteritum von sitta); auch: gesetzt (Supinum von sätta)
+hårda|hård|harte (Plural, bestimmte Form)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -3795,7 +3976,7 @@ humilde||einfach, bescheiden
 insostenible||unhaltbar
 ladrar||bellen
 madrugar||früh aufstehen
-miró|mirar|sah an (Indefinido)
+miró|mirar|sah an (Indefinido); Miró = Pilar Miró, Filmregisseurin (1940–1997)
 movimiento||Bewegung
 oscuro||dunkel
 prudente||vorsichtig, umsichtig
@@ -4217,7 +4398,7 @@ aguacate|aguacate|Avocado (Mexiko, Mittelamerika, Spanien u. a.; aus dem Nahuatl
 guacamole|guacamole|Guacamole (Avocadocreme; aus dem Nahuatl)
 millones|millón|Millionen
 ustedes|ustedes|ihr (Lateinamerika); Sie (Plural)
-estrenar|estrenar|zum ersten Mal benutzen oder tragen
+estrenar|estrenar|zum ersten Mal benutzen oder tragen; uraufführen (Film, Theaterstück)
 tutear|tutear|duzen
 mundo|mundo|Welt
 gallego|gallego|Galicisch; galicisch
@@ -5386,7 +5567,7 @@ lavan|lavar|waschen (Präsens); lavarse = sich waschen
 lavar||waschen
 lavarse||sich waschen
 exactamente||genau
-mira|mirar|ansehen, schauen (Präsens)
+mira|mirar|schaut an, schaut (Präsens); Mira = Dorf in der Provinz Cuenca
 franja||Streifen
 longitud||Länge; geografische Länge
 reino||Königreich; el Reino Unido = das Vereinigte Königreich
@@ -6267,7 +6448,7 @@ descubre|descubrir|entdecken (Präsens)
 descubrir||entdecken
 pobre||arm
 manuscrito||Manuskript, Handschrift
-guarda|guardar|aufbewahren (Präsens); guardarse = aufbewahrt werden
+guarda|guardar|aufbewahren (Präsens); guardarse = aufbewahrt werden; el guarda = der Wächter
 guardar||aufbewahren
 biblioteca||Bibliothek
 palacio||Palast; Palacio Real = Königspalast
@@ -6927,7 +7108,7 @@ modestamente||bescheiden
 obvio||offensichtlich
 onu||UNO, Vereinte Nationen (Organización de las Naciones Unidas)
 papá||Papa
-petición||Antrag, Bitte
+petición||Antrag, Bitte, Gesuch
 plomero||Klempner (Lateinamerika)
 propietario||Eigentümer
 quizá||vielleicht
@@ -7332,6 +7513,91 @@ apagar||ausschalten, löschen
 sentado||sitzend (Partizip von sentar)
 ocupado||besetzt; beschäftigt (Partizip von ocupar)
 duda||Zweifel; sin duda = zweifellos
+pastor||Hirte, Schäfer; Pfarrer (evangelisch)
+judicial||gerichtlich, Gerichts-
+tresjuncos||Tresjuncos (Dorf in der Provinz Cuenca)
+provincia||Provinz
+narrador||Erzähler
+belmonte||Belmonte (Ort in der Provinz Cuenca)
+tapa||Deckel; Tapa (Häppchen)
+grimaldos||Grimaldos (Nachname)
+lópez||López (Nachname)
+bañarse||baden
+celadilla||La Celadilla (Lagune bei Tresjuncos)
+acusar||beschuldigen, anklagen
+osa||Bärin; Osa de la Vega = Dorf in der Provinz Cuenca
+vega||fruchtbare Flussebene; Osa de la Vega = Dorf in der Provinz Cuenca
+león||Löwe; León (Vorname; Stadt in Spanien)
+mayoral||Vorarbeiter (auf einem Gut), Oberhirte
+gregorio||Gregorio (Vorname)
+valero||Valero (Nachname)
+matar||töten
+prueba||Beweis; Prüfung, Test
+acumular||anhäufen, sammeln
+declaración||Erklärung; Aussage (vor Gericht)
+declaraciones|declaración|Erklärungen; Aussagen
+archivar||ablegen, archivieren; einen Fall einstellen
+sospecha||Verdacht (auch: vermutet, von sospechar)
+fácilmente||leicht, einfach
+isasa||Isasa (Nachname)
+echenique||Echenique (Nachname)
+insistir||darauf bestehen, nicht lockerlassen
+órdenes|orden|Befehle; órdenes de detención = Haftbefehle
+detención||Festnahme, Haft
+ocurrir||geschehen, passieren
+torturar||foltern
+tortura||Folter
+confesar||gestehen
+añadir||hinzufügen
+defunción||Tod (amtlich); certificado de defunción = Totenschein
+asesinar||ermorden
+grueso||dick
+audiencia||Audienz; Audiencia Provincial = Landgericht
+provincial||Provinz-
+jurado||Jury, Geschworene; Geschworener
+asesino||Mörder; mörderisch
+confesión||Geständnis; Beichte
+confesiones|confesión|Geständnisse
+salvar||retten
+garrote||Knüppel; Würgeschraube (Hinrichtungsart, garrote vil)
+deliberar||beraten
+prisión||Gefängnis
+miguel||Miguel (Vorname)
+peticiones|petición|Bitten, Gesuche
+indulto||Begnadigung
+cura||Pfarrer; Heilung
+bautismo||Taufe; partida de bautismo = Taufurkunde
+casarse||heiraten
+novio||Bräutigam; fester Freund
+bolsillo||Tasche (an der Kleidung)
+presentimiento||Vorahnung
+mentir||lügen
+galo||Galo (Vorname)
+supremo||oberster; Tribunal Supremo = Oberster Gerichtshof
+anular||aufheben, für ungültig erklären
+sentencia||Urteil
+indemnizar||entschädigen
+peseta||Peseta (spanische Währung bis 2002)
+absolver||freisprechen
+parroquia||Pfarrei, Pfarrkirche
+lola||Lola (Vorname)
+salvador||Retter; Salvador (Vorname)
+pilar||Pfeiler; Pilar (Vorname)
+rodar||rollen; drehen (einen Film)
+ministerio||Ministerium
+cultura||Kultur
+jurisdicción||Gerichtsbarkeit; jurisdicción militar = Militärgerichtsbarkeit
+injuria||Beleidigung
+prohibido||verboten (prohibir = verbieten)
+archivo||Archiv
+sellar||stempeln, versiegeln
+cepa||Rebstock; el Cepa = Spitzname von José María Grimaldos
+partida||Partie (Spiel); Urkunde (partida de bautismo = Taufurkunde); Abfahrt
+ponte||Ponte (Galo Ponte, Justizminister 1925–1930)
+retiro||Rückzug; Ruhestand; el Retiro = großer Park in Madrid (auch: ich ziehe zurück, von retirar)
+guardas||Wächter (Plural von el guarda); auch: du bewahrst auf (guardar)
+procesar||strafrechtlich verfolgen, anklagen
+juzgada|juzgar|vor Gericht gestellt (Partizip, weiblich)
 `
 };
 

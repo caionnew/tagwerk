@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.102.0
+**Zwei neue Reihen in zwei neuen Formen: „Beredskap“ (Schwedisch, B2, viele Stimmen) und „El crimen de Cuenca“ (Spanisch, B2, ein Gegenstand erzählt).**
+- **Beredskap:** Schweden 1940 bis 1945 in sechs Teilen, jeder aus einer anderen Sicht. Erzählende erfunden, Ereignisse und reale Personen belegt.
+- **El crimen de Cuenca:** ein Fall aus der Provinz Cuenca ab 1910 in fünf Teilen, erzählt von der Gerichtsakte. Akte als Erzählerin erfunden, alles andere belegt.
+- **Formen abgewogen**, je drei mit Noten, in IDEEN.md; alle sechs Reihen haben jetzt verschiedene Formen.
+- **Wörterbuch:** 181 neue schwedische und 85 neue spanische Einträge; neue Verben mit geprüften Formen (überleben, kämpfen, gestehen, freisprechen …). Genauer: spår auch „Gleis“, satt auch „saß“, rykte auch „Gerücht“, Namen wie Mira, Retiro, Ponte und Miró im Kontext; „verschieden“ gilt nicht mehr als Verb.
+- Tests: Beide Reihen halten alle Regeln aus docs/REIHEN.md ein. Speicherstand unverändert.
+
 ## 24.101.0
 **Zwei neue Reihen, jede in einer eigenen Form: „La noche de los transistores“ (Spanisch, B2) und „Två mammor“ (Schwedisch, B1).**
 - **La noche de los transistores (23-F, „Du entscheidest“, fünf Teile):** der Putschversuch vom 23. Februar 1981, von 18.23 Uhr bis zum „pacto del capó“ am Mittag danach, den Demonstrationen vom 27. Februar und der Freigabe der Geheimdokumente am 25. Februar 2026, dem Todestag Tejeros. Jeder Teil endet an einer echten Entscheidung („¿Qué haces tú?“: am Boden oder sitzen bleiben, weitersenden oder abschalten, im Fernsehen sprechen oder abwarten, bei Tejero bleiben oder gehen), der nächste erzählt, was geschah. Keine erfundenen Figuren.

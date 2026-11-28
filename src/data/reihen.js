@@ -262,6 +262,142 @@ Hälsningar från Aili.`,
          ['Warum geht Aili in die Küche?', ['Damit Aino sie nicht weinen sieht', 'Um Essen zu kochen', 'Um einen Brief zu schreiben'], 'Jag var tvungen att gå ut i köket så att hon inte skulle se mig gråta.', 'Varför går Aili ut i köket?', ['Så att Aino inte ska se henne gråta', 'För att laga mat', 'För att skriva ett brev']]],
       keep:[['De första veckorna var svåra.', 'Die ersten Wochen waren schwer.'], ['Du är också hennes mamma.', 'Du bist auch ihre Mutter.']],
       src:['Riksarkivet, „Finska krigsbarn“ (rund 70 000 Kinder, etwa 7 000 blieben in Schweden)', 'Doria, „Att få ett gott hem…“ (Transporte bis 1. Oktober 1948, 1949 noch über 15 000 Kinder in Schweden)', 'Yle, „Om de stumma krigsbarnen“ (Mutter und Kind ohne gemeinsame Sprache)'] }
+  ] },
+// Paket 4 (24.102.0): Schweden im Zweiten Weltkrieg, „Viele Stimmen“. Erzählende erfunden; Ereignisse, Daten und reale Personen
+// geprüft am 28.11.2026 an den Quellen je Teil.
+{ id:'beredskap', title:'Beredskap', topic:'Geschichte', level:'B2', form:'stimmen',
+  teaser:'Sverige under andra världskriget: neutralt, men inte oberört.',
+  intro:['Sverige håller sig utanför andra världskriget, men kriget kommer ändå nära: vid gränsen, på järnvägen, i tidningarna och på stränderna i Skåne. Människor i olika delar av landet berättar om åren 1940 till 1945.',
+    'Schweden hält sich aus dem Zweiten Weltkrieg heraus, aber der Krieg kommt trotzdem nahe: an der Grenze, auf der Eisenbahn, in den Zeitungen und an den Stränden von Schonen. Menschen in verschiedenen Teilen des Landes erzählen von den Jahren 1940 bis 1945.'],
+  real:'Die Erzählerinnen und Erzähler sind erfunden. Ereignisse, Daten, Zahlen und alle realen Personen sind belegt; Quellen unter jedem Teil.',
+  cast:[['Sven', 'erfunden: Wehrpflichtiger an der norwegischen Grenze', 1], ['Karin', 'erfunden: arbeitet am Bahnhof an der Strecke nach Norwegen', 2],
+    ['Elsa', 'erfunden: junge Journalistin in Göteborg', 3], ['Torgny Segerstedt', 'Chefredakteur der Göteborgs Handels- och Sjöfartstidning', 3],
+    ['Anna', 'erfunden: Fischersfrau am Öresund', 4], ['Gunnar', 'erfunden: Busfahrer des Schwedischen Roten Kreuzes', 5], ['Folke Bernadotte', 'Vizepräsident des Schwedischen Roten Kreuzes', 5]],
+  words:[['beredskap', 1], ['gräns', 1], ['flykting', 1], ['neutral', 1], ['permission', 2], ['regering', 2], ['censur', 3], ['tidning', 3], ['ockuperad', 4], ['fånge', 5], ['kapitulera', 6], ['järnmalm', 6]],
+  parts:[
+    { title:'Gränsen', when:'april 1940', date:'Värmland, april 1940',
+      body:`Jag heter Sven, jag är tjugoett år och jag fryser. I några dagar har mitt kompani legat i ett läger i skogen, några kilometer från norska gränsen. Det ligger fortfarande snö mellan granarna.
+
+Det började på tisdagsmorgonen, den 9 april. Mamma väckte mig och sa att radion hade något viktigt. Tyskland hade gått in i Danmark och Norge, samma natt, på en gång. Danmark gav upp nästan direkt. I Norge strider de fortfarande.
+
+Sverige är neutralt, men regeringen har höjt beredskapen. Två dagar senare fick jag min inkallelseorder. Nu sitter vi här och väntar. Vi har kalla tält och ingen aning om vad som händer. Ibland hör vi flygplan över skogen, men vi vet inte vems de är.
+
+På andra sidan gränsen är det krig. Nästan varje dag kommer det flyktingar över till oss, ofta på skidor: unga män, familjer, en gång bara ett barn med en ryggsäck. Vi ger dem kaffe och skickar dem vidare.
+
+Radion säger att Norges kung inte fick komma in i Sverige. Sverige vill inte dras in i kriget. Det förstår jag. Men när jag ser norrmännen komma ut ur skogen, frusna och trötta, känns det ändå konstigt. Vi är ju grannar.
+
+Löjtnanten säger att vi ska vara beredda. På vad, frågar ingen. Alla tänker samma sak. Kommer tyskarna hit också?`,
+      q:[['Was geschah in der Nacht zum 9. April 1940?', ['Deutschland marschierte in Dänemark und Norwegen ein', 'Schweden erklärte Deutschland den Krieg', 'Norwegens König floh nach Schweden'], 'Tyskland hade gått in i Danmark och Norge, samma natt, på en gång.', 'Vad hände natten till den 9 april 1940?', ['Tyskland gick in i Danmark och Norge', 'Sverige förklarade krig mot Tyskland', 'Norges kung flydde till Sverige']],
+         ['Wer kommt fast jeden Tag über die Grenze?', ['Flüchtlinge aus Norwegen', 'Deutsche Soldaten', 'Schwedische Urlauber'], 'Nästan varje dag kommer det flyktingar över till oss, ofta på skidor', 'Vem kommer över gränsen nästan varje dag?', ['Flyktingar från Norge', 'Tyska soldater', 'Svenska turister']],
+         ['Was sagt das Radio über Norwegens König?', ['Er durfte nicht nach Schweden einreisen', 'Er ist in Stockholm angekommen', 'Er hat kapituliert'], 'Radion säger att Norges kung inte fick komma in i Sverige.', 'Vad säger radion om Norges kung?', ['Han fick inte komma in i Sverige', 'Han har kommit till Stockholm', 'Han har kapitulerat']]],
+      keep:[['Vi är ju grannar.', 'Wir sind doch Nachbarn.'], ['Kommer tyskarna hit också?', 'Kommen die Deutschen auch hierher?']],
+      src:['Wikipedia (englisch), „Timeline of Sweden during World War II“ (9.4.1940)', 'Wikipedia (englisch), „Operation Weserübung’s effects on Sweden“ (Dänemark und Norwegen, 62 Tage Kampf in Norwegen, König Haakon am 12.4. abgewiesen)'] },
+    { title:'Tågen', when:'juni 1941', date:'En station vid linjen mot Norge, midsommar 1941',
+      hook:'På järnvägen rullar tåg som ingen vill prata om.',
+      recap:['April 1940: Tyskland går in i Danmark och Norge. Sven ligger med sitt kompani vid norska gränsen och ser flyktingar komma över.',
+        'April 1940: Deutschland marschiert in Dänemark und Norwegen ein. Sven liegt mit seiner Kompanie an der norwegischen Grenze und sieht Flüchtlinge herüberkommen.'],
+      body:`Jag heter Karin och jag har arbetat på stationen i tolv år. Jag säljer biljetter, skriver fraktsedlar och vet när varje tåg ska komma. Men sedan förra sommaren går det tåg här som inte står i någon tidtabell för vanligt folk.
+
+Det är tyska soldater. I juli förra året gick regeringen med på att tyska soldater med permission får resa genom Sverige, mellan Norge och Tyskland. Vi kallar dem permittenter. Tågen går nästan varje dag. Soldaterna sitter i våra vagnar och tittar ut på våra skogar.
+
+Vi pratar inte om det. Inte på stationen, inte i affären. Man vet aldrig vem som lyssnar.
+
+Vid midsommar händer något nytt. Det är inte längre soldater på väg hem till sina familjer. Det är en hel tysk division, med vapen och utrustning, som ska genom Sverige från Norge till Finland. Regeringen har sagt ja efter långa och hårda diskussioner.
+
+Några av mina grannar står vid spåret och vinkar. Soldaterna vinkar tillbaka. Andra står tysta med armarna i kors. Själv står jag i biljettluckan och räknar vagnar. Jag räknar för att slippa tänka.
+
+Min bror säger att vi köper oss fria från kriget, tåg för tåg. Jag vet inte om han har rätt. Men jag vet att varje tåg som rullar förbi här tar kriget lite närmare.`,
+      q:[['Wer fährt seit dem Sommer 1940 durch Schweden?', ['Deutsche Soldaten auf Heimaturlaub', 'Norwegische Flüchtlinge', 'Schwedische Rekruten'], 'gick regeringen med på att tyska soldater med permission får resa genom Sverige', 'Vem reser genom Sverige sedan sommaren 1940?', ['Tyska soldater på permission', 'Norska flyktingar', 'Svenska rekryter']],
+         ['Was ist neu zu Mittsommer 1941?', ['Eine ganze deutsche Division mit Waffen fährt nach Finnland', 'Die Züge werden gestoppt', 'Karin bekommt eine neue Stelle'], 'Det är en hel tysk division, med vapen och utrustning, som ska genom Sverige från Norge till Finland.', 'Vad är nytt vid midsommar 1941?', ['En hel tysk division med vapen ska till Finland', 'Tågen stoppas', 'Karin får ett nytt arbete']],
+         ['Warum zählt Karin die Waggons?', ['Um nicht nachdenken zu müssen', 'Weil es ihre Arbeit ist', 'Um es der Zeitung zu melden'], 'Jag räknar för att slippa tänka.', 'Varför räknar Karin vagnarna?', ['För att slippa tänka', 'För att det är hennes arbete', 'För att berätta det för tidningen']]],
+      keep:[['Vi pratar inte om det.', 'Wir reden nicht darüber.'], ['Man vet aldrig vem som lyssnar.', 'Man weiß nie, wer zuhört.']],
+      src:['Wikipedia (englisch), „Timeline of Sweden during World War II“ (Abkommen vom 8.7.1940 über die Urlaubertransporte)', 'SVT, „70 år sedan tysktågen rullade genom Sverige“ (Engelbrecht-Division zu Mittsommer 1941, Menschen winken)'] },
+    { title:'Tidningen', when:'hösten 1942', date:'Göteborg, hösten 1942',
+      hook:'I Göteborg skriver en tidning det som andra inte vågar.',
+      recap:['Sedan 1940 får tyska soldater på permission resa genom Sverige. Vid midsommar 1941 rullar en hel tysk division med vapen genom landet.',
+        'Seit 1940 dürfen deutsche Soldaten auf Urlaub durch Schweden reisen. Zu Mittsommer 1941 rollt eine ganze deutsche Division mit Waffen durch das Land.'],
+      body:`Jag heter Elsa, jag är tjugofem år och jag arbetar på Göteborgs Handels- och Sjöfartstidning. Vår chefredaktör heter Torgny Segerstedt. Han är över sextio, ofta trött och alltid arg på Hitler.
+
+Redan 1933, när Hitler just hade kommit till makten, skrev han i tidningen: ”Herr Hitler är en förolämpning.” Hermann Göring blev rasande. Sedan dess har Segerstedt skrivit mot nazismen nästan varje dag.
+
+Det är inte populärt i Stockholm. Regeringen vill inte reta Tyskland. Kungen har till och med kallat Segerstedt till slottet för att varna honom. Det hjälpte inte.
+
+Det finns censur nu, fast ingen vill använda det ordet. Tidningar som skriver för hårt om Tyskland kan beslagtas, och vissa har fått transportförbud. Ibland står vi på redaktionen och diskuterar ett enda ord i en rubrik i en timme.
+
+På spårvagnen hem ser jag affischen med den blågula tigern. ”En svensk tiger”, står det. Det betyder två saker: en svensk tiger, och en svensk som tiger, alltså håller tyst. Det är meningen att vi ska tänka på spioner. Jag tänker på något annat.
+
+Till redaktionen kommer brev från Norge och Danmark, och ibland rykten om vad som händer med judarna i öst. Vi vet inte vad som är sant, och det som kanske är sant är för hemskt för att tro på.
+
+I kväll ligger en artikel på mitt skrivbord. Jag tror att den är sann, men den är farlig. Ska vi trycka den?`,
+      q:[['Was schrieb Segerstedt 1933?', ['„Herr Hitler ist eine Beleidigung.“', '„Schweden muss neutral bleiben.“', '„Der Krieg ist bald vorbei.“'], 'skrev han i tidningen: ”Herr Hitler är en förolämpning.”', 'Vad skrev Segerstedt 1933?', ['”Herr Hitler är en förolämpning.”', '”Sverige måste vara neutralt.”', '”Kriget är snart slut.”']],
+         ['Was kann mit Zeitungen geschehen, die zu hart über Deutschland schreiben?', ['Sie können beschlagnahmt werden', 'Sie bekommen Geld vom Staat', 'Sie werden ins Deutsche übersetzt'], 'Tidningar som skriver för hårt om Tyskland kan beslagtas, och vissa har fått transportförbud.', 'Vad kan hända med tidningar som skriver för hårt om Tyskland?', ['De kan beslagtas', 'De får pengar av staten', 'De översätts till tyska']],
+         ['Welche zwei Bedeutungen hat „En svensk tiger“?', ['Ein schwedischer Tiger und ein Schwede, der schweigt', 'Ein starker und ein schwacher Schwede', 'Ein Tier im Zoo und ein Soldat'], 'Det betyder två saker: en svensk tiger, och en svensk som tiger, alltså håller tyst.', 'Vilka två betydelser har ”En svensk tiger”?', ['En svensk tiger och en svensk som håller tyst', 'En stark och en svag svensk', 'Ett djur på zoo och en soldat']]],
+      keep:[['Det hjälpte inte.', 'Es half nichts.'], ['Ska vi trycka den?', 'Sollen wir ihn drucken?']],
+      src:['torgnysegerstedt.se, „Who was Torgny Segerstedt?“ (Kolumne vom 3.2.1933, Görings Reaktion)', 'Dagbladet, „Uredd redaktør“ (der König bestellt Segerstedt ins Schloss)', 'Forum för levande historia, „In what ways was freedom of the press challenged“ (Beschlagnahmen, Transportverbote)', 'Wikipedia (englisch), „En svensk tiger“ (Plakat von Bertil Almqvist, 1941, Statens informationsstyrelse; Doppelbedeutung)'] },
+    { title:'Över sundet', when:'okt 1943', date:'Ett fiskeläge vid Öresund, oktober 1943',
+      hook:'En natt i oktober hörs motorer ute på sundet.',
+      recap:['I Göteborg skriver Torgny Segerstedts tidning mot Hitler, trots varningar och censur. Överallt sitter affischer: ”En svensk tiger”.',
+        'In Göteborg schreibt Torgny Segerstedts Zeitung gegen Hitler, trotz Warnungen und Zensur. Überall hängen Plakate: „En svensk tiger“.'],
+      body:`Jag heter Anna. Min man är fiskare, och vi bor i ett litet fiskeläge vid Öresund. När det är klart väder ser vi Danmark på andra sidan. I tre och ett halvt år har landet varit ockuperat av tyskarna.
+
+Natten till den 2 oktober började tyskarna leta efter de danska judarna. Men många hade blivit varnade och hunnit gömma sig. Samma dag sa svensk radio att Sverige är berett att ta emot alla danska judar. Jag satt vid radion med min man. Han sa ingenting, men han gick ner till hamnen och stannade där hela natten.
+
+Sedan började båtarna komma. Nästan varje natt kommer de nu: små fiskebåtar från den danska sidan, fulla av människor. Barn som sover i sina mammors armar. Gamla som inte kan gå själva. En kvinna som bara har en väska och ett fotografi.
+
+Vi tar emot dem vid stranden, ger dem filtar och varm soppa och följer dem till polisen. I skolan har man ställt fram sängar. Ingen frågar vem som ska betala.
+
+Tidningarna skriver att det redan är flera tusen. De flesta har betalat danska fiskare för att komma över, och många har förlorat allt de ägde. Men de lever.
+
+Min man säger att han inte gör något märkvärdigt. ”Det är ju bara över sundet”, säger han.
+
+I natt hör jag motorer igen, långt ute på vattnet. Hur många kommer i natt?`,
+      q:[['Was sagt das schwedische Radio am 2. Oktober?', ['Schweden nimmt alle dänischen Juden auf', 'Schweden schließt die Grenze', 'Der Krieg ist vorbei'], 'Samma dag sa svensk radio att Sverige är berett att ta emot alla danska judar.', 'Vad sa svensk radio den 2 oktober?', ['Att Sverige tar emot alla danska judar', 'Att Sverige stänger gränsen', 'Att kriget är slut']],
+         ['Wie kommen die Menschen über den Öresund?', ['In kleinen Fischerbooten von der dänischen Seite', 'Mit der Fähre', 'Über eine Brücke'], 'små fiskebåtar från den danska sidan, fulla av människor', 'Hur kommer människorna över Öresund?', ['I små fiskebåtar från den danska sidan', 'Med färjan', 'Över en bro']],
+         ['Was tun Anna und die anderen am Strand?', ['Sie geben Decken und Suppe und bringen die Menschen zur Polizei', 'Sie schicken die Boote zurück', 'Sie verkaufen Fisch'], 'Vi tar emot dem vid stranden, ger dem filtar och varm soppa och följer dem till polisen.', 'Vad gör Anna och de andra vid stranden?', ['De ger filtar och soppa och följer folk till polisen', 'De skickar tillbaka båtarna', 'De säljer fisk']]],
+      keep:[['Men de lever.', 'Aber sie leben.'], ['Ingen frågar vem som ska betala.', 'Niemand fragt, wer das bezahlen soll.']],
+      src:['Wikipedia (englisch), „Rescue of the Danish Jews“ (Razzia in der Nacht zum 2.10.1943, Erklärung Schwedens am 2.10., Fahrt über den Öresund)', 'USHMM, „Danish Jews Escape“ (rund 7 200 Menschen von September bis Oktober 1943)', 'Humanity in Action (Bezahlung der Fischer, über 7 000 Menschen in wenigen Wochen)'] },
+    { title:'De vita bussarna', when:'april 1945', date:'Norra Tyskland, april 1945',
+      hook:'Vita bussar kör in i ett land som håller på att falla samman.',
+      recap:['Hösten 1943 säger Sverige att landet tar emot de danska judarna. Natt efter natt kommer båtarna över Öresund, och flera tusen räddas.',
+        'Im Herbst 1943 erklärt Schweden, es nehme die dänischen Juden auf. Nacht für Nacht kommen die Boote über den Öresund, und mehrere Tausend werden gerettet.'],
+      body:`Jag heter Gunnar, och jag kör buss för Svenska Röda korset. Bussen är vitmålad, med den svenska flaggan på sidorna och röda kors på taket. Det är för att flygarna ska se vilka vi är.
+
+Vi är i norra Tyskland, och landet faller sönder. Vägarna är fulla av flyktingar, trasiga bilar och soldater som går åt alla håll. Greve Folke Bernadotte från Röda korset har förhandlat med Heinrich Himmler, chefen för SS. Först gällde det bara fångar från Norge och Danmark. Nu får vi hämta fler.
+
+I går körde vi till kvinnolägret Ravensbrück. Jag kan inte beskriva vad jag såg, och jag tänker inte försöka. Kvinnorna var så magra att vi kunde lyfta in dem i bussen som barn.
+
+På vägen norrut blev en av kolonnerna beskjuten av allierade flygplan, trots de röda korsen. Flera kvinnor dog, efter allt de hade överlevt i lägret.
+
+I morgon ska vi ta färjan från Köpenhamn till Malmö. Där väntar läkare och sjuksköterskor, varma bad och rena lakan.
+
+En kvinna i min buss frågar hela tiden på tyska om det verkligen är Sverige vi åker till. Ja, säger jag, varje gång. Snart. Hon nickar och frågar igen en stund senare.
+
+Jag är ingen hjälte. Jag kör bara bussen. Men jag kommer aldrig att glömma de här ansiktena.`,
+      q:[['Warum sind die Busse weiß mit roten Kreuzen?', ['Damit die Flieger sehen, wer sie sind', 'Weil Weiß billiger ist', 'Weil es schwedische Busse aus Malmö sind'], 'Det är för att flygarna ska se vilka vi är.', 'Varför är bussarna vita med röda kors?', ['För att flygarna ska se vilka de är', 'För att vitt är billigare', 'För att det är bussar från Malmö']],
+         ['Mit wem hat Folke Bernadotte verhandelt?', ['Mit Heinrich Himmler, dem Chef der SS', 'Mit dem schwedischen König', 'Mit dem norwegischen König'], 'Greve Folke Bernadotte från Röda korset har förhandlat med Heinrich Himmler, chefen för SS.', 'Med vem har Folke Bernadotte förhandlat?', ['Med Heinrich Himmler, chefen för SS', 'Med Sveriges kung', 'Med Norges kung']],
+         ['Wie geht es morgen weiter?', ['Mit der Fähre von Kopenhagen nach Malmö', 'Zurück nach Ravensbrück', 'Mit dem Zug nach Stockholm'], 'I morgon ska vi ta färjan från Köpenhamn till Malmö.', 'Hur går resan vidare i morgon?', ['Med färjan från Köpenhamn till Malmö', 'Tillbaka till Ravensbrück', 'Med tåget till Stockholm']]],
+      keep:[['Jag är ingen hjälte.', 'Ich bin kein Held.'], ['Nu får vi hämta fler.', 'Jetzt dürfen wir mehr holen.']],
+      src:['Malmö museer, „Vad är de Vita bussarna?“ (weiße Busse mit Flagge und roten Kreuzen, Verhandlungen Bernadottes mit Himmler)', 'The Local, „The Swedish expedition that rescued thousands…“ (ab 21. April alle Nationalitäten, Beschuss am 25. April, Ankunft in Malmö am 28. April)', 'Svenska Röda korset, Aufstellung der Geretteten (15 345 aus den Lagern)'] },
+    { title:'Freden', when:'maj 1945', date:'Stockholm, 7 maj 1945',
+      hook:'En dag i maj fylls gatorna med människor.',
+      recap:['April 1945: Svenska Röda korsets vita bussar hämtar fångar ur de tyska lägren och kör dem till Sverige.',
+        'April 1945: Die weißen Busse des Schwedischen Roten Kreuzes holen Häftlinge aus den deutschen Lagern und bringen sie nach Schweden.'],
+      body:`Det är jag igen, Sven. Jag är tjugosex nu, och jag har inte frusit på länge. I dag är jag i Stockholm, och hela staden är ute på gatorna.
+
+På morgonen kom nyheten: Tyskland har kapitulerat. Kriget i Europa är slut. På Kungsgatan regnar det konfetti från fönstren, och människor som aldrig har sett varandra förut kramas.
+
+Jag tänker på allt som har hänt de här åren. Norrmännen som kom ut ur skogen 1940. Tågen med tyska soldater, som stoppades först i augusti 1943, efter mer än två miljoner resor. De danska judarna, över 7 000, som kom över sundet på en enda höst. De vita bussarna, som har räddat över 15 000 människor ur lägren.
+
+Och Torgny Segerstedt, han i Göteborg som skrev mot Hitler i tolv år. Han dog den 31 mars. Han fick aldrig se den här dagen.
+
+Sverige har klarat sig. Vi har inte haft krig på över hundra år, och vi slapp den här gången också. Men jag kan inte bara jubla. Vi sålde järnmalm till Tyskland, vi lät deras soldater åka på våra tåg, och vi tittade ofta bort. Till slut hjälpte vi också. Var det tillräckligt?
+
+En flicka ger mig en liten flagga. Jag viftar med den, som alla andra. I dag får vi vara glada. I morgon får vi fundera.`,
+      q:[['Was ist die Nachricht am Morgen des 7. Mai 1945?', ['Deutschland hat kapituliert', 'Schweden tritt in den Krieg ein', 'Die Grenze nach Norwegen wird geschlossen'], 'På morgonen kom nyheten: Tyskland har kapitulerat.', 'Vilken nyhet kom på morgonen den 7 maj 1945?', ['Tyskland har kapitulerat', 'Sverige går in i kriget', 'Gränsen mot Norge stängs']],
+         ['Wann wurden die Züge mit deutschen Soldaten gestoppt?', ['Im August 1943', 'Im April 1940', 'Im Mai 1945'], 'som stoppades först i augusti 1943, efter mer än två miljoner resor', 'När stoppades tågen med tyska soldater?', ['I augusti 1943', 'I april 1940', 'I maj 1945']],
+         ['Was verkaufte Schweden an Deutschland?', ['Eisenerz', 'Waffen', 'Lebensmittel'], 'Vi sålde järnmalm till Tyskland', 'Vad sålde Sverige till Tyskland?', ['Järnmalm', 'Vapen', 'Mat']]],
+      keep:[['Kriget i Europa är slut.', 'Der Krieg in Europa ist vorbei.'], ['I morgon får vi fundera.', 'Morgen dürfen wir nachdenken.']],
+      src:['Sveriges Radio, „Tidslinje: Vägen till fred“ (Kapitulation am 7.5.1945, Konfetti auf der Kungsgatan)', 'Wikipedia (englisch), „Transit of German troops through Finland and Sweden“ (Ende am 15.8.1943, über zwei Millionen Fahrten)', 'Wikipedia (englisch), „Torgny Segerstedt“ (gestorben am 31.3.1945)', 'Wikipedia (englisch), „Sweden during World War II“ (Eisenerz für Deutschland); Svenska Röda korset (15 345 Gerettete)'] }
   ] }
 ],
 es:[
@@ -468,6 +604,112 @@ Ahora conoces el final. Pero piensa en aquella noche, cuando nadie sabía cómo 
          ['Was geschieht am 25. Februar 2026?', ['Die Regierung veröffentlicht die Geheimdokumente, und Tejero stirbt', 'Ein neuer Prozess beginnt', 'Der König hält wieder eine Rede'], 'el Gobierno publica los documentos secretos del golpe', '¿Qué pasa el 25 de febrero de 2026?', ['El Gobierno publica los documentos secretos y muere Tejero', 'Empieza un nuevo juicio', 'El rey da otro mensaje']]],
       keep:[['Tejero se queda cada vez más solo.', 'Tejero ist immer mehr allein.'], ['Han pasado unas dieciocho horas.', 'Etwa achtzehn Stunden sind vergangen.']],
       src:['Ara, „¡Quieto todo el mundo!“ (Guardias gehen am Morgen durchs Fenster); Economist & Jurist, „1982: los responsables del 23-F responden ante la Justicia“ (Pakt auf der Motorhaube)', 'Wikipedia (spanisch), „Golpe de Estado en España de 1981“ (11.25 Uhr, Urteile)', 'BOE, 19.2.2026, Ort der demokratischen Erinnerung (Demonstrationen vom 27.2.1981)', 'Ara, 25.2.2026 (Freigabe der Dokumente, Tod Tejeros)'] }
+  ] },
+// Paket 4 (24.102.0): Fall Grimaldos, „Ein Gegenstand erzählt“ (die Akte). Fakten geprüft am 28.11.2026 an den Quellen je Teil.
+{ id:'cuenca', title:'El crimen de Cuenca', topic:'Geschichte', level:'B2', form:'ding',
+  teaser:'En 1910 desaparece un pastor en La Mancha. Un expediente judicial cuenta lo que pasa después.',
+  intro:['En agosto de 1910, un pastor desaparece cerca de Tresjuncos, en la provincia de Cuenca. Lo que sigue lo cuenta un narrador muy especial: el expediente del juzgado, que solo sabe lo que escriben en él.',
+    'Im August 1910 verschwindet bei Tresjuncos in der Provinz Cuenca ein Schäfer. Was folgt, erzählt ein besonderer Erzähler: die Gerichtsakte, die nur weiß, was in ihr steht.'],
+  real:'Die Akte als Erzählerin ist erfunden. Personen, Orte, Daten und Urteile sind belegt; was Beteiligte sagten, steht sinngemäß da. Quellen unter jedem Teil.',
+  cast:[['José María Grimaldos', '„el Cepa“, Schäfer aus Tresjuncos', 1], ['León Sánchez', 'Vorarbeiter auf dem Gut, aus Osa de la Vega', 1], ['Gregorio Valero', 'Wächter auf dem Gut, aus Osa de la Vega', 1],
+    ['Emilio Isasa Echenique', 'neuer Richter in Belmonte', 2], ['Galo Ponte', 'Minister', 4], ['Lola Salvador', 'Autorin', 5], ['Pilar Miró', 'Filmregisseurin', 5]],
+  words:[['expediente', 1], ['juzgado', 1], ['denuncia', 1], ['acusar', 1], ['prueba', 1], ['archivar', 1], ['detención', 2], ['confesar', 2], ['culpable', 2], ['jurado', 3], ['indulto', 3], ['inocente', 4]],
+  parts:[
+    { title:'Una denuncia', when:'1910–1911', date:'Juzgado de Belmonte (Cuenca), 1910 y 1911',
+      body:`Nazco en 1910, en el juzgado de Belmonte, un pueblo de la provincia de Cuenca. Soy un expediente: unas hojas de papel dentro de una carpeta, con un número en la tapa. Todo lo que sé es lo que escriben en mí.
+
+Mi primera hoja es una denuncia. Un pastor de Tresjuncos, José María Grimaldos López, de 28 años, ha desaparecido. Lo llaman «el Cepa». El 20 de agosto vendió sus ovejas, fue a bañarse a la laguna de La Celadilla y no volvió.
+
+Su familia acusa a dos hombres de Osa de la Vega, un pueblo cercano: León Sánchez, el mayoral de la finca donde trabajaba el Cepa, y Gregorio Valero, el guarda. Dicen que lo mataron para quedarse con el dinero de las ovejas.
+
+Los dos hombres son detenidos. Pero no hay cuerpo, no hay testigos y no hay pruebas. El juez los deja libres.
+
+En mis hojas se van acumulando declaraciones, sellos y firmas. Luego, nada. En septiembre de 1911 el caso se archiva, y a mí me guardan en una estantería, entre otros expedientes que ya nadie lee.
+
+Desde allí oigo poco. Pero algo oigo. En Tresjuncos la gente sigue hablando, y la familia del Cepa no se rinde. En los pueblos pequeños, una sospecha no se archiva tan fácilmente como un papel.
+
+¿Me abrirá alguien otra vez?`,
+      q:[['Wann wurde der Schäfer zuletzt gesehen?', ['Am 20. August 1910, nachdem er seine Schafe verkauft hatte', 'Im September 1911', 'An Weihnachten 1910'], 'El 20 de agosto vendió sus ovejas, fue a bañarse a la laguna de La Celadilla y no volvió.', '¿Cuándo desaparece el pastor?', ['El 20 de agosto de 1910, después de vender sus ovejas', 'En septiembre de 1911', 'En Navidad de 1910']],
+         ['Warum beschuldigt die Familie die zwei Männer?', ['Sie hätten ihn wegen des Geldes für die Schafe getötet', 'Sie hätten mit ihm gestritten', 'Sie hätten seine Schafe gestohlen'], 'Dicen que lo mataron para quedarse con el dinero de las ovejas.', '¿Por qué acusa la familia a los dos hombres?', ['Dicen que lo mataron para quedarse con el dinero de las ovejas', 'Dicen que se pelearon con él', 'Dicen que robaron sus ovejas']],
+         ['Warum lässt der Richter die Männer frei?', ['Es gibt keine Leiche, keine Zeugen und keine Beweise', 'Sie haben ein Alibi', 'Der Schäfer ist wieder da'], 'Pero no hay cuerpo, no hay testigos y no hay pruebas.', '¿Por qué deja libres el juez a los dos hombres?', ['No hay cuerpo, ni testigos, ni pruebas', 'Tienen una coartada', 'El pastor ha vuelto']]],
+      keep:[['Todo lo que sé es lo que escriben en mí.', 'Alles, was ich weiß, ist das, was man in mich hineinschreibt.'], ['El juez los deja libres.', 'Der Richter lässt sie frei.']],
+      src:['Wikipedia (spanisch), „Crimen de Cuenca“ (Verschwinden am 20.8.1910, Anzeige in Belmonte, Einstellung im September 1911)', 'SensaCine, „Qué fue de Gregorio Valero y León Sánchez…“ (Verdacht wegen des Geldes für die Schafe)'] },
+    { title:'Un juez nuevo', when:'1913', date:'Belmonte, 1913',
+      hook:'Dos años en una estantería, y entonces llega alguien nuevo al juzgado.',
+      recap:['En 1910 desaparece el pastor José María Grimaldos, «el Cepa». Su familia acusa a dos hombres de Osa de la Vega, pero no hay pruebas, y en 1911 el caso se archiva.',
+        '1910 verschwindet der Schäfer José María Grimaldos, „el Cepa“. Seine Familie beschuldigt zwei Männer aus Osa de la Vega, aber es gibt keine Beweise, und 1911 wird der Fall eingestellt.'],
+      body:`En 1913 me sacan del polvo. Ha llegado a Belmonte un juez nuevo, Emilio Isasa Echenique, y la familia del Cepa vuelve a insistir. El juez me lee entero, hoja por hoja. Después firma dos órdenes de detención: otra vez León Sánchez y Gregorio Valero.
+
+La Guardia Civil se los lleva. Durante días están en el cuartel. Lo que ocurre allí no lo escribe nadie en mis hojas. Años más tarde se sabrá: los torturan para que confiesen y para que digan dónde está el cuerpo.
+
+Y confiesan. Las declaraciones llegan a mí con letra limpia y ordenada, como si fueran verdad. Cada uno dice que el culpable es el otro. Sobre el cuerpo cuentan una historia, luego otra, luego otra distinta. Lo buscan donde ellos dicen, y no lo encuentran nunca.
+
+A mí eso no me preocupa. Yo no busco cuerpos: yo guardo papeles. Y mis papeles dicen que hay un crimen y dos culpables.
+
+El 11 de noviembre de 1913 me añaden una hoja especial: un certificado de defunción. Según ese papel, José María Grimaldos murió el 21 de agosto de 1910, asesinado por los dos hombres.
+
+Ahora soy más grueso, más serio y más importante. Algún día me llevarán a Cuenca, ante un tribunal de verdad.`,
+      q:[['Wer bringt den Fall 1913 wieder ins Rollen?', ['Ein neuer Richter, auf Drängen der Familie', 'Ein Journalist', 'Die beiden Männer selbst'], 'Ha llegado a Belmonte un juez nuevo, Emilio Isasa Echenique, y la familia del Cepa vuelve a insistir.', '¿Quién reabre el caso en 1913?', ['Un juez nuevo, porque la familia insiste', 'Un periodista', 'Los dos hombres']],
+         ['Was steht nicht in der Akte?', ['Was in der Kaserne geschieht', 'Die Geständnisse', 'Der Totenschein'], 'Lo que ocurre allí no lo escribe nadie en mis hojas.', '¿Qué no está escrito en el expediente?', ['Lo que ocurre en el cuartel', 'Las confesiones', 'El certificado de defunción']],
+         ['Was geschieht am 11. November 1913?', ['Ein Totenschein für Grimaldos kommt in die Akte', 'Die Männer werden freigelassen', 'Die Leiche wird gefunden'], 'El 11 de noviembre de 1913 me añaden una hoja especial: un certificado de defunción.', '¿Qué pasa el 11 de noviembre de 1913?', ['Le añaden al expediente un certificado de defunción', 'Los dos hombres salen libres', 'Encuentran el cuerpo']]],
+      keep:[['Y confiesan.', 'Und sie gestehen.'], ['Yo no busco cuerpos: yo guardo papeles.', 'Ich suche keine Leichen: Ich bewahre Papiere auf.']],
+      src:['Wikipedia (spanisch), „Crimen de Cuenca“ (Wiederaufnahme 1913, Richter Isasa, Folter, Geständnisse, Totenschein vom 11.11.1913)'] },
+    { title:'El juicio', when:'1918–1925', date:'Audiencia Provincial de Cuenca, 1918',
+      hook:'Cinco años después, el expediente viaja a Cuenca.',
+      recap:['En 1913, un juez nuevo reabre el caso. León Sánchez y Gregorio Valero confiesan tras días en el cuartel de la Guardia Civil, y el Cepa es declarado muerto.',
+        '1913 rollt ein neuer Richter den Fall wieder auf. León Sánchez und Gregorio Valero gestehen nach Tagen in der Kaserne der Guardia Civil, und el Cepa wird für tot erklärt.'],
+      body:`En 1918 me ponen sobre una mesa larga, en la Audiencia Provincial de Cuenca. Delante hay un jurado popular: hombres de la provincia que tienen que decidir si dos vecinos son asesinos.
+
+El juicio dura unas siete horas. En la sala se leen mis hojas: la denuncia, las confesiones, el certificado de defunción. Los abogados de los acusados casi no discuten si son culpables. Lo que intentan, sobre todo, es salvarlos del garrote, la pena de muerte.
+
+El jurado delibera solo media hora. Culpables. León Sánchez y Gregorio Valero son condenados a dieciocho años de cárcel. Valero va a la prisión de San Miguel de los Reyes, en Valencia; Sánchez, a la de Cartagena.
+
+Después vuelvo a una estantería, esta vez en Cuenca. Pasan los años. A veces llegan papeles nuevos y me los añaden al final: traslados, informes de la cárcel, peticiones de las familias.
+
+En 1925 llegan dos indultos. El 4 de julio de 1925, después de doce años y dos meses presos, los dos hombres salen libres. Pero en mis hojas siguen siendo asesinos, y en sus pueblos también. Les cuesta encontrar trabajo, y mucha gente no quiere saber nada de ellos.
+
+Yo creía que mi historia había terminado. Me equivocaba.`,
+      q:[['Wie lange berät die Jury?', ['Nur eine halbe Stunde', 'Sieben Stunden', 'Drei Tage'], 'El jurado delibera solo media hora.', '¿Cuánto tiempo delibera el jurado?', ['Solo media hora', 'Siete horas', 'Tres días']],
+         ['Was versuchen die Verteidiger vor allem?', ['Die Todesstrafe zu verhindern', 'Die Unschuld zu beweisen', 'Den Prozess zu verschieben'], 'Lo que intentan, sobre todo, es salvarlos del garrote, la pena de muerte.', '¿Qué intentan sobre todo los abogados?', ['Salvarlos de la pena de muerte', 'Demostrar que son inocentes', 'Retrasar el juicio']],
+         ['Wann kommen die beiden Männer frei?', ['Am 4. Juli 1925, nach zwei Begnadigungen', 'Nach achtzehn Jahren', 'Gleich nach dem Prozess'], 'El 4 de julio de 1925, después de doce años y dos meses presos, los dos hombres salen libres.', '¿Cuándo salen libres los dos hombres?', ['El 4 de julio de 1925, tras dos indultos', 'Después de dieciocho años', 'Justo después del juicio']]],
+      keep:[['Culpables.', 'Schuldig.'], ['Me equivocaba.', 'Ich irrte mich.']],
+      src:['Wikipedia (spanisch), „Crimen de Cuenca“ (Prozess 1918, Gefängnisse, Begnadigung am 4.7.1925)', 'SensaCine, „Qué fue de Gregorio Valero y León Sánchez…“ (Geschworene, 18 Jahre)'] },
+    { title:'Una carta de Mira', when:'1926–1935', date:'Tresjuncos y Madrid, 1926',
+      hook:'Una carta llega a la parroquia de Tresjuncos.',
+      recap:['En 1918, un jurado declara culpables a León Sánchez y Gregorio Valero, que pasan doce años en la cárcel. En 1925 salen libres, pero para todos siguen siendo asesinos.',
+        '1918 erklärt eine Jury León Sánchez und Gregorio Valero für schuldig, sie sitzen zwölf Jahre im Gefängnis. 1925 kommen sie frei, aber für alle bleiben sie Mörder.'],
+      body:`El 8 de febrero de 1926, el cura de Tresjuncos recibe una carta del cura de Mira, un pueblo a más de cien kilómetros. Le pide una partida de bautismo, porque alguien quiere casarse. El novio se llama José María Grimaldos López.
+
+El cura de Tresjuncos esconde la carta. Pero poco después el propio Cepa aparece en el pueblo, vivo, dieciséis años mayor. El juez de Belmonte ordena detenerlo. Cuando le preguntan, cuenta que en 1910 llevaba el dinero de las ovejas en los bolsillos, tuvo un presentimiento y se marchó. Dice que nunca oyó hablar del juicio.
+
+De repente, todas mis hojas mienten. El ministro Galo Ponte pide que se revise el caso. El 10 de julio de 1926, el Tribunal Supremo anula la sentencia de 1918, declara inocentes a León Sánchez y Gregorio Valero y anula también el certificado de defunción. El Estado tendrá que indemnizarlos.
+
+Me miro y no me reconozco. Tengo dos confesiones de un crimen que nunca existió y el certificado de defunción de un hombre vivo que quiere casarse.
+
+En 1935, el Estado da a los dos hombres una pensión de 3.000 pesetas al año. Se van a Madrid y trabajan como guardas en el parque del Retiro. Ese mismo año se juzga en Cuenca a guardias civiles, al secretario del juzgado y a los médicos forenses del caso. Todos salen absueltos.`,
+      q:[['Was will der Pfarrer von Mira?', ['Eine Taufurkunde für eine Hochzeit', 'Geld für die Kirche', 'Die Akte des Falls'], 'Le pide una partida de bautismo, porque alguien quiere casarse.', '¿Qué le pide el cura de Mira?', ['Una partida de bautismo para una boda', 'Dinero para la iglesia', 'El expediente del caso']],
+         ['Was entscheidet das Oberste Gericht am 10. Juli 1926?', ['Die beiden Männer sind unschuldig', 'Die Strafe wird verkürzt', 'Der Fall wird neu verhandelt'], 'declara inocentes a León Sánchez y Gregorio Valero', '¿Qué decide el Tribunal Supremo el 10 de julio de 1926?', ['Que los dos hombres son inocentes', 'Que la pena será más corta', 'Que habrá un nuevo juicio']],
+         ['Wo arbeiten die beiden Männer später?', ['Als Wächter im Retiro-Park in Madrid', 'Auf dem Gut El Palomar', 'Beim Gericht in Cuenca'], 'Se van a Madrid y trabajan como guardas en el parque del Retiro.', '¿Dónde trabajan después los dos hombres?', ['Como guardas en el parque del Retiro, en Madrid', 'En la finca El Palomar', 'En el juzgado de Cuenca']]],
+      keep:[['De repente, todas mis hojas mienten.', 'Plötzlich lügen alle meine Blätter.'], ['Me miro y no me reconozco.', 'Ich sehe mich an und erkenne mich nicht wieder.']],
+      src:['Wikipedia (spanisch), „Crimen de Cuenca“ (Brief vom 8.2.1926, Urteil des Supremo vom 10.7.1926, Rente 1935, Prozess gegen die Beamten 1935)', 'eldiario.es, „El crimen de Cuenca, vigente cuarenta años después de su secuestro“ (Mira, gut hundert Kilometer von Tresjuncos)'] },
+    { title:'Una película', when:'1979–1981', date:'Cuenca y Madrid, 1979 a 1981',
+      hook:'Más de cincuenta años después, alguien quiere contar la historia con una cámara.',
+      recap:['En 1926 se sabe la verdad sobre el Cepa. El Tribunal Supremo declara inocentes a León Sánchez y Gregorio Valero y anula el certificado de defunción.',
+        '1926 kommt die Wahrheit über el Cepa ans Licht. Das Oberste Gericht erklärt León Sánchez und Gregorio Valero für unschuldig und hebt den Totenschein auf.'],
+      body:`Pasan más de cincuenta años. Franco muere en 1975, y España empieza a vivir en democracia. Una escritora, Lola Salvador, escribe un libro sobre mi historia, y la directora de cine Pilar Miró decide hacer una película con él.
+
+En el verano de 1979 ruedan en los mismos lugares donde empezó todo: Osa de la Vega, Tresjuncos, Belmonte, la laguna de La Celadilla. Por fin se cuenta lo que nunca se escribió en mis hojas: las torturas en el cuartel.
+
+La película se llama «El crimen de Cuenca», y también hace historia. El Ministerio de Cultura no deja estrenarla. La jurisdicción militar la secuestra y procesa a Pilar Miró por injurias a la Guardia Civil. En febrero de 1980 la película se presenta en el Festival de Berlín, pero en España nadie puede verla.
+
+Pilar Miró es la última persona civil juzgada por un tribunal militar en España. Al final, el Tribunal Supremo la absuelve, y en agosto de 1981 la película se estrena por fin en los cines. Es la única película prohibida en la España democrática.
+
+Yo sigo en un archivo, con mis hojas amarillas. Todo lo que hay en mí está bien escrito, firmado y sellado. Y casi nada es verdad.`,
+      q:[['Wo wird der Film gedreht?', ['An den Orten, wo alles begann', 'In einem Studio in Madrid', 'In Berlin'], 'En el verano de 1979 ruedan en los mismos lugares donde empezó todo', '¿Dónde se rueda la película?', ['En los mismos lugares donde empezó todo', 'En un estudio de Madrid', 'En Berlín']],
+         ['Warum wird Pilar Miró angeklagt?', ['Wegen Beleidigung der Guardia Civil', 'Wegen Steuerbetrugs', 'Weil sie ohne Erlaubnis gedreht hat'], 'procesa a Pilar Miró por injurias a la Guardia Civil', '¿Por qué procesan a Pilar Miró?', ['Por injurias a la Guardia Civil', 'Por no pagar impuestos', 'Por rodar sin permiso']],
+         ['Wann kommt der Film in Spanien in die Kinos?', ['Im August 1981', 'Im Februar 1980', 'Gleich nach dem Dreh 1979'], 'en agosto de 1981 la película se estrena por fin en los cines', '¿Cuándo se estrena la película en España?', ['En agosto de 1981', 'En febrero de 1980', 'Justo después del rodaje, en 1979']]],
+      keep:[['Pasan más de cincuenta años.', 'Mehr als fünfzig Jahre vergehen.'], ['Y casi nada es verdad.', 'Und fast nichts davon ist wahr.']],
+      src:['Wikipedia (spanisch), „Crimen de Cuenca“ (Buch und Drehbuch von Lola Salvador, Verbot, Militärjustiz)', 'eldiario.es (Dreh im Sommer 1979 an den Originalschauplätzen)', 'Economist & Jurist, „Inicia el juicio contra Pilar Miró…“ (15.4.1980, letzte Zivilistin vor einem Militärgericht, Freispruch)', 'SensaCine (Drehorte; einziger verbotener Film der Demokratie; Kinostart 17.8.1981)'] }
   ] }
 ]
 };

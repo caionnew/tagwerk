@@ -2,16 +2,16 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 28. November 2026 (nach 24.84.0, Durchsicht vom 28.11.)
+Stand: 28. November 2026 (nach 24.87.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
 ## Lagebild
 
-- **Inhalte:** 529 schwedische und 719 spanische Sätze, davon 324 bzw. 444 auf B2, in 16 bzw. 20 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
+- **Inhalte:** 601 schwedische und 719 spanische Sätze, davon 396 bzw. 444 auf B2, in 16 bzw. 20 Themen; 23 bzw. 25 Lesetexte. Jeder Satz hat eine Erklärung. Die Grammatikthemen für B2/C1 sind vollständig (24.41 bis 24.43: Verbalperiphrasen, Subjuntivo im Satzgefüge, Pluralklassen, Modalpartikeln, Redewendungen).
 - **Übungen:** fast alles da. „Fehler finden“ ist seit 24.45 bis 24.48 eine echte Prüfaufgabe: Richtige Sätze sind dabei, Formfehler werden verbessert, es gibt sieben Fehlerarten je Sprache, und welche kommt, richtet sich nach deinen Fehlern.
 - **Prüfqualität bleibt das Wichtigste.** Jede falsche „Falsch“-Wertung kostet Zeit und Vertrauen. Generatoren (24.37) und Satzbank (24.38) sind durchgesehen; falsch bewertete Antworten meldest du direkt.
-- **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen. Schwedisch ist zuerst so weit: bei „Normal“ und einem Tagwerk am Tag rechnerisch Ende März 2027 (389 Sätze auf B1/B2, etwa 3 neue je Sprache und Tag), Spanisch Mitte Mai (545).
+- **Wenn die B2-Sätze aufgebraucht sind,** bleibt der Nachschub von Tatoeba, ohne Erklärung je Satz und ohne geprüfte Alternativen. Dann bringen neue kuratierte Satzblöcke mehr als neue Funktionen. Schwedisch ist zuerst so weit: bei „Normal“ und einem Tagwerk am Tag rechnerisch Ende April 2027 (461 Sätze auf B1/B2, nach Paket 7, etwa 3 neue je Sprache und Tag), Spanisch Mitte Mai (545).
 - **Browser-Tests** laufen in Chromium und Firefox, beide verbindlich. Firefox hat keine Spracherkennung; was darauf aufbaut, kommt bei dir nicht an.
 
 ## Fahrplan
@@ -24,7 +24,7 @@ Befund: kein Umbau nötig. Gewachsen sind Spanisch und die Prüfung; Schwedisch,
 
 | Punkt | Note | Stand |
 |---|---|---|
-| **Schwedisches Satzpaket vor den Kollokationen.** Schwedisch hat seit Paket 4 (24.59) keine neuen Sätze bekommen und geht zuerst die Sätze aus (siehe Lagebild). | A− | Paket 7 |
+| **Schwedisches Satzpaket vor den Kollokationen.** Schwedisch hat seit Paket 4 (24.59) keine neuen Sätze bekommen und geht zuerst die Sätze aus (siehe Lagebild). | A− | erledigt, 24.87.0 (Paket 7) |
 | **Wörterbuch leitet Verbformen ab, der Test prüft auch die Alternativen.** Erzeugt wurden Formen nur für 48 Verben in vier Zeiten, ohne Futur, Konditional und Subjuntivo auf -ra/-se; alles andere stand von Hand da. 170 schwedische und 209 spanische Wörter aus Alternativen und erzeugten Fassungen ließen sich nicht nachschlagen, obwohl sie in der Lösung erscheinen. | B+ | erledigt, 24.86.0 |
 | **Satzzeichen an einer Stelle.** Ein Dutzend leicht verschiedene Zeichenlisten in norm, tokens, altKey, wTokens und anderen; Gleiches wurde an verschiedenen Stellen verschieden behandelt. | B− | erledigt, 24.85.0 |
 | **Benannte Verwechslungen im Schwedischen** (en/ett-Endung, sin/hans, Verb an zweiter Stelle). Spanisch hat seit 24.62 sechs Erkennungen dazubekommen, Schwedisch keine. | B | Idee 4 |
@@ -46,20 +46,19 @@ Alle drei Schritte sind erledigt: Fehler und Einheitlichkeit 24.66.1, je eine St
 
 Schritt 3 fiel kleiner aus als gedacht. Mit zwei Sprachen verglichen (23.11.): Im Überblick wiederholte „Jahr für Jahr“ im ersten Jahr die Kopfkarte samt Tagwerken je Sprache; es steht jetzt erst ab dem zweiten Jahr da, der Überblick ist von 3,4 auf 3 Bildschirme kürzer. „Wann du übst“ bleibt eine eigene Karte: Die Verteilung über den Tag zeigt mehr als der Satz allein (in 24.69.0 kurz nur der Satz, auf deine Rückmeldung in 24.69.1 zurück). Der Sprach-Tab bleibt, wie er ist: „Stand der Sätze“ in die Kopfkarte zu ziehen sparte nur ein Zehntel Bildschirm und nähme den Balken zum nächsten Ziel (siehe „Geprüft und zurückgestellt“).
 
-### Inhalte: Satzpakete (ab 24.56; Pakete 1 bis 6 erledigt, 24.56 bis 24.60 und 24.84)
+### Inhalte: Satzpakete (ab 24.56; Pakete 1 bis 7 erledigt, 24.56 bis 24.60, 24.84 und 24.87)
 
 Befund vom 19.11. (`tools/vielfalt.js`, Häufigkeitslisten): Die Satzbank übt Grammatik mit schmalem Alltagswortschatz (590 Grundformen im Schwedischen, am häufigsten gå, komma, morgon). B2-Sätze hatten im Schnitt 7,8 Wörter, und je Thema reichten 12 bis 16 B2-Sätze bei „Fortgeschritten“ für gut eine Woche als Schwerpunkt. Darum je Thema neue B2-Sätze, länger und mit Wörtern, die der Satzbank fehlen.
 
 | Paket | Inhalt | Note | Stand |
 |---|---|---|---|
-| 7 | Schwedisch: neue B2-Sätze in sechs Themen, damit Schwedisch nicht vor Spanisch leerläuft (Durchsicht vom 28.11.) | A− | als Nächstes |
-| 8 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | |
+| 8 | Kollokationen als eigene Übung (fatta beslut, tomar una decisión), je Sprache mindestens 36 | B+ | als Nächstes |
 | 9 | Relativsätze (lo que, el que, cuyo; vars, vilket) | B+ / B | |
 
 So entsteht ein Paket:
 - **Wortschatz steuern:** Zielwörter aus Häufigkeitslisten (wordfreq, OpenSubtitles), Rang 1500 bis 8000, die der Satzbank fehlen, quer durch Arbeit, Gesellschaft, Gesundheit, Medien, Gefühle, Argumentieren. Die Listen dienen nur der Auswahl, in die App kommt nichts davon.
 - **Anregung, keine Übernahme:** Schwedische Sätze aus Common Voice (gemeinfrei, CC0) zeigen natürliche Muster; übernommen wird nichts wörtlich, viele stammen aus alten Romanen. Tatoeba, Korp und Wikipedia sind aus der Arbeitsumgebung nicht erreichbar.
-- **Messen:** `node tools/vielfalt.js` gegen den letzten Stand, erst nach dem Eintrag ins Wörterbuch (sonst zählt jede neue Verbform als neues Wort). Ziel: mindestens 40 % neue Inhaltswörter, Hilfsverben und Kopula nicht mitgezählt (Paket 1: 44 %, Paket 2: 42 %, Paket 4: 43 %, Paket 5: 41 %, nachdem 24 Sätze frischere Wörter bekamen; angepeilt war die Hälfte, Grammatiksätze brauchen viele Alltagsverben), im Schnitt mindestens 9 Wörter, kein Satzanfang öfter als dreimal. Die Ziele gelten für B2-Pakete; ein neues Thema beginnt bei A2 mit kurzen Sätzen und Grundwortschatz (Paket 3: 32 %, 8,3 Wörter; Paket 6: 33 %, die 24 B2-Sätze 39 %, 10,4 Wörter). In der Arbeitsumgebung ließ sich wordfreq zuletzt nicht installieren; Paket 6 wählte die Wörter darum ohne Liste, gemessen gegen die Satzbank. Ein Test hält die B2-Sätze dauerhaft abwechslungsreich (Anfänge, erste Person).
+- **Messen:** `node tools/vielfalt.js` gegen den letzten Stand, erst nach dem Eintrag ins Wörterbuch (sonst zählt jede neue Verbform als neues Wort). Ziel: mindestens 40 % neue Inhaltswörter, Hilfsverben und Kopula nicht mitgezählt (Paket 1: 44 %, Paket 2: 42 %, Paket 4: 43 %, Paket 5: 41 %, nachdem 24 Sätze frischere Wörter bekamen; angepeilt war die Hälfte, Grammatiksätze brauchen viele Alltagsverben), im Schnitt mindestens 9 Wörter, kein Satzanfang öfter als dreimal. Die Ziele gelten für B2-Pakete; ein neues Thema beginnt bei A2 mit kurzen Sätzen und Grundwortschatz (Paket 3: 32 %, 8,3 Wörter; Paket 6: 33 %, die 24 B2-Sätze 39 %, 10,4 Wörter). Paket 7 (72 schwedische B2-Sätze in sechs Themen): 40 %, 9,9 Wörter, nachdem 30 Sätze frischere Wörter bekamen; gemessen erst mit den abgeleiteten Verbformen (24.86), die vorher jede Form als neues Wort zählten. In der Arbeitsumgebung ließ sich wordfreq zuletzt nicht installieren; Paket 6 wählte die Wörter darum ohne Liste, gemessen gegen die Satzbank. Ein Test hält die B2-Sätze dauerhaft abwechslungsreich (Anfänge, erste Person).
 
 ### Danach
 

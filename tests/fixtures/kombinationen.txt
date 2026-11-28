@@ -89,6 +89,48 @@ Det var skönt att få höra att operationen hade gått bra trots allt.
 Till slut medgav han att han inte hade läst avtalet noggrant.
 Han erkände till slut att han inte hade läst avtalet noggrant.
 Till slut erkände han att han inte hade läst avtalet noggrant.
+# sv bisats | Försvaret hävdar att den misstänkte aldrig var på brottsplatsen.
+Att den misstänkta aldrig var på brottsplatsen hävdar försvaret.
+Att den misstänkta aldrig har varit på brottsplatsen hävdar försvaret.
+Att den misstänkte aldrig har varit på brottsplatsen hävdar försvaret.
+Försvaret påstår att den misstänkta aldrig var på brottsplatsen.
+Försvaret påstår att den misstänkta aldrig har varit på brottsplatsen.
+Försvaret hävdar att den misstänkta aldrig har varit på brottsplatsen.
+Försvaret påstår att den misstänkte aldrig har varit på brottsplatsen.
+# sv bisats | Läkaren menade att jag förmodligen inte behöver opereras.
+Läkaren sa att jag antagligen inte behöver opereras.
+Läkaren tyckte att jag antagligen inte behöver opereras.
+# sv bisats | Facket hotar med strejk om arbetsgivarna inte förbättrar sitt bud.
+Facket hotar med strejk ifall arbetsgivarna inte förbättrar sitt erbjudande.
+# sv bisats | Det stör mig att man nästan aldrig hittar en parkeringsplats vid sjukhuset.
+Att man nästan aldrig hittar någon parkeringsplats vid sjukhuset stör mig.
+Att man nästan aldrig hittar en parkering vid sjukhuset stör mig.
+Det irriterar mig att man nästan aldrig hittar någon parkeringsplats vid sjukhuset.
+Det irriterar mig att man nästan aldrig hittar en parkering vid sjukhuset.
+# sv bisats | Trots att företaget faktiskt går med vinst vill ledningen skära ner på personalen.
+Fast företaget faktiskt går med vinst vill ledningen dra ner på personalen.
+# sv bisats | Hon bytte bransch eftersom hon inte längre stod ut med jäktet på reklambyrån.
+Eftersom hon inte längre stod ut med stressen på reklambyrån bytte hon bransch.
+Hon har bytt bransch eftersom hon inte stod ut med jäktet på reklambyrån längre.
+Hon har bytt bransch eftersom hon inte stod ut med stressen på reklambyrån längre.
+Hon bytte bransch eftersom hon inte stod ut med stressen på reklambyrån längre.
+Hon har bytt bransch eftersom hon inte längre stod ut med stressen på reklambyrån.
+# sv bisats | Undersökningen visar att många unga knappt läser tidningar längre.
+Enkäten visar att många unga nästan inte läser tidningar längre.
+Enkäten visar att många ungdomar knappt läser tidningar längre.
+# sv bisats | Vet du varför vaktmästaren aldrig har lagat ventilationen?
+Vet du varför fastighetsskötaren aldrig lagade ventilationen?
+Vet du varför fastighetsskötaren aldrig har fixat ventilationen?
+# sv bisats | Det är fullt möjligt att löneförhandlingarna återigen spricker i höst.
+Det är mycket möjligt att löneförhandlingarna spricker igen i höst.
+Det är mycket möjligt att löneförhandlingarna återigen misslyckas i höst.
+# sv bisats | Chefen låtsades som om han inte alls hade hört kritiken.
+Chefen låtsades som att han inte hade hört kritiken alls.
+Chefen låtsades att han inte hade hört kritiken alls.
+# sv bisats | Om du inte betalar fakturan i tid tillkommer en påminnelseavgift.
+En påminnelseavgift tillkommer om du inte betalar räkningen i tid.
+Betalar du inte fakturan i tid får du betala en påminnelseavgift.
+Om du inte betalar räkningen i tid får du betala en påminnelseavgift.
 # sv inversion | Vanligtvis dricker jag inte kaffe.
 Normalt dricker jag inget kaffe.
 # sv inversion | Ikväll träffar jag honom inte.
@@ -133,6 +175,46 @@ Plötsligt släcktes alla lampor i hela huset på en gång.
 # sv inversion | Till skillnad från sin syster har Johan aldrig varit intresserad av politik.
 Johan har till skillnad från sin syster aldrig intresserat sig för politik.
 Johan har till skillnad från sin syster aldrig brytt sig om politik.
+# sv inversion | Trots det dåliga vädret kom över tusen personer till demonstrationen.
+Trots det dåliga vädret kom fler än tusen människor till demonstrationen.
+# sv inversion | Utan stödet från sin familj skulle hon aldrig ha klarat studierna.
+Studierna skulle hon aldrig ha klarat utan stöd från sin familj.
+Hon skulle aldrig ha klarat studierna utan stöd från sin familj.
+Utan stöd från sin familj hade hon aldrig klarat studierna.
+# sv inversion | I efterhand inser jag att jag borde ha förhandlat om lönen.
+Jag inser i efterhand att jag skulle ha förhandlat om lönen.
+Jag inser i efterhand att jag skulle ha förhandlat om min lön.
+Jag inser i efterhand att jag borde ha förhandlat om min lön.
+I efterhand förstår jag att jag skulle ha förhandlat om lönen.
+I efterhand förstår jag att jag skulle ha förhandlat om min lön.
+I efterhand förstår jag att jag borde ha förhandlat om min lön.
+I efterhand inser jag att jag skulle ha förhandlat om min lön.
+# sv inversion | I år har elpriserna i södra Sverige stigit kraftigare än väntat.
+Elpriserna i södra Sverige har i år stigit mer än väntat.
+# sv inversion | Efter mycket om och men har kommunfullmäktige till slut ändå godkänt detaljplanen.
+Kommunfullmäktige har efter mycket om och men till slut godkänt detaljplanen.
+# sv inversion | Utomlands saknar jag framför allt allemansrätten och tystnaden i skogen.
+När jag är utomlands saknar jag särskilt allemansrätten och tystnaden i skogen.
+När jag är utomlands saknar jag särskilt allemansrätten och lugnet i skogen.
+När jag är utomlands saknar jag framför allt allemansrätten och lugnet i skogen.
+Utomlands saknar jag särskilt allemansrätten och lugnet i skogen.
+# sv inversion | Knappt hade konserten tagit slut förrän det började ösa ner.
+Konserten hade knappt tagit slut förrän det började ösregna.
+Konserten hade knappt tagit slut innan det började ösregna.
+Konserten hade knappt tagit slut innan det började ösa ner.
+Knappt var konserten slut förrän det började ösregna.
+Knappt var konserten slut innan det började ösregna.
+Knappt var konserten slut innan det började ösa ner.
+Knappt hade konserten tagit slut innan det började ösregna.
+# sv inversion | Som tur var upptäckte grannen röken innan elden spred sig.
+Grannen upptäckte som tur var röken innan branden spred sig.
+Lyckligtvis upptäckte grannen röken innan branden spred sig.
+Som tur var märkte grannen röken innan branden spred sig.
+# sv inversion | Inför valet i september pratar kandidaterna knappt om äldreomsorgen.
+Inför valet i september talar kandidaterna nästan inte om äldreomsorgen.
+Inför valet i september talar kandidaterna nästan inte om äldrevården.
+Inför valet i september talar kandidaterna knappt om äldrevården.
+Inför valet i september pratar kandidaterna nästan inte om äldrevården.
 # sv tempus | När jag kom fram hade tåget redan gått.
 När jag kom dit hade tåget redan åkt.
 # sv tempus | Sedan jag flyttade hit har jag aldrig upplevt en så kall vinter.
@@ -196,6 +278,50 @@ Vi har inte fått något svar från kommunen ännu, trots att vi skickade in ans
 Vi har fortfarande inte fått något svar från kommunen, trots att vi skickade in ansökan i mars.
 # sv tempus | Jag hade aldrig sett norrsken innan vi åkte till Abisko.
 Jag hade aldrig sett något norrsken förrän vi åkte till Abisko.
+# sv tempus | Sedan vi skaffade en lådcykel har vi knappt använt bilen.
+Vi har knappt använt bilen sedan vi köpte en lådcykel.
+Vi har knappt använt bilen sedan vi skaffade lådcykel.
+Sedan vi köpte en lådcykel har vi nästan inte använt bilen.
+Sedan vi skaffade lådcykel har vi nästan inte använt bilen.
+# sv tempus | Taket hade redan rasat när brandkåren kom fram.
+När räddningstjänsten kom fram hade taket redan rasat.
+Taket hade redan rasat när räddningstjänsten kom dit.
+Taket hade redan störtat in när räddningstjänsten kom dit.
+Taket hade redan störtat in när brandkåren kom dit.
+Taket hade redan störtat in när räddningstjänsten kom fram.
+# sv tempus | Affären där jag extraknäckte som student stängde förra året.
+Förra året stängde affären där jag jobbade extra som student.
+Butiken där jag jobbade extra som student stängde förra året.
+Butiken där jag jobbade extra som student lades ner förra året.
+Butiken där jag extraknäckte som student lades ner förra året.
+Affären där jag jobbade extra som student lades ner förra året.
+# sv tempus | Vi har bott i det här kvarteret i femton år nu.
+Vi har bott i den här stadsdelen i femton år.
+Vi har bott i det här området i femton år.
+# sv tempus | Konserthuset invigdes 1926 och renoverades senast för tjugo år sedan.
+Konserthuset invigdes år 1926 och rustades senast upp för tjugo år sedan.
+# sv tempus | Hon har aldrig varit så nervös som när hon höll sin första presentation för styrelsen.
+Aldrig har hon varit så nervös som när hon höll sitt första föredrag för styrelsen.
+Aldrig har hon varit så nervös som när hon presenterade för styrelsen första gången.
+# sv tempus | Sedan gruvan hade lagts ner flyttade många unga från orten.
+Efter att gruvan hade stängts flyttade många unga från orten.
+När gruvan hade stängts flyttade många unga från orten.
+# sv tempus | Matpriserna har stigit så mycket i år att allt fler handlar på lågpriskedjor.
+Matpriserna har ökat så kraftigt i år att allt fler handlar på lågpriskedjor.
+Matpriserna har gått upp så kraftigt i år att allt fler handlar på lågprisbutiker.
+# sv tempus | Som barn tillbringade han varje sommar hos sina morföräldrar i Dalarna.
+När han var barn tillbringade han varje sommar hos sina farföräldrar i Dalarna.
+När han var barn var han varje sommar hos sina farföräldrar i Dalarna.
+Som barn var han varje sommar hos sina farföräldrar i Dalarna.
+När han var barn var han varje sommar hos sina morföräldrar i Dalarna.
+# sv tempus | Har du hört att fritidsgården i området har stängts?
+Har du hört att fritidsgården i kvarteret har lagts ner?
+Har du hört att fritidsgården i kvarteret har stängt?
+# sv tempus | Vi hade precis ätit när strömmen plötsligt gick.
+Vi hade just ätit klart när strömmen plötsligt gick.
+Vi hade just ätit klart när det plötsligt blev strömavbrott.
+Vi hade just ätit när det plötsligt blev strömavbrott.
+Vi hade precis ätit klart när det plötsligt blev strömavbrott.
 # sv partikel | Kan du ta reda på när affären öppnar?
 Kan du kolla när butiken öppnar?
 # sv partikel | Jag står inte ut med det här oljudet längre.
@@ -229,6 +355,52 @@ Han brukar sätta på radion direkt när han vaknar.
 # sv partikel | Vi har bestämt oss för att sätta igång med renoveringen i vår.
 Vi har beslutat att börja med renoveringen i vår.
 Vi har bestämt att börja med renoveringen i vår.
+# sv partikel | Mötet ställdes in eftersom ordföranden hade blivit sjuk.
+Eftersom ordföranden blev sjuk ställdes mötet in.
+Mötet blev inställt eftersom ordföranden blev sjuk.
+Sammanträdet ställdes in eftersom ordföranden blev sjuk.
+# sv partikel | Kan du hämta upp mig hos tandläkaren klockan halv fyra?
+Kan du hämta mig vid tandläkaren klockan halv fyra?
+Kan du hämta mig vid tandläkaren halv fyra?
+Kan du hämta mig hos tandläkaren halv fyra?
+Kan du hämta upp mig vid tandläkaren halv fyra?
+Kan du plocka upp mig vid tandläkaren halv fyra?
+Kan du plocka upp mig vid tandläkaren klockan halv fyra?
+Kan du plocka upp mig hos tandläkaren halv fyra?
+# sv partikel | Han har lagt av med att röka sedan hans pappa fick en hjärtinfarkt.
+Han har slutat röka sedan hans pappa fick hjärtinfarkt.
+Han har lagt av med rökningen sedan hans pappa fick hjärtinfarkt.
+# sv partikel | Polisen försöker ta reda på vem som anlade branden.
+Polisen försöker lista ut vem som har anlagt branden.
+Polisen försöker lista ut vem som startade branden.
+# sv partikel | Företaget sa upp nästan hälften av personalen förra året.
+Företaget sade upp nästan halva personalen förra året.
+Företaget sade upp nästan hälften av de anställda förra året.
+# sv partikel | Hon kommer inte alls överens med sin nya kollega.
+Hon drar inte alls jämnt med sin nya arbetskamrat.
+# sv partikel | Kom ihåg att stänga av spisen innan du går.
+Innan du går, kom ihåg att slå av spisen.
+Glöm inte att slå av spisen innan du går.
+Glöm inte att slå av spisen innan du går hemifrån.
+Glöm inte att stänga av spisen innan du går hemifrån.
+Kom ihåg att slå av spisen innan du går hemifrån.
+# sv partikel | Försäkringsbolaget vägrar att stå för skadan.
+Försäkringen vägrar stå för skadan.
+Försäkringen vägrar att betala för skadan.
+Försäkringen vägrar att ersätta skadan.
+# sv partikel | Försäkringskassan har fortfarande inte betalat ut sjukpenningen.
+Försäkringskassan har inte betalat sjukpenningen än.
+Försäkringskassan har ännu inte betalat sjukpenningen.
+# sv partikel | Hon tog emot erbjudandet utan att tänka efter särskilt länge.
+Hon tackade ja till erbjudandet utan att fundera särskilt länge.
+Hon tackade ja till erbjudandet utan att tänka efter så länge.
+# sv partikel | Vi fick skjuta upp resan eftersom min dotter hade fått feber.
+Eftersom min dotter fick feber fick vi skjuta upp resan.
+Eftersom dottern hade fått feber fick vi skjuta upp resan.
+Vi var tvungna att skjuta upp resan eftersom min dotter fick feber.
+Vi var tvungna att skjuta upp resan eftersom dottern hade fått feber.
+# sv partikel | Innan du skickar in ansökan måste du fylla i alla fält.
+Innan du skickar iväg ansökan behöver du fylla i alla fält.
 # sv modal | Jag sa ju det!
 Jag har ju sagt det till dig!
 # sv modal | Det kunde du väl ha sagt!
@@ -260,6 +432,36 @@ Hyresgästerna klagade över att hyrorna hade höjts kraftigt.
 Hyresgästerna klagade på att hyrorna hade höjts mycket.
 # sv sin | Ingen vill ta ansvar för sina misstag.
 Ingen vill ta ansvaret för sina fel.
+# sv sin | Lena och hennes bror har ärvt sina föräldrars sommarstuga.
+Lena och hennes bror ärvde sina föräldrars sommarhus.
+# sv sin | Varje deltagare måste ta med sin egen sovsäck.
+Alla deltagare måste ta med sig sin egen sovsäck.
+# sv sin | Hon frågade sin handledare om hans forskargrupp också skulle delta i konferensen.
+Hon frågade sin handledare om även hans forskargrupp skulle vara med på konferensen.
+# sv sin | Företaget måste informera sina kunder om dataläckan.
+Bolaget måste informera sina kunder om dataintrånget.
+Företaget är skyldigt att informera sina kunder om dataintrånget.
+# sv sin | Föräldrarna är oroliga eftersom deras son inte kom hem i natt.
+Föräldrarna oroar sig eftersom deras son inte har kommit hem i natt.
+Föräldrarna är oroliga för att deras son inte har kommit hem i natt.
+# sv sin | Konstnären har inte ställt ut sina tavlor på flera år.
+Konstnären har inte ställt ut sina målningar på många år.
+# sv sin | Många studenter finansierar sina studier med ett extrajobb.
+Många studenter betalar sina studier genom att extraknäcka.
+Många studenter betalar sina studier med ett deltidsjobb.
+# sv sin | Staden har lagt om hela sitt bussnät.
+Kommunen har lagt om sitt bussnät helt.
+Kommunen har gjort om sitt bussnät helt.
+Staden har gjort om sitt bussnät helt.
+Kommunen har gjort om hela sitt bussnät.
+# sv sin | Anna berättade att hennes sambo har blivit befordrad till avdelningschef.
+Anna har berättat att hennes sambo har befordrats till avdelningschef.
+Anna berättade för mig att hennes sambo har befordrats till avdelningschef.
+# sv sin | Spelarna firade segern med sina fans på torget.
+Spelarna firade segern tillsammans med sina supportrar på torget.
+Spelarna firade vinsten med sina supportrar på torget.
+# sv sin | Läraren och hennes kollegor har protesterat mot nedskärningarna.
+Läraren och hennes kollegor protesterade mot besparingarna.
 # sv tid | Vi träffades för tre år sedan.
 Vi lärde känna varandra för tre år sen.
 Vi träffade varandra för tre år sen.
@@ -313,6 +515,42 @@ Patienterna får inte äta någonting efter midnatt före operationen.
 Vi missade tåget, så vi var tvungna att ta taxi.
 # sv framtid | Det kan dröja innan vi får besked från försäkringsbolaget.
 Det kan ta tid innan vi får besked från försäkringen.
+# sv framtid | Enligt väderprognosen kommer det att snöa kraftigt i fjällen i morgon.
+Enligt prognosen kommer det snöa kraftigt i fjällen i morgon.
+Enligt prognosen kommer det snöa mycket i fjällen i morgon.
+Enligt väderprognosen kommer det snöa mycket i fjällen i morgon.
+Enligt prognosen kommer det att snöa mycket i fjällen i morgon.
+Enligt väderprognosen ska det snöa mycket i fjällen i morgon.
+# sv framtid | Du behöver inte svara direkt, tänk på saken i lugn och ro.
+Du behöver inte svara med en gång, tänk igenom det i lugn och ro.
+# sv framtid | I sommar ska vi hyra en husbil och köra längs norrlandskusten.
+I sommar ska vi hyra husbil och åka längs norrlandskusten.
+# sv framtid | Byggarbetet vid den nya stationen ska börja först nästa vår.
+Bygget av den nya stationen ska inte börja förrän nästa vår.
+Bygget av den nya stationen ska starta först nästa vår.
+# sv framtid | Du kunde väl ha varnat mig för att bron var avstängd.
+Du hade kunnat varna mig om att bron var avstängd.
+Du kunde ju ha varnat mig om att bron var avstängd.
+# sv framtid | Om räntorna fortsätter att stiga kommer många bostadsrättsföreningar att behöva höja avgifterna.
+Om räntorna fortsätter stiga kommer många bostadsrättsföreningar att tvingas höja avgifterna.
+Om räntorna fortsätter stiga kommer många bostadsrättsföreningar att tvingas höja månadsavgifterna.
+Om räntorna fortsätter att stiga kommer många bostadsrättsföreningar att tvingas höja månadsavgifterna.
+Om räntorna fortsätter stiga kommer många bostadsrättsföreningar behöva höja avgifterna.
+Om räntorna fortsätter stiga kommer många bostadsrättsföreningar behöva höja månadsavgifterna.
+Om räntorna fortsätter stiga kommer många bostadsrättsföreningar att behöva höja månadsavgifterna.
+Om räntorna fortsätter att stiga kommer många bostadsrättsföreningar behöva höja månadsavgifterna.
+# sv framtid | Från och med nästa vecka måste alla besökare visa legitimation.
+Alla besökare måste visa legitimation från nästa vecka.
+Från nästa vecka ska alla besökare visa legitimation.
+# sv framtid | Hon hade aldrig trott att hon skulle vänja sig så snabbt vid klimatet.
+Hon skulle aldrig ha trott att hon skulle vänja sig vid klimatet så snabbt.
+Hon skulle aldrig ha trott att hon skulle vänja sig så fort vid klimatet.
+# sv framtid | Elektrikern skulle egentligen komma i förrgår, men han har fortfarande inte hört av sig.
+Elektrikern skulle egentligen ha kommit i förrgår, men han har ännu inte hört av sig.
+Elektrikern skulle ha kommit i förrgår, men han har ännu inte hört av sig.
+# sv framtid | Regeringen borde inte skjuta upp pensionsreformen längre.
+Regeringen bör inte vänta längre med pensionsreformen.
+Regeringen bör inte dra ut på pensionsreformen längre.
 # sv passiv | Det förväntas att priserna fortsätter att stiga.
 Man förväntar sig att priserna fortsätter stiga.
 # sv passiv | Boken har översatts till över trettio språk.

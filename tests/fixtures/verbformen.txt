@@ -1,6 +1,7 @@
 sv akta (Gruppe 1): aktar, aktade, aktat; aktad, aktat, aktade; aktas, aktades
 sv aktivera (Gruppe 1): aktiverar, aktiverade, aktiverat; aktiverad, aktiverat, aktiverade; aktiveras, aktiverades
 sv ana (Gruppe 1): anar, anade, anat; anad, anat, anade; anas, anades
+sv anlägga (unregelmäßig): anlägger, anla/anlade, anlagt; anlagd, anlagt, anlagda; anläggs, anlades
 sv anse (unregelmäßig): anser, ansåg, ansett; ansedd, ansett, ansedda; anses, ansågs
 sv anta (unregelmäßig): antar, antog, antagit; antagen, antaget, antagna; antas, antogs
 sv använda (Gruppe 2): använder, använde, använt; använd, använt, använda; används, användes
@@ -10,13 +11,16 @@ sv avgöra (unregelmäßig): avgör, avgjorde, avgjort; avgjord, avgjort, avgjor
 sv avskaffa (Gruppe 1): avskaffar, avskaffade, avskaffat; avskaffad, avskaffat, avskaffade; avskaffas, avskaffades
 sv avslöja (Gruppe 1): avslöjar, avslöjade, avslöjat; avslöjad, avslöjat, avslöjade; avslöjas, avslöjades
 sv bada (Gruppe 1): badar, badade, badat; badad, badat, badade; badas, badades
+sv baka (Gruppe 1): bakar, bakade, bakat; bakad, bakat, bakade; bakas, bakades
 sv be (unregelmäßig): ber, bad, bett
 sv bedöma (Gruppe 2): bedömer, bedömde, bedömt; bedömd, bedömt, bedömda; bedöms, bedömdes
 sv befara (Gruppe 1): befarar, befarade, befarat; befarad, befarat, befarade; befaras, befarades
+sv befordra (Gruppe 1): befordrar, befordrade, befordrat; befordrad, befordrat, befordrade; befordras, befordrades
 sv begripa (unregelmäßig): begriper, begrep, begripit; begripen, begripet, begripna; begrips, begreps
 sv begära (Gruppe 2): begär, begärde, begärt; begärd, begärt, begärda; begärs, begärdes
 sv behålla (unregelmäßig): behåller, behöll, behållit; behållen, behållet, behållna; behålls, behölls
 sv behöva (Gruppe 2): behöver, behövde, behövt; behövd, behövt, behövda; behövs, behövdes
+sv beklaga (Gruppe 1): beklagar, beklagade, beklagat; beklagad, beklagat, beklagade; beklagas, beklagades
 sv belägga (unregelmäßig): belägger, bela/belade, belagt; belagd, belagt, belagda; beläggs, belades
 sv berätta (Gruppe 1): berättar, berättade, berättat; berättad, berättat, berättade; berättas, berättades
 sv beskriva (unregelmäßig): beskriver, beskrev, beskrivit; beskriven, beskrivet, beskrivna; beskrivs, beskrevs
@@ -53,12 +57,15 @@ sv dricka (unregelmäßig): dricker, drack, druckit; drucken, drucket, druckna; 
 sv driva (unregelmäßig): driver, drev, drivit; driven, drivet, drivna; drivs, drevs
 sv dröja (Gruppe 2): dröjer, dröjde, dröjt
 sv dua (Gruppe 1): duar, duade, duat; duad, duat, duade; duas, duades
+sv dyka (unregelmäßig): dyker, dök/dykte, dykt
 sv döda (Gruppe 1): dödar, dödade, dödat; dödad, dödat, dödade; dödas, dödades
 sv emigrera (Gruppe 1): emigrerar, emigrerade, emigrerat
 sv erkänna (unregelmäßig): erkänner, erkände, erkänt; erkänd, erkänt, erkända; erkänns, erkändes
 sv ersätta (unregelmäßig): ersätter, ersatte, ersatt; ersatt, ersatt, ersatta; ersätts, ersattes
+sv extraknäcka (Gruppe 2): extraknäcker, extraknäckte, extraknäckt; extraknäckt, extraknäckt, extraknäckta; extraknäcks, extraknäcktes
 sv falla (unregelmäßig): faller, föll, fallit
 sv fatta (Gruppe 1): fattar, fattade, fattat; fattad, fattat, fattade; fattas, fattades
+sv finansiera (Gruppe 1): finansierar, finansierade, finansierat; finansierad, finansierat, finansierade; finansieras, finansierades
 sv finna (unregelmäßig): finner, fann, funnit; funnen, funnet, funna; finns, fanns
 sv finnas (unregelmäßig): finns, fanns, funnits
 sv fira (Gruppe 1): firar, firade, firat; firad, firat, firade; firas, firades
@@ -86,6 +93,7 @@ sv förbjuda (unregelmäßig): förbjuder, förbjöd, förbjudit; förbjuden, f�
 sv förbättra (Gruppe 1): förbättrar, förbättrade, förbättrat; förbättrad, förbättrat, förbättrade; förbättras, förbättrades
 sv föreslå (unregelmäßig): föreslår, föreslog, föreslagit; föreslagen, föreslaget, föreslagna; föreslås, föreslogs
 sv förfölja (Gruppe 2): förföljer, förföljde, förföljt; förföljd, förföljt, förföljda; förföljs, förföljdes
+sv förhandla (Gruppe 1): förhandlar, förhandlade, förhandlat; förhandlad, förhandlat, förhandlade; förhandlas, förhandlades
 sv förorda (Gruppe 1): förordar, förordade, förordat; förordad, förordat, förordade; förordas, förordades
 sv förse (unregelmäßig): förser, försåg, försett; försedd, försett, försedda; förses, försågs
 sv förstå (unregelmäßig): förstår, förstod, förstått; förstådd, förstått, förstådda; förstås, förstods
@@ -117,6 +125,7 @@ sv hylla (Gruppe 1): hyllar, hyllade, hyllat; hyllad, hyllat, hyllade; hyllas, h
 sv hyra (Gruppe 2): hyr, hyrde, hyrt; hyrd, hyrt, hyrda; hyrs, hyrdes
 sv hålla (unregelmäßig): håller, höll, hållit; hållen, hållet, hållna; hålls, hölls
 sv hälsa (Gruppe 1): hälsar, hälsade, hälsat; hälsad, hälsat, hälsade; hälsas, hälsades
+sv hämta (Gruppe 1): hämtar, hämtade, hämtat; hämtad, hämtat, hämtade; hämtas, hämtades
 sv hända (unregelmäßig): händer, hände, hänt
 sv härstamma (Gruppe 1): härstammar, härstammade, härstammat
 sv häva (Gruppe 2): häver, hävde, hävt; hävd, hävt, hävda; hävs, hävdes
@@ -125,12 +134,16 @@ sv höja (Gruppe 2): höjer, höjde, höjt; höjd, höjt, höjda; höjs, höjdes
 sv höra (Gruppe 2): hör, hörde, hört; hörd, hört, hörda; hörs, hördes
 sv ifrågasätta (unregelmäßig): ifrågasätter, ifrågasatte, ifrågasatt; ifrågasatt, ifrågasatt, ifrågasatta; ifrågasätts, ifrågasattes
 sv improvisera (Gruppe 1): improviserar, improviserade, improviserat
+sv informera (Gruppe 1): informerar, informerade, informerat; informerad, informerat, informerade; informeras, informerades
 sv införa (Gruppe 2): inför, införde, infört; införd, infört, införda; införs, infördes
 sv innebära (unregelmäßig): innebär, innebar, inneburit; inneburen, inneburet, inneburna; innebärs, innebars
 sv innehålla (unregelmäßig): innehåller, innehöll, innehållit; innehållen, innehållet, innehållna; innehålls, innehölls
 sv inrätta (Gruppe 1): inrättar, inrättade, inrättat; inrättad, inrättat, inrättade; inrättas, inrättades
+sv inse (unregelmäßig): inser, insåg, insett; insedd, insett, insedda; inses, insågs
 sv intressera (Gruppe 1): intresserar, intresserade, intresserat; intresserad, intresserat, intresserade; intresseras, intresserades
 sv invandra (Gruppe 1): invandrar, invandrade, invandrat
+sv inviga (Gruppe 2): inviger, invigde, invigt; invigd, invigt, invigda; invigs, invigdes
+sv irritera (Gruppe 1): irriterar, irriterade, irriterat; irriterad, irriterat, irriterade; irriteras, irriterades
 sv jaga (Gruppe 1): jagar, jagade, jagat; jagad, jagat, jagade; jagas, jagades
 sv jobba (Gruppe 1): jobbar, jobbade, jobbat
 sv jäsa (Gruppe 2): jäser, jäste, jäst; jäst, jäst, jästa; jäses, jästes
@@ -144,6 +157,7 @@ sv kora (Gruppe 1): korar, korade, korat; korad, korat, korade; koras, korades
 sv kritisera (Gruppe 1): kritiserar, kritiserade, kritiserat; kritiserad, kritiserat, kritiserade; kritiseras, kritiserades
 sv krypa (unregelmäßig): kryper, kröp, krupit
 sv kunna (unregelmäßig): kan, kunde, kunnat
+sv källsortera (Gruppe 1): källsorterar, källsorterade, källsorterat; källsorterad, källsorterat, källsorterade; källsorteras, källsorterades
 sv känna (unregelmäßig): känner, kände, känt; känd, känt, kända; känns, kändes
 sv köa (Gruppe 1): köar, köade, köat
 sv köpa (Gruppe 2): köper, köpte, köpt; köpt, köpt, köpta; köps, köptes
@@ -165,6 +179,7 @@ sv lägga (unregelmäßig): lägger, la/lade, lagt; lagd, lagt, lagda; läggs, l
 sv lämna (Gruppe 1): lämnar, lämnade, lämnat; lämnad, lämnat, lämnade; lämnas, lämnades
 sv lära (Gruppe 2): lär, lärde, lärt; lärd, lärt, lärda; lärs, lärdes
 sv läsa (Gruppe 2): läser, läste, läst; läst, läst, lästa; läses, lästes
+sv lösa (Gruppe 2): löser, löste, löst; löst, löst, lösta; löses, löstes
 sv meddela (Gruppe 1): meddelar, meddelade, meddelat; meddelad, meddelat, meddelade; meddelas, meddelades
 sv mena (Gruppe 1): menar, menade, menat; menad, menat, menade; menas, menades
 sv minnas (unregelmäßig): minns, mindes, mints
@@ -180,6 +195,8 @@ sv nedvärdera (Gruppe 1): nedvärderar, nedvärderade, nedvärderat; nedvärder
 sv nå (Gruppe 3): når, nådde, nått; nådd, nått, nådda; nås, nåddes
 sv nämna (Gruppe 2): nämner, nämnde, nämnt; nämnd, nämnt, nämnda; nämns, nämndes
 sv ordna (Gruppe 1): ordnar, ordnade, ordnat; ordnad, ordnat, ordnade; ordnas, ordnades
+sv oroa (Gruppe 1): oroar, oroade, oroat; oroad, oroat, oroade; oroas, oroades
+sv parkera (Gruppe 1): parkerar, parkerade, parkerat; parkerad, parkerat, parkerade; parkeras, parkerades
 sv passa (Gruppe 1): passar, passade, passat; passad, passat, passade; passas, passades
 sv peka (Gruppe 1): pekar, pekade, pekat; pekad, pekat, pekade; pekas, pekades
 sv pendla (Gruppe 1): pendlar, pendlade, pendlat
@@ -193,6 +210,7 @@ sv pynta (Gruppe 1): pyntar, pyntade, pyntat; pyntad, pyntat, pyntade; pyntas, p
 sv pågå (unregelmäßig): pågår, pågick, pågått
 sv påstå (unregelmäßig): påstår, påstod, påstått; påstådd, påstått, påstådda; påstås, påstods
 sv ramla (Gruppe 1): ramlar, ramlade, ramlat
+sv rasa (Gruppe 1): rasar, rasade, rasat
 sv redovisa (Gruppe 1): redovisar, redovisade, redovisat; redovisad, redovisat, redovisade; redovisas, redovisades
 sv regna (Gruppe 1): regnar, regnade, regnat
 sv rekommendera (Gruppe 1): rekommenderar, rekommenderade, rekommenderat; rekommenderad, rekommenderat, rekommenderade; rekommenderas, rekommenderades
@@ -220,6 +238,7 @@ sv simma (Gruppe 1): simmar, simmade, simmat; simmad, simmat, simmade; simmas, s
 sv sjunga (unregelmäßig): sjunger, sjöng, sjungit; sjungen, sjunget, sjungna; sjungs, sjöngs
 sv sjunka (unregelmäßig): sjunker, sjönk, sjunkit
 sv skada (Gruppe 1): skadar, skadade, skadat; skadad, skadat, skadade; skadas, skadades
+sv skaffa (Gruppe 1): skaffar, skaffade, skaffat; skaffad, skaffat, skaffade; skaffas, skaffades
 sv ske (Gruppe 3): sker, skedde, skett
 sv skicka (Gruppe 1): skickar, skickade, skickat; skickad, skickat, skickade; skickas, skickades
 sv skilja (unregelmäßig): skiljer, skilde, skilt; skild, skilt, skilda; skiljs, skildes
@@ -236,11 +255,14 @@ sv släcka (Gruppe 2): släcker, släckte, släckt; släckt, släckt, släckta; 
 sv slänga (Gruppe 2): slänger, slängde, slängt; slängd, slängt, slängda; slängs, slängdes
 sv smaka (Gruppe 1): smakar, smakade, smakat; smakad, smakat, smakade; smakas, smakades
 sv smälta (Gruppe 2): smälter, smälte, smält; smält, smält, smälta; smälts, smältes
+sv snöa (Gruppe 1): snöar, snöade, snöat
+sv sopsortera (Gruppe 1): sopsorterar, sopsorterade, sopsorterat; sopsorterad, sopsorterat, sopsorterade; sopsorteras, sopsorterades
 sv sortera (Gruppe 1): sorterar, sorterade, sorterat; sorterad, sorterat, sorterade; sorteras, sorterades
 sv sova (unregelmäßig): sover, sov, sovit
 sv spara (Gruppe 1): sparar, sparade, sparat; sparad, sparat, sparade; sparas, sparades
 sv spela (Gruppe 1): spelar, spelade, spelat; spelad, spelat, spelade; spelas, spelades
 sv spricka (unregelmäßig): spricker, sprack, spruckit
+sv sprida (unregelmäßig): sprider, spred/spridde, spritt; spridd, spritt, spridda; sprids, spriddes
 sv springa (unregelmäßig): springer, sprang, sprungit
 sv spöregna (Gruppe 1): spöregnar, spöregnade, spöregnat
 sv stanna (Gruppe 1): stannar, stannade, stannat; stannad, stannat, stannade; stannas, stannades
@@ -256,6 +278,7 @@ sv ställa (Gruppe 2): ställer, ställde, ställt; ställd, ställt, ställda; 
 sv stämma (Gruppe 2): stämmer, stämde, stämt; stämd, stämt, stämda; stäms, stämdes
 sv stänga (Gruppe 2): stänger, stängde, stängt; stängd, stängt, stängda; stängs, stängdes
 sv störa (Gruppe 2): stör, störde, stört; störd, stört, störda; störs, stördes
+sv störta (Gruppe 1): störtar, störtade, störtat; störtad, störtat, störtade; störtas, störtades
 sv svara (Gruppe 1): svarar, svarade, svarat; svarad, svarat, svarade; svaras, svarades
 sv svänga (Gruppe 2): svänger, svängde, svängt; svängd, svängt, svängda; svängs, svängdes
 sv säga (unregelmäßig): säger, sa/sade, sagt; sagd, sagt, sagda; sägs, sades
@@ -266,7 +289,9 @@ sv sätta (unregelmäßig): sätter, satte, satt; satt, satt, satta; sätts, sat
 sv sörja (Gruppe 2): sörjer, sörjde, sörjt; sörjd, sörjt, sörjda; sörjs, sörjdes
 sv ta (unregelmäßig): tar, tog, tagit; tagen, taget, tagna; tas, togs
 sv tala (Gruppe 1): talar, talade, talat; talad, talat, talade; talas, talades
+sv testa (Gruppe 1): testar, testade, testat; testad, testat, testade; testas, testades
 sv tillbringa (Gruppe 1): tillbringar, tillbringade, tillbringat; tillbringad, tillbringat, tillbringade; tillbringas, tillbringades
+sv tillkomma (unregelmäßig): tillkommer, tillkom, tillkommit
 sv titta (Gruppe 1): tittar, tittade, tittat; tittad, tittat, tittade; tittas, tittades
 sv tjäna (Gruppe 1): tjänar, tjänade, tjänat; tjänad, tjänat, tjänade; tjänas, tjänades
 sv trilla (Gruppe 1): trillar, trillade, trillat
@@ -300,6 +325,7 @@ sv väcka (Gruppe 2): väcker, väckte, väckt; väckt, väckt, väckta; väcks,
 sv vägra (Gruppe 1): vägrar, vägrade, vägrat; vägrad, vägrat, vägrade; vägras, vägrades
 sv välja (unregelmäßig): väljer, valde, valt; vald, valt, valda; väljs, valdes
 sv vända (Gruppe 2): vänder, vände, vänt; vänd, vänt, vända; vänds, vändes
+sv vänja (unregelmäßig): vänjer, vande, vant; van, vant, vana; vänjs, vandes
 sv vänta (Gruppe 1): väntar, väntade, väntat; väntad, väntat, väntade; väntas, väntades
 sv växa (unregelmäßig): växer, växte, vuxit/växt
 sv åka (Gruppe 2): åker, åkte, åkt; åkt, åkt, åkta; åks, åktes
@@ -308,6 +334,7 @@ sv återuppbygga (Gruppe 2): återuppbygger, återuppbyggde, återuppbyggt; åte
 sv äga (Gruppe 2): äger, ägde, ägt; ägd, ägt, ägda; ägs, ägdes
 sv älska (Gruppe 1): älskar, älskade, älskat; älskad, älskat, älskade; älskas, älskades
 sv ändra (Gruppe 1): ändrar, ändrade, ändrat; ändrad, ändrat, ändrade; ändras, ändrades
+sv ärva (Gruppe 2): ärver, ärvde, ärvt; ärvd, ärvt, ärvda; ärvs, ärvdes
 sv äta (unregelmäßig): äter, åt, ätit; äten, ätet, ätna; äts, åts
 sv äventyra (Gruppe 1): äventyrar, äventyrade, äventyrat; äventyrad, äventyrat, äventyrade; äventyras, äventyrades
 sv öka (Gruppe 1): ökar, ökade, ökat; ökad, ökat, ökade; ökas, ökades
@@ -317,6 +344,7 @@ sv ösa (Gruppe 2): öser, öste, öst; öst, öst, östa; öses, östes
 sv ösregna (Gruppe 1): ösregnar, ösregnade, ösregnat
 sv överlåta (unregelmäßig): överlåter, överlät, överlåtit
 sv överraska (Gruppe 1): överraskar, överraskade, överraskat; överraskad, överraskat, överraskade; överraskas, överraskades
+sv översvämma (Gruppe 1): översvämmar, översvämmade, översvämmat; översvämmad, översvämmat, översvämmade; översvämmas, översvämmades
 sv översätta (unregelmäßig): översätter, översatte, översatt; översatt, översatt, översatta; översätts, översattes
 es abrir: abro abre abrimos, abrí abrió abrieron, abra abramos, abriré, abriera, abierto, abriendo, abre abrid
 es abuchear: abucheo abuchea abucheamos, abucheé abucheó abuchearon, abuchee abucheemos, abuchearé, abucheara, abucheado, abucheando, abuchea abuchead

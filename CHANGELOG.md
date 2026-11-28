@@ -2,6 +2,16 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.87.0
+**Paket 7: 72 neue schwedische B2-Sätze in sechs Themen (Durchsicht vom 28.11.).**
+- **Warum:** Schwedisch hatte seit Paket 4 (24.59) keine neuen Sätze bekommen und wäre zuerst leergelaufen, rechnerisch Ende März 2027. Mit 461 statt 389 Sätzen auf B1/B2 reicht es jetzt bis Ende April, Spanisch bis Mitte Mai.
+- **Je 12 Sätze** in Wortstellung im Nebensatz, Inversion & „inte“, Präteritum oder Perfekt, Partikelverben, sin/sitt/sina und Zukunft & Modalverben. Sachgebiete gemischt: Arbeit und Gewerkschaft, Wohnen, Gesundheit und Versicherung, Medien, Politik und Gemeinde, Polizei und Gericht, Natur (allemansrätt, Fjäll). Im Schnitt 9,9 Wörter, 40 % neue Inhaltswörter (150 neue Grundformen), nur ein Satz beginnt mit „jag“.
+- **Für die Wortkästchen** (Nebensatz, Inversion, Partikelverben) stehen alle richtigen Reihenfolgen derselben Wörter in den Alternativen. Alle 174 neuen erzeugten Fassungen gelesen.
+- **Fehler finden** bekommt vier neue Aufgaben aus „sin/sitt/sina“ (Lena och sin bror, Läraren och sina kollegor, att sin sambo, om sin forskargrupp).
+- **Wörterbuch:** 233 schwedische Einträge, fast nur Grundformen und Nomen mit bestimmter Form; die Verbformen leitet es seit 24.86 selbst ab (28 Verben mehr, darunter die starken sprida, dyka, anlägga, inse). Eine Wendung als Bedeutung (Müll trennen) zählt jetzt auch als Verb.
+- Doku: IDEEN.md (Lagebild, Paket 7 erledigt, Kollokationen als Nächstes), CONTENT.md (Lehren aus Paket 7).
+- Speicherstand unverändert.
+
 ## 24.86.0
 **Das Wörterbuch leitet Verbformen ab, der Wörterbuch-Test prüft auch Alternativen und erzeugte Fassungen (Durchsicht vom 28.11.).**
 - **Vorher** bildete das Wörterbuch Formen nur für die 48 spanischen Verben der Übungsformen, in vier Zeiten, und für die 22 schwedischen Verben aus „Präteritum oder Perfekt“; alles andere stand von Hand da oder fehlte. 170 schwedische und 209 spanische Wörter aus Alternativen und erzeugten Fassungen ließen sich nicht nachschlagen, obwohl sie nach dem Prüfen unter „Auch richtig“ stehen.

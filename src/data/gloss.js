@@ -581,7 +581,7 @@ stannar|stanna|bleibt; hält an
 stavar|stava|buchstabiert, schreibt
 stavas|stava|wird geschrieben
 stockholm||Stockholm
-stress||Stress
+stress||Stress (en-Wort)
 stäng|stänga|schließ!; stäng av = schalte aus
 stängas|stänga|geschlossen werden
 svarar|svara|antwortet
@@ -1464,7 +1464,7 @@ gruva||Grube, Bergwerk (en-Wort)
 marken|mark|der Boden
 ovanför||oberhalb, über
 sprickor|spricka|Risse (Plural)
-spricka||Riss (en-Wort); reißen, platzen
+spricka||reißen, platzen, scheitern (Verhandlungen); Riss (en-Wort)
 kryper|krypa|kriechen (Präsens)
 krypa||kriechen
 närmare|nära|näher (Komparativ)
@@ -2716,7 +2716,7 @@ besked||Bescheid, Auskunft
 beställt|beställa|bestellt (Supinum)
 biblioteket|bibliotek|die Bibliothek
 bricka||Tablett (Servierbrett)
-bygge||Bau, Bauvorhaben
+bygge||Bau, Bauvorhaben, Baustelle (ett-Wort)
 bytt|byta|gewechselt (Supinum)
 dans||Tanz
 diskuterat|diskutera|diskutiert (Supinum)
@@ -3023,6 +3023,239 @@ ständigt||ständig, dauernd
 varann||einander
 varsågod||bitte (beim Anbieten); varsågod och kom in = komm bitte herein
 vore||wäre (Konjunktiv von vara)
+beklaga||bedauern; beklaga sig = sich beklagen
+irritera||ärgern, irritieren
+källsortera||Müll trennen
+tillkomma||hinzukommen (Gebühr, Kosten)
+extraknäcka||nebenher jobben
+hämta||holen; hämta upp = abholen
+parkera||parken
+ärva||erben
+informera||informieren
+oroa||beunruhigen; oroa sig = sich Sorgen machen
+finansiera||finanzieren
+vänja||gewöhnen; vänja sig vid = sich gewöhnen an
+dyka||tauchen; dyka upp = auftauchen
+översvämma||überschwemmen
+lösa||lösen (Verb); auch Plural von lös = lose, frei: springa lösa = frei herumlaufen
+fack||Fach; Gewerkschaft (ett-Wort)
+facket|fack|die Gewerkschaft; das Fach
+strejk||Streik (en-Wort)
+arbetsgivare||Arbeitgeber (en-Wort)
+arbetsgivarna|arbetsgivare|die Arbeitgeber
+bud||Angebot, Gebot (ett-Wort); Bote
+erbjudande||Angebot (ett-Wort)
+parkeringsplats||Parkplatz (en-Wort)
+sjukhus||Krankenhaus (ett-Wort)
+sjukhuset|sjukhus|das Krankenhaus
+överhuvudtaget||überhaupt
+alls||überhaupt; inte alls = gar nicht
+huvud||Kopf (ett-Wort); över huvud taget = überhaupt
+jäkt||Hektik, Hetze (ett-Wort)
+jäktet|jäkt|die Hektik
+stressen|stress|der Stress
+undersökning||Untersuchung; Umfrage (en-Wort)
+undersökningen|undersökning|die Untersuchung, die Umfrage
+unga|ung|jung (Plural und bestimmte Form); många unga = viele junge Leute
+tidning||Zeitung (en-Wort)
+tidningar|tidning|Zeitungen
+enkät||Umfrage, Fragebogen (en-Wort)
+enkäten|enkät|die Umfrage
+sopor||Müll, Abfall (Plural); sortera sopor = Müll trennen
+löneförhandling||Lohnverhandlung (en-Wort)
+löneförhandlingarna|löneförhandling|die Lohnverhandlungen
+återigen||wieder, noch einmal
+kritiken|kritik|die Kritik
+faktura||Rechnung (en-Wort)
+fakturan|faktura|die Rechnung
+påminnelseavgift||Mahngebühr (en-Wort)
+demonstration||Demonstration (en-Wort)
+demonstrationen|demonstration|die Demonstration
+stödet|stöd|die Unterstützung
+studier||Studium (Plural)
+studierna|studier|das Studium
+familjs|familj|der Familie (Genitiv)
+vägkant||Straßenrand (en-Wort)
+vägkanten|vägkant|der Straßenrand
+bärgningsbil||Abschleppwagen (en-Wort)
+bärgningsbilen|bärgningsbil|der Abschleppwagen
+bärgare||Abschleppdienst (en-Wort)
+bärgaren|bärgare|der Abschleppdienst
+giltig||gültig
+giltigt|giltig|gültig (bei ett-Wörtern)
+kommunfullmäktige||Gemeinderat, Stadtrat (Parlament der Gemeinde)
+mammas|mamma|Mamas (Genitiv)
+källare||Keller (en-Wort)
+källaren|källare|der Keller
+kvarteret|kvarter|das Viertel
+stadsdel||Stadtteil (en-Wort)
+stadsdelen|stadsdel|der Stadtteil
+nervös||nervös
+presentation||Präsentation, Vortrag (en-Wort)
+föredrag||Vortrag (ett-Wort)
+arbetslös||arbeitslos
+arbetslösa|arbetslös|arbeitslos (Plural)
+sushi||Sushi (en-Wort)
+morföräldrar||Großeltern (Eltern der Mutter)
+farföräldrar||Großeltern (Eltern des Vaters)
+dalarna||Dalarna (Landschaft in Mittelschweden)
+ström||Strom (en-Wort)
+strömmen|ström|der Strom; strömmen gick = der Strom fiel aus
+strömavbrott||Stromausfall (ett-Wort)
+ordförande||Vorsitzender (en-Wort)
+ordföranden|ordförande|der Vorsitzende
+sammanträde||Sitzung (ett-Wort)
+sammanträdet|sammanträde|die Sitzung
+hjärtinfarkt||Herzinfarkt (en-Wort)
+rökning||Rauchen (en-Wort)
+rökningen|rökning|das Rauchen
+sist||zuletzt; als Letzter
+hälft||Hälfte (en-Wort)
+hälften|hälft|die Hälfte
+halva|halv|halb (bestimmte Form); halva personalen = die halbe Belegschaft
+arbetskamrat||Arbeitskollege (en-Wort)
+spis||Herd (en-Wort)
+spisen|spis|der Herd
+skadan|skada|der Schaden
+prov||Prüfung, Klassenarbeit; Probe (ett-Wort)
+proven|prov|die Klassenarbeiten, die Prüfungen
+skrivning||Klassenarbeit, Klausur (en-Wort)
+skrivningarna|skrivning|die Klassenarbeiten
+feber||Fieber (en-Wort)
+dottern|dotter|die Tochter
+fält||Feld (ett-Wort, Plural gleich)
+grannen|granne|der Nachbar
+trottoar||Gehweg, Bürgersteig (en-Wort)
+trottoaren|trottoar|der Gehweg
+föräldrars|föräldrar|der Eltern (Genitiv)
+sommarstuga||Sommerhaus, Ferienhaus (en-Wort)
+sommarhus||Sommerhaus (ett-Wort)
+laptop||Laptop (en-Wort)
+dataläcka||Datenleck, Datenpanne (en-Wort)
+dataläckan|dataläcka|die Datenpanne
+dataintrång||Hackerangriff, unbefugter Zugriff auf Daten (ett-Wort)
+dataintrånget|dataintrång|der Hackerangriff
+skyldigt|skyldig|schuldig; vara skyldig att = verpflichtet sein (bei ett-Wörtern)
+oroliga|orolig|besorgt (Plural)
+åratal||Jahre; på åratal = seit Jahren
+extrajobb||Nebenjob (ett-Wort)
+deltidsjobb||Teilzeitjob (ett-Wort)
+bussnät||Busnetz (ett-Wort)
+spelare||Spieler (en-Wort)
+spelarna|spelare|die Spieler
+segern|seger|der Sieg
+fans||Fans (Plural)
+vinsten|vinst|der Gewinn, der Sieg
+supportrar|supporter|Fans, Anhänger
+nedskärning||Kürzung (en-Wort)
+nedskärningarna|nedskärning|die Kürzungen
+besparing||Einsparung (en-Wort)
+besparingarna|besparing|die Einsparungen
+väderprognos||Wettervorhersage (en-Wort)
+väderprognosen|väderprognos|die Wettervorhersage
+sak||Sache, Ding (en-Wort)
+saken|sak|die Sache
+lugn||ruhig; Ruhe; i lugn och ro = in aller Ruhe
+ro||Ruhe; i lugn och ro = in aller Ruhe
+bokning||Buchung, Reservierung (en-Wort)
+byggarbete||Bauarbeiten (ett-Wort)
+byggarbetet|byggarbete|die Bauarbeiten
+bygget|bygge|der Bau
+misstänkte|misstänkt|der Verdächtige (bestimmte Form, männlich)
+misstänkta|misstänkt|der, die Verdächtige (bestimmte Form); verdächtig (Plural)
+brottsplats||Tatort (en-Wort)
+brottsplatsen|brottsplats|der Tatort
+tillverkare||Hersteller (en-Wort)
+tillverkaren|tillverkare|der Hersteller
+testa||testen, ausprobieren
+produkt||Produkt (en-Wort)
+produkten|produkt|das Produkt
+bransch||Branche (en-Wort)
+reklambyrå||Werbeagentur (en-Wort)
+reklambyrån|reklambyrå|die Werbeagentur
+vaktmästare||Hausmeister (en-Wort)
+vaktmästaren|vaktmästare|der Hausmeister
+fastighetsskötare||Hausmeister (en-Wort)
+fastighetsskötaren|fastighetsskötare|der Hausmeister
+ventilation||Lüftung (en-Wort)
+ventilationen|ventilation|die Lüftung
+elcykel||E-Bike, Elektrofahrrad (en-Wort)
+inse||einsehen, erkennen
+förhandla||verhandeln
+elpris||Strompreis (ett-Wort)
+elpriserna|elpris|die Strompreise
+södra||südlich, Süd- (södra Sverige = Südschweden)
+kraftigare|kraftig|stärker (Komparativ)
+detaljplan||Bebauungsplan (en-Wort)
+detaljplanen|detaljplan|der Bebauungsplan
+tystnad||Stille, Schweigen (en-Wort)
+tystnaden|tystnad|die Stille
+lugnet|lugn|die Ruhe
+rök||Rauch (en-Wort)
+röken|rök|der Rauch
+elden|eld|das Feuer
+branden|brand|der Brand
+sprida||verbreiten; sprida sig = sich ausbreiten
+kandidat||Kandidat (en-Wort)
+kandidaterna|kandidat|die Kandidaten
+äldreomsorg||Altenpflege (en-Wort)
+äldreomsorgen|äldreomsorg|die Altenpflege
+äldrevård||Altenpflege (en-Wort)
+äldrevården|äldrevård|die Altenpflege
+skaffa||anschaffen, sich besorgen
+lådcykel||Lastenrad (en-Wort)
+brandkår||Feuerwehr (en-Wort)
+brandkåren|brandkår|die Feuerwehr
+rasa||einstürzen
+räddningstjänst||Rettungsdienst, Feuerwehr (en-Wort)
+räddningstjänsten|räddningstjänst|der Rettungsdienst, die Feuerwehr
+störta||stürzen; störta in = einstürzen
+konserthus||Konzerthaus (ett-Wort)
+konserthuset|konserthus|das Konzerthaus
+inviga||einweihen, eröffnen
+ort||Ort, Ortschaft (en-Wort)
+orten|ort|der Ort
+matpris||Lebensmittelpreis (ett-Wort)
+matpriserna|matpris|die Lebensmittelpreise
+lågpriskedja||Discounter, Billigkette (en-Wort)
+lågpriskedjor|lågpriskedja|Discounter, Billigketten
+lågprisbutik||Discounter, Billigladen (en-Wort)
+lågprisbutiker|lågprisbutik|Discounter, Billigläden
+fritidsgård||Jugendzentrum, Jugendtreff (en-Wort)
+fritidsgården|fritidsgård|das Jugendzentrum
+anlägga||anlegen; anlägga en brand = einen Brand legen
+handledare||Betreuer (Studium), Ausbilder (en-Wort)
+forskargrupp||Forschungsgruppe (en-Wort)
+konferensen|konferens|die Konferenz
+konstnären|konstnär|der Künstler
+tavla||Bild, Gemälde; Tafel (en-Wort)
+tavlor|tavla|Bilder, Gemälde
+målning||Gemälde, Malerei (en-Wort)
+målningar|målning|Gemälde
+befordra||befördern (im Beruf)
+avdelningschef||Abteilungsleiter (en-Wort)
+husbil||Wohnmobil (en-Wort)
+norrlandskust||Küste Norrlands (en-Wort)
+norrlandskusten|norrlandskust|die Küste Norrlands
+bostadsrättsförening||Wohnungsgenossenschaft, Eigentümergemeinschaft (en-Wort)
+bostadsrättsföreningar|bostadsrättsförening|Wohnungsgenossenschaften
+avgift||Gebühr, Beitrag (en-Wort)
+avgifterna|avgift|die Gebühren
+månadsavgift||Monatsgebühr, Hausgeld (en-Wort)
+månadsavgifterna|månadsavgift|die Monatsgebühren
+elektriker||Elektriker (en-Wort)
+elektrikern|elektriker|der Elektriker
+pensionsreform||Rentenreform (en-Wort)
+pensionsreformen|pensionsreform|die Rentenreform
+surdegsbröd||Sauerteigbrot (ett-Wort)
+baka||backen
+försäkringskassa||Sozialversicherungskasse (en-Wort)
+försäkringskassan|försäkringskassa|die Sozialversicherung (Försäkringskassan, schwedische Behörde)
+sjukpenning||Krankengeld (en-Wort)
+sjukpenningen|sjukpenning|das Krankengeld
+avstängd||gesperrt; abgeschaltet
+snöa||schneien
+allra||aller- (verstärkt den Superlativ); för allra första gången = zum allerersten Mal
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)

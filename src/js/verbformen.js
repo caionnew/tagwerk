@@ -174,16 +174,16 @@ const SV_STRONG = {
   le:'ler log lett -', be:'ber bad bett -', slippa:'slipper slapp sluppit -', sticka:'sticker stack stuckit stucken', spricka:'spricker sprack spruckit -',
   hugga:'hugger högg huggit huggen', slita:'sliter slet slitit sliten', skrika:'skriker skrek skrikit -', fara:'far for farit -', växa:'växer växte vuxit/växt -', hända:'händer hände hänt -',
   sälja:'säljer sålde sålt såld', välja:'väljer valde valt vald', dölja:'döljer dolde dolt dold', heta:'heter hette hetat -', känna:'känner kände känt känd',
-  försvinna:'försvinner försvann försvunnit -', glömma:'glömmer glömde glömt glömd', kliva:'kliver klev klivit -', tåla:'tål tålde tålt -',
+  försvinna:'försvinner försvann försvunnit -', glömma:'glömmer glömde glömt glömd', kliva:'kliver klev klivit -', tåla:'tål tålde tålt -', dyka:'dyker dök/dykte dykt -', sprida:'sprider spred/spridde spritt spridd',
   skilja:'skiljer skilde skilt skild', glädja:'gläder gladde glatt -', stödja:'stöder stödde stött stödd', svälja:'sväljer svalde svalt -', vänja:'vänjer vande vant van',
   // Deponens: nur Aktivformen auf -s
   lyckas:'lyckas lyckades lyckats -', hoppas:'hoppas hoppades hoppats -', låtsas:'låtsas låtsades låtsats -', andas:'andas andades andats -',
   kallas:'kallas kallades kallats -', trivas:'trivs trivdes trivts -', minnas:'minns mindes mints -', finnas:'finns fanns funnits -', synas:'syns syntes synts -',
   kännas:'känns kändes känts -', skämmas:'skäms skämdes skämts -', födas:'föds föddes fötts -', ses:'ses sågs setts -', umgås:'umgås umgicks umgåtts -'
 };
-const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra'.split(' '));
+const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga'.split(' '));
 const SV_INTRANS = new Set(('vakna regna ösregna spöregna ramla trilla pendla emigrera invandra härstamma hamna skratta funka köa tälta forsa rusa protestera ' +
-  'improvisera samarbeta förvärvsarbeta jobba vandra dröja gälla lysa betyda bo ske bry').split(' '));
+  'improvisera samarbeta förvärvsarbeta jobba vandra dröja gälla lysa betyda bo ske bry snöa rasa').split(' '));
 const SV_G3 = new Set('bo tro nå ske fly må gro sy klä spå bry'.split(' '));
 const SV_NO_COMPOUND = new Set('vara ha kunna vilja böra veta heta be le dö fara'.split(' '));
 const SV_PREFIX = 'an av be bi bort del efter er fort fram för före god ifråga in inne med miss ned ner om på samman till tillbaka under undan upp ut åter över'.split(' ');
@@ -205,8 +205,8 @@ function svConj(inf, g){
     const en = add(part), base = inf.slice(st.pre.length), short = /^[^aeiouyåäö]*[aeiouyåäö]$/.test(base);
     const stem = (short || !/a$/.test(base) ? base : base.slice(0, -1)).replace(/mm$/, 'm');
     const longest = pastL.reduce((a, b) => (b.length > a.length ? b : a));
-    // Partizip: skriven, skrivet, skrivna; vunnen, vunnet, vunna; sagd, sagt, sagda; satt, satt, satta
-    const part3 = !en ? [] : /en$/.test(en) ? [en, en.slice(0, -1) + 't', en.slice(0, -2) + (/n$/.test(en.slice(0, -2)) ? 'a' : 'na')] : /d$/.test(en) ? [en, supL[0], en + 'a'] : [en, en, en + 'a'];
+    // Partizip: skriven, skrivet, skrivna; vunnen, vunnet, vunna; sagd, sagt, sagda; satt, satt, satta; van, vant, vana
+    const part3 = !en ? [] : /en$/.test(en) ? [en, en.slice(0, -1) + 't', en.slice(0, -2) + (/n$/.test(en.slice(0, -2)) ? 'a' : 'na')] : /d$/.test(en) ? [en, supL[0], en + 'a'] : [en, /t$/.test(en) ? en : en + 't', en + 'a'];
     return { pres:add(pres), past:pastL, sup:supL[0], sups:supL, part:part3,
       pass:en ? [add(stem) + (/s$/.test(stem) && !short ? 'es' : 's'), inf + 's'] : [],
       passPast:en ? [longest + 's'] : [], passSup:en ? supL[0] + 's' : '', impv:add(short || !/a$/.test(base) ? base : base.slice(0, -1)) };
@@ -244,12 +244,12 @@ function svGroup(inf, forms){
 }
 // Ein schwedischer Eintrag ist ein Verb, wenn die Bedeutung eines ist: klein geschrieben und auf -n (gehen, sich freuen, tun)
 // Ein schwedischer Eintrag ist ein Verb, wenn eine seiner Bedeutungen (durch ; getrennt) eines ist: klein geschrieben und auf -en, -ern,
-// -eln (gehen, sich freuen) oder tun, sein. Nicht: Artikel davor (der Nutzen), Wendungen mit = (ta reda på = herausfinden), Adverbien
+// -eln (gehen, sich freuen), eine Wendung darauf (Müll trennen) oder tun, sein. Nicht: Artikel davor (der Nutzen), Wendungen mit = (ta reda på = herausfinden), Adverbien
 // (gern, inzwischen). Gibt die Bedeutung als Verb zurück (fråga = Frage; fragen → fragen), sonst ''.
 const DE_NOT_VERB = new Set('gern sofern inzwischen einzeln gestern morgen oben unten innen außen neben zwischen eben selten seitdem trotzdem ebenfalls zusammen'.split(' '));
 function svVerbMeaning(k, de){
   if (!/^[a-zåäö]+$/.test(k)) return '';
   const seg = String(de).split(';').map(x => x.split('(')[0].trim()).find(x => !x.includes('=') && !/^(der|die|das|ein|eine) /.test(x) &&
-    x.split(',').some(y => !DE_NOT_VERB.has(y.trim()) && /^[a-zäöüß].*(en|ern|eln)$|(^|\s)(tun|sein)$/.test(y.trim())));
+    x.split(',').some(y => !DE_NOT_VERB.has(y.trim()) && /^[a-zäöüß].*(en|ern|eln)$|\s[a-zäöüß]+(en|ern|eln)$|(^|\s)(tun|sein)$/.test(y.trim())));
   return seg || '';
 }

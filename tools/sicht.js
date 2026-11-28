@@ -7,13 +7,14 @@
 //   node tools/sicht.js --vs origin/main        dazu Vergleich mit origin/main
 //   node tools/sicht.js --nur heute,aufgabe     nur diese Ansichten
 //   node tools/sicht.js --ganz                  ganze Seite statt nur Bildschirmhöhe
+//   node tools/sicht.js --niveau fort           alle Ansichten mit diesem Niveau (grund, mittel, fort)
 // Eigenes Chromium: CHROMIUM_PATH=/pfad/zu/chrome. Zufall ist im Browser festgelegt, damit beide Stände dasselbe zeigen.
 const path = require('path'), fs = require('fs'), os = require('os'), { execFileSync } = require('child_process');
 const { chromium } = require('@playwright/test');
 const { freshDB, richDB, longDB, klarDB, topicItems, answerOnly, answerWrong, fakeVoice, speechWav, fakeMicArgs, hash } = require('../tests/e2e/helpers.js');
 const ROOT = path.join(__dirname, '..'), OUT = path.join(ROOT, 'sicht');
 const arg = name => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
-const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz');
+const VS = arg('--vs'), ONLY = arg('--nur'), FULL = process.argv.includes('--ganz'), NIV = arg('--niveau');
 const SIZES = [[390, 844], [411, 923]], SCHEMES = ['light', 'dark'];
 
 const pad = n => String(n).padStart(2, '0'), now = new Date();
@@ -142,7 +143,7 @@ async function tour(browser, html, dir, label){
     const ctx = await browser.newContext({ viewport:{ width:w, height:h }, deviceScaleFactor:2, colorScheme:scheme, reducedMotion:'reduce' });
     await ctx.addInitScript(SEED_RANDOM);
     await ctx.addInitScript(fakeVoice);
-    await ctx.addInitScript(v => { if (!sessionStorage.getItem('s')) { sessionStorage.setItem('s', '1'); localStorage.setItem('tagwerk-offline-v1', v); } }, JSON.stringify(db()));
+    await ctx.addInitScript(v => { if (!sessionStorage.getItem('s')) { sessionStorage.setItem('s', '1'); localStorage.setItem('tagwerk-offline-v1', v); } }, JSON.stringify((d => { if (NIV) d.settings = Object.assign({}, d.settings, { niveau:NIV }); return d; })(db())));
     const page = await ctx.newPage();
     page.setDefaultTimeout(5000);
     try {

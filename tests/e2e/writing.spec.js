@@ -38,3 +38,27 @@ test('Wörter zum Einbauen: fünf Grundformen, „Andere Wörter“ tauscht sie 
   expect(after.filter(w => before.includes(w))).toEqual([]);
   await expect(page.locator('#wtext')).toHaveValue('Jag skriver något.');
 });
+// Seit 24.95.0: bei „Fortgeschritten“ Aufgabe und Anweisung in der Zielsprache, Wörter antippbar; „Auf Deutsch“ stellt die deutsche
+// Fassung darunter, ohne den angefangenen Text zu verlieren
+test('Schreibaufgabe bei „Fortgeschritten“: zielsprachig, Wort nachschlagbar, „Auf Deutsch“ behält den Text', async ({ page }) => {
+  const db = richDB('es'); db.settings.lang = 'es'; db.settings.niveau = 'fort';
+  await seed(page, db);
+  await page.goto(APP);
+  await page.click('[data-a=tab][data-v=extra]');
+  await page.click('[data-a=write]');
+  await expect(page.locator('.kicker .kick-tl')).toHaveText('Escribe de 4 a 6 frases en español');
+  await expect(page.locator('.de.wq')).toHaveAttribute('lang', 'es');
+  await expect(page.locator('.wq-de')).toHaveCount(0);
+  await page.fill('#wtext', 'Ayer fui al mercado.');
+  await page.click('.de.wq [data-a=lookup] >> nth=1');
+  await expect(page.locator('.pop')).toBeVisible();
+  await page.click('[data-a=popclose]');
+  await page.click('.vocab [data-a=kickde]');
+  await expect(page.locator('.wq-de')).toBeVisible();
+  await expect(page.locator('.kicker')).toHaveText('Schreib 4 bis 6 Sätze auf Spanisch');
+  await expect(page.locator('.de.wq')).toBeVisible();
+  await expect(page.locator('#wtext')).toHaveValue('Ayer fui al mercado.');
+  await page.click('[data-a=wnew]');
+  await expect(page.locator('.wq-de')).toHaveCount(0);
+  await expect(page.locator('.kicker .kick-tl')).toBeVisible();
+});

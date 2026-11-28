@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.95.0
+**Bei „Fortgeschritten“ die ganze Aufgabe in der Zielsprache; Ergebnis im Kopf des Rundenendes.**
+- **Ergebnis am Rundenende:** „7 von 12 auf Anhieb richtig.“ steht jetzt im Kopf unter dem Zuruf, in derselben Textspalte wie „Tagwerk erledigt“, und nicht mehr unter der Etappe an der Seitenkante. Der Zuruf antwortet auf genau diese Zahl. Danach folgen die Leiste je Aufgabe und die Etappe. Ohne beantwortete Aufgabe bleibt es beim großen Titel.
+- **Urteil nach dem Prüfen** bei „Fortgeschritten“: Rätt, Nästan rätt, Fel, Lösning; Correcto, Casi correcto, Incorrecto, Solución; Treffer in Folge „3 i rad“, „3 seguidas“. Die Farbe trägt die Bedeutung, das Deutsche steht im title. „Andere Norm“ bleibt deutsch. Ein Tipp auf die Anweisung zeigt auch das Urteil deutsch.
+- **Schreibaufgabe** bei „Fortgeschritten“: alle 44 Aufgaben in beiden Sprachen („Vad äter och dricker du till frukost, och har det alltid varit så?“, „¿Qué harías si te tocara la lotería?“), Wörter antippbar, ¿ hängt vor der Kante. „Auf Deutsch“ stellt die deutsche Fassung darunter, die zielsprachige bleibt als Wortvorrat stehen; der angefangene Text bleibt. Anweisung „Skriv 4–6 meningar på svenska“, „Escribe de 4 a 6 frases en español“. Entwürfe und gespeicherte Texte behalten ihre Aufgabe (das Deutsche bleibt Schlüssel).
+- **Bonus am Rundenende:** „Skriv en egen mening med …“, „Escribe una frase propia con …“.
+- Wörterbuch: 41 neue Einträge (frukost, humör, missöde, hittegodsavdelningen, recension, infancia, percance, reseña, objetos perdidos …), Wendungen bei lär, stället, cuenta, habla, marcado, tocar, dejar, hábito.
+- Sichtprüfung: `npm run sicht -- --niveau fort` zeigt alle Ansichten mit diesem Niveau.
+- Tests: Urteil je Niveau und Sprache, alle Schreibaufgaben übersetzt und nachschlagbar, Ansicht mit und ohne Deutsch, „Auf Deutsch“ im Browser behält den Text, Ergebnis im Kopf in einer Spalte mit dem Titel.
+- Doku: ARCHITECTURE.md, IDEEN.md, CLAUDE.md, README.md. Speicherstand unverändert.
+
 ## 24.94.0
 **¡ und ¿ hängen vor der Kante; Durchsicht: was in die Zielsprache gehört.**
 - **Ausrichtung:** Beginnt eine große Zeile mit ¡ oder ¿, steht das Zeichen links vor der Kante, und die Buchstaben fluchten mit der Zeile darüber oder darunter, wie Anführungszeichen im Satz. Vorher stand „¡Poco a poco!“ 9 px rechts von „Tagwerk erledigt“, „¿Qué tal?“ 13 px rechts vom Datum (Noto Serif). Gilt für Gruß, Zuruf, Hörrunde und Titel der Lesetexte, nicht für Fließtext und Aufgaben. Die Breite wird in der Schrift des Geräts gemessen; das Zeichen bleibt im antippbaren Wort.

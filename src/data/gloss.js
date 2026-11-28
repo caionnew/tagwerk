@@ -341,7 +341,7 @@ sabbatsår||Sabbatjahr
 skyndar|skynda|eilt; skynda sig = sich beeilen
 missa||verpassen
 sista|sist|letzte; sista bussen = der letzte Bus
-lär|lära|dürfte, soll wohl (Vermutung); auch: lehren
+lär|lära|dürfte, soll wohl (Vermutung); auch: lehren; lär sig = lernt (lära sig = lernen)
 varmare|varm|wärmer
 lagen|lag|das Gesetz
 antogs|anta|wurde angenommen (anta = annehmen)
@@ -1805,7 +1805,7 @@ förbud||Verbot (ett-Wort)
 föll|falla|fallen (Präteritum); scheitern
 falla||fallen
 procent||Prozent
-stället|ställe|die Stelle; i stället = stattdessen
+stället|ställe|die Stelle, der Ort; i stället = stattdessen; stället där du bor = der Ort, wo du wohnst
 fortsatte|fortsätta|fortsetzen, weitermachen (Präteritum)
 fortsätta||fortsetzen, weitermachen
 motboken|motbok|das Alkoholbuch
@@ -3458,6 +3458,29 @@ framåt||vorwärts; det går framåt = es geht voran
 okej||okay, in Ordnung
 kämpa||kämpfen
 kämpat|kämpa|gekämpft (Supinum); bra kämpat! = gut gekämpft!
+lotto||Lotto (ett-Wort); vinna på lotto = im Lotto gewinnen
+serie||Serie (en-Wort), auch Fernsehserie
+vardag||Alltag; Werktag (en-Wort); i vardagen = im Alltag
+vardagen|vardag|der Alltag (bestimmte Form); i vardagen = im Alltag
+favoritplats||Lieblingsort (en-Wort)
+missöde||Missgeschick (ett-Wort); vara med om ett missöde = ein Missgeschick erleben
+favoriträtt||Lieblingsgericht (en-Wort)
+humör||Laune (ett-Wort); på dåligt humör = schlecht gelaunt
+sådant|sådan|solches (bei ett-Wörtern); i sådant väder = bei solchem Wetter
+konsert||Konzert (en-Wort)
+match||Spiel, Match (en-Wort)
+förändras||sich verändern
+förändrats|förändras|sich verändert (Supinum)
+arbetsdag||Arbeitstag (en-Wort)
+hittegodsavdelning||Fundbüro (en-Wort)
+hittegodsavdelningen|hittegodsavdelning|das Fundbüro (bestimmte Form)
+foto||Foto (ett-Wort)
+osynlig||unsichtbar
+frukost||Frühstück (en-Wort); till frukost = zum Frühstück
+packa||packen
+årstid||Jahreszeit (en-Wort)
+bäst|bra|am besten; tycka bäst om = am liebsten mögen
+recension||Rezension, Besprechung (en-Wort)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -4016,7 +4039,7 @@ contestar||antworten
 correo||Post; correo electrónico = E-Mail
 creo|creer|ich glaube
 cuando||wenn, als
-cuenta||Rechnung; Konto; darse cuenta = merken
+cuenta||Rechnung; Konto; darse cuenta = merken; ¡cuenta! = erzähl! (contar)
 cómo||wie
 de||von, aus
 deberías|deber|du solltest
@@ -4098,7 +4121,7 @@ gusta|gustar|gefällt
 gustan|gustar|gefallen
 gustaría|gustar|me gustaría = ich hätte gern
 ha|haber|hat (Hilfsverb)
-habla|hablar|spricht; se habla = man spricht
+habla|hablar|spricht; se habla = man spricht; habla de … = erzähl von … (Imperativ, tú)
 hace|hacer|macht; hace frío = es ist kalt; hace dos semanas = vor zwei Wochen
 haciendo|hacer|machend
 haciéndolo|hacer|es machend
@@ -6010,7 +6033,7 @@ kilo||Kilo
 frente||frente a = gegenüber, im Vergleich zu; Front; Stirn
 tereré||Tereré: kalt aufgegossener Mate (Paraguay)
 quedar||bleiben; übrig bleiben; sich verabreden
-dejar||lassen; verlassen; dejar de = aufhören zu
+dejar||lassen; verlassen; dejar de = aufhören zu; dejar un hábito = eine Gewohnheit ablegen
 depender||abhängen; depender de = abhängen von
 creer||glauben
 recordar||sich erinnern an; erinnern an
@@ -6145,7 +6168,7 @@ mandamos|mandar|wir schicken
 mandato||Amtszeit, Mandat
 mango||Griff, Stiel; auch: Mango
 mantenerlo|mantener|ihn unterhalten, erhalten
-marcado|marcar|markiert (Partizip)
+marcado|marcar|markiert (Partizip); un libro que te haya marcado = ein Buch, das dich geprägt hat
 marinar||marinieren
 marinas|marino|Meeres-; tortugas marinas = Meeresschildkröten
 marisco||Meeresfrüchte
@@ -6575,7 +6598,7 @@ sentir||fühlen; lo siento = es tut mir leid
 sentirse||sich fühlen
 solucionar||lösen
 sorprender||überraschen
-tocar||berühren; spielen (Instrument); anklopfen; me toca = ich bin dran
+tocar||berühren; spielen (Instrument); anklopfen; me toca = ich bin dran; te toca la lotería = du gewinnst im Lotto
 adobo||Marinade; en adobo = mariniert
 afuera||draußen (Lateinamerika)
 apto||geeignet; no apta para niños = nicht für Kinder geeignet
@@ -6784,6 +6807,24 @@ febrero||Februar
 abril||April
 mayo||Mai
 impecable||makellos, tadellos
+correcto||richtig, korrekt
+incorrecto||falsch, nicht korrekt
+solución||Lösung
+cuál||welche, welcher, welches (fragend); ¿cuál es …? = was ist …?, welches ist …?
+planes|plan|Pläne; ¿qué planes tienes? = was hast du vor?
+plan||Plan
+infancia||Kindheit; en tu infancia = als du Kind warst
+percance||Missgeschick, Panne
+gustaba|gustar|gefiel (Imperfekt); me gustaba = ich mochte
+corriente||üblich, gewöhnlich; Strömung, Strom; normal y corriente = ganz gewöhnlich
+objeto||Gegenstand
+objetos|objeto|Gegenstände; objetos perdidos = Fundsachen; la oficina de objetos perdidos = das Fundbüro
+invisible||unsichtbar
+meter||hineinstecken, hineinlegen
+metes|meter|steckst, legst hinein (Präsens, tú); meter en la maleta = in den Koffer packen
+hábito||Gewohnheit; adoptar un hábito = sich eine Gewohnheit zulegen
+reseña||Rezension, Bewertung
+tocara|tocar|berühren (Imperfecto de subjuntivo); si te tocara la lotería = wenn du im Lotto gewinnen würdest
 ánimo||Mut, Stimmung; ¡ánimo! = Kopf hoch!, nur Mut!
 vas|ir|gehst (Präsens, tú); ¡vas bien! = du bist auf gutem Weg!
 `

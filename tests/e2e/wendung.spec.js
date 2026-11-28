@@ -27,7 +27,8 @@ test('Redewendung beim ersten Kontakt: „Wörtlich zeigen“, auf Tipp das Bild
   await expect(page.locator('#answer')).toBeFocused();
   await page.fill('#answer', 'världen');
   await page.click('[data-a=check]');
-  await expect(page.locator('#fb')).toContainText('Richtig');
+  // Bei „Fortgeschritten“ auch das Urteil in der Zielsprache (seit 24.95.0)
+  await expect(page.locator('#fb')).toContainText('Rätt');
   await page.click('[data-a=next]');
   // Bekannte Wendung: Abruf ohne Hilfe (Anweisung bei „Fortgeschritten“ schwedisch, seit 24.92.0)
   await expect(page.locator('.kicker')).toHaveText('Fyll i luckan');

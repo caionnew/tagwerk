@@ -350,7 +350,7 @@ document.addEventListener('click', e => {
     case 'moreNew': startRun('extraNew', { n:Number(b.dataset.n) || 0 }); break;
     case 'lookup': {
       const w = (b.dataset.w || '').trim(); if (!w || /^\d+$/.test(w)) break;
-      const lang = (S.view === 'run' && S.run && S.run.lang) || (S.view === 'text' && S.text && S.text.lang) || (S.view === 'shadow' && S.shadow && S.shadow.lang) || S.lang;
+      const lang = (S.view === 'run' && S.run && S.run.lang) || (S.view === 'write' && S.write && S.write.lang) || (S.view === 'text' && S.text && S.text.lang) || (S.view === 'shadow' && S.shadow && S.shadow.lang) || S.lang;
       const sent = S.view === 'text' && b.closest('.rs-s[data-i]');
       if (S.view === 'text' && S.text && S.text.looked && !S.text.looked.includes(w)) { S.text.looked.push(w); setTimeout(render, 0); }
       DB.used = DB.used || {}; DB.used.lookup = true;
@@ -362,7 +362,13 @@ document.addEventListener('click', e => {
     }
     case 'popclose': S.pop = null; renderPopup(); break;
     // Anweisung in der Zielsprache: Tipp zeigt sie für diese Aufgabe deutsch
-    case 'kickde': if (S.run && S.run.cur) { S.run.cur.kickDe = true; render(); } break;
+    case 'kickde': {
+      if (S.view === 'write' && S.write) { const wt = $('#wtext'); if (wt) S.write.text = wt.value; S.write.kickDe = true; }
+      else if (S.view === 'runDone' && S.run && S.run.bonus) { const bt = $('#bonusText'); if (bt) S.run.bonus.text = bt.value; S.run.bonus.kickDe = true; }
+      else if (S.run && S.run.cur) S.run.cur.kickDe = true;
+      else break;
+      render(); break;
+    }
     case 'popext': { const P = S.pop; if (!P) break; window.open(P.lang === 'es' ? `https://dict.leo.org/spanisch-deutsch/${encodeURIComponent(P.w)}` : `https://sv-de.dict.cc/?s=${encodeURIComponent(P.w)}`, '_blank', 'noopener'); break; }
     case 'popweb': {
       const P = S.pop; if (!P) break;

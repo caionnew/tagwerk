@@ -66,3 +66,52 @@ test('¡ und ¿ hängen am Anfang großer Zeilen vor der Kante, das Zeichen blei
   assert.match(run(`greetHtml('es', new Date(2026, 11, 24, 10, 30))`), /<p class="hello-g wordrow" lang="es"><span data-a="lookup" data-w="Feliz"><span class="hang">¡<\/span>Feliz/);
   assert.doesNotMatch(run(`greetHtml('sv', new Date(2026, 11, 24, 10, 30))`), /hang/);
 });
+
+test('Urteil nach dem Prüfen: bei „Fortgeschritten“ in der Zielsprache (Deutsch im title), „Andere Norm“ deutsch, Tipp auf die Anweisung zeigt es deutsch', () => {
+  const fb = (lang, niv, c) => run(`(() => { DB = freshDB(); DB.settings.niveau = '${niv}'; const it = BANK.${lang}.find(i => !i.own && !i.tat);
+    return feedbackHtml({ lang:'${lang}' }, { type:'free', id:it.id }, Object.assign({ input:'x', nextIvl:3, combo:0 }, ${JSON.stringify(c)})); })()`);
+  const pill = h => (h.match(/<span class="verdict [^"]+"[^>]*>[^<]+<\/span>/) || [''])[0];
+  assert.equal(pill(fb('sv', 'fort', { result:'ok' })), '<span class="verdict v-ok" lang="sv" title="Richtig">Rätt</span>');
+  assert.equal(pill(fb('sv', 'fort', { result:'near' })), '<span class="verdict v-mid" lang="sv" title="Fast richtig">Nästan rätt</span>');
+  assert.equal(pill(fb('sv', 'fort', { result:'bad' })), '<span class="verdict v-bad" lang="sv" title="Falsch">Fel</span>');
+  assert.equal(pill(fb('es', 'fort', { result:'bad', gaveUp:true })), '<span class="verdict v-bad" lang="es" title="Lösung">Solución</span>');
+  assert.equal(pill(fb('es', 'fort', { result:'near' })), '<span class="verdict v-mid" lang="es" title="Fast richtig">Casi correcto</span>');
+  assert.equal(pill(fb('es', 'fort', { result:'near', why:{ kind:'norm' } })), '<span class="verdict v-mid">Andere Norm</span>');
+  assert.equal(pill(fb('es', 'fort', { result:'ok', kickDe:true })), '<span class="verdict v-ok">Richtig</span>');
+  assert.equal(pill(fb('sv', 'mittel', { result:'ok' })), '<span class="verdict v-ok">Richtig</span>');
+  assert.match(fb('sv', 'fort', { result:'ok', combo:3 }), /<span class="combo"><span lang="sv">3 i rad<\/span><\/span>/);
+  assert.match(fb('es', 'fort', { result:'ok', combo:5 }), /<span class="combo"><span lang="es">5 seguidas<\/span><\/span>/);
+  assert.match(fb('es', 'grund', { result:'ok', combo:5 }), /<span class="combo">5 in Folge<\/span>/);
+  for (const lang of ['sv', 'es']) for (const [k, w] of Object.entries(app.get('VERDICT_TL')[lang])) if (k !== 'combo') for (const t of w.toLowerCase().split(' ')) assert.ok(run(`lookupWord('${lang}', ${JSON.stringify(t)})`), `${lang}: ${t}`);
+});
+
+test('Schreibaufgabe bei „Fortgeschritten“: Aufgabe und Anweisung in der Zielsprache, „Auf Deutsch“ stellt die deutsche darunter; sonst deutsch', () => {
+  const P = app.get('WRITE_PROMPTS'), T = app.get('WRITE_PROMPTS_TL'), tokens = app.get('tokens'), lookupWord = app.get('lookupWord');
+  for (const lang of ['sv', 'es']) {
+    assert.equal(T[lang].length, P.length, `${lang}: gleich viele Aufgaben, gleiche Reihenfolge`);
+    for (const p of T[lang]) {
+      assert.match(p, /^[¿A-ZÅÄÖÁÉÍÓÚ]/, p);
+      assert.match(p, /[.?]$/, p);
+      for (const w of tokens(p)) if (/[a-zà-ÿ]/i.test(w)) assert.ok(lookupWord(lang, w), `${lang}: ${w} (${p})`);
+    }
+    assert.equal(new Set(T[lang]).size, P.length, `${lang}: keine doppelt`);
+  }
+  assert.equal(T.sv[P.indexOf('Warum lernst du diese Sprache?')], 'Varför lär du dig svenska?');
+  assert.equal(T.es[P.indexOf('Was würdest du mit einem Lottogewinn machen?')], '¿Qué harías si te tocara la lotería?');
+  const view = (lang, niv, i, extra = '') => run(`(() => { DB = freshDB(); DB.settings.niveau = '${niv}'; S.write = { lang:'${lang}', prompt:WRITE_PROMPTS[${i}], text:'', id:'w1', extra:'' }; ${extra}; S.view = 'write'; return viewWrite(); })()`);
+  const fort = view('es', 'fort', 2);
+  assert.match(fort, /<p class="kicker"><button type="button" class="kick-tl" data-a="kickde" lang="es" title="Schreib 4 bis 6 Sätze auf Spanisch">Escribe de 4 a 6 frases en español<\/button><\/p>/);
+  assert.match(fort, /<p class="de wq wordrow" lang="es"><span data-a="lookup" data-w="Cómo"><span class="hang q">¿<\/span>Cómo<\/span>/);
+  assert.match(fort, /data-a="kickde">Auf Deutsch<\/button>/);
+  assert.doesNotMatch(fort, /Wie sieht ein typischer Montag/);
+  const de = view('es', 'fort', 2, 'S.write.kickDe = true');
+  assert.match(de, /<p class="kicker">Schreib 4 bis 6 Sätze auf Spanisch<\/p>/);
+  assert.match(de, /<p class="de wq wordrow" lang="es">.*<\/p><p class="wq-de" lang="de">Wie sieht ein typischer Montag bei dir aus\?<\/p>/);
+  assert.doesNotMatch(de, /Auf Deutsch/);
+  const mid = view('sv', 'mittel', 2);
+  assert.match(mid, /<p class="kicker">Schreib 4 bis 6 Sätze auf Schwedisch<\/p>\s*<p class="de" lang="de">Wie sieht ein typischer Montag bei dir aus\?<\/p>/);
+  assert.match(view('sv', 'fort', 0, 'S.write.restored = true'), /<p class="kicker">Dein Entwurf von vorhin<\/p>/);
+  assert.match(run(`(() => { DB.settings.niveau = 'fort'; return kick('Schreib einen eigenen Satz mit', 'sv', {}); })()`), />Skriv en egen mening med</);
+  assert.match(run(`kick('Schreib einen eigenen Satz mit', 'es', {})`), />Escribe una frase propia con</);
+  run('S.write = null; S.view = "home"');
+});

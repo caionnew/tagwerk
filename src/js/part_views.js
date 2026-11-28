@@ -422,10 +422,10 @@ function feedbackHtml(r, ex, c){
   const lang = r.lang;
   const near = lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.';
   // Form der anderen Norm: richtiges Spanisch, nur nicht gefragt. „Fast richtig“ hieße, an der Form fehle etwas.
-  const pill = c.result === 'ok' ? '<span class="verdict v-ok">Richtig</span>' : c.result === 'near' ? `<span class="verdict v-mid">${c.why && c.why.kind === 'norm' ? 'Andere Norm' : 'Fast richtig'}</span>` : c.gaveUp ? '<span class="verdict v-bad">Lösung</span>' : '<span class="verdict v-bad">Falsch</span>';
+  const pill = c.result === 'ok' ? verdictPill('v-ok', 'Richtig', lang, c) : c.result === 'near' ? verdictPill('v-mid', c.why && c.why.kind === 'norm' ? 'Andere Norm' : 'Fast richtig', lang, c) : verdictPill('v-bad', c.gaveUp ? 'Lösung' : 'Falsch', lang, c);
   const normNear = c.why && c.why.kind === 'norm' && !ex.requeue;
   const next = c.nextIvl ? `<span class="nexthint">${c.result === 'bad' ? 'gleich noch einmal, dann morgen wieder' : normNear ? `gleich noch einmal, dann ${ivlText(c.nextIvl)}` : ivlText(c.nextIvl)}</span>` : '';
-  const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${c.combo} in Folge</span>` : '';
+  const combo = c.combo >= 3 && (c.combo === 3 || c.combo % 5 === 0) ? `<span class="combo">${comboText(c.combo, lang, c)}</span>` : '';
   // Bei Lücken steht rechts der Knopf zum Vorlesen; Urteil und „wann wieder“ brechen links davon um
   const vrow = extra => `<div class="vrow"><div class="vrow-l">${pill}${combo}${next}</div>${extra}</div>`;
   let out = vrow('');
@@ -751,7 +751,7 @@ function bonusHtml(r){
     : b.lt ? ltHtml(b.ltText || b.text, b.lt, lang, false) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Ob die Bedeutung passt, prüft es nicht.${lang === 'sv' ? ' Für Schwedisch vor allem die Rechtschreibung.' : ''}</p>` : '';
   const res = b.res ? `<p class="hint bres ${b.res.ok ? 'is-ok' : 'is-warn'}">${esc(b.res.msg)}${b.res.ok ? ` ${speakBtn(b.text, lang)}` : ''}</p>` : '';
   return `<h2 class="grp">Bonus: eigener Satz</h2><section class="chart bonus">
-    <p class="bq">Schreib einen eigenen Satz mit ${ex}</p>
+    <p class="bq">${kick('Schreib einen eigenen Satz mit', lang, b)} ${ex}</p>
     ${tr && tr.id !== 'eigene' ? `<p class="legend">Thema: ${esc(keepHyph(tr.label))}</p>` : ''}
     ${item ? `<p class="bmodel"><span class="rt wordrow" lang="${lang}">${linkWords(item.target, lang)}</span>${item.de ? `<span class="rd">${esc(item.de)}</span>` : ''}</p>` : ''}
     <textarea id="bonusText" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="Dein Satz">${esc(b.text || '')}</textarea>
@@ -853,7 +853,9 @@ function viewRunDone(){
   // Antworten in der anderen Norm (Perfecto/Indefinido) sind richtiges Spanisch, aber nicht das Gefragte: kein „Fehlerfrei“
   const nNorm = res.filter(x => x.nrm).length;
   const perfect = total > 0 && !r.bad && !nNorm;
-  // Titel klein und deutsch (Tagwerk oder Runde), daneben groß der Zuruf; „Fehlerfrei“ sagen schon Ergebnis und Zuruf
+  // Kopf: Titel klein und deutsch (Tagwerk oder Runde), groß der Zuruf, darunter das Ergebnis, auf das der Zuruf antwortet (seit
+  // 24.95.0 im Kopf, eine Textspalte neben dem Stempel; vorher stand es unter der Etappe an der Seitenkante). „Fehlerfrei“ sagen
+  // schon Ergebnis und Zuruf.
   const title = daily ? 'Tagwerk erledigt' : 'Runde beendet';
   const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok - nNorm} von ${total} auf Anhieb richtig${nNorm ? `, ${nNorm} in der anderen Norm` : ''}.`;
   // Ergebnis je Aufgabe als Leiste: auf einen Blick, wo es gehakt hat
@@ -889,14 +891,15 @@ function viewRunDone(){
     : '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   const st = stampSvg(r, daily, !!(r.miles && r.miles.length), perfect && total >= 3);
-  const head = total ? `<div class="done-top">${st}<div class="done-tt"><h1 class="done-h done-st">${title}</h1><p class="done-z wordrow" lang="${lang}">${hangLead(linkWords(zurufFor(lang, r.ok - nNorm, total, perfect), lang))}</p></div></div>`
-    : `${st}<h1 class="done-h">${title}</h1>`;
+  const head = total ? `<div class="done-top">${st}<div class="done-tt"><h1 class="done-h done-st">${title}</h1><p class="done-z wordrow" lang="${lang}">${hangLead(linkWords(zurufFor(lang, r.ok - nNorm, total, perfect), lang))}</p><p class="done-r">${lead}</p></div></div>`
+    : `${st}<h1 class="done-h">${title}</h1><p class="lead">${lead}</p>`;
+  // Reihenfolge: Ergebnis (Kopf, Leiste je Aufgabe), dann die Etappe, dann Zahlen und Plan
   return `<div class="donebox">
     ${head}
-    ${mileHtml(r)}
-    <p class="lead">${lead}</p>
     ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint mt0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}
-    ${strip}${kpis}${span}
+    ${strip}
+    ${mileHtml(r)}
+    ${kpis}${span}
     ${sk}${tomorrow}
     ${monthHtml(r.month)}
     ${topicsHtml(r)}
@@ -909,14 +912,17 @@ function viewRunDone(){
 }
 function viewWrite(){
   const w = S.write, lang = w.lang, L = LANG[lang];
+  // Bei „Fortgeschritten“ steht die Aufgabe in der Zielsprache (antippbar); „Auf Deutsch“ oder Tipp auf die Anweisung stellt die
+  // deutsche Fassung darunter, die zielsprachige bleibt als Wortvorrat stehen
+  const tlP = niveau() === 'fort' ? promptTL(lang, w.prompt) : '';
   const ex = w.extra && W_EXTRA[lang].find(x => x.k === w.extra);
   const ltBlock = w.lt === 'loading' ? '<p class="hint"><span class="dots">Wird geprüft</span></p>'
     : typeof w.lt === 'string' ? `<p class="hint">${esc(w.lt)}</p>`
     : w.lt ? ltHtml(w.text, w.lt, lang, true) + `<p class="src">Geprüft von <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. Dein Text wurde dafür an LanguageTool gesendet.${lang === 'sv' ? ' Für Schwedisch prüft es vor allem die Rechtschreibung.' : ''}</p>` : '';
   return backBar('Text schreiben') + `
-    <p class="kicker">${w.restored ? 'Dein Entwurf von vorhin' : `Schreib 4 bis 6 Sätze auf ${L.deName}`}</p>
-    <p class="de" lang="de">${esc(w.prompt)}</p>
-    <p class="vocab"><button type="button" class="link" data-a="wnew">Andere Aufgabe</button></p>
+    <p class="kicker">${w.restored ? 'Dein Entwurf von vorhin' : kick(`Schreib 4 bis 6 Sätze auf ${L.deName}`, lang, w)}</p>
+    ${tlP ? `<p class="de wq wordrow" lang="${lang}">${hangLead(linkWords(tlP, lang))}</p>${w.kickDe ? `<p class="wq-de" lang="de">${esc(w.prompt)}</p>` : ''}` : `<p class="de" lang="de">${esc(w.prompt)}</p>`}
+    <p class="vocab"><button type="button" class="link" data-a="wnew">Andere Aufgabe</button>${tlP && !w.kickDe ? '<button type="button" class="link dim" data-a="kickde">Auf Deutsch</button>' : ''}</p>
     ${ex ? `<div class="wextra"><span class="wx-t">Extra: ${esc(ex.t)}</span><span class="wx-b"><button type="button" class="link dim" data-a="wextra">Andere</button><button type="button" class="link dim" data-a="wextraoff">Ohne</button></span></div>` : `<p class="vocab"><button type="button" class="link dim" data-a="wextra">Mit Extra-Aufgabe schreiben</button></p>`}
     ${w.sugg && w.sugg.length ? `<p class="wsugg">Aus deinen neuen Sätzen, gern gebeugt: ${w.sugg.map(x => `<button type="button" class="wchip" data-a="lookup" data-w="${esc(x.base)}" lang="${lang}">${esc(x.base)}</button>`).join('')}${w.suggMore ? ' <button type="button" class="link dim" data-a="wsugg">Andere Wörter</button>' : ''}</p>` : ''}
     <textarea id="wtext" class="tw" lang="${lang}" rows="7" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" placeholder="${esc(L.ph)}">${esc(w.text)}</textarea>

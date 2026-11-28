@@ -16,9 +16,15 @@ test('Tagwerk mit Etappe: Siegel, Ausschnitt unter dem Titel, Link zu „Dein We
   for (let k = 0; k < 80 && await page.$('.runbar'); k++) { await answerWrong(page); await page.click('[data-a=next]'); }
   await expect(page.locator('.done-h')).toHaveText('Tagwerk erledigt');
   await expect(page.locator('svg.stamp.seal')).toBeVisible();
-  // Direkt unter dem Titel
-  // Seit 24.93.0 stehen Titel und Zuruf neben dem Stempel (.done-top); die Etappe folgt gleich darauf
-  expect(await page.evaluate(() => document.querySelector('.done-top').nextElementSibling.className)).toBe('mile');
+  // Seit 24.93.0 stehen Titel und Zuruf neben dem Stempel (.done-top), seit 24.95.0 dort auch das Ergebnis; darunter die Leiste je
+  // Aufgabe, dann die Etappe. Ergebnis und Titel in einer Textspalte.
+  const o = await page.evaluate(() => { const t = document.querySelector('.done-top'), x = el => el.getBoundingClientRect().left;
+    return { next:t.nextElementSibling.className, after:t.nextElementSibling.nextElementSibling.className, res:document.querySelector('.done-top .done-r').textContent,
+      col:[x(document.querySelector('.done-st')), x(document.querySelector('.done-r'))] }; });
+  expect(o.next).toMatch(/^rstrip\b/);
+  expect(o.after).toBe('mile');
+  expect(o.res).toMatch(/^\d+ von \d+ auf Anhieb richtig\.$/);
+  expect(Math.abs(o.col[0] - o.col[1])).toBeLessThan(1);
   await expect(page.locator('.mile .mr.now')).toContainText('500 Aufgaben');
   await expect(page.locator('.mile .mr.done')).toContainText('100 Aufgaben');
   await expect(page.locator('.mile .mr.next')).toContainText('1.000 Aufgaben');

@@ -170,7 +170,8 @@ const STREAK_TL = {
 };
 // Anweisungen: deutsch → Zielsprache. Was hier fehlt, bleibt deutsch. Lesetext-Lücken („Aus „Vasaloppet““, „Nachgeschlagen in …“) über das Muster.
 const KICK_TL = {
-  sv:{ 'Ergänze die Lücke':'Fyll i luckan', 'Übersetze ins Schwedische':'Översätt till svenska', 'Bring die Wörter in die richtige Reihenfolge':'Sätt orden i rätt ordning',
+  sv:{ 'Schreib 4 bis 6 Sätze auf Schwedisch':'Skriv 4–6 meningar på svenska', 'Schreib einen eigenen Satz mit':'Skriv en egen mening med',
+    'Ergänze die Lücke':'Fyll i luckan', 'Übersetze ins Schwedische':'Översätt till svenska', 'Bring die Wörter in die richtige Reihenfolge':'Sätt orden i rätt ordning',
     'Ein Wort bleibt übrig':'Ett ord blir över', 'Hör zu und schreib den Satz auf':'Lyssna och skriv meningen', 'echte Aufnahme':'riktig inspelning',
     'Tipp auf das falsche Wort. Stimmt der Satz, tipp auf „Kein Fehler“.':'Tryck på ordet som är fel. Stämmer meningen: ”Kein Fehler”.', 'Gefunden. Wie heißt es richtig?':'Hittat! Hur ska det vara?',
     'Finde den Fehler':'Hitta felet', 'Bau den Satz um':'Skriv om meningen', 'Welches Wort passt?':'Vilket ord passar?', 'Welche Präposition?':'Vilken preposition?',
@@ -178,7 +179,8 @@ const KICK_TL = {
     'den, det oder de?':'den, det eller de?', 'en oder ett?':'en eller ett?', 'Setz die Mehrzahl ein':'Skriv pluralformen', 'Setz die bestimmte Mehrzahl ein':'Skriv bestämd form plural',
     'Schreib die Uhrzeit in Worten':'Skriv klockslaget med bokstäver', 'Schreib die Uhrzeit als Zahl':'Skriv klockslaget med siffror', 'Hör zu und schreib die Uhrzeit als Zahl':'Lyssna och skriv klockslaget med siffror',
     'Schreib den Preis in Worten':'Skriv priset med bokstäver', 'Schreib den Preis als Zahl':'Skriv priset med siffror', 'Hör zu und schreib den Preis als Zahl':'Lyssna och skriv priset med siffror' },
-  es:{ 'Ergänze die Lücke':'Completa el hueco', 'Übersetze ins Spanische':'Traduce al español', 'Bring die Wörter in die richtige Reihenfolge':'Ordena las palabras',
+  es:{ 'Schreib 4 bis 6 Sätze auf Spanisch':'Escribe de 4 a 6 frases en español', 'Schreib einen eigenen Satz mit':'Escribe una frase propia con',
+    'Ergänze die Lücke':'Completa el hueco', 'Übersetze ins Spanische':'Traduce al español', 'Bring die Wörter in die richtige Reihenfolge':'Ordena las palabras',
     'Ein Wort bleibt übrig':'Sobra una palabra', 'Hör zu und schreib den Satz auf':'Escucha y escribe la frase', 'echte Aufnahme':'grabación real',
     'Tipp auf das falsche Wort. Stimmt der Satz, tipp auf „Kein Fehler“.':'Toca la palabra incorrecta. Si la frase está bien: «Kein Fehler».', 'Gefunden. Wie heißt es richtig?':'¡Bien visto! ¿Cómo se dice correctamente?',
     'Finde den Fehler':'Encuentra el error', 'Bau den Satz um':'Transforma la frase', 'Tausch das Nomen aus und pass den Satz an':'Cambia el sustantivo y adapta la frase',
@@ -195,8 +197,23 @@ function kickTL(lang, de){
   return KICK_TL[lang][de] || '';
 }
 // Anweisung einer Aufgabe: bei „Fortgeschritten“ in der Zielsprache, Tipp zeigt sie deutsch (c.kickDe, nur für diese Aufgabe)
+// Schreibaufgabe in der Zielsprache (seit 24.95.0, bei „Fortgeschritten“): gleiche Stelle in WRITE_PROMPTS_TL; Deutsch ist der Schlüssel
+const promptTL = (lang, de) => { const i = WRITE_PROMPTS.indexOf(de); return i < 0 ? '' : (WRITE_PROMPTS_TL[lang] || [])[i] || ''; };
+// Urteil nach dem Prüfen und Treffer in Folge (seit 24.95.0): bei „Fortgeschritten“ in der Zielsprache wie die Anweisung, sodass die
+// Aufgabe bis auf die Erklärung zielsprachig ist. Die Farbe trägt die Bedeutung. „Andere Norm“ bleibt deutsch: eine Erklärung, kein
+// Urteil. Wer auf die Anweisung tippt, bekommt auch das Urteil deutsch (c.kickDe).
+const VERDICT_TL = {
+  sv:{ 'Richtig':'Rätt', 'Fast richtig':'Nästan rätt', 'Falsch':'Fel', 'Lösung':'Lösning', combo:n => `${n} i rad` },
+  es:{ 'Richtig':'Correcto', 'Fast richtig':'Casi correcto', 'Falsch':'Incorrecto', 'Lösung':'Solución', combo:n => `${n} seguidas` }
+};
+const tlTask = c => niveau() === 'fort' && !(c && c.kickDe);
+function verdictPill(cls, de, lang, c){
+  const tl = tlTask(c) && VERDICT_TL[lang] && VERDICT_TL[lang][de];
+  return `<span class="verdict ${cls}"${tl ? ` lang="${lang}" title="${de}"` : ''}>${tl || de}</span>`;
+}
+const comboText = (n, lang, c) => (tlTask(c) && VERDICT_TL[lang] ? `<span lang="${lang}">${VERDICT_TL[lang].combo(n)}</span>` : `${n} in Folge`);
 function kick(de, lang, c){
-  const tl = niveau() === 'fort' && !(c && c.kickDe) ? kickTL(lang, de) : '';
+  const tl = tlTask(c) ? kickTL(lang, de) : '';
   return tl ? `<button type="button" class="kick-tl" data-a="kickde" lang="${lang}" title="${esc(de)}">${esc(tl)}</button>` : esc(de);
 }
 /* ---------- Start über Teilen oder App-Verknüpfung ---------- */

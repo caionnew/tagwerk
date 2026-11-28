@@ -209,6 +209,7 @@ sv nå (Gruppe 3): når, nådde, nått; nådd, nått, nådda; nås, nåddes
 sv nämna (Gruppe 2): nämner, nämnde, nämnt; nämnd, nämnt, nämnda; nämns, nämndes
 sv ordna (Gruppe 1): ordnar, ordnade, ordnat; ordnad, ordnat, ordnade; ordnas, ordnades
 sv oroa (Gruppe 1): oroar, oroade, oroat; oroad, oroat, oroade; oroas, oroades
+sv packa (Gruppe 1): packar, packade, packat; packad, packat, packade; packas, packades
 sv parkera (Gruppe 1): parkerar, parkerade, parkerat; parkerad, parkerat, parkerade; parkeras, parkerades
 sv passa (Gruppe 1): passar, passade, passat; passad, passat, passade; passas, passades
 sv peka (Gruppe 1): pekar, pekade, pekat; pekad, pekat, pekade; pekas, pekades
@@ -587,6 +588,7 @@ es marcar: marco marca marcamos, marqué marcó marcaron, marque marquemos, marc
 es marchar: marcho marcha marchamos, marché marchó marcharon, marche marchemos, marcharé, marchara, marchado, marchando, marcha marchad
 es marinar: marino marina marinamos, mariné marinó marinaron, marine marinemos, marinaré, marinara, marinado, marinando, marina marinad
 es mencionar: menciono menciona mencionamos, mencioné mencionó mencionaron, mencione mencionemos, mencionaré, mencionara, mencionado, mencionando, menciona mencionad
+es meter: meto mete metemos, metí metió metieron, meta metamos, meteré, metiera, metido, metiendo, mete meted
 es mirar: miro mira miramos, miré miró miraron, mire miremos, miraré, mirara, mirado, mirando, mira mirad
 es morir: muero muere morimos, morí murió murieron, muera muramos, moriré, muriera, muerto, muriendo, muere morid
 es mudarse: mudo muda mudamos, mudé mudó mudaron, mude mudemos, mudaré, mudara, mudado, mudando, muda mudad

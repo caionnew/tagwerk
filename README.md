@@ -33,11 +33,12 @@ Voraussetzung: Node.js 20 oder neuer.
 ```bash
 npm install                 # Entwicklungswerkzeuge (Playwright, ESLint, Kartenwerkzeuge)
 npm run build               # → dist/
-npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (502 Tests)
+npm test                    # Einheitstests samt ESLint-Prüfung, ohne Browser (504 Tests)
 npx playwright install chromium
-npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (110 Tests)
+npm run test:e2e            # Browser-Tests in Handygröße über lokalen Server (111 Tests)
 npm run serve               # lokal unter http://localhost:8080 ansehen
 npm run sicht -- --vs origin/main   # Bildschirmfotos aller Ansichten, vorher/nachher
+npm run sicht -- --niveau fort      # dieselben Ansichten mit Niveau „Fortgeschritten“
 ```
 
 Eigenes Chromium statt Download: `CHROMIUM_PATH=/pfad/zu/chrome npm run test:e2e`. Zusätzlich in Firefox: `npx playwright install firefox`, dann `PW_FIREFOX=1 npx playwright test --project=firefox` (Nachsprechen mit vorgetäuschtem Mikrofon nur in Chromium). Die CI prüft Chromium und Firefox in zwei Jobs; beide müssen grün sein.

@@ -149,8 +149,10 @@ test('Zuruf am Rundenende: nach dem Ergebnis auf Anhieb, nur in der Zielsprache,
   const done = n => run(`(() => { DB = freshDB(); S.run = { kind:'quick', lang:'es', queue:[], idx:0, ok:${n}, bad:${10 - n}, res:Array.from({ length:10 }, (_, k) => ({ good:k < ${n} })), combo:0, best:0, stamped:true }; S.view = 'runDone'; return viewRunDone(); })()`);
   const h = done(10);
   assert.match(h, /<div class="done-top"><div class="done-tt"><h1 class="done-h done-st">Runde beendet<\/h1><p class="done-z wordrow" lang="es"><span data-a="lookup" data-w="[^"]+"><span class="hang">¡<\/span>/, '¡ hängt vor der Kante, die Buchstaben fluchten mit dem Titel');
+  assert.match(h, /<p class="done-r">Alle 10 auf Anhieb richtig\.<\/p><\/div><\/div>/, 'Ergebnis im Kopf, unter dem Zuruf');
+  assert.ok(h.indexOf('class="rstrip') > h.indexOf('done-r'), 'Leiste je Aufgabe nach dem Kopf');
   assert.doesNotMatch(h, /Fehlerfrei/);
-  assert.match(run(`(() => { S.run.ok = 0; S.run.bad = 0; S.run.res = []; return viewRunDone(); })()`), /<h1 class="done-h">Runde beendet<\/h1>/);
+  assert.match(run(`(() => { S.run.ok = 0; S.run.bad = 0; S.run.res = []; return viewRunDone(); })()`), /<h1 class="done-h">Runde beendet<\/h1><p class="lead">Keine Aufgabe beantwortet\.<\/p>/);
   run('S.run = null; S.view = "home"');
 });
 

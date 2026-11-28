@@ -11,7 +11,7 @@ test('jeder Generator: mindestens dreimal so viele verschiedene Aufgaben wie die
     assert.ok(seen.size >= 3 * MEM, `${g}: nur ${seen.size} verschiedene Aufgaben`);
   }
 });
-test('Konnektoren & feste Verbindungen: genug Fälle, Lösung unter den Optionen, drei verschiedene Optionen, keine Dubletten', () => {
+test('Konnektoren: genug Fälle, Lösung unter den Optionen, drei verschiedene Optionen, keine Dubletten', () => {
   for (const name of ['VERB_SV', 'VERB_ES']) {
     const list = app.get(name);
     assert.ok(list.length >= 40, `${name}: ${list.length}`);

@@ -14,6 +14,7 @@ const TAT_Q = {
     framtid:['"kommer att"', '"behöver inte"', '"får inte"', 'borde', '"skulle vilja"', '"ska resa"', '"kommer inte att"'],
     modal:['"vet du ju"', '"väl inte"', '"nog inte"', '^visst', 'nämligen', '"då?"'],
     passiv:['"det finns"', '"finns det"', '"man kan"', '"man måste"', 'byggdes', 'såldes', 'kallas'],
+    kollok:['"fatta ett beslut"', '"ställa en fråga"', '"tog examen"', '"ta hänsyn"', '"spelar ingen roll"', '"ta en paus"', '"gick i pension"'],
     idiom:['"ta det lugnt"', '"ingen fara"', '"kostar skjortan"', '"samma båt"', '"fullt upp"', '"bita ihop"'],
     falska:ffQuery('sv')
   },
@@ -31,6 +32,7 @@ const TAT_Q = {
     reflexivo:['"se me"', '"me acuerdo"', '"me levanto"', '"nos vamos"', '"se llama"', '"nos vemos"'],
     cambio:['"se puso"', '"se volvió"', '"se hizo"', '"se quedó"', '"se convirtió en"', '"me pongo"', '"me quedé dormido"'],
     preposiciones:['"pienso en"', '"depende de"', '"desde hace"', '"se casó con"', '"sueño con"', '"tarda en"', '"se olvidó de"'],
+    kollok:['"tomar una decisión"', '"hacer una pregunta"', '"dar un paseo"', '"tener razón"', '"hacer cola"', '"me da miedo"', '"echo de menos"'],
     idiom:['"no pasa nada"', '"una mano"', '"la pata"', '"el pelo"', '"pan comido"', '"hecho polvo"'],
     falsos:ffQuery('es')
   }
@@ -45,6 +47,7 @@ const TAT_ADV = {
     tid:['"sedan dess"', '"under tiden"', '"för länge sedan"', '"i flera år"', '"inom kort"', '"så småningom"'],
     framtid:['"skulle kunna"', '"skulle ha"', '"lär vara"', 'torde', '"kommer nog"', '"hade tänkt"'],
     modal:['"ju inte"', '"väl ändå"', '"nog ändå"', '"nu en gång"', 'minsann', '"har ju"'],
+    kollok:['"vidta åtgärder"', '"äger rum"', '"dra slutsatser"', '"utgör ett hot"', '"ta ansvar"', '"väckte uppmärksamhet"', '"ta ställning"'],
     idiom:['"över en kam"', '"ko på isen"', '"het gröt"', '"skinn på näsan"', '"i klistret"', '"mitt i handen"'],
     passiv:['"har byggts"', '"måste göras"', 'anses', 'sägs', '"har hittats"', 'diskuterades']
   },
@@ -56,6 +59,7 @@ const TAT_ADV = {
     perifrasis:['llevaba', '"acababa de"', '"volvió a"', '"se echó a"', 'solía', '"estuvo a punto de"', '"va mejorando"', '"acabó por"'],
     porpara:['"por lo menos"', '"por si acaso"', '"para siempre"', '"por fin"', '"por lo visto"', '"para colmo"'],
     pronombres:['"se los"', '"se las"', 'díselo', 'dámelo', '"me lo dijo"', '"te lo prometo"'],
+    kollok:['"llevar a cabo"', '"tomar medidas"', '"sacar conclusiones"', '"prestar atención"', '"hacer frente"', '"poner en marcha"', '"tendrá lugar"'],
     idiom:['"pelos en la lengua"', '"por las ramas"', '"colmó el vaso"', '"pies al gato"', '"por los codos"', '"uña y carne"'],
     gustar:['"me molesta"', '"me importa"', '"me cae"', '"me hace falta"', '"me preocupa"', '"le sorprende"'],
     condicional:['habría', '"si hubiera"', '"yo que tú"', '"sería mejor"', '"de haberlo sabido"', '"me habría gustado"'],

@@ -591,6 +591,86 @@ Många försök har gjorts att förbättra resultaten i skolan.
 Inget får ändras utan styrelsens godkännande.
 # sv passiv | Det finns fortfarande mycket som kan förenklas.
 Det finns ännu mycket som skulle kunna förenklas.
+# sv kollok | Styrelsen måste fatta ett beslut om sammanslagningen till fredag.
+Styrelsen måste ta ett beslut om sammanslagningen senast på fredag.
+Styrelsen måste fatta beslut om sammanslagningen senast på fredag.
+# sv kollok | Journalisten ställde en obekväm fråga till ministern om vapenexporten.
+Journalisten ställde ministern en besvärlig fråga om vapenexporten.
+# sv kollok | Alla gör misstag ibland, det är inget att skämmas för.
+Alla gör fel ibland, det är inget att skämmas över.
+# sv kollok | På kvällarna tar vi hänsyn till grannarna och spelar inte hög musik.
+På kvällen tar vi hänsyn till grannarna och spelar ingen hög musik.
+# sv kollok | Det spelar ingen roll om du kommer lite senare till kräftskivan.
+Det gör ingenting om du kommer lite sent till kräftskivan.
+# sv kollok | Glöm inte att borsta tänderna innan du går och lägger dig.
+Kom ihåg att borsta tänderna innan du lägger dig.
+# sv kollok | Det tar tid att lära sig att spela fiol ordentligt.
+Det tar tid att lära sig spela fiol riktigt bra.
+# sv kollok | Lade du märke till att hon hade klippt håret?
+Märkte du att hon hade klippt sig?
+# sv kollok | Bruden höll ett rörande tal på bröllopsmiddagen.
+Bruden höll ett gripande tal under bröllopsmiddagen.
+# sv kollok | Den misstänkte förnekar att han har begått något brott.
+Den misstänkte nekar till att han begått något brott.
+# sv kollok | Hennes debattartikel väckte stor uppmärksamhet i hela landet.
+Hennes debattinlägg väckte stor uppmärksamhet över hela landet.
+Hennes debattartikel fick stor uppmärksamhet över hela landet.
+# sv kollok | Den nya chefen ställer höga krav på alla i teamet.
+Nya chefen ställer höga krav på alla i gruppen.
+# sv kollok | Vi kan dra nytta av hennes långa erfarenhet av förhandlingar.
+Vi kan ha nytta av hennes långa förhandlingserfarenhet.
+# sv kollok | Partiet vill fortfarande inte ta ställning i frågan om kärnkraft.
+Partiet vill ännu inte ta ställning i kärnkraftsfrågan.
+# sv kollok | Plötsligt fick vi syn på en älg vid skogskanten.
+Plötsligt fick vi se en älg i skogsbrynet.
+Plötsligt såg vi en älg i skogsbrynet.
+# sv kollok | Min svärfar gick i pension förra året och seglar nu i skärgården.
+Min svärfar gick i pension i fjol och seglar i skärgården nu.
+Min svärfar blev pensionär förra året och seglar i skärgården nu.
+# sv kollok | Alla är här, så nu sätter vi igång med årsmötet.
+Alla är på plats, så nu kör vi igång med årsmötet.
+Alla är på plats, så nu börjar vi årsmötet.
+# sv kollok | Kommunen måste vidta åtgärder mot den ökande trafiken.
+Kommunen måste sätta in åtgärder mot den växande trafiken.
+# sv kollok | Konferensen äger rum i Göteborg i början av mars.
+Konferensen hålls i Göteborg i början på mars.
+# sv kollok | Forskarna varnar för att dra förhastade slutsatser av studien.
+Forskarna varnar för att dra för snabba slutsatser utifrån studien.
+# sv kollok | Experterna menar att viruset inte utgör något hot mot människor.
+Experterna anser att viruset inte utgör något hot för människor.
+# sv kollok | Domstolen fäller sin dom i bedrägerimålet först nästa vecka.
+Rätten fäller inte sin dom i bedrägerimålet förrän nästa vecka.
+# sv kollok | Beslutet att stänga skolbiblioteket väcker många frågor bland föräldrarna.
+Beslutet att stänga skolbiblioteket väcker en rad frågor hos föräldrarna.
+# sv kollok | Kan du duka bordet medan jag gör klart såsen?
+Kan du duka fram medan jag gör färdigt såsen?
+# sv kollok | Jag måste bara ringa ett samtal till rörmokaren, sedan kommer jag.
+Jag måste bara ringa ett kort samtal till rörmokaren, sen kommer jag.
+# sv kollok | Facket sätter press på arbetsgivarna inför avtalsrörelsen.
+Facket sätter tryck på arbetsgivarna före avtalsrörelsen.
+# sv kollok | Den nya lagen har gett upphov till en livlig debatt.
+Den nya lagen har givit upphov till en livlig diskussion.
+Den nya lagen har väckt en livlig diskussion.
+# sv kollok | Hon tog tillfället i akt och frågade chefen om löneförhöjning.
+Hon tog tillfället i akt och bad chefen om en löneförhöjning.
+Hon passade på att fråga chefen om en löneförhöjning.
+# sv kollok | Vem för protokoll på dagens styrelsemöte?
+Vem skriver protokoll vid dagens styrelsemöte?
+# sv kollok | Mormor fyller nittio år på lördag och vi har hyrt en festlokal.
+Farmor fyller nittio på lördag och vi har hyrt en festlokal.
+# sv kollok | Många unga har inte råd att köpa en egen bostadsrätt.
+Många ungdomar har inte råd att skaffa en egen bostadsrätt.
+Många ungdomar har inte råd med en egen bostadsrätt.
+# sv kollok | Alla medarbetare ska ta del av den nya policyn.
+Alla anställda ska ta del av de nya riktlinjerna.
+# sv kollok | Den unga pianisten gjorde ett starkt intryck på juryn.
+Den unga pianisten gjorde stort intryck på domarna.
+# sv kollok | Ingen tog skada vid olyckan, men bilen är totalförstörd.
+Ingen kom till skada i olyckan, men bilen är totalförstörd.
+# sv kollok | Forskningen lade grunden för det moderna vaccinet.
+Forskningen la grunden till det moderna vaccinet.
+# sv kollok | Grannarna slog larm när de kände röklukt i trapphuset.
+Grannarna larmade när de kände lukten av rök i trapphuset.
 # sv idiom | Ingen fara, det gör ingenting.
 Det är ingen fara, det gör inget.
 # sv idiom | En lägenhet i innerstaden kostar skjortan.
@@ -1434,6 +1514,87 @@ Pienso mucho en mi tiempo en Sevilla.
 La casa tiene tres pisos.
 # es preposiciones | Me enteré de este restaurante por un amigo.
 Supe de este restaurante gracias a un amigo.
+# es kollok | El comité de ética tiene que tomar una decisión antes del viernes.
+La comisión de ética debe tomar una decisión antes del viernes.
+La comisión de ética tiene que decidir antes del viernes.
+# es kollok | ¿Te puedo hacer una pregunta personal sobre tu adolescencia?
+¿Puedo hacerte una pregunta personal sobre tu juventud?
+# es kollok | Al final tenías razón: la pastelería estaba cerrada por inventario.
+Al final tuviste razón: la confitería estaba cerrada por inventario.
+# es kollok | Mi bisabuelo, que todavía cultiva su huerto, cumple noventa años el mes que viene.
+Mi bisabuelo, que todavía cultiva su huerto, cumplirá noventa años el próximo mes.
+El mes que viene mi bisabuelo, que todavía cultiva su huerto, cumplirá noventa años.
+# es kollok | Mi hijo adolescente nunca me hace caso cuando le digo que se abrigue.
+Mi hijo adolescente jamás me hace caso cuando le pido que se abrigue.
+# es kollok | Hay que tener en cuenta que el plazo de preinscripción termina el lunes.
+Hay que tener presente que el plazo de preinscripción vence el lunes.
+Hay que tomar en cuenta que el plazo de preinscripción vence el lunes.
+# es kollok | La aseguradora llevó a cabo una reestructuración profunda.
+La aseguradora realizó una profunda reestructuración.
+# es kollok | Leí la novela de un tirón y no me di cuenta de que ya era medianoche.
+Me leí la novela de un tirón y no me di cuenta de que ya eran las doce.
+# es kollok | Lo siento, no puedo quedarme a la sobremesa, hoy tengo mucha prisa.
+Perdona, no me puedo quedar a la sobremesa, hoy tengo mucha prisa.
+Perdona, no me puedo quedar a la sobremesa, hoy voy con mucha prisa.
+Lo siento, no me puedo quedar a la sobremesa, hoy voy con mucha prisa.
+Perdona, no puedo quedarme a la sobremesa, hoy voy con mucha prisa.
+# es kollok | Después de la disputa por la herencia, los dos hermanos hicieron las paces.
+Tras la disputa por la herencia, los dos hermanos se reconciliaron.
+# es kollok | El zumbido de los taladros me está volviendo loco.
+El zumbido del taladro me está volviendo loca.
+El zumbido del taladro me vuelve loco.
+# es kollok | Tu nuevo compañero de piso me cae muy bien: es divertido y nada engreído.
+Tu nuevo compañero de departamento me cae genial: es divertido y nada engreído.
+Tu nuevo compañero de departamento me cae genial: es gracioso y nada creído.
+Tu nuevo compañero de cuarto me cae genial: es divertido y nada engreído.
+Tu nuevo compañero de cuarto me cae genial: es gracioso y nada creído.
+Tu nuevo compañero de piso me cae genial: es gracioso y nada creído.
+Tu nuevo compañero de departamento me cae muy bien: es gracioso y nada creído.
+Tu nuevo compañero de cuarto me cae muy bien: es gracioso y nada creído.
+# es kollok | El gobierno autonómico tomará medidas contra la subida desorbitada de los alquileres.
+El gobierno autonómico va a tomar medidas contra el aumento desorbitado de los alquileres.
+El gobierno autonómico adoptará medidas contra el aumento desorbitado de los alquileres.
+# es kollok | Es demasiado pronto para sacar conclusiones del ensayo clínico.
+Todavía es pronto para extraer conclusiones del ensayo clínico.
+# es kollok | Los alumnos no prestaban atención a la explicación del teorema.
+Los estudiantes no ponían atención a la explicación del teorema.
+Los estudiantes no atendían a la explicación del teorema.
+# es kollok | Si no reservas ahora, corres el riesgo de quedarte sin entradas para el estreno.
+Si no reservas ya, corres el riesgo de quedarte sin boletos para el estreno.
+Si no reservas ahora, te arriesgas a quedarte sin boletos para el estreno.
+# es kollok | Con este acuerdo, los dos países dan un paso decisivo hacia la paz.
+Con este acuerdo, ambos países dan un paso clave hacia la paz.
+# es kollok | Todavía no he hecho la maleta y el tren nocturno sale en una hora.
+Aún no he hecho las maletas y el tren nocturno sale en una hora.
+Aún no he empacado y el tren nocturno sale en una hora.
+# es kollok | La catedrática dio una conferencia sobre inteligencia artificial.
+La profesora dio una charla sobre inteligencia artificial.
+La catedrática impartió una charla sobre inteligencia artificial.
+# es kollok | Tras una maratoniana negociación, los sindicatos y la patronal llegaron a un acuerdo sobre la jornada laboral.
+Después de una maratoniana negociación, los sindicatos y la patronal alcanzaron un acuerdo sobre la jornada laboral.
+Tras unas maratonianas negociaciones, los sindicatos y la patronal alcanzaron un acuerdo sobre la jornada laboral.
+# es kollok | Ten cuidado, ese perro callejero te puede hacer daño.
+Cuidado, ese perro callejero puede hacerte daño.
+Cuidado, ese perro callejero te puede lastimar.
+# es kollok | El alcalde reelegido no ha cumplido ninguna de sus promesas electorales.
+El alcalde reelegido no cumplió ninguna de las promesas de su campaña.
+# es kollok | El acuerdo pretende poner fin a un conflicto fronterizo de décadas.
+El acuerdo busca poner punto final a un conflicto fronterizo de décadas.
+# es kollok | ¿Le puedes echar un vistazo a mi currículum antes de que lo envíe a la consultora?
+¿Puedes echarle un vistazo a mi currículum antes de enviarlo a la consultora?
+¿Le puedes echar una ojeada a mi currículum antes de enviarlo a la consultora?
+# es kollok | Tras el robo, fuimos a la comisaría a poner una denuncia.
+Después del robo, fuimos a la comisaría para poner una denuncia.
+Después del robo, fuimos a la comisaría a presentar una denuncia.
+# es kollok | Mis suegros siempre le han dado mucha importancia a la puntualidad y a la cortesía.
+Mis suegros siempre han dado gran importancia a la puntualidad y a la cortesía.
+# es kollok | Nadie se tomó en serio las advertencias de los vulcanólogos.
+Nadie tomó las advertencias de los vulcanólogos en serio.
+# es kollok | Mi prima dio a luz a gemelos por cesárea la semana pasada.
+La semana pasada mi prima dio a luz a mellizos por cesárea.
+La semana pasada mi prima tuvo gemelos por cesárea.
+# es kollok | Tienes que hacer un esfuerzo si quieres aprobar estadística.
+Tienes que esforzarte si quieres aprobar el examen de estadística.
 # es idiom | El coche costó un ojo de la cara.
 El coche me costó una fortuna.
 El carro costó una fortuna.

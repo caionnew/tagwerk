@@ -181,12 +181,12 @@ const SV_STRONG = {
   kallas:'kallas kallades kallats -', trivas:'trivs trivdes trivts -', minnas:'minns mindes mints -', finnas:'finns fanns funnits -', synas:'syns syntes synts -',
   kännas:'känns kändes känts -', skämmas:'skäms skämdes skämts -', födas:'föds föddes fötts -', ses:'ses sågs setts -', umgås:'umgås umgicks umgåtts -'
 };
-const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga'.split(' '));
+const SV_G2 = new Set('vända hända störa sköta begära röka jäsa nämna fälla märka släcka slänga tänka upptäcka hyra möta ösa återuppbygga framföra extraknäcka ärva lösa inviga klippa täcka framställa'.split(' '));
 const SV_INTRANS = new Set(('vakna regna ösregna spöregna ramla trilla pendla emigrera invandra härstamma hamna skratta funka köa tälta forsa rusa protestera ' +
   'improvisera samarbeta förvärvsarbeta jobba vandra dröja gälla lysa betyda bo ske bry snöa rasa').split(' '));
-const SV_G3 = new Set('bo tro nå ske fly må gro sy klä spå bry'.split(' '));
+const SV_G3 = new Set('bo tro nå ske fly må gro sy klä spå bry bete'.split(' '));
 const SV_NO_COMPOUND = new Set('vara ha kunna vilja böra veta heta be le dö fara'.split(' '));
-const SV_PREFIX = 'an av be bi bort del efter er fort fram för före god ifråga in inne med miss ned ner om på samman till tillbaka under undan upp ut åter över'.split(' ');
+const SV_PREFIX = 'an av be bi bort del efter er fort fram för före god ifråga in inne med miss ned ner om på samman till tillbaka under undan upp ut vid åter över'.split(' ');
 function svStrong(inf){
   if (SV_STRONG[inf]) return { pre:'', row:SV_STRONG[inf] };
   // Hilfs- und Modalverben nicht zusammengesetzt (bevara ist nicht be + vara)
@@ -209,7 +209,8 @@ function svConj(inf, g){
     const part3 = !en ? [] : /en$/.test(en) ? [en, en.slice(0, -1) + 't', en.slice(0, -2) + (/n$/.test(en.slice(0, -2)) ? 'a' : 'na')] : /d$/.test(en) ? [en, supL[0], en + 'a'] : [en, /t$/.test(en) ? en : en + 't', en + 'a'];
     return { pres:add(pres), past:pastL, sup:supL[0], sups:supL, part:part3,
       pass:en ? [add(stem) + (/s$/.test(stem) && !short ? 'es' : 's'), inf + 's'] : [],
-      passPast:en ? [longest + 's'] : [], passSup:en ? supL[0] + 's' : '', impv:add(short || !/a$/.test(base) ? base : base.slice(0, -1)) };
+      // Präteritum auf -s (frös) ohne Passiv-Präteritum: „fröss“ gibt es nicht
+      passPast:en && !/s$/.test(longest) ? [longest + 's'] : [], passSup:en ? supL[0] + 's' : '', impv:add(short || !/a$/.test(base) ? base : base.slice(0, -1)) };
   }
   const c = svWeak(inf, g);
   // Ohne Objekt (vakna, regna, dröja): kein Partizip, kein Passiv

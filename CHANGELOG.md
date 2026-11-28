@@ -2,6 +2,19 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.88.0
+**Paket 8: neues Thema „Feste Verbindungen“, je 49 Sätze (18 B1, 31 B2), mit benanntem Verbfehler.**
+- **Warum:** Verb und Nomen gehören fest zusammen, und das deutsche Verb führt oft in die Irre: eine Entscheidung treffen heißt fatta ett beslut und tomar una decisión, nicht träffa und nicht hacer. Bisher standen solche Verbindungen als Auswahl unter den Konnektoren; dort wählte man zwischen drei Wörtern, statt das Verb selbst zu finden.
+- **Was geübt wird:** im Schwedischen etwa ta körkort, vidta åtgärder, äga rum, utgöra ett hot, dra slutsatser, hålla tummarna, slå rekord, ge upphov till; im Spanischen etwa cometer un error, dar un paso, sacar conclusiones, prestar atención, tener lugar, echar un vistazo, hacer hincapié, plantear un problema. Die 21 schwedischen und 20 spanischen Verbindungen aus den Konnektoren sind darin aufgegangen, als ganze Sätze. Wortschatz-Thema wie Redewendungen und falsche Freunde: Ein anderes Wort in der Lücke zählt beim Thema als Fehler.
+- **Falsches Verb beim Namen:** Steht in der Lücke oder in deiner Übersetzung ein anderes Verb, heißt es zuerst „„ett beslut“ geht nicht mit göra.“, danach die richtige Verbindung aus der Erklärung. Verben, die auch gehen (ta ett beslut, presentar una denuncia), stehen in den Alternativen und gelten.
+- **Fehler finden:** 14 schwedische und 15 spanische neue Aufgaben aus den typischen Lehnübersetzungen (Han gjorde körkort, El árbitro hizo un error, Konferensen tar plats). Sie stehen mit dem neuen Zeichen `falsch:` in den Alternativen; ein Test prüft, dass sie nie als richtig gelten.
+- **Konnektoren** heißen jetzt nur so und haben je 21 neue Fälle statt der Verbindungen (annars, i stället, antingen … eller, ju … desto, utan att, nämligen; por eso, como si, sin que, por mucho que, a menos que, a medida que), je Sprache 42 und 43.
+- **Abwechslung:** 40 % neue Inhaltswörter im Schwedischen, 41 % im Spanischen, im Schnitt 9,3 und 11,6 Wörter. Dafür bekamen 22 schwedische und 44 spanische Sätze genauere Wörter (om sammanslagningen, till kräftskivan, i skärgården; malecón, ensayo clínico, ermita románica). Alle 96 neuen erzeugten Fassungen gelesen.
+- **Wörterbuch:** 168 schwedische und 144 spanische Einträge, dazu die Nomen-Lesart von acuerdo (Abkommen) und estudio (Studie), die bisher nur als Verbform erschienen. 18 schwedische und 31 spanische Verben mehr mit abgeleiteten Formen; zusammengesetzt mit vid- (vidta wie ta), klippa, täcka und framställa nach Gruppe 2, bete nach Gruppe 3. frös bekommt kein erfundenes Passiv „fröss“ mehr.
+- Doku: CONTENT.md (Zeichen `falsch:`, Lehren aus Paket 8), ARCHITECTURE.md, CLAUDE.md, IDEEN.md (Lagebild, Paket 8 erledigt, Relativsätze als Nächstes).
+- Tests: Anzahl und Niveau, Erklärung beginnt mit der Verbindung, `falsch:` nur in der Lücke und nie richtig, Aufgaben „Finde den Fehler“, benanntes Verb bei Lücke und Übersetzen, keine Verbindungen mehr unter den Konnektoren.
+- Speicherstand unverändert. Was du unter „Konnektoren“ geübt hast, bleibt dort gezählt.
+
 ## 24.87.0
 **Paket 7: 72 neue schwedische B2-Sätze in sechs Themen (Durchsicht vom 28.11.).**
 - **Warum:** Schwedisch hatte seit Paket 4 (24.59) keine neuen Sätze bekommen und wäre zuerst leergelaufen, rechnerisch Ende März 2027. Mit 461 statt 389 Sätzen auf B1/B2 reicht es jetzt bis Ende April, Spanisch bis Mitte Mai.

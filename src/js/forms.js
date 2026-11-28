@@ -171,6 +171,23 @@ function bankSpotsSv(){
   return out;
 }
 let BANK_SPOTS_SV = null;
+// Feste Verbindungen aus der Satzbank: der typische Fehler aus „falsch:“ (Vi måste träffa ett beslut, hacer un error). Er weicht nur in
+// der Lücke ab, das Verb; die richtige Verbindung steht in der Erklärung. Ein Satz mit mehreren „falsch:“ gibt mehrere Aufgaben.
+function bankSpotsKollok(lang){
+  const out = [];
+  BANK[lang].forEach(it => {
+    if (it.trap !== 'kollok' || it.tat || it.own || !it.wrong || !it.wrong.length) return;
+    const a = it.target.split(' ');
+    it.wrong.forEach(w => {
+      const b = w.split(' '), key = x => punctKey(x).toLowerCase();
+      if (b.length !== a.length) return;
+      const diff = a.map((_, i) => i).filter(i => key(a[i]) !== key(b[i]));
+      if (!diff.length || diff.length > 2) return;
+      out.push(withTrap('kollok', () => spotData(it.de, b, diff, it.target, it.note, 'kollok', it.gapAlts.length ? it.gapAlts : [it.gap])));
+    });
+  });
+  return out;
+}
 // Aus Auswahlaufgaben (Präpositionen, Konnektoren): Eine der falschen Optionen steht im Satz. Diese Listen haben genau eine richtige Option,
 // auch ohne den deutschen Satz, also ist die eingesetzte sicher falsch. Welche von zwei anderen richtig ist, folgt nicht aus dem Finden: eintippen.
 function spotChoice(list, trap){
@@ -181,16 +198,16 @@ function spotChoice(list, trap){
 }
 let BANK_SPOTS_ES = null;
 function bankSpots(lang){
-  if (lang === 'es') return BANK_SPOTS_ES || (BANK_SPOTS_ES = bankSpotsEs());
-  return BANK_SPOTS_SV || (BANK_SPOTS_SV = bankSpotsSv());
+  if (lang === 'es') return BANK_SPOTS_ES || (BANK_SPOTS_ES = bankSpotsEs().concat(bankSpotsKollok('es')));
+  return BANK_SPOTS_SV || (BANK_SPOTS_SV = bankSpotsSv().concat(bankSpotsKollok('sv')));
 }
 const fromBank = (lang, trap) => () => pick(bankSpots(lang).filter(f => f.trap === trap))();
 // Fehlerarten je Sprache. Arten aus der Satzbank mit wenigen Sätzen kommen seltener (Gewicht = Sätze / 12), damit sich nicht dieselben vier Sätze häufen.
 const SPOT_CATS = {
-  sv:{ bisats:() => spotInteSv('bisats'), inversion:() => spotInteSv('inv'), tempus:spotTempusSv, species:spotNpSv, sin:fromBank('sv', 'sin'), prep:() => spotChoice(PREP_SV, 'prep'), verbind:() => spotChoice(VERB_SV, 'verbind') },
-  es:{ serestar:() => spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar'), porpara:() => spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara'), subjuntivo:fromBank('es', 'subjuntivo'), perfecto:fromBank('es', 'perfecto'), gustar:fromBank('es', 'gustar'), prep:() => spotChoice(PREP_ES, 'prep'), verbind:() => spotChoice(VERB_ES, 'verbind') }
+  sv:{ bisats:() => spotInteSv('bisats'), inversion:() => spotInteSv('inv'), tempus:spotTempusSv, species:spotNpSv, sin:fromBank('sv', 'sin'), prep:() => spotChoice(PREP_SV, 'prep'), verbind:() => spotChoice(VERB_SV, 'verbind'), kollok:fromBank('sv', 'kollok') },
+  es:{ serestar:() => spotSwapEs(genSerEstar, a => SE_SWAP[a] || a, 'serestar'), porpara:() => spotSwapEs(genPorPara, a => (a === 'por' ? 'para' : 'por'), 'porpara'), subjuntivo:fromBank('es', 'subjuntivo'), perfecto:fromBank('es', 'perfecto'), gustar:fromBank('es', 'gustar'), prep:() => spotChoice(PREP_ES, 'prep'), verbind:() => spotChoice(VERB_ES, 'verbind'), kollok:fromBank('es', 'kollok') }
 };
-const BANK_CATS = { sv:['sin'], es:['subjuntivo', 'perfecto', 'gustar'] };
+const BANK_CATS = { sv:['sin', 'kollok'], es:['subjuntivo', 'perfecto', 'gustar', 'kollok'] };
 function spotWeight(lang, k){
   if (!BANK_CATS[lang].includes(k)) return 1;
   return Math.min(1, bankSpots(lang).filter(f => f.trap === k).length / 12);

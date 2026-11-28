@@ -29,7 +29,7 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
    - Keine Tests, die vom Zufall abhängen; wo Zufall nötig ist, mit festem Startwert. Startdaten in Browser-Tests über `seed()`; Neuladen behält den Speicher.
    - Rund um Mitternacht (UTC oder Ortszeit) können datumsabhängige Tests scheitern; dann danach wiederholen.
    - Ändern sich Sätze oder Alternativen, nennt tests/unit/kombinationen.test.js neue erzeugte Fassungen (Kombinationen, -se): alle lesen, falsche mit „nicht: …“ in den Alternativen ausschließen, dann `node tools/kombinationen.js --write`.
-   - Kommen Verben ins Wörterbuch, nennt tests/unit/verbformen.test.js ihre abgeleiteten Formen: lesen; falsche Gruppe oder fehlender Stammwechsel in die Listen in src/js/verbformen.js (SV_G2, SV_G3, SV_STRONG, SV_INTRANS; ES_IE, ES_UE, ES_EI, ES_ACC_IAR), dann `node tools/verbformen.js --write`.
+   - Kommen Verben ins Wörterbuch, nennt tests/unit/verbformen.test.js ihre abgeleiteten Formen: lesen; falsche Gruppe oder fehlender Stammwechsel in die Listen in src/js/verbformen.js (SV_G2, SV_G3, SV_STRONG, SV_INTRANS, Vorsilben in SV_PREFIX; ES_IE, ES_UE, ES_EI, ES_ACC_IAR), dann `node tools/verbformen.js --write`.
 4. Sichtprüfung bei UI-Änderungen: `npm run sicht -- --vs origin/main` macht Vorher/Nachher aller Ansichten in 390×844 und 411×923, hell und dunkel. Neue Ansichten in tools/sicht.js aufnehmen und die Bilder wirklich ansehen. Wenn ich ein Backup (JSON) mitschicke, damit prüfen: Echte Daten zeigen mehr als Testprofile.
 5. Ändert sich Speicher, Backup oder eine Aufgabenart: den vorigen Stand mit `git worktree` bauen, dort mit offenem Tagwerk exportieren, im neuen Stand auf leerem Gerät einspielen, weiterüben, wieder exportieren und einspielen.
 6. Release:

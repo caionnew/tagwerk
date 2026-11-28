@@ -155,6 +155,30 @@ function esReflexWhy(input, solution){
 // Nur dasselbe Verb wie in der Lösung, in derselben Person, sonst keine Behauptung. Formen ohne Akzente je Person aus
 // esCondForms, esCondParse und esPastSubjForms (verbformen.js); Konditional erkannt an der Form selbst (quería ist Imperfecto, querría Konditional).
 // hubiera, quisiera, pudiera, debiera gehen im Hauptsatz auch: dort kein Hinweis.
+// Feste Verbindungen: ein anderes Verb als das der Verbindung (göra statt fatta ett beslut, hacer statt cometer un error). pairs:
+// [getippt, erwartet]; das erwartete Wort steht in der Lücke. Nur, wenn das Getippte ein Verb ist, das das Wörterbuch kennt (sonst
+// eher ein Tippfehler oder ein ganz anderer Satz). Die Verbindung steht vorn in der Erklärung: „fatta ett beslut = …“.
+function kollokWhy(lang, item, pairs){
+  if (!item || item.trap !== 'kollok') return '';
+  const m = /^(.+?) = /.exec(item.note || '');
+  if (!m) return '';
+  glossForms();
+  const verbs = new Set(GLOSS_VERBS[lang].map(v => v[0]));
+  const base = w => String(w).toLowerCase().replace(/([aeií]r)se$/, '$1');
+  const lem = w => { const e = lookupWord(lang, w); return e && !e.multi ? base(e.l || punctKey(w)) : ''; };
+  const words = m[1].trim().split(/\s+/), verb = words.find(w => verbs.has(base(w)));
+  if (!verb) return '';
+  const gap = item.gap.split(/\s+/).map(w => punctKey(w).toLowerCase());
+  // Verben, die auch richtig sind (ta ett beslut neben fatta ett beslut): nur in falscher Form, kein falsches Verb
+  const ok = new Set([base(verb)].concat((item.gapAlts || []).flatMap(g => g.split(/\s+/).map(lem))));
+  for (const [x, w] of pairs) {
+    if (!gap.includes(punctKey(w).toLowerCase())) continue;
+    const lx = lem(x);
+    if (!lx || ok.has(lx) || !verbs.has(lx)) continue;
+    return `„${words.filter(y => y !== verb).join(' ')}“ geht nicht mit ${lx}.`;
+  }
+  return '';
+}
 function esCondWhy(input, solution){
   const s = norm(solution, 'es').split(' '), t = norm(input, 'es').split(' '), S = s.map(deacc), T = t.map(deacc);
   const si = S.indexOf('si');
@@ -395,6 +419,11 @@ function check(){
     }
     // Lücke mit einem Wort: dieselbe Form-Erklärung („stor“ ist die Grundform, hier braucht es „stort“)
     if (res === 'bad' && (ex.type === 'cloze' || (ex.type === 'gen' && ex.data.gap)) && c.best && !/\s/.test(c.input.trim()) && !/\s/.test(c.best.trim())) c.form = formWhy(r.lang, [[c.input.trim(), c.best.trim()]]);
+    // Feste Verbindung mit falschem Verb: zuerst beim Namen genannt, die Erklärung bringt die richtige Verbindung
+    if (res === 'bad' && ex.type === 'cloze' && c.best) {
+      const a = c.input.trim().split(/\s+/), b = c.best.trim().split(/\s+/);
+      c.refl = c.refl || kollokWhy(r.lang, itemById(ex.id), a.length === b.length ? a.map((x, i) => [x, b[i]]) : [[c.input.trim(), c.best.trim()]]);
+    }
     if (res === 'bad' && ex.type !== 'cloze') {
       const m = mistakeFor(ex, c.input, r.lang);
       c.kind = m ? m.kind : null;
@@ -402,10 +431,12 @@ function check(){
       // darum hielt die Einteilung es für Wortschatz („Die Grammatik passt …“), und das Thema bekam den Fehler nicht.
       if (c.cond && c.kind === 'vocab') c.kind = 'word';
       if (c.kind === 'word') c.form = formWhy(r.lang, (m.pairs || []).map(([x, w]) => [x, ownWords(r.lang, c.input, w)]));
+      const kw = ex.type === 'free' && (c.kind === 'vocab' || c.kind === 'word') ? kollokWhy(r.lang, itemById(ex.id), m.pairs || []) : '';
+      if (kw) { c.refl = kw; c.kind = 'vocab'; }
       if (c.kind === 'vocab') {
-        c.vocabTopic = !!m.topic;
+        c.vocabTopic = !!m.topic || !!kw;
         // Einzelnes Lückenwort: Die Lösung steht schon da, der Satz „Die Grammatik passt …“ wäre dort schief
-        if (!(ex.type === 'gen' && ex.data.gap)) c.vocab = m.pairs;
+        if (!(ex.type === 'gen' && ex.data.gap) && !kw) c.vocab = m.pairs;
         // In Grammatik-Übungen zählt die Grammatik: ein anderes Inhaltswort bei richtiger Form und Stellung ist „fast richtig“
         if (ex.type === 'gen' && !ex.data.gap && ex.data.kind !== 'time') { c.result = 'near'; c.why = { kind:'vocab' }; }
       }

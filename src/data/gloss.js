@@ -3256,6 +3256,174 @@ sjukpenningen|sjukpenning|das Krankengeld
 avstängd||gesperrt; abgeschaltet
 snöa||schneien
 allra||aller- (verstärkt den Superlativ); för allra första gången = zum allerersten Mal
+journalisten|journalist|der Journalist, die Journalistin
+obekväm||unbequem, unangenehm
+besvärlig||lästig, schwierig, unangenehm
+kvällarna|kväll|die Abende; på kvällarna = abends
+löftet|löfte|das Versprechen
+klippa||schneiden (mit der Schere, Haare, Gras)
+hår||Haar (ett-Wort)
+håret|hår|das Haar
+rörande||rührend; betreffend
+bröllopsmiddag||Hochzeitsessen (en-Wort)
+bröllopsmiddagen|bröllopsmiddag|das Hochzeitsessen
+gripande||ergreifend, bewegend
+förneka||leugnen, bestreiten
+neka||verweigern, ablehnen; neka till = bestreiten
+begå||begehen; begå ett brott = ein Verbrechen begehen
+debattartikel||Meinungsbeitrag, Debattenartikel (en-Wort)
+debattinlägg||Debattenbeitrag (ett-Wort)
+team||Team (ett-Wort)
+teamet|team|das Team
+grupp||Gruppe (en-Wort)
+gruppen|grupp|die Gruppe
+förhandlingar|förhandling|Verhandlungen (Plural)
+förhandlingserfarenhet||Verhandlungserfahrung (en-Wort)
+kärnkraft||Atomkraft, Kernkraft (en-Wort)
+kärnkraftsfråga||Atomkraftfrage (en-Wort)
+kärnkraftsfrågan|kärnkraftsfråga|die Atomkraftfrage
+budgetförslag||Haushaltsentwurf (ett-Wort)
+skogskant||Waldrand (en-Wort)
+skogskanten|skogskant|der Waldrand
+skogsbryn||Waldrand (ett-Wort)
+skogsbrynet|skogsbryn|der Waldrand
+vidta||ergreifen (Maßnahmen); vidta åtgärder = Maßnahmen ergreifen
+åtgärd||Maßnahme (en-Wort)
+åtgärder|åtgärd|Maßnahmen (Plural)
+ökande||zunehmend, steigend
+trafik||Verkehr (en-Wort)
+trafiken|trafik|der Verkehr
+växande||wachsend
+års|år|des Jahres (Genitiv); vid trettio års ålder = im Alter von dreißig Jahren
+tumme||Daumen (en-Wort)
+tummarna|tumme|die Daumen; hålla tummarna = die Daumen drücken
+intervju||Interview, Vorstellungsgespräch (en-Wort)
+intervjun|intervju|das Interview, das Vorstellungsgespräch
+anställningsintervju||Vorstellungsgespräch (en-Wort)
+anställningsintervjun|anställningsintervju|das Vorstellungsgespräch
+jobbintervju||Vorstellungsgespräch (en-Wort)
+jobbintervjun|jobbintervju|das Vorstellungsgespräch
+världsrekord||Weltrekord (ett-Wort)
+världsrekordet|världsrekord|der Weltrekord
+maraton||Marathon (ett-Wort)
+förhastad||voreilig, übereilt
+förhastade|förhastad|voreilig (Plural und bestimmte Form)
+slutsats||Schluss, Schlussfolgerung (en-Wort)
+slutsatser|slutsats|Schlüsse, Schlussfolgerungen (Plural)
+studie||Studie (en-Wort)
+studien|studie|die Studie
+snabba|snabb|schnell (Plural und bestimmte Form)
+utifrån||ausgehend von; von außen
+expert||Experte, Expertin (en-Wort)
+experterna|expert|die Experten
+viruset|virus|das Virus
+utgöra||darstellen, bilden; utgöra ett hot = eine Gefahr darstellen
+framställa||herstellen; darstellen, schildern
+försening||Verspätung, Verzögerung (en-Wort)
+förseningarna|försening|die Verspätungen, die Verzögerungen
+avhandling||Doktorarbeit, Abhandlung (en-Wort)
+paus||Pause (en-Wort)
+rast||Pause (en-Wort)
+duka||decken (den Tisch); duka av = abräumen
+sås||Soße (en-Wort)
+såsen|sås|die Soße
+färdigt|färdig|fertig (bei ett-Wörtern); göra färdigt = fertig machen
+täcka||bedecken, zudecken
+upphov||Ursprung (ett-Wort); ge upphov till = auslösen, verursachen
+livlig||lebhaft
+diskussion||Diskussion (en-Wort)
+tillfälle||Gelegenheit; Mal (ett-Wort)
+tillfället|tillfälle|die Gelegenheit; ta tillfället i akt = die Gelegenheit nutzen
+akt||Akt; ta tillfället i akt = die Gelegenheit nutzen
+löneförhöjning||Gehaltserhöhung (en-Wort)
+slutändan||i slutändan = letzten Endes, am Ende
+protokoll||Protokoll (ett-Wort)
+protokollet|protokoll|das Protokoll
+policy||Richtlinie, Policy (en-Wort)
+policyn|policy|die Richtlinie
+riktlinje||Richtlinie (en-Wort)
+riktlinjerna|riktlinje|die Richtlinien
+pianist||Pianist, Pianistin (en-Wort)
+pianisten|pianist|der Pianist, die Pianistin
+intryck||Eindruck (ett-Wort)
+jury||Jury (en-Wort)
+juryn|jury|die Jury
+domare||Richter, Richterin; Schiedsrichter (en-Wort)
+domarna|domare|die Richter; die Jury (bei einem Wettbewerb)
+institutet|institut|das Institut
+bedriva||betreiben; bedriva forskning = Forschung betreiben
+hav||Meer (ett-Wort)
+havets|hav|des Meeres (Genitiv)
+ekosystem||Ökosystem (ett-Wort)
+forska||forschen
+olyckan|olycka|der Unfall, das Unglück
+inge||einflößen (gehoben); inge förtroende = Vertrauen einflößen
+förtroende||Vertrauen (ett-Wort)
+doktor||Doktor; Arzt, Ärztin (en-Wort)
+doktorn|doktor|der Doktor, der Arzt
+grunden|grund|der Grund, die Grundlage; lägga grunden för = den Grundstein legen für
+vaccin||Impfstoff (ett-Wort)
+vaccinet|vaccin|der Impfstoff
+larm||Alarm (ett-Wort); slå larm = Alarm schlagen
+larma||alarmieren, Alarm schlagen
+röklukt||Rauchgeruch (en-Wort)
+trapphus||Treppenhaus (ett-Wort)
+trapphuset|trapphus|das Treppenhaus
+tvätta||waschen
+spanska||Spanisch (Sprache); Spanierin
+portugisiska||Portugiesisch (Sprache); Portugiesin
+grönsak||Gemüse (en-Wort)
+grönsakerna|grönsak|das Gemüse (die Gemüsesorten)
+bit||Stück (en-Wort); skära i bitar = in Stücke schneiden
+bitar|bit|Stücke (Plural)
+tills||bis (Konjunktion: vänta tills jag kommer)
+skynda||eilen; skynda sig = sich beeilen
+bete||sich benehmen (bete sig); bete sig = sich benehmen, sich verhalten
+frysa||frieren; einfrieren
+te||Tee (ett-Wort)
+annars||sonst, andernfalls
+antingen||entweder; antingen … eller = entweder … oder
+sammanslagning||Fusion, Zusammenlegung (en-Wort)
+sammanslagningen|sammanslagning|die Fusion, die Zusammenlegung
+vapenexport||Waffenexport (en-Wort)
+vapenexporten|vapenexport|der Waffenexport
+snus||Snus, Lutschtabak (en-Wort)
+snusa||Snus nehmen
+kräftskiva||Krebsessen (Fest im August, en-Wort)
+kräftskivan|kräftskiva|das Krebsessen
+fiol||Geige (en-Wort)
+infrastruktur||Infrastruktur (en-Wort)
+infrastrukturen|infrastruktur|die Infrastruktur
+skärgård||Schären, Schärengarten (en-Wort)
+skärgården|skärgård|die Schären
+årsmöte||Jahresversammlung (ett-Wort)
+årsmötet|årsmöte|die Jahresversammlung
+misslyckad||gescheitert, misslungen
+misslyckade|misslyckad|gescheitert (Plural und bestimmte Form)
+uppkörning||praktische Fahrprüfung (en-Wort)
+uppkörningar|uppkörning|Fahrprüfungen (Plural)
+tunnelbanebygge||U-Bahn-Bau (ett-Wort)
+tunnelbanebygget|tunnelbanebygge|der U-Bahn-Bau
+viking||Wikinger (en-Wort)
+vikingarnas|viking|der Wikinger (Genitiv Plural)
+handelsväg||Handelsweg (en-Wort)
+handelsvägar|handelsväg|Handelswege (Plural)
+bedrägerimål||Betrugsprozess (ett-Wort)
+bedrägerimålet|bedrägerimål|der Betrugsprozess
+skolbibliotek||Schulbibliothek (ett-Wort)
+skolbiblioteket|skolbibliotek|die Schulbibliothek
+termos||Thermoskanne (en-Wort)
+termosen|termos|die Thermoskanne
+rörmokare||Klempner, Installateur (en-Wort)
+rörmokaren|rörmokare|der Klempner
+avtalsrörelse||Tarifrunde (en-Wort)
+avtalsrörelsen|avtalsrörelse|die Tarifrunde
+styrelsemöte||Vorstandssitzung (ett-Wort)
+festlokal||Festsaal (en-Wort)
+bostadsrätt||Eigentumswohnung (mit Nutzungsrecht in einer Genossenschaft, en-Wort)
+totalförstörd||völlig zerstört; bilen är totalförstörd = das Auto hat einen Totalschaden
+kort||kurz; Karte (ett-Wort)
+svärfar||Schwiegervater (en-Wort)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -3756,7 +3924,7 @@ aburrida|aburrido|langweilig (ser); gelangweilt (estar)
 aburrido||langweilig (ser); gelangweilt (estar)
 aburro|aburrirse|me aburro = ich langweile mich
 acostó|acostarse|se acostó = ging ins Bett
-acuerdo|acordarse|me acuerdo = ich erinnere mich
+acuerdo||Abkommen, Einigung; de acuerdo = einverstanden; me acuerdo = ich erinnere mich (acordarse)
 aeropuerto||Flughafen
 al||a + el: zum, zur
 alegra|alegrar|me alegra = es freut mich
@@ -3866,7 +4034,7 @@ estado|estar|gewesen
 estamos|estar|wir sind
 estar||sein (Zustand, Ort)
 estoy|estar|ich bin
-estudio|estudiar|ich lerne, studiere
+estudio||Studie; Studium; Arbeitszimmer; (yo) estudio = ich lerne, studiere (estudiar)
 estudios|estudio|Studium
 estuvo|estar|war (Indefinido)
 está|estar|ist (Zustand, Ort)
@@ -6419,6 +6587,150 @@ rodeo||Umweg; dar rodeos = um den heißen Brei herumreden
 rumbo||Richtung, Kurs; rumbo a = in Richtung
 salario||Gehalt, Lohn
 sur||Süden; América del Sur = Südamerika
+comité||Ausschuss, Komitee
+comisión||Kommission, Ausschuss
+cumplir||erfüllen; cumplir años = Geburtstag haben; cumplir una promesa = ein Versprechen halten
+primo||Cousin
+abrigar||wärmen, warm halten; abrigarse = sich warm anziehen
+agradecer||danken, dankbar sein für
+terror||Schrecken, Terror; película de terror = Horrorfilm
+asustar||erschrecken, Angst machen
+extrañar||vermissen (Lateinamerika); befremden
+plazo||Frist
+vencer||siegen, besiegen; ablaufen (Frist)
+reestructuración||Umstrukturierung
+realizar||durchführen, verwirklichen
+perdonar||verzeihen; perdona = entschuldige
+reconciliar||versöhnen; reconciliarse = sich versöhnen
+regar||gießen (Pflanzen)
+adoptar||annehmen, ergreifen (Maßnahmen); adoptieren
+conclusión||Schluss, Schlussfolgerung; sacar conclusiones = Schlüsse ziehen
+conclusiones|conclusión|Schlüsse, Schlussfolgerungen (Plural)
+negociaciones|negociación|Verhandlungen (Plural)
+extraer||herausziehen, gewinnen; extraer conclusiones = Schlüsse ziehen
+atención||Aufmerksamkeit; prestar atención = aufpassen
+explicación||Erklärung
+atender||sich kümmern um; aufpassen; bedienen
+riesgo||Risiko; correr el riesgo de = Gefahr laufen
+arriesgar||riskieren, wagen; arriesgarse a = Gefahr laufen
+ola||Welle
+contagio||Ansteckung
+enfrentar||gegenüberstellen; enfrentarse a = sich stellen
+afrontar||sich stellen, bewältigen
+servicio||Dienst, Service
+alcaldía||Bürgermeisteramt, Stadtverwaltung
+lanzar||werfen; starten, auf den Markt bringen
+cometer||begehen; cometer un error = einen Fehler machen
+grave||schwer, ernst
+equivocarse||sich irren, sich vertun
+gravemente||schwer, ernsthaft
+clave||Schlüssel (zu einem Rätsel); entscheidend
+charla||Vortrag; Gespräch, Plauderei
+empacar||packen, einpacken (Lateinamerika)
+catedrático||Professor (Lehrstuhlinhaber); catedrática = Professorin
+inteligencia||Intelligenz; inteligencia artificial = künstliche Intelligenz
+artificial||künstlich
+impartir||erteilen, halten (Unterricht, Vortrag)
+alcanzar||erreichen
+lastimar||verletzen, wehtun (Lateinamerika)
+asturias|Asturias|Asturien (Region im Norden Spaniens)
+provecho||Nutzen; sacar provecho de = profitieren von; ¡buen provecho! = guten Appetit
+semestre||Semester
+beneficiar||nützen; beneficiarse de = profitieren von
+promesa||Versprechen
+electoral||Wahl-; promesa electoral = Wahlversprechen
+pretender||beabsichtigen, vorhaben
+currículum||Lebenslauf
+ojeada||flüchtiger Blick; echar una ojeada = einen Blick werfen
+acusado||der Angeklagte; beschuldigt
+silencio||Stille, Schweigen; guardar silencio = schweigen
+permanecer||bleiben
+robo||Diebstahl, Raub
+comisaría||Polizeiwache, Polizeirevier
+denuncia||Anzeige; poner una denuncia = Anzeige erstatten
+importancia||Wichtigkeit, Bedeutung; dar importancia a = Wert legen auf
+puntualidad||Pünktlichkeit
+hincapié||hacer hincapié en = betonen
+necesidad||Notwendigkeit, Bedürfnis
+ahorrar||sparen
+energía||Energie
+subrayar||unterstreichen, betonen
+recalcar||betonen, hervorheben
+serio||ernst, seriös; en serio = im Ernst; tomar en serio = ernst nehmen
+advertencia||Warnung
+dimisión||Rücktritt
+escándalo||Skandal
+gemelo||Zwilling
+mellizo||zweieiiger Zwilling
+esfuerzo||Anstrengung, Mühe; hacer un esfuerzo = sich anstrengen
+esforzarse||sich anstrengen
+trozo||Stück
+modo||Art, Weise; de modo que = sodass
+discreto||diskret, zurückhaltend
+opción||Möglichkeit, Option
+opciones|opción|Möglichkeiten, Optionen (Plural)
+ejemplo||Beispiel; por ejemplo = zum Beispiel
+ética||Ethik; comité de ética = Ethikkommission
+adolescencia||Jugend, Pubertät
+adolescente||Jugendlicher, Teenager; jugendlich
+juventud||Jugend
+malecón||Uferpromenade, Kai
+pastelería||Konditorei
+inventario||Inventur; Inventar
+bisabuelo||Urgroßvater
+huerto||Gemüsegarten
+lejano||entfernt, fern
+abrasador||sengend, glühend heiß
+exposición||Ausstellung
+cerámica||Keramik
+generosidad||Großzügigkeit
+espantoso||schrecklich, entsetzlich
+croqueta||Krokette
+casero||hausgemacht; Vermieter
+preinscripción||Voranmeldung
+aseguradora||Versicherungsgesellschaft
+tirón||Ruck; de un tirón = in einem Zug
+auditorio||Saal, Hörsaal; Publikum
+abarrotado||überfüllt, brechend voll
+disputa||Streit, Auseinandersetzung
+herencia||Erbe, Erbschaft
+zumbido||Surren, Summen
+geranio||Geranie
+engreído||eingebildet, arrogant
+gracioso||witzig, lustig
+autonómico||regional (einer autonomen Region Spaniens); gobierno autonómico = Regionalregierung
+desorbitado||maßlos, überzogen (Preise)
+ensayo||Versuch; Essay; Probe; ensayo clínico = klinische Studie
+clínico||klinisch
+teorema||Lehrsatz, Theorem
+comarcal||Kreis-, regional; hospital comarcal = Kreiskrankenhaus
+patinete||Roller; patinete eléctrico = E-Scooter
+eléctrico||elektrisch
+decisivo||entscheidend
+anatomía||Anatomie
+tableta||Tablet; Tafel (Schokolade)
+nocturno||nächtlich, Nacht-; tren nocturno = Nachtzug
+maratoniano||endlos lang, Marathon-
+patronal||Arbeitgeberverband; Arbeitgeber-
+laboral||Arbeits-; jornada laboral = Arbeitszeit
+callejero||Straßen-; perro callejero = Straßenhund
+ermita||Kapelle (meist abgelegen, auf dem Land)
+románico||romanisch (Baustil)
+ingeniería||Ingenieurwesen
+reelegido||wiedergewählt
+fronterizo||Grenz-; conflicto fronterizo = Grenzkonflikt
+consultora||Beratungsfirma
+cortesía||Höflichkeit
+vulcanólogo||Vulkanologe
+corrupción||Korruption
+cesárea||Kaiserschnitt
+estadística||Statistik
+subida||Anstieg, Erhöhung; Aufstieg
+marcha||Gang; Marsch; poner en marcha = in Gang setzen, starten
+apunte||Notiz; tomar apuntes = sich Notizen machen
+apuntes|apunte|Notizen, Mitschrift (Plural)
+culpa||Schuld; echar la culpa a alguien = jemandem die Schuld geben
+plantear||aufwerfen, stellen (Frage, Problem)
 `
 };
 

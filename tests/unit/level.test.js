@@ -46,7 +46,7 @@ test('Schwerpunkt der Woche: Ziehung aus dem Fehlermodell mit der Woche als Star
   const got = Array.from(app.run("pickNew('sv', 6).map(i => i.trap)"));
   assert.ok(got.filter(x => x === 'passiv').length >= 2, got.join(' '));
 });
-test('Konnektoren & feste Verbindungen: Lücke mit drei Optionen, Lösung unter den Optionen', () => {
+test('Konnektoren: Lücke mit drei Optionen, Lösung unter den Optionen', () => {
   for (const g of ['verbind_sv', 'verbind_es']) for (let k = 0; k < 40; k++) {
     const d = app.run(`GENS.${g}.make()`);
     assert.ok(d.gap && d.prompt.includes('___'));

@@ -15,7 +15,7 @@ function listing(app = loadApp()){
   const G = { 0:'unregelmäßig', 1:'Gruppe 1', 2:'Gruppe 2', 3:'Gruppe 3' };
   [...V.sv].sort((a, b) => a[0].localeCompare(b[0], 'sv')).forEach(([inf, g]) => {
     const c = svConj(inf, g);
-    lines.push(`sv ${inf} (${G[g]}): ${c.pres}, ${c.past.join('/')}, ${(c.sups || [c.sup]).join('/')}` + (c.part.length ? `; ${c.part.join(', ')}` : '') + (c.pass.length ? `; ${c.pass[0]}, ${c.passPast[0]}` : ''));
+    lines.push(`sv ${inf} (${G[g]}): ${c.pres}, ${c.past.join('/')}, ${(c.sups || [c.sup]).join('/')}` + (c.part.length ? `; ${c.part.join(', ')}` : '') + (c.pass.length ? `; ${[c.pass[0]].concat(c.passPast.slice(0, 1)).join(', ')}` : ''));
   });
   [...V.es].sort((a, b) => a[0].localeCompare(b[0], 'es')).forEach(([inf, lemma]) => {
     const c = esConj(inf);

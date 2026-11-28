@@ -84,3 +84,32 @@ test('Rückmeldung: kein „wann wieder“, Thema nur bei falscher Antwort; Lös
     assert.equal(answer(R, inp).result, 'ok', inp);
   assert.equal(answer(R, 'La reunión está en la sala grande, que ya está reservada.').result, 'bad', 'estar für den Ort eines Ereignisses bleibt falsch');
 });
+
+test('Norm bis zum Rundenende: Liste der Aufgaben zeigt bei „wie in Lateinamerika“ den Satz dieser Norm, beim Übersetzen und bei der Lücke', () => {
+  for (const [type, input] of [['free', 'Hoy trabajé mucho'], ['cloze', 'trabajé']]) {
+    const res = run(`(() => { DB = freshDB(); const it = BANK.es.find(i => i.target === 'Hoy he trabajado mucho.'); const ex = { type:'${type}', id:it.id, norm:'la' };
+      S.run = { kind:'daily', lang:'es', queue:[ex], idx:0, ok:0, bad:0, res:[], combo:0, best:0 }; S.run.cur = { input:'${input}', state:'answer' }; check(); next();
+      return S.run.res.map(x => ({ target:x.target, good:x.good })); })()`);
+    assert.deepEqual(res, [{ target:'Hoy trabajé mucho.', good:true }], type);
+  }
+  assert.equal(run(`(() => { const ex = { type:'free', id:BANK.es.find(i => i.target === 'Hoy he trabajado mucho.').id, norm:'es' }; return taskTarget(ex); })()`), 'Hoy he trabajado mucho.');
+});
+
+test('Länge des Tagwerks: Obergrenze aller Aufgaben und woraus sie besteht', () => {
+  run(`(() => { DB = freshDB(); DB.settings.size = 'normal'; S.view = 'settings'; })()`);
+  const h = text(run('viewSettings()'));
+  assert.match(h, /Kurz bis 17 Aufgaben Normal bis 32 Aufgaben Lang bis 53 Aufgaben 6 neue Sätze, bis zu 20 Wiederholungen und bis zu 6 Grammatik-Aufgaben\. Was falsch war, kommt in der Runde noch einmal\./);
+});
+
+test('Rundenende: „x von y auf Anhieb richtig“ zählt nur erste Versuche; der zweite Versuch eines falschen Satzes zählt nicht mit', () => {
+  const h = run(`(() => { DB = freshDB(); const [a, b] = BANK.es.filter(i => i.trap === 'serestar').slice(0, 2);
+    S.run = { kind:'quick', lang:'es', queue:[{ type:'free', id:a.id }, { type:'free', id:b.id }], idx:0, ok:0, bad:0, res:[], combo:0, best:0 };
+    const answer = inp => { S.run.cur = { input:inp, state:'answer' }; check(); next(); };
+    answer('xx yy zz');                       // falsch: kommt in der Runde noch einmal
+    answer(b.target);                          // richtig
+    const re = S.run.queue[S.run.idx]; answer(re.type === 'cloze' ? clozeOf(re).gap : a.target); // zweiter Versuch, richtig
+    S.view = 'runDone'; return { lead:viewRunDone(), queue:S.run.queue.length, ok:S.run.ok, bad:S.run.bad }; })()`);
+  assert.equal(h.queue, 3, 'die Leiste oben zählt den zweiten Versuch mit');
+  assert.deepEqual([h.ok, h.bad], [1, 1]);
+  assert.match(h.lead, /1 von 2 auf Anhieb richtig\./);
+});

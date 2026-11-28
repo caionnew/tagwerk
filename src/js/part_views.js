@@ -408,10 +408,8 @@ function normPairHtml(ex, c, lang){
 }
 function solShown(lang, ex, c){
   if (ex.type === 'gen' && ['spot', 'genus', 'time'].includes(ex.data.kind)) return ex.data.full;
-  const item = ex.id ? itemById(ex.id) : null;
-  // Lücke: der Satz der gefragten Norm (bei „wie in Lateinamerika“ ggf. eine Alternative); ohne Norm ist es der Zielsatz
-  // Übersetzen mit Norm: die erste Fassung der gefragten Norm (bei „wie in Lateinamerika“ nicht das Perfecto des Zielsatzes)
-  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : ex.type === 'cloze' ? clozeOf(ex).target : ex.type === 'free' && otherNorm(ex) && normOf(item, item.target) === otherNorm(ex) ? answersFor(ex)[0] : item.target;
+  // Satzbank: der Zielsatz in der gefragten Norm (taskTarget), bei Lücken der ganze Satz dieser Norm
+  const solution = ex.type === 'gen' ? (ex.data.full || ex.data.answers[0]) : taskTarget(ex);
   const showDiff = c.result !== 'ok' && c.diff && c.input && !c.gaveUp && ex.type !== 'cloze' && !(ex.type === 'gen' && ex.data.gap);
   // Andere Norm: die nächste Fassung der gefragten Norm, ohne Markierung (sie ist ja nicht falsch)
   if (c.why && c.why.kind === 'norm' && ex.type === 'free' && c.best) return c.best;
@@ -1274,7 +1272,8 @@ function viewSettings(){
   const autoN = DB.tat[S.lang].filter(o => o.auto).length;
   return backBar('Einstellungen', S.settingsFrom || 'home') + noticeHtml() + `
   <h2 class="grp">Länge des Tagwerks</h2>
-  <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>${v.newPer} neue Sätze, höchstens ${v.maxRev} Wiederholungen</span></button>`).join('')}</div>
+  <div class="seg3" role="radiogroup">${Object.entries(SIZES).map(([k, v]) => `<button type="button" role="radio" aria-checked="${DB.settings.size === k}" data-a="size" data-s="${k}">${v.label}<span>bis ${v.newPer + v.maxRev + v.gen} Aufgaben</span></button>`).join('')}</div>
+  ${(z => `<p class="setl-n">${z.newPer} neue Sätze, bis zu ${z.maxRev} Wiederholungen und bis zu ${z.gen} Grammatik-Aufgaben. Was falsch war, kommt in der Runde noch einmal.</p>`)(size())}
   <h2 class="grp">Sprache beim Start</h2>
   <div class="seg2" role="radiogroup">${[['auto', 'Nach Bedarf'], ['last', 'Zuletzt gewählte']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${(DB.settings.langMode || 'auto') === k}" data-a="langmode" data-v="${k}">${l}</button>`).join('')}</div>
   ${(DB.settings.langMode || 'auto') === 'auto' ? '<p class="setl-n">Die Sprache, in der mehr fällig ist.</p>' : ''}

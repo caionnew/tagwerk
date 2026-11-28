@@ -26,6 +26,7 @@ test('Hörrunde läuft ohne Antippen und lässt sich steuern', async ({ page }) 
   expect(said[3].t).not.toBe(said[0].t);
   // Pause: es kommt nichts mehr
   await page.click('[data-a=rplay]');
+  await expect(page.locator('[data-a=rplay]')).toHaveText('Weiter');
   const n = await page.evaluate(() => window.__said.length);
   await page.waitForTimeout(2500);
   expect(await page.evaluate(() => window.__said.length)).toBe(n);
@@ -36,7 +37,10 @@ test('Hörrunde läuft ohne Antippen und lässt sich steuern', async ({ page }) 
   const after = (await page.evaluate(() => window.__said)).slice(n);
   expect(after.every(x => x.lang === 'sv-SE')).toBe(true);
   // Zurück: Ton aus, keine weiteren Sätze
+  // Erst messen, wenn die Ansicht gewechselt hat: In Firefox kehrt der Klick zurück, bevor die App ihn verarbeitet hat; bis dahin
+  // konnte die Runde noch einen Satz anfangen (CI vom 28.11., 9 statt 8)
   await page.click('.backbar [data-a=tab]');
+  await expect(page.locator('.radio-card')).toHaveCount(0);
   const m = await page.evaluate(() => window.__said.length);
   await page.waitForTimeout(2500);
   expect(await page.evaluate(() => window.__said.length)).toBe(m);

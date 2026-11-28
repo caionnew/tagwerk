@@ -313,6 +313,16 @@ function answersFor(ex){
   if (ex.type === 'cloze') return (item.gapAlts.length ? clozeOf(ex).ok : [item.gap]).concat(((st && st.gapAlts) || []).filter(keep));
   return [item.target].concat(item.alts, (st && st.alts) || []).filter(keep);
 }
+// Zielsatz einer Aufgabe in der gefragten Norm: Lücke im Satz dieser Norm (clozeOf), Übersetzen mit der ersten Fassung dieser
+// Norm, sonst der Zielsatz. Für Lösung, Vorlesen und die Liste am Rundenende (bis 24.107 dort immer der Zielsatz, bei
+// „wie in Lateinamerika“ also das Perfecto aus Spanien).
+function taskTarget(ex){
+  const item = ex && ex.id ? itemById(ex.id) : null;
+  if (!item) return '';
+  if (ex.type === 'cloze') return clozeOf(ex).target;
+  if (ex.type === 'free' && otherNorm(ex) && normOf(item, item.target) === otherNorm(ex)) return answersFor(ex)[0] || item.target;
+  return item.target;
+}
 // Die Fassungen der anderen Norm: richtiges Spanisch, aber nicht gefragt
 function otherAnswers(ex){
   const o = otherNorm(ex);
@@ -565,7 +575,7 @@ function next(){
     if (counts) {
       const ra = recordAnswer(r.lang, ex, c, good);
       const item = ex.id ? itemById(ex.id) : null;
-      (r.res = r.res || []).push(resDetail({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, trap:ex.type === 'gen' && ex.data ? ex.data.trap : undefined, target:item ? item.target : (ex.data && (ex.data.full || ex.data.answers[0])) || '' }, ex, c, ra, r.lang));
+      (r.res = r.res || []).push(resDetail({ good, near:c.result === 'near', fresh:!!f.fresh, id:ex.id || null, gen:ex.type === 'gen' ? ex.gen : undefined, trap:ex.type === 'gen' && ex.data ? ex.data.trap : undefined, target:item ? taskTarget(ex) : (ex.data && (ex.data.full || ex.data.answers[0])) || '' }, ex, c, ra, r.lang));
     } else if (ex.id) {
       // Zweiter Versuch eines falschen Satzes: am Rundenende „beim zweiten Mal richtig“
       const first = (r.res || []).slice().reverse().find(x => x.id === ex.id && !x.good && x.again == null);

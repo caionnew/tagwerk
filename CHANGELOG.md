@@ -2,6 +2,12 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.108.0
+**Norm auch am Rundenende, Länge des Tagwerks vollständig, Firefox-Test stabil.**
+- **„wie in Lateinamerika“ am Rundenende:** Die Liste der Aufgaben zeigte bei richtigen Antworten den Zielsatz aus Spanien (Perfecto). Jetzt steht dort, wie in der Rückmeldung, der Satz der gefragten Norm, beim Übersetzen und bei der Lücke. Eine Stelle (`taskTarget`) liefert ihn für Lösung, Vorlesen und Liste. Geprüft, ohne weiteren Fehler: Lücke, Vorlesen nach dem Prüfen, Korrektur bei falscher Antwort, zweiter Versuch in der Runde.
+- **Länge des Tagwerks:** Die Knöpfe nennen die Obergrenze aller Aufgaben (Kurz bis 17, Normal bis 32, Lang bis 53), darunter steht, woraus sie besteht: neue Sätze, Wiederholungen, Grammatik-Aufgaben, und dass Falsches in der Runde noch einmal kommt. Vorher stand dort nur „6 neue Sätze, höchstens 20 Wiederholungen“.
+- **Test der Hörrunde in Firefox:** misst erst, wenn Pause und Zurück verarbeitet sind (in Firefox kehrt der Klick früher zurück; CI vom 28.11. zählte einen Satz zu viel). Die App selbst war richtig.
+
 ## 24.107.0
 **Fehlerquote über die Zeit, ruhigere Rückmeldung, zwei Prüffehler behoben.**
 - **Themen:** oben eine Karte mit deiner Fehlerquote im Schnitt über die Zeit, rot mit 50-%-Bereich, darüber der Vergleich mit vor 4 Wochen. Dasselbe Modell wie die Themenliste (jedes Thema zählt gleich, der Schwerpunkt der Woche verschiebt nichts), der letzte Wert ist „dein Schnitt“. Kurze Verläufe zeigen jeden Tag, lange jede Woche oder alle vier Wochen; Antippen und Ziehen wie im Verlauf. Damit das über Monate trägt, wandern Tage, die nach 120 Tagen aus dem Fehlerprotokoll fallen, vorher in Wochensummen (etwa 20 KB im Jahr).

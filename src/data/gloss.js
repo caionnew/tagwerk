@@ -380,7 +380,7 @@ bort||weg; tappa bort = verlieren
 bott|bo|gewohnt (Supinum)
 bra||gut
 brev||Brief
-bror||Bruder
+bror||Bruder; auch Vorname (Bror)
 bröd||Brot
 butiken|butik|der Laden
 byggdes|bygga|wurde gebaut
@@ -489,7 +489,7 @@ ledsen||traurig
 leker|leka|spielt (Kinder)
 lisa||Lisa (Name)
 ljuset|ljus|das Licht
-lund||Lund (Stadt)
+lund||Lund (Stadt); auch Nachname
 läkare||Arzt, Ärztin
 läkaren|läkare|der Arzt, die Ärztin
 läkartid||Arzttermin
@@ -3955,6 +3955,126 @@ sidorna|sida|die Seiten
 glada|glad|froh (Plural)
 satt|sitta|saß (Präteritum von sitta); auch: gesetzt (Supinum von sätta)
 hårda|hård|harte (Plural, bestimmte Form)
+hvad||alte Schreibung (vor 1906) für vad: was
+hvem||alte Schreibung (vor 1906) für vem: wer
+hvit||alte Schreibung (vor 1906) für vit: weiß
+lefva||alte Schreibung (vor 1906) für leva: leben
+godt||alte Schreibung (vor 1906) für gott: gut
+hen||geschlechtsneutrales Pronomen: er oder sie (seit 2015 im Wörterbuch der Akademie)
+generation||Generation (en-Wort)
+generationer|generation|Generationen
+still||still, ruhig; stå still = stillstehen
+tilltala||anreden
+ordlista||Wörterbuch, Wortliste (en-Wort)
+ordlistan|ordlista|das Wörterbuch
+elin||Elin (Vorname)
+elins|elin|Elins
+byskola||Dorfschule (en-Wort)
+byskolan|byskola|die Dorfschule
+tavlan|tavla|die Tafel
+sudda||radieren, wischen; sudda ut = wegwischen
+bokstav||Buchstabe (en-Wort)
+bokstaven|bokstav|der Buchstabe
+bokstäver|bokstav|Buchstaben
+mormors|mormor|der Großmutter (Genitiv)
+psalmbok||Gesangbuch (en-Wort)
+likadant||gleich, genauso
+ecklesiastikministern||der Kultusminister (für Schule und Kirche)
+fridtjuv||Fridtjuv (Vorname; Fridtjuv Berg, 1851–1916, Kultusminister)
+regler|regel|Regeln
+v-ljud||v-Laut (ett-Wort)
+v||der Buchstabe v
+logisk||logisch
+logiskt|logisk|logisch (ett-Form)
+naken||nackt
+naket|naken|nackt (ett-Form)
+stavningsukasen||der „Rechtschreib-Ukas“ (Spottname der Reform von 1906)
+därpå||darauf; året därpå = im Jahr darauf
+köksbord||Küchentisch (ett-Wort)
+köksbordet|köksbord|der Küchentisch
+läxa||Hausaufgabe (en-Wort)
+marginal||Rand (einer Seite) (en-Wort)
+marginalen|marginal|der Rand
+rita||zeichnen
+ensamt|ensam|allein, einsam (ett-Form)
+gösta||Gösta (Vorname)
+göstas|gösta|Göstas
+direktör||Direktor (en-Wort)
+direktören|direktör|der Direktor
+oartig||unhöflich
+oartigt|oartig|unhöflich (ett-Form)
+otänkbar||undenkbar
+otänkbart|otänkbar|undenkbar (ett-Form)
+rexed||Rexed (Bror Rexed, 1914–2002, Mediziner)
+medicinalstyrelsen||das Medizinalamt (Gesundheitsbehörde, bis 1968)
+välkomsttal||Willkommensrede (ett-Wort)
+förnamn||Vorname (ett-Wort)
+galen||verrückt
+kollegan|kollega|der Kollege, die Kollegin
+berit||Berit (Vorname)
+modig||mutig
+holmgren||Holmgren (Nachname)
+harkla||räuspern; harkla sig = sich räuspern
+stickning||Strickzeug; das Stricken (en-Wort)
+stickningen|stickning|das Strickzeug
+ohyfsad||unhöflich, ungehobelt
+ohyfsat|ohyfsad|unhöflich (ett-Form)
+respekt||Respekt (en-Wort)
+titel||Titel (en-Wort)
+titlar|titel|Titel (Plural)
+le||lächeln
+arga|arg|wütend (Plural)
+stavning||Rechtschreibung (en-Wort)
+stavningen|stavning|die Rechtschreibung
+huvudspråk||Hauptsprache (ett-Wort)
+huvudspråket|huvudspråk|die Hauptsprache
+invandrare||Einwanderer (en-Wort)
+språklag||Sprachgesetz (en-Wort)
+språklagen|språklag|das Sprachgesetz
+klassrum||Klassenzimmer (ett-Wort)
+klassrummet|klassrum|das Klassenzimmer
+amina||Amina (Vorname)
+somalia||Somalia
+jorge||Jorge (Vorname)
+chile||Chile
+hevin||Hevin (Vorname)
+irak||Irak
+skydda||schützen
+teckenspråk||Gebärdensprache (ett-Wort)
+teckenspråket|teckenspråk|die Gebärdensprache
+längst||am längsten; ganz (längst upp = ganz oben)
+likna||ähneln
+kurdiska||Kurdisch
+möjlighet||Möglichkeit (en-Wort)
+utveckla||entwickeln
+middag||Abendessen; Mittag (en-Wort)
+lyssna||zuhören
+love||Love (schwedischer Vorname)
+marias|maria|Marias
+yngsta|ung|jüngste (bestimmte Form)
+akademiens||der Akademie; Svenska Akademiens ordlista = Wörterbuch der Schwedischen Akademie
+upplaga||Auflage, Ausgabe (en-Wort)
+fjortonde||vierzehnte
+pronomen||Pronomen (ett-Wort)
+pronomenet|pronomen|das Pronomen
+exempel||Beispiel (ett-Wort); till exempel = zum Beispiel
+praktiskt|praktisk|praktisch (ett-Form)
+skåp||Schrank (ett-Wort)
+skrivbok||Schreibheft (en-Wort)
+mörkblå||dunkelblau
+mörkblått|mörkblå|dunkelblau (ett-Form)
+omslag||Umschlag (ett-Wort)
+snirklig||verschnörkelt
+snirkliga|snirklig|verschnörkelte (Plural, bestimmte Form)
+gammelmormor||Urgroßmutter (Mutter der Großmutter mütterlicherseits) (en-Wort)
+bläddra||blättern
+handstil||Handschrift (en-Wort)
+ritat|rita|gezeichnet (Supinum)
+h:et|h|das h (der Buchstabe)
+berg||Berg (ett-Wort); auch Nachname (Fridtjuv Berg)
+låter|låta|lässt; klingt (det låter bra = das klingt gut)
+stava||buchstabieren, schreiben (Rechtschreibung)
+reform||Reform (en-Wort)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -4012,7 +4132,7 @@ dimitido|dimitir|zurückgetreten (Partizip)
 discutido|discutir|gestritten; diskutiert (Partizip)
 disponible||verfügbar, lieferbar
 doble||doppelt; el doble = das Doppelte
-documental||Dokumentarfilm
+documental||Dokumentarfilm; dokumentarisch, Dokumentations-
 dueño||Besitzer, Eigentümer
 emigrarían|emigrar|würden auswandern (Konditional)
 enchufe||Steckdose, Stecker
@@ -4634,14 +4754,14 @@ libros|libro|Bücher
 listas|listo|fertig
 listo||fertig (estar); klug (ser)
 listos|listo|fertig
-llamado|llamar|angerufen
+llamado|llamar|angerufen; gerufen, genannt; llamado a filas = einberufen
 llamas|llamarse|te llamas = du heißt
 llamo|llamar|ich rufe an; me llamo = ich heiße
 llamó|llamar|rief an
 llaves|llave|Schlüssel
 llegues|llegar|(wenn) du ankommst (Subjuntivo)
 lleva|llevar|bringt, nimmt mit; lleva tres días aquí = ist seit drei Tagen hier
-llevo|llevar|llevo tres años = ich bin seit drei Jahren
+llevo|llevar|ich trage, bringe; llevo tres años = ich bin seit drei Jahren
 lloviendo|llover|regnend
 llovía|llover|es regnete (Imperfecto)
 llueva|llover|(dass) es regnet (Subjuntivo)
@@ -4725,7 +4845,7 @@ quisiera|querer|ich hätte gern (höflich)
 qué||was; wie
 razón||Grund; tener razón = recht haben
 reciben|recibir|bekommen
-recuerdo|recordar|ich erinnere mich
+recuerdo|recordar|ich erinnere mich; als Nomen: Erinnerung, Andenken (como recuerdo = als Erinnerung)
 regalo||Geschenk
 repente||de repente = plötzlich
 responder||antworten
@@ -4805,7 +4925,7 @@ visité|visitar|ich besuchte
 viviendo|vivir|lebend, wohnend
 vivió|vivir|lebte, wohnte
 vivo||lebendig, am Leben (auch: ich lebe, von vivir)
-vivía|vivir|ich wohnte (Imperfecto)
+vivía|vivir|wohnte, lebte (Imperfecto, yo / él, ella, usted)
 voy|ir|ich gehe
 y||und
 ya||schon; jetzt
@@ -4860,7 +4980,7 @@ bilbao||Bilbao
 málaga||Málaga
 ocho||acht
 cinco||fünf
-lista|listo|klug (ser); fertig (estar)
+lista||Liste; als Adjektiv: klug (ser), fertig (estar)
 normalmente||normalerweise
 felices|feliz|glückliche, frohe; ¡Felices Reyes! = Schönen Dreikönigstag!
 reyes|rey|Könige; los Reyes Magos = die Heiligen Drei Könige
@@ -5054,7 +5174,7 @@ falta|faltar|fehlt
 cosas|cosa|Sachen, Dinge
 demás|demás|übrige; los demás = die anderen
 historia|historia|Geschichte
-acaban|acabar|gehen zu Ende; se me acaban = mir gehen aus
+acaban|acabar|gehen zu Ende; se me acaban = mir gehen aus; acaban de llegar = sie sind gerade angekommen
 después|después|danach, nach; después de = nach
 entrenamiento|entrenamiento|Training
 músculos|músculo|Muskeln
@@ -5410,7 +5530,7 @@ patrimonio||Erbe; Patrimonio de la Humanidad = Welterbe
 cultural||kulturell
 inmaterial||immateriell
 humanidad||Menschheit
-camino||Weg; el Camino de Santiago = der Jakobsweg
+camino||Weg; el Camino de Santiago = der Jakobsweg; auch: ich gehe (caminar)
 caminan|caminar|gehen, wandern (Präsens)
 caminar||gehen, wandern
 hacia||nach, in Richtung
@@ -6504,7 +6624,7 @@ uruguayo||uruguayisch; Uruguayer
 consumen|consumir|konsumieren (Präsens)
 kilos|kilo|Kilo (Plural)
 kilo||Kilo
-frente||frente a = gegenüber, im Vergleich zu; Front; Stirn
+frente||Front; Stirn; frente a = gegenüber, im Vergleich zu
 tereré||Tereré: kalt aufgegossener Mate (Paraguay)
 quedar||bleiben; übrig bleiben; sich verabreden
 dejar||lassen; verlassen; dejar de = aufhören zu; dejar un hábito = eine Gewohnheit ablegen
@@ -6976,7 +7096,7 @@ testigo||Zeuge, Zeugin
 contradijo|contradecir|widersprach (Indefinido); se contradijo = widersprach sich
 juez||Richter, Richterin
 matrícula||Einschreibung, Studiengebühr; Kennzeichen
-concentración||Kundgebung; Konzentration
+concentración||Kundgebung; Konzentration; campo de concentración = Konzentrationslager
 parlamento||Parlament
 atasco||Stau
 embotellamiento||Stau (Lateinamerika)
@@ -7094,7 +7214,7 @@ estante||Regal
 estupendo||toll, großartig
 excompañero||ehemaliger Mitschüler, ehemaliger Kollege
 facilísimo|fácil|sehr leicht, kinderleicht
-fila||Reihe, Schlange; hacer fila = anstehen
+fila||Reihe, Schlange; hacer fila = anstehen; llamar a filas = zum Militär einberufen
 finalmente||schließlich, endlich
 fortuna||Vermögen; Glück; costar una fortuna = ein Vermögen kosten
 jamás||nie, niemals
@@ -7592,12 +7712,78 @@ prohibido||verboten (prohibir = verbieten)
 archivo||Archiv
 sellar||stempeln, versiegeln
 cepa||Rebstock; el Cepa = Spitzname von José María Grimaldos
-partida||Partie (Spiel); Urkunde (partida de bautismo = Taufurkunde); Abfahrt
+partida||Partie (Spiel); Urkunde (partida de bautismo = Taufurkunde); Abfahrt; auch: geteilt, gespalten (Partizip von partir)
 ponte||Ponte (Galo Ponte, Justizminister 1925–1930)
 retiro||Rückzug; Ruhestand; el Retiro = großer Park in Madrid (auch: ich ziehe zurück, von retirar)
 guardas||Wächter (Plural von el guarda); auch: du bewahrst auf (guardar)
 procesar||strafrechtlich verfolgen, anklagen
 juzgada|juzgar|vor Gericht gestellt (Partizip, weiblich)
+aquellos|aquel|jene (Plural); aquellos años = jene Jahre
+carmen||Carmen (Vorname)
+atar||binden, zubinden
+medalla||Medaille, Orden
+tomás||Tomás (Vorname)
+julián||Julián (Vorname)
+sublevado||Aufständischer; aufständisch
+sublevados|sublevado|die Aufständischen (Putschisten von 1936)
+aragón||Aragonien (Region im Nordosten Spaniens)
+salamanca||Salamanca (Stadt in Kastilien und León)
+archivera||Archivarin
+reunir||sammeln, zusammentragen
+partir||teilen; aufbrechen; a partir de = ab
+perseguir||verfolgen
+biberón||Babyfläschchen; la quinta del biberón = der „Babyflaschen-Jahrgang“ (1938 eingezogene 17-Jährige)
+movilizar||mobilisieren, einberufen
+tropa||Truppe; las tropas = die Truppen
+aprendiz||Lehrling
+elegir||wählen, aussuchen
+conducir||fahren (Auto); führen
+reconstruir||wieder aufbauen
+corbera||Corbera d'Ebre (Ort in Katalonien, Altstadt seit 1938 Ruine)
+d'ebre||am Ebro (katalanisch, in Ortsnamen)
+tarragona||Tarragona (Stadt und Provinz in Katalonien)
+luchar||kämpfen
+ebro||Ebro (Fluss im Nordosten Spaniens)
+colina||Hügel
+gandesa||Gandesa (Ort in Katalonien)
+tachar||durchstreichen
+censura||Zensur
+rezar||beten
+señor||Herr; un señor mayor = ein älterer Herr
+superviviente||Überlebender
+supervivientes|superviviente|Überlebende
+muro||Mauer
+lejos||weit, weit weg
+batallón||Bataillon
+batallones|batallón|Bataillone
+capturar||gefangen nehmen
+historiador||Historiker
+clasificar||einstufen, einteilen
+prisionero||Gefangener
+falange||Falange (Partei des Franco-Regimes)
+afecto||Zuneigung; als Einstufung in Francos Lagern: regimetreu
+afectos|afecto|die „Regimetreuen“ (Einstufung in Francos Lagern)
+desafecto||regimefeindlich (Einstufung in Francos Lagern)
+desafectos|desafecto|die „Regimefeinde“ (Einstufung in Francos Lagern)
+dudoso||zweifelhaft
+pantano||Stausee
+borrador||Entwurf
+muchacho||Junge, junger Mann
+pirineo||Pyrenäen; el Pirineo = die Pyrenäen
+asunción||Asunción (Vorname)
+guiñote||Guiñote (Kartenspiel, in Aragonien beliebt)
+delito||Straftat, Delikt
+manera||Art, Weise
+defensa||Verteidigung
+trescientos||dreihundert
+quinta||fünfte; Jahrgang der Einberufenen (la quinta del biberón)
+alta|alto|groß, hoch; la parte alta = der obere Teil
+llevaron|llevar|brachten; trugen (Indefinido, ellos, ellas)
+políticas||politische (weiblich, Plural); las políticas = politische Maßnahmen
+juntos|junto|zusammen
+juntas|junto|zusammen (weiblich)
+llamaban|llamar|nannten; riefen an (Imperfecto, ellos, ellas)
+llamaron|llamar|riefen an; riefen (zum Militär) ein; nannten (Indefinido, ellos, ellas)
 `
 };
 

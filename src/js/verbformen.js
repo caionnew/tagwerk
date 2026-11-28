@@ -15,6 +15,8 @@ const ES_UE = new Set(('contar encontrar recordar acordar costar mostrar demostr
 const ES_EI = new Set('pedir despedir impedir medir repetir servir seguir conseguir perseguir vestir elegir corregir rendir competir gemir regir concebir'.split(' '));
 // -iar/-uar mit betontem i/u (envío, continúa); die übrigen ohne (cambio, estudio, averiguo)
 const ES_ACC_IAR = new Set('enviar confiar desconfiar vaciar esquiar ampliar criar guiar fiar desafiar variar espiar enfriar resfriar averiar continuar actuar situar graduar evaluar efectuar acentuar insinuar'.split(' '));
+// betontes u/i vor dem letzten Konsonanten des Stamms (reúno, prohíbe)
+const ES_ACC_STEM = new Set('reunir prohibir cohibir rehusar aislar aunar ahumar'.split(' '));
 // Zusammensetzungen: nur diese Grundverben (contestar ist kein estar, compensar kein pensar, conjugar kein jugar)
 // freír geht wie reír (frío, frio, friendo)
 const ES_COMPOUND = ['tener', 'venir', 'poner', 'hacer', 'decir', 'traer', 'volver', 'pedir', 'conocer', 'salir', 'valer', 'reír'];
@@ -88,7 +90,8 @@ function esConjSimple(inf){
     if (uir && /^[oae]/.test(end)) return st + 'y';
     return st;
   };
-  const accIar = (st, p) => (ES_ACC_IAR.has(inf) && [0, 1, 2, 5].includes(p) ? st.replace(/([iu])$/, c => (c === 'i' ? 'í' : 'ú')) : st);
+  const accIar = (st, p) => (![0, 1, 2, 5].includes(p) ? st : ES_ACC_IAR.has(inf) ? st.replace(/([iu])$/, c => (c === 'i' ? 'í' : 'ú'))
+    : ES_ACC_STEM.has(inf) ? st.replace(/([iu])([^aeiou]+)$/, (m, c, r) => (c === 'i' ? 'í' : 'ú') + r) : st);
   const reg = t => ES_END6[t][cls].split(' ').map((end, p) => {
     let st = stem;
     if (t === 'pres') st = [0, 1, 2, 5].includes(p) ? strong : stem;

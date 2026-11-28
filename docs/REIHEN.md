@@ -8,10 +8,11 @@ Mehrere Lesetexte, die aufeinander aufbauen und nur in fester Reihenfolge gelese
 „Thema 1, Teil 1“. Sie leben in „Lesen und Hören“ über den Einzeltexten und nutzen denselben Leser (Vorlesen, „Nur hören“, Antippen,
 Fragen mit Textstelle, „Ins Tagwerk“, Lückentext). Neu ist die Ebene darüber:
 
-- **Karte** in „Lesen und Hören“: Thema, Niveau, Erzählform, Fortschritt als Striche. Tipp auf eine begonnene Reihe öffnet gleich
+- **Karte** in „Lesen und Hören“: Thema, Niveau, Fortschritt als Striche; die Erzählform zeigt die App nicht (man soll unvoreingenommen
+  hineinlesen), sie steht nur in den Daten und in IDEEN.md. Tipp auf eine begonnene Reihe öffnet gleich
   den nächsten Teil, sonst die Übersicht.
-- **Übersicht:** Einleitung, „Was ist echt?“, die Teile als Schiene (wie „Dein Weg“), Personen und Wörter der Reihe. Titel späterer
-  Teile, Personen und Wörter erscheinen erst, wenn man so weit ist (kein Vorgriff). Gelesene Teile lassen sich jederzeit noch einmal
+- **Übersicht:** Einleitung, „Was ist echt?“, die Teile als Schiene (wie „Dein Weg“), Personen und Wörter der Reihe. Titel und Zeitangaben
+  späterer Teile, Personen und Wörter erscheinen erst, wenn man so weit ist (kein Vorgriff). Gelesene Teile lassen sich jederzeit noch einmal
   lesen, die Fragen noch einmal beantworten; das beste Ergebnis bleibt.
 - **Teil:** Datumszeile unter dem Titel, ab Teil 2 „Bisher“ (zwei Sätze), am Ende „Im nächsten Teil“ mit einem Satz Vorschau und die
   Quellen.
@@ -60,8 +61,8 @@ Dokumente), spuren (Ermittlung), ding (Ein Gegenstand erzählt), wahl (Du entsch
   Die Form ist eine kreative Entscheidung je Reihe, kein Standard: mit oder ohne Figur, Stimmen, Dokumente, was der Stoff trägt.
   Die Reihen sollen sich unterscheiden: möglichst jede in einer Form, die noch keine hat, nie zweimal dieselbe hintereinander.
   „Wie es geschah“: Präsens, jeder Teil kennt nur den Stand seines Tages. Das sagt die Form, nicht die Einleitung.
-- **Was ist echt:** Kurz, höchstens 200 Zeichen: was erfunden ist, dass der Rest belegt ist (Quellen je Teil), wie Gesagtes
-  wiedergegeben wird. Jede erfundene Figur wird in „Was ist echt?“ genannt. Echte Personen bekommen keine erfundenen Zitate, nur
+- **Was ist echt:** Kurz, höchstens 200 Zeichen: was erfunden ist, dass der Rest belegt ist, wie Gesagtes wiedergegeben wird.
+  Kein Hinweis auf die Quellen (stehen am Ende jedes Teils) und keiner auf die Form („Wer erzählt, ist erfunden“). Jede erfundene Figur wird in „Was ist echt?“ genannt. Echte Personen bekommen keine erfundenen Zitate, nur
   belegte oder sinngemäß wiedergegebene. Unsicheres und Legenden als solche benennen (Nobels zu früher Nachruf).
 - **Quellen:** je Teil zwei bis vier, jede Tatsache aus mindestens einer. Daten, Zahlen und Namen gegen die Quellen prüfen.
 - **Umstrittenes** (Bürgerkrieg, Katalonien, Samen) aus mehreren Perspektiven. Gewalt benennen, nicht ausmalen.

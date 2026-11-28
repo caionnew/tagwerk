@@ -3,8 +3,7 @@
 // „Ins Tagwerk“, Lückentext); dazu kommen die Übersicht, „Bisher“ am Anfang jedes Teils, „Im nächsten Teil“ am Ende und die
 // Fortsetzung auf „Heute“. Der Fortschritt steht im vorhandenen Speicher der Lesetexte (DB.used.texts, Schlüssel „sv:palme-2“),
 // es gibt also kein neues Datenformat. Inhalte kommen in Paketen (data/reihen.js, Regeln in docs/REIHEN.md).
-const SERIES_FORMS = { live:'Wie es geschah', figur:'Mit erfundener Figur', stimmen:'Viele Stimmen', chronik:'Familienchronik', briefe:'Briefe und Dokumente',
-  spuren:'Ermittlung', ding:'Ein Gegenstand erzählt', wahl:'Du entscheidest', tage:'Ein Tag, der alles änderte', reise:'Reisetagebuch' };
+// Die Erzählform (form) zeigt die App nicht, man soll unvoreingenommen hineinlesen; die Liste steht in docs/REIHEN.md und in der Prüfung
 const seriesList = lang => SERIES[lang] || [];
 const seriesById = (lang, id) => seriesList(lang).find(s => s.id === id) || null;
 const partId = (s, i) => `${s.id}-${i + 1}`;
@@ -47,7 +46,7 @@ function seriesCards(lang){
   return `<h2 class="grp">Reihen</h2><div class="tgrid2">${list.map(s => {
     const st = seriesState(lang, s), N = s.parts.length;
     const cta = st.all ? `Alle ${N} Teile gelesen` : st.n ? `Weiter mit Teil ${st.next + 1} ›` : 'Beginnen ›';
-    return `<button type="button" class="tcard scard" data-a="sopen" data-s="${s.id}"><span class="tchips"><span class="tag">${esc(s.topic)}</span><span class="tag">${s.level}</span>${SERIES_FORMS[s.form] ? `<span class="tag form">${SERIES_FORMS[s.form]}</span>` : ''}</span>
+    return `<button type="button" class="tcard scard" data-a="sopen" data-s="${s.id}"><span class="tchips"><span class="tag">${esc(s.topic)}</span><span class="tag">${s.level}</span></span>
       <span class="ttitle" lang="${lang}">${esc(s.title)}</span><span class="tteaser" lang="${lang}">${esc(s.teaser)}</span>
       <span class="sprog"><span class="sdash" aria-label="${st.n} von ${N} Teilen gelesen">${st.read.map(r => `<i${r ? ' class="on"' : ''}></i>`).join('')}</span><span class="scta">${cta}</span></span></button>`;
   }).join('')}</div><h2 class="grp">Einzelne Texte</h2>`;
@@ -60,14 +59,14 @@ function viewSeries(){
   const st = seriesState(lang, s), N = s.parts.length, reach = seriesReach(st);
   const rail = s.parts.map((p, i) => {
     const open = partOpen(st, i), cls = st.read[i] ? 'done' : i === st.next ? 'now' : 'next';
-    const inner = `${open ? `<span class="mr-t" lang="${lang}">${esc(p.title)}</span>` : `<span class="mr-t">Teil ${i + 1}</span>`}<span class="mr-d">${esc(p.when || '')}</span>`;
+    const inner = `${open ? `<span class="mr-t" lang="${lang}">${esc(p.title)}</span>` : `<span class="mr-t">Teil ${i + 1}</span>`}${open ? `<span class="mr-d">${esc(p.when || '')}</span>` : ''}`;
     return `<li class="mr ${cls}"><i></i>${open ? `<button type="button" class="mr-b" data-a="spart" data-s="${s.id}" data-i="${i}" aria-label="Teil ${i + 1}: ${esc(p.title)}${st.read[i] ? ', gelesen, noch einmal lesen' : ''}">${inner}</button>` : `<span class="mr-b">${inner}</span>`}</li>`;
   }).join('');
   const cast = (s.cast || []).filter(c => (c[2] || 1) <= reach);
   const words = (s.words || []).filter(w => (w[1] || 1) <= reach);
   const go = st.all ? [0, 'Von vorn lesen'] : [st.next, st.n ? `Weiter mit Teil ${st.next + 1}` : 'Beginnen'];
   return backBar('Lesen und Hören', 'texts') + `<header class="rhero">
-      <div class="tchips"><span class="tag">${esc(s.topic)}</span><span class="tag">${s.level}</span><span class="tag">${N} Teile</span>${SERIES_FORMS[s.form] ? `<span class="tag form">${SERIES_FORMS[s.form]}</span>` : ''}</div>
+      <div class="tchips"><span class="tag">${esc(s.topic)}</span><span class="tag">${s.level}</span><span class="tag">${N} Teile</span></div>
       <h1 class="rtitle" lang="${lang}">${hangLead(esc(s.title))}</h1>
       ${tlOrDe(s.intro, lang, 'shook', P.de)}${niveau() !== 'grund' && !P.de ? '<p class="vocab"><button type="button" class="link dim" data-a="sde">Auf Deutsch</button></p>' : ''}
     </header>

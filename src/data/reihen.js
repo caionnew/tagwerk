@@ -11,7 +11,7 @@ sv:[
   teaser:'Mordet på Olof Palme, från skotten på Sveavägen till i dag.',
   intro:['Den 28 februari 1986 skjuts statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättelsen om natten, spåren och frågan som Sverige fortfarande saknar svar på.',
     'Am 28. Februar 1986 wird Ministerpräsident Olof Palme auf dem Heimweg vom Kino erschossen. Die Geschichte der Nacht, der Spuren und der Frage, auf die Schweden bis heute keine Antwort hat.'],
-  real:'Alles belegt, keine erfundenen Figuren. Was Beteiligte sagten, steht sinngemäß da; die Quellen unter jedem Teil.',
+  real:'Alles belegt, keine erfundenen Figuren. Was Beteiligte sagten, steht sinngemäß da.',
   cast:[['Olof Palme', 'Ministerpräsident, Sozialdemokrat', 1], ['Lisbet Palme', 'seine Frau', 1], ['Mårten Palme', 'der Sohn, mit seiner Freundin im Kino', 1],
     ['Ingvar Carlsson', 'stellvertretender Ministerpräsident, übernimmt in der Nacht', 2], ['Hans Holmér', 'Polizeichef von Stockholm, leitet die Ermittlung', 3],
     ['„33-åringen“', 'der erste Verdächtige, nach wenigen Tagen frei', 3], ['Christer Pettersson', '1989 verurteilt, im selben Jahr freigesprochen', 5],
@@ -130,10 +130,10 @@ Nästan fyrtio år efter natten på Sveavägen finns det alltså inget svar. Vem
 // Paket 3 (24.101.0): finnische Kriegskinder, „Briefe und Dokumente“. Familien und Briefe erfunden; Zahlen, Wege und Daten geprüft
 // am 28.11.2026 an den Quellen je Teil.
 { id:'tvamammor', title:'Två mammor', topic:'Geschichte', level:'B1', form:'briefe',
-  teaser:'En flicka från Helsingfors, två mammor och fyra år av brev.',
+  teaser:'En flicka från Helsingfors, två mammor och ett krig emellan.',
   intro:['Under andra världskriget skickas ungefär 70 000 barn från Finland till Sverige för att komma bort från kriget. En av dem är Aino, sex år, som får två mammor: en i Helsingfors och en i Dalarna.',
     'Im Zweiten Weltkrieg werden rund 70 000 Kinder aus Finnland nach Schweden geschickt, weg vom Krieg. Eines davon ist Aino, sechs Jahre alt, die zwei Mütter bekommt: eine in Helsinki und eine in Dalarna.'],
-  real:'Die Familien und ihre Briefe sind erfunden. Belegt sind die Geschichte der rund 70 000 Kriegskinder, ihre Wege und die Daten des Krieges; Quellen unter jedem Teil.',
+  real:'Die Familien sind erfunden. Belegt sind die Geschichte der rund 70 000 Kriegskinder, ihre Wege und die Daten des Krieges.',
   cast:[['Aili Virtanen', 'erfunden: Mutter in Helsinki, spricht nur Finnisch', 1], ['Aino', 'erfunden: ihre Tochter, sechs Jahre alt', 1],
     ['fröken Holm', 'erfunden: Nachbarin, Finnlandschwedin, schreibt und liest die Briefe für Aili', 1], ['Veikko', 'erfunden: Ainos Vater, an der Front', 1],
     ['Greta Lindqvist', 'erfunden: Pflegemutter auf einem Hof bei Mora', 2], ['Erik', 'erfunden: ihr Mann', 2], ['Nils', 'erfunden: ihr Sohn', 3]],
@@ -269,7 +269,7 @@ Hälsningar från Aili.`,
   teaser:'Sverige under andra världskriget: neutralt, men inte oberört.',
   intro:['Sverige håller sig utanför andra världskriget, men kriget kommer ändå nära: vid gränsen, på järnvägen, i tidningarna och på stränderna i Skåne. Människor i olika delar av landet berättar om åren 1940 till 1945.',
     'Schweden hält sich aus dem Zweiten Weltkrieg heraus, aber der Krieg kommt trotzdem nahe: an der Grenze, auf der Eisenbahn, in den Zeitungen und an den Stränden von Schonen. Menschen in verschiedenen Teilen des Landes erzählen von den Jahren 1940 bis 1945.'],
-  real:'Die Erzählerinnen und Erzähler sind erfunden. Ereignisse, Daten, Zahlen und alle realen Personen sind belegt; Quellen unter jedem Teil.',
+  real:'Wer erzählt, ist erfunden. Ereignisse, Daten, Zahlen und alle realen Personen sind belegt.',
   cast:[['Sven', 'erfunden: Wehrpflichtiger an der norwegischen Grenze', 1], ['Karin', 'erfunden: arbeitet am Bahnhof an der Strecke nach Norwegen', 2],
     ['Elsa', 'erfunden: junge Journalistin in Göteborg', 3], ['Torgny Segerstedt', 'Chefredakteur der Göteborgs Handels- och Sjöfartstidning', 3],
     ['Anna', 'erfunden: Fischersfrau am Öresund', 4], ['Gunnar', 'erfunden: Busfahrer des Schwedischen Roten Kreuzes', 5], ['Folke Bernadotte', 'Vizepräsident des Schwedischen Roten Kreuzes', 5]],
@@ -398,6 +398,138 @@ En flicka ger mig en liten flagga. Jag viftar med den, som alla andra. I dag få
          ['Was verkaufte Schweden an Deutschland?', ['Eisenerz', 'Waffen', 'Lebensmittel'], 'Vi sålde järnmalm till Tyskland', 'Vad sålde Sverige till Tyskland?', ['Järnmalm', 'Vapen', 'Mat']]],
       keep:[['Kriget i Europa är slut.', 'Der Krieg in Europa ist vorbei.'], ['I morgon får vi fundera.', 'Morgen dürfen wir nachdenken.']],
       src:['Sveriges Radio, „Tidslinje: Vägen till fred“ (Kapitulation am 7.5.1945, Konfetti auf der Kungsgatan)', 'Wikipedia (englisch), „Transit of German troops through Finland and Sweden“ (Ende am 15.8.1943, über zwei Millionen Fahrten)', 'Wikipedia (englisch), „Torgny Segerstedt“ (gestorben am 31.3.1945)', 'Wikipedia (englisch), „Sweden during World War II“ (Eisenerz für Deutschland); Svenska Röda korset (15 345 Gerettete)'] }
+  ] },
+// Paket 5 (24.103.0): Sprachwandel in vier Generationen, „Familienchronik“. Familie erfunden; Reformen, Daten und Gesetze geprüft am
+// 28.11.2026 an den Quellen je Teil.
+{ id:'hvad', title:'Från hvad till hen', topic:'Sprache', level:'B1', form:'chronik',
+  teaser:'En familj, fyra generationer och ett språk som aldrig står still.',
+  intro:['Svenskan har ändrats mycket på hundra år: hur man stavar, hur man tilltalar varandra och vilka ord som finns i ordlistan. En familj från Småland är med varje gång.',
+    'Das Schwedische hat sich in hundert Jahren stark verändert: wie man schreibt, wie man einander anredet und welche Wörter im Wörterbuch stehen. Eine Familie aus Småland ist jedes Mal dabei.'],
+  real:'Die Familie ist erfunden. Reformen, Gesetze, Daten und Zahlen sind belegt.',
+  cast:[['Elin', 'erfunden: Schulmädchen in Småland, 1907', 1], ['fröken Lund', 'erfunden: ihre Lehrerin', 1], ['Fridtjuv Berg', 'Kultusminister, unterschreibt 1906 die Rechtschreibreform', 1],
+    ['Gösta', 'erfunden: Elins Sohn, Büroangestellter in Stockholm', 2], ['Bror Rexed', 'Generaldirektor des Medizinalamts', 2],
+    ['Maria', 'erfunden: Göstas Tochter, Lehrerin für Schwedisch', 3], ['Love', 'erfunden: Marias Kind', 4]],
+  words:[['stava', 1], ['reform', 1], ['regel', 1], ['bokstav', 1], ['titel', 2], ['förnamn', 2], ['respekt', 2], ['språklag', 3], ['huvudspråk', 3], ['minoritetsspråk', 3], ['ordlista', 4], ['pronomen', 4]],
+  parts:[
+    { title:'Hvad blir vad', when:'1907', date:'En byskola i Småland, hösten 1907',
+      body:`Elin är nio år och går i byskolan. En morgon i september skriver fröken Lund ett ord på svarta tavlan: hvad. Sedan suddar hon ut bokstaven h.
+
+– Från och med i år skriver vi så här, säger hon. Vad.
+
+Barnen tittar på varandra. I alla böcker i skolan står det hvad, hvem och hvit. I mormors psalmbok står det likadant.
+
+Fröken förklarar att ecklesiastikministern Fridtjuv Berg bestämde nya regler förra våren. Nu ska ett v-ljud alltid stavas med v. Därför blir hvit till vit och lefva till leva. Och godt ska stavas gott, eftersom det låter så.
+
+– Det är logiskt, säger fröken. Man ska skriva som man säger.
+
+Elin tycker att vad ser naket ut utan sitt h. Men hon lär sig snabbt, och hon tycker om att reglerna är enkla.
+
+Hemma blir pappa arg. Han läser tidningen varje kväll och är stolt över att han stavar rätt.
+
+– Ska en minister bestämma hur vi stavar? säger han.
+
+Han är inte ensam. I tidningarna kallar många reformen för stavningsukasen. Året därpå lämnar 40 000 människor in en protest till regeringen. Det hjälper inte.
+
+På kvällen sitter Elin vid köksbordet och skriver sin läxa. Hon skriver vad, vem och vit. I marginalen ritar hon ett litet h, så att det inte ska känna sig ensamt.`,
+      q:[['Was wischt die Lehrerin an der Tafel weg?', ['Den Buchstaben h in „hvad“', 'Das ganze Wort', 'Elins Namen'], 'Sedan suddar hon ut bokstaven h.', 'Vad suddar fröken ut på tavlan?', ['Bokstaven h i ”hvad”', 'Hela ordet', 'Elins namn']],
+         ['Was ist die neue Regel für den v-Laut?', ['Er wird immer mit v geschrieben', 'Er wird mit hv geschrieben', 'Er wird mit f geschrieben'], 'Nu ska ett v-ljud alltid stavas med v.', 'Vad är den nya regeln för v-ljudet?', ['Det ska alltid stavas med v', 'Det ska stavas med hv', 'Det ska stavas med f']],
+         ['Was geschieht im Jahr darauf?', ['40 000 Menschen protestieren bei der Regierung', 'Die Reform wird zurückgenommen', 'Elin wechselt die Schule'], 'Året därpå lämnar 40 000 människor in en protest till regeringen.', 'Vad händer året därpå?', ['40 000 människor protesterar hos regeringen', 'Reformen tas tillbaka', 'Elin byter skola']]],
+      keep:[['Man ska skriva som man säger.', 'Man soll schreiben, wie man spricht.'], ['Det hjälper inte.', 'Es hilft nichts.']],
+      src:['Wikipedia (englisch), „Svenska Akademiens ordlista“ (Erlass vom 7.4.1906, Schulen ab 1907, Protest mit 40 000 Unterschriften 1908)', 'Elon, „A Short History of the Swedish Language“ (v statt f, fv, hv; t statt dt)', 'Hans Högman, „Orthography reform in Sweden“ („stafningsukasen“)'] },
+    { title:'Säg du', when:'juli 1967', date:'Stockholm, juli 1967',
+      hook:'Sextio år senare handlar det inte om bokstäver, utan om ett litet ord.',
+      recap:['Hösten 1907 lär sig Elin den nya stavningen i skolan: vad i stället för hvad. Hennes pappa och många andra är arga på reformen.',
+        'Im Herbst 1907 lernt Elin in der Schule die neue Rechtschreibung: vad statt hvad. Ihr Vater und viele andere ärgern sich über die Reform.'],
+      body:`Gösta, Elins son, är fyrtiotvå år och arbetar på ett försäkringsbolag i Stockholm. Han har arbetat där i tjugo år, men han har aldrig sagt du till sin chef. Man säger ”direktören”: ”Vill direktören ha kaffe?” Att säga ni till chefen är nästan oartigt, och du är otänkbart.
+
+En morgon i juli läser Gösta i tidningen om Bror Rexed, den nya chefen för Medicinalstyrelsen. På måndagen har han hållit ett välkomsttal för personalen. Där bad han alla att kalla honom Bror. Själv tänker han säga du och förnamn till alla.
+
+– Han är galen, säger kollegan Berit.
+
+– Eller modig, säger Gösta.
+
+Två veckor senare kommer direktör Holmgren in på kontoret. Han harklar sig och säger: ”Jag heter Lennart. Vi säger du här från och med nu.” Ingen vet vad man ska svara. Till slut frågar Berit: ”Vill du ha kaffe, Lennart?” Alla skrattar.
+
+På söndagen åker Gösta hem till Småland och hälsar på sin mamma. Elin är sextionio år nu.
+
+– På kontoret säger vi du till chefen, berättar han.
+
+Elin tittar upp från stickningen.
+
+– Det låter ohyfsat. Hur ska man då visa respekt?
+
+– Kanske med det man gör, mamma, och inte med titlar.
+
+Elin tänker en stund. Sedan ler hon.
+
+– Det var likadant med h:et, säger hon. Folk blev arga då också.`,
+      q:[['Wie spricht man 1967 in Göstas Büro den Chef an?', ['Mit dem Titel: „Vill direktören ha kaffe?“', 'Mit dem Vornamen', 'Mit „du“'], 'Man säger ”direktören”: ”Vill direktören ha kaffe?”', 'Hur tilltalar man chefen på Göstas kontor 1967?', ['Med titeln: ”Vill direktören ha kaffe?”', 'Med förnamnet', 'Med du']],
+         ['Worum bat Bror Rexed seine Mitarbeiter?', ['Ihn Bror zu nennen', 'Pünktlich zu kommen', 'Ihn Herr Generaldirektor zu nennen'], 'Där bad han alla att kalla honom Bror.', 'Vad bad Bror Rexed sin personal om?', ['Att kalla honom Bror', 'Att komma i tid', 'Att kalla honom herr generaldirektör']],
+         ['Woran erinnert Elin die du-Reform?', ['An die Rechtschreibreform mit dem h', 'An ihre Hochzeit', 'An den Krieg'], 'Det var likadant med h:et, säger hon.', 'Vad påminner du-reformen Elin om?', ['Om stavningsreformen med h:et', 'Om hennes bröllop', 'Om kriget']]],
+      keep:[['Elin tänker en stund.', 'Elin denkt eine Weile nach.'], ['Folk blev arga då också.', 'Die Leute haben sich damals auch geärgert.']],
+      src:['SVT, „Tramsigt att nia kunder“ (Montag, 3. Juli 1967: Bror Rexed, Willkommensrede, „Bror“ und Vornamen)', 'Wikipedia (englisch), „Du-reformen“ (vorher Titel, „ni“ wenig respektvoll)', 'SVT, „Experterna: du-reformen är Sveriges största språkhändelse“'] },
+    { title:'Huvudspråk', when:'2009', date:'Stockholm, augusti 2009',
+      hook:'Fyrtio år senare får svenskan för första gången en egen lag.',
+      recap:['Sommaren 1967 börjar Gösta och hans kollegor säga du till chefen. Hans mamma Elin tycker först att det låter ohyfsat.',
+        'Im Sommer 1967 fangen Gösta und seine Kollegen an, den Chef zu duzen. Seine Mutter Elin findet das zuerst unhöflich.'],
+      body:`Maria, Göstas dotter, är fyrtiosju år och lärare i svenska för invandrare. Den första dagen efter sommaren skriver hon en mening på tavlan: Svenska är huvudspråk i Sverige.
+
+– Det står i en ny lag, förklarar hon. Språklagen. Den gäller sedan den 1 juli.
+
+I klassrummet sitter tjugo vuxna från tolv länder. Amina kommer från Somalia, Jorge från Chile och Hevin från Irak.
+
+– Varför behövs en lag? frågar Jorge. Alla i Sverige pratar ju svenska.
+
+– Inte alla, säger Maria. Lagen säger också att Sverige har fem nationella minoritetsspråk: finska, jiddisch, meänkieli, romani chib och samiska. De har talats här länge, och samhället ska skydda dem. Teckenspråket får också ett särskilt skydd.
+
+– Vad är meänkieli? frågar Amina.
+
+– Ett språk i Tornedalen, längst upp i norr. Det liknar finska.
+
+Hevin räcker upp handen.
+
+– Och kurdiska? Mitt språk?
+
+– Lagen säger att alla som har ett annat modersmål ska få möjlighet att utveckla det, svarar Maria. Men huvudspråket är svenska. Det är det ni är här för.
+
+På kvällen äter hon middag hos sin pappa. Gösta är åttiofyra år nu.
+
+– När jag var ung trodde vi att alla i Sverige talade svenska, säger han.
+
+– Det har aldrig varit sant, pappa, säger Maria. Vi har bara inte lyssnat.`,
+      q:[['Seit wann gilt das Sprachgesetz?', ['Seit dem 1. Juli 2009', 'Seit 1967', 'Seit 1907'], 'Den gäller sedan den 1 juli.', 'Sedan när gäller språklagen?', ['Sedan den 1 juli 2009', 'Sedan 1967', 'Sedan 1907']],
+         ['Wie viele nationale Minderheitensprachen nennt das Gesetz?', ['Fünf', 'Zwei', 'Zwölf'], 'Lagen säger också att Sverige har fem nationella minoritetsspråk', 'Hur många nationella minoritetsspråk nämner lagen?', ['Fem', 'Två', 'Tolv']],
+         ['Wo spricht man Meänkieli?', ['Im Tornedal, ganz im Norden', 'In Stockholm', 'In Småland'], 'Ett språk i Tornedalen, längst upp i norr.', 'Var talar man meänkieli?', ['I Tornedalen, längst upp i norr', 'I Stockholm', 'I Småland']]],
+      keep:[['Det liknar finska.', 'Es ähnelt dem Finnischen.'], ['Vi har bara inte lyssnat.', 'Wir haben nur nicht zugehört.']],
+      src:['Riksdagen, Språklag (2009:600) (§ 4 Hauptsprache, § 7 Minderheitensprachen, Gebärdensprache, Muttersprache; in Kraft ab 1.7.2009)', 'Regeringen, Prop. 2008/09:153 „Språk för alla“', 'Lagen.nu, Språklag (2009:600) (Minderheitensprachen seit 2000 anerkannt)'] },
+    { title:'Hen', when:'april 2015', date:'Stockholm, april 2015',
+      hook:'Ett nytt ord i ordlistan, och en gammal skrivbok i ett skåp.',
+      recap:['Sommaren 2009 får Sverige en språklag: svenska blir huvudspråk, och fem språk blir nationella minoritetsspråk. Maria berättar om lagen för sina elever.',
+        'Im Sommer 2009 bekommt Schweden ein Sprachgesetz: Schwedisch wird Hauptsprache, und fünf Sprachen werden nationale Minderheitensprachen. Maria erzählt ihren Schülern von dem Gesetz.'],
+      body:`Love är tolv år och Marias yngsta barn. I april 2015 pratar alla i klassen om samma bok: Svenska Akademiens ordlista, som har kommit i en ny upplaga. Det är den fjortonde sedan 1874. Ungefär 13 000 nya ord har kommit in, och ett av dem har det skrivits mest om: pronomenet hen.
+
+Läraren skriver ordet på tavlan.
+
+– Hen kan man använda om en person när man inte vet eller inte vill säga om det är en kvinna eller en man, förklarar hon. Till exempel: Om någon ringer, be hen ringa igen.
+
+Några i klassen tycker att det är praktiskt. Andra skrattar. En pojke säger att hans pappa blir arg av ordet. Love tänker att det låter bekant.
+
+På söndagen hjälper Love sin mamma att städa ur ett gammalt skåp. Längst in ligger en skrivbok med mörkblått omslag. På första sidan står det med snirkliga bokstäver: Elin, 1907.
+
+– Det var din gammelmormor, säger Maria. Min farmor.
+
+Love bläddrar. Där står vad, vem och vit, med noggrann handstil. Och i marginalen, på nästan varje sida, ett litet ritat h.
+
+– Varför har hon ritat dem? frågar Love.
+
+– Hon brukade säga att h:et inte skulle behöva känna sig ensamt, säger Maria och skrattar.
+
+Love tar en penna och skriver något längst ner på den sista sidan. Ett litet h, och bredvid det: hen.`,
+      q:[['Was ist im April 2015 neu?', ['Eine neue Ausgabe des Wörterbuchs der Schwedischen Akademie', 'Ein neues Sprachgesetz', 'Eine neue Rechtschreibreform'], 'Svenska Akademiens ordlista, som har kommit i en ny upplaga', 'Vad är nytt i april 2015?', ['En ny upplaga av Svenska Akademiens ordlista', 'En ny språklag', 'En ny stavningsreform']],
+         ['Wofür kann man „hen“ benutzen?', ['Für eine Person, wenn man nicht weiß oder nicht sagen will, ob Frau oder Mann', 'Nur für Tiere', 'Nur für Kinder'], 'Hen kan man använda om en person när man inte vet eller inte vill säga om det är en kvinna eller en man', 'När kan man använda ”hen”?', ['Om en person när man inte vet eller inte vill säga om det är en kvinna eller en man', 'Bara om djur', 'Bara om barn']],
+         ['Was findet Love im Schrank?', ['Elins Schreibheft von 1907', 'Ein altes Wörterbuch', 'Briefe von Gösta'], 'På första sidan står det med snirkliga bokstäver: Elin, 1907.', 'Vad hittar Love i skåpet?', ['Elins skrivbok från 1907', 'En gammal ordlista', 'Brev från Gösta']]],
+      keep:[['Läraren skriver ordet på tavlan.', 'Die Lehrerin schreibt das Wort an die Tafel.'], ['Love tänker att det låter bekant.', 'Love denkt, dass das bekannt klingt.']],
+      src:['LexicoNordica, Silén, „Den fjortonde upplagan av SAOL“ (April 2015, mehr als 13 000 neue Wörter)', 'Sveriges Radio, „Hen in i Svenska Akademiens ordlista“ (23.3.2015)', 'SVT, „Hen med i Akademiens ordlista“', 'Göteborgs universitet, „Svenska Akademiens ordlista får tusentals nya ord“ (erste Ausgabe 1874)'] }
   ] }
 ],
 es:[
@@ -406,7 +538,7 @@ es:[
   teaser:'Sesenta y nueve días bajo el desierto de Atacama, contados por una joven reportera.',
   intro:['El 5 de agosto de 2010, una mina se derrumba en el norte de Chile y 33 hombres quedan atrapados a 700 metros de profundidad. Camila, una joven reportera de Copiapó, cuenta lo que vive arriba, junto a las familias.',
     'Am 5. August 2010 stürzt im Norden Chiles ein Bergwerk ein, 33 Männer sind in 700 Metern Tiefe eingeschlossen. Camila, eine junge Reporterin aus Copiapó, erzählt, was sie oben bei den Familien erlebt.'],
-  real:'Erfunden ist nur die Erzählerin Camila, alles andere ist belegt (Quellen unter jedem Teil). Die Nachricht der Bergleute steht im Original, alles andere Gesagte sinngemäß.',
+  real:'Erfunden ist nur die Erzählerin Camila, alles andere ist belegt. Die Nachricht der Bergleute steht im Original, alles andere Gesagte sinngemäß.',
   cast:[['Camila', 'erfunden: junge Reporterin bei einem Radiosender in Copiapó, erzählt die Reihe', 1], ['Laurence Golborne', 'Bergbauminister', 1],
     ['Sebastián Piñera', 'Präsident Chiles', 2], ['María Segovia', '„la Alcaldesa“ des Lagers, Schwester des Bergmanns Darío Segovia', 3],
     ['Luis Urzúa', 'Schichtleiter, 54, teilt unten das Essen ein', 3], ['Carlos Mamani', 'der einzige Bolivianer unter den 33', 3],
@@ -508,10 +640,10 @@ Abajo, los rescatistas levantan un cartel: «Misión cumplida Chile». Mañana, 
 // Paket 3 (24.101.0): 23-F, „Du entscheidest“. Fakten geprüft am 28.11.2026 an den Quellen je Teil; Stand nach der Freigabe der
 // Geheimdokumente am 25.2.2026.
 { id:'transistores', title:'La noche de los transistores', topic:'Geschichte', level:'B2', form:'wahl',
-  teaser:'El 23 de febrero de 1981, un golpe de Estado contado en decisiones: ¿qué habrías hecho tú?',
+  teaser:'23 de febrero de 1981: guardias civiles armados entran en el Congreso. ¿Qué habrías hecho tú?',
   intro:['El 23 de febrero de 1981, guardias civiles armados asaltan el Congreso de los Diputados en Madrid. Durante unas dieciocho horas, la joven democracia española depende de lo que deciden unas pocas personas.',
     'Am 23. Februar 1981 stürmen bewaffnete Guardias Civiles das spanische Parlament in Madrid. Etwa achtzehn Stunden lang hängt die junge Demokratie davon ab, was wenige Menschen entscheiden.'],
-  real:'Keine erfundenen Figuren; die Frage am Ende jedes Teils geht an dich. Tejeros Ruf steht im Original, sonst Gesagtes sinngemäß; Quellen unter jedem Teil.',
+  real:'Keine erfundenen Figuren. Tejeros Ruf steht im Original, alles andere Gesagte sinngemäß.',
   cast:[['Antonio Tejero', 'Oberstleutnant der Guardia Civil, stürmt das Parlament', 1], ['Manuel Gutiérrez Mellado', 'General, stellvertretender Regierungschef', 1],
     ['Adolfo Suárez', 'scheidender Regierungschef', 1], ['Leopoldo Calvo-Sotelo', 'soll an diesem Tag Regierungschef werden', 1],
     ['Santiago Carrillo', 'Chef der Kommunisten', 2], ['Emilio Olabarrieta', 'Techniker der Cadena SER', 2], ['Jaime Milans del Bosch', 'Generalkapitän in Valencia', 2],
@@ -607,10 +739,10 @@ Ahora conoces el final. Pero piensa en aquella noche, cuando nadie sabía cómo 
   ] },
 // Paket 4 (24.102.0): Fall Grimaldos, „Ein Gegenstand erzählt“ (die Akte). Fakten geprüft am 28.11.2026 an den Quellen je Teil.
 { id:'cuenca', title:'El crimen de Cuenca', topic:'Geschichte', level:'B2', form:'ding',
-  teaser:'En 1910 desaparece un pastor en La Mancha. Un expediente judicial cuenta lo que pasa después.',
-  intro:['En agosto de 1910, un pastor desaparece cerca de Tresjuncos, en la provincia de Cuenca. Lo que sigue lo cuenta un narrador muy especial: el expediente del juzgado, que solo sabe lo que escriben en él.',
-    'Im August 1910 verschwindet bei Tresjuncos in der Provinz Cuenca ein Schäfer. Was folgt, erzählt ein besonderer Erzähler: die Gerichtsakte, die nur weiß, was in ihr steht.'],
-  real:'Die Akte als Erzählerin ist erfunden. Personen, Orte, Daten und Urteile sind belegt; was Beteiligte sagten, steht sinngemäß da. Quellen unter jedem Teil.',
+  teaser:'Agosto de 1910: un pastor de La Mancha vende sus ovejas y no vuelve.',
+  intro:['En agosto de 1910, un pastor desaparece cerca de Tresjuncos, en la provincia de Cuenca. Su familia acude al juzgado de Belmonte, y empieza un caso que nadie en la comarca olvidará.',
+    'Im August 1910 verschwindet bei Tresjuncos in der Provinz Cuenca ein Schäfer. Seine Familie geht zum Gericht in Belmonte, und es beginnt ein Fall, den in der Gegend niemand vergessen wird.'],
+  real:'Wer erzählt, ist erfunden. Personen, Orte, Daten und Urteile sind belegt; was Beteiligte sagten, steht sinngemäß da.',
   cast:[['José María Grimaldos', '„el Cepa“, Schäfer aus Tresjuncos', 1], ['León Sánchez', 'Vorarbeiter auf dem Gut, aus Osa de la Vega', 1], ['Gregorio Valero', 'Wächter auf dem Gut, aus Osa de la Vega', 1],
     ['Emilio Isasa Echenique', 'neuer Richter in Belmonte', 2], ['Galo Ponte', 'Minister', 4], ['Lola Salvador', 'Autorin', 5], ['Pilar Miró', 'Filmregisseurin', 5]],
   words:[['expediente', 1], ['juzgado', 1], ['denuncia', 1], ['acusar', 1], ['prueba', 1], ['archivar', 1], ['detención', 2], ['confesar', 2], ['culpable', 2], ['jurado', 3], ['indulto', 3], ['inocente', 4]],
@@ -710,6 +842,119 @@ Yo sigo en un archivo, con mis hojas amarillas. Todo lo que hay en mí está bie
          ['Wann kommt der Film in Spanien in die Kinos?', ['Im August 1981', 'Im Februar 1980', 'Gleich nach dem Dreh 1979'], 'en agosto de 1981 la película se estrena por fin en los cines', '¿Cuándo se estrena la película en España?', ['En agosto de 1981', 'En febrero de 1980', 'Justo después del rodaje, en 1979']]],
       keep:[['Pasan más de cincuenta años.', 'Mehr als fünfzig Jahre vergehen.'], ['Y casi nada es verdad.', 'Und fast nichts davon ist wahr.']],
       src:['Wikipedia (spanisch), „Crimen de Cuenca“ (Buch und Drehbuch von Lola Salvador, Verbot, Militärjustiz)', 'eldiario.es (Dreh im Sommer 1979 an den Originalschauplätzen)', 'Economist & Jurist, „Inicia el juicio contra Pilar Miró…“ (15.4.1980, letzte Zivilistin vor einem Militärgericht, Freispruch)', 'SensaCine (Drehorte; einziger verbotener Film der Demokratie; Kinostart 17.8.1981)'] }
+  ] },
+// Paket 5 (24.103.0): Bürgerkrieg, „Ermittlung“. Familie erfunden; Ereignisse, Archive, Gesetze und Zahlen geprüft am 28.11.2026
+// an den Quellen je Teil.
+{ id:'guerracasa', title:'La guerra en casa', topic:'Geschichte', level:'B2', form:'spuren',
+  teaser:'Una caja de zapatos, dos fotos de 1938 y una familia que nunca habló de la guerra.',
+  intro:['Cuando muere su abuela, Lucía encuentra en un armario de Zaragoza una caja con fotos y cartas de la Guerra Civil. En su familia nadie habló nunca de aquellos años, y ella decide preguntar.',
+    'Als ihre Großmutter stirbt, findet Lucía in einem Schrank in Zaragoza eine Schachtel mit Fotos und Briefen aus dem Bürgerkrieg. In ihrer Familie hat nie jemand über diese Jahre gesprochen, und sie beschließt nachzufragen.'],
+  real:'Lucía und ihre Familie sind erfunden. Belegt sind die Ereignisse, die Archive, die Gesetze und die Zahlen.',
+  cast:[['Lucía', 'erfunden: erzählt, lebt in Zaragoza', 1], ['Carmen', 'erfunden: ihre Großmutter', 1], ['Julián', 'erfunden: Carmens Vater, Lucías Urgroßvater', 1],
+    ['Tomás', 'erfunden: Juliáns jüngerer Bruder', 1], ['Asunción', 'erfunden: Nachbarin im Dorf', 5]],
+  words:[['guerra', 1], ['bando', 1], ['uniforme', 1], ['frente', 2], ['archivo', 2], ['soldado', 2], ['batalla', 3], ['censura', 3], ['prisionero', 4], ['batallón', 4], ['silencio', 5], ['amnistía', 5]],
+  parts:[
+    { title:'Una caja', when:'2025', date:'Zaragoza, octubre de 2025',
+      body:`Mi abuela Carmen murió en septiembre, a los noventa y cinco años. Esta semana, mientras vaciamos su piso de Zaragoza, encuentro en el fondo de un armario una caja de zapatos atada con una cinta. Dentro hay cartas amarillas, una medalla y dos fotos pequeñas.
+
+En la primera foto hay un chico muy joven con uniforme y gorra. En la segunda, otro chico, un poco mayor, también de uniforme. Pero los uniformes no son iguales. Detrás de cada foto, alguien ha escrito a lápiz un nombre y un año: «Tomás, 1938» y «Julián, 1938».
+
+Julián era el padre de mi abuela, mi bisabuelo. Murió antes de que yo naciera. De Tomás no sé nada.
+
+Llamo a mi padre y le pregunto quién era Tomás. Se queda callado un momento.
+
+—Un hermano del abuelo Julián. Vivía en el pueblo. En casa no se hablaba de la guerra, Lucía. Nunca.
+
+Esa noche leo sobre aquellos años. La Guerra Civil empezó en julio de 1936, con un golpe militar contra el Gobierno de la República. España quedó partida en dos. Zaragoza cayó en manos de los sublevados el 19 de julio. Muchos pueblos del este de Aragón, como el de mi familia, quedaron al principio en la zona republicana.
+
+Miro otra vez las dos fotos. Dos hermanos, dos uniformes distintos, el mismo año. ¿En qué bando estaba cada uno?`,
+      q:[['Was findet Lucía im Schrank?', ['Eine Schuhschachtel mit Briefen, einer Medaille und zwei Fotos', 'Ein Tagebuch ihrer Großmutter', 'Eine alte Uniform'], 'encuentro en el fondo de un armario una caja de zapatos atada con una cinta', '¿Qué encuentra Lucía en el armario?', ['Una caja de zapatos con cartas, una medalla y dos fotos', 'Un diario de su abuela', 'Un uniforme antiguo']],
+         ['Was fällt Lucía an den Fotos auf?', ['Die Uniformen sind verschieden', 'Beide Jungen lachen', 'Die Fotos sind farbig'], 'Pero los uniformes no son iguales.', '¿Qué le llama la atención a Lucía en las fotos?', ['Los uniformes no son iguales', 'Los dos chicos se ríen', 'Las fotos son en color']],
+         ['Was sagt ihr Vater über die Familie?', ['Zu Hause wurde nie über den Krieg gesprochen', 'Tomás ist nach Amerika gegangen', 'Die Großmutter hat alles aufgeschrieben'], 'En casa no se hablaba de la guerra, Lucía.', '¿Qué dice su padre sobre la familia?', ['Que en casa nunca se hablaba de la guerra', 'Que Tomás se fue a América', 'Que la abuela lo escribió todo']]],
+      keep:[['De Tomás no sé nada.', 'Über Tomás weiß ich nichts.'], ['España quedó partida en dos.', 'Spanien war in zwei Teile gespalten.']],
+      src:['Wikipedia (englisch), „Aragon front“ (Zaragoza am 19.7.1936 in der Hand der Aufständischen, Ostaragonien republikanisch)', 'Público, „80 años del Consejo de Aragón“ (die Front bricht im März 1938 zusammen)'] },
+    { title:'Salamanca', when:'2025', date:'Salamanca, noviembre de 2025',
+      hook:'Un archivo en Salamanca guarda papeles reunidos con otro fin.',
+      recap:['Al vaciar el piso de su abuela en Zaragoza, Lucía encuentra dos fotos de 1938: su bisabuelo Julián y su hermano Tomás, con uniformes distintos. En su familia nunca se habló de la guerra.',
+        'Beim Ausräumen der Wohnung ihrer Großmutter in Zaragoza findet Lucía zwei Fotos von 1938: ihr Urgroßvater Julián und sein Bruder Tomás, in verschiedenen Uniformen. In ihrer Familie wurde nie über den Krieg gesprochen.'],
+      body:`En noviembre viajo a Salamanca, al Centro Documental de la Memoria Histórica. La archivera me explica algo que no sabía: muchos de estos papeles los reunió el bando de Franco a partir de 1938 para perseguir a sus enemigos. Hoy sirven para lo contrario, para que las familias sepan qué pasó.
+
+Pido al archivo todo lo que haya sobre Tomás. Dos días después me traen una lista de soldados del Ejército Popular de la República. Allí está: Tomás, nacido en 1920, llamado a filas en la primavera de 1938, con diecisiete años.
+
+—La quinta del biberón —dice la archivera—. Así los llamaban, porque eran casi niños.
+
+La República, que estaba perdiendo la guerra, movilizó en 1938 a los chicos nacidos en 1920. Fueron unos veintisiete mil.
+
+En el hotel leo otra carta de la caja. Es de Julián a su madre, de abril de 1938. Por fin puede escribirle: las tropas de Franco acaban de ocupar el pueblo, y ya no hay un frente entre los dos. Cuenta que en julio de 1936 estaba en Zaragoza, de aprendiz en una panadería, y que allí lo llamaron al ejército. Al final añade una frase: «Me dicen que Tomás se ha ido con los republicanos que se retiraban a Cataluña».
+
+Ninguno de los dos eligió su bando. Lo decidió el lugar donde estaba cada uno.`,
+      q:[['Wozu sammelte Francos Seite ab 1938 viele dieser Papiere?', ['Um ihre Feinde zu verfolgen', 'Für ein Museum', 'Für die Familien der Soldaten'], 'muchos de estos papeles los reunió el bando de Franco a partir de 1938 para perseguir a sus enemigos', '¿Para qué reunió el bando de Franco muchos de estos papeles?', ['Para perseguir a sus enemigos', 'Para un museo', 'Para las familias de los soldados']],
+         ['Warum hießen diese Soldaten „la quinta del biberón“?', ['Weil sie fast noch Kinder waren', 'Weil sie Milch transportierten', 'Weil sie aus einem Dorf namens Biberón kamen'], 'Así los llamaban, porque eran casi niños.', '¿Por qué los llamaban «la quinta del biberón»?', ['Porque eran casi niños', 'Porque transportaban leche', 'Porque venían de un pueblo llamado Biberón']],
+         ['Wo war Julián im Juli 1936?', ['In Zaragoza, als Lehrling in einer Bäckerei', 'Im Dorf bei seiner Mutter', 'In Katalonien'], 'Cuenta que en julio de 1936 estaba en Zaragoza, de aprendiz en una panadería', '¿Dónde estaba Julián en julio de 1936?', ['En Zaragoza, de aprendiz en una panadería', 'En el pueblo, con su madre', 'En Cataluña']]],
+      keep:[['Fueron unos veintisiete mil.', 'Es waren etwa siebenundzwanzigtausend.'], ['Ninguno de los dos eligió su bando.', 'Keiner der beiden hat sich seine Seite ausgesucht.']],
+      src:['Wikipedia (englisch), „Salamanca Papers“; Gredos, Universidad de Salamanca (Delegación del Estado para Recuperación de Documentos, 1938, zur Verfolgung)', 'Diari de Tarragona, „Víctor Amela y el recuerdo de la Quinta del Biberón“ (Jahrgang 1920, rund 27 000 Rekruten)', 'Público, „80 años del Consejo de Aragón“ (Zusammenbruch der Aragonfront im März 1938)'] },
+    { title:'El río', when:'1938', date:'Corbera d\'Ebre (Tarragona), diciembre de 2025',
+      hook:'En el verano de 1938, un río separa a muchos españoles.',
+      recap:['En Salamanca, Lucía descubre que Tomás fue soldado de la República con diecisiete años. Julián, que estaba en Zaragoza en 1936, luchaba en el ejército de Franco.',
+        'In Salamanca entdeckt Lucía, dass Tomás mit siebzehn Jahren Soldat der Republik war. Julián, der 1936 in Zaragoza war, kämpfte in Francos Armee.'],
+      body:`En diciembre conduzco hasta Corbera d'Ebre, en Tarragona. La parte alta del pueblo está en ruinas desde 1938. No la reconstruyeron: la dejaron así, como recuerdo. Camino entre casas sin techo y calles vacías. Hace viento y no hay nadie.
+
+Aquí se luchó la batalla del Ebro, la más larga de la guerra. El 25 de julio de 1938, el ejército de la República cruzó el río por sorpresa. Después, durante casi cuatro meses, los dos ejércitos lucharon por cada colina. El 16 de noviembre, los últimos republicanos volvieron a cruzar el río. Murieron decenas de miles de soldados; las cifras cambian según quién las cuente.
+
+Llevo en el bolsillo una carta de Julián de agosto de 1938, escrita cerca de Gandesa, a pocos kilómetros de aquí. Algunas líneas están tachadas por la censura. Pero una frase se lee bien: «Dicen que al otro lado hay chicos de diecisiete años. Madre, reza por Tomás».
+
+Julián sabía que su hermano podía estar al otro lado.
+
+En el bar del pueblo, un señor mayor me cuenta que durante años, cada 25 de julio, venían a la comarca supervivientes de los dos bandos. Algunos se daban la mano. Hoy ya casi no queda ninguno.
+
+Me siento en un muro y miro hacia el río. ¿Llegaron a estar los dos hermanos aquí, tan cerca y tan lejos?`,
+      q:[['Warum steht der obere Teil von Corbera d’Ebre noch in Ruinen?', ['Man hat ihn als Erinnerung so gelassen', 'Es fehlte Geld', 'Dort darf niemand wohnen, weil es gefährlich ist'], 'No la reconstruyeron: la dejaron así, como recuerdo.', '¿Por qué la parte alta de Corbera sigue en ruinas?', ['La dejaron así como recuerdo', 'No había dinero', 'Es peligroso vivir allí']],
+         ['Wie lange dauerte die Schlacht am Ebro?', ['Fast vier Monate', 'Eine Woche', 'Zwei Jahre'], 'Después, durante casi cuatro meses, los dos ejércitos lucharon por cada colina.', '¿Cuánto duró la batalla del Ebro?', ['Casi cuatro meses', 'Una semana', 'Dos años']],
+         ['Warum fehlen in Juliáns Brief einige Zeilen?', ['Die Zensur hat sie durchgestrichen', 'Das Papier ist nass geworden', 'Julián hat sie selbst gelöscht'], 'Algunas líneas están tachadas por la censura.', '¿Por qué faltan algunas líneas en la carta de Julián?', ['Las tachó la censura', 'El papel se mojó', 'Julián las borró']]],
+      keep:[['Hace viento y no hay nadie.', 'Es ist windig, und niemand ist da.'], ['Hoy ya casi no queda ninguno.', 'Heute ist kaum noch einer übrig.']],
+      src:['Wikipedia (englisch), „Corbera d’Ebre“ (Altstadt zerstört und als Mahnmal erhalten; Schlacht vom 25.7. bis 16.11.1938)', 'Público / Rebelión, „80 años de la batalla del Ebro“ (114 Tage, Zahl der Toten je nach Schätzung)', 'Diari de Tarragona, „Víctor Amela y el recuerdo de la Quinta del Biberón“ (Treffen von Überlebenden beider Seiten am 25. Juli)'] },
+    { title:'Los papeles del campo', when:'1938–1941', date:'Zaragoza, enero de 2026',
+      hook:'Noviembre de 1938: la batalla termina, pero para muchos no termina la guerra.',
+      recap:['En Corbera d\'Ebre, Lucía lee una carta de Julián de agosto de 1938: sabía que su hermano Tomás podía estar al otro lado del río Ebro.',
+        'In Corbera d’Ebre liest Lucía einen Brief Juliáns vom August 1938: Er wusste, dass sein Bruder Tomás auf der anderen Seite des Ebro sein konnte.'],
+      body:`En enero me escribe la archivera de Salamanca. Ha encontrado el nombre de Tomás en otro fondo: el de los campos de concentración y los batallones de trabajadores.
+
+Tomás fue capturado en noviembre de 1938, en los últimos días de la batalla, y lo llevaron a un campo de concentración. Franco tuvo unos trescientos campos, y por ellos pasaron entre medio millón y un millón de personas, según los historiadores.
+
+En los campos se clasificaba a los prisioneros. Para decidir, se pedían informes al alcalde, al cura, a la Guardia Civil o a la Falange de su pueblo. Los «afectos» pasaban al ejército de Franco. Los «desafectos» y los dudosos iban a batallones de trabajadores, a construir carreteras y pantanos.
+
+En la caja hay un papel que antes no entendía: el borrador de una carta, con la letra de Julián, dirigida al jefe de un campo. Dice que su hermano es un muchacho trabajador, sin ideas políticas, que solo tenía diecisiete años cuando lo llamaron, y que él responde por él.
+
+Según el archivo, Tomás pasó dos años en un batallón de trabajadores, construyendo una carretera en el Pirineo. Volvió al pueblo en 1941.
+
+No sé si la carta de Julián sirvió de algo. Pero sé que la escribió. Y que la guardó toda su vida.`,
+      q:[['Wann wurde Tomás gefangen genommen?', ['Im November 1938, in den letzten Tagen der Schlacht', 'Gleich zu Beginn der Schlacht', 'Nach dem Krieg, 1940'], 'Tomás fue capturado en noviembre de 1938, en los últimos días de la batalla', '¿Cuándo capturaron a Tomás?', ['En noviembre de 1938, en los últimos días de la batalla', 'Al principio de la batalla', 'Después de la guerra, en 1940']],
+         ['Von wem holte man Berichte über die Gefangenen ein?', ['Vom Bürgermeister, Pfarrer, der Guardia Civil oder der Falange im Heimatort', 'Von ihren Müttern', 'Von ausländischen Journalisten'], 'se pedían informes al alcalde, al cura, a la Guardia Civil o a la Falange de su pueblo', '¿A quién se pedían informes sobre los prisioneros?', ['Al alcalde, al cura, a la Guardia Civil o a la Falange de su pueblo', 'A sus madres', 'A periodistas extranjeros']],
+         ['Was baute Tomás im Arbeitsbataillon?', ['Eine Straße in den Pyrenäen', 'Eine Brücke über den Ebro', 'Ein Gefängnis in Zaragoza'], 'Tomás pasó dos años en un batallón de trabajadores, construyendo una carretera en el Pirineo', '¿Qué construyó Tomás en el batallón de trabajadores?', ['Una carretera en el Pirineo', 'Un puente sobre el Ebro', 'Una cárcel en Zaragoza']]],
+      keep:[['Volvió al pueblo en 1941.', 'Er kehrte 1941 ins Dorf zurück.'], ['Pero sé que la escribió.', 'Aber ich weiß, dass er ihn geschrieben hat.']],
+      src:['Wikipedia (englisch), „Francoist concentration camps“ (rund 300 Lager, 500 000 bis eine Million Gefangene nach Rodrigo und Hernández de Miguel)', 'Todos los Nombres, Marta Borraz, „El trabajo esclavo al servicio del franquismo“ (Einstufung, Berichte aus dem Heimatort, Arbeitsbataillone)', 'Ministerio de Cultura, Fondo „Batallones de Trabajadores y Campos de Concentración“ im Centro Documental de la Memoria Histórica'] },
+    { title:'Lo que no se contaba', when:'1941–2026', date:'Un pueblo del este de Aragón, febrero de 2026',
+      hook:'En el pueblo, alguien todavía se acuerda de los dos hermanos.',
+      recap:['Tomás estuvo prisionero en un campo de concentración y pasó dos años en un batallón de trabajadores. En la caja, Lucía encuentra el borrador de una carta de Julián en defensa de su hermano.',
+        'Tomás war Gefangener in einem Konzentrationslager und verbrachte zwei Jahre in einem Arbeitsbataillon. In der Schachtel findet Lucía den Entwurf eines Briefes, in dem Julián seinen Bruder verteidigt.'],
+      body:`En febrero voy por fin al pueblo. Quedan pocos vecinos. Una de ellas, Asunción, tiene noventa y siete años y una memoria perfecta.
+
+—Julián y Tomás —dice—. Vivieron cincuenta años pared con pared. Trabajaban juntos en el campo, y los domingos jugaban al guiñote en el bar. Pero de la guerra no hablaban nunca. Ni ellos ni nadie.
+
+Franco murió en 1975, y llegó la democracia. En 1977, una ley de amnistía puso fin a los procesos por los delitos políticos de aquellos años. Durante mucho tiempo, el silencio pareció la única manera de vivir juntos.
+
+Mucho después llegaron otras leyes: la de Memoria Histórica, en 2007, y la de Memoria Democrática, en octubre de 2022. Hoy los archivos están abiertos, y muchas familias, como la mía, empiezan a preguntar.
+
+Antes de irme, Asunción me da una foto que tenía guardada. Son dos hombres viejos sentados en un banco, al sol, en la plaza del pueblo. No se miran, pero están muy cerca.
+
+—Esto fue en 1985 —dice—. Ya no les quedaba mucho.
+
+En casa pongo las tres fotos juntas: Tomás en 1938, Julián en 1938 y los dos en el banco. Mi abuela no habló nunca de todo esto. Ahora hablo yo.`,
+      q:[['Wie lebten Julián und Tomás nach dem Krieg?', ['Fünfzig Jahre Wand an Wand, ohne über den Krieg zu sprechen', 'In verschiedenen Ländern', 'Sie sahen sich nie wieder'], 'Vivieron cincuenta años pared con pared.', '¿Cómo vivieron Julián y Tomás después de la guerra?', ['Cincuenta años pared con pared, sin hablar de la guerra', 'En países distintos', 'No se volvieron a ver']],
+         ['Was bewirkte das Amnestiegesetz von 1977?', ['Es beendete die Verfahren wegen politischer Delikte jener Jahre', 'Es öffnete alle Archive', 'Es verbot Bücher über den Krieg'], 'En 1977, una ley de amnistía puso fin a los procesos por los delitos políticos de aquellos años.', '¿Qué hizo la ley de amnistía de 1977?', ['Puso fin a los procesos por delitos políticos de aquellos años', 'Abrió todos los archivos', 'Prohibió los libros sobre la guerra']],
+         ['Was zeigt das Foto von 1985?', ['Die beiden Brüder als alte Männer auf einer Bank', 'Julián in Uniform', 'Die Großmutter als Kind'], 'Son dos hombres viejos sentados en un banco, al sol, en la plaza del pueblo.', '¿Qué hay en la foto de 1985?', ['Los dos hermanos de viejos en un banco', 'Julián de uniforme', 'La abuela de niña']]],
+      keep:[['Ni ellos ni nadie.', 'Weder sie noch sonst jemand.'], ['Ahora hablo yo.', 'Jetzt rede ich.']],
+      src:['Wikipedia (englisch), „Political prisoners in Francoist Spain“ (Amnestiegesetz 46/1977 vom 15. Oktober 1977)', 'Govern de les Illes Balears, Normativa estatal (Ley 52/2007)', 'BOE, Ley 20/2022, de 19 de octubre, de Memoria Democrática'] }
   ] }
 ]
 };

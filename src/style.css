@@ -848,7 +848,6 @@ button.mrow:active{ background:var(--accent-soft); }
 .tteaser{ color:var(--muted); font-size:var(--fs-4); line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .rhero{ margin:4px 0 6px; }
 /* Reihen (seit 24.97.0): Karte mit Erzählform und Fortschritt, Übersicht, Datumszeile, „Bisher“, Ende eines Teils */
-.tag.form{ color:var(--accent-ink); background:var(--accent-soft); border-color:transparent; }
 .scard .ttitle{ font-size:var(--fs-10); }
 .sprog{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px; }
 .sdash{ display:flex; gap:4px; }

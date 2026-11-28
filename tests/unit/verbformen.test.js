@@ -36,6 +36,8 @@ test('Spanisch: Rechtschreibung vor der Endung und betontes i/u', () => {
   assert.equal(row('construir', 'pres'), 'construyo construyes construye construimos construís construyen');
   assert.equal(row('enviar', 'pres'), 'envío envías envía enviamos enviáis envían');
   assert.equal(row('continuar', 'subj').split(' ')[2], 'continúe');
+  assert.equal(row('reunir', 'pres'), 'reúno reúnes reúne reunimos reunís reúnen');
+  assert.equal(row('prohibir', 'subj').split(' ')[3], 'prohibamos');
   assert.equal(row('diseñar', 'indef').split(' ')[2], 'diseñó');
   assert.equal(row('reducir', 'indef'), 'reduje redujiste redujo redujimos redujisteis redujeron');
   assert.equal(row('creer', 'indef'), 'creí creíste creyó creímos creísteis creyeron');

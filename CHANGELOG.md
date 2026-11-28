@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.103.0
+**Zwei neue Reihen: „Från hvad till hen“ (Schwedisch, B1, vier Teile) und „La guerra en casa“ (Spanisch, B2, fünf Teile). Die Erzählform bleibt intern.**
+- **Från hvad till hen:** hundert Jahre schwedische Sprachgeschichte an einer Familie aus Småland. Familie erfunden, Reformen, Gesetze und Daten belegt.
+- **La guerra en casa:** der Spanische Bürgerkrieg und das Schweigen danach, von heute aus erzählt. Familie erfunden, Ereignisse, Archive, Gesetze und Zahlen belegt.
+- **Unvoreingenommen hineinlesen:** Karte und Übersicht zeigen die Erzählform nicht mehr, gesperrte Teile auch kein Datum mehr, nur „Teil 2“, „Teil 3“ … „Was ist echt?“ ohne Hinweis auf Quellen oder Form, Vorschau und Einleitung verraten sie ebenfalls nicht. Die Formen stehen in docs/REIHEN.md und IDEEN.md (Abwägung Paket 5, je drei mit Noten).
+- **Wörterbuch:** 120 neue schwedische und 66 neue spanische Einträge, neue Verben mit geprüften Formen (zuhören, ähneln, kämpfen, wählen, verfolgen …). Spanisch: reunir und prohibir mit betontem Vokal (reúno, prohíbe). Genauer im Kontext: lista auch „Liste“, recuerdo auch „Erinnerung“, Llevo auch „ich trage“, juntos „zusammen“, låter auch „klingt“, Bror und Lund auch als Namen, h:et ist das h und nicht „heiß“.
+- Tests: Beide Reihen halten alle Regeln aus docs/REIHEN.md ein; Karte ohne Form, gesperrte Teile ohne Datum. Speicherstand unverändert.
+
 ## 24.102.0
 **Zwei neue Reihen in zwei neuen Formen: „Beredskap“ (Schwedisch, B2, viele Stimmen) und „El crimen de Cuenca“ (Spanisch, B2, ein Gegenstand erzählt).**
 - **Beredskap:** Schweden 1940 bis 1945 in sechs Teilen, jeder aus einer anderen Sicht. Erzählende erfunden, Ereignisse und reale Personen belegt.

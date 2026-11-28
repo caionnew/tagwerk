@@ -6,7 +6,10 @@ const { loadApp } = require('../helpers/load.js');
 const FIX = require('../fixtures/reihe.js');
 const app = loadApp();
 const run = code => app.run(code);
-const SERIES = app.get('SERIES'), SHIPPED = JSON.parse(JSON.stringify(SERIES)), TEXTS = app.get('TEXTS'), FORMS = app.get('SERIES_FORMS'), textSentences = app.get('textSentences'), tokens = app.get('tokens'), lookupWord = app.get('lookupWord');
+// Erzählformen (nur intern, die App zeigt sie nicht); dieselbe Liste in docs/REIHEN.md
+const FORMS = { live:'Wie es geschah', figur:'Mit erfundener Figur', stimmen:'Viele Stimmen', chronik:'Familienchronik', briefe:'Briefe und Dokumente',
+  spuren:'Ermittlung', ding:'Ein Gegenstand erzählt', wahl:'Du entscheidest', tage:'Ein Tag, der alles änderte', reise:'Reisetagebuch' };
+const SERIES = app.get('SERIES'), SHIPPED = JSON.parse(JSON.stringify(SERIES)), TEXTS = app.get('TEXTS'), textSentences = app.get('textSentences'), tokens = app.get('tokens'), lookupWord = app.get('lookupWord');
 
 // Prüft eine Reihe nach docs/REIHEN.md; gibt die Mängel zurück
 function problems(lang, s, { length = true, lookup = true } = {}){
@@ -15,6 +18,8 @@ function problems(lang, s, { length = true, lookup = true } = {}){
   if (!s.title || !s.topic || !/^(A2|B1|B2|C1)$/.test(s.level)) bad('Titel, Thema oder Niveau');
   if (!FORMS[s.form]) bad(`Erzählform „${s.form}“ unbekannt`);
   if (!s.teaser || !Array.isArray(s.intro) || s.intro.length !== 2 || !s.real) bad('Kartentext, Einleitung (Zielsprache, Deutsch) oder „Was ist echt?“ fehlt');
+  // „Was ist echt?“ sagt, was erfunden und was belegt ist; die Quellen stehen ohnehin am Ende jedes Teils, die Form verrät es nicht
+  if (/Quellen|Erzählform|Brief|Akte/.test(s.real || '')) bad('„Was ist echt?“ ohne Hinweis auf Quellen oder Erzählform');
   if (s.real && s.real.length > 200) bad(`„Was ist echt?“ zu lang (${s.real.length} Zeichen, höchstens 200)`);
   if (!Array.isArray(s.parts) || s.parts.length < 2) { bad('mindestens zwei Teile'); return out; }
   const N = s.parts.length;
@@ -67,12 +72,12 @@ run(`SERIES.sv.push(${JSON.stringify(FIX)})`);
 const reset = (niv = 'mittel', extra = '') => run(`(() => { DB = freshDB(); DB.settings.niveau = '${niv}'; S.lang = 'sv'; S.series = null; S.text = null; ${extra}; })()`);
 const readPart = (k, day = 'today()') => `DB.used.texts = DB.used.texts || {}; DB.used.texts['sv:test-${k}'] = { best:3, n:1, last:${day} };`;
 
-test('Karte in „Lesen und Hören“: Erzählform, Fortschritt, Beginnen und Weiter; Einzeltexte darunter', () => {
+test('Karte in „Lesen und Hören“: Fortschritt, Beginnen und Weiter, keine Erzählform (man liest unvoreingenommen hinein); Einzeltexte darunter', () => {
   reset();
   let h = run('viewTexts()');
   assert.match(h, /<h2 class="grp">Reihen<\/h2><div class="tgrid2"><button type="button" class="tcard scard" data-a="sopen" data-s="/);
   h = h.slice(h.indexOf('data-s="test"'));
-  assert.match(h, /<span class="tag form">Wie es geschah<\/span>/);
+  assert.doesNotMatch(h.slice(0, h.indexOf('</button>')), /Wie es geschah|class="tag form"/);
   assert.match(h, /<span class="sdash" aria-label="0 von 3 Teilen gelesen"><i><\/i><i><\/i><i><\/i><\/span><span class="scta">Beginnen ›<\/span>/);
   assert.match(h, /<h2 class="grp">Einzelne Texte<\/h2><div class="tgrid2"><button type="button" class="tcard" data-a="textopen"/);
   reset('mittel', readPart(1));
@@ -90,7 +95,8 @@ test('Übersicht: Einleitung je Niveau, Teile ohne Vorgriff, Personen und Wörte
   assert.match(h, /<p class="shook wordrow" lang="sv"><span data-a="lookup"/, 'Einleitung in der Zielsprache');
   assert.match(h, /data-a="sde">Auf Deutsch<\/button>/);
   assert.match(h, /<li class="mr now"><i><\/i><button type="button" class="mr-b" data-a="spart" data-s="test" data-i="0"/);
-  assert.match(h, /<li class="mr next"><i><\/i><span class="mr-b"><span class="mr-t">Teil 2<\/span><span class="mr-d">1 mars 1986<\/span><\/span><\/li>/, 'späterer Titel verdeckt');
+  assert.match(h, /<li class="mr next"><i><\/i><span class="mr-b"><span class="mr-t">Teil 2<\/span><\/span><\/li>/, 'späterer Titel und Zeitangabe verdeckt');
+  assert.doesNotMatch(h, /1 mars 1986|Wie es geschah/, 'keine Zeitangabe gesperrter Teile, keine Erzählform');
   assert.doesNotMatch(h, /Natten<|Morgonen|Ingvar Carlsson|sjukhus|regering/);
   assert.match(h, /Lisbet Palme/); assert.match(h, /data-w="livvakt"/);
   assert.match(h, /<button type="button" class="primary" data-a="spart" data-s="test" data-i="0">Beginnen<\/button>/);

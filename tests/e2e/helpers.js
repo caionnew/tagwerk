@@ -25,6 +25,21 @@ function richDB(lang){
   bankIds(lang, 90).forEach((id, i) => { db.st[id] = { s:10 + i, d:4, ivl:i % 3 === 0 ? 30 : 6, last:ds(2), due:ds(-3), reps:3, ok:3, bad:0, alts:[] }; });
   return db;
 }
+// Verlauf (24.106.0): Tagesstände zu richDB, Wörter in gefestigten Sätzen die letzten 8 Tage, Behaltensdauer die letzten 20
+function verlaufDB(lang){
+  const db = richDB(lang), pad = n => String(n).padStart(2, '0'), t = new Date();
+  const ds = k => { const d = new Date(t.getFullYear(), t.getMonth(), t.getDate() - k); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+  db.snap = {};
+  for (let k = 40; k >= 1; k--) {
+    if (!db.log[ds(k)]) continue;
+    const f = (40 - k) / 40;
+    db.log[ds(k)][lang].mc = Math.round(30 * f);
+    db.snap[ds(k)] = { [lang]:{ n:20 + Math.round(60 * f), m:Math.round(30 * f), k:15 + Math.round(55 * f), w:80 + Math.round(300 * f) } };
+    if (k <= 8) db.snap[ds(k)][lang].wf = 60 + Math.round(40 * f);
+    if (k <= 20) db.snap[ds(k)][lang].sp = [2 + Math.round(4 * f), 6 + Math.round(10 * f), 14 + Math.round(16 * f)];
+  }
+  return db;
+}
 // Zehn Wochen Protokoll: dieselben Muster wie richDB, nur weiter zurück, damit die Veränderungspfeile erscheinen (ab acht Wochen);
 // die Adjektivendungen mit zwei von drei falsch, also klar über dem Schnitt (rot hinterlegt)
 function longDB(lang){
@@ -138,4 +153,4 @@ const test = base.test.extend({
     base.expect(errors, 'JavaScript-Fehler auf der Seite').toEqual([]);
   }
 });
-module.exports = { test, expect:base.expect, APP, seed, freshDB, richDB, longDB, klarDB, klarRunDB, topicItems, answerOnly, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };
+module.exports = { verlaufDB, test, expect:base.expect, APP, seed, freshDB, richDB, longDB, klarDB, klarRunDB, topicItems, answerOnly, answerWrong, stored, bankIds, bankItems, hash, fakeVoice, speechWav, fakeMicArgs };

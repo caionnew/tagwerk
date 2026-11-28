@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.106.0
+**Verlauf mit drei Reitern: Sätze, Wörter, Gedächtnis.**
+- **Sätze:** Flächen statt Linien, von hell (im Aufbau) über die Sprachfarbe (gefestigt) bis dunkel (verankert, sobald es verankerte gibt), dazu gestrichelt „abrufbar“. Darüber der Zuwachs („+92 gefestigt, +124 geübt in 30 Tagen“, bei kürzerem Verlauf „seit …“). Ersetzt den Balken „Stand der Sätze“.
+- **Wörter:** Grundformen in geübten Sätzen, dunkel die in gefestigten Sätzen (erfasst ab jetzt).
+- **Gedächtnis:** Behaltensdauer, also wie lange du einen Satz nach der letzten Wiederholung noch mit mindestens 90 % weißt (die Stabilität aus FSRS). Median als Linie, unteres bis oberes Viertel als Band, logarithmische Achse in Tagen. Erfasst ab jetzt; bis eine Woche zusammenkommt, zeigt der Reiter die Verteilung nach Dauer (unter 1 Woche bis über 1 Jahr). Begriff „Behaltensdauer“ und „Wörter“ auf Tipp erklärt.
+- **Detail:** Antippen oder Ziehen zeigt die Werte eines Tages mit Fadenkreuz, Pfeiltasten gehen Punkt für Punkt, ohne Neuaufbau. Unter dem Diagramm stehen Datum und je Reihe Zahl, Farbe und Name. Kurven monoton geglättet, gestapelte Kanten schneiden sich nie; senkrechtes Wischen scrollt weiter. Kurzes Aufziehen beim Reiterwechsel, bei „Bewegung reduzieren“ ohne.
+- **Tagesstand** speichert zusätzlich verankert, Wörter in gefestigten Sätzen und die Viertel der Behaltensdauer (abwärtskompatibel, etwa 30 Zeichen je Tag und Sprache).
+- Tests: Quartile, Monotonie, Stapel, Reiter, Kopfzeilen, Verteilung; im Browser Ziehen, Pfeiltasten, Antippen auf dem Handy, Begriff.
+
 ## 24.105.0
 **Heute: mehr Luft zwischen „Schwerpunkt der Woche“ und dem Startknopf** (16 px wie unter dem Plan, Zeilenabstand 1,5).
 

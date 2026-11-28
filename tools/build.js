@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..'), SRC = path.join(ROOT, 'src'), OUT = pat
 const ORDER = [
   'js/part_text.js', 'data/content.js', 'js/generators.js', 'js/forms.js', 'js/verbformen.js', 'data/gloss.js', 'data/fundstueck.js', 'data/terms.js', 'data/kultur.js', 'data/texte.js', 'data/reihen.js', 'data/geo.js',
   'js/part_head.js', 'js/part_icons.js', 'js/part_fsrs.js', 'js/part_check.js', 'js/part_online.js', 'js/part_speech.js', 'js/part_radio.js', 'js/part_read.js', 'js/part_series.js', 'js/part_start.js', 'js/part_shadow.js',
-  'js/part_stats.js', 'js/part_model.js', 'js/part_long.js', 'js/part_write.js', 'js/part_ref.js', 'js/part_views.js', 'js/part_events.js'
+  'js/part_stats.js', 'js/part_model.js', 'js/part_long.js', 'js/part_write.js', 'js/part_ref.js', 'js/part_verlauf.js', 'js/part_views.js', 'js/part_events.js'
 ];
 function build(){
   const missing = ORDER.filter(f => !fs.existsSync(path.join(SRC, f)));

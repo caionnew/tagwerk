@@ -335,6 +335,7 @@ document.addEventListener('click', e => {
     case 'otherdaily': { const l = b.dataset.l; S.lang = l; DB.settings.lang = l; DB.dayLang = { d:today(), l, manual:true }; save(); const d = openDaily(); if (d && d.lang === l) { resumeDaily(); render(); window.scrollTo(0, 0); } else startRun('daily'); break; }
     case 'showtip': if (S.run && S.run.cur) { S.run.cur.tip = true; render(); const a = document.getElementById('answer'); if (a) a.focus(); } break;
     case 'pcrange': S.pcAll = b.dataset.v === '1'; render(); break;
+    case 'pctab': S.pcTab = b.dataset.t; S.pcEnter = true; render(); break;
     case 'focusnext': { const c = focusCandidates(S.lang), cur = focusTrap(S.lang), nx = c[(c.indexOf(cur) + 1) % c.length]; DB.focus[S.lang] = { trap:nx, week:mondayOf(today()) }; S.dailyPlanCache = null; save(); render(); break; }
     case 'errtab': S.errTab = b.dataset.t; render(); break;
     case 'kultadd': {

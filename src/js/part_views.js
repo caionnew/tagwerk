@@ -270,7 +270,7 @@ function progressBar(r){
   marks.forEach((m, i) => { if (r.queue[i].requeue) { if (!m || m === 'cur') open++; } else if (cnt[m] != null) cnt[m]++; });
   const parts = [cnt.ok && `${cnt.ok} richtig`, cnt.near && `${cnt.near} fast richtig`, cnt.bad && `${cnt.bad} falsch`, open && plural(open, 'zweiter Versuch folgt', 'zweite Versuche folgen')].filter(Boolean);
   const aria = `Aufgabe ${r.idx + 1} von ${n}${parts.length ? ': ' + parts.join(', ') : ''}`;
-  const segs = marks.map((m, i) => `<i class="seg${m ? ' s-' + m : ''}${r.queue[i].requeue ? ' re' : ''}${i === re1 ? ' re1' : ''}${i === r.idx && c && c.enter && m !== 'cur' ? ' just' : ''}"></i>`).join('');
+  const segs = marks.map((m, i) => `<i class="seg${m ? ` s-${m}` : ''}${r.queue[i].requeue ? ' re' : ''}${i === re1 ? ' re1' : ''}${i === r.idx && c && c.enter && m !== 'cur' ? ' just' : ''}"></i>`).join('');
   return `<div class="progress${n > 44 ? ' d2' : n > 30 ? ' d1' : ''}" role="img" aria-label="${aria}">${segs}</div><span class="count" aria-hidden="true">${r.idx + 1}/${n}</span>`;
 }
 // Hinweis als Chip. Bei „Fortgeschritten“ bleiben Grundform, wörtliches Bild und das Muster einer Periphrase (acabar de + Infinitiv)
@@ -1161,51 +1161,6 @@ function retTrend(lang){
   return `<svg viewBox="0 0 ${W} ${H}" class="rtsvg" role="img" aria-label="Behalten pro Woche, letzte acht Wochen">${g}</svg>
   <p class="legend"><span class="tgtl"></span>Ziel 90\u00a0%</p>`;
 }
-// Verlauf: geübte, geschätzt abrufbare und gefestigte Sätze über die Zeit
-function niceStep(max){ const raw = max / 4, p = Math.pow(10, Math.floor(Math.log10(raw || 1))); return [1, 2, 5, 10].map(m => m * p).find(v => v >= raw) || p * 10; }
-function progressChart(lang){
-  const days = Object.keys(DB.log).filter(k => (dayLog(k, lang).n || 0) > 0).sort();
-  if (!days.length) return '';
-  const t = today(), first = days[0], long = dayDiff(t, first) > 400, all = long && S.pcAll;
-  const start = long && !all ? addDays(t, -365) : first, span = dayDiff(t, start);
-  if (span < 13) return '';
-  const step = span > 180 ? 7 : span > 70 ? 3 : 1;
-  const pts = []; let cum = start > first ? days.filter(d => d < start).reduce((a, d) => a + (dayLog(d, lang).fresh || 0), 0) : 0, snapFrom = null;
-  for (let k = 0; k <= span; k++) {
-    const ds = addDays(start, k);
-    cum += dayLog(ds, lang).fresh || 0;
-    if (k % step && k !== span) continue;
-    let sn = null;
-    for (let b = 0; b < step && !sn; b++) { const x = DB.snap && DB.snap[addDays(ds, -b)]; if (x && x[lang]) sn = x[lang]; }
-    if (sn && !snapFrom) snapFrom = ds;
-    pts.push({ ds, n:cum, m:sn ? sn.m : null, k:sn ? sn.k : null });
-  }
-  const last = pts[pts.length - 1];
-  const max = Math.max(4, ...pts.map(p => Math.max(p.n, p.m || 0, p.k || 0)));
-  const st = niceStep(max), top = Math.ceil(max / st) * st;
-  const W = 340, H = 168, L = 30, R = 36, T = 10, B = 20;
-  const X = i => L + (pts.length === 1 ? 0 : i / (pts.length - 1)) * (W - L - R);
-  const Y = v => T + (1 - v / top) * (H - T - B);
-  let g = '';
-  for (let v = 0; v <= top; v += st) g += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${L - 5}" y="${Y(v) + 3}" class="yl">${v}</text>`;
-  const path = key => { let dstr = '', pen = false; pts.forEach((p, i) => { const v = p[key]; if (v == null) { pen = false; return; } dstr += `${pen ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; }); return dstr; };
-  const series = [['n', 'ln-n', 'geübt'], ['k', 'ln-k', 'abrufbar'], ['m', 'ln-m', 'gefestigt']];
-  const ends = [];
-  series.forEach(([key, cls]) => {
-    const dstr = path(key); if (!dstr) return;
-    g += `<path d="${dstr}" class="${cls}"/>`;
-    if (last[key] != null) ends.push({ v:last[key], y:Y(last[key]), cls });
-  });
-  ends.sort((a, b) => a.y - b.y).forEach((e, i, arr) => { if (i && e.y - arr[i - 1].y < 11) e.y = arr[i - 1].y + 11; g += `<text x="${W - R + 4}" y="${e.y + 3}" class="el ${e.cls}">${e.v}</text>`; });
-  const fmt = ds => { const x = dateOf(ds); return `${x.getDate()}. ${MONTHS[x.getMonth()]}`; };
-  const fmtAx = ds => { const x = dateOf(ds); return span > 300 ? `${MONTHS[x.getMonth()]} ${x.getFullYear()}` : fmt(ds); };
-  [0, Math.floor((pts.length - 1) / 2), pts.length - 1].forEach((i, j) => { g += `<text x="${X(i)}" y="${H - 5}" class="xl" text-anchor="${j === 0 ? 'start' : j === 2 ? 'end' : 'middle'}">${fmtAx(pts[i].ds)}</text>`; });
-  const rangeSeg = long ? `<div class="seg2 pcr" role="radiogroup">${[[false, 'Letztes Jahr'], [true, 'Seit Beginn']].map(([v, l]) => `<button type="button" role="radio" aria-checked="${!!all === v}" data-a="pcrange" data-v="${v ? 1 : 0}">${l}</button>`).join('')}</div>` : '';
-  return `<h2 class="grp">Verlauf</h2>${rangeSeg}<div class="chart">
-    <svg viewBox="0 0 ${W} ${H}" class="pcsvg" role="img" aria-label="Verlauf der geübten, abrufbaren und gefestigten Sätze">${g}</svg>
-    <p class="legend calleg"><span><i class="lk ln-n"></i>geübt</span><span><i class="lk ln-k"></i>geschätzt abrufbar</span><span><i class="lk ln-m"></i>gefestigt</span></p>
-  </div>`;
-}
 function viewProgress(){
   const tab = S.ptab || 'all';
   const lang = tab === 'all' ? S.lang : tab, L = LANG[lang];
@@ -1219,8 +1174,6 @@ function viewProgress(){
   const secs14 = sumLog(lang, 14, 'secs');
   const rev30 = sumLog(lang, 30, 'rev'), revOk30 = sumLog(lang, 30, 'revOk'), revM30 = sumLog(lang, 30, 'revM'), revMOk30 = sumLog(lang, 30, 'revMOk');
   const fc = forecast(lang), fcMax = Math.max(1, ...fc.map(f => f.n));
-  const dist = { anchored:0, mature:0, young:0, neu:0 };
-  items.forEach(i => { const st = stOf(i.id); if (!st) dist.neu++; else if ((st.ivl || 0) >= ANCHORED) dist.anchored++; else if ((st.ivl || 0) >= MATURE) dist.mature++; else dist.young++; });
   const collected = DB.own[lang].map(o => ({ id:o.id, de:o.de, target:o.target })).concat(DB.tat[lang].filter(o => !o.auto).map(o => ({ id:o.id, de:o.de, target:o.target })));
   const firstDate = tot.first ? dateOf(tot.first) : null;
   const ret = rev30 >= 10 ? revOk30 / rev30 : null;
@@ -1272,9 +1225,6 @@ function viewProgress(){
   ${retTrend(lang)}
   ${revM30 >= 10 ? `<p class="legend">Bei gefestigten Sätzen: ${pct(revMOk30 / revM30)} (${revMOk30} von ${revM30}).</p>` : ''}
   ${ret != null ? `<p class="legend">Ziel: etwa 90 %. ${ret < 0.8 && retSure ? 'Du liegst deutlich darunter. Meist heißt das: zu viel Neues auf einmal. Ein kürzeres Tagwerk hilft.' : ret > 0.95 && retSure ? ((DB.settings.niveau || 'mittel') === 'fort' ? 'Du liegst deutlich darüber. Ein längeres Tagwerk würde dich nicht überfordern.' : 'Du liegst deutlich darüber. Wenn dir die Sätze leicht fallen: Das Niveau <button type="button" class="link inl" data-a="settings">„Fortgeschritten“</button> bringt längere und schwerere.') : ret < 0.8 || ret > 0.95 ? `Für ein sicheres Urteil sind ${rev30} Wiederholungen noch zu wenige.` : 'Du liegst im Plan.'}</p>` : ''}</div>
-  <h2 class="grp">Stand der Sätze</h2>
-  <div class="chart"><div class="stack" aria-hidden="true">${['anchored', 'mature', 'young', 'neu'].map(k => dist[k] ? `<span class="s-${k}" style="flex:${dist[k]}"></span>` : '').join('')}</div>
-  <p class="legend distline"><span><span class="sq s-anchored"></span>${dist.anchored} <button type="button" class="term" data-a="term" data-k="verankert">verankert</button></span><span><span class="sq s-mature"></span>${dist.mature} <button type="button" class="term" data-a="term" data-k="gefestigt">gefestigt</button></span><span><span class="sq s-young"></span>${dist.young} im Aufbau</span><span><span class="sq s-neu"></span>${dist.neu} neu</span></p></div>
   <h2 class="grp">Wiederholungen der nächsten Tage</h2>
   <div class="chart">${fc.every(f => !f.n) ? '<p class="stat">In den nächsten sieben Tagen ist nichts fällig.</p>' : ''}<div class="fc${fc.every(f => !f.n) ? ' empty' : ''}">${fc.map(f => `<div class="fcd"><span class="fcn">${f.n}</span><span class="fcb"><span style="height:${Math.round(f.n / fcMax * 100)}%"></span></span><span class="fcl">${f.label}</span></div>`).join('')}</div>
   </div>
@@ -1400,6 +1350,7 @@ function render(){
   if (S.run && S.run.cur) { S.run.cur.enter = false; S.run.cur.intro = false; }
   const cs = $('#calscroll');
   if (cs) { cs.scrollLeft = S.calScroll != null ? S.calScroll : cs.scrollWidth; cs.addEventListener('scroll', () => { S.calScroll = cs.scrollLeft; }, { passive:true }); }
+  if (S.view === 'progress') armVerlauf();
   if (S.view === 'runDone' && S.run) S.run.stamped = true;
   if (S.view === 'home' && S.justDone) S.justDone = null;
   if (S.focus) { S.focus = false; const el = $('#answer'); if (el && !el.readOnly) { try { el.focus({ preventScroll:true }); } catch (e) {} caretToEnd(el); } }

@@ -1,9 +1,12 @@
 /* ---------- Langfristiger Fortschritt: Etappen, Dein Weg, Jahr für Jahr, Veränderung über 30 Tage ---------- */
-// Tagesstand ergänzen: Wortschatz (Grundformen) und gefestigte Sätze je Thema
+// Tagesstand ergänzen: Wortschatz (Grundformen), seit 24.106.0 auch in gefestigten Sätzen und die Behaltensdauer (Quartile),
+// dazu gefestigte Sätze je Thema
 function snapshotExtra(snap){
   ['sv', 'es'].forEach(l => {
     if (!snap[l]) return;
-    snap[l].w = vocabCount(l).all;
+    const v = vocabCount(l), sp = spanQuartiles(l);
+    snap[l].w = v.all; snap[l].wf = v.firm;
+    if (sp) snap[l].sp = sp;
     const t = {};
     BANK[l].forEach(i => { const st = stOf(i.id); if (st && (st.ivl || 0) >= MATURE && i.trap) t[i.trap] = (t[i.trap] || 0) + 1; });
     snap[l].t = t;

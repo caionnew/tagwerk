@@ -394,13 +394,13 @@ function save(){
 }
 // Sofort speichern, wenn die App in den Hintergrund geht oder geschlossen wird (Android beendet Apps oft ohne Vorwarnung)
 function flushSave(){ clearTimeout(saveTimer); try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} }
-// Tagesstand je Sprache (für den Verlauf): geübt, gefestigt, geschätzt abrufbar
+// Tagesstand je Sprache (für den Verlauf): geübt, gefestigt, verankert (seit 24.106.0), geschätzt abrufbar
 function snapshot(){
   const t = today(), snap = {};
   ['sv', 'es'].forEach(l => {
     let n = 0, m = 0, k = 0, a = 0;
     BANK[l].forEach(i => { const st = stOf(i.id); if (!st) return; n++; if ((st.ivl || 0) >= MATURE) m++; if ((st.ivl || 0) >= ANCHORED) a++; k += FSRS.retrievability(st, t); });
-    if (n) snap[l] = { n, m, k:Math.round(k) };
+    if (n) { snap[l] = { n, m, k:Math.round(k) }; if (a) snap[l].a = a; }
     // Bestand am Tagesende auch im Tagesprotokoll: daraus entstehen die Etappen „gefestigt“ und „verankert“ (seit 24.63).
     // Das Protokoll bleibt 400 Tage, Tagesstände werden nach 120 Tagen ausgedünnt; so behalten Etappen ihr genaues Datum.
     const x = DB.log[t] && DB.log[t][l];

@@ -131,7 +131,7 @@ function viewHome(){
   }
   const dnow = dateOf(today());
   const ws = weekStrip();
-  const hello = `<header class="hello"><p class="hello-g wordrow" lang="${lang}">${linkWords(greeting(lang), lang)}</p>${ws.strip}<p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p>${ws.count}</header>`;
+  const hello = `<header class="hello">${greetHtml(lang)}${ws.strip}<p class="hello-d">${WDAYS_FULL[dnow.getDay()]}, ${dnow.getDate()}. ${MONTHS_FULL[dnow.getMonth()]}</p>${ws.count}</header>`;
   return `${topLine()}${hello}${noticeHtml() || storeHint() || backupHint()}${intro}${monthRecap()}<section class="today hero">${card}</section>${weakHtml(lang)}${findHtml(lang)}`;
 }
 // Was heute in dieser Sprache passiert ist: Zeit, Neues, Wiederholungen, alles Üben des Tages zusammen
@@ -822,11 +822,15 @@ const SEAL_PATH = (() => {
   for (let i = 0; i < N; i++) { const a0 = 2 * Math.PI * i / N - Math.PI / 2, a1 = 2 * Math.PI * (i + 1) / N - Math.PI / 2; if (!i) d = `M${p(r1, a0)}`; d += `Q${p(r2, (a0 + a1) / 2)} ${p(r1, a1)}`; }
   return d + 'Z';
 })();
-function stampSvg(r, daily, sealed){
+// Funken: acht kurze Striche vom Rand nach außen, einmal nach dem Zeichnen (CSS .bu); r1 knapp außerhalb des Stempels
+const stampBurst = r1 => `<path class="bu" d="${Array.from({ length:8 }, (_, i) => { const a = Math.PI / 4 * i + Math.PI / 8, c = Math.cos(a), s = Math.sin(a); return `M${(28 + r1 * c).toFixed(1)} ${(28 + r1 * s).toFixed(1)}L${(28 + (r1 + 7) * c).toFixed(1)} ${(28 + (r1 + 7) * s).toFixed(1)}`; }).join('')}"/>`;
+// Drehung je Tag zwischen −6° und +6°, fest für den Tag
+const stampTilt = d => (parseInt(hash(d), 36) % 13) - 6;
+function stampSvg(r, daily, sealed, burst){
   if (!daily && !sealed) return '';
-  const draw = r.stamped ? '' : ' draw';
-  if (!sealed) return `<svg class="stamp${draw}" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/></svg>`;
-  return `<svg class="stamp seal${daily ? '' : ' nd'}${draw}" viewBox="-10 -10 76 76" aria-hidden="true"><path class="sl" pathLength="100" d="${SEAL_PATH}"/><circle cx="28" cy="28" r="25"/>${daily ? '<path d="M17 29.5l7.5 7.5L40 21"/>' : '<circle class="dot" cx="28" cy="28" r="7"/>'}</svg>`;
+  const draw = r.stamped ? '' : ' draw', tilt = ` style="--tilt:${stampTilt(today())}deg${sealed ? ';--bd:1.3s' : ''}"`;
+  if (!sealed) return `<svg class="stamp${draw}" viewBox="0 0 56 56" aria-hidden="true"${tilt}><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/>${burst && draw ? stampBurst(30) : ''}</svg>`;
+  return `<svg class="stamp seal${daily ? '' : ' nd'}${draw}" viewBox="-10 -10 76 76" aria-hidden="true"${tilt}><path class="sl" pathLength="100" d="${SEAL_PATH}"/><circle cx="28" cy="28" r="25"/>${daily ? '<path d="M17 29.5l7.5 7.5L40 21"/>' : '<circle class="dot" cx="28" cy="28" r="7"/>'}${draw ? stampBurst(39) : ''}</svg>`;
 }
 function viewRunDone(){
   const r = S.run, lang = r.lang;
@@ -870,7 +874,7 @@ function viewRunDone(){
     : '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   return `<div class="donebox">
-    ${stampSvg(r, daily, !!(r.miles && r.miles.length))}
+    ${stampSvg(r, daily, !!(r.miles && r.miles.length), perfect && total >= 3)}
     <h1 class="done-h">${title}</h1>
     ${mileHtml(r)}
     <p class="lead">${lead}</p>
@@ -1364,6 +1368,7 @@ function render(){
     default: h = viewProgress();
   }
   $('#app').innerHTML = h;
+  if (S.view === 'home') fitGreeting();
   renderPopup();
   document.body.classList.toggle('has-actions', !!$('#app .actionbar'));
   if (S.view === 'tat') { const w = $('#tatWord'); if (w) w.addEventListener('input', ev => { S.tat.word = ev.target.value; }); }

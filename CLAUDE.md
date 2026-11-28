@@ -57,8 +57,8 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
 - Ein Tagwerk am Tag ist die Einheit, in einer Sprache, gewählt nach Bedarf. Die andere Sprache steht auf „Heute“ mit Stand und „Tagwerk starten“. Die Serie zählt je Tag, Tagwerke werden je Sprache gezählt.
 - Übungen: Aufgabe oben, Antwort unten (Abstand höchstens 30 % der Bildhöhe), Knopfleiste unten, Nebenweg links, Hauptweg rechts. Kein automatisches Weiter.
 - Einheitliche Kodierung für Kalender und Wochenstreifen: gefüllt = Tagwerk, Farbe = Sprache (Schwedisch blau, Spanisch gelb, beide diagonal geteilt), Rand = nur geübt, gestrichelt = freier Tag.
-- Gestaltung nur mit den festen Stufen aus style.css (Radien: Flächen 18 px, Bedienelemente 14 px). Bewegung nur als Antwort auf eine Handlung, `prefers-reduced-motion` wird respektiert.
-- Keine Herzen, Ligen, Konfetti oder Gimmicks. Lieber Grafik statt viel Text, wo es Klarheit bringt.
+- Gestaltung nur mit den festen Stufen aus style.css (Radien: Flächen 18 px, Bedienelemente 14 px). Bewegung als Antwort auf eine Handlung, am Feiertag einmal beim ersten Öffnen von „Heute“; kurz, `prefers-reduced-motion` wird respektiert.
+- Keine Herzen, Ligen, Konfettiregen oder Gimmicks. Kleine Freuden mit etwas Bewegung sind erwünscht, wenn sie gut aussehen und nicht kitschig sind: kurz, einmal, aus dem Bild der App (Stempel, Tinte, Papier) oder aus der Kultur der Sprache (Feiertage, Wochentage). Lieber Grafik statt viel Text, wo es Klarheit bringt.
 - Statistik: Jede Zahl sagt, was sie zählt (Erklärung oben, nicht erst darunter). Aufteilungen als Anzahl, Quoten als Prozent; bei kleinen Mengen keine Scheingenauigkeit.
 - Auswahlaufgaben haben genau eine richtige Option. Listen in Generatoren mindestens dreimal so groß wie die Wiederholungssperre (12).
 - Weder Hinweis noch Auswahl einer Aufgabe darf die Lösung verraten: Aufgaben nie nach ihrer Lösung aussortieren oder neu würfeln. Deutsche Stichwörter nur, wo sie eindeutig sind.

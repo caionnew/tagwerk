@@ -1,4 +1,4 @@
-// Begrüßung auf „Heute“ (24.89.0): jeden Tag eine andere, innerhalb der Tageszeit dieselbe; Vorrang für Fest, ersten Tag,
+// Begrüßung auf „Heute“ (24.89.0): jeden Tag eine andere, innerhalb der Tageszeit dieselbe; Vorrang für Feiertag (24.90.0), ersten Tag,
 // Rückkehr nach einer Pause, erledigtes Tagwerk und zweiten Besuch; Wochentage mit eigenem Gruß. Und: Ein Thema unter
 // „Höchste Fehlerquoten“ öffnet zuerst das Themenblatt.
 const test = require('node:test'), assert = require('node:assert/strict');
@@ -64,6 +64,58 @@ test('Vorrang: Fest, erster Tag, Rückkehr nach Pause, Tagwerk erledigt, zweiter
   // Heute schon etwas geübt
   assert.equal(greet('sv', 2026, 12, 1, 19, { extra:`DB.log['2026-12-01'] = { sv: { n: 3 } }` }), 'Hej igen!');
   assert.equal(greet('es', 2026, 12, 1, 19, { extra:`DB.log['2026-12-01'] = { es: { n: 3 } }` }), '¡Hola de nuevo!');
+});
+
+test('Feiertage: eigener Gruß je Sprache und Zeitraum, Einzeltage vor Zeiträumen; Feste ohne Gruß bekommen den gewöhnlichen', () => {
+  const hol = (lang, t) => run(`(() => { const h = holidayGreet('${lang}', '${t}'); return h ? h.g + (h.orn ? ' ' + h.orn : '') : null; })()`);
+  assert.equal(hol('sv', '2026-11-29'), 'Trevlig advent! candle');
+  assert.equal(hol('sv', '2026-12-20'), 'Trevlig advent! candle');
+  assert.equal(hol('sv', '2026-12-13'), 'Glad lucia! candle', 'Lucia am dritten Advent');
+  assert.equal(hol('sv', '2028-12-24'), 'God jul! star', 'Heiligabend am vierten Advent');
+  assert.equal(hol('sv', '2026-12-23'), 'Lillejulafton! star');
+  assert.equal(hol('sv', '2026-12-26'), 'God jul! star');
+  assert.equal(hol('sv', '2026-12-28'), 'God fortsättning!');
+  assert.equal(hol('sv', '2027-01-01'), 'Gott nytt år! spark');
+  assert.equal(hol('sv', '2027-03-27'), 'Glad påsk!', 'Påskafton');
+  assert.equal(hol('sv', '2027-06-26'), 'Glad midsommar! sun', 'Midsommardagen');
+  assert.equal(hol('es', '2026-12-24'), '¡Feliz Nochebuena! star');
+  assert.equal(hol('es', '2026-12-28'), '¡No te fíes hoy!', 'Inocentes vor „¡Felices fiestas!“');
+  assert.equal(hol('es', '2026-12-29'), '¡Felices fiestas!');
+  assert.equal(hol('es', '2027-01-06'), '¡Felices Reyes! star');
+  assert.equal(hol('es', '2027-03-28'), '¡Feliz Pascua!');
+  assert.equal(hol('es', '2026-11-29'), null);
+  // La Tomatina (letzter Mittwoch im August) und Alla helgons dag: der gewöhnliche Gruß, nicht der Satz aus dem Fundstück
+  assert.ok(GREET.es.day.includes(greet('es', 2027, 8, 25, 12)), greet('es', 2027, 8, 25, 12));
+  assert.ok(!/batalla/.test(greet('es', 2027, 8, 25, 12)));
+  assert.ok(GREET.sv.day.includes(greet('sv', 2026, 10, 31, 12)), 'Alla helgons dag');
+  // Jeder Eintrag hat in jedem Jahr ein Datum, jedes Wort ist nachschlagbar, höchstens 18 Zeichen
+  for (const lang of ['sv', 'es']) {
+    const rows = run(`HOLIDAY_GREET.${lang}.map(([rule, n, g, orn]) => [[2026, 2027, 2028, 2029, 2030].every(y => !!rule(y)), g, orn || ''])`);
+    for (const [ok, g, orn] of rows) {
+      assert.ok(ok, g); assert.ok(g.length <= 18, g); assert.ok(!orn || run(`!!ORN.${orn}`), orn);
+      for (const w of tokens(g)) if (/[a-zà-ÿ]/i.test(w)) assert.ok(lookupWord(lang, w), `${lang}: ${w} (${g})`);
+    }
+  }
+});
+
+test('Kopf: Zeichen zum Feiertagsgruß, bewegt nur beim ersten Zeichnen am Tag; gewöhnliche Tage ohne Zeichen', () => {
+  const html = () => run(`greetHtml('sv', new Date(2026, 11, 13, 9, 0))`);
+  run('S.greetAnim = null');
+  assert.match(html(), /Glad.*lucia.*<svg class="orn orn-candle go"/);
+  assert.match(html(), /<svg class="orn orn-candle"/, 'beim zweiten Mal ohne Bewegung');
+  assert.doesNotMatch(run(`greetHtml('sv', new Date(2026, 11, 1, 9, 0))`), /orn/);
+  // Ohne Layout (Node) tut die Anpassung nichts
+  run('fitGreeting()');
+});
+
+test('Stempel: je Tag fest gedreht (−6° bis +6°); Funken nur nach fehlerfreier Runde und an Etappentagen', () => {
+  const tilts = new Set(Array.from({ length:60 }, (_, k) => run(`stampTilt(addDays('2026-12-01', ${k}))`)));
+  assert.ok([...tilts].every(x => x >= -6 && x <= 6) && tilts.size >= 8, [...tilts].join(' '));
+  assert.equal(run(`stampTilt('2026-12-01')`), run(`stampTilt('2026-12-01')`));
+  assert.match(run(`stampSvg({ stamped:false }, true, false, true)`), /--tilt:-?\d+deg.*class="bu"/);
+  assert.doesNotMatch(run(`stampSvg({ stamped:false }, true, false, false)`), /class="bu"/);
+  assert.match(run(`stampSvg({ stamped:false }, true, true, false)`), /--bd:1.3s.*class="bu"/);
+  assert.doesNotMatch(run(`stampSvg({ stamped:true }, true, true, true)`), /class="bu"/, 'beim Wiederzeichnen nicht noch einmal');
 });
 
 test('Heute, „Höchste Fehlerquoten“: Antippen öffnet das Themenblatt, von dort „10 Aufgaben üben“', () => {

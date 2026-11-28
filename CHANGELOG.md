@@ -2,6 +2,18 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.90.0
+**Feiertagsgrüße je Sprache mit kleinem Zeichen, Stempel wie von Hand, Funken nach fehlerfreien Runden.**
+- **Feiertage:** 15 schwedische und 16 spanische Grüße, an manchen über mehrere Tage. Schwedisch: Semmeldags! (Fettisdagen), Våffeldags!, Glad påsk! (Påskafton bis Annandag), Glad valborg!, Glad nationaldag!, Glad midsommar!, Håll för näsan! (Surströmming), Kanelbulle?, Mårtensgås?, Trevlig advent! an allen vier Adventssonntagen, Glad lucia!, Lillejulafton!, God jul! (24. bis 26.), God fortsättning! (27. bis 30.), Gott nytt år! (31. bis 6. Januar). Spanisch: ¡Feliz Año Nuevo!, ¡Feliz año!, ¡Felices Reyes!, ¡Feliz Carnaval!, ¡Felices Fallas!, ¡Feliz Pascua!, ¡Feliz Sant Jordi!, ¡Feliz San Juan!, ¡Viva México!, ¡Viva Chile!, ¡Hoy es fiesta! (12. Oktober), ¡Feliz Nochebuena!, ¡Feliz Navidad!, ¡No te fíes hoy! (Inocentes), ¡Felices fiestas!, ¡Feliz Nochevieja!.
+- Bisher stand am Festtag der Beispielsatz aus dem Fundstück als Gruß da, darunter „una batalla de tomates“ und „el Día de Muertos“. Feste ohne passenden Gruß (La Tomatina, Día de Muertos, Alla helgons dag) bekommen jetzt den gewöhnlichen. Fällt Lucia auf einen Adventssonntag, gilt Lucia (2026 der dritte Advent).
+- **Zeichen zum Gruß:** Kerze (Advent, Lucia), Stern (Weihnachten, Reyes), Feuerwerk (Silvester, Neujahr), Sonne (Mittsommer), Feuer (Valborg, Fallas, San Juan). Beim ersten Öffnen von „Heute“ am Tag bewegt es sich einmal: Die Flamme flackert, der Stern funkelt auf, die Strahlen gehen auf.
+- **Passt in eine Zeile:** Wie breit ein Gruß ist, hängt an der Schrift des Geräts. Bricht er um, wird er eine Stufe kleiner, höchstens zwei („¡Feliz Nochebuena!“ mit Stern auf 360 px).
+- **Stempel wie von Hand:** Jeden Tag ein wenig anders gedreht (−6° bis +6°), beim Rundenende setzt er mit leichtem Druck auf. Nach einer fehlerfreien Runde (ab drei Aufgaben) und an Etappentagen springen danach kurz acht Funken in der Sprachfarbe vom Rand.
+- Alles Bewegte ist aus, wenn das System „Bewegung reduzieren“ meldet.
+- Wörterbuch: 16 neue Einträge (semmeldags, lillejulafton, fortsättning, nochebuena, fiarse …), darunter viva und fallas in der Bedeutung des Grußes; håll ergänzt (håll för näsan!).
+- Doku: CLAUDE.md (deine Linie: kleine Freuden und leichte Bewegung gern, kein Konfettiregen), ARCHITECTURE.md, IDEEN.md. Tests: Grüße je Datum und Vorrang, alle Wörter nachschlagbar, Zeichen nur beim ersten Mal bewegt, Stempel und Funken; im Browser „¡Feliz Nochebuena!“ in einer Zeile auf 360 px.
+- Speicherstand unverändert.
+
 ## 24.89.0
 **Gruß auf „Heute“ jeden Tag anders, Thema öffnet zuerst das Themenblatt.**
 - **Gruß:** Bisher stand je Tageszeit immer derselbe da. Jetzt kommt jeden Tag ein anderer, innerhalb der Tageszeit derselbe: 30 schwedische und 27 spanische, etwa Morrn!, Kaffe först?, Tjena!, Nattuggla?; ¡Buen día!, ¿Un cafecito?, ¿Qué tal?, ¡Qué tarde es!. Dazu die Wochentage (Måndag igen!, Glad lillördag! am Mittwochabend, Fredagsmys!, ¡Ya es viernes!, ¡Buen finde!), am frühen Nachmittag jeden zweiten Tag Dags för fika? bzw. ¿Ya has comido?, sehr früh Tidigt ute! bzw. ¡Qué madrugón!.

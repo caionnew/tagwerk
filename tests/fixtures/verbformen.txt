@@ -538,6 +538,7 @@ es explicar: explico explica explicamos, expliqué explicó explicaron, explique
 es extender: extiendo extiende extendemos, extendí extendió extendieron, extienda extendamos, extenderé, extendiera, extendido, extendiendo, extiende extended
 es extraer: extraigo extrae extraemos, extraje extrajo extrajeron, extraiga extraigamos, extraeré, extrajera, extraído, extrayendo, extrae extraed
 es extrañar: extraño extraña extrañamos, extrañé extrañó extrañaron, extrañe extrañemos, extrañaré, extrañara, extrañado, extrañando, extraña extrañad
+es fiarse: fío fía fiamos, fié fió fiaron, fíe fiemos, fiaré, fiara, fiado, fiando, fía fiad
 es fijar: fijo fija fijamos, fijé fijó fijaron, fije fijemos, fijaré, fijara, fijado, fijando, fija fijad
 es financiar: financio financia financiamos, financié financió financiaron, financie financiemos, financiaré, financiara, financiado, financiando, financia financiad
 es fingir: finjo finge fingimos, fingí fingió fingieron, finja finjamos, fingiré, fingiera, fingido, fingiendo, finge fingid

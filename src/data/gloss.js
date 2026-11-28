@@ -2333,7 +2333,7 @@ praktisk||praktisch
 loppet|lopp|das Rennen
 lopp||Rennen, Lauf (ett-Wort)
 motsatt||entgegengesetzt
-håll||Richtung (ett-Wort)
+håll||Richtung (ett-Wort); halt! (Imperativ von hålla); håll för näsan! = halt dir die Nase zu!
 äldsta|gammal|älteste (Superlativ)
 längdskidlopp||Skilanglaufrennen (ett-Wort)
 söndagen|söndag|der Sonntag
@@ -3439,6 +3439,13 @@ snyggt|snygg|hübsch, schick (bei ett-Wörtern); snyggt jobbat! = gut gemacht!
 skön||schön, angenehm, gemütlich
 lillördag||Mittwoch, „kleiner Samstag“, an dem man sich abends etwas gönnt (en-Wort)
 lördagskväll||Samstagabend (en-Wort)
+semmeldags||Zeit für Semlor (Hefebrötchen mit Mandelmasse und Sahne, am Fettisdagen)
+våffeldags||Zeit für Waffeln (am Våffeldagen, 25. März)
+kanelbulle||Zimtschnecke (en-Wort)
+mårtensgås||Martinsgans (en-Wort)
+advent||Advent (en-Wort); trevlig advent! = schönen Advent!
+lillejulafton||23. Dezember, „kleiner Heiligabend“
+fortsättning||Fortsetzung (en-Wort); god fortsättning! = Gruß zwischen den Jahren: weiterhin schöne Feiertage!
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -6751,6 +6758,15 @@ cafecito||Käffchen (Verkleinerung von café)
 madrugón||frühes Aufstehen; ¡qué madrugón! = so früh schon wach!
 finde||Wochenende (umgangssprachlich für fin de semana)
 hecho|hacer|gemacht (Partizip); Tatsache; ¡bien hecho! = gut gemacht!
+carnaval||Karneval, Fasching
+pascua||Ostern; ¡Feliz Pascua! = Frohe Ostern!
+sant||Sankt (katalanisch); Sant Jordi = Sankt Georg, 23. April
+jordi||Georg (katalanisch); Sant Jordi = Sankt Georg
+san||Sankt (vor Namen); San Juan = Johannistag
+nochebuena||Heiligabend
+fiarse||trauen, sich verlassen; ¡no te fíes! = trau dem nicht!
+fallas||Fallas: Fest in Valencia, große Figuren werden verbrannt; auch: du versagst (fallar)
+viva||es lebe!, hoch!; ¡Viva México! = Es lebe Mexiko!; auch Subjuntivo von vivir
 `
 };
 

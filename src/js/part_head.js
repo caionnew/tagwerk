@@ -751,14 +751,14 @@ function startRun(kind, opts){
   else if (kind === 'form') queue = Array.from({ length:10 }, () => ({ type:'gen', gen:opts.gen }));
   else if (kind === 'textgap') {
     // Eigener Lesetext oder Wikipedia-Fundstück (Text kommt dann mit)
-    const t = opts.body ? { body:opts.body, title:opts.title } : TEXTS[lang].find(x => x.id === opts.text);
+    const t = opts.body ? { body:opts.body, title:opts.title } : textById(lang, opts.text);
     // Direkt nach dem Lesen: eben nachgeschlagene Wörter zuerst; reichen die Wörter mit Bedeutung nicht, wie früher auffüllen
     if (t) {
       const prefer = new Set(((S.text && S.text.looked) || []).map(w => w.toLowerCase()).concat(t.id ? Object.keys((DB.used.looked || {})[lang + ':' + t.id] || {}) : []));
       const has = s => s.split(' ').some(w => prefer.has(gapToken(w).toLowerCase()));
       const sents = shuffle(gapSentences(t)).sort((a, b) => has(b) - has(a));
-      let items = sents.map(x => textGapData(lang, x, t.title, { prefer })).filter(Boolean);
-      if (items.length < 8) items = items.concat(sents.filter(x => !items.some(d => d.full === x)).map(x => textGapData(lang, x, t.title, { lenient:true })).filter(Boolean));
+      let items = sents.map(x => textGapData(lang, x, t.label || t.title, { prefer })).filter(Boolean);
+      if (items.length < 8) items = items.concat(sents.filter(x => !items.some(d => d.full === x)).map(x => textGapData(lang, x, t.label || t.title, { lenient:true })).filter(Boolean));
       queue = items.slice(0, 8).map(data => ({ type:'gen', gen:'textgap_' + lang, data }));
     }
   }

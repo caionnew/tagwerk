@@ -154,6 +154,7 @@ document.addEventListener('click', e => {
     case 'radio': startRadio(); break;
     case 'texts': stopReading(); S.text = null; goView('texts'); break;
     case 'textopen': openText(S.lang, b.dataset.id, null, b.dataset.back); break;
+    case 'sopen': case 'spart': case 'snext': case 'sde': seriesCmd(b.dataset.a, b); break;
     case 'kultcat': S.kultCat = b.dataset.c; render(); break;
     case 'wiki': openWiki(); break;
     case 'tplayall': case 'treplay': case 'tslow': case 'tshowall': case 'treveal': case 'tsay': case 'tquiz': case 'tqnext': case 'tpick': case 'tkeep': case 'tnexttext': readCmd(b.dataset.a, b); break;

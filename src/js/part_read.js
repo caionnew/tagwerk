@@ -1,7 +1,8 @@
 /* ---------- Lesen und Hören: eigene Texte mit Fragen, dazu ein Wikipedia-Fundstück (online) ---------- */
 // Ein Text, zwei Wege: Lesen (Wörter antippbar) oder Hören (Text verdeckt, Satz für Satz vorgelesen, danach Fragen).
 let readToken = 0, readTimer = null;
-const textById = (lang, id) => TEXTS[lang].find(t => t.id === id);
+// Auch Teile von Reihen (part_series.js): gleiche Felder, Kennung „palme-2“
+const textById = (lang, id) => TEXTS[lang].find(t => t.id === id) || seriesPart(lang, id);
 // Antworten mischen, aber für denselben Text immer gleich (sonst springt die Reihenfolge beim Neuzeichnen)
 function optionOrder(id, k, n){ const o = [...Array(n).keys()]; let h = parseInt(hash(id + ':' + k), 36); for (let i = n - 1; i > 0; i--) { const j = h % (i + 1); h = Math.floor(h / 7) + 13; [o[i], o[j]] = [o[j], o[i]]; } return o; }
 // Lesen oder nur hören wird vor dem Öffnen gewählt (in der Übersicht) und gemerkt: Wer hören will, soll den Text vorher nicht sehen.
@@ -28,7 +29,7 @@ function readPlay(){
   if (T.si >= list.length) {
     // Text zu Ende gehört: beim reinen Hören kommen jetzt die Fragen
     T.playing = false; T.si = Math.max(0, list.length - 1); T.listened = true;
-    if (T.hidden && T.id && !T.quiz) { T.quiz = true; T.enter = true; if (S.view === 'text') { render(); followSentence('.tq'); } return; }
+    if (T.hidden && T.id && !T.quiz) { T.quiz = true; T.enter = true; markRead(T); if (S.view === 'text') { render(); followSentence('.tq'); } return; }
     if (S.view === 'text') render(); return;
   }
   T.playing = true; T.startedAt = Date.now();
@@ -60,7 +61,7 @@ function readCmd(a, b){
     else { T.tapped = i; stopReading(); T.si = i; readPlay(); return; }
   }
   else if (a === 'tsay') { S.pop = null; renderPopup(); stopReading(); T.si = Number(b.dataset.i); readPlay(); return; }
-  else if (a === 'tquiz') { T.quiz = true; T.enter = true; render(); followSentence('.tq'); return; }
+  else if (a === 'tquiz') { T.quiz = true; T.enter = true; markRead(T); render(); followSentence('.tq'); return; }
   else if (a === 'tqnext') { T.qi = Math.min(T.qi + 1, t ? t.q.length : 0); T.enter = true; }
   else if (a === 'tpick') {
     const k = Number(b.dataset.k); if (!t || T.picks[k] != null) return;
@@ -106,7 +107,7 @@ function viewTexts(){
   return backBar('Lesen und Hören') + `
     <div class="seg2 tmode" role="radiogroup" aria-label="Wie möchtest du die Texte?">${[['read', 'Lesen und hören'], ['listen', 'Nur hören']].map(([k, l]) => `<button type="button" role="radio" aria-checked="${textMode() === k}" data-a="tdefmode" data-v="${k}">${l}</button>`).join('')}</div>
     <p class="lead-s">${textMode() === 'listen' ? 'Der Text bleibt verdeckt, bis die drei Fragen beantwortet sind.' : 'Lesen, auf Wunsch mit Vorlesen, danach drei Fragen.'}</p>
-    <div class="tgrid2">${cards}</div>
+    ${seriesCards(lang)}<div class="tgrid2">${cards}</div>
     <h2 class="grp">Frischer Lesestoff</h2>
     <div class="rows">${row('wiki', 'Wikipedia-Fundstück', navigator.onLine === false ? 'Braucht eine Internetverbindung' : 'Ein ausgezeichneter Artikel, gern mit Bezug zum Land', '')}</div>`;
 }
@@ -134,8 +135,8 @@ function viewText(){
     const cls = `rs-s${T.playing && i === T.si ? ' on' : ''}${veiled(i) ? ' veil' : ''}${!veiled(i) && evidence.has(i) ? ' ev' : ''}`;
     return veiled(i) ? `<span class="${cls}" data-a="treveal" data-i="${i}" role="button" aria-label="Satz ${i + 1}: ${T.tapped === i ? 'aufdecken' : 'noch einmal hören'}">${esc(s)}</span>` : `<span class="${cls}" data-i="${i}">${linkWords(s, lang)}</span>`; }).join(' ')}</p>`).join('')}</article>`;
   const hero = `<header class="rhero">
-      <div class="tchips">${W ? `<span class="tag">Wikipedia</span>${W.label ? `<span class="tag">${esc(W.label)}</span>` : ''}` : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>
-      <h1 class="rtitle" lang="${lang}">${hangLead(esc(W ? W.title : t.title))}</h1>
+      ${t && t.series ? seriesHero(t, T) : `<div class="tchips">${W ? `<span class="tag">Wikipedia</span>${W.label ? `<span class="tag">${esc(W.label)}</span>` : ''}` : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>`}
+      <h1 class="rtitle" lang="${lang}">${hangLead(esc(W ? W.title : t.title))}</h1>${t && t.series ? seriesDate(t) : ''}
       <div class="rprog" aria-hidden="true"><i style="width:${Math.round(100 * Math.min(heard, list.length) / Math.max(1, list.length))}%"></i></div>
       ${veil ? `<p class="rhint">${fold ? 'Der Text bleibt bis nach den Fragen verdeckt.' : 'Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn. Nach dem letzten Satz kommen die Fragen.'}</p>` : ''}
     </header>`;
@@ -159,14 +160,14 @@ function viewText(){
       ? `<p class="hint m0 mb-12">Die Fragen kommen, sobald der Text zu Ende ist.</p><button type="button" class="ghost" data-a="tquiz">Fragen jetzt</button>`
       : `<button type="button" class="primary" data-a="tquiz">Gelesen, zu den Fragen</button>`}</div>` : '';
   const score = Object.values(T.picks).filter(i => i === 0).length;
-  const qi = Math.min(T.qi, t.q.length - 1), [q, opts, src] = t.q[qi], picked = T.picks[qi];
+  const qi = Math.min(T.qi, t.q.length - 1), src = t.q[qi][2], picked = T.picks[qi], { q, opts, tl:qtl } = seriesQ(t, t.q[qi]);
   const srcSent = picked != null ? flatSents(T)[srcIndex(T, src)] : '';
   // Einblenden nur bei einer neuen Frage oder dem Ergebnis, nicht bei jedem Antippen einer Antwort
   const enter = T.enter ? ' enter' : ''; T.enter = false;
   const quiz = !T.quiz || finished ? '' : `<section class="tq${picked == null ? '' : ' answered'}${enter}" aria-live="polite">
       <div class="tq-head"><span>Frage ${qi + 1} von ${t.q.length}</span><span class="sdots">${t.q.map((_, i) => `<i class="${T.picks[i] == null ? (i === qi ? 'on' : '') : T.picks[i] === 0 ? 'ok' : 'bad'}"></i>`).join('')}</span></div>
-      <p class="tq-q">${esc(q)}</p>
-      <div class="tq-o">${optionOrder(t.id, qi, opts.length).map(i => `<button type="button" class="tq-b${picked != null ? (i === 0 ? ' right' : i === picked ? ' wrong' : ' dim') : ''}" data-a="tpick" data-k="${qi}" data-i="${i}"${picked != null ? ' disabled' : ''}>${esc(opts[i])}</button>`).join('')}</div>
+      <p class="tq-q"${qtl ? ` lang="${lang}"` : ''}>${esc(q)}</p>
+      <div class="tq-o">${optionOrder(t.id, qi, opts.length).map(i => `<button type="button" class="tq-b${picked != null ? (i === 0 ? ' right' : i === picked ? ' wrong' : ' dim') : ''}" data-a="tpick" data-k="${qi}" data-i="${i}"${picked != null ? ' disabled' : ''}${qtl ? ` lang="${lang}"` : ''}>${esc(opts[i])}</button>`).join('')}</div>
       ${picked != null ? `<p class="tq-src"><span class="lbl-s">Im Text</span> <span lang="${lang}">${esc(srcSent)}</span></p>` : ''}
     </section>`;
   const own = new Set((DB.own[lang] || []).map(o => o.id));
@@ -175,9 +176,10 @@ function viewText(){
       <p class="hint mt-4">${T.hidden ? 'Jetzt kannst du den Text in Ruhe nachlesen. Die Stellen mit den Antworten sind markiert.' : 'Die Stellen mit den Antworten sind im Text markiert.'}</p>
       <p class="keep-h">„Ins Tagwerk“ nimmt den Satz in deine nächsten Tagwerke auf.</p>
       <div class="rows mt-8">${t.keep.map(([s, de], i) => { const has = own.has(lang + ':own:' + hash(s)); return `<div class="row static"><span class="txt"><span class="rt" lang="${lang}">${esc(s)}</span><span class="rd">${esc(de)}</span></span>${has ? '<span class="kadd on">✓ Im Tagwerk</span>' : `<button type="button" class="kadd" data-a="tkeep" data-k="${i}" aria-label="Satz ins Tagwerk übernehmen">Ins Tagwerk</button>`}</div>`; }).join('')}</div>
-      <div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>
-    </section>` : '';
-  return backBar('Lesen und Hören', T.back || 'texts') + hero + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
+      ${t.series ? '' : `<div class="btnrow"><button type="button" class="ghost" data-a="textgap" data-id="${t.id}">Lückentext üben</button><button type="button" class="primary" data-a="tnexttext">Nächster Text</button></div>`}
+    </section>${t.series ? seriesEnd(t, lang) : ''}` : '';
+  const sr = t.series && seriesById(lang, t.series);
+  return backBar(sr ? sr.title : 'Lesen und Hören', T.back || 'texts') + hero + (sr ? seriesRecap(t, lang) : '') + article + gate + (T.quiz ? `<h2 class="grp">Verstanden?</h2>` : '') + quiz + after + looked + bar;
 }
 // Wikipedia-Fundstück: nur Artikel, die die Wikipedia-Gemeinschaft selbst ausgezeichnet hat (exzellent bzw. gut),
 // solche mit Bezug zum Kulturraum der Sprache zuerst, schon Gesehenes nicht noch einmal. Zufällig ist nur der

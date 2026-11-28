@@ -1,5 +1,5 @@
 /* ---------- Ansichten ---------- */
-const FOCUS_VIEWS = ['run', 'runDone', 'radio', 'texts', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
+const FOCUS_VIEWS = ['run', 'runDone', 'radio', 'texts', 'series', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
 const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(wordCore(w))}">${esc(w)}</span>` : esc(w)).join(' ');
 function monthRecap(){
   const t = today(), day = Number(t.slice(8, 10));
@@ -66,6 +66,8 @@ function weekStrip(){
   };
 }
 function findHtml(lang){
+  // Offene Reihe: Fortsetzung statt Fundstück (part_series.js)
+  const cont = seriesContinue(lang); if (cont) return cont;
   const f = fundstueck(lang);
   if (f.kind === 'event') {
     const when = f.diff === 0 ? 'heute' : f.diff === 1 ? 'morgen' : `in ${f.diff} Tagen`;
@@ -1382,6 +1384,7 @@ function render(){
     case 'shadow': h = viewShadow(); break;
     case 'radio': h = viewRadio(); break;
     case 'texts': h = viewTexts(); break;
+    case 'series': h = viewSeries(); break;
     case 'text': h = S.text && !S.text.id && !S.text.wiki ? viewWikiLoading() : viewText(); break;
     case 'write': h = viewWrite(); break;
     case 'own': h = viewOwn(); break;

@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.97.0
+**Rahmen für Reihen: Lesetexte in Fortsetzungen. Inhalte kommen in Paketen.**
+- **Reihen in „Lesen und Hören“:** über den Einzeltexten, je Reihe eine Karte mit Thema, Niveau, Erzählform („Wie es geschah“, „Mit erfundener Figur“ …) und Fortschritt als Striche. Tipp auf eine begonnene Reihe öffnet gleich den nächsten Teil, sonst die Übersicht.
+- **Übersicht:** Einleitung in der Zielsprache mit „Auf Deutsch“ (bei „Grundlagen“ deutsch), „Was ist echt?“, die Teile als Schiene wie in „Dein Weg“, Personen und Wörter der Reihe. Titel späterer Teile, Personen und Wörter erscheinen erst, wenn du so weit bist. Gelesene Teile lassen sich jederzeit noch einmal lesen, die Fragen noch einmal beantworten; das beste Ergebnis bleibt.
+- **Teil:** der gewohnte Leser (Vorlesen, „Nur hören“, Antippen, Fragen, „Ins Tagwerk“, Lückentext), dazu Datumszeile, ab Teil 2 „Bisher“ (zwei Sätze, bei „Grundlagen“ deutsch), am Ende „Im nächsten Teil“ mit einem Satz Vorschau und die Quellen. Fragen bei „Fortgeschritten“ in der Zielsprache, wenn der Teil sie mitbringt.
+- **Reihenfolge:** Ein Teil gilt als gelesen, sobald du zu den Fragen gehst (Knopf oder Ende des Vorlesens); dann öffnet sich der nächste. Keine Wartezeit.
+- **Heute:** Fortsetzung statt Fundstück, solange eine Reihe offen ist, in den letzten sieben Tagen gelesen wurde und heute noch kein Teil dran war.
+- Gelesene Teile liefern Lesetext-Lücken wie Einzeltexte, beschriftet mit dem Namen der Reihe.
+- Noch ohne Inhalte: Der Abschnitt erscheint mit dem ersten Paket. Konzept, Erzählformen und Themen mit Noten in IDEEN.md, Aufbau und Regeln für die Pakete in docs/REIHEN.md.
+- Tests: Regeln für jedes Paket (Aufbau, Länge, Textstellen, Nachschlagbarkeit, Personen und Wörter je Teil), Rahmen mit einer Testreihe im Node und im Browser. Speicherstand unverändert (Fortschritt im vorhandenen Speicher der Lesetexte).
+
 ## 24.96.0
 **Kopf am Rundenende: Abstände neu gemessen.**
 - **Titel und Zuruf:** „Tagwerk erledigt“ steht enger am Zuruf (7 statt 13 px von der Grundlinie zur Versalhöhe), es gehört zu ihm und schwebte vorher. Das Ergebnis bleibt etwas weiter weg (14 px), dort brauchen die Unterlängen des Zurufs (p, g, y) Luft. Der Textblock ist damit 63 statt 70 px hoch und steht mittig zum Stempel.

@@ -704,7 +704,8 @@ function textGapData(lang, sentence, title, opts = {}){
 }
 const gapSentences = t => t.body.replace(/\n+/g, ' ').split(new RegExp(`(?<=${rxSet(P_STOP)})\\s+`)).filter(x => x.split(' ').length >= 5);
 // Gelesen = die Fragen zum Text beantwortet (Schlüssel „sv:vasa“)
-const readTexts = lang => { const done = (DB.used && DB.used.texts) || {}; return TEXTS[lang].filter(t => done[lang + ':' + t.id]); };
+// Seit 24.97.0 auch Teile von Reihen; label ist dann der Name der Reihe („Aus „Natten på Sveavägen““)
+const readTexts = lang => { const done = (DB.used && DB.used.texts) || {}; return allTexts(lang).filter(t => done[lang + ':' + t.id]); };
 // Nachgeschlagene Wörter aus gelesenen Texten, frühestens am Tag danach, ohne die zuletzt gezeigten Sätze
 function lookedDue(lang, texts, recent){
   const all = (DB.used && DB.used.looked) || {}, t0 = today(), out = [];
@@ -723,10 +724,10 @@ function genTextGap(lang){
     const ts = readTexts(lang), list = ts.length ? ts : TEXTS[lang];
     const recent = (DB.used && DB.used.genRecent && DB.used.genRecent['textgap_' + lang]) || [];
     const due = lookedDue(lang, ts, recent);
-    if (due.length) { const o = pick(due), d = textGapData(lang, o.s, o.t.title, { prefer:new Set([o.w]), looked:{ k:o.key, w:o.w } }); if (d) return d; }
-    for (let k = 0; k < 30; k++) { const t = pick(list), d = textGapData(lang, pick(gapSentences(t)), t.title); if (d && (k > 20 || !recent.includes(d.full.toLowerCase()))) return d; }
-    for (const t of list) for (const s of gapSentences(t)) { const d = textGapData(lang, s, t.title); if (d) return d; }
-    for (const t of list) for (const s of gapSentences(t)) { const d = textGapData(lang, s, t.title, { lenient:true }); if (d) return d; }
+    if (due.length) { const o = pick(due), d = textGapData(lang, o.s, o.t.label || o.t.title, { prefer:new Set([o.w]), looked:{ k:o.key, w:o.w } }); if (d) return d; }
+    for (let k = 0; k < 30; k++) { const t = pick(list), d = textGapData(lang, pick(gapSentences(t)), t.label || t.title); if (d && (k > 20 || !recent.includes(d.full.toLowerCase()))) return d; }
+    for (const t of list) for (const s of gapSentences(t)) { const d = textGapData(lang, s, t.label || t.title); if (d) return d; }
+    for (const t of list) for (const s of gapSentences(t)) { const d = textGapData(lang, s, t.label || t.title, { lenient:true }); if (d) return d; }
     return null;
   };
 }

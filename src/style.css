@@ -847,6 +847,32 @@ button.mrow:active{ background:var(--accent-soft); }
 .ttitle{ font-family:var(--serif); font-size:var(--fs-9); line-height:1.25; margin-top:2px; }
 .tteaser{ color:var(--muted); font-size:var(--fs-4); line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .rhero{ margin:4px 0 6px; }
+/* Reihen (seit 24.97.0): Karte mit Erzählform und Fortschritt, Übersicht, Datumszeile, „Bisher“, Ende eines Teils */
+.tag.form{ color:var(--accent-ink); background:var(--accent-soft); border-color:transparent; }
+.scard .ttitle{ font-size:var(--fs-10); }
+.sprog{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px; }
+.sdash{ display:flex; gap:4px; }
+.sdash i{ width:22px; height:4px; border-radius:var(--r-pill); background:var(--line); }
+.sdash i.on{ background:var(--accent); }
+.scta{ font-size:var(--fs-4); font-weight:var(--fw-semibold); color:var(--accent-ink); white-space:nowrap; }
+.shook{ margin:10px 0 0; font-size:var(--fs-6); line-height:1.5; }
+.shook.wordrow{ font-family:var(--serif); font-size:var(--fs-7); }
+.tl-de{ margin:6px 0 0; font-size:var(--fs-5); color:var(--muted); line-height:1.45; }
+.rhero .vocab{ margin:8px 0 0; }
+.sreal{ margin:14px 0 0; padding:10px 12px; border-radius:var(--r-m); background:var(--accent-soft); font-size:var(--fs-4); line-height:1.45; }
+.srail .mr-b{ grid-column:2 / 4; display:flex; align-items:center; justify-content:space-between; gap:10px; background:none; border:0; padding:0; margin:0; font:inherit; color:inherit; text-align:left; }
+.srail button.mr-b .mr-t{ color:var(--accent-ink); }
+.srail .mr.now button.mr-b .mr-t{ color:var(--ink); }
+.rdate{ margin:4px 0 0; font-size:var(--fs-4); color:var(--muted); }
+.sbisher{ margin:16px 0 4px; padding:10px 12px; border-radius:var(--r-m); border:1px solid var(--line); background:var(--surface); }
+.sbisher-k{ margin:0 0 2px; font-size:var(--fs-3); font-weight:var(--fw-semibold); color:var(--muted); }
+.sbisher-t{ margin:0; font-size:var(--fs-6); line-height:1.5; color:var(--muted); }
+.snext{ margin:16px 0 0; padding:14px 16px; border-radius:var(--r-l); border:1px solid var(--line); background:var(--surface); }
+.snext-h{ margin:0; font-family:var(--serif); font-size:var(--fs-10); color:var(--accent-ink); }
+.snext-t{ margin:6px 0 0; font-size:var(--fs-6); line-height:1.5; }
+.snext .btnrow{ margin-top:14px; flex-wrap:nowrap; }
+.snext .btnrow .ghost{ flex:none; white-space:nowrap; }
+.snext .btnrow .primary{ flex:1 1 auto; }
 .rtitle{ font-family:var(--serif); font-weight:var(--fw-semibold); font-size:var(--fs-12); line-height:1.18; letter-spacing:-0.01em; margin:14px 0 0; }
 .rprog{ height:3px; border-radius:var(--r-pill); background:var(--line); margin:18px 0 0; overflow:hidden; }
 .rprog i{ display:block; height:100%; background:var(--accent); transition:width .5s var(--ease); }

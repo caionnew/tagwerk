@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 28. November 2026 (nach 24.95.0, Durchsicht vom 28.11.)
+Stand: 28. November 2026 (nach 24.97.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -62,6 +62,8 @@ So entsteht ein Paket:
 ### Danach
 
 1. **Neue Sätze beim ersten Mal richtig, je Thema und Monat (B+, Anzeige ab Januar):** „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30.“ Misst, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für bekannte Sätze und wächst vor allem mit der Zeit. Gezählt wird seit 24.61.0 (`DB.first`, unsichtbar), immer in derselben Übungsform und getrennt nach Stufe. Anzeige gestalten, wenn zwei Monate Daten da sind, mit echtem Backup: nur gleiche Stufe im Vergleich (bei „Fortgeschritten“ B2), Anzahlen statt Prozent bei kleinen Mengen. Ersetzt die Wochenbilanz zum Schwerpunkt, die an wechselnden Übungsarten und Niveaus gescheitert wäre.
+
+2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; zuerst Natten på Sveavägen und Los 33, dann je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
 
 Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
@@ -127,6 +129,64 @@ Umgesetzt: Gruß jeden Tag anders, mit Wochentag und Anlass, Thema auf „Heute�
 16. **Deine letzten Fehler im Themenblatt, auch auf Fortschritt (C+).** Am Rundenende stehen sie seit 24.68 beim Thema. Überall bräuchte es ein dauerhaftes Protokoll falscher Antworten je Thema; erst, wenn sich das Aufklappen am Rundenende bewährt.
 17. **Hartnäckige Sätze anders üben (B−).** Ab vier Fehlversuchen erst die Lücke statt des ganzen Satzes, mit der Regel davor. FSRS holt solche Sätze ohnehin oft; erst angehen, wenn sie sich in der Statistik häufen.
 
+
+## Reihen: Lesen in Fortsetzungen (Konzept vom 28.11., Rahmen seit 24.97.0)
+
+Aufeinander aufbauende Texte in fester Reihenfolge, als Weiterentwicklung von „Lesen und Hören“ (A; eine eigene Übungsform wäre C+:
+zweiter Leser, zweiter Ort). Aufbau, Sprache je Niveau, Datenformat und Regeln für den Inhalt in [REIHEN.md](REIHEN.md). Umgesetzt
+ist der Rahmen; Inhalte kommen in Paketen, je Paket eine Reihe, abwechselnd die Sprachen. Erste Pakete: **Natten på Sveavägen**
+(Schwedisch, „Wie es geschah“) und **Los 33** (Spanisch, erfundene Erzählerin), zwei verschiedene Formen zum Erproben.
+
+**Erzählformen:** Wie es geschah, Präsens, jeder Teil kennt nur den Stand seines Tages (A); erfundene Figur in echten Ereignissen,
+gekennzeichnet (A); viele Stimmen, jeder Teil eine andere Perspektive (A); Familienchronik über Generationen (A−); ein Tag, der alles
+änderte, Landesgeschichte in Stationen (A−); Briefe und Dokumente (B+); Ermittlung, Spur für Spur (B+); ein Gegenstand erzählt (B);
+du entscheidest, erst „Was würdest du tun?“, dann was geschah (B); Reisetagebuch (B).
+
+**Lernfunktionen:** dasselbe Thema über viele Texte, Schlüsselwörter kehren wieder (A, der eigentliche Gewinn); „Bisher“ (A);
+Cliffhanger und Vorschau (A−); Personen und Wörter der Reihe, ohne Vorgriff (A−); „Erinnerst du dich?“, eine Frage zu einem früheren
+Teil (B+, braucht Textstellen aus früheren Teilen in der Prüfung); Fragen in beiden Sprachen, bei „Fortgeschritten“ zielsprachig (B+,
+im Rahmen schon vorgesehen); Karte und Zeitleiste (B); Vorhersage vor dem nächsten Teil (C+); ein Teil pro Tag als Einstellung (C+);
+verteilte Stimmen beim Vorlesen (C, wenige Stimmen je Sprache).
+
+**Einleitung (entschieden 28.11.):** zwei Sätze in der Zielsprache mit „Auf Deutsch“, bei „Grundlagen“ deutsch, wie „Bisher“. Sie
+sagt, worum es geht, nicht wie erzählt wird; das zeigt das Etikett der Erzählform. Beispiel Palme: „Den 28 februari 1986 skjuts
+statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättelsen om natten, spåren och frågan som Sverige levde med i 34 år.“
+
+**Themen Schwedisch** (Fakten vor dem Schreiben an Quellen prüfen):
+- **Natten på Sveavägen (A):** Palme-Mord, Wie es geschah, 6 Teile, B2: die Nacht, der „33-Jährige“, die PKK-Spur, Christer
+  Pettersson, die Antwort der Staatsanwaltschaft am 10. Juni 2020.
+- **Krigsbarnen (A):** erfundene Figur, 5 Teile, B1: Aino, sieben, eines von rund 70 000 finnischen Kriegskindern in Schweden
+  (1939–45): Abschied, Haparanda, Pflegefamilie, die Sprache vergessen, Rückkehr zu einer Mutter, die sie nicht mehr versteht.
+- **Tre generationer (A):** Familienchronik, 4 Teile, B1: Rechtschreibreform 1906 (hvad → vad), du-Reform (Bror Rexed, 3. Juli
+  1967), „hen“ (SAOL 2015). Sprachwandel an der eigenen Zielsprache.
+- **Beredskap (A):** viele Stimmen, 6 Teile, B2: Rekrut an der norwegischen Grenze, Eisenbahner an den deutschen Urlauberzügen,
+  Journalistin unter Zensur, dänische Juden über den Öresund 1943, die Weißen Busse 1945.
+- **Mot Amerika (A−):** Briefe einer erfundenen Familie aus Småland, Hungerjahre um 1867, Überfahrt, Minnesota, 5 Teile, B1.
+- **Sverige på tio dagar (A−):** zehn Tage von 1520 bis zum NATO-Beitritt 2024.
+- **Ålandsfrågan 1917–21 (B+)** und **Unionen 1905 (B+):** zwei Unabhängigkeitsfragen, beide ohne Krieg gelöst.
+- **Spanienfrivilliga (B+):** erfundener Waldarbeiter aus Norrland unter den gut 500 schwedischen Freiwilligen; Schwedisch über
+  Spanien.
+- **Fortsetzungen vorhandener Texte (B+):** Vasa (Suche und Hebung 1961), Astrid Lindgren (Pomperipossa 1976), Systembolaget (das
+  Motbok), Kiruna (die Kirche erzählt, Umzug am 19. und 20. August 2025).
+- **Nobels testamente (B+):** der zu frühe Nachruf (oft erzählt, dünn belegt: gehört in „Was ist echt?“), Testament, Streit, 1901.
+- **B:** Raoul Wallenberg, Dag Hammarskjöld (Absturz 1961), IFK Göteborg 1982, Hammarby und seine Fans über drei Generationen.
+
+**Themen Spanisch:**
+- **La noche de los transistores (A):** 23-F, Wie es geschah, Stunde für Stunde, 5 Teile, B2.
+- **La guerra en casa (A):** Bürgerkrieg, eine Familie auf beiden Seiten, viele Stimmen, 6 bis 7 Teile, B2–C1: Madrid belagert,
+  Guernica, Kinder ins Ausland, Exil 1939.
+- **Los 33 (A):** Chile 2010, erfundene Reporterin im Campamento Esperanza, 5 Teile, B1, geht gut aus.
+- **El crimen de Cuenca (A−):** Ermittlung, 4 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
+  verurteilt, 1926 taucht er lebend auf.
+- **España en diez días (A−):** zehn Tage von 711 bis heute.
+- **El Oviedo de todos (B+):** 2012 kaufen Fans aus aller Welt Aktien, am letzten Tag steigt Carlos Slim ein.
+- **B+:** Gaudís Straßenbahnunfall 1926 mit Rückblenden, „Relato de un náufrago“ neu erzählt, der Streit um das ñ und die
+  RAE-Reform 2010, Fortsetzungen zu Campoamor und zum Camino (Reisetagebuch).
+- **B:** Boca gegen River 2018 in Madrid, Athletic Club mit nur baskischen Spielern.
+- **B−:** Katalonien 2017, nur mit vielen Stimmen und später.
+
+**Bewusst nicht (D):** Katastrophen als tägliche Lektüre (Estonia, Tsunami), erfundene Geschichten über echte Opfer, erfundene
+Zitate echter Personen.
 
 ## Lesetexte: Themen für später
 

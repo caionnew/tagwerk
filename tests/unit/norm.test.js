@@ -58,7 +58,8 @@ test('Jede Fassung jedes markierten Satzes: in ihrer Norm richtig, in der andere
 test('„wie in Spanien“: perdí ist „Andere Norm“, beide Formen mit Grund, und zählt beim Thema als Fehler', () => {
   const it = item('Esta mañana he perdido el autobús.');
   const r = show({ type:'free', id:it.id, norm:'es' }, { input:'Esta mañana perdí el autobús', check:true, next:true });
-  assert.match(r.kicker, /Übersetze ins Spanische<span class="hintw norm">wie in Spanien<\/span>/);
+  // Bei „Fortgeschritten“ die Anweisung spanisch (24.92.0), die Norm bleibt deutsch
+  assert.match(r.kicker, /Traduce al español<\/button><span class="hintw norm">wie in Spanien<\/span>/);
   assert.equal(r.result, 'near');
   assert.deepEqual(r.why, { kind:'norm', norm:'es' });
   assert.match(r.fb, /Andere Norm/);

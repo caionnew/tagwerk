@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 28. November 2026 (nach 24.91.0, Durchsicht vom 28.11.)
+Stand: 28. November 2026 (nach 24.92.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -73,10 +73,8 @@ Umgesetzt: Gruß jeden Tag anders, mit Wochentag und Anlass, Thema auf „Heute�
 
 1. **Zuruf am Rundenende in der Zielsprache (B+, Vorschau am 28.11. gezeigt, deine Wahl).** Nach dem Ergebnis der Runde, nicht nach Etappen (die haben ihre eigene Karte).** Eine kurze Zeile unter „Tagwerk erledigt“ oder „Runde beendet“, antippbar wie der Gruß, passend zum Ergebnis: fehlerfrei „Felfritt!“ / „¡Impecable!“, gut „Bra jobbat!“ / „¡Bien hecho!“, viele Fehler „Bra kämpat!“ / „¡Ánimo!“, Etappe „Grattis!“ / „¡Enhorabuena!“. Varianten: (a) Zeile unter dem deutschen Titel; (b) der Zuruf wird zum Titel, der deutsche rückt klein darüber; (c) neben dem Stempel, kostet keine Höhe. Vorschau-Code als Diff aufbewahrt.
 2. **Unübersetzbare Wörter als Fundstück (B+).** lagom, gökotta, smultronställe, mångata, klämdag, tretår, orka; sobremesa, madrugar, estrenar, puente, vergüenza ajena, friolero, merendar. Je 15 bis 20 mit Beispielsatz und „Ins Tagwerk“. Varianten: (a) eigene Karte im Wechsel des Fundstücks (empfohlen); (b) Kategorie in „Land & Leute“.
-3. **Mehr in der Zielsprache, je nach Niveau (Vorschläge vom 28.11.).** Datum im Kopf seit 24.91.0 (immer). Grundsatz: Zielsprache dort, wo die Bedeutung aus dem Zusammenhang klar ist und sich jeden Tag wiederholt; Deutsch, wo Verstehen zählt (Navigation, Statistik, Regeln, Erklärungen).
-   - **Serie im Kopf: „5 dagar i rad“, „5 días seguidos“, „Serien börjar i dag“ (B).** Dann ist der ganze Kopf in der Zielsprache. Ab „Mittel“, bei „Grundlagen“ deutsch.
-   - **Anweisungen der Aufgaben bei „Fortgeschritten“ (B).** „Översätt till svenska“, „Fyll i luckan“, „Lyssna och skriv“; „Traduce al español“, „Completa el hueco“. Jeden Tag dieselben zehn Sätze, darum schnell gelernt; Deutsch auf Tipp. Varianten: (a) nur „Fortgeschritten“ (empfohlen); (b) ab „Mittel“, die ersten zwei Wochen mit Deutsch klein darunter.
-   - **Kürzel im Kalender (B−).** M T O T F L S; im Spanischen L M X J V S D, mit X für miércoles, damit es sich von martes unterscheidet.
+3. **Mehr in der Zielsprache, je nach Niveau.** Grundsatz: Zielsprache dort, wo die Bedeutung aus dem Zusammenhang klar ist und sich jeden Tag wiederholt; Deutsch, wo Verstehen zählt (Navigation, Statistik, Regeln, Erklärungen). Umgesetzt: Datum im Kopf (24.91.0, immer), Serie im Kopf ab „Mittel“ und Anweisungen der Aufgaben bei „Fortgeschritten“ mit Deutsch auf Tipp (24.92.0).
+   - **Kürzel im Kalender (B−, angehalten).** Einzelne Buchstaben sind in jeder Sprache mehrdeutig (deutsch M D M D F S S, schwedisch M T O T F L S); das spanische X für miércoles ist üblich, aber nicht zu erraten. Besser zwei Buchstaben: må ti on to fr lö sö, lu ma mi ju vi sá do; passen in die Zellen (Monatsrückblick 20 px, Jahreskalender mit eigener Spalte).
    - **Urteil nach dem Prüfen bei „Fortgeschritten“ (C+).** „Rätt“, „Nästan“, „Fel“; „Correcto“, „Casi“, „Incorrecto“. Kurz und eindeutig, aber das Urteil muss man ohne Nachdenken lesen; „Andere Norm“ bliebe deutsch.
    - **Titel des Monatsrückblicks (C+).** „Din november“, „Tu noviembre“; die Zahlen darunter deutsch.
    - **Bewusst nicht (D):** Leiste unten und Knöpfe, Erklärungen der Statistik, Regeln und Erklärungen zu Sätzen, Fehlermeldungen.

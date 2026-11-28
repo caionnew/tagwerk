@@ -28,7 +28,8 @@ test('Export und Import ergeben denselben Stand, auch auf einem leeren Gerät', 
   // Nach Neustart noch da, und die Startseite zeigt die Serie
   await fresh.reload();
   expect(pick(await stored(fresh))).toEqual(pick(before));
-  await expect(fresh.locator('#app')).toContainText('in Folge');
+  // Serie im Kopf ab „Mittel“ in der Zielsprache (24.92.0)
+  await expect(fresh.locator('#app')).toContainText('dagar i rad');
   expect(errors).toEqual([]);
   await ctx.close();
 });
@@ -111,7 +112,8 @@ test('Backup: der ganze Stand kommt zurück, auch alles, was in späteren Versio
   await fresh.click('[data-a=tab][data-v=extra]');
   if (await fresh.$('[data-a=form][data-g=textgap_sv]')) await fresh.click('[data-a=form][data-g=textgap_sv]');
   else { await fresh.click('[data-a=forms]'); await fresh.click('[data-a=gengo][data-g=textgap_sv]'); }
-  await expect(fresh.locator('.kicker')).toContainText('Nachgeschlagen in „Regalskeppet Vasa“');
+  // Bei „Fortgeschritten“ schwedisch (24.92.0)
+  await expect(fresh.locator('.kicker')).toContainText('Uppslaget i ”Regalskeppet Vasa”');
   await fresh.fill('#answer', 'krigsskeppet'); await fresh.click('[data-a=check]'); await fresh.click('[data-a=next]');
   await expect.poll(async () => (await stored(fresh)).used.looked).toEqual({ 'es:campoamor':start.used.looked['es:campoamor'] });
   expect(errors).toEqual([]);
@@ -156,7 +158,7 @@ test('Backup aus einer alten Version: wird übernommen und umgerechnet', async (
   expect(d.own).toEqual({ sv:[], es:[] }); expect(d.tat).toEqual({ sv:[], es:[] });
   // Die App läuft damit: Startseite mit Serie, Fortschritt, ein Tagwerk lässt sich starten
   await page.click('[data-a=tab][data-v=home]');
-  await expect(page.locator('#app')).toContainText('2 in Folge');
+  await expect(page.locator('#app')).toContainText('2 dagar i rad');
   await page.click('[data-a=tab][data-v=progress]');
   await expect(page.locator('#app')).toContainText('Übungstage');
   await page.click('[data-a=tab][data-v=home]');

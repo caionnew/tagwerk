@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.92.0
+**Mehr Zielsprache je nach Niveau: Serie im Kopf ab „Mittel“, Anweisungen der Aufgaben bei „Fortgeschritten“.**
+- **Serie im Kopf** (ab „Mittel“, das ist auch die Vorgabe): „5 dagar i rad“, „5 días seguidos“; am ersten Tag „Serien börjar i dag“ bzw. „Hoy empieza la racha“; wenn nach dem Pausetag heute ein Tagwerk nötig ist „Öva i dag!“ bzw. „¡Hoy toca!“. Bei „Grundlagen“ bleibt es deutsch, vorgelesen wird immer deutsch.
+- **Anweisungen** (bei „Fortgeschritten“): „Fyll i luckan“, „Översätt till svenska“, „Sätt orden i rätt ordning“, „Hitta felet“; „Completa el hueco“, „Traduce al español“, „Ordena las palabras“, „Encuentra el error“ und so fort für alle Aufgabenarten, auch Uhrzeiten, Preise und Lesetext-Lücken („Ur ”Vasaloppet”“, „Del texto «La siesta»“). Gepunktet unterstrichen; ein Tipp zeigt die Anweisung dieser Aufgabe deutsch.
+- Was deutsch bleibt (Leiste, Knöpfe, Statistik, Regeln, Erklärungen), steht jetzt als Grundsatz in CLAUDE.md.
+- Kalenderkürzel angehalten: Einzelne Buchstaben sind mehrdeutig (auch das schwedische M T O T F L S), das spanische X für miércoles ist nicht zu erraten; Vorschlag in IDEEN.md: zwei Buchstaben.
+- Doku: CLAUDE.md, ARCHITECTURE.md, IDEEN.md. Tests: Serie je Niveau, Anweisungen je Niveau mit Tipp, jede mögliche Anweisung hat eine Übersetzung.
+- Speicherstand unverändert.
+
 ## 24.91.0
 **Datum im Kopf in der Zielsprache, Fenster nach unten wegziehen, Gruß passt auch in breiten Schriften.**
 - **Datum:** „lördag 28 november“ bzw. „sábado, 28 de noviembre“ statt „Samstag, 28. November“, Wochentag und Monat antippbar. Acht fehlende Namen im Wörterbuch ergänzt (tisdag, onsdag, januari, april; jueves, febrero, abril, mayo).

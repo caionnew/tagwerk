@@ -29,6 +29,6 @@ test('Redewendung beim ersten Kontakt: „Wörtlich zeigen“, auf Tipp das Bild
   await page.click('[data-a=check]');
   await expect(page.locator('#fb')).toContainText('Richtig');
   await page.click('[data-a=next]');
-  // Bekannte Wendung: Abruf ohne Hilfe
-  await expect(page.locator('.kicker')).toHaveText('Ergänze die Lücke');
+  // Bekannte Wendung: Abruf ohne Hilfe (Anweisung bei „Fortgeschritten“ schwedisch, seit 24.92.0)
+  await expect(page.locator('.kicker')).toHaveText('Fyll i luckan');
 });

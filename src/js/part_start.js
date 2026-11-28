@@ -146,6 +146,44 @@ function dateIn(lang, dt){
 }
 // Antippbar sind die Wörter, nicht die Zahl (das Wörterbuch kennt Zahlen als Wort)
 const dateHtml = (lang, dt) => dateIn(lang, dt).split(/( \d+ )/).map(x => (/^ \d+ $/.test(x) ? x : linkWords(x, lang))).join('');
+// Zielsprache je Niveau (seit 24.92.0): Ab „Mittel“ steht auch die Serie im Kopf in der Zielsprache, bei „Fortgeschritten“ dazu die
+// Anweisungen der Aufgaben (Deutsch auf Tipp). Deutsch bleibt, wo es aufs Verstehen ankommt: Leiste, Knöpfe, Statistik, Regeln.
+const niveau = () => DB.settings.niveau || 'mittel';
+const STREAK_TL = {
+  sv:{ n:n => `${n} ${n === 1 ? 'dag' : 'dagar'} i rad`, start:'Serien börjar i dag', risk:'Öva i dag!' },
+  es:{ n:n => `${n} ${n === 1 ? 'día seguido' : 'días seguidos'}`, start:'Hoy empieza la racha', risk:'¡Hoy toca!' }
+};
+// Anweisungen: deutsch → Zielsprache. Was hier fehlt, bleibt deutsch. Lesetext-Lücken („Aus „Vasaloppet““, „Nachgeschlagen in …“) über das Muster.
+const KICK_TL = {
+  sv:{ 'Ergänze die Lücke':'Fyll i luckan', 'Übersetze ins Schwedische':'Översätt till svenska', 'Bring die Wörter in die richtige Reihenfolge':'Sätt orden i rätt ordning',
+    'Ein Wort bleibt übrig':'Ett ord blir över', 'Hör zu und schreib den Satz auf':'Lyssna och skriv meningen', 'echte Aufnahme':'riktig inspelning',
+    'Tipp auf das falsche Wort. Stimmt der Satz, tipp auf „Kein Fehler“.':'Tryck på ordet som är fel. Stämmer meningen: ”Kein Fehler”.', 'Gefunden. Wie heißt es richtig?':'Hittat! Hur ska det vara?',
+    'Finde den Fehler':'Hitta felet', 'Bau den Satz um':'Skriv om meningen', 'Welches Wort passt?':'Vilket ord passar?', 'Welche Präposition?':'Vilken preposition?',
+    'Welches Possessivpronomen?':'Vilket possessivpronomen?', 'Welche Form nach dem Possessivpronomen?':'Vilken form efter possessivpronomenet?', 'Welche Form nach den/det här?':'Vilken form efter den/det här?',
+    'den, det oder de?':'den, det eller de?', 'en oder ett?':'en eller ett?', 'Setz die Mehrzahl ein':'Skriv pluralformen', 'Setz die bestimmte Mehrzahl ein':'Skriv bestämd form plural',
+    'Schreib die Uhrzeit in Worten':'Skriv klockslaget med bokstäver', 'Schreib die Uhrzeit als Zahl':'Skriv klockslaget med siffror', 'Hör zu und schreib die Uhrzeit als Zahl':'Lyssna och skriv klockslaget med siffror',
+    'Schreib den Preis in Worten':'Skriv priset med bokstäver', 'Schreib den Preis als Zahl':'Skriv priset med siffror', 'Hör zu und schreib den Preis als Zahl':'Lyssna och skriv priset med siffror' },
+  es:{ 'Ergänze die Lücke':'Completa el hueco', 'Übersetze ins Spanische':'Traduce al español', 'Bring die Wörter in die richtige Reihenfolge':'Ordena las palabras',
+    'Ein Wort bleibt übrig':'Sobra una palabra', 'Hör zu und schreib den Satz auf':'Escucha y escribe la frase', 'echte Aufnahme':'grabación real',
+    'Tipp auf das falsche Wort. Stimmt der Satz, tipp auf „Kein Fehler“.':'Toca la palabra incorrecta. Si la frase está bien: «Kein Fehler».', 'Gefunden. Wie heißt es richtig?':'¡Bien visto! ¿Cómo se dice correctamente?',
+    'Finde den Fehler':'Encuentra el error', 'Bau den Satz um':'Transforma la frase', 'Tausch das Nomen aus und pass den Satz an':'Cambia el sustantivo y adapta la frase',
+    'Welches Wort passt?':'¿Qué palabra encaja?', 'Welche Präposition?':'¿Qué preposición?', 'el oder la?':'¿el o la?', 'Setz die passende Form ein':'Escribe la forma correcta',
+    'Setz die passende Verbform ein':'Escribe la forma verbal correcta', 'Setz por oder para ein':'Escribe por o para', 'Setz ser oder estar ein':'Escribe ser o estar',
+    'Schreib die Uhrzeit in Worten':'Escribe la hora con letras', 'Schreib die Uhrzeit als Zahl':'Escribe la hora en cifras', 'Hör zu und schreib die Uhrzeit als Zahl':'Escucha y escribe la hora en cifras',
+    'Schreib den Preis in Worten':'Escribe el precio con letras', 'Schreib den Preis als Zahl':'Escribe el precio en cifras', 'Hör zu und schreib den Preis als Zahl':'Escucha y escribe el precio en cifras' }
+};
+function kickTL(lang, de){
+  const m = /^(Aus|Nachgeschlagen in) „(.+)“$/.exec(de);
+  if (m && m[1] === 'Aus') return lang === 'sv' ? `Ur ”${m[2]}”` : `Del texto «${m[2]}»`;
+  if (m) return lang === 'sv' ? `Uppslaget i ”${m[2]}”` : `Buscado en «${m[2]}»`;
+  if (de === 'Ergänze aus dem Text') return lang === 'sv' ? 'Fyll i från texten' : 'Completa con el texto';
+  return KICK_TL[lang][de] || '';
+}
+// Anweisung einer Aufgabe: bei „Fortgeschritten“ in der Zielsprache, Tipp zeigt sie deutsch (c.kickDe, nur für diese Aufgabe)
+function kick(de, lang, c){
+  const tl = niveau() === 'fort' && !(c && c.kickDe) ? kickTL(lang, de) : '';
+  return tl ? `<button type="button" class="kick-tl" data-a="kickde" lang="${lang}" title="${esc(de)}">${esc(tl)}</button>` : esc(de);
+}
 /* ---------- Start über Teilen oder App-Verknüpfung ---------- */
 function guessLang(text){
   const t = ' ' + text.toLowerCase() + ' ';

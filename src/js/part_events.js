@@ -361,6 +361,8 @@ document.addEventListener('click', e => {
       renderPopup(); break;
     }
     case 'popclose': S.pop = null; renderPopup(); break;
+    // Anweisung in der Zielsprache: Tipp zeigt sie für diese Aufgabe deutsch
+    case 'kickde': if (S.run && S.run.cur) { S.run.cur.kickDe = true; render(); } break;
     case 'popext': { const P = S.pop; if (!P) break; window.open(P.lang === 'es' ? `https://dict.leo.org/spanisch-deutsch/${encodeURIComponent(P.w)}` : `https://sv-de.dict.cc/?s=${encodeURIComponent(P.w)}`, '_blank', 'noopener'); break; }
     case 'popweb': {
       const P = S.pop; if (!P) break;

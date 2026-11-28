@@ -62,6 +62,7 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
 - Statistik: Jede Zahl sagt, was sie zählt (Erklärung oben, nicht erst darunter). Aufteilungen als Anzahl, Quoten als Prozent; bei kleinen Mengen keine Scheingenauigkeit.
 - Auswahlaufgaben haben genau eine richtige Option. Listen in Generatoren mindestens dreimal so groß wie die Wiederholungssperre (12).
 - Weder Hinweis noch Auswahl einer Aufgabe darf die Lösung verraten: Aufgaben nie nach ihrer Lösung aussortieren oder neu würfeln. Deutsche Stichwörter nur, wo sie eindeutig sind.
+- Oberfläche deutsch; Zielsprache nur, wo die Bedeutung aus dem Zusammenhang klar ist und sich täglich wiederholt (Gruß, Datum, Serie ab „Mittel“, Anweisungen bei „Fortgeschritten“ mit Deutsch auf Tipp). Navigation, Knöpfe, Statistik, Regeln und Erklärungen bleiben deutsch.
 - Bei „Fortgeschritten“ ist die Grundform verdeckt und erscheint erst auf Tipp. Erzeugte Aufgaben zeigen bei falscher Antwort die Standardlösung, vorgelesen wird, was angezeigt wird.
 - Inhalte sachlich korrekt und idiomatisch. Wo zwei Lösungen gehen, als Alternative aufnehmen oder aus den Optionen nehmen. Bei erzeugten Sätzen alle Fassungen lesen, nicht nur Stichproben.
 

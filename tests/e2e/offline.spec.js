@@ -9,7 +9,7 @@ test('Nach dem ersten Besuch startet die App ohne Netz, Lernstand und Serie blei
   await context.setOffline(true);
   await page.reload();
   await expect(page.locator('.today')).toBeVisible();
-  await expect(page.locator('#app')).toContainText('in Folge');
+  await expect(page.locator('#app')).toContainText('dagar i rad');
   await expect(page.locator('.notice')).toHaveCount(0);
   expect((await stored(page)).st).toEqual(before);
   await context.setOffline(false);

@@ -450,6 +450,8 @@ body.has-pop, html:has(body.has-pop){ overscroll-behavior-y:none; }
 .hello-g{ margin:0; font-family:var(--serif); font-size:var(--fs-12); line-height:1.2; color:var(--accent-ink); }
 .hello-d{ margin:0; font-size:var(--fs-4); color:var(--muted); }
 .hello-d [data-a="lookup"]{ cursor:pointer; }
+/* Anweisung in der Zielsprache („Fortgeschritten“): wie die Anweisung, gepunktet unterstrichen, Tipp zeigt sie deutsch */
+.kick-tl{ font:inherit; color:inherit; background:none; border:0; padding:0; margin:0; text-align:left; cursor:pointer; border-bottom:1.5px dotted color-mix(in srgb, currentColor 45%, transparent); }
 /* Hauptkarte in der Farbe der Sprache */
 .today.hero{ background:linear-gradient(155deg, color-mix(in srgb, var(--accent) 14%, var(--surface)) 0%, var(--surface) 62%); border-color:color-mix(in srgb, var(--accent) 25%, var(--line)); }
 /* Mikrofon */

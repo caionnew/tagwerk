@@ -107,14 +107,14 @@ const HA_SUPINE = new Set(('sett setts träffats träffat ringt ätit fått veta
   'stannat rest åkt flugit simmat lagat städat tvättat öppnat stängt tappat lämnat skickat mejlat fyllt försökt bestämt hämtat ätits stulits byggts skrivits').split(' '));
 const SV_SUB = /^(att|som|om|eftersom|när|innan|förrän|fast|medan|ifall|tills|sedan|varför|vad|vem|hur|vilken|vilket|vilka)$/;
 function svHaDrop(ans){
-  const w = ans.split(' '), out = [], bare = t => t.toLowerCase().replace(/[.,!?;:]+$/, '');
+  const w = ans.split(' '), out = [], bare = t => wordCore(t.toLowerCase());
   for (let i = 1; i < w.length - 1; i++) {
     const sup = bare(w[i + 1]);
     if (!/^(har|hade)$/i.test(w[i]) || !(HA_SUPINE.has(sup) || /\(Supinum/.test((lookupWord('sv', sup) || {}).de || ''))) continue;
     // Nebensatz: ein einleitendes Wort davor ohne Satzgrenze dazwischen. Fragewörter am Satzanfang leiten einen Hauptsatz ein (Vad har hänt?).
     for (let j = i - 1; j >= 0; j--) {
       const t = bare(w[j]);
-      if (/^(och|men|eller)$/.test(t) || (j < i - 1 && /[,;:]$/.test(w[j]))) break;
+      if (/^(och|men|eller)$/.test(t) || (j < i - 1 && new RegExp(`${rxSet(P_PAUSE)}$`).test(w[j]))) break;
       if (SV_SUB.test(t)) { if (!(j === 0 && /^(varför|vad|vem|hur|vilken|vilket|vilka|sedan)$/.test(t))) out.push(w.slice(0, i).concat(w.slice(i + 1)).join(' ')); break; }
     }
   }
@@ -252,7 +252,7 @@ function diffHtml(target, typed, lang){
   const m = idx.length, st = T.map((_, k) => (tb[k] ? 'miss' : 'ok'));
   let hit = 0;
   lcsPairs(idx.map(i => tb[i]), yb).forEach(([i, j]) => { st[idx[i]] = te[idx[i]] === Y[j] ? 'ok' : 'near'; if (st[idx[i]] === 'ok') hit++; });
-  return { html:T.map((w, k) => `<span class="w-${st[k]}" data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>`).join(' '), score:m ? hit / m : 0 };
+  return { html:T.map((w, k) => `<span class="w-${st[k]}" data-a="lookup" data-w="${esc(wordCore(w))}">${esc(w)}</span>`).join(' '), score:m ? hit / m : 0 };
 }
 // Kommt die Wortfolge pat (mit * als beliebigem Wort) zusammenhängend in den Wörtern t vor?
 function seqIn(t, pat){

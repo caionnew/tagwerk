@@ -6,7 +6,7 @@
 // Bei Paaren (ser/estar, por/para, en/ett, Stellung) ergibt sich die Verbesserung von selbst, da reicht das Antippen.
 const spotData = (de, wrongWords, wrongIdx, fixed, note, trap, fix) => {
   const words = wrongWords.slice(), last = words.length - 1;
-  if (/[.!?]$/.test(fixed) && !/[.!?]$/.test(words[last])) words[last] += fixed.slice(-1);
+  if (endsSentence(fixed) && !endsSentence(words[last])) words[last] += fixed.slice(-1);
   return { kind:'spot', deLine:de, words, wrong:wrongIdx, full:fixed, answers:[fixed], note, trap, fix:fix || null, label:'Finde den Fehler' };
 };
 // Dieselbe Aufgabe als richtiger Satz
@@ -14,7 +14,7 @@ const spotOk = d => Object.assign({}, d, { words:d.full.split(' '), wrong:[], fi
 const SPOT_OK = 0.4;
 // Welche Wörter der Lösung neu sind: alles außerhalb der längsten gemeinsamen Wortfolge (ohne Satzzeichen, Groß/klein egal)
 function spotChanged(words, fixed){
-  const k = w => w.replace(/[.,!?¿¡]/g, '').toLowerCase(), b = fixed.map(k);
+  const k = w => punctKey(w).toLowerCase(), b = fixed.map(k);
   const keep = new Set(lcsPairs(words.map(k), b).map(p => p[1]));
   return new Set(b.map((_, x) => x).filter(x => !keep.has(x)));
 }
@@ -107,7 +107,7 @@ function bankSpotsEs(){
     const inf = it.hint.replace(/[()]/g, '').split(',')[0].trim().replace(refl ? /se$/ : /$^/, '');
     if (!/^[a-zñ]+(ar|er|ir)$/.test(inf)) return;
     const verb = refl ? it.gap.split(' ')[1] : it.gap;
-    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?¿¡]/g, '') === verb);
+    const toks = it.target.split(' '), idx = toks.findIndex(t => punctKey(t) === verb);
     if (idx < 0) return;
     const swapAt = (form, extra) => { const w = toks.slice(); w[idx] = toks[idx].replace(verb, form); if (extra) w.splice(idx + 1, 0, extra); return w; };
     if (it.trap === 'subjuntivo') {
@@ -137,7 +137,7 @@ function bankSpotsEs(){
     if (it.trap !== 'gustar' || it.tat || it.own || !it.gap || it.gap.includes(' ') || it.gap.length < 4) return;
     const g = it.gap, wrongForm = /ían$/.test(g) ? g.slice(0, -1) : /ía$/.test(g) ? g + 'n' : /[ae]n$/.test(g) ? g.slice(0, -1) : /[ae]$/.test(g) ? g + 'n' : null;
     if (!wrongForm || it.gapAlts.includes(wrongForm)) return;
-    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?¿¡]/g, '') === g);
+    const toks = it.target.split(' '), idx = toks.findIndex(t => punctKey(t) === g);
     if (idx < 0) return;
     const w = toks.slice(); w[idx] = toks[idx].replace(g, wrongForm);
     out.push(withTrap('gustar', () => spotData(it.de, w, [idx], it.target, it.note, 'gustar')));
@@ -158,11 +158,11 @@ function bankSpotsSv(){
   const out = [];
   BANK.sv.forEach(it => {
     if (it.trap !== 'sin' || it.tat || it.own || !['hans', 'hennes', 'deras', 'dess'].includes(it.gap)) return;
-    const toks = it.target.split(' '), idx = toks.findIndex(t => t.replace(/[.,!?]/g, '') === it.gap);
+    const toks = it.target.split(' '), idx = toks.findIndex(t => punctKey(t) === it.gap);
     if (idx < 1) return;
     const prev = toks[idx - 1].toLowerCase(), first = toks[0].toLowerCase();
     if (!(prev === 'och' || prev === 'att' || (prev === 'om' && /\bob\b/.test(it.de)) || ['jag', 'du', 'vi', 'ni'].includes(first))) return;
-    const kind = toks[idx + 1] && svNounKind(toks[idx + 1].replace(/[.,!?]/g, ''));
+    const kind = toks[idx + 1] && svNounKind(punctKey(toks[idx + 1]));
     if (!kind) return;
     const w = toks.slice(); w[idx] = { pl:'sina', ett:'sitt', en:'sin' }[kind];
     out.push(withTrap('sin', () => spotData(it.de, w, [idx], it.target, it.note, 'sin', it.gapAlts.length ? it.gapAlts : [it.gap])));

@@ -664,7 +664,7 @@ function gapA2(lang){
   }));
   return GAP_A2[lang] = s;
 }
-const gapToken = t => t.replace(/[.,;:!?¡¿«»"„“”()…]/g, '');
+const gapToken = t => punctKey(t);
 const gapWordOk = (w, i) => w.length >= 4 && /^[a-zà-ÿ]+$/i.test(w) && (i === 0 || w[0] === w[0].toLowerCase());
 // Ein Wort als mögliche Lücke: Bedeutung, Grundform, ob gebeugtes Verb. own = nachgeschlagen (kommt auch ohne Bedeutung dran).
 function gapInfo(lang, w, i, own, toks){
@@ -717,7 +717,7 @@ function textGapData(lang, sentence, title, opts = {}){
   if (x.own && opts.looked) d.looked = opts.looked;
   return d;
 }
-const gapSentences = t => t.body.replace(/\n+/g, ' ').split(/(?<=[.!?])\s+/).filter(x => x.split(' ').length >= 5);
+const gapSentences = t => t.body.replace(/\n+/g, ' ').split(new RegExp(`(?<=${rxSet(P_STOP)})\\s+`)).filter(x => x.split(' ').length >= 5);
 // Gelesen = die Fragen zum Text beantwortet (Schlüssel „sv:vasa“)
 const readTexts = lang => { const done = (DB.used && DB.used.texts) || {}; return TEXTS[lang].filter(t => done[lang + ':' + t.id]); };
 // Nachgeschlagene Wörter aus gelesenen Texten, frühestens am Tag danach, ohne die zuletzt gezeigten Sätze
@@ -753,7 +753,7 @@ function lookedDone(lk){
 }
 // Beim Lesen nachgeschlagen: merken (höchstens 300 je Sprache, die ältesten fallen heraus)
 function rememberLooked(lang, id, w){
-  const lw = String(w || '').toLowerCase().replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, '');
+  const lw = wordCore(String(w || '').toLowerCase());
   if (!id || !gapWordOk(lw, 0)) return;
   DB.used = DB.used || {}; const all = DB.used.looked = DB.used.looked || {};
   const m = all[lang + ':' + id] = all[lang + ':' + id] || {};

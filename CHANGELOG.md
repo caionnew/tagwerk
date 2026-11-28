@@ -2,6 +2,15 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.85.0
+**Satzzeichen und Wortgrenzen an einer Stelle (Durchsicht vom 28.11.).**
+- **Vorher** gab es rund zwanzig eigene Zeichenlisten in Prüfung, Wörterbuch, Wortkästchen, Kombinationen, Schreiben, Nachsprechen und Anzeige, jede etwas anders: Die eine nahm den Doppelpunkt mit, die andere den Gedankenstrich, eine dritte nur Punkt, Komma, Ausrufe- und Fragezeichen.
+- **Jetzt** stehen sie in `src/js/part_text.js`, das im Build zuerst kommt: Satz ohne Satzzeichen, Wort ohne Satzzeichen, Wort ohne Zeichen davor und danach, Wort in seine Teile zerlegt, Satzende. Ein Test meldet neue eigene Listen in anderen Dateien.
+- **Geändert hat sich dabei nur:** Ein Doppelpunkt am Wortende und ein freistehender Gedankenstrich zählen jetzt überall als Satzzeichen. Im Wort bleibt der Doppelpunkt (tv:n, USA:s), wie es im Schwedischen sein muss. Alle Sätze, Alternativen, erzeugten Fassungen, Lesetexte und 40 Aufgaben je Generator vorher und nachher verglichen: Abweichungen nur bei den deutschen Sätzen mit Doppelpunkt, einem spanischen Satz mit Gedankenstrich und beim Nachschlagen von Wörtern mit Doppelpunkt am Ende (enkel:, köp:), die jetzt ohne Umweg gefunden werden.
+- Doku: ARCHITECTURE.md, CLAUDE.md (neues Modul), IDEEN.md.
+- Tests: Vergleich ohne Satzzeichen, Doppelpunkt im Wort, Wortkern und Wortteile, Satzende, Nachschlagen mit Satzzeichen, keine eigenen Zeichenlisten außerhalb von part_text.js.
+- Speicherstand unverändert.
+
 ## 24.84.0
 **Paket 6: neues Thema Spanisch „wohl“: Futur der Vermutung, 36 Sätze (12 B1, 24 B2).**
 - **Warum:** Deutsches „wohl“ und „dürfte“ heißt im Spanischen oft Futur oder Konditional: Será el cartero (das wird wohl der Postbote sein), serían las cuatro (es war wohl vier). Bisher gab es dazu zwei Sätze. Im Schwedischen sind nog, väl und lär mit 17 Sätzen schon gut abgedeckt; darum nur Spanisch.

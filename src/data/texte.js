@@ -645,4 +645,4 @@ En Argentina, una ley de 2013 declaró el mate infusión nacional, y la yerba es
         ['Quien no quiere más dice simplemente gracias; decirlo antes de tiempo puede dejarte sin el siguiente.', 'Wer nicht mehr will, sagt einfach „danke“; sagt man es zu früh, kann man den nächsten verpassen.']] }
 ]
 };
-const textSentences = body => body.split(/\n\s*\n/).map(p => p.trim().split(/(?<=[.!?])\s+(?=[A-ZÅÄÖÁÉÍÓÚÑ¿¡0-9])/));
+const textSentences = body => body.split(/\n\s*\n/).map(p => p.trim().split(new RegExp(`(?<=${rxSet(P_STOP)})\\s+(?=[A-ZÅÄÖÁÉÍÓÚÑ¿¡0-9])`)));

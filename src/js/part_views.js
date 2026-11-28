@@ -1,6 +1,6 @@
 /* ---------- Ansichten ---------- */
 const FOCUS_VIEWS = ['run', 'runDone', 'radio', 'texts', 'text', 'shadow', 'write', 'own', 'tat', 'pickTopic', 'pickGen', 'settings', 'ref'];
-const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(w.replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, ''))}">${esc(w)}</span>` : esc(w)).join(' ');
+const linkWords = (text, lang) => String(text).split(' ').map(w => /[A-Za-zÀ-ÿ0-9]/.test(w) ? `<span data-a="lookup" data-w="${esc(wordCore(w))}">${esc(w)}</span>` : esc(w)).join(' ');
 function monthRecap(){
   const t = today(), day = Number(t.slice(8, 10));
   // Nach dem ersten Tagwerk des Monats steht die Bilanz am Rundenende (monthCard); hier dann nicht noch einmal
@@ -323,7 +323,7 @@ function viewRun(){
   } else if (ex.type === 'gen' && ex.data.kind === 'spot') {
     const d = ex.data, fixing = !done && c.fixing, locked = done || fixing;
     // Gefundene Stelle beim Verbessern; nach der Lösung: getroffen, daneben (im richtigen Satz ohne Durchstreichen), übersehen
-    const wrongText = d.wrong.map((i, k) => (k && i > d.wrong[k - 1] + 1 ? '… ' : '') + d.words[i].replace(/[.,!?]$/, '')).join(' ');
+    const wrongText = d.wrong.map((i, k) => (k && i > d.wrong[k - 1] + 1 ? '… ' : '') + wordCore(d.words[i])).join(' ');
     const kicker = c.fixing ? 'Gefunden. Wie heißt es richtig?' : 'Tipp auf das falsche Wort. Stimmt der Satz, tipp auf „Kein Fehler“.';
     body = `<p class="kicker">${kicker}</p><p class="de" lang="de">${esc(d.deLine)}</p>
       <div class="ex-a"><p class="spot${c.intro ? ' enter' : ''}" lang="${lang}">${d.words.map((w, i) => {
@@ -349,7 +349,7 @@ function viewRun(){
   } else if (ex.type === 'gen' && ex.data.kind === 'trans') {
     const d = ex.data;
     // Nomen tauschen: das alte Nomen im Satz fett, darunter das neue (antippbar für die Bedeutung). Kein Satzanfang vorgegeben.
-    const src = d.swap ? d.src.split(' ').map(t => { const m = t.match(/^([¿¡]*)(.*?)([.,;:!?]*)$/); return m[2] === d.swap[0] ? `${esc(m[1])}<b>${esc(m[2])}</b>${esc(m[3])}` : esc(t); }).join(' ') : esc(d.src);
+    const src = d.swap ? d.src.split(' ').map(t => { const m = wordParts(t); return m.core === d.swap[0] ? `${esc(m.pre)}<b>${esc(m.core)}</b>${esc(m.post)}` : esc(t); }).join(' ') : esc(d.src);
     const how = d.swap ? `Mit <b class="swapto" lang="${lang}" data-a="lookup" data-w="${esc(d.swap[1])}">${esc(d.swap[1])}</b> statt <span lang="${lang}">${esc(d.swap[0])}</span>` : `Beginne mit „${esc(d.start.trim())} …“${d.aim ? `. ${esc(d.aim)}` : ''}`;
     body = `<p class="kicker">${esc(d.label)}</p><p class="de" lang="${lang}">${src}</p><p class="vocab">${how}</p>
       <div class="ex-a">${done ? doneAnswer(c, lang) : `<textarea id="answer" class="tw" lang="${lang}" rows="2" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="done" aria-label="Umgebauter Satz">${esc(c.input)}</textarea>`}
@@ -432,11 +432,11 @@ function feedbackHtml(r, ex, c){
     const changed = spotChanged(d.words, fixed);
     const fixWord = d.fix ? d.fix[0] : '';
     const line = clean ? (c.result === 'ok' ? 'Der Satz stimmt.' : 'Der Satz war richtig.')
-      : c.none ? `Hier steckt ein Fehler: <span lang="${lang}">„${esc(d.wrong.map(i => d.words[i].replace(/[.,!?]$/, '')).join(' '))}“</span>.`
+      : c.none ? `Hier steckt ein Fehler: <span lang="${lang}">„${esc(d.wrong.map(i => wordCore(d.words[i])).join(' '))}“</span>.`
       : c.fixBad ? `Fehler gefunden, aber richtig heißt es <span lang="${lang}">„${esc(fixWord)}“</span>.`
       : c.result === 'near' ? (lang === 'sv' ? 'Achte auf å, ä und ö.' : 'Achte auf die Akzente.') : '';
     if (line) out += `<p class="expl spotline">${line}</p>`;
-    out += `<div class="solrow"><p class="sol" lang="${lang}">${fixed.map((w, i) => `<span data-a="lookup" data-w="${esc(w.replace(/[.,!?¿¡]/g, ''))}"${changed.has(i) ? ' class="w-fix"' : ''}>${esc(w)}</span>`).join(' ')}</p>${speakBtn(d.full, lang)}</div>`;
+    out += `<div class="solrow"><p class="sol" lang="${lang}">${fixed.map((w, i) => `<span data-a="lookup" data-w="${esc(wordCore(w))}"${changed.has(i) ? ' class="w-fix"' : ''}>${esc(w)}</span>`).join(' ')}</p>${speakBtn(d.full, lang)}</div>`;
     out += `<p class="expl">${termify(d.note)}</p>`;
     const tr = trapMeta(lang, d.trap); if (tr) out += `<p class="src">Thema: ${esc(keepHyph(tr.label))}</p>`;
     return out;
@@ -590,7 +590,7 @@ function roundTaskHtml(x, lang){
   const you = x.gu ? '<span class="rk-you">Weiß ich nicht</span>'
     : x.ans ? `<span class="rk-you" lang="${lang}"><span class="lbl-s">Du:</span> ${typed ? (mineHtml(x.ans, want, lang) || esc(x.ans)) : `„${esc(x.ans)}“`}</span>` : '';
   const sol = typed && x.ans ? diffHtml(want, x.ans, lang).html : gap && x.best ? boldIn(x.target, x.best) : esc(want);
-  const why = [x.why ? esc(x.why).replace(/([^.!?])$/, '$1.') : '', x.again == null ? '' : x.again ? 'Beim zweiten Mal richtig.' : 'Auch beim zweiten Mal falsch.'].filter(Boolean).join(' ');
+  const why = [x.why ? esc(x.why) + (endsSentence(x.why) ? '' : '.') : '', x.again == null ? '' : x.again ? 'Beim zweiten Mal richtig.' : 'Auch beim zweiten Mal falsch.'].filter(Boolean).join(' ');
   return `<li class="rk ${x.near ? 'near' : x.off ? 'off' : 'bad'}">${q}${you}<span class="rk-row"><span class="rk-s" lang="${lang}">${sol}</span>${speakBtn(want, lang)}</span>${why ? `<span class="rk-why">${why}</span>` : ''}</li>`;
 }
 // Falsche und fast richtige zuerst, darunter die richtigen kurz

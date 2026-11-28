@@ -109,7 +109,7 @@ const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 
 const deacc = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 function norm(s, lang){
-  let t = String(s || '').toLowerCase().replace(/[’`´]/g, "'").replace(/[.!?¡¿,;"„“”«»()…]/g, ' ').replace(/[–—]/g, ' ').replace(/\s+/g, ' ').trim();
+  let t = unpunct(String(s || '').toLowerCase().replace(/[’`´]/g, "'")).replace(/\s+/g, ' ').trim();
   if (lang === 'sv') t = t.replace(/\bi (dag|morgon|går|kväll|morse|natt)\b/g, 'i$1');
   // Spanisch: betontes Subjektpronomen am Anfang zählt nicht (Yo tengo = Tengo). Nicht „tu“ ohne Akzent: das ist das Possessiv
   // (Tu prima …); und nicht in „yo que tú“, wo das Pronomen zur Wendung gehört.
@@ -119,14 +119,15 @@ function norm(s, lang){
 // Niveau eines Satzes, grob geschätzt: Länge, Nebensätze, anspruchsvolle Formen (Plusquamperfekt, Konditional, Subjuntivo, Passiv).
 // 1 = Grundlagen (etwa A2), 2 = Mittelstufe (B1), 3 = Fortgeschritten (B2). Gleiche Regel wie in tests/unit/level.test.js.
 const LVL_SUB = { sv:/(?:^|\s)(att|som|eftersom|om|när|medan|innan|fast|trots|så att|för att|ifall|än|vilket|hur|varför)(?=\s)/g, es:/(?:^|\s)(que|cuando|porque|aunque|si|mientras|donde|como|cual|quien)(?=\s)/g };
-const LVL_HARD = { sv:/(?:^|\s)(skulle|hade|lär|borde|\S+(?:ades|ades|des|tes|ogs|ass|sades)|\S+as(?= (?:av|efter|innan|senast|i|på)\b))(?=\s|[.,!?]|$)/, es:/(?:^|\s)(\S+ría[ns]?|\S+(?:ara|iera|ase|iese)[ns]?|haya[ns]?|hubiera[ns]?|hubiese[ns]?|habría[ns]?|se (?:lo|la|le|los|las|me|te|nos)|me (?:lo|la|las|los)|te (?:lo|la|las|los)|llevábamos|ocurrirá)(?=\s|[.,!?]|$)/ };
+// Geprüft wird der Satz ohne Satzzeichen (estLevel), darum reicht Leerzeichen oder Ende
+const LVL_HARD = { sv:/(?:^|\s)(skulle|hade|lär|borde|\S+(?:ades|ades|des|tes|ogs|ass|sades)|\S+as(?= (?:av|efter|innan|senast|i|på)\b))(?=\s|$)/, es:/(?:^|\s)(\S+ría[ns]?|\S+(?:ara|iera|ase|iese)[ns]?|haya[ns]?|hubiera[ns]?|hubiese[ns]?|habría[ns]?|se (?:lo|la|le|los|las|me|te|nos)|me (?:lo|la|las|los)|te (?:lo|la|las|los)|llevábamos|ocurrirá)(?=\s|$)/ };
 function estLevel(lang, t){
-  const x = ' ' + String(t).toLowerCase().replace(/[.,!?¡¿;:]/g, ' ') + ' ';
+  const x = ' ' + unpunct(String(t).toLowerCase()) + ' ';
   const w = String(t).split(/\s+/).length, sub = (x.match(LVL_SUB[lang]) || []).length, hard = LVL_HARD[lang].test(x) ? 1 : 0;
   const sc = w + 3 * sub + 3 * hard;
   return sc <= 8 ? 1 : sc <= 13 ? 2 : 3;
 }
-function tokens(s){ return String(s).replace(/[.!?¡¿,;"„“”«»()…]/g, ' ').split(/\s+/).filter(Boolean); }
+function tokens(s){ return unpunct(s).split(/\s+/).filter(Boolean); }
 
 /* ---------- Satzbank ---------- */
 let BANK = { sv:[], es:[] };
@@ -142,7 +143,7 @@ function gapPos(target, gap){
 // gemeinsamen Folge abweichen. Alternativen mit höchstens zwei geänderten Stellen, deren Bereiche sich nicht berühren
 // (auch nicht angrenzen), gelten auch zusammen: „lyfta frågan på mötet“ und „ta upp frågan under mötet“ ergeben
 // „lyfta frågan under mötet“. Was eine Alternative zusammen ändert, bleibt zusammen (la sesión … tensa).
-const altKey = w => w.toLowerCase().replace(/[.!?¡¿,;:"„“”«»()…–—]/g, '');
+const altKey = w => punctKey(w.toLowerCase());
 // Bereiche [a0, a1) in A, ersetzt durch [b0, b1) aus B (A, B: Schlüssel der Wörter). Gleicher Anfang und gleiches Ende
 // gehören immer zur längsten gemeinsamen Folge; gerechnet wird nur die Mitte.
 function altEdits(A, B){
@@ -162,7 +163,7 @@ function altEdits(A, B){
   if (cur) out.push(Object.assign(cur, { a1:i, b1:j }));
   return out;
 }
-const caseFirst = (w, up) => w.replace(/^([¿¡"„«(]*)(\p{L})/u, (m, p, c) => p + (up ? c.toUpperCase() : c.toLowerCase()));
+const caseFirst = (w, up) => { const p = wordParts(w); return /^\p{L}/u.test(p.core) ? p.pre + (up ? p.core[0].toUpperCase() : p.core[0].toLowerCase()) + p.core.slice(1) + p.post : w; };
 function altCombos(target, alts){
   if (alts.length < 2) return [];
   const T = target.split(/\s+/), TK = T.map(altKey), all = [target].concat(alts);
@@ -171,12 +172,12 @@ function altCombos(target, alts){
   const touch = (x, y) => x.e.some(r => y.e.some(s => !(r.a1 < s.a0 || s.a1 < r.a0)));
   // Satzzeichen und Großschreibung: Ein Wort, das in seiner Fassung einen Satz begann (am Anfang oder nach ? . !) und jetzt
   // mitten im Satz steht, wird klein, außer es steht irgendwo mitten im Satz groß (Namen). Nach ? . ! groß.
-  const ends = w => /[.!?…]$/.test(w || '');
-  const word = (ws, k) => ({ w:ws[k], start:k === 0, sent:k === 0 || ends(ws[k - 1]), last:k === ws.length - 1 });
+  const word = (ws, k) => ({ w:ws[k], start:k === 0, sent:k === 0 || endsSentence(ws[k - 1]), last:k === ws.length - 1 });
   let inner = null;
-  const innerCap = w => (inner || (inner = new Set(all.flatMap(s => { const ws = s.split(/\s+/); return ws.filter((x, k) => k && !ends(ws[k - 1]) && /^[¿¡"„«(]*\p{Lu}/u.test(x)); }).map(altKey)))).has(altKey(w));
-  const trail = w => (/[.,;:!?…]+$/.exec(w) || [''])[0], bare = w => w.replace(/[.,;:!?…]+$/, '');
-  const open = (/^[¿¡]+/.exec(T[0]) || [''])[0], close = trail(T[T.length - 1]).replace(/^[,;:]+/, '');
+  const innerCap = w => (inner || (inner = new Set(all.flatMap(s => { const ws = s.split(/\s+/); return ws.filter((x, k) => k && !endsSentence(ws[k - 1]) && /^\p{Lu}/u.test(wordCore(x))); }).map(altKey)))).has(altKey(w));
+  const trail = w => wordParts(w).post, bare = w => { const p = wordParts(w); return p.pre + p.core; };
+  const lead = w => w.slice(0, w.length - w.replace(new RegExp(`^${rxSet(P_INV)}+`), '').length);
+  const open = lead(T[0]), close = trail(T[T.length - 1]).replace(new RegExp(`^${rxSet(P_PAUSE)}+`), '');
   const out = [];
   const make = set => {
     const words = T.map((w, k) => word(T, k));
@@ -188,9 +189,9 @@ function altCombos(target, alts){
     const ws = [];
     words.forEach((x, k) => {
       let w = x.w;
-      if (x.start) w = w.replace(/^[¿¡]+/, '');
+      if (x.start) w = w.slice(lead(w).length);
       if (x.last) w = bare(w);
-      ws.push(k === 0 ? open + caseFirst(w, true) : ends(ws[k - 1]) ? caseFirst(w, true) : x.sent && !innerCap(w) ? caseFirst(w, false) : w);
+      ws.push(k === 0 ? open + caseFirst(w, true) : endsSentence(ws[k - 1]) ? caseFirst(w, true) : x.sent && !innerCap(w) ? caseFirst(w, false) : w);
     });
     ws[ws.length - 1] = bare(ws[ws.length - 1]) + close;
     return ws.join(' ');

@@ -17,7 +17,7 @@ const ES_COND_IRR = /^(tendr|podr|saldr|vendr|har|dir|sabr|querr|pondr|habr|cabr
 const ES_SUBJ_PAST = /^(tuv|fu|pud|hic|estuv|quis|sup|vin|dij|anduv|trajer|pus|hub|habl|viv|com|trabaj|sal|llam|lleg|volv|viaj)(iera|ieras|iéramos|ieran|era|eras|éramos|eran|ara|aras|áramos|aran)$/;
 const SV_SKIP = /^(jag|du|han|hon|vi|ni|de|man|det|inte|aldrig|redan|just|alltid|ofta|också|bara)$/;
 const ES_IND_COMMON = new Set('es eres soy son somos está estás estoy están estamos tienes tiene tengo tienen tenemos vas va voy van vamos haces hace hago hacen puedes puede puedo pueden quieres quiere quiero quieren sabes sabe sé saben vienes viene vengo vienen hay dices dice digo'.split(' '));
-const sentSplit = text => String(text).replace(/\s+/g, ' ').split(/(?<=[.!?…])\s+/).map(x => x.trim()).filter(x => /[A-Za-zÀ-ÿ]/.test(x));
+const sentSplit = text => String(text).replace(/\s+/g, ' ').split(new RegExp(`(?<=${rxSet(P_END)})\\s+`)).map(x => x.trim()).filter(x => /[A-Za-zÀ-ÿ]/.test(x));
 const wTokens = s => (String(s).toLowerCase().match(/[a-zà-ÿ]+(?:-[a-zà-ÿ]+)?/g) || []);
 const wTag = (lang, w) => { const e = lookupWord(lang, w); return e ? e.de : ''; };
 function tensesOf(lang, toks){
@@ -60,9 +60,9 @@ function textHints(lang, text){
     const FRONT = '(idag|i dag|igår|i går|imorgon|i morgon|ikväll|i kväll|imorse|nu|ibland|ofta|alltid|här|där|därför|tyvärr|först|sen|senare|efteråt|på (?:måndag|tisdag|onsdag|torsdag|fredag|lördag|söndag)|i (?:helgen|sommar|vinter|höst|vår))';
     sents.forEach(s => {
       const m = s.match(new RegExp(`^${FRONT}\\s+${PRON}\\s+(\\S+)`, 'i'));
-      if (m && !/^(inte|aldrig|också|bara)$/i.test(m[3])) add(m[0], `Steht „${m[1].toLowerCase()}“ vorn, kommt das Verb vor das Subjekt: ${cap(m[1].toLowerCase())} ${m[3].replace(/[.,!?]$/, '')} ${m[2].toLowerCase()} …`, 'inversion');
+      if (m && !/^(inte|aldrig|också|bara)$/i.test(m[3])) add(m[0], `Steht „${m[1].toLowerCase()}“ vorn, kommt das Verb vor das Subjekt: ${cap(m[1].toLowerCase())} ${wordCore(m[3])} ${m[2].toLowerCase()} …`, 'inversion');
       const c = s.match(new RegExp(`^(när|om|eftersom|innan|medan|fast)\\s[^,]+,\\s*${PRON}\\s+(\\S+)`, 'i'));
-      if (c && !/^(inte|aldrig)$/i.test(c[3])) add(c[0], `Nach dem Nebensatz vorn kommt zuerst das Verb: …, ${c[3].replace(/[.,!?]$/, '')} ${c[2].toLowerCase()} …`, 'inversion');
+      if (c && !/^(inte|aldrig)$/i.test(c[3])) add(c[0], `Nach dem Nebensatz vorn kommt zuerst das Verb: …, ${wordCore(c[3])} ${c[2].toLowerCase()} …`, 'inversion');
     });
     const ADV = 'inte|aldrig|alltid|ofta|kanske|redan|också|bara|gärna|verkligen';
     for (const m of t.matchAll(new RegExp(`\\b(att|eftersom|om|när|fast|medan|innan|som)\\s+${PRON}\\s+(\\S+)\\s+(${ADV})\\b`, 'gi'))) {
@@ -70,14 +70,14 @@ function textHints(lang, text){
       add(m[0], `Im Nebensatz steht „${m[4].toLowerCase()}“ vor dem Verb: ${m[1].toLowerCase()} ${m[2].toLowerCase()} ${m[4].toLowerCase()} ${m[3]}.`, 'bisats');
     }
     const g = Object.fromEntries((GENUS.sv || []).map(x => [x[0], x[1]]));
-    for (const m of t.matchAll(/\b(en|ett)\s+(?:(\S+)\s+)?(\S+?)[.,!?]?(?=\s)/gi)) {
+    for (const m of t.matchAll(new RegExp(String.raw`\b(en|ett)\s+(?:(\S+)\s+)?(\S+?)${rxSet(P_CLOSE)}?(?=\s)`, 'gi'))) {
       const noun = m[3].toLowerCase(), want = g[noun];
       if (want && want !== m[1].toLowerCase()) add(m[0], `„${noun}“ ist ein ${want}-Wort: ${want} ${m[2] ? m[2] + ' ' : ''}${noun}.`, 'species');
     }
     const TFORM = { stor:'stort', ny:'nytt', fin:'fint', dyr:'dyrt', billig:'billigt', gammal:'gammalt', god:'gott', röd:'rött', vit:'vitt', grön:'grönt', lång:'långt', varm:'varmt', kall:'kallt', ful:'fult', vacker:'vackert', rolig:'roligt', svår:'svårt', stark:'starkt', snabb:'snabbt', trevlig:'trevligt', liten:'litet', enkel:'enkelt', viktig:'viktigt' };
-    for (const m of t.matchAll(/\bett\s+(\S+)\s+(\S+?)[.,!?]?(?=\s)/gi)) { const a = m[1].toLowerCase(); if (TFORM[a]) add(`ett ${m[1]} ${m[2]}`, `Bei ett-Wörtern bekommt das Adjektiv ein -t: ett ${TFORM[a]} ${m[2]}.`, 'species'); }
+    for (const m of t.matchAll(new RegExp(String.raw`\bett\s+(\S+)\s+(\S+?)${rxSet(P_CLOSE)}?(?=\s)`, 'gi'))) { const a = m[1].toLowerCase(); if (TFORM[a]) add(`ett ${m[1]} ${m[2]}`, `Bei ett-Wörtern bekommt das Adjektiv ein -t: ett ${TFORM[a]} ${m[2]}.`, 'species'); }
     const PASTMARK = /(igår|i går|i förrgår|förra (veckan|året|månaden|helgen)|i (somras|vintras|våras|höstas|måndags|tisdags|onsdags|torsdags|fredags|lördags|söndags)|för \S+ (år|veckor|dagar|månader) sedan)/i;
-    sents.forEach(s => { const pm = s.match(PASTMARK), hm = s.match(/\bhar\s+(?:(?:jag|du|han|hon|vi|ni|de|man|det|inte|aldrig|redan|just)\s+){0,2}(\S+?)[.,!?]?(?=\s|$)/i); if (pm && hm && (SV_SUPINE.includes(hm[1].toLowerCase()) || /\(Supinum/.test(wTag('sv', hm[1].toLowerCase())))) add(`${pm[0]} … har ${hm[1]}`, `Mit „${pm[0].toLowerCase()}“ steht im Schwedischen das Präteritum, nicht „har ${hm[1]}“.`, 'tempus'); });
+    sents.forEach(s => { const pm = s.match(PASTMARK), hm = s.match(new RegExp(String.raw`\bhar\s+(?:(?:jag|du|han|hon|vi|ni|de|man|det|inte|aldrig|redan|just)\s+){0,2}(\S+?)${rxSet(P_CLOSE)}?(?=\s|$)`, 'i')); if (pm && hm && (SV_SUPINE.includes(hm[1].toLowerCase()) || /\(Supinum/.test(wTag('sv', hm[1].toLowerCase())))) add(`${pm[0]} … har ${hm[1]}`, `Mit „${pm[0].toLowerCase()}“ steht im Schwedischen das Präteritum, nicht „har ${hm[1]}“.`, 'tempus'); });
     for (const m of t.matchAll(/\bmåste\s+inte\b/gi)) add(m[0], '„måste inte“ ist mehrdeutig. „Muss nicht“ heißt behöver inte, „darf nicht“ heißt får inte.', 'framtid');
   } else {
     const TRIG = '(quiero|quieres|quiere|queremos|quieren|espero|esperas|espera|esperamos|es importante|es necesario|es mejor|para|antes de|me alegro de|no creo|dudo|ojalá)';
@@ -85,12 +85,12 @@ function textHints(lang, text){
     for (const m of t.matchAll(new RegExp(`\\b${TRIG}\\s+(que\\s+)?${SKIP}(\\S+)`, 'gi'))) {
       const ojala = /ojalá/i.test(m[1]);
       if (!ojala && !m[2]) continue; // ohne „que“ kein Nebensatz, etwa „quiero comer“
-      const v = m[3].toLowerCase().replace(/[.,!?]$/, ''), tag = wTag('es', v);
+      const v = wordCore(m[3].toLowerCase()), tag = wTag('es', v);
       if ((/\(Präsens/.test(tag) || ES_IND_COMMON.has(v)) && !/Subjuntivo/.test(tag)) add(m[0], `Nach „${m[1].toLowerCase()}${ojala ? '' : ' que'}“ steht der Subjuntivo, nicht „${v}“.`, 'subjuntivo');
     }
     for (const m of t.matchAll(/\bsi\s+(?:[^\s,]+\s+){0,2}?([^\s,]+?(?:ría|rías|ríamos|rían))\b/gi)) add(m[0], `Nach „si“ steht kein Konditional: si tuviera …, dann ${m[1]}.`, 'condicional');
     for (const m of t.matchAll(/\b(me|te|le|nos|les)\s+(gusta|encanta|interesa)\s+(los|las|mis|tus|sus|estos|estas)\s+\S+/gi)) add(m[0], `Das Verb richtet sich nach dem, was gefällt: ${m[1].toLowerCase()} ${m[2].toLowerCase()}n ${m[3].toLowerCase()} …`, 'gustar');
-    for (const m of t.matchAll(/\b(me|te|le|nos|les)\s+(gustan|encantan|interesan)\s+(el|la|mi|tu|su|este|esta)\s+(\S+?)[.,!?]?(?=\s)/gi)) if (!/s$/.test(m[4])) add(m[0], `Bei einer Sache in der Einzahl: ${m[1].toLowerCase()} ${m[2].toLowerCase().slice(0, -1)} ${m[3].toLowerCase()} ${m[4]}.`, 'gustar');
+    for (const m of t.matchAll(new RegExp(String.raw`\b(me|te|le|nos|les)\s+(gustan|encantan|interesan)\s+(el|la|mi|tu|su|este|esta)\s+(\S+?)${rxSet(P_CLOSE)}?(?=\s)`, 'gi'))) if (!/s$/.test(m[4])) add(m[0], `Bei einer Sache in der Einzahl: ${m[1].toLowerCase()} ${m[2].toLowerCase().slice(0, -1)} ${m[3].toLowerCase()} ${m[4]}.`, 'gustar');
     const PASTMARK = /(ayer|anoche|anteayer|la semana pasada|el (año|mes|verano|invierno|lunes|martes|miércoles|jueves|viernes|sábado|domingo|fin de semana) pasado|hace \S+ (años|días|semanas|meses)|en (19|20)\d\d)/i;
     sents.forEach(s => { const pm = s.match(PASTMARK), hm = s.match(/\b(he|has|ha|hemos|habéis|han)\s+(\S+?(?:ado|ido)|hecho|dicho|visto|escrito|puesto|vuelto|abierto)\b/i); if (pm && hm) add(`${pm[0]} … ${hm[0]}`, `Mit „${pm[0].toLowerCase()}“ steht in Spanien das Indefinido, nicht „${hm[0].toLowerCase()}“.`, 'perfecto'); });
     for (const m of t.matchAll(/\b(soy|eres|es|somos|son)\s+(cansad[oa]s?|enferm[oa]s?|content[oa]s?|ocupad[oa]s?|nervios[oa]s?|preocupad[oa]s?|enfadad[oa]s?|aburrid[oa]s?)\b/gi)) {
@@ -101,7 +101,7 @@ function textHints(lang, text){
     for (const m of t.matchAll(/\bla gente\s+(son|están|tienen|van|quieren|dicen|piensan)\b/gi)) add(m[0], `„la gente“ ist Einzahl: la gente ${({ son:'es', están:'está', tienen:'tiene', van:'va', quieren:'quiere', dicen:'dice', piensan:'piensa' })[m[1].toLowerCase()]}.`, 'konjugation');
     const g = Object.fromEntries((GENUS.es || []).map(x => [x[0], x[1]]));
     const STRESS_A = /^(agua|águila|hambre|hacha|alma|área|arma|aula|ala|hada)$/;
-    for (const m of t.matchAll(/\b(el|la|un|una)\s+(\S+?)[.,!?]?(?=\s)/gi)) {
+    for (const m of t.matchAll(new RegExp(String.raw`\b(el|la|un|una)\s+(\S+?)${rxSet(P_CLOSE)}?(?=\s)`, 'gi'))) {
       const noun = m[2].toLowerCase(), want = g[noun]; if (!want || STRESS_A.test(noun)) continue;
       const art = m[1].toLowerCase(), isMasc = art === 'el' || art === 'un';
       if ((want === 'el') !== isMasc) add(m[0], `„${noun}“ ist ${want === 'el' ? 'männlich: el' : 'weiblich: la'} ${noun}.`, 'konjugation');
@@ -118,8 +118,8 @@ function properNames(lang){
   BANK[lang].forEach(i => {
     const ws = String(i.target).split(/\s+/);
     ws.forEach((x, k) => {
-      const m = x.match(/^[¿¡"„“«(]*([A-ZÅÄÖÁÉÍÓÚÑ][a-zåäöéáíóúñü]+)/); if (!m) return;
-      const w = m[1].toLowerCase(), first = k === 0 || /[.!?:]["”»]?$/.test(ws[k - 1]), e = lookupWord(lang, w);
+      const m = wordCore(x).match(/^([A-ZÅÄÖÁÉÍÓÚÑ][a-zåäöéáíóúñü]+)/); if (!m) return;
+      const w = m[1].toLowerCase(), first = k === 0 || [...wordParts(ws[k - 1]).post].some(ch => (P_STOP + ':').includes(ch)), e = lookupWord(lang, w);
       if (!first || (e && /\((Name|Stadt|Land|Ort|Insel)/.test(e.de))) out.add(w);
     });
   });

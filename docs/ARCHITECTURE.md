@@ -6,12 +6,13 @@ Tagwerk ist eine einzelne HTML-Datei ohne Framework und ohne Laufzeit-Abhängigk
 
 `tools/build.js` setzt `src/index.html` (Gerüst mit Platzhaltern), `src/style.css` und alle Skripte in fester Reihenfolge zu `dist/index.html` zusammen, prüft das JavaScript auf Syntaxfehler und kopiert `public/` dazu. Die Cache-Version im Service Worker wird aus Paketversion und Inhalts-Hash gebildet (`tagwerk-24.0.0-1f89fd26`); jede inhaltliche Änderung erzeugt eine neue Version, und installierte Apps zeigen „Eine neue Version ist da“. Symbole bekommen einen Inhalts-Hash im Dateinamen (`icon-512.89186482.png`), weil Firefox Symbole pro Adresse zwischenspeichert; die Verweise in Manifest, Service Worker und `index.html` setzt der Build. Die Versionsnummer aus `package.json` ersetzt `'@VERSION@'` (`APP_VERSION`) und steht unter Einstellungen.
 
-Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihenfolge steht in `ORDER` in `tools/build.js`: Daten und Generatoren zuerst, Ansichten und Ereignisse zuletzt.
+Alle Skripte laufen in einer gemeinsamen Funktion mit `'use strict'`. Die Reihenfolge steht in `ORDER` in `tools/build.js`: Satzzeichen (`part_text.js`) zuerst, dann Daten und Generatoren, Ansichten und Ereignisse zuletzt.
 
 ## Module
 
 | Datei | Aufgabe |
 |---|---|
+| `js/part_text.js` | Satzzeichen und Wortgrenzen an einer Stelle (seit 24.85.0), im Build zuerst: `unpunct` (Satz ohne Satzzeichen, für Vergleich und Wortlisten), `punctKey` (Wort ohne Satzzeichen), `wordCore` (ohne Zeichen davor und danach, zum Nachschlagen und Anzeigen), `wordParts` (davor, Kern, danach), `endsSentence`; Zeichenlisten `P_OPEN`, `P_CLOSE`, `P_INV`, `P_STOP`, `P_END`, `P_PAUSE`. Der Doppelpunkt zählt nur am Wortende (tv:n). `tests/unit/satzzeichen.test.js` meldet eigene Zeichenlisten in anderen Dateien |
 | `data/content.js` | Satzbank (`CONTENT`) |
 | `js/generators.js` | Konjugation, Grammatik-Generatoren (`GENS`), darunter Nomen tauschen (`det_es`, Aufgabenart `trans` mit `swap`) |
 | `js/forms.js` | Übungsformen: Fehler finden, Umbauen, Uhrzeiten & Zahlen, Genus |

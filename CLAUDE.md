@@ -39,6 +39,7 @@ Du übernimmst die Weiterentwicklung meiner Sprachlern-App „Tagwerk“. Antwor
    - Reine Teständerungen ohne Versionssprung, als `tagwerk-<version>-tests.patch`.
 
 ## Code-Landkarte (Details in docs/ARCHITECTURE.md)
+- src/js/part_text.js: Satzzeichen und Wortgrenzen an einer Stelle (unpunct, punctKey, wordCore, wordParts, endsSentence); kommt im Build zuerst. Keine eigenen Zeichenlisten in anderen Dateien (Test).
 - src/js/part_head.js: Themen (TRAPS, Wortschatz-Themen mit vocab:true), Zustand, load/save, Backup (parseBackup, applyBackup), Satzbank-Aufbau (Niveau je Satz), pickNew, Tagesplan, Sprache des Tages, Tagwerk je Sprache, Schwerpunkt der Woche, Wiederholungssperre der Generatoren.
 - src/js/part_fsrs.js: FSRS-6. part_check.js: Antwortprüfung, geprüfter Teil, Rundenende.
 - src/js/part_views.js: alle Ansichten; part_events.js: Klicks über data-a, Export und Import; part_start.js: Begrüßung; part_icons.js: Symbole.

@@ -46,13 +46,13 @@ function shAnalyze(bins, origSpeech, commas){
   const dur = offset - onset, tp = shTempo(dur, origSpeech);
   return { nothing:false, onset, offset, speech:dur, pauses, extra:Math.max(0, pauses.length - (commas || 0)), quiet:top < 0.012, clip, ratio:tp ? tp.ratio : null, tempo:tp ? tp.tempo : null, top };
 }
-const shCommas = text => (String(text).match(/[,;:–—]/g) || []).length;
+const shCommas = text => (String(text).match(new RegExp(rxSet(P_PAUSE), 'g')) || []).length;
 // Pausen an Satzzeichen sind gewollt: Jedes Satzzeichen bekommt die Pause, die zeitlich am nächsten liegt (Lage im Satz nach Zeichen
 // geschätzt, höchstens ein Viertel daneben). Übrige Pausen sind Stockungen. Ergebnis: [Beginn, Ende, gewollt]
 function shMarkPauses(an, text){
   if (!an || an.nothing) return an;
-  const t = String(text).replace(/[.!?…]+\s*$/, ''), fr = [];
-  t.replace(/[,;:–—]/g, (m, i) => { fr.push(i / Math.max(1, t.length)); return m; });
+  const t = String(text).replace(new RegExp(`${rxSet(P_END)}+\\s*$`), ''), fr = [];
+  t.replace(new RegExp(rxSet(P_PAUSE), 'g'), (m, i) => { fr.push(i / Math.max(1, t.length)); return m; });
   const ps = an.pauses.map(([a, b]) => [a, b, false]);
   fr.forEach(f => {
     let best = -1, bd = 0.25;
@@ -118,7 +118,7 @@ function esStress(word){
 const esVowelStart = w => { const x = w.toLowerCase(); return x === 'y' || (/^h?[aeiouáéíóú]/.test(x) && !/^h?[iu][aeiouáéíóú]/.test(x)); };
 // Satz in Wörter mit Satzzeichen zerlegen: [{ pre, core, post }]
 function shChunks(text){
-  return String(text).split(/\s+/).filter(Boolean).map(t => { const m = t.match(/^([¿¡"„“«(]*)(.*?)([.!?,;:"„“”»)…]*)$/); return { pre:m[1], core:m[2], post:m[3] }; });
+  return String(text).split(/\s+/).filter(Boolean).map(wordParts);
 }
 // Hinweise je Wort und Bindungen zwischen Wörtern
 function shHints(text, lang){

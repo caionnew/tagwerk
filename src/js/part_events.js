@@ -110,7 +110,7 @@ document.addEventListener('click', e => {
       const s1 = !focused || box.selectionEnd == null ? box.value.length : box.selectionEnd;
       let ch = b.dataset.c;
       const before = box.value.slice(0, s0).trim();
-      if (box.tagName === 'TEXTAREA' && /[a-zåäöéáíóúñü]/.test(ch) && (!before || /[.!?¿¡]$/.test(before))) ch = ch.toUpperCase();
+      if (box.tagName === 'TEXTAREA' && /[a-zåäöéáíóúñü]/.test(ch) && (!before || new RegExp(`${rxSet(P_STOP + P_INV)}$`).test(before))) ch = ch.toUpperCase();
       box.value = box.value.slice(0, s0) + ch + box.value.slice(s1);
       box.selectionStart = box.selectionEnd = s0 + ch.length;
       box.focus(); box.dispatchEvent(new Event('input', { bubbles:true }));

@@ -6007,7 +6007,7 @@ function buildGloss(){
 }
 function lookupWord(lang, w){
   // Auch ein Doppelpunkt am Ende („pocas:“), damit Mehrzahl und weibliche Formen gefunden werden
-  const k = String(w || '').toLowerCase().replace(/^[¿¡"„“«(]+|[.!?,;:"„“”»)…]+$/g, '');
+  const k = wordCore(String(w || '').toLowerCase());
   const hit = GLOSS[lang][k] || GLOSS[lang][k.replace(/:/g, '')];
   if (hit || lang !== 'es') return hit || null;
   // Spanisch: Mehrzahl und weibliche Formen auf die Grundform zurückführen (casas → casa, ciudades → ciudad, nuevas → nuevo)

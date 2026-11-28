@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.89.0
+**Gruß auf „Heute“ jeden Tag anders, Thema öffnet zuerst das Themenblatt.**
+- **Gruß:** Bisher stand je Tageszeit immer derselbe da. Jetzt kommt jeden Tag ein anderer, innerhalb der Tageszeit derselbe: 30 schwedische und 27 spanische, etwa Morrn!, Kaffe först?, Tjena!, Nattuggla?; ¡Buen día!, ¿Un cafecito?, ¿Qué tal?, ¡Qué tarde es!. Dazu die Wochentage (Måndag igen!, Glad lillördag! am Mittwochabend, Fredagsmys!, ¡Ya es viernes!, ¡Buen finde!), am frühen Nachmittag jeden zweiten Tag Dags för fika? bzw. ¿Ya has comido?, sehr früh Tidigt ute! bzw. ¡Qué madrugón!.
+- **Je nach Anlass:** nach drei und mehr Tagen ohne Üben Länge sen! bzw. ¡Cuánto tiempo!, nach dem Tagwerk Bra jobbat! bzw. ¡Bien hecho!, beim zweiten Besuch am Tag Hej igen! bzw. ¡Hola de nuevo!, am allerersten Tag Nu kör vi! bzw. ¡Empezamos!. Feste gehen weiter vor (Glad lucia!).
+- **Jedes Wort ist antippbar,** Wendungen stehen beim tragenden Wort im Wörterbuch (länge sen = lange nicht gesehen, ¿qué tal? = wie geht's?, ¡arriba! = auf geht's). 20 neue Einträge, 10 ergänzte. Auf schmalen Geräten (360 px) ist der Gruß eine Stufe kleiner und bleibt in einer Zeile.
+- **Thema auf „Heute“:** Antippen unter „Höchste Fehlerquoten“ öffnet jetzt das Themenblatt mit Regel, Beispielen und typischem Fehler, von dort „10 Aufgaben üben“. Bisher ging es gleich in die Übung.
+- **Behoben:** Im Spanischen stand der Wochenstreifen neben dem Gruß 16 px zu hoch. Die Felder mit spanischem Tagwerk heißen intern „de“, und dieselbe Klasse trägt der deutsche Satz in den Aufgaben, samt Abstand darunter. Der Browser-Test zum Kopf läuft jetzt in beiden Sprachen.
+- Vorschläge für mehr Charakter (Zuruf am Rundenende, unübersetzbare Wörter, Datum in der Zielsprache, Stempel wie von Hand und andere) bewertet in IDEEN.md, deine Entscheidung.
+- Doku: ARCHITECTURE.md, IDEEN.md. Tests: Gruß je Tag und Tageszeit, Wochentage, Vorrang der Anlässe, alle Wörter nachschlagbar, höchstens 16 Zeichen; Thema auf „Heute“ öffnet das Themenblatt.
+- Speicherstand unverändert.
+
 ## 24.88.0
 **Paket 8: neues Thema „Feste Verbindungen“, je 49 Sätze (18 B1, 31 B2), mit benanntem Verbfehler.**
 - **Warum:** Verb und Nomen gehören fest zusammen, und das deutsche Verb führt oft in die Irre: eine Entscheidung treffen heißt fatta ett beslut und tomar una decisión, nicht träffa und nicht hacer. Bisher standen solche Verbindungen als Auswahl unter den Konnektoren; dort wählte man zwischen drei Wörtern, statt das Verb selbst zu finden.

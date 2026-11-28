@@ -14,7 +14,7 @@ mindre|liten|weniger, kleiner
 pluggar|plugga|lernen, studieren (umgangssprachlich)
 samtidigt|samtidigt|gleichzeitig; samtidigt som = während
 heltid|heltid|Vollzeit
-ute|ute|draußen
+ute|ute|draußen; tidigt ute = früh dran
 å|å|ach; å ena sidan … å andra sidan = einerseits … andererseits
 sidan|sida|die Seite
 soligt|solig|sonnig
@@ -149,7 +149,7 @@ juli||Juli
 kontant||bar; betala kontant = bar zahlen
 numera||inzwischen, heutzutage
 kvällen|kväll|der Abend; på kvällen = abends
-kör|köra|fährt (ein Fahrzeug); köra bil = Auto fahren
+kör|köra|fährt (ein Fahrzeug); köra bil = Auto fahren; nu kör vi! = los geht's!
 lyssnar|lyssna|hört zu; lyssna på radio = Radio hören
 måndagar|måndag|montags (Plural: Montage)
 nycklarna|nyckel|die Schlüssel
@@ -552,7 +552,7 @@ röd||rot
 röka||rauchen
 sedan||seit; dann; för … sedan = vor …
 semester||Urlaub
-sen||spät; umgangssprachlich für sedan
+sen||spät; umgangssprachlich für sedan; länge sen! = lange nicht gesehen!
 senare|sen|später
 sent|sen|spät; för sent = zu spät; sent uppe? = noch wach?
 serveras|servera|wird serviert
@@ -677,7 +677,7 @@ lördags|lördag|i lördags = letzten Samstag
 somras|sommar|i somras = letzten Sommer
 morse|morgon|i morse = heute Morgen
 veckan|vecka|förra veckan = letzte Woche
-jobbat|jobba|gearbeitet (Supinum)
+jobbat|jobba|gearbeitet (Supinum); bra jobbat! = gut gemacht!
 arbetat|arbeta|gearbeitet (Supinum)
 läst|läsa|gelesen; läst svenska = Schwedisch gelernt
 pluggat|plugga|gelernt (Supinum)
@@ -3424,6 +3424,21 @@ bostadsrätt||Eigentumswohnung (mit Nutzungsrecht in einer Genossenschaft, en-Wo
 totalförstörd||völlig zerstört; bilen är totalförstörd = das Auto hat einen Totalschaden
 kort||kurz; Karte (ett-Wort)
 svärfar||Schwiegervater (en-Wort)
+nattuggla||Nachteule (en-Wort)
+sömnlös||schlaflos
+godmorgon||guten Morgen (auch getrennt: god morgon)
+morrn||Morgen! (umgangssprachlicher Gruß)
+pigg||munter, wach, fit
+hallå||hallo
+tjena||hallo (umgangssprachlich)
+kvällspass||Abendeinheit; Abendschicht (ett-Wort)
+välkommen||willkommen; välkommen åter = willkommen zurück
+åter||wieder, zurück
+snygg||hübsch, schick, gut aussehend
+snyggt|snygg|hübsch, schick (bei ett-Wörtern); snyggt jobbat! = gut gemacht!
+skön||schön, angenehm, gemütlich
+lillördag||Mittwoch, „kleiner Samstag“, an dem man sich abends etwas gönnt (en-Wort)
+lördagskväll||Samstagabend (en-Wort)
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -3637,7 +3652,7 @@ gasolina|gasolina|das Benzin
 consiguiente|consiguiente|por consiguiente = folglich
 usa|usar|benutzen (Präsens, er/sie)
 presto|prestar|leihen (Präsens, ich)
-tal|tal|solch; con tal de que = vorausgesetzt, dass
+tal|tal|solch; con tal de que = vorausgesetzt, dass; ¿qué tal? = wie geht's?
 devuelvas|devolver|zurückgeben (Subjuntivo, du)
 iré|ir|gehen (Futur, ich)
 ayúdame|ayudar|hilf mir (Imperativ)
@@ -3937,7 +3952,7 @@ apagó|apagarse|se apagó = ging aus
 apartamento||Wohnung
 aprendo|aprender|ich lerne
 aquí||hier
-así||so; así que = also
+así||so; así que = also; ¡así se hace! = so macht man das!
 ayer||gestern
 ayudar||helfen
 ayudarme|ayudar|mir helfen
@@ -4221,7 +4236,7 @@ sonó|sonar|klingelte
 sopa||Suppe
 su||sein, ihr
 sucio||schmutzig
-sueño|soñar|ich träume; Traum
+sueño|soñar|ich träume; Traum; Schlaf, Müdigkeit: tener sueño = müde sein
 sé|saber|ich weiß
 tarda|tardar|braucht (Zeit)
 tarde||spät; Nachmittag
@@ -4341,7 +4356,7 @@ día||Tag
 muertos|muerto|Tote
 feliz||glücklich, froh
 navidad||Weihnachten
-nuevo||neu; Año Nuevo = Neujahr
+nuevo||neu; Año Nuevo = Neujahr; de nuevo = wieder
 menos||weniger; bei Uhrzeiten: vor (las ocho menos cuarto = 7:45)
 cuarto||Viertel; Zimmer
 cuesta|costar|kostet; la cuesta = der Hang, die Steigung
@@ -4638,7 +4653,7 @@ reír|reír|lachen
 debe|deber|muss, soll; debe de = dürfte, wird wohl
 deben|deber|müssen, sollen; deben de = dürften, werden wohl
 terminar|terminar|beenden, fertig werden
-cuánto|cuánto|wie viel; ¿cuánto tiempo? = wie lange?
+cuánto|cuánto|wie viel; ¿cuánto tiempo? = wie lange?; ¡cuánto tiempo! = lange nicht gesehen!
 paro|paro|Arbeitslosigkeit; estar en paro = arbeitslos sein
 llevan|llevar|tragen; llevan treinta años casados = sind seit dreißig Jahren verheiratet
 casados|casado|verheiratet (Plural)
@@ -4870,7 +4885,7 @@ encima||oben, obendrauf
 hombros|hombro|Schultern
 hombro||Schulter
 ligero||leicht
-arriba||oben; arriba del todo = ganz oben
+arriba||oben; arriba del todo = ganz oben; ¡arriba! = auf geht's, raus aus den Federn!
 casco||Helm; casco antiguo = Altstadt
 saludar||grüßen
 tradición||Tradition
@@ -6731,6 +6746,11 @@ apunte||Notiz; tomar apuntes = sich Notizen machen
 apuntes|apunte|Notizen, Mitschrift (Plural)
 culpa||Schuld; echar la culpa a alguien = jemandem die Schuld geben
 plantear||aufwerfen, stellen (Frage, Problem)
+hola||hallo
+cafecito||Käffchen (Verkleinerung von café)
+madrugón||frühes Aufstehen; ¡qué madrugón! = so früh schon wach!
+finde||Wochenende (umgangssprachlich für fin de semana)
+hecho|hacer|gemacht (Partizip); Tatsache; ¡bien hecho! = gut gemacht!
 `
 };
 

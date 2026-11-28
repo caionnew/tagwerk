@@ -972,10 +972,14 @@ section.ex #fb:empty{ display:none; }
 /* Kopf: zwei Zeilen, zwei gemeinsame Grundlinien. Oben Gruß und Woche (die Quadrate stehen auf der Grundlinie des Grußes),
    unten Datum und Serie in gleicher Schrift. Rechte Kante: Umrandung von heute und Text der Serie bündig. */
 .hello{ display:grid; grid-template-columns:minmax(0, 1fr) auto; column-gap:12px; row-gap:2px; align-items:baseline; }
+/* Schmale Geräte (360 px): eine Stufe kleiner, damit auch „Äntligen fredag!“ oder „¡Buenas tardes!“ in einer Zeile neben der Woche steht */
+@media (max-width:374px){ .hello-g{ font-size:var(--fs-11); } }
 .weekstrip{ justify-self:end; background:none; border:0; padding:0; margin:0 3px 0 0; color:inherit; line-height:0; }
 .wkc{ justify-self:end; background:none; border:0; padding:0; margin:0; font:inherit; font-size:var(--fs-4); color:var(--muted); font-variant-numeric:tabular-nums; }
 .wks{ display:flex; gap:4px; }
-.wk{ display:block; width:14px; }
+/* margin:0: Die Klasse „de“ (Tagwerk Spanisch) trifft sonst auch die Regel für den deutschen Satz (.de, 16 px Abstand unten), und
+   im Spanischen stand die Woche bis 24.88 über der Grundlinie des Grußes */
+.wk{ display:block; width:14px; margin:0; }
 .wk i{ display:block; width:14px; height:14px; border-radius:var(--r-mark); background:var(--line); box-sizing:border-box; }
 .wk.ds i{ background:var(--sv); } .wk.de i{ background:var(--es); } .wk.db i{ background:linear-gradient(135deg, var(--sv) 50%, var(--es) 50%); }
 .wk.ps i, .wk.pe i{ background:transparent; border:1.6px solid var(--muted); }

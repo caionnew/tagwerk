@@ -180,14 +180,15 @@ function topicRows(lang){
 const rowText = r => `<span class="txt"><span class="rt">${esc(keepHyph(r.label))}</span><span class="rd">${r.est ? `geschätzt ${pctPill(r.mean, r.clear)} falsch${r.base ? ' · ' : ''}` : ''}${esc(r.base)}</span></span>`;
 const barRow = r => rowText(r) + (r.gen ? '' : `<span class="bar" aria-hidden="true"><span style="width:${Math.max(3, r.pct)}%"></span></span>`);
 // Heute, „Höchste Fehlerquoten“: die drei höchsten Schätzungen unter den übbaren Themen (topRates, part_model.js), immer, sobald
-// das Modell rechnet, auch wenn alle Themen gleich liegen. „Klar über Schnitt“ (Hysterese) ist rot hinterlegt.
+// das Modell rechnet, auch wenn alle Themen gleich liegen. „Klar über Schnitt“ (Hysterese) ist rot hinterlegt. Antippen öffnet
+// das Themenblatt auf „Regel“, von dort „10 Aufgaben üben“ (bis 24.88 ging es gleich in die Übung); Themen ohne Blatt zur Übung.
 // Bis 24.73 „Fehlerquellen“: nur Themen mit P ≥ 75 % und erst ab 8 Fehlern in 30 Tagen.
 const weakTopics = lang => topRates(lang, 3);
 function weakHtml(lang){
   const list = weakTopics(lang);
   if (!list.length) return '';
   const M = topicModel(lang), max = modelScale(list, M.mu);
-  return `<h2 class="grp">Höchste Fehlerquoten</h2><div class="rows">${list.map(x => `<button type="button" class="row mrowh" data-a="trapgo" data-t="${x.id}" aria-label="${esc(modelAria(x.label, x) + (x.clear ? ', klar über Schnitt' : ''))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x))}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:list.some(x => x.clear) })}</p></div>`;
+  return `<h2 class="grp">Höchste Fehlerquoten</h2><div class="rows">${list.map(x => `<${topicOpen(lang, x.id) || `button type="button" data-a="trapgo" data-t="${x.id}"`} class="row mrowh" aria-label="${esc(modelAria(x.label, x) + (x.clear ? ', klar über Schnitt' : ''))}"><span class="txt">${mLine(`<span class="rt">${esc(keepHyph(x.label))}</span>`, modelRight(x))}${modelStripHtml(x, M.mu, max)}</span></button>`).join('')}<p class="legend inrows">${modelKeyHtml(M.mu, { clear:list.some(x => x.clear) })}</p></div>`;
 }
 function viewExtra(){
   const lang = S.lang, L = LANG[lang];

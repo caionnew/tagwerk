@@ -42,18 +42,22 @@ test('Genus: auch nach richtiger Antwort erst mit „Weiter“, wie überall', a
   await expect(page.locator('#fb')).toBeVisible();
   await expect(page.locator('[data-a=next]')).toBeVisible();
 });
-test('Kopf von „Heute“: zwei Zeilen mit gemeinsamen Grundlinien, rechte Kante bündig, Serie führt zum Kalender', async ({ page }) => {
-  await seed(page, richDB('sv'));
+// Auch im Spanischen: Bis 24.88 traf die Regel für den deutschen Satz (.de) die Felder mit spanischem Tagwerk (wk de), die Woche stand
+// dort 16 px über der Grundlinie des Grußes
+for (const lang of ['sv', 'es']) test(`Kopf von „Heute“ (${lang}): zwei Zeilen mit gemeinsamen Grundlinien, rechte Kante bündig, Serie führt zum Kalender`, async ({ page }) => {
+  const db = richDB(lang); db.settings.lang = lang;
+  await seed(page, db);
   await page.goto(APP);
   const m = await page.evaluate(() => {
     const base = el => { const s = document.createElement('span'); s.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline'; el.appendChild(s); const y = s.getBoundingClientRect().top; s.remove(); return y; };
     const g = document.querySelector('.hello-g'), d = document.querySelector('.hello-d'), c = document.querySelector('.wkc');
     const sq = [...document.querySelectorAll('.weekstrip .wk i')], last = sq[sq.length - 1].getBoundingClientRect();
     const rg = document.createRange(); rg.selectNodeContents(c);
-    return { greet:base(g), sqBottom:sq[0].getBoundingClientRect().bottom, date:base(d), streak:base(c), fd:getComputedStyle(d).fontSize, fc:getComputedStyle(c).fontSize,
+    return { greet:base(g), sqBottom:sq[0].getBoundingClientRect().bottom, sqSpread:Math.max(...sq.map(x => x.getBoundingClientRect().bottom)) - Math.min(...sq.map(x => x.getBoundingClientRect().bottom)), date:base(d), streak:base(c), fd:getComputedStyle(d).fontSize, fc:getComputedStyle(c).fontSize,
       outlineRight:last.right + 3, textRight:rg.getBoundingClientRect().right, gearRight:document.querySelector('.topline .iconbtn svg').getBoundingClientRect().right };
   });
   expect(Math.abs(m.sqBottom - m.greet)).toBeLessThan(1);
+  expect(m.sqSpread).toBeLessThan(0.5);
   expect(Math.abs(m.streak - m.date)).toBeLessThan(1);
   expect(m.fc).toBe(m.fd);
   expect(Math.abs(m.outlineRight - m.textRight)).toBeLessThan(1.5);

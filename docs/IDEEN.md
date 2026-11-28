@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 28. November 2026 (nach 24.88.0, Durchsicht vom 28.11.)
+Stand: 28. November 2026 (nach 24.89.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -66,6 +66,19 @@ So entsteht ein Paket:
 Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
 ## Bewertet: lohnend
+
+### Charakter und Ton (Vorschläge vom 28.11., deine Entscheidung)
+
+Umgesetzt in 24.89.0: Gruß jeden Tag anders, mit Wochentag und Anlass; Thema auf „Heute“ öffnet erst das Themenblatt. Für alles hier gilt weiter: keine Maskottchen, kein Konfetti, Bewegung nur als Antwort auf eine Handlung. Charakter soll aus der Sprache und der Kultur kommen, und möglichst lernt man dabei etwas.
+
+1. **Zuruf am Rundenende in der Zielsprache (B+).** Eine kurze Zeile unter „Tagwerk erledigt“ oder „Runde beendet“, antippbar wie der Gruß, passend zum Ergebnis: fehlerfrei „Felfritt!“ / „¡Impecable!“, gut „Bra jobbat!“ / „¡Bien hecho!“, viele Fehler „Bra kämpat!“ / „¡Ánimo!“, Etappe „Grattis!“ / „¡Enhorabuena!“. Varianten: (a) Zeile unter dem deutschen Titel (empfohlen); (b) der Zuruf wird zum Titel, der deutsche rückt klein darüber.
+2. **Unübersetzbare Wörter als Fundstück (B+).** lagom, gökotta, smultronställe, mångata, klämdag, tretår, orka; sobremesa, madrugar, estrenar, puente, vergüenza ajena, friolero, merendar. Je 15 bis 20 mit Beispielsatz und „Ins Tagwerk“. Varianten: (a) eigene Karte im Wechsel des Fundstücks (empfohlen); (b) Kategorie in „Land & Leute“.
+3. **Datum im Kopf in der Zielsprache (B).** „lördag 28 november“, „sábado, 28 de noviembre“, antippbar: Wochentage und Monate jeden Tag, dazu die Kleinschreibung und das „de“. Varianten: (a) immer; (b) nur bei „Fortgeschritten“.
+4. **Stempel wie von Hand (B−).** (a) Jeden Tag ein wenig anders gedreht, fest je Tag (empfohlen, kostet fast nichts); (b) an Etappentagen das Datum im Siegelrand; (c) ein Wort in der Zielsprache statt des Hakens (KLART, HECHO).
+5. **Woher der Name kommt (C+).** Einmal, beim ersten Start oder unten in den Einstellungen: Ein Tagwerk war das Stück Land, das ein Bauer an einem Tag pflügen konnte, in Bayern gut ein Drittel Hektar.
+6. **Jahrestag im Gruß (C+).** Am Jahrestag des ersten Übungstags „Ett år i dag!“ / „¡Un año ya!“, zum ersten Mal am 15.11.2027.
+7. **Seltene Zustände mit etwas Haltung (C+).** Nur wo sie selten sind, sonst nutzt sich der Witz ab: „Alle Sätze sind eingeführt.“ mit Anerkennung und dem Weg zum Nachschub, die erste fehlerfreie Runde eines Themas, das erste Tagwerk in der zweiten Sprache.
+8. **Bewusst nicht (D):** Sprüche nach jeder richtigen Antwort, Farbstimmung nach Tageszeit (Farben tragen Bedeutung: Sprache, Fehler), Maskottchen.
 
 ### Inhalte und Niveau
 

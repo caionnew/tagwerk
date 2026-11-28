@@ -2,6 +2,17 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.93.0
+**Zuruf am Rundenende in der Zielsprache, neben dem Stempel.**
+- **Was oben steht:** links der Stempel, rechts daneben klein „Tagwerk erledigt“ oder „Runde beendet“ und groß ein Zuruf in der Zielsprache, antippbar. Der große deutsche Titel entfällt, ebenso „Fehlerfrei“: Das sagen schon Ergebnis und Zuruf. Wesentliches bleibt deutsch („1 von 12 auf Anhieb richtig.“), der Zuspruch steht nur einmal da, in der Zielsprache. Das spart eine Zeile und nutzt den Platz rechts vom Stempel.
+- **Zurufe nach dem Ergebnis auf Anhieb:** fehlerfrei „Felfritt!“, „Klockrent!“ / „¡Impecable!“, „¡De diez!“; ab 80 % „Bra jobbat!“, „Snyggt!“, „Starkt!“ / „¡Bien hecho!“, „¡Muy bien!“, „¡Genial!“; ab 50 % „Det går framåt!“, „Helt okej!“ / „¡Vas bien!“, „¡Poco a poco!“; darunter „Bra kämpat!“, „Ge inte upp!“ / „¡Ánimo!“, „¡A seguir!“. Antworten in der anderen Norm zählen nicht als fehlerfrei.
+- **Abstände:** Textblock mittig zum Stempel, 16 px daneben; das Siegel an Etappentagen steht mit seinem Kreis genau dort, wo sonst der Stempel steht, und hält Abstand zur Karte darunter. Ohne Stempel (Runde ohne Etappe) steht der Textblock allein.
+- **CI:** Der Test mit breiter Schrift erlaubt jetzt bis 12 px (Untergrenze von fitGreeting); DejaVu Serif auf dem GitHub-Server landete bei 13,9 px.
+- Kalenderkürzel: alle Varianten als Bild gezeigt, noch angehalten (IDEEN.md).
+- Wörterbuch: 11 neue Einträge (felfritt, klockrent, framåt, kämpat, impecable, ánimo …), Wendungen bei upp, helt, diez, seguir.
+- Doku: ARCHITECTURE.md, IDEEN.md. Tests: Zuruf je Ergebnis, alle Wörter nachschlagbar, Kopf am Rundenende, Etappe direkt darunter, andere Norm kein „fehlerfrei“.
+- Speicherstand unverändert.
+
 ## 24.92.0
 **Mehr Zielsprache je nach Niveau: Serie im Kopf ab „Mittel“, Anweisungen der Aufgaben bei „Fortgeschritten“.**
 - **Serie im Kopf** (ab „Mittel“, das ist auch die Vorgabe): „5 dagar i rad“, „5 días seguidos“; am ersten Tag „Serien börjar i dag“ bzw. „Hoy empieza la racha“; wenn nach dem Pausetag heute ein Tagwerk nötig ist „Öva i dag!“ bzw. „¡Hoy toca!“. Bei „Grundlagen“ bleibt es deutsch, vorgelesen wird immer deutsch.

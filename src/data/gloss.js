@@ -620,7 +620,7 @@ tycker|tycka|findet, meint; tycker om = mag
 tyvärr||leider
 tänker|tänka|denkt; hat vor
 tåget|tåg|der Zug
-upp||auf, hoch; ge upp = aufgeben
+upp||auf, hoch; ge upp = aufgeben; ge inte upp! = gib nicht auf!
 uppsala||Uppsala (Stadt)
 ut||hinaus; flytta ut = ausziehen
 vald|välja|gewählt
@@ -731,7 +731,7 @@ skickades|skicka|wurde geschickt
 slips||Krawatte
 springer|springa|läuft, rennt
 stanna||bleiben; anhalten
-starkt|stark|stark
+starkt|stark|stark (bei ett-Wörtern); starkt! = stark!, beeindruckend!
 stigit|stiga|gestiegen (Supinum)
 stänga||schließen; stänga av = ausschalten
 stängs|stänga|wird geschlossen; stängs av = wird gesperrt
@@ -1070,7 +1070,7 @@ sjönk|sjunka|sinken (Präteritum)
 sjunka||sinken
 hamnen|hamn|der Hafen
 hamn||Hafen (en-Wort)
-helt||ganz, völlig; helt enkelt = einfach, schlicht
+helt||ganz, völlig; helt enkelt = einfach, schlicht; helt okej = ganz in Ordnung
 enkelt|enkel|einfach (t-Form); helt enkelt = einfach, schlicht
 smalt|smal|schmal (t-Form)
 smal||schmal
@@ -3450,6 +3450,14 @@ tisdag||Dienstag (en-Wort)
 onsdag||Mittwoch (en-Wort)
 januari||Januar
 april||April
+felfri||fehlerfrei
+felfritt|felfri|fehlerfrei (bei ett-Wörtern); felfritt! = fehlerfrei!
+klockren||glasklar, perfekt (wörtlich: glockenrein)
+klockrent|klockren|glasklar, perfekt (bei ett-Wörtern); klockrent! = perfekt!
+framåt||vorwärts; det går framåt = es geht voran
+okej||okay, in Ordnung
+kämpa||kämpfen
+kämpat|kämpa|gekämpft (Supinum); bra kämpat! = gut gekämpft!
 `,
 es: `accidente||Unfall
 afecta|afectar|betrifft (Präsens)
@@ -4019,7 +4027,7 @@ depende|depender|hängt ab
 desde||seit, ab; desde hace = seit
 di|dar|me di cuenta = ich merkte; ich gab
 dicho|decir|gesagt
-diez||zehn
+diez||zehn; ¡de diez! = erstklassig (wie die Note 10)
 digas|decir|no se lo digas = sag es ihm nicht
 dije|decir|ich sagte
 domingos|domingo|los domingos = sonntags
@@ -6025,7 +6033,7 @@ llevar||tragen; bringen; dauern; llevar su nombre = seinen Namen tragen
 pájaro||Vogel
 tomate||Tomate
 soler||pflegen zu (etwas gewöhnlich tun)
-seguir||folgen; weitermachen; sigue + Gerundio = immer noch
+seguir||folgen; weitermachen; sigue + Gerundio = immer noch; ¡a seguir! = weiter so!
 tratar||behandeln; tratar de = versuchen zu
 tratarse||sich handeln um; se trata de = es geht um
 cualquiera||jeder (beliebige)
@@ -6775,6 +6783,9 @@ jueves||Donnerstag
 febrero||Februar
 abril||April
 mayo||Mai
+impecable||makellos, tadellos
+ánimo||Mut, Stimmung; ¡ánimo! = Kopf hoch!, nur Mut!
+vas|ir|gehst (Präsens, tú); ¡vas bien! = du bist auf gutem Weg!
 `
 };
 

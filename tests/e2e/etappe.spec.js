@@ -17,7 +17,8 @@ test('Tagwerk mit Etappe: Siegel, Ausschnitt unter dem Titel, Link zu „Dein We
   await expect(page.locator('.done-h')).toHaveText('Tagwerk erledigt');
   await expect(page.locator('svg.stamp.seal')).toBeVisible();
   // Direkt unter dem Titel
-  expect(await page.evaluate(() => document.querySelector('.done-h').nextElementSibling.className)).toBe('mile');
+  // Seit 24.93.0 stehen Titel und Zuruf neben dem Stempel (.done-top); die Etappe folgt gleich darauf
+  expect(await page.evaluate(() => document.querySelector('.done-top').nextElementSibling.className)).toBe('mile');
   await expect(page.locator('.mile .mr.now')).toContainText('500 Aufgaben');
   await expect(page.locator('.mile .mr.done')).toContainText('100 Aufgaben');
   await expect(page.locator('.mile .mr.next')).toContainText('1.000 Aufgaben');

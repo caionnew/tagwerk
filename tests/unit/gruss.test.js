@@ -132,6 +132,28 @@ test('Datum im Kopf in der Zielsprache, antippbar: „lördag 28 november“, �
   assert.match(run(`dateHtml('sv', new Date(2026, 10, 28))`), /^<span data-a="lookup" data-w="lördag">lördag<\/span> 28 <span data-a="lookup" data-w="november">november<\/span>$/);
 });
 
+test('Zuruf am Rundenende: nach dem Ergebnis auf Anhieb, nur in der Zielsprache, antippbar; Titel klein und deutsch', () => {
+  const Z = app.get('ZURUF'), z = (lang, ok, total, perfect) => run(`zurufFor('${lang}', ${ok}, ${total}, ${perfect})`);
+  assert.ok(Z.sv.perfect.includes(z('sv', 10, 10, true)));
+  assert.ok(Z.sv.good.includes(z('sv', 2, 2, true)), 'unter drei Aufgaben kein „fehlerfrei“');
+  assert.ok(Z.es.good.includes(z('es', 10, 12, false)));
+  assert.ok(Z.es.mid.includes(z('es', 7, 12, false)));
+  assert.ok(Z.sv.low.includes(z('sv', 1, 12, false)));
+  assert.equal(z('sv', 1, 12, false), z('sv', 1, 12, false), 'fest beim Neuzeichnen');
+  for (const lang of ['sv', 'es']) for (const g of Object.values(Z[lang]).flat()) {
+    assert.ok(g.length <= 16, g);
+    for (const w of tokens(g)) if (/[a-zà-ÿ]/i.test(w)) assert.ok(lookupWord(lang, w), `${lang}: ${w} (${g})`);
+  }
+  assert.match(lookupWord('sv', 'klockrent').de, /perfekt/);
+  // Im Rundenende: Titel als kleine Überschrift, Zuruf daneben; ohne beantwortete Aufgabe wie bisher nur der Titel
+  const done = n => run(`(() => { DB = freshDB(); S.run = { kind:'quick', lang:'es', queue:[], idx:0, ok:${n}, bad:${10 - n}, res:Array.from({ length:10 }, (_, k) => ({ good:k < ${n} })), combo:0, best:0, stamped:true }; S.view = 'runDone'; return viewRunDone(); })()`);
+  const h = done(10);
+  assert.match(h, /<div class="done-top"><div class="done-tt"><h1 class="done-h done-st">Runde beendet<\/h1><p class="done-z wordrow" lang="es">/);
+  assert.doesNotMatch(h, /Fehlerfrei/);
+  assert.match(run(`(() => { S.run.ok = 0; S.run.bad = 0; S.run.res = []; return viewRunDone(); })()`), /<h1 class="done-h">Runde beendet<\/h1>/);
+  run('S.run = null; S.view = "home"');
+});
+
 test('Heute, „Höchste Fehlerquoten“: Antippen öffnet das Themenblatt, von dort „10 Aufgaben üben“', () => {
   run(`(() => { DB = freshDB(); DB.tlog = { [today()]: { es: { 'p:condicional':[40, 16], 'p:prep':[24, 10], 'p:perfecto':[20, 9], 'p:porpara':[30, 1], 'p:serestar':[30, 1], 't:gap':[150, 37] } } }; })()`);
   const html = run(`weakHtml('es')`), ids = run(`weakTopics('es').map(x => x.id)`);

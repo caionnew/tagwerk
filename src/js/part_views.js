@@ -834,6 +834,18 @@ function stampSvg(r, daily, sealed, burst){
   if (!sealed) return `<svg class="stamp${draw}" viewBox="0 0 56 56" aria-hidden="true"${tilt}><circle cx="28" cy="28" r="25"/><path d="M17 29.5l7.5 7.5L40 21"/>${burst && draw ? stampBurst(30) : ''}</svg>`;
   return `<svg class="stamp seal${daily ? '' : ' nd'}${draw}" viewBox="-10 -10 76 76" aria-hidden="true"${tilt}><path class="sl" pathLength="100" d="${SEAL_PATH}"/><circle cx="28" cy="28" r="25"/>${daily ? '<path d="M17 29.5l7.5 7.5L40 21"/>' : '<circle class="dot" cx="28" cy="28" r="7"/>'}${draw ? stampBurst(39) : ''}</svg>`;
 }
+// Zuruf in der Zielsprache am Rundenende (seit 24.93.0): nach dem Ergebnis auf Anhieb, nicht nach Etappen (die haben ihre Karte).
+// Er ist Zuspruch, keine Auskunft, darum steht er nur einmal da und in der Zielsprache; deutsch bleiben das Ergebnis („1 von 12
+// auf Anhieb richtig.“) und klein, ob Tagwerk oder Runde. Je Tag und Ergebnis fest, damit er beim Neuzeichnen nicht wechselt.
+const ZURUF = {
+  sv:{ perfect:['Felfritt!', 'Klockrent!'], good:['Bra jobbat!', 'Snyggt!', 'Starkt!'], mid:['Det går framåt!', 'Helt okej!'], low:['Bra kämpat!', 'Ge inte upp!'] },
+  es:{ perfect:['¡Impecable!', '¡De diez!'], good:['¡Bien hecho!', '¡Muy bien!', '¡Genial!'], mid:['¡Vas bien!', '¡Poco a poco!'], low:['¡Ánimo!', '¡A seguir!'] }
+};
+function zurufFor(lang, ok, total, perfect){
+  const share = total ? ok / total : 0, k = perfect && total >= 3 ? 'perfect' : share >= 0.8 ? 'good' : share >= 0.5 ? 'mid' : 'low';
+  const list = ZURUF[lang][k];
+  return list[(dayIndex(today()) + total) % list.length];
+}
 function viewRunDone(){
   const r = S.run, lang = r.lang;
   const daily = r.kind === 'daily';
@@ -841,7 +853,8 @@ function viewRunDone(){
   // Antworten in der anderen Norm (Perfecto/Indefinido) sind richtiges Spanisch, aber nicht das Gefragte: kein „Fehlerfrei“
   const nNorm = res.filter(x => x.nrm).length;
   const perfect = total > 0 && !r.bad && !nNorm;
-  const title = daily ? 'Tagwerk erledigt' : perfect && total >= 3 ? 'Fehlerfrei' : 'Runde beendet';
+  // Titel klein und deutsch (Tagwerk oder Runde), daneben groß der Zuruf; „Fehlerfrei“ sagen schon Ergebnis und Zuruf
+  const title = daily ? 'Tagwerk erledigt' : 'Runde beendet';
   const lead = !total ? 'Keine Aufgabe beantwortet.' : perfect ? (total === 1 ? 'Auf Anhieb richtig.' : `Alle ${total} auf Anhieb richtig.`) : `${r.ok - nNorm} von ${total} auf Anhieb richtig${nNorm ? `, ${nNorm} in der anderen Norm` : ''}.`;
   // Ergebnis je Aufgabe als Leiste: auf einen Blick, wo es gehakt hat
   const nOk = res.filter(x => x.good && !x.near).length, nNear = res.filter(x => x.near).length, nBad = res.length - nOk - nNear;
@@ -875,9 +888,11 @@ function viewRunDone(){
     ? '<button type="button" class="ghost" data-a="tab" data-v="extra">Weiter üben</button><button type="button" class="primary" data-a="tab" data-v="home">Fertig</button>'
     : '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
+  const st = stampSvg(r, daily, !!(r.miles && r.miles.length), perfect && total >= 3);
+  const head = total ? `<div class="done-top">${st}<div class="done-tt"><h1 class="done-h done-st">${title}</h1><p class="done-z wordrow" lang="${lang}">${linkWords(zurufFor(lang, r.ok - nNorm, total, perfect), lang)}</p></div></div>`
+    : `${st}<h1 class="done-h">${title}</h1>`;
   return `<div class="donebox">
-    ${stampSvg(r, daily, !!(r.miles && r.miles.length), perfect && total >= 3)}
-    <h1 class="done-h">${title}</h1>
+    ${head}
     ${mileHtml(r)}
     <p class="lead">${lead}</p>
     ${r.ended && r.kind === 'extraNew' && r.leftNew ? `<p class="hint mt0">${plural(r.leftNew, 'neuer Satz bleibt', 'neue Sätze bleiben')} für später.</p>` : ''}

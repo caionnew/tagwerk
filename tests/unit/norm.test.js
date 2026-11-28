@@ -161,6 +161,8 @@ test('Rundenende: Antwort in der anderen Norm ist kein „Fehlerfrei“', () => 
     answer('Esta mañana perdí el autobús'); S.run.idx = 1; answer('Ayer no dormí bien'); S.run.idx = 2; answer('Ayer no dormí bien');
     S.view = 'runDone'; return viewRunDone().replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' '); })()`);
   assert.doesNotMatch(done, /Fehlerfrei/);
+  // Seit 24.93.0 kein „Fehlerfrei“-Titel mehr; auch der Zuruf ist nicht der für eine fehlerfreie Runde
+  for (const z of app.get('ZURUF').es.perfect) assert.ok(!done.includes(z.replace(/[¡!]/g, '')), z);
   assert.match(done, /2 von 3 auf Anhieb richtig, 1 in der anderen Norm\./);
   assert.match(done, /Andere Norm, gefragt war Spanien/);
 });

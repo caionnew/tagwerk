@@ -168,6 +168,7 @@ sv kritisera (Gruppe 1): kritiserar, kritiserade, kritiserat; kritiserad, kritis
 sv krypa (unregelmäßig): kryper, kröp, krupit
 sv kunna (unregelmäßig): kan, kunde, kunnat
 sv källsortera (Gruppe 1): källsorterar, källsorterade, källsorterat; källsorterad, källsorterat, källsorterade; källsorteras, källsorterades
+sv kämpa (Gruppe 1): kämpar, kämpade, kämpat; kämpad, kämpat, kämpade; kämpas, kämpades
 sv känna (unregelmäßig): känner, kände, känt; känd, känt, kända; känns, kändes
 sv köa (Gruppe 1): köar, köade, köat
 sv köpa (Gruppe 2): köper, köpte, köpt; köpt, köpt, köpta; köps, köptes

@@ -2,7 +2,7 @@
 
 Lohnende, noch nicht umgesetzte Ideen, mit Bewertung (A bis D) und den Gründen, dazu der Fahrplan für die nächsten Updates. Was umgesetzt ist, kommt hier heraus und steht im [Änderungsverlauf](../CHANGELOG.md). Themen für weitere Lesetexte stehen unten; Leitlinien und die Liste der geschriebenen Texte in [CONTENT.md](CONTENT.md#lesetexte-srcdatatextejs).
 
-Stand: 28. November 2026 (nach 24.92.0, Durchsicht vom 28.11.)
+Stand: 28. November 2026 (nach 24.93.0, Durchsicht vom 28.11.)
 
 Bewertet nach: Wirkung aufs Lernen auf fortgeschrittenem Niveau, wie oft es im Alltag greift (täglich im Tagwerk oder selten), Passung zu den Grundsätzen (offline, ohne KI, ohne Spielerei), Aufwand und Fehlerrisiko.
 
@@ -69,12 +69,11 @@ Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unt
 
 ### Charakter und Ton (Vorschläge vom 28.11.)
 
-Umgesetzt: Gruß jeden Tag anders, mit Wochentag und Anlass, Thema auf „Heute“ öffnet erst das Themenblatt (24.89.0); Feiertagsgrüße je Sprache mit kleinem bewegtem Zeichen, Stempel je Tag gedreht und mit Druck, Funken nach fehlerfreier Runde und an Etappentagen (24.90.0). Deine Linie vom 28.11.: kleine Freuden und leichte Bewegung gern, solange sie gut aussehen und nicht kitschig sind; kein Konfettiregen, keine Maskottchen. Charakter soll aus der Sprache, der Kultur und dem Bild der App (Stempel, Tinte, Papier) kommen, und möglichst lernt man dabei etwas.
+Umgesetzt: Gruß jeden Tag anders, mit Wochentag und Anlass, Thema auf „Heute“ öffnet erst das Themenblatt (24.89.0); Zuruf am Rundenende neben dem Stempel (24.93.0, Variante d); Feiertagsgrüße je Sprache mit kleinem bewegtem Zeichen, Stempel je Tag gedreht und mit Druck, Funken nach fehlerfreier Runde und an Etappentagen (24.90.0). Deine Linie vom 28.11.: kleine Freuden und leichte Bewegung gern, solange sie gut aussehen und nicht kitschig sind; kein Konfettiregen, keine Maskottchen. Charakter soll aus der Sprache, der Kultur und dem Bild der App (Stempel, Tinte, Papier) kommen, und möglichst lernt man dabei etwas.
 
-1. **Zuruf am Rundenende in der Zielsprache (B+, Vorschau am 28.11. gezeigt, deine Wahl).** Nach dem Ergebnis der Runde, nicht nach Etappen (die haben ihre eigene Karte).** Eine kurze Zeile unter „Tagwerk erledigt“ oder „Runde beendet“, antippbar wie der Gruß, passend zum Ergebnis: fehlerfrei „Felfritt!“ / „¡Impecable!“, gut „Bra jobbat!“ / „¡Bien hecho!“, viele Fehler „Bra kämpat!“ / „¡Ánimo!“, Etappe „Grattis!“ / „¡Enhorabuena!“. Varianten: (a) Zeile unter dem deutschen Titel; (b) der Zuruf wird zum Titel, der deutsche rückt klein darüber; (c) neben dem Stempel, kostet keine Höhe. Vorschau-Code als Diff aufbewahrt.
 2. **Unübersetzbare Wörter als Fundstück (B+).** lagom, gökotta, smultronställe, mångata, klämdag, tretår, orka; sobremesa, madrugar, estrenar, puente, vergüenza ajena, friolero, merendar. Je 15 bis 20 mit Beispielsatz und „Ins Tagwerk“. Varianten: (a) eigene Karte im Wechsel des Fundstücks (empfohlen); (b) Kategorie in „Land & Leute“.
 3. **Mehr in der Zielsprache, je nach Niveau.** Grundsatz: Zielsprache dort, wo die Bedeutung aus dem Zusammenhang klar ist und sich jeden Tag wiederholt; Deutsch, wo Verstehen zählt (Navigation, Statistik, Regeln, Erklärungen). Umgesetzt: Datum im Kopf (24.91.0, immer), Serie im Kopf ab „Mittel“ und Anweisungen der Aufgaben bei „Fortgeschritten“ mit Deutsch auf Tipp (24.92.0).
-   - **Kürzel im Kalender (B−, angehalten).** Einzelne Buchstaben sind in jeder Sprache mehrdeutig (deutsch M D M D F S S, schwedisch M T O T F L S); das spanische X für miércoles ist üblich, aber nicht zu erraten. Besser zwei Buchstaben: må ti on to fr lö sö, lu ma mi ju vi sá do; passen in die Zellen (Monatsrückblick 20 px, Jahreskalender mit eigener Spalte).
+   - **Kürzel im Kalender (B−, angehalten, alle Varianten am 28.11. gezeigt).** Einzelne Buchstaben sind in jeder Sprache mehrdeutig (deutsch M D M D F S S, schwedisch M T O T F L S); das spanische X für miércoles ist üblich, aber nicht zu erraten. Gezeigt: ein, zwei, drei Buchstaben, klein und groß. Zwei Buchstaben passen in beide Kalender, drei werden im Jahreskalender abgeschnitten. Offen: Die Kalender zeigen beide Sprachen zusammen, die Kürzel richteten sich dann nach der gewählten Sprache; die Monatsnamen im Jahreskalender (Aug, Sep, Okt) müssten mit.
    - **Urteil nach dem Prüfen bei „Fortgeschritten“ (C+).** „Rätt“, „Nästan“, „Fel“; „Correcto“, „Casi“, „Incorrecto“. Kurz und eindeutig, aber das Urteil muss man ohne Nachdenken lesen; „Andere Norm“ bliebe deutsch.
    - **Titel des Monatsrückblicks (C+).** „Din november“, „Tu noviembre“; die Zahlen darunter deutsch.
    - **Bewusst nicht (D):** Leiste unten und Knöpfe, Erklärungen der Statistik, Regeln und Erklärungen zu Sätzen, Fehlermeldungen.

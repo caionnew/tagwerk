@@ -2,6 +2,11 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.100.0
+**„Was ist echt?“ kürzer.**
+- Bei beiden Reihen höchstens zwei Sätze: was erfunden ist, dass der Rest belegt ist (Quellen unter jedem Teil), wie Gesagtes wiedergegeben wird. Los 33 von 347 auf 170 Zeichen, Natten på Sveavägen von 211 auf 112.
+- Regel in docs/REIHEN.md und in der Prüfung jedes Pakets: höchstens 200 Zeichen.
+
 ## 24.99.0
 **Zweite Reihe: „Los 33“ (Spanisch, B1, fünf Teile).**
 - **Das Grubenunglück von San José 2010, erzählt von einer erfundenen Reporterin:** Camila arbeitet bei einem kleinen Radiosender in Copiapó und schreibt ihr Notizbuch oben bei den Familien. Setecientos metros (7.8.2010, zweiter Einsturz im Lüftungsschacht, fehlende Leitern), Un papel (22.8., Tag 17: „Estamos bien en el refugio los 33“), Campamento Esperanza (18.9., 200 Jahre Chile im Lager; palomas, Rationen vor dem Kontakt, Plan A bis C), El Fénix (11.10., Plan B ist durch, die Kapsel), Uno por uno (12. und 13.10., die Rettung, 69 Tage). Je Teil 200 bis 260 Wörter, Ich-Form, Datumszeile, „Bisher“, Vorschau, drei Fragen auf Deutsch und Spanisch, zwei Sätze zum Übernehmen, Quellen.

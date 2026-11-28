@@ -15,6 +15,7 @@ function problems(lang, s, { length = true, lookup = true } = {}){
   if (!s.title || !s.topic || !/^(A2|B1|B2|C1)$/.test(s.level)) bad('Titel, Thema oder Niveau');
   if (!FORMS[s.form]) bad(`Erzählform „${s.form}“ unbekannt`);
   if (!s.teaser || !Array.isArray(s.intro) || s.intro.length !== 2 || !s.real) bad('Kartentext, Einleitung (Zielsprache, Deutsch) oder „Was ist echt?“ fehlt');
+  if (s.real && s.real.length > 200) bad(`„Was ist echt?“ zu lang (${s.real.length} Zeichen, höchstens 200)`);
   if (!Array.isArray(s.parts) || s.parts.length < 2) { bad('mindestens zwei Teile'); return out; }
   const N = s.parts.length;
   (s.cast || []).forEach(([n, d, k]) => { if (!n || !d || !(k >= 1 && k <= N)) bad(`Person ${n}`); });

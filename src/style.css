@@ -322,6 +322,7 @@ button.row.toggle::after{ display:none; }
 .plan2{ list-style:none; padding:0; margin:12px 0 16px; }
 .plan2 li{ display:grid; grid-template-columns:1.6em 1fr; column-gap:8px; align-items:baseline; padding:9px 0; border-top:1px solid var(--line); font-size:var(--fs-6); }
 .plan2 li:first-child{ border-top:0; }
+.today .focusline{ margin:0 0 16px; line-height:1.5; }
 .plan2 b{ min-width:1.4em; text-align:right; font-variant-numeric:tabular-nums; }
 /* Die Bezeichnung links bricht nie um, die Erklärung rechts darf umbrechen */
 .plan2 li{ white-space:normal; }

@@ -2,6 +2,9 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.105.0
+**Heute: mehr Luft zwischen „Schwerpunkt der Woche“ und dem Startknopf** (16 px wie unter dem Plan, Zeilenabstand 1,5).
+
 ## 24.104.0
 **Weniger Text: Hinweise und Erklärungen, die niemand braucht, sind raus.**
 - **Reihen:** Personen erscheinen erst nach dem Teil, in dem sie vorkommen; vor Teil 1 gibt es den Abschnitt nicht. Gesperrte Teile haben statt der Zeitangabe einen grauen Balken, ohne Legende.

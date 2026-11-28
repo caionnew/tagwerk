@@ -2,6 +2,14 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.99.0
+**Zweite Reihe: „Los 33“ (Spanisch, B1, fünf Teile).**
+- **Das Grubenunglück von San José 2010, erzählt von einer erfundenen Reporterin:** Camila arbeitet bei einem kleinen Radiosender in Copiapó und schreibt ihr Notizbuch oben bei den Familien. Setecientos metros (7.8.2010, zweiter Einsturz im Lüftungsschacht, fehlende Leitern), Un papel (22.8., Tag 17: „Estamos bien en el refugio los 33“), Campamento Esperanza (18.9., 200 Jahre Chile im Lager; palomas, Rationen vor dem Kontakt, Plan A bis C), El Fénix (11.10., Plan B ist durch, die Kapsel), Uno por uno (12. und 13.10., die Rettung, 69 Tage). Je Teil 200 bis 260 Wörter, Ich-Form, Datumszeile, „Bisher“, Vorschau, drei Fragen auf Deutsch und Spanisch, zwei Sätze zum Übernehmen, Quellen.
+- **Was ist echt:** Erfunden ist nur Camila. Uhrzeiten, Zahlen und Personen geprüft an Wikipedia, Revista Minería Chilena, Diario Financiero, Cooperativa, Diario de Cuyo, El Litoral, RPP und weiteren chilenischen Berichten; wo die Quellen sich widersprechen (Länge der Verrohrung, Breite des Schachts, Alter von Byron Ávalos), steht keine Zahl. Echte Personen ohne erfundene Zitate; die Nachricht der Bergleute im Original.
+- **Spanisch wie in Chile, wo es zur Erzählerin passt** (auto, carpa, cerro), sonst neutral (en promedio statt de media).
+- **Wörterbuch:** 109 neue Einträge (Bergbau und Rettung: mina, derrumbe, sonda, pozo, rescatista, cápsula …; Namen), neue Verben mit geprüften Formen (mover, medir, mostrar, contener, repartir …). Genauer: vivos ist „lebendig“ statt „ich wohne“, muestra „zeigt“ statt „ich zeige“, vino auch „Wein“, bajar zuerst „hinuntergehen“, contar „zählen, erzählen“, refugio auch „Schutzraum“.
+- Tests: Die Reihe hält alle Regeln aus docs/REIHEN.md ein; die Prüfung „ohne Reihen kein Abschnitt“ leert dafür ausdrücklich die Liste, der Browsertest zum Niveau sortiert nur die Einzeltexte (die Karte der Reihe steht darüber). Speicherstand unverändert.
+
 ## 24.98.0
 **Erste Reihe: „Natten på Sveavägen“ (Schwedisch, B2, sechs Teile).**
 - **Der Mord an Olof Palme, erzählt wie es geschah:** Fredag kväll (28.2.1986), Natten, 33-åringen, Spåret (die PKK-Spur unter Hans Holmér), Rättegången (Christer Pettersson, verurteilt und freigesprochen 1989), Ett namn (Stig Engström, benannt am 10. Juni 2020). Je Teil 180 bis 205 Wörter, Präsens, Datumszeile, „Bisher“, Vorschau auf den nächsten Teil, drei Fragen auf Deutsch und Schwedisch, zwei Sätze zum Übernehmen, Quellen.

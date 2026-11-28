@@ -63,7 +63,7 @@ So entsteht ein Paket:
 
 1. **Neue Sätze beim ersten Mal richtig, je Thema und Monat (B+, Anzeige ab Januar):** „Konditional, neue B2-Sätze: November 14 von 20, Januar 26 von 30.“ Misst, ob die Grammatik bei Sätzen sitzt, die du noch nie gesehen hast; „gefestigt“ zählt dagegen das Gedächtnis für bekannte Sätze und wächst vor allem mit der Zeit. Gezählt wird seit 24.61.0 (`DB.first`, unsichtbar), immer in derselben Übungsform und getrennt nach Stufe. Anzeige gestalten, wenn zwei Monate Daten da sind, mit echtem Backup: nur gleiche Stufe im Vergleich (bei „Fortgeschritten“ B2), Anzahlen statt Prozent bei kleinen Mengen. Ersetzt die Wochenbilanz zum Schwerpunkt, die an wechselnden Übungsarten und Niveaus gescheitert wäre.
 
-2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, als Nächstes Los 33, dann je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
+2. **Reihen, Inhaltspakete (A):** Rahmen steht seit 24.97.0; Natten på Sveavägen seit 24.98.0, Los 33 seit 24.99.0. Weitere Pakete auf Wunsch, je Paket eine Reihe aus [Reihen](#reihen-lesen-in-fortsetzungen-konzept-vom-2811-rahmen-seit-24970).
 
 Sonst nach Bedarf aus „Bewertet: lohnend“; neue Lesetexte aus den Themen unten (46 von 48 noch ungelesen, darum vorerst C+).
 
@@ -135,7 +135,7 @@ Umgesetzt: Gruß jeden Tag anders, mit Wochentag und Anlass, Thema auf „Heute�
 Aufeinander aufbauende Texte in fester Reihenfolge, als Weiterentwicklung von „Lesen und Hören“ (A; eine eigene Übungsform wäre C+:
 zweiter Leser, zweiter Ort). Aufbau, Sprache je Niveau, Datenformat und Regeln für den Inhalt in [REIHEN.md](REIHEN.md). Umgesetzt
 ist der Rahmen; Inhalte kommen in Paketen, je Paket eine Reihe, abwechselnd die Sprachen. Erste Pakete: **Natten på Sveavägen**
-(Schwedisch, „Wie es geschah“) und **Los 33** (Spanisch, erfundene Erzählerin), zwei verschiedene Formen zum Erproben.
+(Schwedisch, „Wie es geschah“, 24.98.0) und **Los 33** (Spanisch, erfundene Erzählerin, 24.99.0), zwei verschiedene Formen zum Erproben.
 
 **Erzählformen:** Wie es geschah, Präsens, jeder Teil kennt nur den Stand seines Tages (A); erfundene Figur in echten Ereignissen,
 gekennzeichnet (A); viele Stimmen, jeder Teil eine andere Perspektive (A); Familienchronik über Generationen (A−); ein Tag, der alles
@@ -175,7 +175,7 @@ statsminister Olof Palme ihjäl på väg hem från bion. Det här är berättels
 - **La noche de los transistores (A):** 23-F, Wie es geschah, Stunde für Stunde, 5 Teile, B2.
 - **La guerra en casa (A):** Bürgerkrieg, eine Familie auf beiden Seiten, viele Stimmen, 6 bis 7 Teile, B2–C1: Madrid belagert,
   Guernica, Kinder ins Ausland, Exil 1939.
-- **Los 33 (A):** Chile 2010, erfundene Reporterin im Campamento Esperanza, 5 Teile, B1, geht gut aus.
+- **Los 33 (A, umgesetzt in 24.99.0):** Chile 2010, erfundene Reporterin im Campamento Esperanza, 5 Teile, B1, geht gut aus.
 - **El crimen de Cuenca (A−):** Ermittlung, 4 Teile, B2: 1910 verschwindet ein Schäfer, 1918 werden zwei Männer zu 18 Jahren
   verurteilt, 1926 taucht er lebend auf.
 - **España en diez días (A−):** zehn Tage von 711 bis heute.

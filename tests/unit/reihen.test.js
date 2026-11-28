@@ -79,8 +79,8 @@ test('Karte in „Lesen und Hören“: Erzählform, Fortschritt, Beginnen und We
   assert.match(h, /<i class="on"><\/i><i><\/i><i><\/i><\/span><span class="scta">Weiter mit Teil 2 ›<\/span>/);
   reset('mittel', readPart(1) + readPart(2) + readPart(3));
   assert.match(run('viewTexts()'), /<span class="scta">Alle 3 Teile gelesen<\/span>/);
-  reset(); run('SERIES.es = SERIES.es || []; S.lang = "es"');
-  assert.doesNotMatch(run('viewTexts()'), /Reihen/, 'ohne Reihen kein Abschnitt');
+  reset(); const h0 = run('(() => { const keep = SERIES.es; SERIES.es = []; S.lang = "es"; const h = viewTexts(); SERIES.es = keep; return h; })()');
+  assert.doesNotMatch(h0, /Reihen/, 'ohne Reihen kein Abschnitt');
 });
 
 test('Übersicht: Einleitung je Niveau, Teile ohne Vorgriff, Personen und Wörter bis zum Gelesenen, gelesene Teile noch einmal lesbar', () => {

@@ -3859,7 +3859,7 @@ nevera||Kühlschrank (Lateinamerika: refrigerador)
 ofrecieran|ofrecer|(wenn) sie anbieten würden (Imperfecto de subjuntivo)
 olvide|olvidar|vergesse (Subjuntivo); antes de que se me olvide = bevor ich es vergesse
 opinión||Meinung
-oscuras||a oscuras = im Dunkeln
+oscuras|oscuro|dunkel; a oscuras = im Dunkeln
 pagamos|pagar|wir zahlen, wir zahlten
 pareja||Partner, Partnerin; Paar
 parábamos|parar|wir hielten an (Imperfecto)
@@ -3954,7 +3954,7 @@ acercó|acercarse|sich nähern (Indefinido, er/sie)
 comprometo|comprometerse|sich verpflichten (Präsens, ich)
 ayudarte|ayudar|dir helfen
 huyó|huir|fliehen (Indefinido, er/sie)
-policía|policía|die Polizei
+policía|policía|die Polizei; el policía, la policía = Polizist, Polizistin
 o|o|oder
 algo||etwas
 largo||lang
@@ -4251,7 +4251,7 @@ contestar||antworten
 correo||Post; correo electrónico = E-Mail
 creo|creer|ich glaube
 cuando||wenn, als
-cuenta||Rechnung; Konto; darse cuenta = merken; ¡cuenta! = erzähl! (contar)
+cuenta||Rechnung; Konto; darse cuenta = merken; erzählt, zählt (contar); ¡cuenta! = erzähl!
 cómo||wie
 de||von, aus
 deberías|deber|du solltest
@@ -4524,7 +4524,7 @@ va|ir|geht
 vamos|ir|wir gehen
 vaso||Glas
 vayas|irse|te vayas = (bevor) du gehst (Subjuntivo)
-vemos|ver|nos vemos = wir sehen uns
+vemos|ver|wir sehen; nos vemos = wir sehen uns
 venga|venir|(dass) sie kommt (Subjuntivo)
 vengas|venir|(dass) du kommst (Subjuntivo)
 venido|venir|gekommen
@@ -4542,7 +4542,7 @@ vine|venir|ich kam
 visité|visitar|ich besuchte
 viviendo|vivir|lebend, wohnend
 vivió|vivir|lebte, wohnte
-vivo|vivir|ich wohne, lebe
+vivo||lebendig, am Leben (auch: ich lebe, von vivir)
 vivía|vivir|ich wohnte (Imperfecto)
 voy|ir|ich gehe
 y||und
@@ -4613,7 +4613,7 @@ navidad||Weihnachten
 nuevo||neu; Año Nuevo = Neujahr; de nuevo = wieder
 menos||weniger; bei Uhrzeiten: vor (las ocho menos cuarto = 7:45)
 cuarto||Viertel; Zimmer
-cuesta|costar|kostet; la cuesta = der Hang, die Steigung
+cuesta|costar|kostet; cuesta creer = es ist kaum zu glauben; la cuesta = der Hang, die Steigung
 paciencia||Geduld
 deberes||Hausaufgaben
 deporte||Sport
@@ -4838,7 +4838,7 @@ insiste|insistir|besteht darauf
 época|época|Zeit, Epoche
 consta|constar|besteht (aus); constar de = bestehen aus
 plantas|planta|Stockwerke; Pflanzen
-contar|contar|zählen; erzählen; contar con = sich verlassen auf
+contar|contar|zählen, erzählen; contar con = sich verlassen auf
 propio|propio|eigen
 supermercado|supermercado|Supermarkt
 enteré|enterarse|ich erfuhr (Indefinido)
@@ -5364,7 +5364,7 @@ sierra||Gebirge, Bergkette; Säge
 francisco||Francisco (Vorname)
 monumento||Denkmal
 construyó|construir|bauen (Indefinido); construirse = gebaut werden
-parte||Teil; en parte = teilweise
+parte||Teil; en parte = teilweise; por todas partes = überall
 presos|preso|Gefangene
 preso||Gefangener; gefangen
 político||politisch; Politiker
@@ -5414,7 +5414,7 @@ desaparecido||verschwunden; Verschwundener
 octubre||Oktober
 gobierno||Regierung
 pedro||Pedro (Vorname)
-sánchez||Sánchez (Pedro Sánchez, spanischer Ministerpräsident seit 2018)
+sánchez||Sánchez (Nachname; Pedro Sánchez, spanischer Ministerpräsident seit 2018)
 exhumó|exhumar|exhumieren (Indefinido)
 exhumar||exhumieren
 trasladó|trasladar|überführen, verlegen (Indefinido)
@@ -5685,7 +5685,7 @@ señalan|señalar|hinweisen, darauf hinweisen (Präsens)
 señalar||hinweisen, zeigen
 consumo||Konsum, Verbrauch
 bajado|bajar|sinken, senken (Partizip)
-bajar||sinken; hinuntergehen; senken
+bajar||hinuntergehen, hinunterlassen, sinken; senken
 legal||legal
 quitado|quitar|wegnehmen (Partizip)
 clientes|cliente|Kunden
@@ -6315,7 +6315,7 @@ carácter||Charakter
 celebrará|celebrar|wird stattfinden, wird gefeiert (Futur)
 ceremonia||Feier, Zeremonie
 cero||Null; un cero a la izquierda = eine Null
-chimenea||Kamin
+chimenea||Kamin, Schornstein; im Bergbau: Schacht
 chocolate||Schokolade
 chocó|chocar|prallte (Indefinido); chocar contra = prallen gegen
 cita||Termin, Verabredung
@@ -6415,7 +6415,7 @@ préstamo||Kredit, Darlehen
 página||Seite
 quiebra||Konkurs, Pleite
 reclamó|reclamar|beschwerte sich (Indefinido)
-refugio||Hütte, Berghütte, Zuflucht
+refugio||Zuflucht, Schutzraum; Hütte, Berghütte
 regional||regional
 rellenar||ausfüllen
 renovables|renovable|erneuerbar
@@ -6491,7 +6491,7 @@ escasez||Mangel, Knappheit
 pesquero||Fischer-; pueblo pesquero = Fischerdorf
 frontera||Grenze
 plazos|plazo|Fristen; plazo de entrega = Abgabetermin
-entrega||Abgabe, Lieferung
+entrega||Abgabe, Lieferung (auch: übergibt, von entregar)
 fuga||Leck; Flucht
 conseguido|conseguir|bekommen, geschafft (Partizip)
 festival||Festival
@@ -6721,7 +6721,7 @@ embotellamiento||Stau (Lateinamerika)
 enorme||riesig, enorm
 tremendo||gewaltig, enorm
 turnos|turno|Schichten; turnos de noche = Nachtschichten
-turno||Schicht; turno de noche = Nachtschicht
+turno||Schicht; turno de noche = Nachtschicht; jefe de turno = Schichtleiter
 descansar||sich ausruhen
 cifras|cifra|Zahlen, Ziffern
 convencen|convencer|überzeugen (Präsens, ellos, ellas)
@@ -7039,6 +7039,115 @@ reseña||Rezension, Bewertung
 tocara|tocar|berühren (Imperfecto de subjuntivo); si te tocara la lotería = wenn du im Lotto gewinnen würdest
 ánimo||Mut, Stimmung; ¡ánimo! = Kopf hoch!, nur Mut!
 vas|ir|gehst (Präsens, tú); ¡vas bien! = du bist auf gutem Weg!
+desierto||Wüste
+atacama||Atacama (Wüste im Norden Chiles)
+reportero||Reporter; reportera = Reporterin
+mina||Bergwerk, Mine
+norte||Norden
+atrapado|atrapar|eingeschlossen, gefangen; quedar atrapado = eingeschlossen werden
+atrapar||fangen, einschließen
+profundidad||Tiefe; a 700 metros de profundidad = in 700 Metern Tiefe
+camila||Camila (Vorname)
+copiapó||Copiapó (Stadt im Norden Chiles)
+setecientos||siebenhundert
+bloque||Block
+roca||Fels, Gestein
+mover||bewegen; moverse = sich bewegen
+quemar||brennen, verbrennen
+minería||Bergbau
+laurence||Laurence (Vorname)
+golborne||Golborne (Laurence Golborne, chilenischer Bergbauminister 2010–2011)
+rescatista||Retter, Retterin
+ventilación||Belüftung; chimenea de ventilación = Lüftungsschacht
+derrumbe||Einsturz
+derrumbarse||einstürzen
+tragedia||Tragödie, Unglück
+minero||Bergmann; Bergbau-
+contener||zurückhalten; enthalten; contener las lágrimas = die Tränen zurückhalten
+lágrima||Träne
+sindicato||Gewerkschaft
+trabajador||Arbeiter, Arbeitnehmer; fleißig
+autoridad||Behörde; Autorität
+perforar||bohren, durchbohren
+sonda||Sonde; Bohrung
+tubo||Rohr, Röhre
+fino||dünn, fein
+allá||dort, da drüben; allá abajo = da unten
+esperanza||Hoffnung
+técnico||Techniker; technisch
+mancha||Fleck
+letra||Buchstabe; Schrift; Liedtext
+sebastián||Sebastián (Vorname)
+piñera||Piñera (Sebastián Piñera, Präsident Chiles 2010–2014 und 2018–2022)
+campamento||Lager, Camp
+abrazar||umarmen; abrazarse = sich umarmen
+abrazo||Umarmung
+agujero||Loch
+negro||schwarz; en blanco y negro = schwarz-weiß
+cueca||Cueca (chilenischer Nationaltanz)
+empanada||Empanada (gefüllte Teigtasche)
+celebración||Feier
+alcohol||Alkohol
+descartar||verwerfen, ausschließen
+carpa||Zelt (Lateinamerika)
+soldado||Soldat
+segovia||Segovia (Nachname; Stadt in Spanien)
+darío||Darío (Vorname)
+alcaldesa||Bürgermeisterin
+cerro||Hügel, Berg
+boliviano||bolivianisch; Bolivianer
+carlos||Carlos (Vorname)
+contacto||Kontakt
+paloma||Taube; in der Mine San José: Röhre, die Dinge nach unten bringt
+sobrevivir||überleben
+urzúa||Urzúa (Nachname)
+repartir||verteilen
+cucharada||Löffel (voll); dos cucharadas = zwei Löffel
+atún||Thunfisch
+máquina||Maschine
+pozo||Schacht; Brunnen
+rescate||Rettung
+b||B (Buchstabe); Plan B = Plan B
+c||C (Buchstabe); Plan C = Plan C
+fénix||Phönix; Fénix 2 = die Rettungskapsel von 2010
+sonrisa||Lächeln
+ancho||breit; Breite; de ancho = breit
+acero||Stahl
+cápsula||Kapsel
+armada||Marine, Kriegsflotte
+nasa||NASA (Raumfahrtbehörde der USA)
+micrófono||Mikrofon
+altavoz||Lautsprecher
+superficie||Oberfläche; im Bergbau: über Tage
+durar||dauern
+medir||messen; mide 54 centímetros = ist 54 Zentimeter groß, breit
+centímetro||Zentimeter
+hábil||geschickt, fähig
+débil||schwach
+periodista||Journalist, Journalistin
+manuel||Manuel (Vorname)
+gonzález||González (Nachname)
+pantalla||Bildschirm
+florencio||Florencio (Vorname)
+ávalos||Ávalos (Nachname)
+byron||Byron (Vorname)
+chi||Ruf der Chilenen: „¡Chi, chi, chi! ¡Le, le, le!“ (aus Chi-le)
+mario||Mario (Vorname)
+sepúlveda||Sepúlveda (Nachname)
+jimmy||Jimmy (Vorname)
+gómez||Gómez (Nachname)
+misión||Mission, Auftrag; misión cumplida = Auftrag erfüllt
+salida||Ausgang; Abfahrt
+punta||Spitze
+promedio||Durchschnitt; en promedio = im Durchschnitt
+firme||fest, stabil (auch: unterschreibe, von firmar)
+mostrar||zeigen
+entregar||übergeben, abgeben; entregar el turno = die Schicht übergeben
+vino||Wein (auch: kam, von venir)
+vive|vivir|lebt, wohnt; erlebt (Präsens, él, ella, usted)
+llaman|llamar|rufen an, nennen (Präsens, ellos, ellas); se llaman = heißen
+finales|final|Ende (Plural); a finales de agosto = Ende August
+pie||der Fuß (el pie); de pie = stehend
 `
 };
 

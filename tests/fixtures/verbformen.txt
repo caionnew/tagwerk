@@ -394,6 +394,7 @@ sv överlåta (unregelmäßig): överlåter, överlät, överlåtit
 sv överraska (Gruppe 1): överraskar, överraskade, överraskat; överraskad, överraskat, överraskade; överraskas, överraskades
 sv översvämma (Gruppe 1): översvämmar, översvämmade, översvämmat; översvämmad, översvämmat, översvämmade; översvämmas, översvämmades
 sv översätta (unregelmäßig): översätter, översatte, översatt; översatt, översatt, översatta; översätts, översattes
+es abrazar: abrazo abraza abrazamos, abracé abrazó abrazaron, abrace abracemos, abrazaré, abrazara, abrazado, abrazando, abraza abrazad
 es abrigar: abrigo abriga abrigamos, abrigué abrigó abrigaron, abrigue abriguemos, abrigaré, abrigara, abrigado, abrigando, abriga abrigad
 es abrir: abro abre abrimos, abrí abrió abrieron, abra abramos, abriré, abriera, abierto, abriendo, abre abrid
 es abuchear: abucheo abuchea abucheamos, abucheé abucheó abuchearon, abuchee abucheemos, abuchearé, abucheara, abucheado, abucheando, abuchea abuchead
@@ -436,6 +437,7 @@ es arreglar: arreglo arregla arreglamos, arreglé arregló arreglaron, arregle a
 es arriesgar: arriesgo arriesga arriesgamos, arriesgué arriesgó arriesgaron, arriesgue arriesguemos, arriesgaré, arriesgara, arriesgado, arriesgando, arriesga arriesgad
 es asustar: asusto asusta asustamos, asusté asustó asustaron, asuste asustemos, asustaré, asustara, asustado, asustando, asusta asustad
 es atender: atiendo atiende atendemos, atendí atendió atendieron, atienda atendamos, atenderé, atendiera, atendido, atendiendo, atiende atended
+es atrapar: atrapo atrapa atrapamos, atrapé atrapó atraparon, atrape atrapemos, atraparé, atrapara, atrapado, atrapando, atrapa atrapad
 es atravesar: atravieso atraviesa atravesamos, atravesé atravesó atravesaron, atraviese atravesemos, atravesaré, atravesara, atravesado, atravesando, atraviesa atravesad
 es aumentar: aumento aumenta aumentamos, aumenté aumentó aumentaron, aumente aumentemos, aumentaré, aumentara, aumentado, aumentando, aumenta aumentad
 es avalar: avalo avala avalamos, avalé avaló avalaron, avale avalemos, avalaré, avalara, avalado, avalando, avala avalad
@@ -485,6 +487,7 @@ es construir: construyo construye construimos, construí construyó construyeron
 es consultar: consulto consulta consultamos, consulté consultó consultaron, consulte consultemos, consultaré, consultara, consultado, consultando, consulta consultad
 es consumir: consumo consume consumimos, consumí consumió consumieron, consuma consumamos, consumiré, consumiera, consumido, consumiendo, consume consumid
 es contar: cuento cuenta contamos, conté contó contaron, cuente contemos, contaré, contara, contado, contando, cuenta contad
+es contener: contengo contiene contenemos, contuve contuvo contuvieron, contenga contengamos, contendré, contuviera, contenido, conteniendo, contened
 es contestar: contesto contesta contestamos, contesté contestó contestaron, conteste contestemos, contestaré, contestara, contestado, contestando, contesta contestad
 es continuar: continúo continúa continuamos, continué continuó continuaron, continúe continuemos, continuaré, continuara, continuado, continuando, continúa continuad
 es contradecir: contradigo contradice contradecimos, contradije contradijo contradijeron, contradiga contradigamos, contradiré, contradijera, contradicho, contradiciendo, contradecid
@@ -516,10 +519,12 @@ es dejar: dejo deja dejamos, dejé dejó dejaron, deje dejemos, dejaré, dejara,
 es depender: dependo depende dependemos, dependí dependió dependieron, dependa dependamos, dependeré, dependiera, dependido, dependiendo, depende depended
 es derogar: derogo deroga derogamos, derogué derogó derogaron, derogue deroguemos, derogaré, derogara, derogado, derogando, deroga derogad
 es derramar: derramo derrama derramamos, derramé derramó derramaron, derrame derramemos, derramaré, derramara, derramado, derramando, derrama derramad
+es derrumbarse: derrumbo derrumba derrumbamos, derrumbé derrumbó derrumbaron, derrumbe derrumbemos, derrumbaré, derrumbara, derrumbado, derrumbando, derrumba derrumbad
 es desaparecer: desaparezco desaparece desaparecemos, desaparecí desapareció desaparecieron, desaparezca desaparezcamos, desapareceré, desapareciera, desaparecido, desapareciendo, desaparece desapareced
 es desarrollar: desarrollo desarrolla desarrollamos, desarrollé desarrolló desarrollaron, desarrolle desarrollemos, desarrollaré, desarrollara, desarrollado, desarrollando, desarrolla desarrollad
 es desayunar: desayuno desayuna desayunamos, desayuné desayunó desayunaron, desayune desayunemos, desayunaré, desayunara, desayunado, desayunando, desayuna desayunad
 es descansar: descanso descansa descansamos, descansé descansó descansaron, descanse descansemos, descansaré, descansara, descansado, descansando, descansa descansad
+es descartar: descarto descarta descartamos, descarté descartó descartaron, descarte descartemos, descartaré, descartara, descartado, descartando, descarta descartad
 es describir: describo describe describimos, describí describió describieron, describa describamos, describiré, describiera, descrito, describiendo, describe describid
 es descubrir: descubro descubre descubrimos, descubrí descubrió descubrieron, descubra descubramos, descubriré, descubriera, descubierto, descubriendo, descubre descubrid
 es despedir: despido despide despedimos, despedí despidió despidieron, despida despidamos, despediré, despidiera, despedido, despidiendo, despide despedid
@@ -533,6 +538,7 @@ es diseñar: diseño diseña diseñamos, diseñé diseñó diseñaron, diseñe d
 es dividir: divido divide dividimos, dividí dividió dividieron, divida dividamos, dividiré, dividiera, dividido, dividiendo, divide dividid
 es dominar: domino domina dominamos, dominé dominó dominaron, domine dominemos, dominaré, dominara, dominado, dominando, domina dominad
 es dormir: duermo duerme dormimos, dormí durmió durmieron, duerma durmamos, dormiré, durmiera, dormido, durmiendo, duerme dormid
+es durar: duro dura duramos, duré duró duraron, dure duremos, duraré, durara, durado, durando, dura durad
 es echar: echo echa echamos, eché echó echaron, eche echemos, echaré, echara, echado, echando, echa echad
 es emigrar: emigro emigra emigramos, emigré emigró emigraron, emigre emigremos, emigraré, emigrara, emigrado, emigrando, emigra emigrad
 es empacar: empaco empaca empacamos, empaqué empacó empacaron, empaque empaquemos, empacaré, empacara, empacado, empacando, empaca empacad
@@ -549,6 +555,7 @@ es enojarse: enojo enoja enojamos, enojé enojó enojaron, enoje enojemos, enoja
 es enseñar: enseño enseña enseñamos, enseñé enseñó enseñaron, enseñe enseñemos, enseñaré, enseñara, enseñado, enseñando, enseña enseñad
 es entender: entiendo entiende entendemos, entendí entendió entendieron, entienda entendamos, entenderé, entendiera, entendido, entendiendo, entiende entended
 es entrar: entro entra entramos, entré entró entraron, entre entremos, entraré, entrara, entrado, entrando, entra entrad
+es entregar: entrego entrega entregamos, entregué entregó entregaron, entregue entreguemos, entregaré, entregara, entregado, entregando, entrega entregad
 es enviar: envío envía enviamos, envié envió enviaron, envíe enviemos, enviaré, enviara, enviado, enviando, envía enviad
 es equivocarse: equivoco equivoca equivocamos, equivoqué equivocó equivocaron, equivoque equivoquemos, equivocaré, equivocara, equivocado, equivocando, equivoca equivocad
 es escoger: escojo escoge escogemos, escogí escogió escogieron, escoja escojamos, escogeré, escogiera, escogido, escogiendo, escoge escoged
@@ -615,10 +622,13 @@ es mantener: mantengo mantiene mantenemos, mantuve mantuvo mantuvieron, mantenga
 es marcar: marco marca marcamos, marqué marcó marcaron, marque marquemos, marcaré, marcara, marcado, marcando, marca marcad
 es marchar: marcho marcha marchamos, marché marchó marcharon, marche marchemos, marcharé, marchara, marchado, marchando, marcha marchad
 es marinar: marino marina marinamos, mariné marinó marinaron, marine marinemos, marinaré, marinara, marinado, marinando, marina marinad
+es medir: mido mide medimos, medí midió midieron, mida midamos, mediré, midiera, medido, midiendo, mide medid
 es mencionar: menciono menciona mencionamos, mencioné mencionó mencionaron, mencione mencionemos, mencionaré, mencionara, mencionado, mencionando, menciona mencionad
 es meter: meto mete metemos, metí metió metieron, meta metamos, meteré, metiera, metido, metiendo, mete meted
 es mirar: miro mira miramos, miré miró miraron, mire miremos, miraré, mirara, mirado, mirando, mira mirad
 es morir: muero muere morimos, morí murió murieron, muera muramos, moriré, muriera, muerto, muriendo, muere morid
+es mostrar: muestro muestra mostramos, mostré mostró mostraron, muestre mostremos, mostraré, mostrara, mostrado, mostrando, muestra mostrad
+es mover: muevo mueve movemos, moví movió movieron, mueva movamos, moveré, moviera, movido, moviendo, mueve moved
 es mudarse: mudo muda mudamos, mudé mudó mudaron, mude mudemos, mudaré, mudara, mudado, mudando, muda mudad
 es nacer: nazco nace nacemos, nací nació nacieron, nazca nazcamos, naceré, naciera, nacido, naciendo, nace naced
 es nadar: nado nada nadamos, nadé nadó nadaron, nade nademos, nadaré, nadara, nadado, nadando, nada nadad
@@ -642,6 +652,7 @@ es pelear: peleo pelea peleamos, peleé peleó pelearon, pelee peleemos, pelear�
 es pensar: pienso piensa pensamos, pensé pensó pensaron, piense pensemos, pensaré, pensara, pensado, pensando, piensa pensad
 es perder: pierdo pierde perdemos, perdí perdió perdieron, pierda perdamos, perderé, perdiera, perdido, perdiendo, pierde perded
 es perdonar: perdono perdona perdonamos, perdoné perdonó perdonaron, perdone perdonemos, perdonaré, perdonara, perdonado, perdonando, perdona perdonad
+es perforar: perforo perfora perforamos, perforé perforó perforaron, perfore perforemos, perforaré, perforara, perforado, perforando, perfora perforad
 es perjudicar: perjudico perjudica perjudicamos, perjudiqué perjudicó perjudicaron, perjudique perjudiquemos, perjudicaré, perjudicara, perjudicado, perjudicando, perjudica perjudicad
 es permanecer: permanezco permanece permanecemos, permanecí permaneció permanecieron, permanezca permanezcamos, permaneceré, permaneciera, permanecido, permaneciendo, permanece permaneced
 es permitir: permito permite permitimos, permití permitió permitieron, permita permitamos, permitiré, permitiera, permitido, permitiendo, permite permitid
@@ -662,6 +673,7 @@ es proponer: propongo propone proponemos, propuse propuso propusieron, proponga 
 es proteger: protejo protege protegemos, protegí protegió protegieron, proteja protejamos, protegeré, protegiera, protegido, protegiendo, protege proteged
 es quedar: quedo queda quedamos, quedé quedó quedaron, quede quedemos, quedaré, quedara, quedado, quedando, queda quedad
 es quejarse: quejo queja quejamos, quejé quejó quejaron, queje quejemos, quejaré, quejara, quejado, quejando, queja quejad
+es quemar: quemo quema quemamos, quemé quemó quemaron, queme quememos, quemaré, quemara, quemado, quemando, quema quemad
 es querer: quiero quiere queremos, quise quiso quisieron, quiera queramos, querré, quisiera, querido, queriendo, quiere quered
 es quitar: quito quita quitamos, quité quitó quitaron, quite quitemos, quitaré, quitara, quitado, quitando, quita quitad
 es reabrir: reabro reabre reabrimos, reabrí reabrió reabrieron, reabra reabramos, reabriré, reabriera, reabierto, reabriendo, reabre reabrid
@@ -689,6 +701,7 @@ es rellenar: relleno rellena rellenamos, rellené rellenó rellenaron, rellene r
 es rendirse: rindo rinde rendimos, rendí rindió rindieron, rinda rindamos, rendiré, rindiera, rendido, rindiendo, rinde rendid
 es renovar: renuevo renueva renovamos, renové renovó renovaron, renueve renovemos, renovaré, renovara, renovado, renovando, renueva renovad
 es renunciar: renuncio renuncia renunciamos, renuncié renunció renunciaron, renuncie renunciemos, renunciaré, renunciara, renunciado, renunciando, renuncia renunciad
+es repartir: reparto reparte repartimos, repartí repartió repartieron, reparta repartamos, repartiré, repartiera, repartido, repartiendo, reparte repartid
 es repetir: repito repite repetimos, repetí repitió repitieron, repita repitamos, repetiré, repitiera, repetido, repitiendo, repite repetid
 es repoblar: repueblo repuebla repoblamos, repoblé repobló repoblaron, repueble repoblemos, repoblaré, repoblara, repoblado, repoblando, repuebla repoblad
 es reposar: reposo reposa reposamos, reposé reposó reposaron, repose reposemos, reposaré, reposara, reposado, reposando, reposa reposad
@@ -719,6 +732,7 @@ es servir: sirvo sirve servimos, serví sirvió sirvieron, sirva sirvamos, servi
 es significar: significo significa significamos, signifiqué significó significaron, signifique signifiquemos, significaré, significara, significado, significando, significa significad
 es silbar: silbo silba silbamos, silbé silbó silbaron, silbe silbemos, silbaré, silbara, silbado, silbando, silba silbad
 es sobrar: sobro sobra sobramos, sobré sobró sobraron, sobre sobremos, sobraré, sobrara, sobrado, sobrando, sobra sobrad
+es sobrevivir: sobrevivo sobrevive sobrevivimos, sobreviví sobrevivió sobrevivieron, sobreviva sobrevivamos, sobreviviré, sobreviviera, sobrevivido, sobreviviendo, sobrevive sobrevivid
 es soler: suelo suele solemos, suela solamos
 es soltar: suelto suelta soltamos, solté soltó soltaron, suelte soltemos, soltaré, soltara, soltado, soltando, suelta soltad
 es solucionar: soluciono soluciona solucionamos, solucioné solucionó solucionaron, solucione solucionemos, solucionaré, solucionara, solucionado, solucionando, soluciona solucionad

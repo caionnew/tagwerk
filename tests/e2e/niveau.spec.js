@@ -12,9 +12,10 @@ test('Fortgeschritten wählen: gespeichert, schwerste Lesetexte (C1) zuerst, Mod
   await page.click('.backbar [data-a=tab]');
   await page.click('[data-a=tab][data-v=extra]');
   await page.click('[data-a=texts]');
-  await expect(page.locator('.tcard .tag >> nth=1')).toHaveText('C1');
+  // Einzeltexte nach Niveau; die Karten der Reihen stehen darüber
+  await expect(page.locator('.tcard:not(.scard) .tag >> nth=1')).toHaveText('C1');
   await expect(page.locator('[data-a=tdefmode][data-v=read]')).toHaveText('Lesen und hören');
-  await page.click('.tcard >> nth=0');
+  await page.click('.tcard:not(.scard) >> nth=0');
   await expect(page.locator('.pbtn.play.wide')).toContainText('Vorlesen');
 });
 

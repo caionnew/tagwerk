@@ -135,7 +135,7 @@ function viewText(){
     return veiled(i) ? `<span class="${cls}" data-a="treveal" data-i="${i}" role="button" aria-label="Satz ${i + 1}: ${T.tapped === i ? 'aufdecken' : 'noch einmal hören'}">${esc(s)}</span>` : `<span class="${cls}" data-i="${i}">${linkWords(s, lang)}</span>`; }).join(' ')}</p>`).join('')}</article>`;
   const hero = `<header class="rhero">
       <div class="tchips">${W ? `<span class="tag">Wikipedia</span>${W.label ? `<span class="tag">${esc(W.label)}</span>` : ''}` : `<span class="tag">${esc(t.topic)}</span><span class="tag">${t.level}</span>`}<span class="tag">${list.length} Sätze</span>${T.hidden ? '<span class="tag on">Nur hören</span>' : ''}</div>
-      <h1 class="rtitle" lang="${lang}">${esc(W ? W.title : t.title)}</h1>
+      <h1 class="rtitle" lang="${lang}">${hangLead(esc(W ? W.title : t.title))}</h1>
       <div class="rprog" aria-hidden="true"><i style="width:${Math.round(100 * Math.min(heard, list.length) / Math.max(1, list.length))}%"></i></div>
       ${veil ? `<p class="rhint">${fold ? 'Der Text bleibt bis nach den Fragen verdeckt.' : 'Antippen spielt einen Satz noch einmal, zweites Antippen zeigt ihn. Nach dem letzten Satz kommen die Fragen.'}</p>` : ''}
     </header>`;

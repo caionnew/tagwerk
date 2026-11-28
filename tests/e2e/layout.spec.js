@@ -64,6 +64,14 @@ for (const wide of [false, true]) test(`Kopf am Heiligabend auf 360 px${wide ? '
   });
   expect(m.h).toBeLessThan(m.fs * 1.8);
   expect(m.right).toBeLessThanOrEqual(m.strip);
+  // ¡ hängt vor der Kante (24.94.0): „F“ fluchtet mit dem Datum darunter, gemessen in der Schrift des Geräts
+  const al = await page.evaluate(() => {
+    const first = (el, i) => { const tn = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode:n => (n.textContent.trim() ? 1 : 3) }).nextNode(), r = document.createRange(); r.setStart(tn, i); r.setEnd(tn, i + 1); return r.getBoundingClientRect().left; };
+    const g = document.querySelector('.hello-g [data-w]'), tn = [...g.childNodes].find(n => n.nodeType === 3), r = document.createRange(); r.setStart(tn, 0); r.setEnd(tn, 1);
+    return { letter:r.getBoundingClientRect().left, date:first(document.querySelector('.hello-d'), 0), mark:document.querySelector('.hello-g .hang').getBoundingClientRect().left };
+  });
+  expect(Math.abs(al.letter - al.date)).toBeLessThan(1);
+  expect(al.mark).toBeLessThan(al.date - 3);
   // Untergrenze von fitGreeting; mit DejaVu Serif in der CI knapp unter 14 px (auf Handys um 20 px)
   expect(m.fs).toBeGreaterThanOrEqual(wide ? 12 : 14);
 });

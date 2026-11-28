@@ -148,7 +148,7 @@ test('Zuruf am Rundenende: nach dem Ergebnis auf Anhieb, nur in der Zielsprache,
   // Im Rundenende: Titel als kleine Überschrift, Zuruf daneben; ohne beantwortete Aufgabe wie bisher nur der Titel
   const done = n => run(`(() => { DB = freshDB(); S.run = { kind:'quick', lang:'es', queue:[], idx:0, ok:${n}, bad:${10 - n}, res:Array.from({ length:10 }, (_, k) => ({ good:k < ${n} })), combo:0, best:0, stamped:true }; S.view = 'runDone'; return viewRunDone(); })()`);
   const h = done(10);
-  assert.match(h, /<div class="done-top"><div class="done-tt"><h1 class="done-h done-st">Runde beendet<\/h1><p class="done-z wordrow" lang="es">/);
+  assert.match(h, /<div class="done-top"><div class="done-tt"><h1 class="done-h done-st">Runde beendet<\/h1><p class="done-z wordrow" lang="es"><span data-a="lookup" data-w="[^"]+"><span class="hang">¡<\/span>/, '¡ hängt vor der Kante, die Buchstaben fluchten mit dem Titel');
   assert.doesNotMatch(h, /Fehlerfrei/);
   assert.match(run(`(() => { S.run.ok = 0; S.run.bad = 0; S.run.res = []; return viewRunDone(); })()`), /<h1 class="done-h">Runde beendet<\/h1>/);
   run('S.run = null; S.view = "home"');

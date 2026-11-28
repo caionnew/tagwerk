@@ -1002,6 +1002,8 @@ section.ex #fb:empty{ display:none; }
 /* Schmale Geräte (360 px): eine Stufe kleiner. Der Gruß bricht nie um; ist er in der Schrift des Geräts zu breit („¡Feliz Nochebuena!“
    mit Stern), macht fitGreeting ihn passend kleiner. */
 .hello-g{ white-space:nowrap; }
+/* ¡ und ¿ am Zeilenanfang großer Zeilen hängen vor der Kante (hangLead); Näherung für Noto Serif, fitHang misst genau */
+.hang{ margin-left:-.33em; } .hang.q{ margin-left:-.47em; }
 @media (max-width:374px){ .hello-g{ font-size:var(--fs-11); } }
 /* Zeichen zum Feiertagsgruß: Linien in der Farbe des Grußes, eine Spur Füllung für Flamme und Stern. Einmal bewegt (go):
    Flamme flackert, Stern funkelt auf, Strahlen gehen auf */

@@ -121,12 +121,27 @@ function greetHtml(lang, now = new Date()){
   const t = fmt(now), g = greeting(lang, now), hol = holidayGreet(lang, t), orn = hol && hol.g === g ? hol.orn : '';
   const anim = orn && S.greetAnim !== t + lang;
   if (anim) S.greetAnim = t + lang;
-  return `<p class="hello-g wordrow" lang="${lang}">${linkWords(g, lang)}${orn ? `<svg class="orn orn-${orn}${anim ? ' go' : ''}" viewBox="0 0 24 24" aria-hidden="true">${ORN[orn]}</svg>` : ''}</p>`;
+  return `<p class="hello-g wordrow" lang="${lang}">${hangLead(linkWords(g, lang))}${orn ? `<svg class="orn orn-${orn}${anim ? ' go' : ''}" viewBox="0 0 24 24" aria-hidden="true">${ORN[orn]}</svg>` : ''}</p>`;
 }
 // Der Gruß steht in einer Zeile neben der Woche (CSS: nowrap). Wie breit er ist, hängt an der Schrift des Geräts: Noto Serif und
 // Georgia laufen gut ein Sechstel breiter als Times, DejaVu Serif (Linux ohne Noto, so in der CI) noch breiter. Darum gemessen statt
 // gezählt: Ist er breiter als seine Spalte, wird er im selben Verhältnis kleiner (bis 24.90 in zwei festen Stufen, die bei breiten
 // Schriften nicht reichten), nicht unter 12 px.
+// Hängende Satzzeichen (seit 24.94.0): Beginnt eine große Zeile mit ¡ oder ¿, steht das Zeichen vor der linken Kante, damit die
+// Buchstaben mit der Zeile darüber oder darunter fluchten („¡Poco a poco!“ unter „Runde beendet“, „¡Hola!“ über dem Datum). So
+// macht man es im Satz mit Anführungszeichen am Zeilenanfang. Nur für große Zeilen (Gruß, Zuruf, Radio, Titel der Lesetexte),
+// nicht für Fließtext und Aufgaben: Dort sind die Zeichen klein und ¿ kann mitten im Absatz am Zeilenanfang landen. Das Zeichen
+// bleibt im antippbaren Wort.
+function hangLead(html){ return html.replace(/^((?:<[^>]+>)*)([¡¿])/, (m, tags, c) => `${tags}<span class="hang${c === '¿' ? ' q' : ''}">${c}</span>`); }
+// Wie breit ¡ und ¿ sind, hängt an der Schrift des Geräts (Noto Serif schmaler als DejaVu): gemessen, in em, damit es fitGreeting
+// übersteht. CSS hat einen Näherungswert für den ersten Bildaufbau und für Umgebungen ohne Messung.
+function fitHang(){
+  if (typeof getComputedStyle !== 'function') return;
+  for (const h of document.querySelectorAll('#app .hang')) {
+    const w = h.getBoundingClientRect().width, fs = parseFloat(getComputedStyle(h).fontSize);
+    if (w && fs) h.style.marginLeft = -(w / fs).toFixed(3) + 'em';
+  }
+}
 function fitGreeting(){
   const g = $('#app .hello-g');
   if (!g || typeof getComputedStyle !== 'function' || !g.clientWidth) return;

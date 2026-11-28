@@ -2,6 +2,13 @@
 
 Versionen entsprechen der Cache-Version des Service Workers. Ab 24.0.0 setzt der Build sie automatisch.
 
+## 24.94.0
+**¡ und ¿ hängen vor der Kante; Durchsicht: was in die Zielsprache gehört.**
+- **Ausrichtung:** Beginnt eine große Zeile mit ¡ oder ¿, steht das Zeichen links vor der Kante, und die Buchstaben fluchten mit der Zeile darüber oder darunter, wie Anführungszeichen im Satz. Vorher stand „¡Poco a poco!“ 9 px rechts von „Tagwerk erledigt“, „¿Qué tal?“ 13 px rechts vom Datum (Noto Serif). Gilt für Gruß, Zuruf, Hörrunde und Titel der Lesetexte, nicht für Fließtext und Aufgaben. Die Breite wird in der Schrift des Geräts gemessen; das Zeichen bleibt im antippbaren Wort.
+- **Zielsprache je Niveau:** die ganze App durchgesehen, Vorschläge mit Noten und eine Regel für die Stufen in IDEEN.md. Die Woche auf „Heute“ bekommt keine Kürzel, die gemeinsamen Kalender bleiben deutsch.
+- Tests: ¡ und ¿ nur am Zeilenanfang, im antippbaren Wort, im Zuruf; im Browser fluchtet „F“ von „¡Feliz Nochebuena!“ mit dem Datum, auch in breiter Schrift.
+- Doku: ARCHITECTURE.md, IDEEN.md, CLAUDE.md. Speicherstand unverändert.
+
 ## 24.93.0
 **Zuruf am Rundenende in der Zielsprache, neben dem Stempel.**
 - **Was oben steht:** links der Stempel, rechts daneben klein „Tagwerk erledigt“ oder „Runde beendet“ und groß ein Zuruf in der Zielsprache, antippbar. Der große deutsche Titel entfällt, ebenso „Fehlerfrei“: Das sagen schon Ergebnis und Zuruf. Wesentliches bleibt deutsch („1 von 12 auf Anhieb richtig.“), der Zuspruch steht nur einmal da, in der Zielsprache. Das spart eine Zeile und nutzt den Platz rechts vom Stempel.

@@ -55,3 +55,14 @@ test('In der Aufgabe: Lücke bei „Fortgeschritten“ mit „Fyll i luckan“, 
   assert.match(de, /<p class="kicker">Ergänze die Lücke/);
   run('S.run = null; S.view = "home"');
 });
+
+test('¡ und ¿ hängen am Anfang großer Zeilen vor der Kante, das Zeichen bleibt im antippbaren Wort', () => {
+  const hang = h => run(`hangLead(${JSON.stringify(h)})`);
+  assert.equal(hang(run(`linkWords('¡Poco a poco!', 'es')`)), '<span data-a="lookup" data-w="Poco"><span class="hang">¡</span>Poco</span> <span data-a="lookup" data-w="a">a</span> <span data-a="lookup" data-w="poco">poco!</span>');
+  assert.match(hang(run(`linkWords('¿Qué tal?', 'es')`)), /^<span data-a="lookup" data-w="Qué"><span class="hang q">¿<\/span>Qué<\/span>/);
+  assert.equal(hang('¿Dónde está?'), '<span class="hang q">¿</span>Dónde está?');
+  assert.equal(hang('Hej!'), 'Hej!');
+  assert.equal(hang('Hola, ¿qué tal?'), 'Hola, ¿qué tal?', 'nur am Zeilenanfang');
+  assert.match(run(`greetHtml('es', new Date(2026, 11, 24, 10, 30))`), /<p class="hello-g wordrow" lang="es"><span data-a="lookup" data-w="Feliz"><span class="hang">¡<\/span>Feliz/);
+  assert.doesNotMatch(run(`greetHtml('sv', new Date(2026, 11, 24, 10, 30))`), /hang/);
+});

@@ -79,7 +79,7 @@ function viewRadio(){
     <p class="hint mt0">Satz ${R.idx + 1} von ${R.ids.length}${R.heard ? `, ${R.heard} gehört` : ''}. Läuft von allein weiter, der Bildschirm bleibt dabei an.</p>
     <section class="radio-card" aria-live="polite">
       <div class="rsteps">${steps}</div>
-      ${R.show ? `<p class="radio-t" lang="${lang}">${esc(item.target)}</p><p class="radio-de">${esc(item.de || '')}</p>` : '<p class="radio-t radio-hidden">Nur hören</p>'}
+      ${R.show ? `<p class="radio-t" lang="${lang}">${hangLead(esc(item.target))}</p><p class="radio-de">${esc(item.de || '')}</p>` : '<p class="radio-t radio-hidden">Nur hören</p>'}
     </section>
     <div class="rows mt-16">${sw('rde', R.de, 'Deutsch dazwischen', 'Erst der Satz, dann die Bedeutung')}${sw('rshow', R.show, 'Text zeigen', 'Aus: reines Hörverstehen')}${sw('rslow', R.slow, 'Erstes Mal langsamer')}</div>
     <div class="actionbar reader-bar"><div class="in">

@@ -889,7 +889,7 @@ function viewRunDone(){
     : '<button type="button" class="ghost" data-a="tab" data-v="extra">Fertig</button><button type="button" class="primary" data-a="again">Noch eine Runde</button>';
   const reading = daily ? `<p class="hint readtip">Zum Lesen: ${READING[lang].map(readLink).join(', ').replace(/, ([^,]*)$/, ' oder $1')}.</p>` : '';
   const st = stampSvg(r, daily, !!(r.miles && r.miles.length), perfect && total >= 3);
-  const head = total ? `<div class="done-top">${st}<div class="done-tt"><h1 class="done-h done-st">${title}</h1><p class="done-z wordrow" lang="${lang}">${linkWords(zurufFor(lang, r.ok - nNorm, total, perfect), lang)}</p></div></div>`
+  const head = total ? `<div class="done-top">${st}<div class="done-tt"><h1 class="done-h done-st">${title}</h1><p class="done-z wordrow" lang="${lang}">${hangLead(linkWords(zurufFor(lang, r.ok - nNorm, total, perfect), lang))}</p></div></div>`
     : `${st}<h1 class="done-h">${title}</h1>`;
   return `<div class="donebox">
     ${head}
@@ -1385,6 +1385,7 @@ function render(){
     default: h = viewProgress();
   }
   $('#app').innerHTML = h;
+  fitHang();
   if (S.view === 'home') fitGreeting();
   renderPopup();
   document.body.classList.toggle('has-actions', !!$('#app .actionbar'));
